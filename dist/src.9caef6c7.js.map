@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/index.ts"],"names":[],"mappings":";;AACA,IAAM,EAAE,GAAG,QAAQ,CAAC,cAAT,CAAwB,MAAxB,CAAX;;AAEA,IAAI,EAAJ,EAAQ;AACJ,EAAA,EAAE,CAAC,SAAH,GAAe,aAAf;AACH","file":"src.9caef6c7.js","sourceRoot":"..\\public","sourcesContent":["\r\nconst el = document.getElementById(\"root\");\r\n\r\nif (el) {\r\n    el.innerText = \"Hello world\";\r\n}"]}

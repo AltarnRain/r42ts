@@ -1,0 +1,21 @@
+{
+  "name": "r42ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel public/index.html",
+    "build": "parcel build public/index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "immer": "^5.0.0",
+    "redux": "^4.0.4"
+  },
+  "devDependencies": {
+    "parcel": "^1.12.4",
+    "typescript": "^3.7.2"
+  }
+}
