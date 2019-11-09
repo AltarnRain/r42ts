@@ -14,6 +14,8 @@ import { StartGame } from "./Game";
 window.onload = () => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const body  = document.getElementById("body") as HTMLCanvasElement;
+
+    
     if (canvas && body) {
         const rect = body.getBoundingClientRect();
         canvas.width = rect.width;
