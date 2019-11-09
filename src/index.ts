@@ -1,6 +1,21 @@
+/**
+ * @preserve Copyright 2010-2019 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
 
-const el = document.getElementById("root");
+/**
+ * Module:          Index
+ * Responsibility:  Entry point for the game
+ */
 
-if (el) {
-    el.innerText = "Hello world";
-}
+import { StartGame } from "./Game";
+
+window.onload = () => {
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+    if (canvas) {
+        canvas.width = window.screen.width;
+        canvas.height = window.screen.height;
+        StartGame(canvas);
+    }
+};
