@@ -1,0 +1,12 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "eofline": false,
+        "interface-name": false,
+        "max-line-length": false,
+        "object-literal-sort-keys": false,
+        "trailing-comma": false,
+        "prefer-for-of": false,
+        "member-ordering": false
+    }
+}

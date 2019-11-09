@@ -12,13 +12,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StartGame = function (canvas) {
     var ctx = canvas.getContext("2d");
     if (ctx) {
-        ctx.beginPath();
-        ctx.fillStyle = "green";
-        ctx.fillRect(10, 10, 50, 50);
-        ctx.closePath();
-        ctx.beginPath();
-        ctx.fillStyle = "red";
-        ctx.fillRect(150, 150, 150, 150);
-        ctx.closePath();
+        Render(ctx);
     }
+};
+var Render = function (ctx) {
+    ctx.beginPath();
+    ctx.fillStyle = "green";
+    ctx.fillRect(10, 10, 50, 50);
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.fillStyle = "red";
+    ctx.fillRect(150, 150, 150, 150);
+    ctx.closePath();
 };
