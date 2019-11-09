@@ -3,5 +3,12 @@
         "**/.cache": true,
         "**/dist": true,
         "**/js": true
+    },
+    "search.exclude": {
+        "**/*.js": true,
+        "**/*.js.map": true,
+        "dist/**": true,
+        ".cache/**": true,
+        "node_modules/**": true
     }
 }
