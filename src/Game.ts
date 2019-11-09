@@ -15,7 +15,7 @@ export const StartGame = (canvas: HTMLCanvasElement): void => {
 
     if (ctx) {
         Render(ctx);
-    }    
+    }
 };
 
 const Render = (ctx: CanvasRenderingContext2D): void => {
@@ -28,4 +28,4 @@ const Render = (ctx: CanvasRenderingContext2D): void => {
     ctx.fillStyle = "red";
     ctx.fillRect(150, 150, 150, 150);
     ctx.closePath();
-}
+};
