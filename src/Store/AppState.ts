@@ -9,5 +9,10 @@
  * Responsibility:  Defines the application state
  */
 
+import KeyboardState from "./Definitions/KeyboardState"; 
+import LevelState from "./Definitions/LevelState";
+
 export default interface AppState {
+    keyboardState: KeyboardState;
+    levelState: LevelState;
 }

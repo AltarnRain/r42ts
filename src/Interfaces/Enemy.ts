@@ -9,12 +9,17 @@
  * Responsibility:  Defines an enemy
  */
 
-import { Asset } from "./Asset";
+import Asset from "./Asset";
 import GameLocation from "./GameLocation";
 
-export interface Enemy extends Asset {
+export default interface Enemy extends Asset {
     /**
      * Defines the location of the enemy.
      */
     location: GameLocation;
+
+    /**
+     * Angle
+     */
+    angle?: number;
 }

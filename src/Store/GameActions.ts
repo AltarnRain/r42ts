@@ -21,7 +21,6 @@
 enum GameActions {
     keyUp,
     keyDown,
-    
 }
 
 export default GameActions;

@@ -9,7 +9,7 @@
  * Responsibility:  Define the properties of an animated asset.
  */
 
-import { Asset } from "./Asset";
+import Asset from "./Asset";
 
 /**
  * Defines an animation.

@@ -10,7 +10,7 @@
  * Responsibility:  Define animation frames for the bird enemy.
  */
 import CGAColors from "../../Constants/CGAColors";
-import { Asset } from "../../Interfaces/Asset";
+import Asset from "../../Interfaces/Asset";
 
 const BirdAsset: Asset = {
     frames: [

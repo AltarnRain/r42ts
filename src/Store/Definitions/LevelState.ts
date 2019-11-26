@@ -9,8 +9,8 @@
  * Responsibility:  Stores state of the current level.
  */
 
+import Enemy from "../../Interfaces/Enemy";
 import GameLocation from "../../Interfaces/GameLocation";
-import { Enemy } from "../../Interfaces/Enemy";
 
 export default interface LevelState {
     playerLocation: GameLocation;
