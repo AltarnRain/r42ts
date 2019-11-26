@@ -16,6 +16,7 @@ export function CtxProvider() {
         const canvas = document.getElementById("canvas") as HTMLCanvasElement;
         cachedCtx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
-        return cachedCtx;
     }
+
+    return cachedCtx;
 }

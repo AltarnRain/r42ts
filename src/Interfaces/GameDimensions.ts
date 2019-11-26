@@ -14,10 +14,17 @@ export interface GameDimensions {
      * The number of pixels from the screen's left where the game is positioned.
      */
     left: number;
+
     /**
-     * The score board width
+     * The game field width
      */
-    width: number;
+    fullWidth: number;
+
+    /**
+     * The game field height
+     */
+    fullHeight: number;
+
     /**
      * The game field height
      */

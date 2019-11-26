@@ -16,7 +16,13 @@ let gameDimensions: GameDimensions;
 
 const DimensionProvider = (): GameDimensions => {
     if (!gameDimensions) {
-        const height = window.innerHeight * 0.98;
+
+        const body = document.getElementById("body") as HTMLCanvasElement;
+
+        const rect = body.getBoundingClientRect();
+
+        // r42 uses a 4:3 resolution.
+        const height = rect.height;
         const width = (height / 3) * 4;
 
         const scoreBoardHeight = height * ScoreBoardHeightFactor;
@@ -24,11 +30,12 @@ const DimensionProvider = (): GameDimensions => {
         const gameFieldTop = scoreBoardHeight;
         const gameFieldHeight = height - gameFieldTop;
 
-        const pixelSize = width / 160;
+        const pixelSize = Math.ceil(width / 160);
 
         gameDimensions = {
             left: (window.innerWidth - width) / 2,
-            width,
+            fullWidth: width,
+            fullHeight: height,
             gameFieldTop,
             gameFieldHeight,
             scoreBoardHeight,
