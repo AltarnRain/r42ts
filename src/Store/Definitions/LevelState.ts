@@ -10,7 +10,7 @@
  */
 
 import GameLocation from "../../Interfaces/GameLocation";
-import { Enemy } from "./Enemy";
+import { Enemy } from "../../Interfaces/Enemy";
 
 export default interface LevelState {
     playerLocation: GameLocation;

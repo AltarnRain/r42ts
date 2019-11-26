@@ -9,8 +9,8 @@
  * Responsibility:  Defines an enemy
  */
 
-import { Asset } from "../../Interfaces/Asset";
-import GameLocation from "../../Interfaces/GameLocation";
+import { Asset } from "./Asset";
+import GameLocation from "./GameLocation";
 
 export interface Enemy extends Asset {
     /**
