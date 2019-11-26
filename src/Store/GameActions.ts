@@ -18,6 +18,10 @@
  * Module:          GameActions
  * Responsibility:  Defines game actions
  */
-export enum GameActions {
-    setDimensions
+enum GameActions {
+    keyUp,
+    keyDown,
+    
 }
+
+export default GameActions;

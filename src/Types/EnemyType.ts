@@ -5,9 +5,13 @@
  */
 
 /**
- * Module:          AppState
- * Responsibility:  Defines the application state
+ * Module:          Types
+ * Responsibility:  All types.
  */
 
-export default interface AppState {
-}
+/**
+ * Types of enemies.
+ */
+type EnemyType = "Bird";
+
+export default EnemyType;

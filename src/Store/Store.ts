@@ -10,15 +10,13 @@
  */
 
 import { combineReducers, createStore, ReducersMapObject, Store } from "redux";
-import ActionPayload from "./ActionPayload";
+import ActionPayload from "./Definitions/ActionPayload";
 import AppState from "./AppState";
-import { DimensionReducer } from "./Definitions/DimensionReducer";
 
 /**
  * All reducer that build the application state.
  */
 const reducers: ReducersMapObject<AppState, ActionPayload> = {
-    dimensionState: DimensionReducer
 };
 
 const allReducers = combineReducers(reducers);

@@ -10,7 +10,7 @@
  */
 
 import { Action } from "redux";
-import { GameActions } from "./GameActions";
+import GameActions from "../GameActions";
 
 export default interface ActionPayload extends Action {
     /**
@@ -21,5 +21,5 @@ export default interface ActionPayload extends Action {
     /**
      * Payload. Can be any object.
      */
-    payload: any;
+    payload?: any;
 }

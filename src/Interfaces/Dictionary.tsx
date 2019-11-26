@@ -5,9 +5,10 @@
  */
 
 /**
- * Module:          AppState
- * Responsibility:  Defines the application state
+ * Module:          Dictionary
+ * Responsibility:  Defines a dictionary.
  */
 
-export default interface AppState {
+export default interface Dictionary<T> {
+    [key: string]: T;
 }

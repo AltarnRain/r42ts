@@ -5,9 +5,10 @@
  */
 
 /**
- * Module:          AppState
- * Responsibility:  Defines the application state
+ * Module:          Particle
+ * Responsibility:  A definition for a particle.
  */
 
-export default interface AppState {
+export interface Partricle  {
+    show: boolean;
 }
