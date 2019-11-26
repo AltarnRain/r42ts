@@ -11,7 +11,7 @@
 
 let cachedCtx: CanvasRenderingContext2D;
 
-export function CtxProvider() {
+export default function CtxProvider() {
     if (!cachedCtx) {
         const canvas = document.getElementById("canvas") as HTMLCanvasElement;
         cachedCtx = canvas.getContext("2d") as CanvasRenderingContext2D;

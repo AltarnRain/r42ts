@@ -10,7 +10,7 @@
  */
 
 import GameLocation from "../Interfaces/GameLocation";
-import { CtxProvider } from "../Providers/CtxProvider";
+import CtxProvider from "../Providers/CtxProvider";
 import DimensionProvider from "../Providers/DimensionProvider";
 import HexToCGAConverter from "../Utility/HexToCGAConverter";
 
