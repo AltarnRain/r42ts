@@ -9,7 +9,7 @@
  * Responsibility:  Define the levels of the game.
  */
 
-import Dictionary from "../../Interfaces/Dictionary";
+import Dictionary from "../../Models/Dictionary";
 import Level from "../../Types/Level";
 
 const Levels: Dictionary<Level> = {

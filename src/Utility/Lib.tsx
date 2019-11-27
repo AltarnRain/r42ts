@@ -1,6 +1,3 @@
-import GameLocation from "../Interfaces/GameLocation";
-import KeyboardState from "../Store/Definitions/KeyboardState";
-
 /**
  * @preserve Copyright 2010-2019 Onno Invernizzi.
  * This source code is subject to terms and conditions.
@@ -12,6 +9,9 @@ import KeyboardState from "../Store/Definitions/KeyboardState";
  * Responsibility:  A library containing various helper functions
  */
 
+import GameLocation from "../Models/GameLocation";
+import KeyboardState from "../Store/Definitions/KeyboardState";
+
 /**
  * Gets the next X coordinats based on the angle, speed and the current X coordinate.
  * @param {number} angle. The angle.
@@ -19,9 +19,9 @@ import KeyboardState from "../Store/Definitions/KeyboardState";
  * @param {number} current. The current X coordinate.
  * @returns {number}. The next X coordinate.
  */
-export const getNextX = (angle: number, speed: number, current: number): number => {
+export function getNextX(angle: number, speed: number, current: number): number {
     return Math.cos(angle * Math.PI / 180) * speed + current;
-};
+}
 
 /**
  * Gets the next Y coordinate based on the angle, speed and the current Y coordinate.
@@ -30,16 +30,16 @@ export const getNextX = (angle: number, speed: number, current: number): number 
  * @param {number} current. The current X coordinate.
  * @returns {number}. The next Y coordinate.
  */
-export const getNextY = (angle: number, speed: number, current: number): number => {
+export function getNextY(angle: number, speed: number, current: number): number {
     return Math.sin(angle * (Math.PI / 180)) * speed + current;
-};
+}
 
 /**
  * getAngle.
  * @param {KeyboardState} state. Current keyboard dstate
  * @returns {number}. The angle. -1 indicated the ship is not moving.
  */
-export const getAngle = (state: KeyboardState): number => {
+export function getAngle(state: KeyboardState): number {
     let angle = -1;
     if (state.up && state.left) {
         angle = 225;
@@ -60,7 +60,7 @@ export const getAngle = (state: KeyboardState): number => {
     }
 
     return angle;
-};
+}
 
 /**
  * Calculates a new location.
@@ -74,7 +74,7 @@ export const getAngle = (state: KeyboardState): number => {
  * @param {number} objectHeight. The object's height in pixels.
  * @returns {Location}. The new location of the object.
  */
-export const getNewLocation = (angle: number, speed: number, right: number, bottom: number, left: number, top: number, objectWidth: number, objectHeight: number): GameLocation => {
+export function getNewLocation(angle: number, speed: number, right: number, bottom: number, left: number, top: number, objectWidth: number, objectHeight: number): GameLocation {
 
     let nextLeft = getNextX(angle, speed, left);
     let nextTop = getNextY(angle, speed, top);
@@ -96,19 +96,31 @@ export const getNewLocation = (angle: number, speed: number, right: number, bott
         left: nextLeft,
         top: nextTop,
     };
-};
+}
 
 /**
  * Get's the dimensions of a 2d array.
  * @param {any[]}. Any array.
  * @returns {rows: number, columns: number}. The dimensions of the 2d array.
  */
-export const get2dArrayDimensions = (array: any[][]): { rows: number, columns: number } => {
+export function get2dArrayDimensions(array: any[][]): { rows: number, columns: number } {
     return {
         rows: array.length,
         columns: array[0].length,
     };
-};
+}
+
+/**
+ * Returns a random element from an array
+ * @param {T[]} arr. An array of type T.
+ */
+export function getRandomArrayElement<T>(arr: T[]): T {
+    return arr[Math.floor(Math.random() * arr.length - 1)];
+}
+
+export function getRandomArrayIndex(arr: any[]): number {
+    return Math.floor(Math.random() * arr.length - 1);
+}
 
 // export const levelProvider = (level: number, right: number, bottom: number): JSX.Element[] => {
 //     const levelInfo = Levels["level" + level.toString()];

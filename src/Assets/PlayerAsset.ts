@@ -1,5 +1,5 @@
 /**
- * @preserve Copyright 2"0"1"0"-2"0"19 Onno Invernizzi.
+ * @preserve Copyright 2010-2019 Onno Invernizzi.
  * This source code is subject to terms and conditions.
  * See LICENSE.MD.
  */

@@ -10,7 +10,7 @@
  * Responsibility:  Contain the assets of an explosion.
  */
 
-import { Explosion } from "../../Interfaces/Explosion";
+import { Explosion } from "../../Models/Explosion";
 
 const ExplosionAsset01: Explosion = {
     frame: [

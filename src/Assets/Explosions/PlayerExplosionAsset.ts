@@ -10,7 +10,7 @@
  * Responsibility:  Explosion effect only for the player
  */
 
-import { Explosion } from "../../Interfaces/Explosion";
+import { Explosion } from "../../Models/Explosion";
 
 const PlayerExplosionAsset: Explosion = {
     frame: [

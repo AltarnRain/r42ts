@@ -9,8 +9,8 @@
  * Responsibility:  A single object that contains the enemies by name
  */
 
-import Asset from "../Interfaces/Asset";
-import Dictionary from "../Interfaces/Dictionary";
+import Asset from "../Models/Asset";
+import Dictionary from "../Models/Dictionary";
 import BirdAsset from "./Enemies/BirdAsset";
 
 const Enemies: Dictionary<Asset> = {

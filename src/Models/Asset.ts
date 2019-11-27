@@ -11,23 +11,9 @@
 
 export default interface Asset {
     /**
-     * x offsets for each frame.
-     */
-    xOffsets: number[];
-    /**
-     * y offsets for easch frame.
-     */
-    yOffsets: number[];
-    /**
      * Colors
      */
     colors: string[];
-
-    /**
-     * Varies in color.
-     * When true the enemy constantly changes in color.
-     */
-    variesInColor: boolean;
 
     /**
      * The angle of travel the asset can start in
@@ -38,16 +24,6 @@ export default interface Asset {
      * The speed at which the object travels.
      */
     speed: number;
-
-    /**
-     * Maximum width of the asset. User to determine if an image falls outside its container.
-     */
-    maxWidth: number;
-
-    /**
-     * Maximum height of the asset. User to determine if an image falls outside the container.
-     */
-    maxHeight: number;
 
     /**
      * Change color. When true this enemy shifts between colors.
@@ -68,4 +44,14 @@ export default interface Asset {
      * Animation frames.
      */
     frames: string[][][];
+
+    /**
+     * When true this asset's first frame is random.
+     */
+    randomStartFrame: boolean;
+
+    /**
+     * when true this asset initial angle is picked randomly.
+     */
+    randomAngle: boolean;
 }

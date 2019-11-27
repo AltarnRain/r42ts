@@ -12,7 +12,7 @@
 import produce from "immer";
 import Enemies from "../../Assets/Enemies";
 import Levels from "../../Assets/Levels/Levels";
-import Enemy from "../../Interfaces/Enemy";
+import Enemy from "../../Models/Enemy";
 import ActionPayload from "../Definitions/ActionPayload";
 import LevelState from "../Definitions/LevelState";
 

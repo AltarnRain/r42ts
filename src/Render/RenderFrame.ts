@@ -9,7 +9,7 @@
  * Responsibility:  Renders a single frame to the canvas
  */
 
-import GameLocation from "../Interfaces/GameLocation";
+import GameLocation from "../Models/GameLocation";
 import CtxProvider from "../Providers/CtxProvider";
 import DimensionProvider from "../Providers/DimensionProvider";
 import HexToCGAConverter from "../Utility/HexToCGAConverter";

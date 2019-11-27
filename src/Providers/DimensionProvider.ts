@@ -10,7 +10,7 @@
  */
 
 import { ScoreBoardHeightFactor } from "../Constants/Constants";
-import { GameDimensions } from "../Interfaces/GameDimensions";
+import { GameDimensions } from "../Models/GameDimensions";
 
 let gameDimensions: GameDimensions;
 
