@@ -113,13 +113,44 @@ export function get2dArrayDimensions(array: any[][]): { rows: number, columns: n
 /**
  * Returns a random element from an array
  * @param {T[]} arr. An array of type T.
+ * @returns {T}. Value found in a random position.
  */
 export function getRandomArrayElement<T>(arr: T[]): T {
     return arr[Math.floor(Math.random() * arr.length - 1)];
 }
 
+/**
+ * Returns a number between 0 and the number of elements in the array.
+ * @param {any[]} arr. An array of any type.
+ * @returns {number}. A randomly selected index from the array.
+ */
 export function getRandomArrayIndex(arr: any[]): number {
     return Math.floor(Math.random() * arr.length - 1);
+}
+
+/**
+ * Update frames whose cells contain "V" to a randonly selected color.
+ * @param {string[][][]} frames. A set of frames.
+ * @param {string[]} colors. Array containing colors.
+ */
+export function setRandomFrameColors(frames: string[][][], colors: string[]): string[][][] {
+    const returnValue: string[][][] = [];
+    frames.forEach((frame, frameIndex) => {
+        const color = getRandomArrayElement(colors);
+        frame.forEach((row, rowIndex) => {
+            returnValue[frameIndex][rowIndex] = [];
+            row.forEach((cell, cellIndex) => {
+                if (cell === "V") {
+                    // If the cell value is not V, keep the old cell value.
+                    returnValue[frameIndex][rowIndex][cellIndex] = color;
+                } else {
+                    returnValue[frameIndex][rowIndex][cellIndex] = cell;
+                }
+            });
+        });
+    });
+
+    return returnValue;
 }
 
 // export const levelProvider = (level: number, right: number, bottom: number): JSX.Element[] => {
