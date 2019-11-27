@@ -10,7 +10,10 @@
  */
 
 import GameLocation from "../Models/GameLocation";
+import ObjectLocation from "../Models/ObjectDimensions";
+import DimensionProvider from "../Providers/DimensionProvider";
 import KeyboardState from "../Store/Definitions/KeyboardState";
+import Frames from "../Types/Frames";
 
 /**
  * Gets the next X coordinats based on the angle, speed and the current X coordinate.
@@ -74,22 +77,25 @@ export function getAngle(state: KeyboardState): number {
  * @param {number} objectHeight. The object's height in pixels.
  * @returns {Location}. The new location of the object.
  */
-export function getNewLocation(angle: number, speed: number, right: number, bottom: number, left: number, top: number, objectWidth: number, objectHeight: number): GameLocation {
+export function getNewLocation(angle: number, speed: number, objectLocation: ObjectLocation): GameLocation {
 
-    let nextLeft = getNextX(angle, speed, left);
-    let nextTop = getNextY(angle, speed, top);
+    let nextLeft = getNextX(angle, speed, objectLocation.left);
+    let nextTop = getNextY(angle, speed, objectLocation.top);
 
     if (nextTop < 0) {
         nextTop = 0;
     }
+
     if (nextLeft < 0) {
         nextLeft = 0;
     }
-    if (nextTop + objectHeight > bottom) {
-        nextTop = bottom - objectHeight;
+
+    if (nextTop  > objectLocation.bottom) {
+        nextTop = objectLocation.bottom;
     }
-    if (nextLeft + objectWidth > right) {
-        nextLeft = right - objectWidth;
+
+    if (nextLeft  > objectLocation.right) {
+        nextLeft = objectLocation.right;
     }
 
     return {
@@ -133,45 +139,46 @@ export function getRandomArrayIndex(arr: any[]): number {
  * @param {string[][][]} frames. A set of frames.
  * @param {string[]} colors. Array containing colors.
  */
-export function setRandomFrameColors(frames: string[][][], colors: string[]): string[][][] {
-    const returnValue: string[][][] = [];
-    frames.forEach((frame, frameIndex) => {
+export function setRandomFrameColors(frames: Frames, colors: string[]): void {
+    Object.keys(frames).forEach((key) => {
         const color = getRandomArrayElement(colors);
-        frame.forEach((row, rowIndex) => {
-            returnValue[frameIndex][rowIndex] = [];
+        frames[key].forEach((row, rowIndex) => {
             row.forEach((cell, cellIndex) => {
-                if (cell === "V") {
-                    // If the cell value is not V, keep the old cell value.
-                    returnValue[frameIndex][rowIndex][cellIndex] = color;
-                } else {
-                    returnValue[frameIndex][rowIndex][cellIndex] = cell;
+                if (cell !== "0") {
+                    frames[key][rowIndex][cellIndex] = color;
                 }
             });
         });
     });
-
-    return returnValue;
 }
 
-// export const levelProvider = (level: number, right: number, bottom: number): JSX.Element[] => {
-//     const levelInfo = Levels["level" + level.toString()];
+/**
+ * Calculates the object's left, top, right, bottom coordinates.
+ * @param {GameLocation} location. The location.
+ * @param {string[][]} frame. A frame of the object.
+ */
+export function calculateObjectLocation(location: GameLocation, frame: string[][]): ObjectLocation {
 
-//     const elements: JSX.Element[] = [];
+    const width = frame[0].length;
+    const height = frame.length;
 
-//     if (levelInfo) {
-//         for (let i = 0; i < levelInfo.numberOfEnemies; i++) {
-//             elements.push(enemyProvider(levelInfo.enemy, right, bottom, i));
-//         }
-//     }
+    return {
+        left: location.left,
+        top: location.top,
+        right: location.left + width * DimensionProvider().pixelSize,
+        bottom: location.top + height * DimensionProvider().pixelSize,
+    };
+}
 
-//     return elements;
-// };
+/**
+ * Creates a clone for the provides Frames.
+ * @param {Frames} frames. Frames to clone.
+ * @returns {Frames}. A clone of the provided frames.
+ */
+export function cloneFrames(frames: Frames): Frames {
+    const clonedFrames = {} as Frames;
 
-// const enemyProvider = (enemyType: EnemyType, right: number, bottom: number, key: number): JSX.Element => {
-//     switch (enemyType) {
-//         case "Bird":
-//             return <Bird key={key} right={right} bottom={bottom} />;
-//         default:
-//             return <div key={key}>Enemy {enemyType} could not be found</div>;
-//     }
-// };
+    Object.keys(frames).forEach((key) => clonedFrames[key] = [...frames[key]]);
+
+    return clonedFrames;
+}

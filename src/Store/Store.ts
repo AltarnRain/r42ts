@@ -13,14 +13,12 @@ import { combineReducers, createStore, ReducersMapObject, Store } from "redux";
 import AppState from "./AppState";
 import ActionPayload from "./Definitions/ActionPayload";
 import keyboardReducer from "./Reducers/KeyboardReducer";
-import levelReducer from "./Reducers/LevelReducer";
 
 /**
  * All reducer that build the application state.
  */
 const reducers: ReducersMapObject<AppState, ActionPayload> = {
     keyboardState: keyboardReducer,
-    levelState: levelReducer,
 };
 
 const allReducers = combineReducers(reducers);
