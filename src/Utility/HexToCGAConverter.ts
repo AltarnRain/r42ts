@@ -1,5 +1,3 @@
-import CGAColors from "../Constants/CGAColors";
-
 /**
  * @preserve Copyright 2010-2019 Onno Invernizzi.
  * This source code is subject to terms and conditions.
@@ -10,6 +8,8 @@ import CGAColors from "../Constants/CGAColors";
  * Module:          HexToCGAConverter.
  * Responsibility:  Convert raster (hex) color to a CGA color
  */
+
+import CGAColors from "../Constants/CGAColors";
 
 const HexToCGAConverter = (hex: string): string => {
     switch (hex) {

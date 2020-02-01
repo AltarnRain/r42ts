@@ -14,7 +14,7 @@ export default class TickHandler {
     private lastTick = 0;
 
     /**
-     * Creates the Animator class.
+     * Creates the TickHandler class.
      * @param {number} time. The time that should pass between ticks.
      * @param {() => void} onTickPassed. The function to call when the specified time has passed between ticks.
      */

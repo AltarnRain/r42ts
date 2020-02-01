@@ -16,6 +16,8 @@ window.onload = () => {
 
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     if (canvas) {
+
+        // Initialize the dimentions of the canvas.
         canvas.width = DimensionProvider().fullWidth;
         canvas.height = DimensionProvider().fullHeight;
 
