@@ -15,7 +15,6 @@
     "redux": "^4.0.4"
   },
   "devDependencies": {
-    "parcel": "^1.12.4",
     "tslint": "^5.20.1",
     "typescript": "^3.7.2"
   }
