@@ -9,6 +9,6 @@
  * Responsibility:  Can be executed
  */
 
-export default interface IExecute {
-    execute(tick: number): void;
+export default interface IAnimate {
+    animate(tick: number): void;
 }

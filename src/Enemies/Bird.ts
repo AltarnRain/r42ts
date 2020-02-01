@@ -12,7 +12,7 @@
 import CGAColors from "../Constants/CGAColors";
 import BirdFrames from "../Frames/BirdFrames";
 import TickHandler from "../Handlers/TickHandler";
-import IExecute from "../Interfaces/IExecute";
+import IAnimate from "../Interfaces/IAnimate";
 import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
@@ -23,7 +23,7 @@ import { calculateObjectLocation, cloneFrames, getNewLocation, getRandomArrayEle
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 const speed = 5;
 
-export default class BirdEnemy implements IExecute {
+export default class BirdEnemy implements IAnimate {
 
     /**
      * Handles frame ticks.
@@ -87,7 +87,7 @@ export default class BirdEnemy implements IExecute {
      * Called from autside.
      * @param {number} tick. Called from outside whenever a tick occurs.
      */
-    public execute(tick: number): void {
+    public animate(tick: number): void {
         this.frameTickHandler.tick(tick);
         this.colorTickHandler.tick(tick);
         this.moveTickHandler.tick(tick);
