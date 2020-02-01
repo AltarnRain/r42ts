@@ -7,7 +7,7 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Launch Chrome against localhost",
+      "name": "Test game",
       "url": "http://localhost:1234",
       "trace": true,
       "webRoot": "${workspaceFolder}/dist",
@@ -15,6 +15,19 @@
       "sourceMapPathOverrides": {
         "*": "${webRoot}/*"
       }
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Test bird",
+      "url": "http://localhost:1234?bird",
+      "trace": true,
+      "webRoot": "${workspaceFolder}/dist",
+      "breakOnLoad": true,
+      "sourceMapPathOverrides": {
+        "*": "${webRoot}/*"
+      }
     }
+
   ]
 }

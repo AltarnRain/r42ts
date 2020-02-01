@@ -17,8 +17,6 @@ import DimensionProvider from "./Providers/DimensionProvider";
 export function StartGame(): void {
     drawGameFieldBackGround();
     drawScoreBoardBackGround();
-
-    
 }
 
 /**

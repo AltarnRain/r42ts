@@ -48,7 +48,7 @@ export default class FrameProvider {
      * @returns {string[][]}. A frame
      */
     public getFrame(): string[][] {
-        const returnValue = this.frames["F" + this.currentFrameIndex.toString()]
+        const returnValue = this.frames["F" + this.currentFrameIndex.toString()];
         this.setNextFrameIndex();
         return returnValue;
     }

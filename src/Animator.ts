@@ -9,10 +9,9 @@
  * Responsibility:  Animate an animated object.
  */
 
-
 import IAnimate from "./Interfaces/IAnimate";
 
-export class Animator {
+export default class Animator {
 
     /**
      * Animation frame handler.
@@ -30,6 +29,7 @@ export class Animator {
      * @param {IAnimate} animatedObject. Any object that implements the IAnimate interface.
      */
     constructor(private animatedObject: IAnimate, private fps: number = 60) {
+        this.runner = this.runner.bind(this);
     }
 
     /**

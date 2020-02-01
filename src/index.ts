@@ -9,6 +9,8 @@
  * Responsibility:  Entry point for the game
  */
 
+import Animator from "./Animator";
+import BirdEnemy from "./Enemies/Bird";
 import { StartGame } from "./Game";
 import DimensionProvider from "./Providers/DimensionProvider";
 
@@ -23,9 +25,12 @@ window.onload = () => {
 
         switch (window.location.search.replace("?", "")) {
             case "player":
-            // todo render player
+
             case "bird":
-            // todo render bird
+                const bird = new BirdEnemy();
+                const animator = new Animator(bird);
+                animator.start();
+
             default:
                 StartGame();
         }

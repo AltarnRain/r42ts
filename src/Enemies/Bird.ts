@@ -80,7 +80,8 @@ export default class BirdEnemy implements IAnimate {
 
         this.frames = cloneFrames(BirdFrames);
 
-        this.frameProvider = new FrameProvider(this.frames, getRandomArrayIndex(BirdFrames[0]));
+        // const frame = getRandomArrayIndex(BirdFrames[0]);
+        this.frameProvider = new FrameProvider(this.frames, 0);
     }
 
     /**
