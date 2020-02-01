@@ -21,6 +21,13 @@ window.onload = () => {
         canvas.width = DimensionProvider().fullWidth;
         canvas.height = DimensionProvider().fullHeight;
 
-        StartGame();
+        switch (window.location.search.replace("?", "")) {
+            case "player":
+            // todo render player
+            case "bird":
+            // todo render bird
+            default:
+                StartGame();
+        }
     }
 };
