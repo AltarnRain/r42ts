@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2015",
-    "module": "amd",
+    "module": "commonjs",
     "strict": true,
     "outDir": "./js",
     "sourceMap": true,

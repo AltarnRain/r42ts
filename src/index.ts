@@ -31,6 +31,8 @@ window.onload = () => {
                 const animator = new Animator(bird);
                 animator.start();
 
+                // proef
+
             default:
                 StartGame();
         }

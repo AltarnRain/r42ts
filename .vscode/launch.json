@@ -8,7 +8,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Test game",
-      "url": "http://localhost:1234",
+      "url": "http://localhost:8080",
       "trace": true,
       "webRoot": "${workspaceFolder}/dist",
       "breakOnLoad": true,
@@ -20,7 +20,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Test bird",
-      "url": "http://localhost:1234?bird",
+      "url": "http://localhost:8080?bird",
       "trace": true,
       "webRoot": "${workspaceFolder}/dist",
       "breakOnLoad": true,
@@ -28,6 +28,5 @@
         "*": "${webRoot}/*"
       }
     }
-
   ]
 }
