@@ -24,8 +24,10 @@
       "trace": true,
       "webRoot": "${workspaceFolder}/dist",
       "breakOnLoad": true,
+      "sourceMaps": true,
       "sourceMapPathOverrides": {
-        "*": "${webRoot}/*"
+        "webpack:///./js/*": "${workspaceRoot}/js/*",
+        "webpack:///js/*": "${workspaceRoot}/js/*"
       }
     }
   ]

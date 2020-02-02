@@ -3,11 +3,14 @@
     "target": "es2015",
     "module": "commonjs",
     "strict": true,
-    "outDir": "./js",
+    "baseUrl": "./",
     "sourceMap": true,
-    "jsx": "react"
+    "jsx": "react",
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "outDir": "./js"
   },
   "include": [
-    "./src/**/*"
+    "src/**/*"
   ]
 }
