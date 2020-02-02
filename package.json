@@ -2,11 +2,12 @@
   "name": "r42ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./js/index.js",
   "scripts": {
-    "dev": "parcel public/index.html",
-    "build": "parcel build public/index.html"
+    "dev": "",
+    "build": ""
   },
+  "private": true,
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -16,6 +17,8 @@
   },
   "devDependencies": {
     "tslint": "^5.20.1",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   }
 }
