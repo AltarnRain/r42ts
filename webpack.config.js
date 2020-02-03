@@ -1,12 +1,7 @@
 const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-let exclude = [path.resolve(__dirname, "dist")];
 
 module.exports = {
-    entry: './js/index.js',
-    mode: "development",
+    entry: './dist/index.js',
     devtool: "source-map",
     output: {
         filename: 'bundle.js',
@@ -15,20 +10,20 @@ module.exports = {
     devServer: {
         contentBase: path.resolve(__dirname, './dist'),
         hot: true,
-
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            filename: './index.html',
-            template: './index.html',
-        }),
-        new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
-    ],
     module: {
-		rules: [
-			{ test: /\.ts$/, loader: "awesome-typescript-loader", exclude },
-			{ enforce: "pre", test: /\.js$/, loader: "source-map-loader", exclude }
-		]
-	},
+        rules: [
+            {
+                test: /\.ts$/,
+                loader: "ts-loader"
+            },
+            {
+                enforce: "pre",
+                test: /\.js$/, loader: "source-map-loader"
+            }
+        ]
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
+    }
 };

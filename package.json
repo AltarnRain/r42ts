@@ -4,9 +4,8 @@
   "description": "",
   "main": "./js/index.js",
   "scripts": {
-    "build": "webpack",
-    "serve": "webpack-dev-server --open & watch",
-    "watch": "webpack --watch "
+    "build": "webpack -p",
+    "start": "webpack-dev-server -d"
   },
   "private": true,
   "keywords": [],

@@ -1,16 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "commonjs",
-    "strict": true,
-    "baseUrl": "./",
+    "outDir": "./dist/",
     "sourceMap": true,
-    "jsx": "react",
-    "esModuleInterop": true,
-    "noImplicitAny": false,
-    "outDir": "./js"
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es6",
+    "jsx": "react"
   },
   "include": [
-    "src/**/*"
+    "src"
   ]
 }
