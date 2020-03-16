@@ -20,6 +20,23 @@
                 "meteor://💻app/*": "${webRoot}/*",
                 "webpack:///./src/*": "${webRoot}/*",
             }
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Bird",
+            "url": "http://localhost:8080/?bird",
+            "webRoot": "${workspaceFolder}/src",
+            "breakOnLoad": true,
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${webRoot}/*",
+                "webpack:///src/*": "${webRoot}/*",
+                "webpack:///*": "*",
+                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "meteor://💻app/*": "${webRoot}/*",
+                "webpack:///./src/*": "${webRoot}/*",
+            }
         }
     ]
 }
