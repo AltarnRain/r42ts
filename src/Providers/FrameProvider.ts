@@ -20,7 +20,7 @@ export default class FrameProvider {
     /**
      * The current frame for an animated enemy.
      */
-    private currentFrameIndex: number = 0;
+    private frameIndex: number = 0;
 
     /**
      * Added to the current frame index.
@@ -38,7 +38,7 @@ export default class FrameProvider {
      */
     constructor(frames: Frames, startFrameIndex: number) {
         this.frames = frames;
-        this.currentFrameIndex = startFrameIndex;
+        this.frameIndex = startFrameIndex;
         this.maxIndex = Object.keys(frames).length - 1;
     }
 
@@ -48,7 +48,7 @@ export default class FrameProvider {
      * @returns {string[][]}. A frame
      */
     public getFrame(): string[][] {
-        const returnValue = this.frames["F" + this.currentFrameIndex.toString()];
+        const returnValue = this.frames["F" + this.frameIndex.toString()];
         this.setNextFrameIndex();
         return returnValue;
     }
@@ -57,10 +57,10 @@ export default class FrameProvider {
      * Sets the next frame index.
      */
     private setNextFrameIndex(): void {
-        if ((this.currentFrameIndex + 1 > this.maxIndex) || this.currentFrameIndex === 0 ) {
+        this.frameIndex += this.add;
+
+        if ((this.frameIndex === this.maxIndex) || this.frameIndex === 0 ) {
             this.add *= -1;
         }
-
-        this.currentFrameIndex += this.add;
     }
 }
