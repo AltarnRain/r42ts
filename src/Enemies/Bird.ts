@@ -92,16 +92,15 @@ export default class BirdEnemy implements IAnimate {
      * Called from autside.
      * @param {number} tick. Called from outside whenever a tick occurs.
      */
-    public animate(tick: number): Promise<void> {
+    public animate(tick: number): void {
 
-        return new Promise((resolve) => {
-            this.frameTickHandler.tick(tick);
-            this.colorTickHandler.tick(tick);
-            this.moveTickHandler.tick(tick);
+        this.frameTickHandler.tick(tick);
+        this.colorTickHandler.tick(tick);
+        this.moveTickHandler.tick(tick);
 
+        if (this.currentFrame) {
             renderFrame(this.location, this.currentFrame);
-            resolve();
-        });
+        }
     }
 
     public onMove(): void {

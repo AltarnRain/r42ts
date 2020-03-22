@@ -10,5 +10,9 @@
  */
 
 export default interface IAnimate {
-    animate(tick: number): Promise<void>;
+    /**
+     * Animate the object
+     * @param {number} tick. Current tick. 
+     */
+    animate(tick: number): void;
 }

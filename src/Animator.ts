@@ -68,11 +68,9 @@ export default class Animator {
             // Runs all animation at the passed FPS
             if (tick - this.lastTick > (1000 / this.fps)) {
 
-                const promises = this.animations.map((a) => a.animate(tick));
-
                 this.rendering = true;
-                Promise.all(promises).then(() => { this.rendering = false; });
-
+                this.animations.forEach((a) => a.animate(tick));
+                this.rendering = false;
                 this.lastTick = tick;
             }
 
