@@ -28,7 +28,7 @@ export default class TickHandler {
      * @param {number} tick. The current tick.
      */
     public tick(tick: number): void {
-        if (tick - this.lastTick > this.time) {
+        if (tick - this.lastTick >= this.time) {
             this.onTimePassed();
 
             this.lastTick = tick;
