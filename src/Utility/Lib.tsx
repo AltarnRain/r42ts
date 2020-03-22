@@ -90,11 +90,11 @@ export function getNewLocation(angle: number, speed: number, objectLocation: Obj
         nextLeft = 0;
     }
 
-    if (nextTop  > objectLocation.bottom) {
+    if (nextTop > objectLocation.bottom) {
         nextTop = objectLocation.bottom;
     }
 
-    if (nextLeft  > objectLocation.right) {
+    if (nextLeft > objectLocation.right) {
         nextLeft = objectLocation.right;
     }
 
@@ -122,7 +122,12 @@ export function get2dArrayDimensions(array: any[][]): { rows: number, columns: n
  * @returns {T}. Value found in a random position.
  */
 export function getRandomArrayElement<T>(arr: T[]): T {
-    return arr[Math.floor(Math.random() * arr.length - 1)];
+    if (arr.length === 1) {
+        return arr[0];
+    } else {
+        const randomIndex = Math.floor(Math.random() * arr.length - 1);
+        return arr[randomIndex];
+    }
 }
 
 /**

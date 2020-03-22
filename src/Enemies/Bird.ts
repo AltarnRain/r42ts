@@ -18,7 +18,7 @@ import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
-import { calculateObjectLocation, cloneFrames, getNewLocation, getRandomArrayElement, getRandomArrayIndex, setRandomFrameColors } from "../Utility/Lib";
+import { calculateObjectLocation, cloneFrames, getNewLocation, getRandomArrayElement, setRandomFrameColors } from "../Utility/Lib";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 const speed = 5;
@@ -61,6 +61,11 @@ export default class BirdEnemy implements IAnimate {
     private location: GameLocation;
 
     /**
+     * The current frame that should be rendered.
+     */
+    private currentFrame: string[][];
+
+    /**
      * Creates the object.
      */
     constructor() {
@@ -80,7 +85,6 @@ export default class BirdEnemy implements IAnimate {
 
         this.frames = cloneFrames(BirdFrames);
 
-        // const frame = getRandomArrayIndex(BirdFrames[0]);
         this.frameProvider = new FrameProvider(this.frames, 0);
     }
 
@@ -88,22 +92,25 @@ export default class BirdEnemy implements IAnimate {
      * Called from autside.
      * @param {number} tick. Called from outside whenever a tick occurs.
      */
-    public animate(tick: number): void {
-        this.frameTickHandler.tick(tick);
-        this.colorTickHandler.tick(tick);
-        this.moveTickHandler.tick(tick);
+    public animate(tick: number): Promise<void> {
+
+        return new Promise((resolve) => {
+            this.frameTickHandler.tick(tick);
+            this.colorTickHandler.tick(tick);
+            this.moveTickHandler.tick(tick);
+
+            renderFrame(this.location, this.currentFrame);
+            resolve();
+        });
     }
 
     public onMove(): void {
-
         const objectLocation = calculateObjectLocation(this.location, this.frames.F0);
-
         this.location = getNewLocation(this.angle, speed, objectLocation);
     }
 
     private onFrameChange(): void {
-        const currentFrame = this.frameProvider.getFrame();
-        renderFrame(this.location, currentFrame);
+        this.currentFrame = this.frameProvider.getFrame();
     }
 
     private onColorChange(): void {

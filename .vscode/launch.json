@@ -39,6 +39,23 @@
             }
         },
         {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Bird Render Test",
+            "url": "http://localhost:8080/?renderTest",
+            "webRoot": "${workspaceFolder}/src",
+            "breakOnLoad": true,
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${webRoot}/*",
+                "webpack:///src/*": "${webRoot}/*",
+                "webpack:///*": "*",
+                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "meteor://💻app/*": "${webRoot}/*",
+                "webpack:///./src/*": "${webRoot}/*",
+            }
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "Jest All",

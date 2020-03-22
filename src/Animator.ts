@@ -14,6 +14,11 @@ import IAnimate from "./Interfaces/IAnimate";
 export default class Animator {
 
     /**
+     * Array of current animations on screen.
+     */
+    private animations: IAnimate[] = [];
+
+    /**
      * Animation frame handler.
      */
     private handler: number = 0;
@@ -25,10 +30,15 @@ export default class Animator {
     private lastTick: number = 0;
 
     /**
+     * Flag that tracks if a render is in progress.
+     */
+    private rendering: boolean;
+
+    /**
      * Constructs the Animator
      * @param {IAnimate} animatedObject. Any object that implements the IAnimate interface.
      */
-    constructor(private animatedObject: IAnimate, private fps: number = 60) {
+    constructor(private fps: number = 60) {
         this.runner = this.runner.bind(this);
     }
 
@@ -52,12 +62,25 @@ export default class Animator {
      */
     private runner(tick: number): void {
 
-        // Rusn the animation at the passed FPS
-        if (tick - this.lastTick > this.fps) {
-            this.animatedObject.animate(tick);
-            this.lastTick = tick;
-        }
+        // Only run if a render is not in progress
+        if (!this.rendering) {
 
-        this.handler = window.requestAnimationFrame(this.runner);
+            // Runs all animation at the passed FPS
+            if (tick - this.lastTick > (1000 / this.fps)) {
+
+                const promises = this.animations.map((a) => a.animate(tick));
+
+                this.rendering = true;
+                Promise.all(promises).then(() => { this.rendering = false; });
+
+                this.lastTick = tick;
+            }
+
+            this.handler = window.requestAnimationFrame(this.runner);
+        }
+    }
+
+    public register(animation: IAnimate): void {
+        this.animations.push(animation);
     }
 }

@@ -10,5 +10,5 @@
  */
 
 export default interface IAnimate {
-    animate(tick: number): void;
+    animate(tick: number): Promise<void>;
 }

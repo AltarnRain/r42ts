@@ -10,9 +10,13 @@
  */
 
 import Animator from "./Animator";
+import CGAColors from "./Constants/CGAColors";
 import BirdEnemy from "./Enemies/Bird";
-import { StartGame } from "./Game";
+import BirdFrames from "./Frames/BirdFrames";
+import Game from "./Game";
 import DimensionProvider from "./Providers/DimensionProvider";
+import RenderFrame from "./Render/RenderFrame";
+import { setRandomFrameColors } from "./Utility/Lib";
 
 window.onload = () => {
 
@@ -24,16 +28,31 @@ window.onload = () => {
 
         switch (window.location.search.replace("?", "")) {
             case "player":
-
             case "bird":
+
+                const animator = new Animator();
+                const background = new Game();
                 const bird = new BirdEnemy();
-                const animator = new Animator(bird);
+
+                animator.register(background);
+                animator.register(bird);
+
                 animator.start();
 
-                // proef
+                break;
+
+            case "renderTest":
+                setRandomFrameColors(BirdFrames, [CGAColors.green] );
+
+                RenderFrame({ left: 10, top: 10 }, BirdFrames.F0);
+                RenderFrame({ left: 10, top: 50 }, BirdFrames.F1);
+                RenderFrame({ left: 10, top: 100 }, BirdFrames.F2);
+                RenderFrame({ left: 10, top: 150 }, BirdFrames.F3);
+
+                break;
 
             default:
-                StartGame();
+            // StartGame();
         }
     }
 };
