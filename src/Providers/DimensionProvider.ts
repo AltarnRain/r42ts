@@ -14,10 +14,20 @@ import { GameDimensions } from "../Models/GameDimensions";
 
 let gameDimensions: GameDimensions;
 
-const DimensionProvider = (): GameDimensions => {
+export default function DimensionProvider(node?: Node): GameDimensions  {
     if (!gameDimensions) {
 
-        const body = document.getElementById("body") as HTMLCanvasElement;
+        let body: HTMLBodyElement;
+
+        if (node) {
+            body = node as HTMLBodyElement;
+        } else {
+            body = document.getElementById("body") as HTMLBodyElement;
+        }
+
+        if (!body) {
+            throw new Error("No body element found.");
+        }
 
         const rect = body.getBoundingClientRect();
 
@@ -44,6 +54,4 @@ const DimensionProvider = (): GameDimensions => {
     }
 
     return gameDimensions;
-};
-
-export default DimensionProvider;
+}
