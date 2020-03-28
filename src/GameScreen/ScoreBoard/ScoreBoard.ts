@@ -4,13 +4,13 @@
  * See LICENSE.MD.
  */
 
-import Characters from "../Assets/Characters";
-import CGAColors from "../Constants/CGAColors";
-import IDraw from "../Interfaces/IDraw";
-import DimensionProvider from "../Providers/DimensionProvider";
-import RenderFrame from "../Render/RenderFrame";
-import Frames from "../Types/Frames";
-import { cloneFrames, getFrameDimensions, padLeft, setVariableFrameColors } from "../Utility/Lib";
+import Characters from "../../Assets/Characters";
+import CGAColors from "../../Constants/CGAColors";
+import IDraw from "../../Interfaces/IDraw";
+import DimensionProvider from "../../Providers/DimensionProvider";
+import RenderFrame from "../../Render/RenderFrame";
+import Frames from "../../Types/Frames";
+import { cloneFrames, getFrameDimensions, padLeft, setVariableFrameColors } from "../../Utility/Lib";
 
 /**
  * Module:          ScoreBoard

@@ -9,7 +9,7 @@
  * Responsibility:  Draw an object.
  */
 
-import { DrawGameField } from "./Game";
+import { DrawGameField } from "./GameScreen/StaticRenders";
 import IDraw from "./Interfaces/IDraw";
 
 /**
@@ -40,7 +40,7 @@ export default class Drawer {
 
     /**
      * Constructs the Animator
-     * @param {IDraw} drawable object. 
+     * @param {IDraw} drawable object.
      */
     constructor(private fps: number = 60) {
         this.runner = this.runner.bind(this);

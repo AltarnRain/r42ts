@@ -6,13 +6,13 @@
  */
 
 /**
- * Module:          Game
+ * Module:          StaticRenders
  * Responsibility:  Starts the game
  */
 
-import CGAColors from "./Constants/CGAColors";
-import CtxProvider from "./Providers/CtxProvider";
-import DimensionProvider from "./Providers/DimensionProvider";
+import CGAColors from "../Constants/CGAColors";
+import CtxProvider from "../Providers/CtxProvider";
+import DimensionProvider from "../Providers/DimensionProvider";
 
 /**
  * Renders the complete game field background.
