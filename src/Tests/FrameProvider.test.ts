@@ -25,12 +25,12 @@ test("Test if the provided frames go back and forth", () => {
 
     // Act
     const a1 = fp.getFrame();
-    const b1 = fp.getFrame();
-    const c1 = fp.getFrame();
-    const b2 = fp.getFrame();
-    const a2 = fp.getFrame();
-    const b3 = fp.getFrame();
-    const c3 = fp.getFrame();
+    const b1 = fp.getNextFrame();
+    const c1 = fp.getNextFrame();
+    const b2 = fp.getNextFrame();
+    const a2 = fp.getNextFrame();
+    const b3 = fp.getNextFrame();
+    const c3 = fp.getNextFrame();
 
     // Assert
     expect(a1[0][0]).toBe("a");

@@ -17,7 +17,7 @@ import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
 import { RandomStartPosition } from "../Providers/StartPositionProvider";
-import renderFrame from "../Render/RenderFrame";
+import RenderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
 import { cloneFrames, getFrameDimensions, getNewLocation, getRandomArrayElement, getRandomFrameKeyIndex, setRandomFrameColors } from "../Utility/Lib";
 
@@ -118,7 +118,7 @@ export default class BirdEnemy implements IAnimate {
         this.frameTickHandler.tick(tick);
         this.colorTickHandler.tick(tick);
         this.moveTickHandler.tick(tick);
-        renderFrame(this.location, this.currentFrame);
+        RenderFrame(this.location, this.currentFrame);
     }
 
     /**

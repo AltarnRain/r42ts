@@ -26,8 +26,6 @@ const KeyboardState: KeyboardState = {
     selfDestruct: false,
 };
 
-registerListeners();
-
 /**
  * onKeyDown. Fired when a game control key is pushed down..
  * @param {KeyboardEvent} event. A keyboard event.
@@ -39,7 +37,7 @@ function onKeyDown(event: KeyboardEvent): void {
         event.stopPropagation();
         event.preventDefault();
 
-        updateState(event.key, false);
+        updateState(event.key, true);
     }
 }
 
@@ -48,6 +46,7 @@ function onKeyDown(event: KeyboardEvent): void {
  * @param {KeyboardEvent} event. A keyboard event.
  */
 function onKeyUp(event: KeyboardEvent): void {
+
     // Only dispatch if the key is a game control key.
     if (getGameControlKeys().find((s) => s === event.code)) {
         event.stopPropagation();
@@ -60,7 +59,7 @@ function onKeyUp(event: KeyboardEvent): void {
 /**
  * Adds event listeners for keyup and keydown.
  */
-function registerListeners(): void {
+export function registerListeners(): void {
     window.addEventListener("keyup", onKeyUp);
     window.addEventListener("keydown", onKeyDown);
 }

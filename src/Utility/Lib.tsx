@@ -10,10 +10,10 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import ObjectLocation from "../Models/ObjectLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import KeyboardState from "../Providers/KeyboardStateProvider/KeyboardState";
 import Frames from "../Types/Frames";
+import HexToCGAConverter from "./HexToCGAConverter";
 
 /**
  * Gets the next X coordinats based on the angle, speed and the current X coordinate.
@@ -139,8 +139,24 @@ export function setRandomFrameColors(frames: Frames, colors: string[]): void {
         const color = getRandomArrayElement(colors);
         frames[key].forEach((row, rowIndex) => {
             row.forEach((cell, cellIndex) => {
-                if (cell !== "0") {
+                if (cell === "V") {
                     frames[key][rowIndex][cellIndex] = color;
+                }
+            });
+        });
+    });
+}
+
+/**
+ * Updates a frame to actual CGA colors.
+ * @param {Frames} frames. All frames.
+ */
+export function setFrameColors(frames: Frames): void {
+    Object.keys(frames).forEach((key) => {
+        frames[key].forEach((row, rowIndex) => {
+            row.forEach((cellColor, cellIndex) => {
+                if (cellColor !== "0") {
+                    frames[key][rowIndex][cellIndex] = HexToCGAConverter(cellColor);
                 }
             });
         });

@@ -13,7 +13,9 @@ import Animator from "./Animator";
 import CGAColors from "./Constants/CGAColors";
 import BirdEnemy from "./Enemies/Bird";
 import BirdFrames from "./Frames/BirdFrames";
+import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
+import { registerListeners } from "./Providers/KeyboardStateProvider/KeyboardStateProvider";
 import RenderFrame from "./Render/RenderFrame";
 import { setRandomFrameColors } from "./Utility/Lib";
 
@@ -26,19 +28,28 @@ window.onload = () => {
         canvas.height = DimensionProvider().fullHeight;
 
         switch (window.location.search.replace("?", "")) {
-            case "player":
-            case "bird":
+            case "player": {
 
+                registerListeners();
+                const animator = new Animator();
+                const player = new Player();
+
+                animator.register(player);
+                animator.start();
+
+                break;
+            }
+            case "bird": {
                 const animator = new Animator();
                 const bird = new BirdEnemy();
                 animator.register(bird);
 
                 animator.start();
-
                 break;
+            }
 
             case "renderTest":
-                setRandomFrameColors(BirdFrames, [CGAColors.green] );
+                setRandomFrameColors(BirdFrames, [CGAColors.green]);
 
                 RenderFrame({ left: 10, top: 10 }, BirdFrames.F0);
                 RenderFrame({ left: 10, top: 50 }, BirdFrames.F1);

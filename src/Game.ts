@@ -11,11 +11,12 @@
  */
 
 import CGAColors from "./Constants/CGAColors";
-import IAnimate from "./Interfaces/IAnimate";
 import CtxProvider from "./Providers/CtxProvider";
 import DimensionProvider from "./Providers/DimensionProvider";
 
-
+/**
+ * Renders the complete game field background.
+ */
 export function DrawGameField(): void {
     clearBlackground();
     drawScoreBoardBackGround();
@@ -23,12 +24,13 @@ export function DrawGameField(): void {
     drawScoreBoardBackGround();
 }
 
+/**
+ * Renders the entire canvas black
+ */
 function clearBlackground(): void {
     const ctx = CtxProvider();
-    ctx.beginPath();
     ctx.fillStyle = CGAColors.black;
     ctx.fillRect(0, 0, DimensionProvider().fullWidth, DimensionProvider().fullHeight);
-    ctx.closePath();
 }
 
 /**
@@ -36,10 +38,8 @@ function clearBlackground(): void {
  */
 function drawScoreBoardBackGround(): void {
     const ctx = CtxProvider();
-    ctx.beginPath();
     ctx.fillStyle = CGAColors.red;
     ctx.fillRect(0, 0, DimensionProvider().fullWidth, DimensionProvider().scoreBoardHeight);
-    ctx.closePath();
 }
 
 /**
@@ -52,16 +52,5 @@ function drawGameFieldBorder(): void {
     ctx.lineWidth = DimensionProvider().maxPixelSize;
     ctx.strokeStyle = CGAColors.blue;
     ctx.stroke();
-    ctx.closePath();
-}
-
-/**
- * Draws a solid red recangle where the game's score is displayed.
- */
-function drawGameFieldBackground(): void {
-    const ctx = CtxProvider();
-    ctx.beginPath();
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(0, 0, DimensionProvider().fullWidth, DimensionProvider().gameFieldHeight);
     ctx.closePath();
 }
