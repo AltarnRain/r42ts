@@ -49,7 +49,7 @@ function drawGameFieldBorder(): void {
     const ctx = CtxProvider();
     ctx.beginPath();
     ctx.rect(0, DimensionProvider().scoreBoardHeight, DimensionProvider().fullWidth, DimensionProvider().gameFieldHeight);
-    ctx.lineWidth = DimensionProvider().pixelSize;
+    ctx.lineWidth = DimensionProvider().maxPixelSize;
     ctx.strokeStyle = CGAColors.blue;
     ctx.stroke();
     ctx.closePath();

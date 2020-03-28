@@ -36,5 +36,7 @@ export interface GameDimensions {
     /**
      * The height of each 'pixel'.
      */
-    pixelSize: number;
+    maxPixelSize: number;
+
+    minPixelSize: number;
 }

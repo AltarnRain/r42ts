@@ -9,7 +9,7 @@
  * Responsibility:  Define the object dimensions
  */
 
-export default interface ObjectDimensions {
+export default interface ObjectLocation {
 
     /**
      * Top coordinate

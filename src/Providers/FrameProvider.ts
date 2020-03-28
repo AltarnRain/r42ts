@@ -56,9 +56,9 @@ export default class FrameProvider {
      * Returns the current frame and sets the nes one.
      * @returns {string[][]}. A frame.
      */
-    public getFrameAndSetNext(): string[][] {
-        const frame = this.getFrame();
+    public getNextFrame(): string[][] {
         this.setNextFrameIndex();
+        const frame = this.getFrame();
         return frame;
     }
 
@@ -67,6 +67,10 @@ export default class FrameProvider {
      */
     private setNextFrameIndex(): void {
         this.frameIndex += this.add;
+
+        if (this.frameIndex > this.maxIndex) {
+            this.frameIndex = this.maxIndex;
+        }
 
         if ((this.frameIndex === this.maxIndex) || this.frameIndex === 0 ) {
             this.add *= -1;

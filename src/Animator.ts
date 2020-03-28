@@ -9,8 +9,8 @@
  * Responsibility:  Animate an animated object.
  */
 
-import IAnimate from "./Interfaces/IAnimate";
 import { DrawGameField } from "./Game";
+import IAnimate from "./Interfaces/IAnimate";
 
 export default class Animator {
 

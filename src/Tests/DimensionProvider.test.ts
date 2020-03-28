@@ -31,7 +31,7 @@ test("Test if the dimension provider returns the expected dimensions", () => {
     expect(result.fullWidth).toBeDefined();
     expect(result.gameFieldHeight).toBeDefined();
     expect(result.gameFieldTop).toBeDefined();
-    expect(result.pixelSize).toBeDefined();
+    expect(result.maxPixelSize).toBeDefined();
     expect(result.scoreBoardHeight).toBeDefined();
 
 });

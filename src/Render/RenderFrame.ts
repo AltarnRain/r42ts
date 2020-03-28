@@ -28,12 +28,15 @@ export default function RenderFrame(location: GameLocation, frame: string[][]): 
         for (let columnIndex = 0; columnIndex < columns.length; columnIndex++) {
             const color = columns[columnIndex];
 
-            const x = location.left + columnIndex * DimensionProvider().pixelSize;
-            const y = location.top + rowIndex * DimensionProvider().pixelSize;
+            // We use the minimum pixel size to determine the position.
+            const x = location.left + columnIndex * DimensionProvider().minPixelSize;
+            const y = location.top + rowIndex * DimensionProvider().minPixelSize;
 
             if (color !== "0") {
                 ctx.fillStyle = color;
-                ctx.fillRect(x, y, DimensionProvider().pixelSize, DimensionProvider().pixelSize);
+                // But we use the max pixel size to draw a pixel. This ensures the pixels overlap slightly.
+                // Otherwise, you'll see bits and pieces of the back ground.
+                ctx.fillRect(x, y, DimensionProvider().maxPixelSize, DimensionProvider().maxPixelSize);
             }
         }
     }

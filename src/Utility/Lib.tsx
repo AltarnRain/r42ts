@@ -10,7 +10,7 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import ObjectLocation from "../Models/ObjectDimensions";
+import ObjectLocation from "../Models/ObjectLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import KeyboardState from "../Providers/KeyboardStateProvider/KeyboardState";
 import Frames from "../Types/Frames";
@@ -77,26 +77,10 @@ export function getAngle(state: KeyboardState): number {
  * @param {number} objectHeight. The object's height in pixels.
  * @returns {Location}. The new location of the object.
  */
-export function getNewLocation(angle: number, speed: number, objectLocation: ObjectLocation): GameLocation {
+export function getNewLocation(angle: number, speed: number, left: number, top: number): GameLocation {
 
-    let nextLeft = getNextX(angle, speed, objectLocation.left);
-    let nextTop = getNextY(angle, speed, objectLocation.top);
-
-    if (nextTop < 0) {
-        nextTop = 0;
-    }
-
-    if (nextLeft < 0) {
-        nextLeft = 0;
-    }
-
-    if (nextTop > objectLocation.bottom) {
-        nextTop = objectLocation.bottom;
-    }
-
-    if (nextLeft > objectLocation.right) {
-        nextLeft = objectLocation.right;
-    }
+    const nextLeft = getNextX(angle, speed, left);
+    const nextTop = getNextY(angle, speed, top);
 
     return {
         left: nextLeft,
@@ -164,24 +148,6 @@ export function setRandomFrameColors(frames: Frames, colors: string[]): void {
 }
 
 /**
- * Calculates the object's left, top, right, bottom coordinates.
- * @param {GameLocation} location. The location.
- * @param {string[][]} frame. A frame of the object.
- */
-export function calculateObjectLocation(location: GameLocation, frame: string[][]): ObjectLocation {
-
-    const width = frame[0].length;
-    const height = frame.length;
-
-    return {
-        left: location.left,
-        top: location.top,
-        right: location.left + width * DimensionProvider().pixelSize,
-        bottom: location.top + height * DimensionProvider().pixelSize,
-    };
-}
-
-/**
  * Creates a clone for the provides Frames.
  * @param {Frames} frames. Frames to clone.
  * @returns {Frames}. A clone of the provided frames.
@@ -192,4 +158,11 @@ export function cloneFrames(frames: Frames): Frames {
     Object.keys(frames).forEach((key) => clonedFrames[key] = [...frames[key]]);
 
     return clonedFrames;
+}
+
+export function getFrameDimensions(frame: string[][]): { width: number; height: number}  {
+    return {
+        width: frame[0].length * DimensionProvider().maxPixelSize,
+        height: frame.length * DimensionProvider().maxPixelSize,
+    };
 }

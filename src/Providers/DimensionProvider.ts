@@ -14,7 +14,7 @@ import { GameDimensions } from "../Models/GameDimensions";
 
 let gameDimensions: GameDimensions;
 
-export default function DimensionProvider(node?: Node): GameDimensions  {
+export default function DimensionProvider(node?: Node): GameDimensions {
     if (!gameDimensions) {
 
         let body: HTMLBodyElement;
@@ -40,7 +40,8 @@ export default function DimensionProvider(node?: Node): GameDimensions  {
         const gameFieldTop = scoreBoardHeight;
         const gameFieldHeight = height - gameFieldTop;
 
-        const pixelSize = Math.ceil(width / 160);
+        const maxPixelSize = Math.ceil(width / 160);
+        const minPixelSize = Math.floor(width / 160);
 
         gameDimensions = {
             fullWidth: width,
@@ -48,7 +49,8 @@ export default function DimensionProvider(node?: Node): GameDimensions  {
             gameFieldTop,
             gameFieldHeight,
             scoreBoardHeight,
-            pixelSize,
+            maxPixelSize,
+            minPixelSize
         };
     }
 
