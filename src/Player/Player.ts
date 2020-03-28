@@ -10,11 +10,11 @@
  */
 
 import { PlayerFrames } from "../Frames/PlayerFrames";
+import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import TickHandler from "../Handlers/TickHandler";
 import IDraw from "../Interfaces/IDraw";
 import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
-import KeyboardState from "../Providers/KeyboardStateProvider/KeyboardStateProvider";
 import RenderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
 import { cloneFrames, getAngle, getNewLocation, setFrameColors } from "../Utility/Lib";

@@ -9,9 +9,9 @@
  * Responsibility:  A library containing various helper functions
  */
 
+import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardState";
 import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
-import KeyboardState from "../Providers/KeyboardStateProvider/KeyboardState";
 import Frames from "../Types/Frames";
 import HexToCGAConverter from "./HexToCGAConverter";
 
