@@ -10,14 +10,14 @@
  */
 
 import { DrawGameField } from "./Game";
-import IAnimate from "./Interfaces/IAnimate";
+import IDraw from "./Interfaces/IDraw";
 
-export default class Animator {
+export default class Drawer {
 
     /**
      * Array of current animations on screen.
      */
-    private animations: IAnimate[] = [];
+    private animations: IDraw[] = [];
 
     /**
      * Animation frame handler.
@@ -37,7 +37,7 @@ export default class Animator {
 
     /**
      * Constructs the Animator
-     * @param {IAnimate} animatedObject. Any object that implements the IAnimate interface.
+     * @param {IDraw} drawable object. 
      */
     constructor(private fps: number = 60) {
         this.runner = this.runner.bind(this);
@@ -72,7 +72,7 @@ export default class Animator {
                 DrawGameField();
 
                 this.rendering = true;
-                this.animations.forEach((a) => a.animate(tick));
+                this.animations.forEach((a) => a.draw(tick));
                 this.rendering = false;
                 this.lastTick = tick;
             }
@@ -81,7 +81,7 @@ export default class Animator {
         }
     }
 
-    public register(animation: IAnimate): void {
+    public register(animation: IDraw): void {
         this.animations.push(animation);
     }
 }

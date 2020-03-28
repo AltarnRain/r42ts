@@ -9,7 +9,7 @@
  * Responsibility:  Entry point for the game
  */
 
-import Animator from "./Animator";
+import Drawer from "./Drawer";
 import CGAColors from "./Constants/CGAColors";
 import BirdEnemy from "./Enemies/Bird";
 import BirdFrames from "./Frames/BirdFrames";
@@ -32,7 +32,7 @@ window.onload = () => {
             case "player": {
 
                 registerListeners();
-                const animator = new Animator();
+                const animator = new Drawer();
                 const player = new Player();
 
                 animator.register(player);
@@ -41,7 +41,7 @@ window.onload = () => {
                 break;
             }
             case "bird": {
-                const animator = new Animator();
+                const animator = new Drawer();
                 const bird = new BirdEnemy();
                 animator.register(bird);
 
@@ -60,7 +60,7 @@ window.onload = () => {
                 break;
 
             case "scoreboard": {
-                const animator = new Animator();
+                const animator = new Drawer();
                 const scoreboard = new ScoreBoard();
 
                 (window as any).r42 = {

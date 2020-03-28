@@ -11,7 +11,7 @@
 
 import { PlayerFrames } from "../Frames/PlayerFrames";
 import TickHandler from "../Handlers/TickHandler";
-import IAnimate from "../Interfaces/IAnimate";
+import IDraw from "../Interfaces/IDraw";
 import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import KeyboardState from "../Providers/KeyboardStateProvider/KeyboardStateProvider";
@@ -19,7 +19,7 @@ import RenderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
 import { cloneFrames, getAngle, getNewLocation, setFrameColors } from "../Utility/Lib";
 
-export default class Player implements IAnimate {
+export default class Player implements IDraw {
 
     /**
      * Handles player movement.
@@ -58,7 +58,7 @@ export default class Player implements IAnimate {
      * Called when a tick occurs.
      * @param {number} tick. Tick count.
      */
-    public animate(tick: number): void {
+    public draw(tick: number): void {
         this.moveTickHandler.tick(tick);
         RenderFrame(this.location, this.frames.F0);
     }
