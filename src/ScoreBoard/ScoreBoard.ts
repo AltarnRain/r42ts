@@ -17,7 +17,7 @@ import { cloneFrames, getFrameDimensions, padLeft, setVariableFrameColors } from
  * Responsibility:  Draw the ScoreBoard
  */
 
-export class ScoreBoard implements IDraw {
+export default class ScoreBoard implements IDraw {
 
     /**
      * Player score

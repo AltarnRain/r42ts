@@ -5,19 +5,22 @@
  */
 
 /**
- * Module:          Animator
- * Responsibility:  Animate an animated object.
+ * Module:          Drawer
+ * Responsibility:  Draw an object.
  */
 
 import { DrawGameField } from "./Game";
 import IDraw from "./Interfaces/IDraw";
 
+/**
+ * Draws IDrawable classes.
+ */
 export default class Drawer {
 
     /**
-     * Array of current animations on screen.
+     * Array of current game objects on screen.
      */
-    private animations: IDraw[] = [];
+    private gameobjects: IDraw[] = [];
 
     /**
      * Animation frame handler.
@@ -72,7 +75,7 @@ export default class Drawer {
                 DrawGameField();
 
                 this.rendering = true;
-                this.animations.forEach((a) => a.draw(tick));
+                this.gameobjects.forEach((a) => a.draw(tick));
                 this.rendering = false;
                 this.lastTick = tick;
             }
@@ -81,7 +84,17 @@ export default class Drawer {
         }
     }
 
-    public register(animation: IDraw): void {
-        this.animations.push(animation);
+    /**
+     * Register an IDrawable class.
+     * @param drawable.
+     * @returns {() => void}. Function to remove the object from the array of drawable objects.
+     */
+    public register(drawable: IDraw): () => void {
+        this.gameobjects.push(drawable);
+
+        return () => {
+            const objectIndex = this.gameobjects.indexOf(drawable);
+            this.gameobjects.splice(objectIndex, 1);
+        };
     }
 }

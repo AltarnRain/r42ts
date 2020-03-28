@@ -9,16 +9,16 @@
  * Responsibility:  Entry point for the game
  */
 
-import Drawer from "./Drawer";
 import CGAColors from "./Constants/CGAColors";
+import Drawer from "./Drawer";
 import BirdEnemy from "./Enemies/Bird";
 import BirdFrames from "./Frames/BirdFrames";
 import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
-import { registerListeners } from "./Providers/KeyboardStateProvider/KeyboardStateProvider";
+import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import RenderFrame from "./Render/RenderFrame";
+import ScoreBoard from "./ScoreBoard/ScoreBoard";
 import { setRandomFrameColors } from "./Utility/Lib";
-import { ScoreBoard } from "./ScoreBoard/ScoreBoard";
 
 window.onload = () => {
 
@@ -65,6 +65,7 @@ window.onload = () => {
 
                 (window as any).r42 = {
                     updateScore: (score: number) => scoreboard.updateScore(score),
+                    addToScore: (score: number) => scoreboard.addToScore(score),
                 };
 
                 animator.register(scoreboard);
