@@ -115,15 +115,16 @@ export default class BirdEnemy implements IAnimate {
      * @param {number} tick. Called from outside whenever a tick occurs.
      */
     public animate(tick: number): void {
-
         this.frameTickHandler.tick(tick);
         this.colorTickHandler.tick(tick);
         this.moveTickHandler.tick(tick);
         renderFrame(this.location, this.currentFrame);
     }
 
+    /**
+     * Called by a TickHandler when its time to move.
+     */
     public onMove(): void {
-
         this.location = getNewLocation(this.angle, speed, this.location.left, this.location.top);
 
         if (this.location.left <= 0 || this.location.left >= DimensionProvider().fullWidth - this.frameWidth) {
@@ -135,10 +136,16 @@ export default class BirdEnemy implements IAnimate {
         }
     }
 
+    /**
+     * Called by a TickHandler when the next frame is up.
+     */
     private onFrameChange(): void {
         this.currentFrame = this.frameProvider.getNextFrame();
     }
 
+    /**
+     * Called by a TickHandler when the bird should change color.
+     */
     private onColorChange(): void {
         setRandomFrameColors(this.frames, colors);
     }
