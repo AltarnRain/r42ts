@@ -294,5 +294,5 @@ export function getNumberFrames(): Frames {
         N7: Characters.N7,
         N8: Characters.N8,
         N9: Characters.N9
-    }
+    };
 }

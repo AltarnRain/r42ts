@@ -165,7 +165,8 @@ export function setFrameColors(frames: Frames): void {
  */
 export function setVariableFrameColors(frames: Frames, color: string): void {
     Object.keys(frames).forEach((key) => {
-        frames[key].forEach((row, rowIndex) => {
+        const frame = frames[key];
+        frame.forEach((row, rowIndex) => {
             row.forEach((cellColor, cellIndex) => {
                 if (cellColor === "V") {
                     frames[key][rowIndex][cellIndex] = color;
@@ -199,7 +200,23 @@ export function setColors(frames: Frames, color: string): void {
 export function cloneFrames(frames: Frames): Frames {
     const clonedFrames = {} as Frames;
 
-    Object.keys(frames).forEach((key) => clonedFrames[key] = [...frames[key]]);
+
+    for (const key of Object.keys(frames)) {
+        const newArray = [];
+        const frame = frames[key];
+
+        for (let row = 0; row < frame.length; row ++) {
+            newArray[row] = [];
+
+            const columns = frames[key][row];
+
+            for (let col = 0; col < columns.length; col++) {
+                newArray[row][col] = columns[col];
+            }
+        }
+
+        clonedFrames[key] = newArray;
+    }
 
     return clonedFrames;
 }

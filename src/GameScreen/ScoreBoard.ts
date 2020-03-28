@@ -44,7 +44,8 @@ export default class ScoreBoard implements IDraw {
         this.spacing = 2 * DimensionProvider().maxPixelSize;
 
         // Create a clone of the number character frames so we can set their color without ruining the asset.
-        this.frames = cloneFrames(getNumberFrames());
+        const numberFrames = getNumberFrames();
+        this.frames = cloneFrames(numberFrames);
 
         setVariableFrameColors(this.frames, CGAColors.yellow);
 

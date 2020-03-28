@@ -11,7 +11,8 @@
 
 import "jest";
 import Frames from "../Types/Frames";
-import { getRandomArrayElement, getRandomFrameKeyIndex, padLeft } from "../Utility/Lib";
+import { cloneFrames, getRandomArrayElement, getRandomFrameKeyIndex, padLeft, setVariableFrameColors } from "../Utility/Lib";
+import CGAColors from "../Constants/CGAColors";
 
 test("getRandomArrayElement", () => {
     const arr = ["a"];
@@ -76,4 +77,51 @@ test("pad left", () => {
     expect(result6).toBe("123456");
     expect(result7).toBe("1234567");
     expect(result8).toBe("000000");
+});
+
+test("clone frames", () => {
+    const original: Frames = {
+        F0: [
+            ["a"],
+            ["x"],
+        ],
+        F1: [
+            ["1", "3"],
+            ["2", "4"],
+        ]
+    };
+
+    // Act
+    const clonedFrames = cloneFrames(original);
+
+    // Assert
+
+    expect(clonedFrames.F0).toBeDefined();
+    expect(clonedFrames.F1).toBeDefined();
+    expect(clonedFrames.F0[0].length).toBe(1);
+    expect(clonedFrames.F1[0].length).toBe(2);
+
+    expect(original.F0[0][0]).toBe("a");
+    expect(original.F0[1][0]).toBe("x");
+    expect(original.F1[0][0]).toBe("1");
+    expect(original.F1[1][0]).toBe("2");
+});
+
+test("setVariableFrameColors", () => {
+    const original: Frames = {
+        F0: [
+            ["V"],
+            ["V"],
+        ],
+        F1: [
+            ["V", "V"],
+            ["V", "V"],
+        ]
+    };
+
+    const clonedFrames = cloneFrames(original);
+
+    const f0 = clonedFrames.F0[0].length;
+
+    expect(f0).toBe(1);
 });
