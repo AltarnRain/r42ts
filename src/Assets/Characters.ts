@@ -1,8 +1,10 @@
 /**
- * @preserve Copyright 2"0""V""0"-2"0""V"9 Onno Invernizzi.
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
  * This source code is subject to terms and conditions.
  * See LICENSE.MD.
  */
+
+import Frames from "../Types/Frames";
 
 /**
  * Module:          Numbers
@@ -10,7 +12,7 @@
  * No color information is stored here. Color is determined by the game.
  */
 
-const Characters = {
+const Characters: Frames = {
     N0: [
         ["0", "V", "V", "0"],
         ["V", "0", "0", "V"],

@@ -18,6 +18,7 @@ import DimensionProvider from "./Providers/DimensionProvider";
 import { registerListeners } from "./Providers/KeyboardStateProvider/KeyboardStateProvider";
 import RenderFrame from "./Render/RenderFrame";
 import { setRandomFrameColors } from "./Utility/Lib";
+import { ScoreBoard } from "./ScoreBoard/ScoreBoard";
 
 window.onload = () => {
 
@@ -57,6 +58,21 @@ window.onload = () => {
                 RenderFrame({ left: 10, top: 150 }, BirdFrames.F3);
 
                 break;
+
+            case "scoreboard": {
+                const animator = new Animator();
+                const scoreboard = new ScoreBoard();
+
+                (window as any).r42 = {
+                    updateScore: (score: number) => scoreboard.updateScore(score),
+                };
+
+                animator.register(scoreboard);
+
+                animator.start();
+
+                break;
+            }
 
             default:
             // StartGame();
