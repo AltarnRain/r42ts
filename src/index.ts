@@ -13,7 +13,7 @@ import CGAColors from "./Constants/CGAColors";
 import Drawer from "./Drawer";
 import BirdEnemy from "./Enemies/Bird";
 import BirdFrames from "./Frames/BirdFrames";
-import ScoreBoard from "./GameScreen/ScoreBoard/ScoreBoard";
+import ScoreBoard from "./GameScreen/ScoreBoard";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
