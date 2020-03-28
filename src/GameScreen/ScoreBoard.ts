@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import Characters from "../Assets/Characters";
+import { getNumberFrames } from "../Assets/Characters";
 import CGAColors from "../Constants/CGAColors";
 import IDraw from "../Interfaces/IDraw";
 import DimensionProvider from "../Providers/DimensionProvider";
@@ -44,18 +44,7 @@ export default class ScoreBoard implements IDraw {
         this.spacing = 2 * DimensionProvider().maxPixelSize;
 
         // Create a clone of the number character frames so we can set their color without ruining the asset.
-        this.frames = cloneFrames({
-            N0: Characters.N0,
-            N1: Characters.N1,
-            N2: Characters.N2,
-            N3: Characters.N3,
-            N4: Characters.N4,
-            N5: Characters.N5,
-            N6: Characters.N6,
-            N7: Characters.N7,
-            N8: Characters.N8,
-            N9: Characters.N9
-        });
+        this.frames = cloneFrames(getNumberFrames());
 
         setVariableFrameColors(this.frames, CGAColors.yellow);
 

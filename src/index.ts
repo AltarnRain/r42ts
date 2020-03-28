@@ -13,6 +13,7 @@ import CGAColors from "./Constants/CGAColors";
 import Drawer from "./Drawer";
 import BirdEnemy from "./Enemies/Bird";
 import BirdFrames from "./Frames/BirdFrames";
+import Lives from "./GameScreen/Lifes";
 import ScoreBoard from "./GameScreen/ScoreBoard";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Player from "./Player/Player";
@@ -32,11 +33,26 @@ window.onload = () => {
             case "player": {
 
                 registerListeners();
-                const animator = new Drawer();
+                const drawer = new Drawer();
                 const player = new Player();
+                const scoreboard = new ScoreBoard();
+                const lives = new Lives();
 
-                animator.register(player);
-                animator.start();
+                drawer.register(player);
+                drawer.register(scoreboard);
+                drawer.register(lives);
+
+                // player starts with two lives by default.
+                lives.setLives(2);
+
+                (window as any).r42 = {
+                    updateScore: (n: number) => scoreboard.updateScore(n),
+                    addToScore: (n: number) => scoreboard.addToScore(n),
+                    setLives: (n: number) => lives.setLives(n),
+                    addLife: () => lives.addLife(),
+                };
+
+                drawer.start();
 
                 break;
             }
@@ -58,22 +74,6 @@ window.onload = () => {
                 RenderFrame({ left: 10, top: 150 }, BirdFrames.F3);
 
                 break;
-
-            case "scoreboard": {
-                const animator = new Drawer();
-                const scoreboard = new ScoreBoard();
-
-                (window as any).r42 = {
-                    updateScore: (score: number) => scoreboard.updateScore(score),
-                    addToScore: (score: number) => scoreboard.addToScore(score),
-                };
-
-                animator.register(scoreboard);
-
-                animator.start();
-
-                break;
-            }
 
             default:
             // StartGame();

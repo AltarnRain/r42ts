@@ -176,6 +176,22 @@ export function setVariableFrameColors(frames: Frames, color: string): void {
 }
 
 /**
+ * Sets a cell's color to the passed color. Doesn't matter if they're variable (V).
+ * @param {Frames} frames. All frames.
+ */
+export function setColors(frames: Frames, color: string): void {
+    Object.keys(frames).forEach((key) => {
+        frames[key].forEach((row, rowIndex) => {
+            row.forEach((cellColor, cellIndex) => {
+                if (cellColor !== "0") {
+                    frames[key][rowIndex][cellIndex] = color;
+                }
+            });
+        });
+    });
+}
+
+/**
  * Creates a clone for the provides Frames.
  * @param {Frames} frames. Frames to clone.
  * @returns {Frames}. A clone of the provided frames.

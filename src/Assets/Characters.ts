@@ -278,3 +278,21 @@ const Characters: Frames = {
 };
 
 export default Characters;
+
+/**
+ * Returns an object with all the number frames.
+ */
+export function getNumberFrames(): Frames {
+    return {
+        N0: Characters.N0,
+        N1: Characters.N1,
+        N2: Characters.N2,
+        N3: Characters.N3,
+        N4: Characters.N4,
+        N5: Characters.N5,
+        N6: Characters.N6,
+        N7: Characters.N7,
+        N8: Characters.N8,
+        N9: Characters.N9
+    }
+}
