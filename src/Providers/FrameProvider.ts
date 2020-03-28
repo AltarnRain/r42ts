@@ -49,8 +49,17 @@ export default class FrameProvider {
      */
     public getFrame(): string[][] {
         const returnValue = this.frames["F" + this.frameIndex.toString()];
-        this.setNextFrameIndex();
         return returnValue;
+    }
+
+    /**
+     * Returns the current frame and sets the nes one.
+     * @returns {string[][]}. A frame.
+     */
+    public getFrameAndSetNext(): string[][] {
+        const frame = this.getFrame();
+        this.setNextFrameIndex();
+        return frame;
     }
 
     /**

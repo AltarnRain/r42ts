@@ -12,7 +12,7 @@
 import GameLocation from "../Models/GameLocation";
 import ObjectLocation from "../Models/ObjectDimensions";
 import DimensionProvider from "../Providers/DimensionProvider";
-import KeyboardState from "../Store/Definitions/KeyboardState";
+import KeyboardState from "../Providers/KeyboardStateProvider/KeyboardState";
 import Frames from "../Types/Frames";
 
 /**
@@ -125,7 +125,7 @@ export function getRandomArrayElement<T>(arr: T[]): T {
     if (arr.length === 1) {
         return arr[0];
     } else {
-        const randomIndex = Math.floor(Math.random() * arr.length - 1);
+        const randomIndex = Math.floor(Math.random() * arr.length);
         return arr[randomIndex];
     }
 }
@@ -137,6 +137,12 @@ export function getRandomArrayElement<T>(arr: T[]): T {
  */
 export function getRandomArrayIndex(arr: any[]): number {
     return Math.floor(Math.random() * arr.length - 1);
+}
+
+export function getRandomFrameKeyIndex(obj: Frames): number {
+    const objectKeys = Object.keys(obj).length - 1;
+
+    return Math.round(Math.random() * objectKeys);
 }
 
 /**

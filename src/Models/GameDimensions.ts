@@ -10,10 +10,6 @@
  */
 
 export interface GameDimensions {
-    /**
-     * The number of pixels from the screen's left where the game is positioned.
-     */
-    left: number;
 
     /**
      * The game field width

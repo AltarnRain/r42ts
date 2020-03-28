@@ -15,22 +15,20 @@ import IAnimate from "./Interfaces/IAnimate";
 import CtxProvider from "./Providers/CtxProvider";
 import DimensionProvider from "./Providers/DimensionProvider";
 
-export default class Game implements IAnimate {
-    public animate(tick: number): Promise<void> {
 
-        return new Promise((resolve, reject) => {
-            drawGameFieldBackground();
-            drawGameFieldBorder();
-            drawScoreBoardBackGround();
-            resolve();
-        });
-    }
-}
-
-export function StartGame(): void {
+export function DrawGameField(): void {
+    clearBlackground();
     drawScoreBoardBackGround();
     drawGameFieldBorder();
     drawScoreBoardBackGround();
+}
+
+function clearBlackground(): void {
+    const ctx = CtxProvider();
+    ctx.beginPath();
+    ctx.fillStyle = CGAColors.black;
+    ctx.fillRect(0, 0, DimensionProvider().fullWidth, DimensionProvider().fullHeight);
+    ctx.closePath();
 }
 
 /**

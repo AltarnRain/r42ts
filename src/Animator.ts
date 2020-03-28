@@ -10,6 +10,7 @@
  */
 
 import IAnimate from "./Interfaces/IAnimate";
+import { DrawGameField } from "./Game";
 
 export default class Animator {
 
@@ -67,6 +68,8 @@ export default class Animator {
 
             // Runs all animation at the passed FPS
             if (tick - this.lastTick > (1000 / this.fps)) {
+
+                DrawGameField();
 
                 this.rendering = true;
                 this.animations.forEach((a) => a.animate(tick));

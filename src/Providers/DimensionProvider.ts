@@ -43,7 +43,6 @@ export default function DimensionProvider(node?: Node): GameDimensions  {
         const pixelSize = Math.ceil(width / 160);
 
         gameDimensions = {
-            left: (window.innerWidth - width) / 2,
             fullWidth: width,
             fullHeight: height,
             gameFieldTop,

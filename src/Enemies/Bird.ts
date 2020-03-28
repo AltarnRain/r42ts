@@ -16,12 +16,13 @@ import IAnimate from "../Interfaces/IAnimate";
 import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
+import { RandomStartPosition } from "../Providers/StartPositionProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
-import { calculateObjectLocation, cloneFrames, getNewLocation, getRandomArrayElement, setRandomFrameColors } from "../Utility/Lib";
+import { calculateObjectLocation, cloneFrames, getNewLocation, getRandomArrayElement, getRandomFrameKeyIndex, setRandomFrameColors } from "../Utility/Lib";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
-const speed = 5;
+const speed = 15;
 
 export default class BirdEnemy implements IAnimate {
 
@@ -70,10 +71,7 @@ export default class BirdEnemy implements IAnimate {
      */
     constructor() {
         this.angle = getRandomArrayElement([2, 358, 178, 182]);
-        this.location = {
-            left: Math.random() * DimensionProvider().fullWidth,
-            top: Math.random() * 20 + DimensionProvider().gameFieldTop,
-        };
+        this.angle = getRandomArrayElement([358]);
 
         this.onFrameChange = this.onFrameChange.bind(this);
         this.onColorChange = this.onColorChange.bind(this);
@@ -85,7 +83,17 @@ export default class BirdEnemy implements IAnimate {
 
         this.frames = cloneFrames(BirdFrames);
 
-        this.frameProvider = new FrameProvider(this.frames, 0);
+        this.frameProvider = new FrameProvider(this.frames, getRandomFrameKeyIndex(this.frames));
+        this.currentFrame = this.frameProvider.getFrame();
+
+        // Calculate random left position
+        const left = RandomStartPosition(DimensionProvider().fullWidth, this.currentFrame[0].length * DimensionProvider().pixelSize);
+        const top = RandomStartPosition(DimensionProvider().scoreBoardHeight + DimensionProvider().gameFieldTop, this.currentFrame.length) + 50;
+
+        this.location = {
+            left,
+            top,
+        };
     }
 
     /**
@@ -106,10 +114,18 @@ export default class BirdEnemy implements IAnimate {
     public onMove(): void {
         const objectLocation = calculateObjectLocation(this.location, this.frames.F0);
         this.location = getNewLocation(this.angle, speed, objectLocation);
+
+        if (this.location.left <= 0 || this.location.left >= DimensionProvider().fullWidth - objectLocation.right) {
+            this.angle += 180;
+        }
+
+        if (this.location.top <= DimensionProvider().gameFieldTop || this.location.top >= DimensionProvider().fullHeight) {
+            this.angle *= -1;
+        }
     }
 
     private onFrameChange(): void {
-        this.currentFrame = this.frameProvider.getFrame();
+        this.currentFrame = this.frameProvider.getFrameAndSetNext();
     }
 
     private onColorChange(): void {

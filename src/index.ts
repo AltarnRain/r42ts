@@ -13,7 +13,6 @@ import Animator from "./Animator";
 import CGAColors from "./Constants/CGAColors";
 import BirdEnemy from "./Enemies/Bird";
 import BirdFrames from "./Frames/BirdFrames";
-import Game from "./Game";
 import DimensionProvider from "./Providers/DimensionProvider";
 import RenderFrame from "./Render/RenderFrame";
 import { setRandomFrameColors } from "./Utility/Lib";
@@ -31,10 +30,7 @@ window.onload = () => {
             case "bird":
 
                 const animator = new Animator();
-                const background = new Game();
                 const bird = new BirdEnemy();
-
-                animator.register(background);
                 animator.register(bird);
 
                 animator.start();
