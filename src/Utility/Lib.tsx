@@ -70,11 +70,7 @@ export function getAngle(state: KeyboardState): number {
  * @param {number} angle. The angle of the object.
  * @param {number} speed. The speed the of the object
  * @param {number} right. The right outer bounds where the object can travel
- * @param {number} bottom. The bottom bounds where the object can travel.
  * @param {number} left. The current left coordinate of the object.
- * @param {number} top. The current top coordinate of the object.
- * @param {number} objectWidth. The object's width in pixels.
- * @param {number} objectHeight. The object's height in pixels.
  * @returns {Location}. The new location of the object.
  */
 export function getNewLocation(angle: number, speed: number, left: number, top: number): GameLocation {
@@ -176,9 +172,32 @@ export function cloneFrames(frames: Frames): Frames {
     return clonedFrames;
 }
 
-export function getFrameDimensions(frame: string[][]): { width: number; height: number}  {
+export function getFrameDimensions(frame: string[][]): { width: number; height: number } {
     return {
         width: frame[0].length * DimensionProvider().maxPixelSize,
         height: frame.length * DimensionProvider().maxPixelSize,
     };
+}
+
+/**
+ * pads a string on its left size until it is a given length
+ * @param {string} value. Value to pad left.
+ * @param {number} length. Length of the desired output.
+ * @param {string} paddWidth. Character to pad width.
+ */
+export function padLeft(value: string, length: number, padWidth: string): string {
+
+    if (value.length >= length) {
+        return value;
+    } else {
+
+        const padLength = length - value.length;
+        let padding = "";
+
+        for (let i = 0; i < padLength; i++) {
+            padding += padWidth;
+        }
+
+        return padding + value;
+    }
 }

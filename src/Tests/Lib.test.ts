@@ -11,7 +11,7 @@
 
 import "jest";
 import Frames from "../Types/Frames";
-import { getRandomArrayElement, getRandomFrameKeyIndex } from "../Utility/Lib";
+import { getRandomArrayElement, getRandomFrameKeyIndex, padLeft } from "../Utility/Lib";
 
 test("getRandomArrayElement", () => {
     const arr = ["a"];
@@ -47,7 +47,6 @@ test("getRandomFramesKeyIndex multiple keys", () => {
     const indexes: number[] = [];
 
     // Act
-
     for (let i = 0; i < 100; i++) {
         indexes.push(getRandomFrameKeyIndex(frames));
     }
@@ -55,4 +54,26 @@ test("getRandomFramesKeyIndex multiple keys", () => {
     // Assert
     expect(indexes.every((i) => i >= 0)).toBe(true);
     expect(indexes.every((i) => i <= 2)).toBe(true);
+});
+
+test("pad left", () => {
+    // Act
+    const result1 = padLeft("1", 6, "0");
+    const result2 = padLeft("12", 6, "0");
+    const result3 = padLeft("123", 6, "0");
+    const result4 = padLeft("1234", 6, "0");
+    const result5 = padLeft("12345", 6, "0");
+    const result6 = padLeft("123456", 6, "0");
+    const result7 = padLeft("1234567", 6, "0");
+    const result8 = padLeft("", 6, "0");
+
+    // Assert
+    expect(result1).toBe("000001");
+    expect(result2).toBe("000012");
+    expect(result3).toBe("000123");
+    expect(result4).toBe("001234");
+    expect(result5).toBe("012345");
+    expect(result6).toBe("123456");
+    expect(result7).toBe("1234567");
+    expect(result8).toBe("000000");
 });
