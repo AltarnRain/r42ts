@@ -63,7 +63,7 @@ export default class Player implements IDraw {
         if (angle !== -1) {
             this.location = getNewLocation(angle, 15, left, top);
         }
-        
+
         renderFrame(this.location, this.frames.F0);
     }
 }
