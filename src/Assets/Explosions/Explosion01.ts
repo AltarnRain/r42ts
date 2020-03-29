@@ -12,7 +12,7 @@
 
 import { Explosion } from "../../Models/Explosion";
 
-const ExplosionAsset01: Explosion = {
+const Explosion01: Explosion = {
     frame: [
         ["F", "0", "F", "0"],
         ["F", "F", "F", "F"],
