@@ -4,14 +4,13 @@
  * See LICENSE.MD.
  */
 
+import CGAColors from "../Constants/CGAColors";
 import { PlayerFrames } from "../Frames/PlayerFrames";
 import IDraw from "../Interfaces/IDraw";
-import Frames from "../Types/Frames";
-import { cloneFrames, setColors, setVariableFrameColors, padLeft, getFrameDimensions } from "../Utility/Lib";
-import CGAColors from "../Constants/CGAColors";
-import { getNumberFrames } from "../Assets/Characters";
 import DimensionProvider from "../Providers/DimensionProvider";
-import RenderFrame from "../Render/RenderFrame";
+import renderFrame from "../Render/RenderFrame";
+import Frames from "../Types/Frames";
+import { cloneFrames, getFrameDimensions, setColors } from "../Utility/Lib";
 
 /**
  * Module:          Lives
@@ -31,27 +30,25 @@ export default class Lives implements IDraw {
     private lifeFrames: Frames;
 
     /**
-     * Frames used to draw numbers.
+     * Top position
      */
-    private numberFrames: Frames;
+    private top: number;
 
     /**
-     * Left position in PX where we start drawing.
+     * Left position
      */
-    private leftStartPosition: number;
+    private leftStartPostion: number;
 
     constructor() {
 
         // Clone the player frames so we can safely alter them.
         this.lifeFrames = cloneFrames(PlayerFrames);
-        this.numberFrames = cloneFrames(getNumberFrames());
 
         // Lives are completely yellow player ships
         setColors(this.lifeFrames, CGAColors.yellow);
-        setVariableFrameColors(this.numberFrames, CGAColors.yellow);
 
-        // Start five game pixels from the right.
-        this.leftStartPosition = DimensionProvider().fullWidth - (DimensionProvider().maxPixelSize * 5);
+        this.top = DimensionProvider().maxPixelSize;
+        this.leftStartPostion = DimensionProvider().fullWidth - (DimensionProvider().maxPixelSize * 5);
     }
 
     /**
@@ -70,22 +67,25 @@ export default class Lives implements IDraw {
     }
 
     /**
+     * Removes one life.
+     */
+    public removeLife(): void {
+        this.lives--;
+    }
+
+    /**
      * Draws the player lives.
      */
     public draw(_: number): void {
-        // Draw life count.
-        const lifeCountString = padLeft(this.lives.toString(), 2, "0");
 
-        const leftNumber = lifeCountString[1];
-        const rightNumber = lifeCountString[0];
+        let left = this.leftStartPostion;
 
-        const leftLifeNumberFrame = this.numberFrames["N" + leftNumber];
-        const rightLifeNumberFrame = this.numberFrames["N" + rightNumber];
-
-        const numberWidth = getFrameDimensions(leftLifeNumberFrame).width;
-        const spacing = DimensionProvider().minPixelSize * 2;
-
-        RenderFrame({ left: this.leftStartPosition, top: 0 }, leftLifeNumberFrame);
-        RenderFrame({ left: this.leftStartPosition - numberWidth - spacing, top: 0 }, rightLifeNumberFrame);
+        // Start five game pixels from the right.
+        for (let lives = 1; lives <= 7; lives++) {
+            if (lives <= this.lives) {
+                left = left - DimensionProvider().maxPixelSize * 2 - getFrameDimensions(this.lifeFrames.F0).width;
+                renderFrame({ left, top: this.top }, this.lifeFrames.F0);
+            }
+        }
     }
 }

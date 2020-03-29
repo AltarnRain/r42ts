@@ -18,7 +18,7 @@ import ScoreBoard from "./GameScreen/ScoreBoard";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
-import RenderFrame from "./Render/RenderFrame";
+import renderFrame from "./Render/RenderFrame";
 import { setRandomFrameColors } from "./Utility/Lib";
 
 window.onload = () => {
@@ -37,10 +37,12 @@ window.onload = () => {
                 const player = new Player();
                 const scoreboard = new ScoreBoard();
                 const lives = new Lives();
+                const bird = new BirdEnemy();
 
                 drawer.register(player);
                 drawer.register(scoreboard);
                 drawer.register(lives);
+                drawer.register(bird);
 
                 // player starts with two lives by default.
                 lives.setLives(2);
@@ -56,22 +58,14 @@ window.onload = () => {
 
                 break;
             }
-            case "bird": {
-                const animator = new Drawer();
-                const bird = new BirdEnemy();
-                animator.register(bird);
-
-                animator.start();
-                break;
-            }
 
             case "renderTest":
                 setRandomFrameColors(BirdFrames, [CGAColors.green]);
 
-                RenderFrame({ left: 10, top: 10 }, BirdFrames.F0);
-                RenderFrame({ left: 10, top: 50 }, BirdFrames.F1);
-                RenderFrame({ left: 10, top: 100 }, BirdFrames.F2);
-                RenderFrame({ left: 10, top: 150 }, BirdFrames.F3);
+                renderFrame({ left: 10, top: 10 }, BirdFrames.F0);
+                renderFrame({ left: 10, top: 50 }, BirdFrames.F1);
+                renderFrame({ left: 10, top: 100 }, BirdFrames.F2);
+                renderFrame({ left: 10, top: 150 }, BirdFrames.F3);
 
                 break;
 

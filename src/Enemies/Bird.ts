@@ -17,12 +17,12 @@ import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
 import { RandomStartPosition } from "../Providers/StartPositionProvider";
-import RenderFrame from "../Render/RenderFrame";
+import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
 import { cloneFrames, getFrameDimensions, getNewLocation, getRandomArrayElement, getRandomFrameKeyIndex, setRandomFrameColors } from "../Utility/Lib";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
-const speed = 15;
+const speed = 11;
 
 export default class BirdEnemy implements IDraw {
 
@@ -84,11 +84,9 @@ export default class BirdEnemy implements IDraw {
 
         this.onFrameChange = this.onFrameChange.bind(this);
         this.onColorChange = this.onColorChange.bind(this);
-        this.onMove = this.onMove.bind(this);
 
-        this.frameTickHandler = new TickHandler(200, this.onFrameChange);
-        this.colorTickHandler = new TickHandler(200, this.onColorChange);
-        this.moveTickHandler = new TickHandler(200, this.onMove);
+        this.frameTickHandler = new TickHandler(80, this.onFrameChange);
+        this.colorTickHandler = new TickHandler(40, this.onColorChange);
 
         this.frames = cloneFrames(BirdFrames);
 
@@ -117,14 +115,15 @@ export default class BirdEnemy implements IDraw {
     public draw(tick: number): void {
         this.frameTickHandler.tick(tick);
         this.colorTickHandler.tick(tick);
-        this.moveTickHandler.tick(tick);
-        RenderFrame(this.location, this.currentFrame);
+
+        this.move();
+        renderFrame(this.location, this.currentFrame);
     }
 
     /**
      * Called by a TickHandler when its time to move.
      */
-    public onMove(): void {
+    public move(): void {
         this.location = getNewLocation(this.angle, speed, this.location.left, this.location.top);
 
         if (this.location.left <= 0 || this.location.left >= DimensionProvider().fullWidth - this.frameWidth) {

@@ -8,7 +8,7 @@ import { getNumberFrames } from "../Assets/Characters";
 import CGAColors from "../Constants/CGAColors";
 import IDraw from "../Interfaces/IDraw";
 import DimensionProvider from "../Providers/DimensionProvider";
-import RenderFrame from "../Render/RenderFrame";
+import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
 import { cloneFrames, getFrameDimensions, padLeft, setVariableFrameColors } from "../Utility/Lib";
 
@@ -81,7 +81,7 @@ export default class ScoreBoard implements IDraw {
             const spacing = cnt === 0 ? 0 : this.spacing;
             let left = cnt * (getFrameDimensions(frame).width + spacing);
             left = this.leftStartPosition + left;
-            RenderFrame({ left, top: 0 }, frame);
+            renderFrame({ left, top: 0 }, frame);
             cnt++;
         }
     }
