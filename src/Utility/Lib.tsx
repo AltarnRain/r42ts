@@ -231,3 +231,7 @@ export function padLeft(value: string, length: number, padWidth: string): string
         return padding + value;
     }
 }
+
+export function randomNumberInRange(max: number, min: number): number {
+    return Math.floor(Math.random() * (max - min) + min);
+}

@@ -16,10 +16,9 @@ import IDraw from "../Interfaces/IDraw";
 import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
-import { RandomStartPosition } from "../Providers/StartPositionProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
-import { cloneFrames, getFrameDimensions, getNewLocation, getRandomArrayElement, getRandomFrameKeyIndex, setRandomFrameColors } from "../Utility/Lib";
+import { cloneFrames, getFrameDimensions, getNewLocation, getRandomArrayElement, getRandomFrameKeyIndex, randomNumberInRange, setRandomFrameColors } from "../Utility/Lib";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 const speed = 11;
@@ -35,11 +34,6 @@ export default class BirdEnemy implements IDraw {
      * Hanels color changes.
      */
     private colorTickHandler: TickHandler;
-
-    /**
-     * Handles movement.
-     */
-    private moveTickHandler: TickHandler;
 
     /**
      * The frame provider.
@@ -93,9 +87,17 @@ export default class BirdEnemy implements IDraw {
         this.frameProvider = new FrameProvider(this.frames, getRandomFrameKeyIndex(this.frames));
         this.currentFrame = this.frameProvider.getFrame();
 
+        const birdDimensions = getFrameDimensions(this.currentFrame);
+
         // Calculate random left position
-        const left = RandomStartPosition(DimensionProvider().fullWidth, this.currentFrame[0].length * DimensionProvider().maxPixelSize);
-        const top = RandomStartPosition(DimensionProvider().scoreBoardHeight + DimensionProvider().gameFieldTop, this.currentFrame.length) + 50;
+        const left = randomNumberInRange(
+            DimensionProvider().fullWidth - birdDimensions.width,
+            birdDimensions.width
+        ) ;
+
+        const top = randomNumberInRange(
+            DimensionProvider().gameFieldTop + birdDimensions.height + 50,
+            DimensionProvider().gameFieldTop + birdDimensions.height);
 
         this.location = {
             left,
@@ -127,7 +129,7 @@ export default class BirdEnemy implements IDraw {
         this.location = getNewLocation(this.angle, speed, this.location.left, this.location.top);
 
         if (this.location.left <= 0 || this.location.left >= DimensionProvider().fullWidth - this.frameWidth) {
-            this.angle += 180;
+            this.angle = 180 - this.angle;
         }
 
         if (this.location.top <= DimensionProvider().gameFieldTop || this.location.top >= DimensionProvider().fullHeight - this.frameHeight) {
