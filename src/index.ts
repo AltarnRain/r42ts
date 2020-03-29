@@ -9,18 +9,20 @@
  * Responsibility:  Entry point for the game
  */
 
+import PlayerExplosionAsset from "./Assets/Explosions/PlayerExplosion";
 import CGAColors from "./Constants/CGAColors";
 import Drawer from "./Drawer";
 import BirdEnemy from "./Enemies/Bird";
 import BirdFrames from "./Frames/BirdFrames";
+import { LevelIndicator } from "./GameScreen/LevelIndicator";
 import Lives from "./GameScreen/Lifes";
 import ScoreBoard from "./GameScreen/ScoreBoard";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
+import RenderExplosion from "./Render/RenderExplosion";
 import renderFrame from "./Render/RenderFrame";
 import { setRandomFrameColors } from "./Utility/Lib";
-import { LevelIndicator } from "./GameScreen/LevelIndicator";
 
 window.onload = () => {
 
@@ -41,11 +43,15 @@ window.onload = () => {
                 const bird = new BirdEnemy();
                 const levelIndicator = new LevelIndicator();
 
-                drawer.register(player);
-                drawer.register(scoreboard);
-                drawer.register(lives);
-                drawer.register(bird);
-                drawer.register(levelIndicator);
+                // const explosion01 = new RenderExplosion(Explosion01, {left: 500, top: 500});
+                const playerExplosion = new RenderExplosion(PlayerExplosionAsset, { left: 500, top: 500 } );
+                // drawer.register(player);
+                // drawer.register(scoreboard);
+                // drawer.register(lives);
+                // drawer.register(bird);
+                // drawer.register(levelIndicator);
+                // drawer.register(explosion01);
+                drawer.register(playerExplosion);
 
                 // player starts with two lives by default.
                 lives.setLives(2);

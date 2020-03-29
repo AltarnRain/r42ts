@@ -11,8 +11,7 @@
 
 import "jest";
 import Frames from "../Types/Frames";
-import { cloneFrames, getRandomArrayElement, getRandomFrameKeyIndex, padLeft, setVariableFrameColors } from "../Utility/Lib";
-import CGAColors from "../Constants/CGAColors";
+import { cloneObject, getRandomArrayElement, getRandomFrameKeyIndex, padLeft } from "../Utility/Lib";
 
 test("getRandomArrayElement", () => {
     const arr = ["a"];
@@ -92,7 +91,7 @@ test("clone frames", () => {
     };
 
     // Act
-    const clonedFrames = cloneFrames(original);
+    const clonedFrames = cloneObject(original);
 
     // Assert
 
@@ -119,7 +118,7 @@ test("setVariableFrameColors", () => {
         ]
     };
 
-    const clonedFrames = cloneFrames(original);
+    const clonedFrames = cloneObject(original);
 
     const f0 = clonedFrames.F0[0].length;
 

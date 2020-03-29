@@ -10,7 +10,7 @@ import IDraw from "../Interfaces/IDraw";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
-import { cloneFrames, getFrameDimensions, setColors } from "../Utility/Lib";
+import { cloneObject, getFrameDimensions, setFramesColor } from "../Utility/Lib";
 
 /**
  * Module:          Lives
@@ -42,10 +42,10 @@ export default class Lives implements IDraw {
     constructor() {
 
         // Clone the player frames so we can safely alter them.
-        this.lifeFrames = cloneFrames(PlayerFrames);
+        this.lifeFrames = cloneObject(PlayerFrames);
 
         // Lives are completely yellow player ships
-        setColors(this.lifeFrames, CGAColors.yellow);
+        setFramesColor(this.lifeFrames, CGAColors.yellow);
 
         this.top = DimensionProvider().maxPixelSize;
         this.leftStartPostion = DimensionProvider().fullWidth - DimensionProvider().maxPixelSize * 18;

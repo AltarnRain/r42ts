@@ -17,7 +17,7 @@ import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
-import { cloneFrames, getAngle, getNewLocation, setFrameColors } from "../Utility/Lib";
+import { cloneObject, getAngle, getNewLocation, setFramesColors } from "../Utility/Lib";
 
 export default class Player implements IDraw {
 
@@ -46,9 +46,9 @@ export default class Player implements IDraw {
             top: DimensionProvider().fullHeight * 0.9,
         };
 
-        this.frames = cloneFrames(PlayerFrames);
+        this.frames = cloneObject(PlayerFrames);
 
-        setFrameColors(this.frames);
+        setFramesColors(this.frames);
     }
 
     /**

@@ -67,4 +67,4 @@ const PlayerExplosion: Explosion = {
     speed: 0, // not used.
 };
 
-export default PlayerExplosionAsset;
+export default PlayerExplosion;

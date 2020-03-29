@@ -35,4 +35,4 @@ const Explosion01: Explosion = {
     useSpeed: true,
 };
 
-export default ExplosionAsset01;
+export default Explosion01;

@@ -10,7 +10,7 @@ import IDraw from "../Interfaces/IDraw";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
-import { cloneFrames, getFrameDimensions, padLeft, setVariableFrameColors } from "../Utility/Lib";
+import { cloneObject, getFrameDimensions, padLeft, setVariableFramesColor } from "../Utility/Lib";
 
 /**
  * Module:          ScoreBoard
@@ -45,9 +45,9 @@ export default class ScoreBoard implements IDraw {
 
         // Create a clone of the number character frames so we can set their color without ruining the asset.
         const numberFrames = getNumberFrames();
-        this.frames = cloneFrames(numberFrames);
+        this.frames = cloneObject(numberFrames);
 
-        setVariableFrameColors(this.frames, CGAColors.yellow);
+        setVariableFramesColor(this.frames, CGAColors.yellow);
 
         this.score = 0;
     }

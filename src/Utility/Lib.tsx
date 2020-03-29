@@ -147,14 +147,23 @@ export function setRandomFrameColors(frames: Frames, colors: string[]): void {
  * Updates a frame to actual CGA colors.
  * @param {Frames} frames. All frames.
  */
-export function setFrameColors(frames: Frames): void {
+export function setFramesColors(frames: Frames): void {
     Object.keys(frames).forEach((key) => {
-        frames[key].forEach((row, rowIndex) => {
-            row.forEach((cellColor, cellIndex) => {
-                if (cellColor !== "0") {
-                    frames[key][rowIndex][cellIndex] = HexToCGAConverter(cellColor);
-                }
-            });
+        const frame = frames[key];
+        setFrameColors(frame);
+    });
+}
+
+/**
+ * Set the predefined color for a single frame.
+ * @param {string[][]} frame. A single frame.
+ */
+export function setFrameColors(frame: string[][]) {
+    frame.forEach((row, rowIndex) => {
+        row.forEach((cellColor, cellIndex) => {
+            if (cellColor !== "0") {
+                frame[rowIndex][cellIndex] = HexToCGAConverter(cellColor);
+            }
         });
     });
 }
@@ -163,15 +172,24 @@ export function setFrameColors(frames: Frames): void {
  * Updates a frame that uses variable (V) colors to a passed color.
  * @param {Frames} frames. All frames.
  */
-export function setVariableFrameColors(frames: Frames, color: string): void {
+export function setVariableFramesColor(frames: Frames, color: string): void {
     Object.keys(frames).forEach((key) => {
         const frame = frames[key];
-        frame.forEach((row, rowIndex) => {
-            row.forEach((cellColor, cellIndex) => {
-                if (cellColor === "V") {
-                    frames[key][rowIndex][cellIndex] = color;
-                }
-            });
+        setVariableFrameColor(frame, color);
+    });
+}
+
+/**
+ * Sets a random color on a Variable frame color (V).
+ * @param {string[][]} frame. A frame.
+ * @param {string} color. Color.
+ */
+export function setVariableFrameColor(frame: string[][], color: string) {
+    frame.forEach((row, rowIndex) => {
+        row.forEach((cellColor, cellIndex) => {
+            if (cellColor === "V") {
+                frame[rowIndex][cellIndex] = color;
+            }
         });
     });
 }
@@ -180,7 +198,7 @@ export function setVariableFrameColors(frames: Frames, color: string): void {
  * Sets a cell's color to the passed color. Doesn't matter if they're variable (V).
  * @param {Frames} frames. All frames.
  */
-export function setColors(frames: Frames, color: string): void {
+export function setFramesColor(frames: Frames, color: string): void {
     Object.keys(frames).forEach((key) => {
         frames[key].forEach((row, rowIndex) => {
             row.forEach((cellColor, cellIndex) => {
@@ -197,11 +215,16 @@ export function setColors(frames: Frames, color: string): void {
  * @param {Frames} frames. Frames to clone.
  * @returns {Frames}. A clone of the provided frames.
  */
-export function cloneFrames(frames: Frames): Frames {
+export function cloneObject<T>(obj: T): T {
     // Create a clone using JSON.
-    return JSON.parse(JSON.stringify(frames)) as Frames;
+    return JSON.parse(JSON.stringify(obj)) as T;
 }
 
+/**
+ * Returns the dimensions of a frame in PX.
+ * @param {string[][]} frame. A frame.
+ * @returns {width, height}.
+ */
 export function getFrameDimensions(frame: string[][]): { width: number; height: number } {
     return {
         width: frame[0].length * DimensionProvider().maxPixelSize,
@@ -232,6 +255,25 @@ export function padLeft(value: string, length: number, padWidth: string): string
     }
 }
 
+/**
+ * Picks a random number within a range.
+ * @param {number} max. Maximum value.
+ * @param {number} min. Minimum value.
+ */
 export function randomNumberInRange(max: number, min: number): number {
     return Math.floor(Math.random() * (max - min) + min);
+}
+
+/**
+ * Calculates a GameLocation object where the center of a frame resides.
+ * @param {number} location.
+ * @param {frame} frame.
+ */
+export function getFrameCenter(location: GameLocation, frame: string[][]): GameLocation {
+    const dimensions = getFrameDimensions(frame);
+
+    return {
+        left: location.left + dimensions.width / 2,
+        top: location.top + dimensions.height / 2,
+    };
 }

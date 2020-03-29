@@ -18,7 +18,7 @@ import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
-import { cloneFrames, getFrameDimensions, getNewLocation, getRandomArrayElement, getRandomFrameKeyIndex, randomNumberInRange, setRandomFrameColors } from "../Utility/Lib";
+import { getFrameDimensions, getNewLocation, getRandomArrayElement, getRandomFrameKeyIndex, randomNumberInRange, setRandomFrameColors, cloneObject } from "../Utility/Lib";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 const speed = 11;
@@ -82,7 +82,7 @@ export default class BirdEnemy implements IDraw {
         this.frameTickHandler = new TickHandler(80, this.onFrameChange);
         this.colorTickHandler = new TickHandler(40, this.onColorChange);
 
-        this.frames = cloneFrames(BirdFrames);
+        this.frames = cloneObject(BirdFrames);
 
         this.frameProvider = new FrameProvider(this.frames, getRandomFrameKeyIndex(this.frames));
         this.currentFrame = this.frameProvider.getFrame();
