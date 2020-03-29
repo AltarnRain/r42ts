@@ -35,13 +35,13 @@ export default function DimensionProvider(node?: Node): GameDimensions {
         const height = rect.height;
         const width = (height / 3) * 4;
 
-        const scoreBoardHeight = height * ScoreBoardHeightFactor;
+        const maxPixelSize = Math.ceil(width / 160);
+        const minPixelSize = Math.floor(width / 160);
+
+        const scoreBoardHeight = maxPixelSize * 6;
 
         const gameFieldTop = scoreBoardHeight;
         const gameFieldHeight = height - gameFieldTop;
-
-        const maxPixelSize = Math.ceil(width / 160);
-        const minPixelSize = Math.floor(width / 160);
 
         gameDimensions = {
             fullWidth: width,

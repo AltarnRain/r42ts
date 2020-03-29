@@ -20,6 +20,7 @@ import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 import { setRandomFrameColors } from "./Utility/Lib";
+import { LevelIndicator } from "./GameScreen/LevelIndicator";
 
 window.onload = () => {
 
@@ -38,11 +39,13 @@ window.onload = () => {
                 const scoreboard = new ScoreBoard();
                 const lives = new Lives();
                 const bird = new BirdEnemy();
+                const levelIndicator = new LevelIndicator();
 
                 drawer.register(player);
                 drawer.register(scoreboard);
                 drawer.register(lives);
                 drawer.register(bird);
+                drawer.register(levelIndicator);
 
                 // player starts with two lives by default.
                 lives.setLives(2);
@@ -52,6 +55,8 @@ window.onload = () => {
                     addToScore: (n: number) => scoreboard.addToScore(n),
                     setLives: (n: number) => lives.setLives(n),
                     addLife: () => lives.addLife(),
+                    setLevel: (n: number) => levelIndicator.setLevel(n),
+                    addLevel: () => levelIndicator.addLevel(),
                 };
 
                 drawer.start();

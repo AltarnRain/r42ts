@@ -48,7 +48,7 @@ export default class Lives implements IDraw {
         setColors(this.lifeFrames, CGAColors.yellow);
 
         this.top = DimensionProvider().maxPixelSize;
-        this.leftStartPostion = DimensionProvider().fullWidth - (DimensionProvider().maxPixelSize * 5);
+        this.leftStartPostion = DimensionProvider().fullWidth - DimensionProvider().maxPixelSize * 18;
     }
 
     /**
