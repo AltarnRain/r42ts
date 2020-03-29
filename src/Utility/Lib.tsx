@@ -198,27 +198,8 @@ export function setColors(frames: Frames, color: string): void {
  * @returns {Frames}. A clone of the provided frames.
  */
 export function cloneFrames(frames: Frames): Frames {
-    const clonedFrames = {} as Frames;
-
-
-    for (const key of Object.keys(frames)) {
-        const newArray = [];
-        const frame = frames[key];
-
-        for (let row = 0; row < frame.length; row ++) {
-            newArray[row] = [];
-
-            const columns = frames[key][row];
-
-            for (let col = 0; col < columns.length; col++) {
-                newArray[row][col] = columns[col];
-            }
-        }
-
-        clonedFrames[key] = newArray;
-    }
-
-    return clonedFrames;
+    // Create a clone using JSON.
+    return JSON.parse(JSON.stringify(frames)) as Frames;
 }
 
 export function getFrameDimensions(frame: string[][]): { width: number; height: number } {
