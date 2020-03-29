@@ -18,7 +18,7 @@ import DimensionProvider from "../Providers/DimensionProvider";
  * @param {GameLocation} location. The location where to render the frame.
  * @param {string[][]} frame. A 2d string array.
  */
-export default function RenderFrame(location: GameLocation, frame: string[][]): void {
+export default function renderFrame(location: GameLocation, frame: string[][]): void {
     const ctx = CtxProvider();
 
     for (let rowIndex = 0; rowIndex < frame.length; rowIndex++) {
