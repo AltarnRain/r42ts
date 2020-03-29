@@ -9,14 +9,11 @@
  * Responsibility:  Render an explosion on the screen.
  */
 
-import CGAColors from "../Constants/CGAColors";
 import IDraw from "../Interfaces/IDraw";
 import { Explosion } from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
-import { cloneObject, setVariableFrameColor, setFrameColors, getNewLocation, setFramesColors, getFrameCenter } from "../Utility/Lib";
+import { cloneObject, getFrameCenter, getNewLocation, setFrameColors } from "../Utility/Lib";
 import renderFrame from "./RenderFrame";
-
-const centerTick = 200;
 
 export default class RenderExplosion implements IDraw {
 
