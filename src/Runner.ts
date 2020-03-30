@@ -12,6 +12,7 @@
 import BaseGameObject from "./Base/BaseGameObject";
 import { DrawGameField } from "./GameScreen/StaticRenders";
 import { IDraw } from "./Interfaces/IDraw";
+import Player from "./Player/Player";
 
 /**
  * Draws IDrawable classes.
@@ -48,6 +49,11 @@ export default class Runner {
      * Static reference to this class.
      */
     private static runner: Runner;
+
+    /**
+     * Reference to the player object.
+     */
+    private player: BaseGameObject;
 
     /**
      * Constructs the Animator
@@ -87,6 +93,7 @@ export default class Runner {
 
                 DrawGameField();
                 this.drawable.forEach((d) => d.draw(tick));
+                this.player.draw(tick);
                 this.gameobjects.forEach((a) => a.draw(tick));
                 this.rendering = false;
 
@@ -114,6 +121,10 @@ export default class Runner {
         this.drawable.push(drawable);
     }
 
+    public registerPlayer(player: BaseGameObject): void {
+        this.player = player;
+    }
+
     /**
      * Get the game runner instance.
      * @returns {Runner}. Reference to the game runner.
@@ -136,5 +147,13 @@ export default class Runner {
      */
     public static registerDrawable(drawable: IDraw): void {
         Runner.get().registerDrawable(drawable);
+    }
+
+    /**
+     * Register the player object.
+     * @param {Player} player.
+     */
+    public static registerPlayer(player: Player): void {
+        Runner.get().registerPlayer(player);
     }
 }

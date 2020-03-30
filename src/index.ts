@@ -41,7 +41,7 @@ window.onload = () => {
                 const scoreboard = new ScoreBoard();
                 const levelIndicator = new LevelIndicator();
 
-                Runner.register(player);
+                Runner.registerPlayer(player);
                 Runner.register(bird);
                 Runner.registerDrawable(scoreboard);
                 Runner.registerDrawable(lives);
