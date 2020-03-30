@@ -9,21 +9,23 @@
  * Responsibility:  Defines the behaviour of the bird enemy.
  */
 
+import Explosion01 from "../Assets/Explosions/Explosion01";
+import BaseGameObject from "../Base/BaseGameObject";
 import CGAColors from "../Constants/CGAColors";
 import BirdFrames from "../Frames/BirdFrames";
 import TickHandler from "../Handlers/TickHandler";
-import IDraw from "../Interfaces/IDraw";
-import GameLocation from "../Models/GameLocation";
+import { Explosion } from "../Models/Explosion";
 import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
+import GameObjectType from "../Types/GameObject";
 import { cloneObject, getFrameDimensions, getNewLocation, getRandomArrayElement, getRandomFrameKeyIndex, randomNumberInRange, setRandomFrameColors } from "../Utility/Lib";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 const speed = 11;
 
-export default class BirdEnemy implements IDraw {
+export default class BirdEnemy extends BaseGameObject {
 
     /**
      * Handles frame ticks.
@@ -51,11 +53,6 @@ export default class BirdEnemy implements IDraw {
     private frames: Frames;
 
     /**
-     * Bird location.
-     */
-    private location: GameLocation;
-
-    /**
      * The current frame that should be rendered.
      */
     private currentFrame: string[][];
@@ -74,6 +71,7 @@ export default class BirdEnemy implements IDraw {
      * Creates the object.
      */
     constructor() {
+        super();
         this.angle = getRandomArrayElement([2, 358, 178, 182]);
 
         this.onFrameChange = this.onFrameChange.bind(this);
@@ -93,7 +91,7 @@ export default class BirdEnemy implements IDraw {
         const left = randomNumberInRange(
             DimensionProvider().fullWidth - birdDimensions.width,
             birdDimensions.width
-        ) ;
+        );
 
         const top = randomNumberInRange(
             DimensionProvider().gameFieldTop + birdDimensions.height + 50,
@@ -117,7 +115,6 @@ export default class BirdEnemy implements IDraw {
     public draw(tick: number): void {
         this.frameTickHandler.tick(tick);
         this.colorTickHandler.tick(tick);
-
         this.move();
         renderFrame(this.location, this.currentFrame);
     }
@@ -135,6 +132,22 @@ export default class BirdEnemy implements IDraw {
         if (this.location.top <= DimensionProvider().gameFieldTop || this.location.top >= DimensionProvider().fullHeight - this.frameHeight) {
             this.angle *= -1;
         }
+    }
+
+    /**
+     * Returns the explosion asset.
+     * @returns {Explosion}. An explosion asset.
+     */
+    public getExplosion(): Explosion {
+        return Explosion01;
+    }
+
+    /**
+     * Returns the game object type.
+     * @returns {GameObjectType}. The game object type.
+     */
+    public getObjectType(): GameObjectType {
+        return "enemy";
     }
 
     /**

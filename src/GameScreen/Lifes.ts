@@ -6,7 +6,6 @@
 
 import CGAColors from "../Constants/CGAColors";
 import { PlayerFrames } from "../Frames/PlayerFrames";
-import IDraw from "../Interfaces/IDraw";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
@@ -17,7 +16,7 @@ import { cloneObject, getFrameDimensions, setFramesColor } from "../Utility/Lib"
  * Responsibility:  Draws player lives
  */
 
-export default class Lives implements IDraw {
+export default class Lives {
 
     /**
      * Number of lives for the player.
@@ -76,7 +75,7 @@ export default class Lives implements IDraw {
     /**
      * Draws the player lives.
      */
-    public draw(_: number): void {
+    public draw(): void {
 
         let left = this.leftStartPostion;
 

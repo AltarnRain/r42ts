@@ -9,28 +9,18 @@
  * Responsibility:  Player ship
  */
 
+import PlayerExplosion from "../Assets/Explosions/PlayerExplosion";
+import BaseGameObject from "../Base/BaseGameObject";
 import { PlayerFrames } from "../Frames/PlayerFrames";
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
-import TickHandler from "../Handlers/TickHandler";
-import IDraw from "../Interfaces/IDraw";
 import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
+import GameObjectType from "../Types/GameObject";
 import { cloneObject, getAngle, getNewLocation, setFramesColors } from "../Utility/Lib";
 
-export default class Player implements IDraw {
-
-    /**
-     * Handles player movement.
-     */
-    private moveTickHandler: TickHandler;
-
-    /**
-     * Current player location.
-     */
-    private location: GameLocation;
-
+export default class Player extends BaseGameObject {
     /**
      * Frames used by the player ship
      */
@@ -39,16 +29,28 @@ export default class Player implements IDraw {
     /**
      * Construct the class.
      */
-    constructor() {
+    constructor(location?: GameLocation) {
+        super();
 
-        this.location = {
-            left: DimensionProvider().fullWidth / 2,
-            top: DimensionProvider().fullHeight * 0.9,
-        };
+        if (location) {
+            this.location = location;
+        } else {
+            this.location = {
+                left: DimensionProvider().fullWidth / 2,
+                top: DimensionProvider().fullHeight * 0.9,
+            };
+        }
 
         this.frames = cloneObject(PlayerFrames);
 
         setFramesColors(this.frames);
+    }
+
+    public getExplosion(): import("../Models/Explosion").Explosion {
+        return PlayerExplosion;
+    }
+    public getObjectType(): GameObjectType {
+        return "player";
     }
 
     /**

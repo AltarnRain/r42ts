@@ -1,17 +1,18 @@
 /**
- * @preserve Copyright 2010-2020 Onno Invernizzi.
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
  * This source code is subject to terms and conditions.
  * See LICENSE.MD.
  */
 
 /**
  * Module:          IDraw
- * Responsibility:  Contract for a class that has something that can be drawn.
+ * Responsibility:  Defines a method 'draw'
  */
 
-export default interface IDraw {
+export interface IDraw {
+
     /**
-     * Animate the object
+     * Draw the object
      * @param {number} tick. Current tick.
      */
     draw(tick: number): void;

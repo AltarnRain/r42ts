@@ -6,7 +6,6 @@
 
 import { getNumberFrames } from "../Assets/Characters";
 import CGAColors from "../Constants/CGAColors";
-import IDraw from "../Interfaces/IDraw";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
@@ -17,7 +16,7 @@ import { cloneObject, getFrameDimensions, padLeft, setVariableFramesColor } from
  * Responsibility:  Draw the ScoreBoard
  */
 
-export default class ScoreBoard implements IDraw {
+export default class ScoreBoard {
 
     /**
      * Player score
@@ -71,7 +70,7 @@ export default class ScoreBoard implements IDraw {
     /**
      * 'Draws' the scoreboard.
      */
-    public draw(_: number): void {
+    public draw(): void {
         const scoreString = padLeft(this.score.toString(), 6, "0");
 
         let cnt = 0;

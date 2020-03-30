@@ -9,23 +9,28 @@
  * Responsibility:  Render an explosion on the screen.
  */
 
-import IDraw from "../Interfaces/IDraw";
+import BaseGameObject from "../Base/BaseGameObject";
 import { Explosion } from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
-import { cloneObject, getFrameCenter, getNewLocation, setFrameColors } from "../Utility/Lib";
+import { Particle } from "../Particles/Particle";
+import Runner from "../Runner";
+import GameObjectType from "../Types/GameObject";
+import { cloneObject, getFrameCenter, setFrameColors } from "../Utility/Lib";
 import renderFrame from "./RenderFrame";
 
-export default class RenderExplosion implements IDraw {
+export default class RenderExplosion extends BaseGameObject {
 
     private startTick?: number;
     private explosion: Explosion;
-    private location: GameLocation;
 
     private particles: Array<{ frame: string[][]; location: GameLocation, speed: number }> = [];
+
     /**
      *
      */
     constructor(explosion: Explosion, location: GameLocation) {
+        super();
+
         this.explosion = cloneObject(explosion);
         this.location = location;
 
@@ -52,6 +57,13 @@ export default class RenderExplosion implements IDraw {
         }
     }
 
+    public getExplosion(): Explosion {
+        return undefined;
+    }
+    public getObjectType(): GameObjectType {
+        return "explosion";
+    }
+
     public draw(tick: number): void {
 
         if (!this.startTick) {
@@ -62,19 +74,17 @@ export default class RenderExplosion implements IDraw {
         if (tick < this.startTick + this.explosion.explosionCenterDelay) {
             renderFrame(this.location, this.explosion.frame);
         } else {
-            // Render the particles.
+            // Register the particles.
             for (let index = 0; index < this.particles.length; index++) {
                 const particle = this.particles[index];
                 const particleFrame = particle.frame;
                 const particleLocation = particle.location;
+                const angle = this.explosion.angles[index];
 
-                renderFrame(particleLocation, particleFrame);
+                const speed = this.explosion.useSpeed ? this.explosion.speed : this.explosion.speeds[index];
 
-                const particleAngle = this.explosion.angles[index];
-
-                const location = getNewLocation(particleAngle, particle.speed, particle.location.left, particle.location.top);
-                const newSpeed = particle.speed *= this.explosion.acceleration;
-                this.particles[index] = { ...particle, location, speed: newSpeed };
+                const p = new Particle(particleFrame, angle, speed, this.explosion.acceleration, particleLocation);
+                Runner.register(p);
             }
         }
     }

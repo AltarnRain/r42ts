@@ -6,7 +6,7 @@
 
 import { getNumberFrames } from "../Assets/Characters";
 import CGAColors from "../Constants/CGAColors";
-import IDraw from "../Interfaces/IDraw";
+import { IDraw } from "../Interfaces/IDraw";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
@@ -73,7 +73,7 @@ export class LevelIndicator implements IDraw {
     /**
      * Draw the level indicator.
      */
-    public draw(_: number): void {
+    public draw(): void {
         const paddedLevelString = padLeft(this.level.toString(), 2, "0");
 
         const rightNumber = paddedLevelString[1];

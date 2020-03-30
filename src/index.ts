@@ -9,9 +9,7 @@
  * Responsibility:  Entry point for the game
  */
 
-import PlayerExplosionAsset from "./Assets/Explosions/PlayerExplosion";
 import CGAColors from "./Constants/CGAColors";
-import Drawer from "./Drawer";
 import BirdEnemy from "./Enemies/Bird";
 import BirdFrames from "./Frames/BirdFrames";
 import { LevelIndicator } from "./GameScreen/LevelIndicator";
@@ -20,8 +18,8 @@ import ScoreBoard from "./GameScreen/ScoreBoard";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
-import RenderExplosion from "./Render/RenderExplosion";
 import renderFrame from "./Render/RenderFrame";
+import Runner from "./Runner";
 import { setRandomFrameColors } from "./Utility/Lib";
 
 window.onload = () => {
@@ -36,22 +34,18 @@ window.onload = () => {
             case "player": {
 
                 registerListeners();
-                const drawer = new Drawer();
                 const player = new Player();
-                const scoreboard = new ScoreBoard();
-                const lives = new Lives();
                 const bird = new BirdEnemy();
+
+                const lives = new Lives();
+                const scoreboard = new ScoreBoard();
                 const levelIndicator = new LevelIndicator();
 
-                // const explosion01 = new RenderExplosion(Explosion01, {left: 500, top: 500});
-                const playerExplosion = new RenderExplosion(PlayerExplosionAsset, { left: 500, top: 500 } );
-                // drawer.register(player);
-                // drawer.register(scoreboard);
-                // drawer.register(lives);
-                // drawer.register(bird);
-                // drawer.register(levelIndicator);
-                // drawer.register(explosion01);
-                drawer.register(playerExplosion);
+                Runner.register(player);
+                Runner.register(bird);
+                Runner.registerDrawable(scoreboard);
+                Runner.registerDrawable(lives);
+                Runner.registerDrawable(scoreboard);
 
                 // player starts with two lives by default.
                 lives.setLives(2);
@@ -65,7 +59,7 @@ window.onload = () => {
                     addLevel: () => levelIndicator.addLevel(),
                 };
 
-                drawer.start();
+                Runner.get().start();
 
                 break;
             }
