@@ -10,9 +10,14 @@
  */
 
 import BaseGameObject from "./Base/BaseGameObject";
+import { fps } from "./Constants/Constants";
 import { DrawGameField } from "./GameScreen/StaticRenders";
 import { IDraw } from "./Interfaces/IDraw";
 import Player from "./Player/Player";
+import KeyboardState from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
+import PlayerBullet from "./Player/PlayerBullet";
+import { PlayerFrames } from "./Frames/PlayerFrames";
+import { PlayerBulletFrame } from "./Frames/PlayerBulletFrame";
 
 /**
  * Draws IDrawable classes.
@@ -55,11 +60,13 @@ export default class Runner {
      */
     private player: BaseGameObject;
 
+    private playerBullet: PlayerBullet | undefined;
+
     /**
      * Constructs the Animator
      * @param {IGameObject} drawable object.
      */
-    private constructor(private fps: number = 60) {
+    private constructor() {
         this.run = this.run.bind(this);
     }
 
@@ -87,14 +94,27 @@ export default class Runner {
         if (!this.rendering) {
 
             // Runs all animation at the passed FPS
-            if (tick - this.lastTick > (1000 / this.fps)) {
+            if (tick - this.lastTick > (1000 / 60)) {
 
                 this.rendering = true;
 
                 DrawGameField();
+
                 this.drawable.forEach((d) => d.draw(tick));
                 this.player.draw(tick);
                 this.gameobjects.forEach((a) => a.draw(tick));
+
+                // Bullet left the field.
+                if (this.playerBullet && !this.playerBullet.inField()) {
+                    this.playerBullet = undefined;
+                }
+
+                if (this.playerBullet !== undefined) {
+                    this.playerBullet.draw(tick);
+                } else if (KeyboardState.fire && this.playerBullet === undefined) {
+                    this.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, {...this.player.getLocation()});
+                }
+
                 this.rendering = false;
 
                 this.lastTick = tick;
@@ -121,7 +141,11 @@ export default class Runner {
         this.drawable.push(drawable);
     }
 
-    public registerPlayer(player: BaseGameObject): void {
+    /**
+     * Registers the player.
+     * @param {Player} player. The player object.
+     */
+    public registerPlayer(player: Player): void {
         this.player = player;
     }
 

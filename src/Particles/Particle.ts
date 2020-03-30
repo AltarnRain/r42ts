@@ -5,12 +5,11 @@
  */
 
 import BaseGameObject from "../Base/BaseGameObject";
-import GameLocation from "../Models/GameLocation";
-import DimensionProvider from "../Providers/DimensionProvider";
-import renderFrame from "../Render/RenderFrame";
-import { getNewLocation } from "../Utility/Lib";
 import { Explosion } from "../Models/Explosion";
+import GameLocation from "../Models/GameLocation";
+import renderFrame from "../Render/RenderFrame";
 import GameObjectType from "../Types/GameObject";
+import { cloneObject, getNewLocation } from "../Utility/Lib";
 
 /**
  * Module:          Particle
@@ -21,8 +20,10 @@ export class Particle extends BaseGameObject {
     /**
      *
      */
-    constructor(private frame: string[][], private angle: number, private speed: number, private acceleration: number, protected location: GameLocation) {
+    constructor(protected frame: string[][], protected angle: number, protected speed: number, protected acceleration: number, protected location: GameLocation) {
         super();
+
+        this.frame = cloneObject(frame);
     }
 
     public getExplosion(): Explosion {

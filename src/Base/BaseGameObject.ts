@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import { IDraw } from "../Interfaces/IDraw";
 import { Explosion } from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import GameObjectType from "../Types/GameObject";

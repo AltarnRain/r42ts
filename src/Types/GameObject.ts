@@ -9,6 +9,6 @@
  * Responsibility:  Define what types of game objects we have.
  */
 
-type GameObjectType = "particle" | "enemy" | "player" | "particle" | "explosion";
+type GameObjectType = "particle" | "enemy" | "player" | "particle" | "explosion" | "playerbullet";
 
 export default GameObjectType;
