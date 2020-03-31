@@ -9,7 +9,6 @@
  * Responsibility:  Provide dimensions for game objects. Not a part of the State because the entire game uses it.
  */
 
-import { ScoreBoardHeightFactor } from "../Constants/Constants";
 import { GameDimensions } from "../Models/GameDimensions";
 
 let gameDimensions: GameDimensions;

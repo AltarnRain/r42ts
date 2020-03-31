@@ -34,7 +34,7 @@ export default class Player extends BaseGameObject {
         super();
 
         if (location) {
-            this.location = location;
+            this.location = { ...location };
         } else {
             this.location = {
                 left: DimensionProvider().fullWidth / 2,

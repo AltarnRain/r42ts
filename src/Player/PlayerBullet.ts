@@ -20,7 +20,7 @@ export default class PlayerBullet extends Particle {
     /**
      * Construct the object.
      */
-    constructor(frame: string[][], protected angle: number, protected speed: number, protected acceleration: number, protected location: GameLocation) {
+    constructor(frame: string[][], angle: number, speed: number, acceleration: number, location: GameLocation) {
         super(frame, angle, speed, acceleration, location);
 
         // Make the player bullet appear from the ship nozzle.
