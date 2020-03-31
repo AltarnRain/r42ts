@@ -13,9 +13,13 @@ import BaseGameObject from "./Base/BaseGameObject";
 import PlayerBulletFrame from "./Frames/PlayerBulletFrame";
 import { DrawGameField } from "./GameScreen/StaticRenders";
 import KeyboardState from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
-import { IDraw } from "./Interfaces/IDraw";
+import IDraw from "./Interfaces/IDraw";
+import ExplosionCenter from "./Particles/ExplosionCenter";
+import Particle from "./Particles/Particle";
 import Player from "./Player/Player";
 import PlayerBullet from "./Player/PlayerBullet";
+import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
+import particleProvider from "./Providers/ParticleProvider";
 
 export default class Runner {
 
@@ -56,6 +60,16 @@ export default class Runner {
     private playerBullet: PlayerBullet | undefined;
 
     /**
+     * Particles travelling on the screen.
+     */
+    private particles: Particle[] = [];
+
+    /**
+     * Explosion centers on the screen.
+     */
+    private explosionCenters: ExplosionCenter[] = [];
+
+    /**
      * Constructs the Runner.
      */
     private constructor() {
@@ -94,10 +108,20 @@ export default class Runner {
                 this.player.draw(tick);
             }
 
-            this.gameobjects.forEach((a) => a.draw(tick));
+            this.gameobjects.forEach((go) => go.draw(tick));
+
+            if (this.particles.length > 0) {
+                this.particles.forEach((p) => p.draw(tick));
+                this.particles = this.particles.filter((p) => !p.inScreen());
+            }
+
+            if (this.explosionCenters.length > 0) {
+                this.explosionCenters.forEach((ec) => ec.draw(tick));
+                this.explosionCenters = this.explosionCenters.filter((ec) => ec.fizzledOut());
+            }
 
             // Bullet left the field.
-            if (this.playerBullet && !this.playerBullet.inField()) {
+            if (this.playerBullet && !this.playerBullet.inScreen()) {
                 this.playerBullet = undefined;
             }
 
@@ -107,10 +131,35 @@ export default class Runner {
                 this.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, { ...this.player.getLocation() });
             }
 
-            this.lastTick = tick;
+            if (KeyboardState.selfDestruct) {
 
-            this.handler = window.requestAnimationFrame(this.run);
+                if (this.gameobjects.length > 0 && this.player !== undefined) {
+
+                    const assets = [
+                        ...this.gameobjects,
+                        this.player
+                    ];
+
+                    // Reset main rendering.
+                    this.gameobjects = [];
+                    this.player = undefined;
+
+                    const explosionsLocations = assets.map((a) => explosionLocationProvider(a));
+
+                    for (const explosionsLocation of explosionsLocations) {
+                        const center = new ExplosionCenter(explosionsLocation.explosion.frame, explosionsLocation.location, explosionsLocation.explosion.explosionCenterDelay);
+                        const particles = particleProvider(explosionsLocation.explosion, explosionsLocation.location);
+
+                        this.particles.push(...particles);
+                        this.explosionCenters.push(center);
+                    }
+                }
+            }
+
+            this.lastTick = tick;
         }
+
+        this.handler = window.requestAnimationFrame(this.run);
     }
 
     /**

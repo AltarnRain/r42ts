@@ -57,6 +57,7 @@ window.onload = () => {
                     addLife: () => lives.addLife(),
                     setLevel: (n: number) => levelIndicator.setLevel(n),
                     addLevel: () => levelIndicator.addLevel(),
+                    restart: () => Runner.get().start(),
                 };
 
                 Runner.get().start();

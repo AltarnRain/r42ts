@@ -12,7 +12,7 @@ import GameLocation from "./GameLocation";
  * Responsibility:  Combines an explosion asset and a game location
  */
 
-export default interface ExplisionLocation {
+export default interface ExplosionLocation {
     /**
      * Explosion asset.
      */

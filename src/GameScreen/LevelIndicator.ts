@@ -6,7 +6,7 @@
 
 import { getNumberFrames } from "../Assets/Characters";
 import CGAColors from "../Constants/CGAColors";
-import { IDraw } from "../Interfaces/IDraw";
+import IDraw from "../Interfaces/IDraw";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";

@@ -9,7 +9,7 @@
  * Responsibility:  Defines a method 'draw'
  */
 
-export interface IDraw {
+export default interface IDraw {
 
     /**
      * Draw the object

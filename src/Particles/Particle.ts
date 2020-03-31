@@ -7,6 +7,7 @@
 import BaseGameObject from "../Base/BaseGameObject";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
+import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import GameObjectType from "../Types/GameObject";
 import { cloneObject, getNewLocation } from "../Utility/Lib";
@@ -16,7 +17,7 @@ import { cloneObject, getNewLocation } from "../Utility/Lib";
  * Responsibility:  Render a single particle.
  */
 
-export class Particle extends BaseGameObject {
+export default class Particle extends BaseGameObject {
 
     /**
      * Frame of the particle.
@@ -72,5 +73,22 @@ export class Particle extends BaseGameObject {
 
         this.location = getNewLocation(this.angle, this.speed, this.location.left, this.location.top);
         this.speed *= this.acceleration;
+    }
+
+    /**
+     * Returns true if the particle is still in the game field.
+     */
+    public inScreen(): boolean {
+
+        const {
+            gameFieldTop,
+            fullHeight,
+            fullWidth,
+        } = DimensionProvider();
+
+        const yBounds = this.location.top < gameFieldTop || this.location.top > fullHeight;
+        const xBounds = this.location.left < 0 || this.location.left > fullWidth;
+
+        return xBounds || yBounds;
     }
 }

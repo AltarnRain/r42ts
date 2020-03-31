@@ -14,7 +14,6 @@ import GameObjectType from "../Types/GameObject";
  */
 
 export default abstract class BaseGameObject {
-
     /**
      * Game object location.
      */

@@ -5,7 +5,7 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import { Particle } from "../Particles/Particle";
+import Particle from "../Particles/Particle";
 import DimensionProvider from "../Providers/DimensionProvider";
 import GameObjectType from "../Types/GameObject";
 import { setFrameColors } from "../Utility/Lib";
@@ -32,12 +32,5 @@ export default class PlayerBullet extends Particle {
 
     public getObjectType(): GameObjectType {
         return "playerbullet";
-    }
-
-    /**
-     * Returns true if the bullet is still in the game field.
-     */
-    public inField(): boolean {
-        return this.location.top >= DimensionProvider().gameFieldTop;
     }
 }
