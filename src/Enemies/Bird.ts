@@ -85,24 +85,22 @@ export default class BirdEnemy extends BaseGameObject {
         this.frameProvider = new FrameProvider(this.frames, getRandomFrameKeyIndex(this.frames));
         this.currentFrame = this.frameProvider.getFrame();
 
-        const birdDimensions = getFrameDimensions(this.currentFrame);
+        const { width, height } = getFrameDimensions(BirdFrames.F0);
 
         // Calculate random left position
         const left = randomNumberInRange(
-            DimensionProvider().fullWidth - birdDimensions.width,
-            birdDimensions.width
+            DimensionProvider().fullWidth - width,
+            width
         );
 
         const top = randomNumberInRange(
-            DimensionProvider().gameFieldTop + birdDimensions.height + 50,
-            DimensionProvider().gameFieldTop + birdDimensions.height);
+            DimensionProvider().gameFieldTop + height + 50,
+            DimensionProvider().gameFieldTop + height);
 
         this.location = {
             left,
             top,
         };
-
-        const { width, height } = getFrameDimensions(BirdFrames.F0);
 
         this.frameWidth = width;
         this.frameHeight = height;
