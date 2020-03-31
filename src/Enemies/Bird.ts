@@ -14,7 +14,7 @@ import BaseGameObject from "../Base/BaseGameObject";
 import CGAColors from "../Constants/CGAColors";
 import BirdFrames from "../Frames/BirdFrames";
 import TickHandler from "../Handlers/TickHandler";
-import { Explosion } from "../Models/Explosion";
+import Explosion from "../Models/Explosion";
 import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
 import renderFrame from "../Render/RenderFrame";

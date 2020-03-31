@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Explosion } from "../Models/Explosion";
+import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import GameObjectType from "../Types/GameObject";
 

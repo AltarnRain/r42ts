@@ -9,7 +9,7 @@
  * Responsibility:  Provide an array of particle objects for an Explosion
  */
 
-import { Explosion } from "../Models/Explosion";
+import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { Particle } from "../Particles/Particle";
 import { cloneObject, setFrameColors } from "../Utility/Lib";

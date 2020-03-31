@@ -13,7 +13,7 @@ import PlayerExplosion from "../Assets/Explosions/PlayerExplosion";
 import BaseGameObject from "../Base/BaseGameObject";
 import { PlayerFrames } from "../Frames/PlayerFrames";
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
-import { Explosion } from "../Models/Explosion";
+import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";

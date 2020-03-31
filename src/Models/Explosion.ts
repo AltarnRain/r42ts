@@ -9,7 +9,7 @@
  * Responsibility:  Definition for an Explosion asset.
  */
 
-export interface Explosion {
+export default interface Explosion {
 
     frame: string[][];
 
