@@ -11,8 +11,10 @@
 
 import Dictionary from "../Models/Dictionary";
 
-export const PlayerBulletFrame: Dictionary<string[][]> = {
+const PlayerBulletFrame: Dictionary<string[][]> = {
     F0: [
         ["E", "E"]
     ]
 };
+
+export default PlayerBulletFrame;

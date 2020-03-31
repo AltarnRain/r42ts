@@ -9,7 +9,6 @@
  * Responsibility:  Constants used for the player.
  */
 
-
 let gameControlKeysCache: string[];
 
 export const GameControlKeys = {
