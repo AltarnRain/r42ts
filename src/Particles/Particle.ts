@@ -18,15 +18,38 @@ import { cloneObject, getNewLocation } from "../Utility/Lib";
 
 export class Particle extends BaseGameObject {
 
+    /**
+     * Frame of the particle.
+     */
     protected frame: string[][];
 
     /**
-     *
+     * Particle angle.
      */
-    constructor(frame: string[][], protected angle: number, protected speed: number, protected acceleration: number, protected location: GameLocation) {
+    protected angle: number;
+
+    /**
+     * Particle speed
+     */
+    protected speed: number;
+
+    /**
+     * Particle acceleration. 1 = no acceleration.
+     */
+    protected acceleration: number;
+
+    /**
+     * Construct the particle.
+     */
+    constructor(frame: string[][], angle: number, speed: number, acceleration: number, location: GameLocation) {
         super();
 
+        this.location = { ...location };
+
         this.frame = cloneObject(frame);
+        this.angle = angle;
+        this.speed = speed;
+        this.acceleration = acceleration;
     }
 
     /**
