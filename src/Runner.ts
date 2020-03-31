@@ -6,7 +6,7 @@
 
 /**
  * Module:          Runs the game
- * Responsibility:  Draw an object.
+ * Responsibility:  Main game loop.
  */
 
 import BaseGameObject from "./Base/BaseGameObject";
@@ -17,9 +17,6 @@ import { IDraw } from "./Interfaces/IDraw";
 import Player from "./Player/Player";
 import PlayerBullet from "./Player/PlayerBullet";
 
-/**
- * Draws IDrawable classes.
- */
 export default class Runner {
 
     /**
@@ -44,11 +41,6 @@ export default class Runner {
     private lastTick: number = 0;
 
     /**
-     * Flag that tracks if a render is in progress.
-     */
-    private rendering: boolean;
-
-    /**
      * Static reference to this class.
      */
     private static runner: Runner;
@@ -58,65 +50,64 @@ export default class Runner {
      */
     private player: BaseGameObject;
 
+    /**
+     * Quick reference to the player bullet.
+     */
     private playerBullet: PlayerBullet | undefined;
 
     /**
-     * Constructs the Animator
-     * @param {IGameObject} drawable object.
+     * Constructs the Runner.
      */
     private constructor() {
         this.run = this.run.bind(this);
     }
 
     /**
-     * Start the animation.
+     * Start the runner.
      */
     public start(): void {
         this.handler = window.requestAnimationFrame(this.run);
     }
 
     /**
-     * Stop the animation.
+     * Stop the runner.
      */
     public stop(): void {
         window.cancelAnimationFrame(this.handler);
     }
 
     /**
-     * Runs the animation.
+     * Runs the main game loop.
      * @param {number} tick. The current tick.
      */
     private run(tick: number): void {
+        // Runs all animation at the passed FPS
+        if (tick - this.lastTick > (1000 / 60)) {
 
-        // Only run if a render is not in progress
-        if (!this.rendering) {
+            DrawGameField();
 
-            // Runs all animation at the passed FPS
-            if (tick - this.lastTick > (1000 / 60)) {
-
-                this.rendering = true;
-
-                DrawGameField();
-
+            if (this.drawable) {
                 this.drawable.forEach((d) => d.draw(tick));
-                this.player.draw(tick);
-                this.gameobjects.forEach((a) => a.draw(tick));
-
-                // Bullet left the field.
-                if (this.playerBullet && !this.playerBullet.inField()) {
-                    this.playerBullet = undefined;
-                }
-
-                if (this.playerBullet !== undefined) {
-                    this.playerBullet.draw(tick);
-                } else if (KeyboardState.fire && this.playerBullet === undefined) {
-                    this.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, {...this.player.getLocation()});
-                }
-
-                this.rendering = false;
-
-                this.lastTick = tick;
             }
+
+            if (this.player) {
+                this.player.draw(tick);
+            }
+
+            this.gameobjects.forEach((a) => a.draw(tick));
+
+            // Bullet left the field.
+            if (this.playerBullet && !this.playerBullet.inField()) {
+                this.playerBullet = undefined;
+            }
+
+            if (this.playerBullet !== undefined) {
+                this.playerBullet.draw(tick);
+            } else if (KeyboardState.fire && this.playerBullet === undefined) {
+                this.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, { ...this.player.getLocation() });
+            }
+
+            this.lastTick = tick;
 
             this.handler = window.requestAnimationFrame(this.run);
         }
