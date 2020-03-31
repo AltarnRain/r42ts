@@ -17,23 +17,34 @@ import { cloneObject, getNewLocation } from "../Utility/Lib";
  */
 
 export class Particle extends BaseGameObject {
+
+    protected frame: string[][];
+
     /**
      *
      */
-    constructor(protected frame: string[][], protected angle: number, protected speed: number, protected acceleration: number, protected location: GameLocation) {
+    constructor(frame: string[][], protected angle: number, protected speed: number, protected acceleration: number, protected location: GameLocation) {
         super();
 
         this.frame = cloneObject(frame);
     }
 
+    /**
+     * Returns an explosion asset.
+     */
     public getExplosion(): Explosion {
         return undefined;
     }
+
+    /**
+     * Returns the object type.
+     */
     public getObjectType(): GameObjectType {
         return "particle";
     }
 
     public draw(_: number): void {
+
         renderFrame(this.location, this.frame);
 
         this.location = getNewLocation(this.angle, this.speed, this.location.left, this.location.top);

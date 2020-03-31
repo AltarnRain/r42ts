@@ -45,7 +45,7 @@ window.onload = () => {
                 Runner.register(bird);
                 Runner.registerDrawable(scoreboard);
                 Runner.registerDrawable(lives);
-                Runner.registerDrawable(scoreboard);
+                Runner.registerDrawable(levelIndicator);
 
                 // player starts with two lives by default.
                 lives.setLives(2);

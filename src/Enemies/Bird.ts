@@ -77,10 +77,10 @@ export default class BirdEnemy extends BaseGameObject {
         this.onFrameChange = this.onFrameChange.bind(this);
         this.onColorChange = this.onColorChange.bind(this);
 
+        this.frames = cloneObject(BirdFrames);
+
         this.frameTickHandler = new TickHandler(80, this.onFrameChange);
         this.colorTickHandler = new TickHandler(40, this.onColorChange);
-
-        this.frames = cloneObject(BirdFrames);
 
         this.frameProvider = new FrameProvider(this.frames, getRandomFrameKeyIndex(this.frames));
         this.currentFrame = this.frameProvider.getFrame();
@@ -115,7 +115,9 @@ export default class BirdEnemy extends BaseGameObject {
     public draw(tick: number): void {
         this.frameTickHandler.tick(tick);
         this.colorTickHandler.tick(tick);
+
         this.move();
+
         renderFrame(this.location, this.currentFrame);
     }
 

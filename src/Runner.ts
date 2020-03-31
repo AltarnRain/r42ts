@@ -10,14 +10,12 @@
  */
 
 import BaseGameObject from "./Base/BaseGameObject";
-import { fps } from "./Constants/Constants";
+import { PlayerBulletFrame } from "./Frames/PlayerBulletFrame";
 import { DrawGameField } from "./GameScreen/StaticRenders";
+import KeyboardState from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import { IDraw } from "./Interfaces/IDraw";
 import Player from "./Player/Player";
-import KeyboardState from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import PlayerBullet from "./Player/PlayerBullet";
-import { PlayerFrames } from "./Frames/PlayerFrames";
-import { PlayerBulletFrame } from "./Frames/PlayerBulletFrame";
 
 /**
  * Draws IDrawable classes.

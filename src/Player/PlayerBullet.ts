@@ -8,6 +8,7 @@ import GameLocation from "../Models/GameLocation";
 import { Particle } from "../Particles/Particle";
 import DimensionProvider from "../Providers/DimensionProvider";
 import GameObjectType from "../Types/GameObject";
+import { setFrameColors } from "../Utility/Lib";
 
 /**
  * Module:          Player bullet
@@ -17,14 +18,16 @@ import GameObjectType from "../Types/GameObject";
 export default class PlayerBullet extends Particle {
 
     /**
-     *
+     * Construct the object.
      */
-    constructor(protected frame: string[][], protected angle: number, protected speed: number, protected acceleration: number, protected location: GameLocation) {
+    constructor(frame: string[][], protected angle: number, protected speed: number, protected acceleration: number, protected location: GameLocation) {
         super(frame, angle, speed, acceleration, location);
 
         // Make the player bullet appear from the ship nozzle.
         this.location.left = location.left + DimensionProvider().minPixelSize * 2;
-        this.location.top = location.top + DimensionProvider().minPixelSize;
+        this.location.top = location.top - DimensionProvider().minPixelSize * 2;
+
+        setFrameColors(this.frame);
     }
 
     public getObjectType(): GameObjectType {
@@ -32,7 +35,7 @@ export default class PlayerBullet extends Particle {
     }
 
     /**
-     * Returns true if the bullet is still moving.
+     * Returns true if the bullet is still in the game field.
      */
     public inField(): boolean {
         return this.location.top >= DimensionProvider().gameFieldTop;
