@@ -8,7 +8,7 @@ import GameLocation from "../Models/GameLocation";
 import Particle from "../Particles/Particle";
 import DimensionProvider from "../Providers/DimensionProvider";
 import GameObjectType from "../Types/GameObject";
-import { setFrameColors } from "../Utility/Lib";
+import { convertFrameColor } from "../Utility/Lib";
 
 /**
  * Module:          Player bullet
@@ -27,7 +27,7 @@ export default class PlayerBullet extends Particle {
         this.location.left = location.left + DimensionProvider().minPixelSize * 2;
         this.location.top = location.top - DimensionProvider().minPixelSize * 2;
 
-        setFrameColors(this.frame);
+        convertFrameColor(this.frame);
     }
 
     public getObjectType(): GameObjectType {

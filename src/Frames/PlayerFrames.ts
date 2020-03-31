@@ -9,12 +9,8 @@
  * Responsibility:  Contains the frame of the player ship.
  */
 
-import Dictionary from "../Models/Dictionary";
-
-export const PlayerFrames: Dictionary<string[][]> = {
-    F0: [
-        ["0", "0", "B", "B", "0", "0"],
-        ["A", "B", "F", "F", "B", "A"],
-        ["B", "F", "0", "0", "F", "B"]
-    ]
-};
+export const PlayerFrames: string[][] = [
+    ["0", "0", "B", "B", "0", "0"],
+    ["A", "B", "F", "F", "B", "A"],
+    ["B", "F", "0", "0", "F", "B"]
+];

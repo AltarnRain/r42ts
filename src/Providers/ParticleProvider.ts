@@ -12,7 +12,7 @@
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import Particle from "../Particles/Particle";
-import { cloneObject, setFrameColors } from "../Utility/Lib";
+import { cloneObject, convertFrameColor } from "../Utility/Lib";
 
 export default function particleProvider(explosion: Explosion, location: GameLocation) {
 
@@ -25,7 +25,7 @@ export default function particleProvider(explosion: Explosion, location: GameLoc
         const particleFrameIndex = exp.particleFrames[i];
         const particleFrame = exp.particles[particleFrameIndex];
 
-        setFrameColors(particleFrame);
+        convertFrameColor(particleFrame);
 
         const angle = exp.angles[i];
         const speed = exp.useSpeed ? exp.speed : exp.speeds[i];

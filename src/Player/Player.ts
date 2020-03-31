@@ -9,7 +9,6 @@
  * Responsibility:  Player ship
  */
 
-import PlayerExplosion from "../Assets/Explosions/PlayerExplosion";
 import BaseGameObject from "../Base/BaseGameObject";
 import { PlayerFrames } from "../Frames/PlayerFrames";
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
@@ -17,15 +16,15 @@ import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import Frames from "../Types/Frames";
 import GameObjectType from "../Types/GameObject";
-import { cloneObject, getAngle, getNewLocation, setFramesColors, getFrameLocations } from "../Utility/Lib";
+import { cloneObject, getAngle, getFrameLocations, getNewLocation, convertFrameColor } from "../Utility/Lib";
+import PlayerExplosion from "./PlayerExplosion";
 
 export default class Player extends BaseGameObject {
     /**
      * Frames used by the player ship
      */
-    private frames: Frames;
+    private frame: string[][];
 
     /**
      * Construct the class.
@@ -42,9 +41,9 @@ export default class Player extends BaseGameObject {
             };
         }
 
-        this.frames = cloneObject(PlayerFrames);
+        this.frame = cloneObject(PlayerFrames);
 
-        setFramesColors(this.frames);
+        convertFrameColor(this.frame);
     }
 
     public getExplosion(): Explosion {
@@ -67,13 +66,13 @@ export default class Player extends BaseGameObject {
             this.location = getNewLocation(angle, 15, left, top);
         }
 
-        renderFrame(this.location, this.frames.F0);
+        renderFrame(this.location, this.frame);
     }
 
     /**
      * Returns the locations occupied by the object.
      */
     public getLocations(): GameLocation[] {
-        return getFrameLocations(this.frames.F0, this.location);
+        return getFrameLocations(this.frame, this.location);
     }
 }

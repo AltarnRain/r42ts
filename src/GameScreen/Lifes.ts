@@ -8,8 +8,7 @@ import CGAColors from "../Constants/CGAColors";
 import { PlayerFrames } from "../Frames/PlayerFrames";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import Frames from "../Types/Frames";
-import { cloneObject, getFrameDimensions, setFramesColor } from "../Utility/Lib";
+import { cloneObject, getFrameDimensions, setFrameColor } from "../Utility/Lib";
 
 /**
  * Module:          Lives
@@ -26,7 +25,7 @@ export default class Lives {
     /**
      * Frame for a player life.
      */
-    private lifeFrames: Frames;
+    private lifeFrame: string[][];
 
     /**
      * Top position
@@ -41,10 +40,10 @@ export default class Lives {
     constructor() {
 
         // Clone the player frames so we can safely alter them.
-        this.lifeFrames = cloneObject(PlayerFrames);
+        this.lifeFrame = cloneObject(PlayerFrames);
 
         // Lives are completely yellow player ships
-        setFramesColor(this.lifeFrames, CGAColors.yellow);
+        setFrameColor(this.lifeFrame, CGAColors.yellow);
 
         this.top = DimensionProvider().maxPixelSize;
         this.leftStartPostion = DimensionProvider().fullWidth - DimensionProvider().maxPixelSize * 18;
@@ -82,8 +81,8 @@ export default class Lives {
         // Start five game pixels from the right.
         for (let lives = 1; lives <= 7; lives++) {
             if (lives <= this.lives) {
-                left = left - DimensionProvider().maxPixelSize * 2 - getFrameDimensions(this.lifeFrames.F0).width;
-                renderFrame({ left, top: this.top }, this.lifeFrames.F0);
+                left = left - DimensionProvider().maxPixelSize * 2 - getFrameDimensions(this.lifeFrame).width;
+                renderFrame({ left, top: this.top }, this.lifeFrame);
             }
         }
     }

@@ -147,10 +147,10 @@ export function setRandomFrameColors(frames: Frames, colors: string[]): void {
  * Updates a frame to actual CGA colors.
  * @param {Frames} frames. All frames.
  */
-export function setFramesColors(frames: Frames): void {
+export function convertFramesColors(frames: Frames): void {
     Object.keys(frames).forEach((key) => {
         const frame = frames[key];
-        setFrameColors(frame);
+        convertFrameColor(frame);
     });
 }
 
@@ -158,7 +158,7 @@ export function setFramesColors(frames: Frames): void {
  * Set the predefined color for a single frame.
  * @param {string[][]} frame. A single frame.
  */
-export function setFrameColors(frame: string[][]) {
+export function convertFrameColor(frame: string[][]) {
     frame.forEach((row, rowIndex) => {
         row.forEach((cellColor, cellIndex) => {
             if (cellColor !== "0") {
@@ -200,12 +200,17 @@ export function setVariableFrameColor(frame: string[][], color: string) {
  */
 export function setFramesColor(frames: Frames, color: string): void {
     Object.keys(frames).forEach((key) => {
-        frames[key].forEach((row, rowIndex) => {
-            row.forEach((cellColor, cellIndex) => {
-                if (cellColor !== "0") {
-                    frames[key][rowIndex][cellIndex] = color;
-                }
-            });
+        const frame = frames[key];
+        setFrameColor(frame, color);
+    });
+}
+
+export function setFrameColor(frame: string[][], color: string) {
+    frame.forEach((row, rowIndex) => {
+        row.forEach((cellColor, cellIndex) => {
+            if (cellColor !== "0") {
+                frame[rowIndex][cellIndex] = color;
+            }
         });
     });
 }
