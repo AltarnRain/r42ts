@@ -277,3 +277,29 @@ export function getFrameCenter(location: GameLocation, frame: string[][]): GameL
         top: location.top + dimensions.height / 2,
     };
 }
+
+/**
+ * Calculates a game location for every colored pixel in a frame.
+ * @param {string[][]} frame. A frame.
+ * @param {GameLocation }location. Top left location coordinates.
+ */
+export function getFrameLocations(frame: string[][], location: GameLocation): GameLocation[] {
+    const returnValue: GameLocation[] = [];
+
+    const {
+        maxPixelSize
+    } = DimensionProvider();
+
+    frame.forEach((row, rowIndex) => row.forEach((col, colIndex) => {
+        if (col !== "0") {
+            const pixelLocation: GameLocation = {
+                left: colIndex * maxPixelSize + location.left,
+                top: rowIndex * maxPixelSize + location.top,
+            };
+
+            returnValue.push(pixelLocation);
+        }
+    }));
+
+    return returnValue;
+}

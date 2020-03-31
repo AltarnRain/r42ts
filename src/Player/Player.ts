@@ -19,7 +19,7 @@ import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
 import GameObjectType from "../Types/GameObject";
-import { cloneObject, getAngle, getNewLocation, setFramesColors } from "../Utility/Lib";
+import { cloneObject, getAngle, getNewLocation, setFramesColors, getFrameLocations } from "../Utility/Lib";
 
 export default class Player extends BaseGameObject {
     /**
@@ -68,5 +68,12 @@ export default class Player extends BaseGameObject {
         }
 
         renderFrame(this.location, this.frames.F0);
+    }
+
+    /**
+     * Returns the locations occupied by the object.
+     */
+    public getLocations(): GameLocation[] {
+        return getFrameLocations(this.frames.F0, this.location);
     }
 }

@@ -20,7 +20,8 @@ import FrameProvider from "../Providers/FrameProvider";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
 import GameObjectType from "../Types/GameObject";
-import { cloneObject, getFrameDimensions, getNewLocation, getRandomArrayElement, getRandomFrameKeyIndex, randomNumberInRange, setRandomFrameColors } from "../Utility/Lib";
+import { cloneObject, getFrameDimensions, getNewLocation, getRandomArrayElement, getRandomFrameKeyIndex, randomNumberInRange, setRandomFrameColors, getFrameLocations } from "../Utility/Lib";
+import GameLocation from "../Models/GameLocation";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 const speed = 11;
@@ -162,5 +163,12 @@ export default class BirdEnemy extends BaseGameObject {
      */
     private onColorChange(): void {
         setRandomFrameColors(this.frames, colors);
+    }
+
+    /**
+     * Returns the locations occupied by the object.
+     */
+    public getLocations(): GameLocation[] {
+        return getFrameLocations(this.currentFrame, this.location);
     }
 }

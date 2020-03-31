@@ -10,7 +10,7 @@ import GameLocation from "../Models/GameLocation";
 import renderFrame from "../Render/RenderFrame";
 import Frames from "../Types/Frames";
 import GameObjectType from "../Types/GameObject";
-import { cloneObject } from "../Utility/Lib";
+import { cloneObject, getFrameLocations } from "../Utility/Lib";
 
 /**
  * Module:          Explosion Center
@@ -67,5 +67,12 @@ export default class ExplosionCenter extends BaseGameObject {
 
     public fizzledOut(): boolean {
         return this.fizzled;
+    }
+
+    /**
+     * Returns the locations occupied by the object.
+     */
+    public getLocations(): GameLocation[] {
+        return getFrameLocations(this.frame, this.location);
     }
 }

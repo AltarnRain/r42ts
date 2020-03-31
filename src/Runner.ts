@@ -156,6 +156,34 @@ export default class Runner {
                 }
             }
 
+            if (this.player !== undefined || this.playerBullet !== undefined) {
+                const hittableObjects = [
+                    ...this.gameobjects,
+                    ...this.particles,
+                    ...this.explosionCenters
+                ].filter((o) => o !== undefined);
+
+                if (hittableObjects.length > 0) {
+                    for (const hittableObject of hittableObjects) {
+                        const type = hittableObject.getObjectType();
+
+                        switch (type) {
+                            case "explosion":
+                            case "particle":
+                            case "enemy":
+                                {
+                                    const loc = hittableObject.getLocation();
+
+                                }
+
+                        }
+
+
+                    }
+                }
+
+            }
+
             this.lastTick = tick;
         }
 

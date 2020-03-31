@@ -10,7 +10,7 @@ import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import GameObjectType from "../Types/GameObject";
-import { cloneObject, getNewLocation } from "../Utility/Lib";
+import { cloneObject, getNewLocation, getFrameLocations } from "../Utility/Lib";
 
 /**
  * Module:          Particle
@@ -90,5 +90,12 @@ export default class Particle extends BaseGameObject {
         const xBounds = this.location.left < 0 || this.location.left > fullWidth;
 
         return xBounds || yBounds;
+    }
+
+    /**
+     * Returns the locations occupied by the bullet.
+     */
+    public getLocations(): GameLocation[] {
+        return getFrameLocations(this.frame, this.location);
     }
 }

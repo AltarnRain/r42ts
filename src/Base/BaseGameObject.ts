@@ -33,6 +33,11 @@ export default abstract class BaseGameObject {
     }
 
     /**
+     * Returns the game location of every pixel for a game object.
+     */
+    public abstract getLocations(): GameLocation[];
+
+    /**
      * Get the explosion asset for this object. Returns undefined if the game object doesn't have an explosion.
      * For example: bullets and particles.
      */
