@@ -6,7 +6,7 @@
 
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
-import GameObjectType from "../Types/GameObject";
+import { GameObjectType } from "../Types/Types";
 
 /**
  * Module:          IDraw

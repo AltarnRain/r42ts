@@ -4,12 +4,13 @@
  * See LICENSE.MD.
  */
 
-import { getNumberFrames } from "../Assets/Characters";
+import Numbers from "../Assets/Numbers";
 import CGAColors from "../Constants/CGAColors";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import Frames from "../Types/Frames";
-import { cloneObject, getFrameDimensions, padLeft, setVariableFramesColor } from "../Utility/Lib";
+import { Frames } from "../Types/Types";
+import { setVariableFramesColor } from "../Utility/Frame";
+import { cloneObject, getFrameDimensions, padLeft } from "../Utility/Lib";
 
 /**
  * Module:          ScoreBoard
@@ -43,8 +44,7 @@ export default class ScoreBoard {
         this.spacing = 2 * DimensionProvider().maxPixelSize;
 
         // Create a clone of the number character frames so we can set their color without ruining the asset.
-        const numberFrames = getNumberFrames();
-        this.frames = cloneObject(numberFrames);
+        this.frames = cloneObject(Numbers);
 
         setVariableFramesColor(this.frames, CGAColors.yellow);
 

@@ -10,7 +10,7 @@
  */
 
 import "jest";
-import Frames from "../Types/Frames";
+import { Frames } from "../Types/Types";
 import { cloneObject, getRandomArrayElement, getRandomFrameKeyIndex, padLeft } from "../Utility/Lib";
 
 test("getRandomArrayElement", () => {

@@ -12,7 +12,8 @@
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import Particle from "../Particles/Particle";
-import { cloneObject, convertFrameColor } from "../Utility/Lib";
+import { convertFrameColor } from "../Utility/Frame";
+import { cloneObject } from "../Utility/Lib";
 
 export default function particleProvider(explosion: Explosion, location: GameLocation) {
 

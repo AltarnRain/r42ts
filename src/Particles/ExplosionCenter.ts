@@ -8,8 +8,7 @@ import BaseGameObject from "../Base/BaseGameObject";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import renderFrame from "../Render/RenderFrame";
-import Frames from "../Types/Frames";
-import GameObjectType from "../Types/GameObject";
+import { GameObjectType } from "../Types/Types";
 import { cloneObject, getFrameLocations } from "../Utility/Lib";
 
 /**

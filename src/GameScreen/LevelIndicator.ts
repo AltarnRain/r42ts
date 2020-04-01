@@ -4,13 +4,14 @@
  * See LICENSE.MD.
  */
 
-import { getNumberFrames } from "../Assets/Characters";
+import Numbers from "../Assets/Numbers";
 import CGAColors from "../Constants/CGAColors";
 import IDraw from "../Interfaces/IDraw";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import Frames from "../Types/Frames";
-import { cloneObject, padLeft, setVariableFramesColor } from "../Utility/Lib";
+import { Frames } from "../Types/Types";
+import { setVariableFramesColor } from "../Utility/Frame";
+import { cloneObject, padLeft } from "../Utility/Lib";
 
 /**
  * Module:          Level indicator
@@ -47,7 +48,7 @@ export class LevelIndicator implements IDraw {
         this.rightNumberLeft = DimensionProvider().fullWidth - DimensionProvider().maxPixelSize * 8;
         this.leftNumberLeft = DimensionProvider().fullWidth - DimensionProvider().maxPixelSize * 13;
 
-        this.frames = cloneObject(getNumberFrames());
+        this.frames = cloneObject(Numbers);
 
         setVariableFramesColor(this.frames, CGAColors.yellow);
 

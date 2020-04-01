@@ -9,8 +9,8 @@ import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import GameObjectType from "../Types/GameObject";
-import { cloneObject, getNewLocation, getFrameLocations } from "../Utility/Lib";
+import { GameObjectType } from "../Types/Types";
+import { cloneObject, getFrameLocations, getNewLocation } from "../Utility/Lib";
 
 /**
  * Module:          Particle

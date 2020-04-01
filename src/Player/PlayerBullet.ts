@@ -7,8 +7,8 @@
 import GameLocation from "../Models/GameLocation";
 import Particle from "../Particles/Particle";
 import DimensionProvider from "../Providers/DimensionProvider";
-import GameObjectType from "../Types/GameObject";
-import { convertFrameColor } from "../Utility/Lib";
+import { GameObjectType } from "../Types/Types";
+import { convertFrameColor } from "../Utility/Frame";
 
 /**
  * Module:          Player bullet

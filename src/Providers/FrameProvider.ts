@@ -9,7 +9,7 @@
  * Responsibility:  Provide the next frame to animate.
  */
 
-import Frames from "../Types/Frames";
+import { Frames } from "../Types/Types";
 
 export default class FrameProvider {
     /**
@@ -72,7 +72,7 @@ export default class FrameProvider {
             this.frameIndex = this.maxIndex;
         }
 
-        if ((this.frameIndex === this.maxIndex) || this.frameIndex === 0 ) {
+        if ((this.frameIndex === this.maxIndex) || this.frameIndex === 0) {
             this.add *= -1;
         }
     }

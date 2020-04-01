@@ -20,7 +20,7 @@ import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 import Runner from "./Runner";
-import { setRandomFrameColors } from "./Utility/Lib";
+import { setRandomFrameColors } from "./Utility/Frame";
 
 window.onload = () => {
 
@@ -31,7 +31,7 @@ window.onload = () => {
         canvas.height = DimensionProvider().fullHeight;
 
         switch (window.location.search.replace("?", "")) {
-            case "player": {
+            case "playground": {
 
                 registerListeners();
                 const player = new Player();
@@ -64,16 +64,6 @@ window.onload = () => {
 
                 break;
             }
-
-            case "renderTest":
-                setRandomFrameColors(BirdFrames, [CGAColors.green]);
-
-                renderFrame({ left: 10, top: 10 }, BirdFrames.F0);
-                renderFrame({ left: 10, top: 50 }, BirdFrames.F1);
-                renderFrame({ left: 10, top: 100 }, BirdFrames.F2);
-                renderFrame({ left: 10, top: 150 }, BirdFrames.F3);
-
-                break;
 
             default:
             // StartGame();

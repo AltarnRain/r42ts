@@ -8,7 +8,8 @@ import CGAColors from "../Constants/CGAColors";
 import { PlayerFrames } from "../Frames/PlayerFrames";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import { cloneObject, getFrameDimensions, setFrameColor } from "../Utility/Lib";
+import { setFrameColor } from "../Utility/Frame";
+import { cloneObject, getFrameDimensions } from "../Utility/Lib";
 
 /**
  * Module:          Lives

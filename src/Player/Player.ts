@@ -16,8 +16,9 @@ import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import GameObjectType from "../Types/GameObject";
-import { cloneObject, getAngle, getFrameLocations, getNewLocation, convertFrameColor } from "../Utility/Lib";
+import { GameObjectType } from "../Types/Types";
+import { convertFrameColor } from "../Utility/Frame";
+import { cloneObject, getAngle, getFrameLocations, getNewLocation } from "../Utility/Lib";
 import PlayerExplosion from "./PlayerExplosion";
 
 export default class Player extends BaseGameObject {

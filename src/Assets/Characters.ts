@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import Frames from "../Types/Frames";
+import { Frames } from "../Types/Types";
 
 /**
  * Module:          Numbers
@@ -13,79 +13,6 @@ import Frames from "../Types/Frames";
  */
 
 const Characters: Frames = {
-    N0: [
-        ["0", "V", "V", "0"],
-        ["V", "0", "0", "V"],
-        ["V", "0", "0", "V"],
-        ["V", "0", "0", "V"],
-        ["0", "V", "V", "0"],
-    ],
-    N1: [
-        ["0", "0", "V", "0"],
-        ["0", "V", "V", "0"],
-        ["0", "0", "V", "0"],
-        ["0", "0", "V", "0"],
-        ["V", "V", "V", "V"],
-    ],
-    N2: [
-        ["0", "V", "V", "0"],
-        ["V", "0", "0", "V"],
-        ["0", "0", "V", "0"],
-        ["0", "V", "0", "0"],
-        ["V", "V", "V", "V"],
-
-    ],
-    N3: [
-        ["0", "V", "V", "0"],
-        ["V", "0", "0", "V"],
-        ["0", "0", "V", "0"],
-        ["V", "0", "0", "V"],
-        ["0", "V", "V", "0"],
-    ],
-    N4: [
-        ["V", "0", "0", "0"],
-        ["V", "0", "V", "0"],
-        ["V", "V", "V", "V"],
-        ["0", "0", "V", "0"],
-        ["0", "0", "V", "0"],
-
-    ],
-    N5: [
-        ["V", "V", "V", "V"],
-        ["V", "0", "0", "0"],
-        ["V", "V", "V", "0"],
-        ["0", "0", "0", "V"],
-        ["V", "V", "V", "0"],
-    ],
-    N6: [
-        ["0", "V", "V", "V"],
-        ["V", "0", "0", "0"],
-        ["V", "V", "V", "0"],
-        ["V", "0", "0", "V"],
-        ["0", "V", "V", "0"],
-
-    ],
-    N7: [
-        ["V", "V", "V", "V"],
-        ["0", "0", "0", "V"],
-        ["0", "0", "V", "0"],
-        ["0", "V", "0", "0"],
-        ["V", "0", "0", "0"],
-    ],
-    N8: [
-        ["0", "V", "V", "0"],
-        ["V", "0", "0", "V"],
-        ["0", "V", "V", "0"],
-        ["V", "0", "0", "V"],
-        ["0", "V", "V", "0"],
-    ],
-    N9: [
-        ["0", "V", "V", "0"],
-        ["V", "0", "0", "V"],
-        ["0", "V", "V", "V"],
-        ["0", "0", "0", "V"],
-        ["V", "V", "V", "0"],
-    ],
     SPACE: [
         ["0"],
         ["0"],
@@ -278,21 +205,3 @@ const Characters: Frames = {
 };
 
 export default Characters;
-
-/**
- * Returns an object with all the number frames.
- */
-export function getNumberFrames(): Frames {
-    return {
-        N0: Characters.N0,
-        N1: Characters.N1,
-        N2: Characters.N2,
-        N3: Characters.N3,
-        N4: Characters.N4,
-        N5: Characters.N5,
-        N6: Characters.N6,
-        N7: Characters.N7,
-        N8: Characters.N8,
-        N9: Characters.N9
-    };
-}

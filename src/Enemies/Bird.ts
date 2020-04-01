@@ -9,19 +9,19 @@
  * Responsibility:  Defines the behaviour of the bird enemy.
  */
 
-import Explosion01 from "../Assets/Explosions/Explosion01";
+import Explosion01 from "../Assets/Explosion01";
 import BaseGameObject from "../Base/BaseGameObject";
 import CGAColors from "../Constants/CGAColors";
 import BirdFrames from "../Frames/BirdFrames";
 import TickHandler from "../Handlers/TickHandler";
 import Explosion from "../Models/Explosion";
+import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
 import renderFrame from "../Render/RenderFrame";
-import Frames from "../Types/Frames";
-import GameObjectType from "../Types/GameObject";
-import { cloneObject, getFrameDimensions, getNewLocation, getRandomArrayElement, getRandomFrameKeyIndex, randomNumberInRange, setRandomFrameColors, getFrameLocations } from "../Utility/Lib";
-import GameLocation from "../Models/GameLocation";
+import { Frames, GameObjectType } from "../Types/Types";
+import { setRandomFrameColors } from "../Utility/Frame";
+import { cloneObject, getFrameDimensions, getFrameLocations, getNewLocation, getRandomArrayElement, getRandomFrameKeyIndex, randomNumberInRange } from "../Utility/Lib";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 const speed = 11;
