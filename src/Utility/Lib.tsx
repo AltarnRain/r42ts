@@ -118,12 +118,6 @@ export function getRandomArrayIndex(arr: any[]): number {
     return Math.floor(Math.random() * arr.length - 1);
 }
 
-export function getRandomFrameKeyIndex(obj: Frames): number {
-    const objectKeys = Object.keys(obj).length - 1;
-
-    return Math.round(Math.random() * objectKeys);
-}
-
 /**
  * Creates a clone for the provides Frames.
  * @param {Frames} frames. Frames to clone.

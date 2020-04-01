@@ -20,8 +20,8 @@ import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, Frames, GameObjectType } from "../Types/Types";
-import { getFrameDimensions, getFrameLocations, setRandomFrameColors } from "../Utility/Frame";
-import { cloneObject, getNewLocation, getRandomArrayElement, getRandomFrameKeyIndex, randomNumberInRange } from "../Utility/Lib";
+import { getFrameDimensions, getFrameLocations, getRandomFrameKeyIndex, setRandomFrameColors } from "../Utility/Frame";
+import { cloneObject, getNewLocation, getRandomArrayElement, randomNumberInRange } from "../Utility/Lib";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 const speed = 11;

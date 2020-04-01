@@ -10,6 +10,7 @@
  */
 
 import { Frame, Frames } from "../Types/Types";
+import { getFrameByIndex } from "../Utility/Frame";
 
 export default class FrameProvider {
     /**
@@ -48,7 +49,7 @@ export default class FrameProvider {
      * @returns {Frame}. A frame
      */
     public getFrame(): Frame {
-        const returnValue = this.frames["F" + this.frameIndex.toString()];
+        const returnValue = getFrameByIndex(this.frames, this.frameIndex);
         return returnValue;
     }
 

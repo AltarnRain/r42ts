@@ -161,3 +161,23 @@ export function getFrameLocations(frame: Frame, location: GameLocation): GameLoc
 
     return returnValue;
 }
+
+/**
+ * Returns a random frame index.
+ * @param {Frames} frames.
+ * @returns {number}. Frame index.
+ */
+export function getRandomFrameKeyIndex(frames: Frames): number {
+    const objectKeys = Object.keys(frames).length - 1;
+
+    return Math.round(Math.random() * objectKeys);
+}
+
+/**
+ * Returns a frame by index. Returns undefined if the frame is not defined.
+ * @param {Frames} frames. Frames.
+ * @param {number} index. Index of the frame.
+ */
+export function getFrameByIndex(frames: Frames, index: number): Frame | undefined {
+    return frames["F" + index];
+}
