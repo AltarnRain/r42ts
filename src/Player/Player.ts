@@ -16,16 +16,16 @@ import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import { GameObjectType } from "../Types/Types";
-import { convertFrameColor } from "../Utility/Frame";
-import { cloneObject, getAngle, getFrameLocations, getNewLocation } from "../Utility/Lib";
+import { Frame, GameObjectType } from "../Types/Types";
+import { convertFrameColor, getFrameLocations } from "../Utility/Frame";
+import { cloneObject, getAngle, getNewLocation } from "../Utility/Lib";
 import PlayerExplosion from "./PlayerExplosion";
 
 export default class Player extends BaseGameObject {
     /**
      * Frames used by the player ship
      */
-    private frame: string[][];
+    private frame: Frame;
 
     /**
      * Construct the class.

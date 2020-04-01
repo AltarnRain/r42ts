@@ -4,7 +4,9 @@
  * See LICENSE.MD.
  */
 
-import { Frames } from "../Types/Types";
+import GameLocation from "../Models/GameLocation";
+import DimensionProvider from "../Providers/DimensionProvider";
+import { Frame, Frames } from "../Types/Types";
 import HexToCGAConverter from "./HexToCGAConverter";
 import { getRandomArrayElement } from "./Lib";
 
@@ -15,7 +17,7 @@ import { getRandomArrayElement } from "./Lib";
 
 /**
  * Update frames whose cells contain "V" to a randonly selected color.
- * @param {string[][][]} frames. A set of frames.
+ * @param {Frames} frames. A set of frames.
  * @param {string[]} colors. Array containing colors.
  */
 export function setRandomFrameColors(frames: Frames, colors: string[]): void {
@@ -44,9 +46,9 @@ export function convertFramesColors(frames: Frames): void {
 
 /**
  * Set the predefined color for a single frame.
- * @param {string[][]} frame. A single frame.
+ * @param {Frame} frame. A single frame.
  */
-export function convertFrameColor(frame: string[][]) {
+export function convertFrameColor(frame: Frame) {
     frame.forEach((row, rowIndex) => {
         row.forEach((cellColor, cellIndex) => {
             if (cellColor !== "0") {
@@ -69,10 +71,10 @@ export function setVariableFramesColor(frames: Frames, color: string): void {
 
 /**
  * Sets a random color on a Variable frame color (V).
- * @param {string[][]} frame. A frame.
+ * @param {Frame} frame. A frame.
  * @param {string} color. Color.
  */
-export function setVariableFrameColor(frame: string[][], color: string) {
+export function setVariableFrameColor(frame: Frame, color: string) {
     frame.forEach((row, rowIndex) => {
         row.forEach((cellColor, cellIndex) => {
             if (cellColor === "V") {
@@ -93,7 +95,12 @@ export function setFramesColor(frames: Frames, color: string): void {
     });
 }
 
-export function setFrameColor(frame: string[][], color: string) {
+/**
+ * Sets a frame colors when the color is not black ("0")
+ * @param {Frame} frame. A frame
+ * @param {string} color. A color
+ */
+export function setFrameColor(frame: Frame, color: string) {
     frame.forEach((row, rowIndex) => {
         row.forEach((cellColor, cellIndex) => {
             if (cellColor !== "0") {
@@ -101,4 +108,56 @@ export function setFrameColor(frame: string[][], color: string) {
             }
         });
     });
+}
+
+/**
+ * Returns the dimensions of a frame in PX.
+ * @param {Frame} frame. A frame.
+ * @returns {width, height}.
+ */
+export function getFrameDimensions(frame: Frame): { width: number; height: number } {
+    return {
+        width: frame[0].length * DimensionProvider().maxPixelSize,
+        height: frame.length * DimensionProvider().maxPixelSize,
+    };
+}
+
+/**
+ * Calculates a GameLocation object where the center of a frame resides.
+ * @param {number} location.
+ * @param {frame} frame.
+ */
+export function getFrameCenter(location: GameLocation, frame: Frame): GameLocation {
+    const dimensions = getFrameDimensions(frame);
+
+    return {
+        left: location.left + dimensions.width / 2,
+        top: location.top + dimensions.height / 2,
+    };
+}
+
+/**
+ * Calculates a game location for every colored pixel in a frame.
+ * @param {Frame} frame. A frame.
+ * @param {GameLocation }location. Top left location coordinates.
+ */
+export function getFrameLocations(frame: Frame, location: GameLocation): GameLocation[] {
+    const returnValue: GameLocation[] = [];
+
+    const {
+        maxPixelSize
+    } = DimensionProvider();
+
+    frame.forEach((row, rowIndex) => row.forEach((col, colIndex) => {
+        if (col !== "0") {
+            const pixelLocation: GameLocation = {
+                left: colIndex * maxPixelSize + location.left,
+                top: rowIndex * maxPixelSize + location.top,
+            };
+
+            returnValue.push(pixelLocation);
+        }
+    }));
+
+    return returnValue;
 }

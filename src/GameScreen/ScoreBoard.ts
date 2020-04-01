@@ -9,8 +9,8 @@ import CGAColors from "../Constants/CGAColors";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frames } from "../Types/Types";
-import { setVariableFramesColor } from "../Utility/Frame";
-import { cloneObject, getFrameDimensions, padLeft } from "../Utility/Lib";
+import { getFrameDimensions, setVariableFramesColor } from "../Utility/Frame";
+import { cloneObject, padLeft } from "../Utility/Lib";
 
 /**
  * Module:          ScoreBoard

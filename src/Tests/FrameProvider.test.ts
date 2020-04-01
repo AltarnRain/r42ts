@@ -10,10 +10,10 @@
  */
 
 import "jest";
-import Dictionary from "../Models/Dictionary";
 import FrameProvider from "../Providers/FrameProvider";
+import { Frames } from "../Types/Types";
 
-const Frames: Dictionary<string[][]> = {
+const Frames: Frames = {
     F0: [["a"]],
     F1: [["b"]],
     F2: [["c"]],

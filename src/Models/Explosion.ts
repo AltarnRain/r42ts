@@ -4,6 +4,8 @@
  * See LICENSE.MD.
  */
 
+import { Frame } from "../Types/Types";
+
 /**
  * Module:          Explosion.
  * Responsibility:  Definition for an Explosion asset.
@@ -11,12 +13,12 @@
 
 export default interface Explosion {
 
-    frame: string[][];
+    frame: Frame;
 
     /**
      * Explosion particles.
      */
-    particles: string[][][];
+    particles: Frame[];
 
     /**
      * Angles. The number of angles also determines the number of particles.

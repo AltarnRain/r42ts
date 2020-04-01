@@ -9,9 +9,9 @@
  * Responsibility:  Define animation frames for the bird enemy.
  */
 
-import Dictionary from "../Models/Dictionary";
+import { Frames } from "../Types/Types";
 
-const BirdFrames: Dictionary<string[][]> = {
+const BirdFrames: Frames = {
     F0: [
         ["0", "0", "0", "0", "0", "0", "0"],
         ["0", "0", "V", "0", "V", "0", "0"],

@@ -9,9 +9,9 @@
  * Responsibility:  Contains frames for the player's bullet.
  */
 
-import Dictionary from "../Models/Dictionary";
+import { Frames } from "../Types/Types";
 
-const PlayerBulletFrame: Dictionary<string[][]> = {
+const PlayerBulletFrame: Frames = {
     F0: [
         ["E", "E"]
     ]

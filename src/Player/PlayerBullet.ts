@@ -7,7 +7,7 @@
 import GameLocation from "../Models/GameLocation";
 import Particle from "../Particles/Particle";
 import DimensionProvider from "../Providers/DimensionProvider";
-import { GameObjectType } from "../Types/Types";
+import { Frame, GameObjectType } from "../Types/Types";
 import { convertFrameColor } from "../Utility/Frame";
 
 /**
@@ -20,7 +20,7 @@ export default class PlayerBullet extends Particle {
     /**
      * Construct the object.
      */
-    constructor(frame: string[][], angle: number, speed: number, acceleration: number, location: GameLocation) {
+    constructor(frame: Frame, angle: number, speed: number, acceleration: number, location: GameLocation) {
         super(frame, angle, speed, acceleration, location);
 
         // Make the player bullet appear from the ship nozzle.

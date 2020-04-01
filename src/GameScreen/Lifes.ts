@@ -8,8 +8,9 @@ import CGAColors from "../Constants/CGAColors";
 import { PlayerFrames } from "../Frames/PlayerFrames";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import { setFrameColor } from "../Utility/Frame";
-import { cloneObject, getFrameDimensions } from "../Utility/Lib";
+import { Frame } from "../Types/Types";
+import { getFrameDimensions, setFrameColor } from "../Utility/Frame";
+import { cloneObject } from "../Utility/Lib";
 
 /**
  * Module:          Lives
@@ -26,7 +27,7 @@ export default class Lives {
     /**
      * Frame for a player life.
      */
-    private lifeFrame: string[][];
+    private lifeFrame: Frame;
 
     /**
      * Top position

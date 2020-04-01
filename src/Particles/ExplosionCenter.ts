@@ -8,8 +8,9 @@ import BaseGameObject from "../Base/BaseGameObject";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import renderFrame from "../Render/RenderFrame";
-import { GameObjectType } from "../Types/Types";
-import { cloneObject, getFrameLocations } from "../Utility/Lib";
+import { Frame, GameObjectType } from "../Types/Types";
+import { getFrameLocations } from "../Utility/Frame";
+import { cloneObject } from "../Utility/Lib";
 
 /**
  * Module:          Explosion Center
@@ -26,7 +27,7 @@ export default class ExplosionCenter extends BaseGameObject {
     /**
      * Explosion center frame.
      */
-    private frame: string[][];
+    private frame: Frame;
 
     /**
      * Time until the explosion center fizzeles out.
@@ -38,7 +39,7 @@ export default class ExplosionCenter extends BaseGameObject {
      */
     private fizzled = false;
 
-    constructor(frame: string[][], location: GameLocation, fizzleTime: number) {
+    constructor(frame: Frame, location: GameLocation, fizzleTime: number) {
         super();
 
         this.frame = cloneObject(frame);

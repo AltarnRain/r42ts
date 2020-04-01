@@ -9,7 +9,7 @@
  * Responsibility:  Provide the next frame to animate.
  */
 
-import { Frames } from "../Types/Types";
+import { Frame, Frames } from "../Types/Types";
 
 export default class FrameProvider {
     /**
@@ -45,18 +45,18 @@ export default class FrameProvider {
     /**
      * Gets the name frame from an enemy.
      * @param {tick} tick. Current game tick
-     * @returns {string[][]}. A frame
+     * @returns {Frame}. A frame
      */
-    public getFrame(): string[][] {
+    public getFrame(): Frame {
         const returnValue = this.frames["F" + this.frameIndex.toString()];
         return returnValue;
     }
 
     /**
      * Returns the current frame and sets the nes one.
-     * @returns {string[][]}. A frame.
+     * @returns {Frame}. A frame.
      */
-    public getNextFrame(): string[][] {
+    public getNextFrame(): Frame {
         this.setNextFrameIndex();
         const frame = this.getFrame();
         return frame;

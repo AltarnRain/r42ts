@@ -135,18 +135,6 @@ export function cloneObject<T>(obj: T): T {
 }
 
 /**
- * Returns the dimensions of a frame in PX.
- * @param {string[][]} frame. A frame.
- * @returns {width, height}.
- */
-export function getFrameDimensions(frame: string[][]): { width: number; height: number } {
-    return {
-        width: frame[0].length * DimensionProvider().maxPixelSize,
-        height: frame.length * DimensionProvider().maxPixelSize,
-    };
-}
-
-/**
  * pads a string on its left size until it is a given length
  * @param {string} value. Value to pad left.
  * @param {number} length. Length of the desired output.
@@ -176,44 +164,4 @@ export function padLeft(value: string, length: number, padWidth: string): string
  */
 export function randomNumberInRange(max: number, min: number): number {
     return Math.floor(Math.random() * (max - min) + min);
-}
-
-/**
- * Calculates a GameLocation object where the center of a frame resides.
- * @param {number} location.
- * @param {frame} frame.
- */
-export function getFrameCenter(location: GameLocation, frame: string[][]): GameLocation {
-    const dimensions = getFrameDimensions(frame);
-
-    return {
-        left: location.left + dimensions.width / 2,
-        top: location.top + dimensions.height / 2,
-    };
-}
-
-/**
- * Calculates a game location for every colored pixel in a frame.
- * @param {string[][]} frame. A frame.
- * @param {GameLocation }location. Top left location coordinates.
- */
-export function getFrameLocations(frame: string[][], location: GameLocation): GameLocation[] {
-    const returnValue: GameLocation[] = [];
-
-    const {
-        maxPixelSize
-    } = DimensionProvider();
-
-    frame.forEach((row, rowIndex) => row.forEach((col, colIndex) => {
-        if (col !== "0") {
-            const pixelLocation: GameLocation = {
-                left: colIndex * maxPixelSize + location.left,
-                top: rowIndex * maxPixelSize + location.top,
-            };
-
-            returnValue.push(pixelLocation);
-        }
-    }));
-
-    return returnValue;
 }
