@@ -10,7 +10,7 @@ import IDraw from "../Interfaces/IDraw";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frames } from "../Types/Types";
-import { setVariableFramesColor } from "../Utility/Frame";
+import { setVariableFramesColor, getFrameByIndex } from "../Utility/Frame";
 import { cloneObject, padLeft } from "../Utility/Lib";
 
 /**
@@ -77,11 +77,11 @@ export class LevelIndicator implements IDraw {
     public draw(): void {
         const paddedLevelString = padLeft(this.level.toString(), 2, "0");
 
-        const rightNumber = paddedLevelString[1];
-        const leftNumber = paddedLevelString[0];
+        const rightNumber = parseInt(paddedLevelString[1], 10);
+        const leftNumber = parseInt(paddedLevelString[0], 10);
 
-        const rightFrame = this.frames["N" + rightNumber];
-        const leftFrame = this.frames["N" + leftNumber];
+        const rightFrame = getFrameByIndex(this.frames, rightNumber);
+        const leftFrame = getFrameByIndex(this.frames, leftNumber);
 
         renderFrame({ left: this.leftNumberLeft, top: 0 }, leftFrame);
         renderFrame({ left: this.rightNumberLeft, top: 0 }, rightFrame);
