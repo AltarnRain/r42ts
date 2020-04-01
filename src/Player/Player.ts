@@ -10,7 +10,7 @@
  */
 
 import BaseGameObject from "../Base/BaseGameObject";
-import { PlayerFrames } from "../Frames/PlayerFrames";
+import { PlayerFrames } from "./PlayerFrames";
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";

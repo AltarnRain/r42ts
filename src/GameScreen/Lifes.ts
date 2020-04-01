@@ -5,7 +5,7 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
-import { PlayerFrames } from "../Frames/PlayerFrames";
+import { PlayerFrames } from "../Player/PlayerFrames";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame } from "../Types/Types";

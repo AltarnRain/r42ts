@@ -11,7 +11,7 @@
 
 import CGAColors from "./Constants/CGAColors";
 import BirdEnemy from "./Enemies/Bird";
-import BirdFrames from "./Frames/BirdFrames";
+import BirdFrames from "./Enemies/BirdFrames";
 import { LevelIndicator } from "./GameScreen/LevelIndicator";
 import Lives from "./GameScreen/Lifes";
 import ScoreBoard from "./GameScreen/ScoreBoard";

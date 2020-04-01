@@ -10,7 +10,7 @@
  */
 
 import BaseGameObject from "./Base/BaseGameObject";
-import PlayerBulletFrame from "./Frames/PlayerBulletFrame";
+import PlayerBulletFrame from "./Player/PlayerBulletFrame";
 import { DrawGameField } from "./GameScreen/StaticRenders";
 import KeyboardState from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import IDraw from "./Interfaces/IDraw";
