@@ -9,7 +9,7 @@
  * Responsibility:  Define animation frames for the bird enemy.
  */
 
-import { Frames } from "../Types/Types";
+import { Frames } from "../../Types/Types";
 
 const BirdFrames: Frames = {
     F0: [
