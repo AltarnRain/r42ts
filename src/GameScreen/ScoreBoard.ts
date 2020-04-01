@@ -9,7 +9,7 @@ import CGAColors from "../Constants/CGAColors";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frames } from "../Types/Types";
-import { getFrameDimensions, setVariableFramesColor, getFrameByIndex } from "../Utility/Frame";
+import { getFrameByIndex, getFrameDimensions, setVariableFramesColor } from "../Utility/Frame";
 import { cloneObject, padLeft } from "../Utility/Lib";
 
 /**
@@ -75,7 +75,7 @@ export default class ScoreBoard {
 
         let cnt = 0;
         for (const n of scoreString) {
-            const frame = getFrameByIndex(this.frames, n);
+            const frame = getFrameByIndex(this.frames, parseInt(n, 10));
 
             const spacing = cnt === 0 ? 0 : this.spacing;
             let left = cnt * (getFrameDimensions(frame).width + spacing);
