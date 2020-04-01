@@ -170,18 +170,13 @@ export default class Runner {
                         switch (type) {
                             case "explosion":
                             case "particle":
-                            case "enemy":
-                                {
+                            case "enemy": {
                                     const loc = hittableObject.getLocation();
 
                                 }
-
                         }
-
-
                     }
                 }
-
             }
 
             this.lastTick = tick;

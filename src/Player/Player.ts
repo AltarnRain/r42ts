@@ -10,7 +10,6 @@
  */
 
 import BaseGameObject from "../Base/BaseGameObject";
-import { PlayerFrames } from "./PlayerFrames";
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
@@ -20,6 +19,7 @@ import { Frame, GameObjectType } from "../Types/Types";
 import { convertFrameColor, getFrameLocations } from "../Utility/Frame";
 import { cloneObject, getAngle, getNewLocation } from "../Utility/Lib";
 import PlayerExplosion from "./PlayerExplosion";
+import { PlayerFrames } from "./PlayerFrames";
 
 export default class Player extends BaseGameObject {
     /**

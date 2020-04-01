@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack -p",
     "start": "webpack-dev-server -d",
-      "test": "jest --watch"
+    "test": "jest --watch",
+    "lint": "tslint src/**/*.ts{,x}"
   },
   "private": true,
   "keywords": [],

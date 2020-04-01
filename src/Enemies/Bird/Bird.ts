@@ -12,7 +12,6 @@
 import Explosion01 from "../../Assets/Explosion01";
 import BaseGameObject from "../../Base/BaseGameObject";
 import CGAColors from "../../Constants/CGAColors";
-import BirdFrames from "./BirdFrames";
 import TickHandler from "../../Handlers/TickHandler";
 import Explosion from "../../Models/Explosion";
 import GameLocation from "../../Models/GameLocation";
@@ -22,6 +21,7 @@ import renderFrame from "../../Render/RenderFrame";
 import { Frame, Frames, GameObjectType } from "../../Types/Types";
 import { getFrameDimensions, getFrameLocations, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
 import { cloneObject, getNewLocation, getRandomArrayElement, randomNumberInRange } from "../../Utility/Lib";
+import BirdFrames from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 const speed = 11;
