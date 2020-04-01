@@ -10,7 +10,6 @@
  */
 
 import BaseGameObject from "./Base/BaseGameObject";
-import PlayerBulletFrame from "./Player/PlayerBulletFrame";
 import { DrawGameField } from "./GameScreen/StaticRenders";
 import KeyboardState from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import IDraw from "./Interfaces/IDraw";
@@ -18,6 +17,7 @@ import ExplosionCenter from "./Particles/ExplosionCenter";
 import Particle from "./Particles/Particle";
 import Player from "./Player/Player";
 import PlayerBullet from "./Player/PlayerBullet";
+import PlayerBulletFrame from "./Player/PlayerBulletFrame";
 import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
 import particleProvider from "./Providers/ParticleProvider";
 
