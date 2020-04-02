@@ -35,14 +35,18 @@ window.onload = () => {
 
                 registerListeners();
                 const player = new Player();
-                const bird = new BirdEnemy();
+
+                for (let i = 0; i < 20; i ++){
+
+                    const bird = new BirdEnemy();
+                    Runner.register(bird);
+                }
 
                 const lives = new Lives();
                 const scoreboard = new ScoreBoard();
                 const levelIndicator = new LevelIndicator();
 
                 Runner.registerPlayer(player);
-                Runner.register(bird);
                 Runner.registerDrawable(scoreboard);
                 Runner.registerDrawable(lives);
                 Runner.registerDrawable(levelIndicator);

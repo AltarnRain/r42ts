@@ -21,6 +21,8 @@ import PlayerBulletFrame from "./Player/PlayerBulletFrame";
 import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
 import particleProvider from "./Providers/ParticleProvider";
 import { overlaps } from "./Utility/Lib";
+import Explosion from "./Models/Explosion";
+import GameLocation from "./Models/GameLocation";
 
 export default class Runner {
 
@@ -128,7 +130,7 @@ export default class Runner {
 
             if (this.playerBullet !== undefined) {
                 this.playerBullet.draw(tick);
-            } else if (KeyboardState.fire && this.playerBullet === undefined) {
+            } else if (KeyboardState.fire && this.playerBullet === undefined && this.player !== undefined) {
                 this.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, this.player.getLocation());
             }
 
@@ -173,20 +175,26 @@ export default class Runner {
                             case "explosion":
                             case "particle":
                             case "enemy": {
+                                // Check if player got hit.
+                                if (this.player !== undefined) {
+
                                     // Get all the locations of hittable objects and check if the player might be hit.
                                     const hittableObjectLocations = hittableObject.getLocations();
                                     const playerLocations = this.player.getLocations();
+                                    const playerExplosion = this.player.getExplosion();
+                                    const playerLocation = this.player.getLocation();
 
                                     hittableObjectLocations.forEach((hloc) => {
                                         playerLocations.forEach((ploc) => {
                                             const playerHit = overlaps(hloc, ploc);
                                             if (playerHit) {
-                                                this.renderExplosion(this.player);
+                                                this.renderExplosion(playerExplosion, playerLocation);
                                                 this.player = undefined;
                                             }
                                         });
                                     });
                                 }
+                            }
                             case "playerbullet": {
                                 if (this.playerBullet) {
                                     const hittableObjectLocations = hittableObject.getLocations();
@@ -196,8 +204,9 @@ export default class Runner {
                                         playerBulletLocations.forEach((ploc) => {
                                             const hit = overlaps(hloc, ploc);
                                             if (hit) {
+                                                this.playerBullet = undefined;
                                                 if (hittableObject.getObjectType() === "enemy") {
-                                                    this.renderExplosion(hittableObject);
+                                                    this.renderExplosion(hittableObject.getExplosion(), hittableObject.getLocation());
 
                                                     this.enemies = this.enemies.filter((e) => e !== hittableObject);
                                                 }
@@ -217,9 +226,7 @@ export default class Runner {
         this.handler = window.requestAnimationFrame(this.run);
     }
 
-    private renderExplosion(hittableObject: BaseGameObject) {
-        const explosion = hittableObject.getExplosion();
-        const location = hittableObject.getLocation();
+    private renderExplosion(explosion: Explosion, location: GameLocation) {
         const center = new ExplosionCenter(explosion.frame, location, explosion.explosionCenterDelay);
         const particles = particleProvider(explosion, location);
         this.particles.push(...particles);

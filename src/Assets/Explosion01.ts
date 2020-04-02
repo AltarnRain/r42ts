@@ -28,9 +28,9 @@ const Explosion01: Explosion = {
     ],
     angles: [150, 180, 210, 330, 0, 30], // ul, l, ll, ur, r,
     particleFrames: [0, 1, 0, 0, 1, 0],
-    speed: 10,
+    speed: 20,
     acceleration: 1.05,
-    explosionCenterDelay: 100,
+    explosionCenterDelay: 300,
     speeds: [], // not used, all particles travel at the same speed
     useSpeed: true,
 };
