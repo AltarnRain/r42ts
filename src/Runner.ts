@@ -174,15 +174,18 @@ export default class Runner {
                             case "particle":
                             case "enemy": {
                                     // Get all the locations of hittable objects and check if the player might be hit.
-                                    // const hittableObjectLocations = hittableObject.getLocations();
-                                    // const playerLocations = this.player.getLocations();
+                                    const hittableObjectLocations = hittableObject.getLocations();
+                                    const playerLocations = this.player.getLocations();
 
-                                    // hittableObjectLocations.forEach((hloc) => {
-                                    //     playerLocations.forEach((ploc) => {
-                                    //         const hit = overlaps(hloc, ploc);
-                                    //         // TODO: Handle player death.
-                                    //     });
-                                    // });
+                                    hittableObjectLocations.forEach((hloc) => {
+                                        playerLocations.forEach((ploc) => {
+                                            const playerHit = overlaps(hloc, ploc);
+                                            if (playerHit) {
+                                                this.renderExplosion(this.player);
+                                                this.player = undefined;
+                                            }
+                                        });
+                                    });
                                 }
                             case "playerbullet": {
                                 if (this.playerBullet) {
@@ -194,13 +197,7 @@ export default class Runner {
                                             const hit = overlaps(hloc, ploc);
                                             if (hit) {
                                                 if (hittableObject.getObjectType() === "enemy") {
-                                                    const explosion = hittableObject.getExplosion();
-                                                    const location = hittableObject.getLocation();
-                                                    const center = new ExplosionCenter(explosion.frame, location, explosion.explosionCenterDelay);
-                                                    const particles = particleProvider(explosion, location);
-
-                                                    this.particles.push(...particles);
-                                                    this.explosionCenters.push(center);
+                                                    this.renderExplosion(hittableObject);
 
                                                     this.enemies = this.enemies.filter((e) => e !== hittableObject);
                                                 }
@@ -218,6 +215,15 @@ export default class Runner {
         }
 
         this.handler = window.requestAnimationFrame(this.run);
+    }
+
+    private renderExplosion(hittableObject: BaseGameObject) {
+        const explosion = hittableObject.getExplosion();
+        const location = hittableObject.getLocation();
+        const center = new ExplosionCenter(explosion.frame, location, explosion.explosionCenterDelay);
+        const particles = particleProvider(explosion, location);
+        this.particles.push(...particles);
+        this.explosionCenters.push(center);
     }
 
     /**
