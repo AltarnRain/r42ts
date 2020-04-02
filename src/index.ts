@@ -39,17 +39,17 @@ window.onload = () => {
                 for (let i = 0; i < 20; i ++){
 
                     const bird = new BirdEnemy();
-                    Runner.register(bird);
+                    Runner.get().register(bird);
                 }
 
                 const lives = new Lives();
                 const scoreboard = new ScoreBoard();
                 const levelIndicator = new LevelIndicator();
 
-                Runner.registerPlayer(player);
-                Runner.registerDrawable(scoreboard);
-                Runner.registerDrawable(lives);
-                Runner.registerDrawable(levelIndicator);
+                Runner.get().registerPlayer(player);
+                Runner.get().registerScore(scoreboard);
+                Runner.get().registerLives(lives);
+                Runner.get().registerLevelIndicator(levelIndicator);
 
                 // player starts with two lives by default.
                 lives.setLives(2);

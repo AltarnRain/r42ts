@@ -76,4 +76,11 @@ export default class Player extends BaseGameObject {
     public getLocations(): GameLocation[] {
         return getFrameLocations(this.frame, this.location);
     }
+
+    /**
+     * Points for the player
+     */
+    public getPoints(): number {
+        return 0;
+    }
 }

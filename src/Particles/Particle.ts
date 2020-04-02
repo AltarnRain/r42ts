@@ -93,4 +93,11 @@ export default class Particle extends BaseGameObject {
     public getLocations(): GameLocation[] {
         return getFrameLocations(this.frame, this.location);
     }
+
+    /**
+     * Return the points of a particle.
+     */
+    public getPoints(): number {
+        return 0;
+    }
 }

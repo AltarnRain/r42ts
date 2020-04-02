@@ -10,9 +10,14 @@
  */
 
 import BaseGameObject from "./Base/BaseGameObject";
+import { LevelIndicator } from "./GameScreen/LevelIndicator";
+import Lives from "./GameScreen/Lifes";
+import ScoreBoard from "./GameScreen/ScoreBoard";
 import { DrawGameField } from "./GameScreen/StaticRenders";
 import KeyboardState from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import IDraw from "./Interfaces/IDraw";
+import Explosion from "./Models/Explosion";
+import GameLocation from "./Models/GameLocation";
 import ExplosionCenter from "./Particles/ExplosionCenter";
 import Particle from "./Particles/Particle";
 import Player from "./Player/Player";
@@ -21,8 +26,6 @@ import PlayerBulletFrame from "./Player/PlayerBulletFrame";
 import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
 import particleProvider from "./Providers/ParticleProvider";
 import { overlaps } from "./Utility/Lib";
-import Explosion from "./Models/Explosion";
-import GameLocation from "./Models/GameLocation";
 
 export default class Runner {
 
@@ -71,6 +74,12 @@ export default class Runner {
      * Explosion centers on the screen.
      */
     private explosionCenters: ExplosionCenter[] = [];
+
+    private levelIndicator: LevelIndicator;
+
+    private scoreBoard: ScoreBoard;
+
+    private lives: Lives;
 
     /**
      * Constructs the Runner.
@@ -190,6 +199,7 @@ export default class Runner {
                                             if (playerHit) {
                                                 this.renderExplosion(playerExplosion, playerLocation);
                                                 this.player = undefined;
+                                                this.lives.removeLife();
                                             }
                                         });
                                     });
@@ -207,7 +217,7 @@ export default class Runner {
                                                 this.playerBullet = undefined;
                                                 if (hittableObject.getObjectType() === "enemy") {
                                                     this.renderExplosion(hittableObject.getExplosion(), hittableObject.getLocation());
-
+                                                    this.scoreBoard.addToScore(hittableObject.getPoints());
                                                     this.enemies = this.enemies.filter((e) => e !== hittableObject);
                                                 }
                                             }
@@ -243,19 +253,26 @@ export default class Runner {
     }
 
     /**
-     * Registers an object that is Drawable.
-     * @param {IDraw} drawable. Drawable object.
-     */
-    public registerDrawable(drawable: IDraw) {
-        this.drawable.push(drawable);
-    }
-
-    /**
      * Registers the player.
      * @param {Player} player. The player object.
      */
     public registerPlayer(player: Player): void {
         this.player = player;
+    }
+
+    public registerLives(lives: Lives): void {
+        this.lives = lives;
+        this.drawable.push(lives);
+    }
+
+    public registerScore(scoreBoard: ScoreBoard): void {
+        this.scoreBoard = scoreBoard;
+        this.drawable.push(scoreBoard);
+    }
+
+    public registerLevelIndicator(levelIndicator: LevelIndicator): void {
+        this.levelIndicator = levelIndicator;
+        this.drawable.push(levelIndicator);
     }
 
     /**
@@ -268,25 +285,5 @@ export default class Runner {
         }
 
         return Runner.runner;
-    }
-
-    public static register(gameObject: BaseGameObject): void {
-        Runner.get().register(gameObject);
-    }
-
-    /**
-     * Register a drawable object.
-     * @param {IDraw} drawable. Object with an IDraw method.
-     */
-    public static registerDrawable(drawable: IDraw): void {
-        Runner.get().registerDrawable(drawable);
-    }
-
-    /**
-     * Register the player object.
-     * @param {Player} player.
-     */
-    public static registerPlayer(player: Player): void {
-        Runner.get().registerPlayer(player);
     }
 }

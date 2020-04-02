@@ -47,4 +47,9 @@ export default abstract class BaseGameObject {
      * Returns the object type.
      */
     public abstract getObjectType(): GameObjectType;
+
+    /**
+     * Returns the point worth.
+     */
+    public abstract getPoints(): number;
 }

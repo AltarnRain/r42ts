@@ -75,4 +75,11 @@ export default class ExplosionCenter extends BaseGameObject {
     public getLocations(): GameLocation[] {
         return getFrameLocations(this.frame, this.location);
     }
+
+    /**
+     * Gets the points.
+     */
+    public getPoints(): number {
+        return 0;
+    }
 }

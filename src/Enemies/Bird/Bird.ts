@@ -171,4 +171,11 @@ export default class BirdEnemy extends BaseGameObject {
     public getLocations(): GameLocation[] {
         return getFrameLocations(this.currentFrame, this.location);
     }
+
+    /**
+     * Returns the points for the bird.
+     */
+    public getPoints(): number {
+        return 200;
+    }
 }
