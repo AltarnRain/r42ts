@@ -158,61 +158,61 @@ export default class Runner {
                 }
             }
 
-            // if (this.player !== undefined || this.playerBullet !== undefined) {
-            //     const hittableObjects = [
-            //         ...this.enemies,
-            //         ...this.particles,
-            //         ...this.explosionCenters
-            //     ].filter((o) => o !== undefined);
+            if (this.player !== undefined || this.playerBullet !== undefined) {
+                const hittableObjects = [
+                    ...this.enemies,
+                    ...this.particles,
+                    ...this.explosionCenters
+                ].filter((o) => o !== undefined);
 
-            //     if (hittableObjects.length > 0) {
-            //         for (const hittableObject of hittableObjects) {
-            //             const type = hittableObject.getObjectType();
+                if (hittableObjects.length > 0) {
+                    for (const hittableObject of hittableObjects) {
+                        const type = hittableObject.getObjectType();
 
-            //             switch (type) {
-            //                 case "explosion":
-            //                 case "particle":
-            //                 case "enemy": {
-            //                         // Get all the locations of hittable objects and check if the player might be hit.
-            //                         // const hittableObjectLocations = hittableObject.getLocations();
-            //                         // const playerLocations = this.player.getLocations();
+                        switch (type) {
+                            case "explosion":
+                            case "particle":
+                            case "enemy": {
+                                    // Get all the locations of hittable objects and check if the player might be hit.
+                                    // const hittableObjectLocations = hittableObject.getLocations();
+                                    // const playerLocations = this.player.getLocations();
 
-            //                         // hittableObjectLocations.forEach((hloc) => {
-            //                         //     playerLocations.forEach((ploc) => {
-            //                         //         const hit = overlaps(hloc, ploc);
-            //                         //         // TODO: Handle player death.
-            //                         //     });
-            //                         // });
-            //                     }
-            //                 case "playerbullet": {
-            //                     // if (this.playerBullet) {
-            //                     //     const hittableObjectLocations = hittableObject.getLocations();
-            //                     //     const playerBulletLocations = this.playerBullet.getLocations();
+                                    // hittableObjectLocations.forEach((hloc) => {
+                                    //     playerLocations.forEach((ploc) => {
+                                    //         const hit = overlaps(hloc, ploc);
+                                    //         // TODO: Handle player death.
+                                    //     });
+                                    // });
+                                }
+                            case "playerbullet": {
+                                if (this.playerBullet) {
+                                    const hittableObjectLocations = hittableObject.getLocations();
+                                    const playerBulletLocations = this.playerBullet.getLocations();
 
-            //                     //     hittableObjectLocations.forEach((hloc) => {
-            //                     //         playerBulletLocations.forEach((ploc) => {
-            //                     //             const hit = overlaps(hloc, ploc);
-            //                     //             if (hit) {
-            //                     //                 if (hittableObject.getObjectType() === "enemy") {
-            //                     //                     const explosion = hittableObject.getExplosion();
-            //                     //                     const location = hittableObject.getLocation();
-            //                     //                     const center = new ExplosionCenter(explosion.frame, location, explosion.explosionCenterDelay);
-            //                     //                     const particles = particleProvider(explosion, location);
+                                    hittableObjectLocations.forEach((hloc) => {
+                                        playerBulletLocations.forEach((ploc) => {
+                                            const hit = overlaps(hloc, ploc);
+                                            if (hit) {
+                                                if (hittableObject.getObjectType() === "enemy") {
+                                                    const explosion = hittableObject.getExplosion();
+                                                    const location = hittableObject.getLocation();
+                                                    const center = new ExplosionCenter(explosion.frame, location, explosion.explosionCenterDelay);
+                                                    const particles = particleProvider(explosion, location);
 
-            //                     //                     this.particles.push(...particles);
-            //                     //                     this.explosionCenters.push(center);
+                                                    this.particles.push(...particles);
+                                                    this.explosionCenters.push(center);
 
-            //                     //                     this.enemies = this.enemies.filter((e) => e !== hittableObject);
-            //                     //                 }
-            //                     //             }
-            //                     //         });
-            //                     //     });
-            //                     // }
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
+                                                    this.enemies = this.enemies.filter((e) => e !== hittableObject);
+                                                }
+                                            }
+                                        });
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             this.lastTick = tick;
         }
