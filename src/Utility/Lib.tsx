@@ -159,3 +159,55 @@ export function padLeft(value: string, length: number, padWidth: string): string
 export function randomNumberInRange(max: number, min: number): number {
     return Math.floor(Math.random() * (max - min) + min);
 }
+
+/**
+ * Returns true if two positions overlap.
+ * @param {number} x1. Coordinate.
+ * @param {number} x2. Coordinate.
+ * @param {number} y1. Coordinate.
+ * @param {number} y2. Coordinate.
+ * @returns {boolean}. True if the locations overlap, false otherwise.      
+ */
+export function overlaps(location1: GameLocation, location2: GameLocation): boolean {
+
+    const {
+        maxPixelSize
+    } = DimensionProvider();
+
+    const left1 = location1.left;
+    const right1 = left1 + maxPixelSize;
+    const top1 = location1.top;
+    const bottom1 = top1 + maxPixelSize;
+
+    const left2 = location2.left;
+    const right2 = left2 + maxPixelSize;
+    const top2 = location2.top;
+    const bottom2 = top2 + maxPixelSize;
+
+    if (bottom1 < top2 || top1 > bottom2) {
+        return false;
+    }
+
+    if (right2 < left1 || left2 > right1) {
+        return false;
+    }
+
+    // Rectangles overlap
+    return true;
+}
+
+/**
+ * Checks if a location falls within an area.
+ * @param {GameLocation} location.
+ * @param {number} top. Top of the area.
+ * @param {number} bottom. Bottom of the area.
+ * @param {number} left. Left of the area.
+ * @param {number} right. Right of the area.
+ */
+export function fallsWithin(location: GameLocation, top: number, bottom: number, left: number, right: number): boolean {
+
+    const yBounds = location.top > top  && location.top < bottom;
+    const xBounds = location.left > left && location.left < right;
+
+    return xBounds && yBounds;
+}

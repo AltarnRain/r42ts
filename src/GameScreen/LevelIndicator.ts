@@ -10,7 +10,7 @@ import IDraw from "../Interfaces/IDraw";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frames } from "../Types/Types";
-import { setVariableFramesColor, getFrameByIndex } from "../Utility/Frame";
+import { getFrameByIndex, setVariableFramesColor } from "../Utility/Frame";
 import { cloneObject, padLeft } from "../Utility/Lib";
 
 /**

@@ -20,13 +20,14 @@ import PlayerBullet from "./Player/PlayerBullet";
 import PlayerBulletFrame from "./Player/PlayerBulletFrame";
 import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
 import particleProvider from "./Providers/ParticleProvider";
+import { overlaps } from "./Utility/Lib";
 
 export default class Runner {
 
     /**
      * Array of current game objects on screen.
      */
-    private gameobjects: BaseGameObject[] = [];
+    private enemies: BaseGameObject[] = [];
 
     /**
      * Drawable objects like the lives indicator, score, etc.
@@ -108,11 +109,11 @@ export default class Runner {
                 this.player.draw(tick);
             }
 
-            this.gameobjects.forEach((go) => go.draw(tick));
+            this.enemies.forEach((go) => go.draw(tick));
 
             if (this.particles.length > 0) {
                 this.particles.forEach((p) => p.draw(tick));
-                this.particles = this.particles.filter((p) => !p.inScreen());
+                this.particles = this.particles.filter((p) => p.inScreen());
             }
 
             if (this.explosionCenters.length > 0) {
@@ -128,20 +129,21 @@ export default class Runner {
             if (this.playerBullet !== undefined) {
                 this.playerBullet.draw(tick);
             } else if (KeyboardState.fire && this.playerBullet === undefined) {
-                this.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, { ...this.player.getLocation() });
+                this.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, this.player.getLocation());
             }
 
+            // Self destruct
             if (KeyboardState.selfDestruct) {
 
-                if (this.gameobjects.length > 0 && this.player !== undefined) {
+                if (this.enemies.length > 0 && this.player !== undefined) {
 
                     const assets = [
-                        ...this.gameobjects,
+                        ...this.enemies,
                         this.player
                     ];
 
                     // Reset main rendering.
-                    this.gameobjects = [];
+                    this.enemies = [];
                     this.player = undefined;
 
                     const explosionsLocations = assets.map((a) => explosionLocationProvider(a));
@@ -156,28 +158,61 @@ export default class Runner {
                 }
             }
 
-            if (this.player !== undefined || this.playerBullet !== undefined) {
-                const hittableObjects = [
-                    ...this.gameobjects,
-                    ...this.particles,
-                    ...this.explosionCenters
-                ].filter((o) => o !== undefined);
+            // if (this.player !== undefined || this.playerBullet !== undefined) {
+            //     const hittableObjects = [
+            //         ...this.enemies,
+            //         ...this.particles,
+            //         ...this.explosionCenters
+            //     ].filter((o) => o !== undefined);
 
-                if (hittableObjects.length > 0) {
-                    for (const hittableObject of hittableObjects) {
-                        const type = hittableObject.getObjectType();
+            //     if (hittableObjects.length > 0) {
+            //         for (const hittableObject of hittableObjects) {
+            //             const type = hittableObject.getObjectType();
 
-                        switch (type) {
-                            case "explosion":
-                            case "particle":
-                            case "enemy": {
-                                    const loc = hittableObject.getLocation();
+            //             switch (type) {
+            //                 case "explosion":
+            //                 case "particle":
+            //                 case "enemy": {
+            //                         // Get all the locations of hittable objects and check if the player might be hit.
+            //                         // const hittableObjectLocations = hittableObject.getLocations();
+            //                         // const playerLocations = this.player.getLocations();
 
-                                }
-                        }
-                    }
-                }
-            }
+            //                         // hittableObjectLocations.forEach((hloc) => {
+            //                         //     playerLocations.forEach((ploc) => {
+            //                         //         const hit = overlaps(hloc, ploc);
+            //                         //         // TODO: Handle player death.
+            //                         //     });
+            //                         // });
+            //                     }
+            //                 case "playerbullet": {
+            //                     // if (this.playerBullet) {
+            //                     //     const hittableObjectLocations = hittableObject.getLocations();
+            //                     //     const playerBulletLocations = this.playerBullet.getLocations();
+
+            //                     //     hittableObjectLocations.forEach((hloc) => {
+            //                     //         playerBulletLocations.forEach((ploc) => {
+            //                     //             const hit = overlaps(hloc, ploc);
+            //                     //             if (hit) {
+            //                     //                 if (hittableObject.getObjectType() === "enemy") {
+            //                     //                     const explosion = hittableObject.getExplosion();
+            //                     //                     const location = hittableObject.getLocation();
+            //                     //                     const center = new ExplosionCenter(explosion.frame, location, explosion.explosionCenterDelay);
+            //                     //                     const particles = particleProvider(explosion, location);
+
+            //                     //                     this.particles.push(...particles);
+            //                     //                     this.explosionCenters.push(center);
+
+            //                     //                     this.enemies = this.enemies.filter((e) => e !== hittableObject);
+            //                     //                 }
+            //                     //             }
+            //                     //         });
+            //                     //     });
+            //                     // }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
 
             this.lastTick = tick;
         }
@@ -191,7 +226,7 @@ export default class Runner {
      * @returns {() => void}. Function to remove the object from the array of drawable objects.
      */
     public register(gameObject: BaseGameObject): void {
-        this.gameobjects.push(gameObject);
+        this.enemies.push(gameObject);
     }
 
     /**

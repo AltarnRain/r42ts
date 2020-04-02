@@ -12,7 +12,8 @@
 import "jest";
 import { Frames } from "../Types/Types";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
-import { cloneObject, getRandomArrayElement, padLeft } from "../Utility/Lib";
+import { cloneObject, getRandomArrayElement, padLeft, fallsWithin } from "../Utility/Lib";
+import GameLocation from "../Models/GameLocation";
 
 test("getRandomArrayElement", () => {
     const arr = ["a"];
@@ -124,4 +125,18 @@ test("setVariableFrameColors", () => {
     const f0 = clonedFrames.F0[0].length;
 
     expect(f0).toBe(1);
+});
+
+test("fallsWithin", () => {
+    // Arrange
+    const location: GameLocation = {
+        left: 100,
+        top: 100,
+    };
+
+    // Act
+    const within = fallsWithin(location, 0, 150, 0, 200);
+
+    // Assert
+    expect(within).toBe(true);
 });

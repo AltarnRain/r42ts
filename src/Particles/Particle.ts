@@ -11,7 +11,7 @@ import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
 import { getFrameLocations } from "../Utility/Frame";
-import { cloneObject, getNewLocation } from "../Utility/Lib";
+import { cloneObject, getNewLocation, fallsWithin } from "../Utility/Lib";
 
 /**
  * Module:          Particle
@@ -69,9 +69,7 @@ export default class Particle extends BaseGameObject {
     }
 
     public draw(_: number): void {
-
         renderFrame(this.location, this.frame);
-
         this.location = getNewLocation(this.angle, this.speed, this.location.left, this.location.top);
         this.speed *= this.acceleration;
     }
@@ -80,17 +78,13 @@ export default class Particle extends BaseGameObject {
      * Returns true if the particle is still in the game field.
      */
     public inScreen(): boolean {
-
         const {
             gameFieldTop,
-            fullHeight,
             fullWidth,
+            fullHeight,
         } = DimensionProvider();
 
-        const yBounds = this.location.top < gameFieldTop || this.location.top > fullHeight;
-        const xBounds = this.location.left < 0 || this.location.left > fullWidth;
-
-        return xBounds || yBounds;
+        return fallsWithin(this.location, gameFieldTop, fullHeight, 0, fullWidth);
     }
 
     /**
