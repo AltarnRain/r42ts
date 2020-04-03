@@ -9,18 +9,14 @@
  * Responsibility:  Entry point for the game
  */
 
-import CGAColors from "./Constants/CGAColors";
 import BirdEnemy from "./Enemies/Bird/Bird";
-import BirdFrames from "./Enemies/Bird/BirdFrames";
-import { LevelIndicator } from "./GameScreen/LevelIndicator";
+import { Level } from "./GameScreen/Level";
 import Lives from "./GameScreen/Lifes";
 import ScoreBoard from "./GameScreen/ScoreBoard";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
-import renderFrame from "./Render/RenderFrame";
 import Runner from "./Runner";
-import { setRandomFrameColors } from "./Utility/Frame";
 
 window.onload = () => {
 
@@ -44,7 +40,7 @@ window.onload = () => {
 
                 const lives = new Lives();
                 const scoreboard = new ScoreBoard();
-                const levelIndicator = new LevelIndicator();
+                const levelIndicator = new Level();
 
                 Runner.get().registerPlayer(player);
                 Runner.get().registerScore(scoreboard);
