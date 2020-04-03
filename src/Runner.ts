@@ -27,6 +27,8 @@ import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
 import particleProvider from "./Providers/ParticleProvider";
 import { overlaps } from "./Utility/Lib";
 
+const fps = 1000 / 60;
+
 export default class Runner {
 
     /**
@@ -108,7 +110,7 @@ export default class Runner {
      */
     private run(tick: number): void {
         // Runs all animation at the passed FPS
-        if (tick - this.lastTick > (1000 / 60)) {
+        if (tick - this.lastTick > fps) {
 
             DrawGameField();
 
