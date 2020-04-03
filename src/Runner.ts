@@ -110,96 +110,59 @@ export default class Runner {
      */
     private run(tick: number): void {
         // Runs all animation at the passed FPS
-        if (tick - this.lastTick > fps) {
-
-            DrawGameField();
-
-            if (this.drawable) {
-                this.drawable.forEach((d) => d.draw(tick));
-            }
-
-            if (this.player) {
-                this.player.draw(tick);
-            }
-
-            this.enemies.forEach((go) => go.draw(tick));
-
-            if (this.particles.length > 0) {
-                this.particles.forEach((p) => p.draw(tick));
-                this.particles = this.particles.filter((p) => p.inScreen());
-            }
-
-            if (this.explosionCenters.length > 0) {
-                this.explosionCenters.forEach((ec) => ec.draw(tick));
-                this.explosionCenters = this.explosionCenters.filter((ec) => ec.fizzledOut());
-            }
-
-            // Bullet left the field.
-            if (this.playerBullet && !this.playerBullet.inScreen()) {
-                this.playerBullet = undefined;
-            }
-
-            if (this.playerBullet !== undefined) {
-                this.playerBullet.draw(tick);
-            }
-
-            this.lastTick = tick;
-        }
+        this.draw(tick);
 
         // Self destruct
+        this.updateState();
+
+        this.handler = window.requestAnimationFrame(this.run);
+    }
+
+    /**
+     * Called every request animation frame.
+     */
+    private updateState() {
         if (KeyboardState.selfDestruct) {
-
             if (this.enemies.length > 0 && this.player !== undefined) {
-
                 const assets = [
                     ...this.enemies,
                     this.player
                 ];
-
                 // Reset main rendering.
                 this.enemies = [];
                 this.player = undefined;
-
                 const explosionsLocations = assets.map((a) => explosionLocationProvider(a));
-
                 for (const explosionsLocation of explosionsLocations) {
                     const center = new ExplosionCenter(explosionsLocation.explosion.frame, explosionsLocation.location, explosionsLocation.explosion.explosionCenterDelay);
                     const particles = particleProvider(explosionsLocation.explosion, explosionsLocation.location);
-
                     this.particles.push(...particles);
                     this.explosionCenters.push(center);
                 }
             }
         }
-
         if (KeyboardState.fire && this.playerBullet === undefined && this.player !== undefined) {
             this.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, this.player.getLocation());
         }
-
         if (this.player !== undefined || this.playerBullet !== undefined) {
             const hittableObjects = [
                 ...this.enemies,
                 ...this.particles,
                 ...this.explosionCenters
             ].filter((o) => o !== undefined);
-
             if (hittableObjects.length > 0) {
                 for (const hittableObject of hittableObjects) {
                     const type = hittableObject.getObjectType();
-
                     switch (type) {
                         case "explosion":
                         case "particle":
                         case "enemy": {
                             // Check if player got hit.
                             if (this.player !== undefined) {
-
                                 // Get all the locations of hittable objects and check if the player might be hit.
                                 const hittableObjectLocations = hittableObject.getLocations();
                                 const playerLocations = this.player.getLocations();
                                 const playerExplosion = this.player.getExplosion();
                                 const playerLocation = this.player.getLocation();
-
                                 hittableObjectLocations.forEach((hloc) => {
                                     playerLocations.forEach((ploc) => {
                                         const playerHit = overlaps(hloc, ploc);
@@ -216,7 +179,6 @@ export default class Runner {
                             if (this.playerBullet) {
                                 const hittableObjectLocations = hittableObject.getLocations();
                                 const playerBulletLocations = this.playerBullet.getLocations();
-
                                 hittableObjectLocations.forEach((hloc) => {
                                     playerBulletLocations.forEach((ploc) => {
                                         const hit = overlaps(hloc, ploc);
@@ -236,8 +198,39 @@ export default class Runner {
                 }
             }
         }
+    }
 
-        this.handler = window.requestAnimationFrame(this.run);
+    /**
+     * Called every request animation frame. Draws objects.
+     * @param {number} tick. Tick.
+     */
+    private draw(tick: number) {
+        if (tick - this.lastTick > fps) {
+            DrawGameField();
+            if (this.drawable) {
+                this.drawable.forEach((d) => d.draw(tick));
+            }
+            if (this.player) {
+                this.player.draw(tick);
+            }
+            this.enemies.forEach((go) => go.draw(tick));
+            if (this.particles.length > 0) {
+                this.particles.forEach((p) => p.draw(tick));
+                this.particles = this.particles.filter((p) => p.inScreen());
+            }
+            if (this.explosionCenters.length > 0) {
+                this.explosionCenters.forEach((ec) => ec.draw(tick));
+                this.explosionCenters = this.explosionCenters.filter((ec) => ec.fizzledOut());
+            }
+            // Bullet left the field.
+            if (this.playerBullet && !this.playerBullet.inScreen()) {
+                this.playerBullet = undefined;
+            }
+            if (this.playerBullet !== undefined) {
+                this.playerBullet.draw(tick);
+            }
+            this.lastTick = tick;
+        }
     }
 
     private renderExplosion(explosion: Explosion, location: GameLocation) {
