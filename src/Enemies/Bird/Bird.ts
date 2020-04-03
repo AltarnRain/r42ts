@@ -95,7 +95,7 @@ export default class BirdEnemy extends BaseGameObject {
         );
 
         const top = randomNumberInRange(
-            DimensionProvider().gameFieldTop + height + 50,
+            DimensionProvider().gameFieldTop + height + 250,
             DimensionProvider().gameFieldTop + height);
 
         this.location = {
