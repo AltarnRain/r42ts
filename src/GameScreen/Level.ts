@@ -18,7 +18,7 @@ import { cloneObject, padLeft } from "../Utility/Lib";
  * Responsibility:  Show the level the player is playing
  */
 
-export class LevelIndicator implements IDraw {
+export class Level implements IDraw {
     /**
      * Frames to render.
      */
