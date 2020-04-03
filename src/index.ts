@@ -10,7 +10,7 @@
  */
 
 import BirdEnemy from "./Enemies/Bird/Bird";
-import { Level } from "./GameScreen/Level";
+import Level from "./GameScreen/Level";
 import Lives from "./GameScreen/Lifes";
 import ScoreBoard from "./GameScreen/ScoreBoard";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";

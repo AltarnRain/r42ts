@@ -10,7 +10,7 @@
  */
 
 import BaseGameObject from "./Base/BaseGameObject";
-import { LevelIndicator } from "./GameScreen/LevelIndicator";
+import Level from "./GameScreen/Level";
 import Lives from "./GameScreen/Lifes";
 import ScoreBoard from "./GameScreen/ScoreBoard";
 import { DrawGameField } from "./GameScreen/StaticRenders";
@@ -77,7 +77,7 @@ export default class Runner {
      */
     private explosionCenters: ExplosionCenter[] = [];
 
-    private levelIndicator: LevelIndicator;
+    private levelIndicator: Level;
 
     private scoreBoard: ScoreBoard;
 
@@ -267,7 +267,7 @@ export default class Runner {
         this.drawable.push(scoreBoard);
     }
 
-    public registerLevelIndicator(levelIndicator: LevelIndicator): void {
+    public registerLevelIndicator(levelIndicator: Level): void {
         this.levelIndicator = levelIndicator;
         this.drawable.push(levelIndicator);
     }
