@@ -11,7 +11,7 @@
 
 import BirdEnemy from "./Enemies/Bird/Bird";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
-import { Level, Lives, ScoreBoard } from "./Modules";
+import { Level, Lives, Phasers, ScoreBoard } from "./Modules";
 import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
 import * as Runner from "./Runner";
@@ -47,7 +47,9 @@ window.onload = () => {
                     addLife: () => Lives.addLife(),
                     setLevel: (n: number) => Level.setLevel(n),
                     addLevel: () => Level.addLevel(),
-                    restart: () => Runner.start(),
+                    addPhaser: () => Phasers.addPhaser(),
+                    setPhasers: (n: number) => Phasers.setPhasers(n),
+                    removePhaser: () => Phasers.removePhaser(),
                 };
 
                 Runner.start();

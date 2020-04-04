@@ -14,8 +14,9 @@ import { Frame } from "../../Types/Types";
 const Phaser: Frame = [
     ["E", "0"],
     ["E", "0"],
-    ["0", "E"],
     ["E", "E"],
+    ["0", "E"],
+    ["0", "E"],
 ];
 
 export default Phaser;

@@ -14,7 +14,7 @@ import { DrawGameField } from "./GameScreen/StaticRenders";
 import KeyboardState from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Explosion from "./Models/Explosion";
 import GameLocation from "./Models/GameLocation";
-import { Level, Lives, ScoreBoard } from "./Modules";
+import { Level, Lives, Phasers, ScoreBoard } from "./Modules";
 import ExplosionCenter from "./Particles/ExplosionCenter";
 import Particle from "./Particles/Particle";
 import Player from "./Player/Player";
@@ -187,6 +187,7 @@ function draw(tick: number) {
         Level.draw();
         Lives.draw();
         ScoreBoard.draw();
+        Phasers.draw();
 
         if (player) {
             player.draw(tick);

@@ -11,7 +11,7 @@ import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
 import { getFrameLocations } from "../Utility/Frame";
-import { cloneObject, getNewLocation, fallsWithin } from "../Utility/Lib";
+import { cloneObject, fallsWithin, getNewLocation } from "../Utility/Lib";
 
 /**
  * Module:          Particle

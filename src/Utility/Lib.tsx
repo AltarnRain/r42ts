@@ -166,7 +166,7 @@ export function randomNumberInRange(max: number, min: number): number {
  * @param {number} x2. Coordinate.
  * @param {number} y1. Coordinate.
  * @param {number} y2. Coordinate.
- * @returns {boolean}. True if the locations overlap, false otherwise.      
+ * @returns {boolean}. True if the locations overlap, false otherwise.
  */
 export function overlaps(location1: GameLocation, location2: GameLocation): boolean {
 

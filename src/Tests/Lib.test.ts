@@ -10,10 +10,10 @@
  */
 
 import "jest";
+import GameLocation from "../Models/GameLocation";
 import { Frames } from "../Types/Types";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
-import { cloneObject, getRandomArrayElement, padLeft, fallsWithin } from "../Utility/Lib";
-import GameLocation from "../Models/GameLocation";
+import { cloneObject, fallsWithin, getRandomArrayElement, padLeft } from "../Utility/Lib";
 
 test("getRandomArrayElement", () => {
     const arr = ["a"];
