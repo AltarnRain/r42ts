@@ -17,71 +17,46 @@ import { cloneObject, padLeft } from "../Utility/Lib";
  * Responsibility:  Draw the ScoreBoard
  */
 
-export default class ScoreBoard {
+const leftStartPosition = 4 * DimensionProvider().maxPixelSize;
+const spacing = 2 * DimensionProvider().maxPixelSize;
 
-    /**
-     * Player score
-     */
-    private score: number;
+// Create a clone of the number character frames so we can set their color without ruining the asset.
+const frames = cloneObject(Numbers);
 
-    /**
-     * Score board left start position.
-     */
-    private leftStartPosition: number;
+setVariableFramesColor(frames, CGAColors.yellow);
 
-    /**
-     * Spacing between numbers
-     */
-    private spacing: number;
+let score = 0;
 
-    /**
-     * Frames. Contains only numbers
-     */
-    private frames: Frames;
+/**
+ * Updates the score.
+ * @param {number} score. Score.
+ */
+export function updateScore(value: number): void {
+    score = value;
+}
 
-    constructor() {
-        this.leftStartPosition = 4 * DimensionProvider().maxPixelSize;
-        this.spacing = 2 * DimensionProvider().maxPixelSize;
+/**
+ * Adds to the score.
+ * @param {number} value. Number to add to the score.
+ */
+export function addToScore(value: number): void {
+    score += value;
+}
 
-        // Create a clone of the number character frames so we can set their color without ruining the asset.
-        this.frames = cloneObject(Numbers);
+/**
+ * 'Draws' the scoreboard.
+ */
+export function draw(): void {
+    const scoreString = padLeft(score.toString(), 6, "0");
 
-        setVariableFramesColor(this.frames, CGAColors.yellow);
+    let cnt = 0;
+    for (const n of scoreString) {
+        const frame = getFrameByIndex(frames, parseInt(n, 10));
 
-        this.score = 0;
-    }
-
-    /**
-     * Updates the score.
-     * @param {number} score. Score.
-     */
-    public updateScore(score: number): void {
-        this.score = score;
-    }
-
-    /**
-     * Adds to the score.
-     * @param {number} value. Number to add to the score.
-     */
-    public addToScore(value: number): void {
-        this.score += value;
-    }
-
-    /**
-     * 'Draws' the scoreboard.
-     */
-    public draw(): void {
-        const scoreString = padLeft(this.score.toString(), 6, "0");
-
-        let cnt = 0;
-        for (const n of scoreString) {
-            const frame = getFrameByIndex(this.frames, parseInt(n, 10));
-
-            const spacing = cnt === 0 ? 0 : this.spacing;
-            let left = cnt * (getFrameDimensions(frame).width + spacing);
-            left = this.leftStartPosition + left;
-            renderFrame({ left, top: 0 }, frame);
-            cnt++;
-        }
+        const actualSpacing = cnt === 0 ? 0 : spacing;
+        let left = cnt * (getFrameDimensions(frame).width + actualSpacing);
+        left = leftStartPosition + left;
+        renderFrame({ left, top: 0 }, frame);
+        cnt++;
     }
 }
