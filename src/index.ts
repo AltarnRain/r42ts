@@ -10,13 +10,11 @@
  */
 
 import BirdEnemy from "./Enemies/Bird/Bird";
-import Level from "./GameScreen/Level";
-import Lives from "./GameScreen/Lifes";
-import ScoreBoard from "./GameScreen/ScoreBoard";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
+import { Level, Lives, ScoreBoard } from "./Modules";
 import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
-import Runner from "./Runner";
+import * as Runner from "./Runner";
 
 window.onload = () => {
 
@@ -32,35 +30,27 @@ window.onload = () => {
                 registerListeners();
                 const player = new Player();
 
-                for (let i = 0; i < 20; i ++){
-
+                for (let i = 0; i < 20; i ++) {
                     const bird = new BirdEnemy();
-                    Runner.get().register(bird);
+                    Runner.register(bird);
                 }
 
-                const lives = new Lives();
-                const scoreboard = new ScoreBoard();
-                const levelIndicator = new Level();
-
-                Runner.get().registerPlayer(player);
-                Runner.get().registerScore(scoreboard);
-                Runner.get().registerLives(lives);
-                Runner.get().registerLevelIndicator(levelIndicator);
+                Runner.registerPlayer(player);
 
                 // player starts with two lives by default.
-                lives.setLives(2);
+                Lives.setLives(2);
 
                 (window as any).r42 = {
-                    updateScore: (n: number) => scoreboard.updateScore(n),
-                    addToScore: (n: number) => scoreboard.addToScore(n),
-                    setLives: (n: number) => lives.setLives(n),
-                    addLife: () => lives.addLife(),
-                    setLevel: (n: number) => levelIndicator.setLevel(n),
-                    addLevel: () => levelIndicator.addLevel(),
-                    restart: () => Runner.get().start(),
+                    updateScore: (n: number) => ScoreBoard.updateScore(n),
+                    addToScore: (n: number) => ScoreBoard.addToScore(n),
+                    setLives: (n: number) => Lives.setLives(n),
+                    addLife: () => Lives.addLife(),
+                    setLevel: (n: number) => Level.setLevel(n),
+                    addLevel: () => Level.addLevel(),
+                    restart: () => Runner.start(),
                 };
 
-                Runner.get().start();
+                Runner.start();
 
                 break;
             }
