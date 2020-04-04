@@ -6,10 +6,8 @@
 
 import Numbers from "../Assets/Numbers";
 import CGAColors from "../Constants/CGAColors";
-import IDraw from "../Interfaces/IDraw";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import { Frames } from "../Types/Types";
 import { getFrameByIndex, setVariableFramesColor } from "../Utility/Frame";
 import { cloneObject, padLeft } from "../Utility/Lib";
 
@@ -18,72 +16,49 @@ import { cloneObject, padLeft } from "../Utility/Lib";
  * Responsibility:  Show the level the player is playing
  */
 
-export default class Level implements IDraw {
-    /**
-     * Frames to render.
-     */
-    private frames: Frames;
+/**
+ * Current level.
+ */
+let level: number = 1;
 
-    /**
-     * Position for the left number.
-     */
-    private leftNumberLeft: number;
+// Calculate positions. These never change.
+const rightNumberLeft = DimensionProvider().fullWidth - DimensionProvider().maxPixelSize * 8;
+const leftNumberLeft = DimensionProvider().fullWidth - DimensionProvider().maxPixelSize * 13;
 
-    /**
-     * Positino for the right number.
-     */
-    private rightNumberLeft: number;
+// Create frames.
+const frames = cloneObject(Numbers);
+setVariableFramesColor(frames, CGAColors.yellow);
 
-    /**
-     * Current level.
-     */
-    private level: number;
+/**
+ * Set the level.
+ * @param {number} value. Value to set the level to.
+ */
+export function setLevel(value: number): void {
+    level = value;
+}
 
-    /**
-     * Constructs the class.
-     */
-    constructor() {
+/**
+ * Adds one level.
+ */
+export function addLevel(): void {
+    level++;
+}
 
-        // Calculate positions. These never change.
-        this.rightNumberLeft = DimensionProvider().fullWidth - DimensionProvider().maxPixelSize * 8;
-        this.leftNumberLeft = DimensionProvider().fullWidth - DimensionProvider().maxPixelSize * 13;
+/**
+ * Draw the level indicator.
+ */
+export function draw(): void {
+    const paddedLevelString = padLeft(level.toString(), 2, "0");
 
-        this.frames = cloneObject(Numbers);
+    const rightNumber = parseInt(paddedLevelString[1], 10);
+    const leftNumber = parseInt(paddedLevelString[0], 10);
 
-        setVariableFramesColor(this.frames, CGAColors.yellow);
+    const rightFrame = getFrameByIndex(frames, rightNumber);
+    const leftFrame = getFrameByIndex(frames, leftNumber);
 
-        this.level = 1;
-    }
+    renderFrame({
+        left: leftNumberLeft, top: 0
+    }, leftFrame);
 
-    /**
-     * Set the level.
-     * @param {number} value. Value to set the level to.
-     */
-
-    public setLevel(value: number): void {
-        this.level = value;
-    }
-
-    /**
-     * Adds one level.
-     */
-    public addLevel(): void {
-        this.level++;
-    }
-
-    /**
-     * Draw the level indicator.
-     */
-    public draw(): void {
-        const paddedLevelString = padLeft(this.level.toString(), 2, "0");
-
-        const rightNumber = parseInt(paddedLevelString[1], 10);
-        const leftNumber = parseInt(paddedLevelString[0], 10);
-
-        const rightFrame = getFrameByIndex(this.frames, rightNumber);
-        const leftFrame = getFrameByIndex(this.frames, leftNumber);
-
-        renderFrame({ left: this.leftNumberLeft, top: 0 }, leftFrame);
-        renderFrame({ left: this.rightNumberLeft, top: 0 }, rightFrame);
-    }
+    renderFrame({ left: rightNumberLeft, top: 0 }, rightFrame);
 }
