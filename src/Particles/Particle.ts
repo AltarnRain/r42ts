@@ -53,11 +53,15 @@ export default class Particle extends BaseGameObject {
 
     /**
      * Returns the object type.
+     * @returns {GameObjectType}. The game object type.
      */
     public getObjectType(): GameObjectType {
         return "particle";
     }
 
+    /**
+     * Draw the particle
+     */
     public draw(_: number): void {
         renderFrame(this.location, this.frame);
         this.location = getNewLocation(this.angle, this.speed, this.location.left, this.location.top);
@@ -66,6 +70,7 @@ export default class Particle extends BaseGameObject {
 
     /**
      * Returns true if the particle is still in the game field.
+     * @returns {boolean}. True if the particle is in the game field.
      */
     public inScreen(): boolean {
         const {
@@ -78,14 +83,10 @@ export default class Particle extends BaseGameObject {
     }
 
     /**
-     * Returns the locations occupied by the bullet.
+     * Returns the current particle frame.
+     * @returns {Frame}. The current frame.
      */
-    public getLocations(): GameLocation[] {
-        return getFrameLocations(this.frame, this.location);
-    }
-
     public getCurrentFrame(): Frame {
         return this.frame;
     }
-
 }

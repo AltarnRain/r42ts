@@ -41,11 +41,6 @@ export default abstract class BaseGameObject {
     }
 
     /**
-     * Returns the game location of every pixel for a game object.
-     */
-    public abstract getLocations(): GameLocation[];
-
-    /**
      * Returns the object type.
      */
     public abstract getObjectType(): GameObjectType;

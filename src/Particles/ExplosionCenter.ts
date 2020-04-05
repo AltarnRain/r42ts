@@ -39,14 +39,23 @@ export default class ExplosionCenter extends BaseGameObject {
      */
     private fizzled = false;
 
+    /**
+     * Construct the Explosion center object.
+     * @param {Frame} frame. Explosion frame.
+     * @param {GameLocation} location. Location where the explosion will appear.
+     * @param {number} fizzleTime. Time in ticks how long the explosion center should remain visible.
+     */
     constructor(frame: Frame, location: GameLocation, fizzleTime: number) {
-        super();
+        super(location);
 
         this.frame = cloneObject(frame);
-        this.location = {...location};
         this.fizzleTime = fizzleTime;
     }
 
+    /**
+     * Draws the explosion center.
+     * @param {number} tick. Current tick.
+     */
     public draw(tick: number): void {
         if (this.startTick === undefined) {
             this.startTick = tick;
@@ -65,13 +74,6 @@ export default class ExplosionCenter extends BaseGameObject {
 
     public fizzledOut(): boolean {
         return this.fizzled;
-    }
-
-    /**
-     * Returns the locations occupied by the object.
-     */
-    public getLocations(): GameLocation[] {
-        return getFrameLocations(this.frame, this.location);
     }
 
     public getCurrentFrame(): Frame {

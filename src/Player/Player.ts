@@ -16,15 +16,12 @@ import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
-import { convertFrameColor, getFrameLocations } from "../Utility/Frame";
+import { convertFrameColor } from "../Utility/Frame";
 import { cloneObject, getAngle, getNewLocation } from "../Utility/Lib";
 import PlayerExplosion from "./PlayerExplosion";
 import { PlayerFrame } from "./PlayerFrames";
 
 export default class Player extends BaseGameObject {
-    public getCurrentFrame(): Frame {
-        return PlayerFrame;
-    }
     /**
      * Frames used by the player ship
      */
@@ -48,9 +45,18 @@ export default class Player extends BaseGameObject {
         convertFrameColor(this.frame);
     }
 
+    /**
+     * Returns the player explosion
+     * @returns {Explosion}. Player explosion.
+     */
     public getExplosion(): Explosion {
         return PlayerExplosion;
     }
+
+    /**
+     * Returns the object type.
+     * @returns {GameObjectType}. Player object type.
+     */
     public getObjectType(): GameObjectType {
         return "player";
     }
@@ -72,16 +78,10 @@ export default class Player extends BaseGameObject {
     }
 
     /**
-     * Returns the locations occupied by the object.
+     * Returns the current player frame.
+     * @returns {Frame}. Current player frame.
      */
-    public getLocations(): GameLocation[] {
-        return getFrameLocations(this.frame, this.location);
-    }
-
-    /**
-     * Points for the player
-     */
-    public getPoints(): number {
-        return 0;
+    public getCurrentFrame(): Frame {
+        return PlayerFrame;
     }
 }
