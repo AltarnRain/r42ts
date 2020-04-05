@@ -90,7 +90,7 @@ export default class Player extends BaseGameObject {
     public getNozzleLocation(): GameLocation {
         return {
             left: this.location.left + DimensionProvider().minPixelSize * 2,
-            top: this.location.top - DimensionProvider().minPixelSize * 2,
+            top: this.location.top - DimensionProvider().minPixelSize * 1,
         };
     }
 }
