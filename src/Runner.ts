@@ -9,7 +9,6 @@
  * Responsibility:  Main game loop.
  */
 
-import { BaseDestructableObject } from "./Base/BaseDestructableObject";
 import { BaseEnemyObject } from "./Base/BaseEnemyObject";
 import BaseGameObject from "./Base/BaseGameObject";
 import { DrawGameField } from "./GameScreen/StaticRenders";
@@ -120,7 +119,7 @@ function updateState() {
     }
 
     if (KeyboardState.fire && playerBullet === undefined && player !== undefined) {
-        playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, player.getLocation());
+        playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, player.getNozzleLocation());
     }
 
     const hittableObjects = getHittableObjects();
@@ -232,8 +231,8 @@ function draw(tick: number) {
         }
 
         if (renderPhaser && player && enemies.length > 0) {
-            const enemyloc = enemies[0].getLocation();
-            drawPhaser(player.getLocation(), enemyloc, DimensionProvider().averagePixelSize);
+            const enemy = enemies[0];
+            drawPhaser(player.getNozzleLocation(), enemy.getCenterLocation(), DimensionProvider().averagePixelSize);
         }
 
         lastTick = tick;

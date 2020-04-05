@@ -14,12 +14,13 @@ import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import Explosion from "../../Models/Explosion";
+import GameLocation from "../../Models/GameLocation";
 import { Hitbox } from "../../Models/Hitbox";
 import DimensionProvider from "../../Providers/DimensionProvider";
 import FrameProvider from "../../Providers/FrameProvider";
 import renderFrame from "../../Render/RenderFrame";
 import { Frame, Frames, GameObjectType } from "../../Types/Types";
-import { getFrameDimensions, getFrameHitbox, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
+import { getFrameCenter, getFrameDimensions, getFrameHitbox, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
 import { cloneObject, getNewLocation, getRandomArrayElement, randomNumberInRange } from "../../Utility/Lib";
 import BirdFrames from "./BirdFrames";
 
@@ -183,5 +184,13 @@ export default class BirdEnemy extends BaseEnemyObject {
      */
     public getHitbox(): Hitbox {
         return getFrameHitbox(this.location, this.currentFrame, DimensionProvider().maxPixelSize);
+    }
+
+    /**
+     * Returns the center location of the object.
+     * @returns {GameLocation}. GameLocation located at the center of the object.
+     */
+    public getCenterLocation(): GameLocation {
+        return getFrameCenter(this.location, this.currentFrame, DimensionProvider().maxPixelSize);
     }
 }

@@ -9,6 +9,7 @@
  * Responsibility:  Base class for enemies.
  */
 
+import GameLocation from "../Models/GameLocation";
 import { BaseDestructableObject } from "./BaseDestructableObject";
 
 export abstract class BaseEnemyObject extends BaseDestructableObject {
@@ -45,4 +46,6 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
      * Returns the enemies hitpoints.
      */
     public abstract getHitpoints(): number;
+
+    public abstract getCenterLocation(): GameLocation;
 }

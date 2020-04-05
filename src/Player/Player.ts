@@ -67,8 +67,6 @@ export default class Player extends BaseGameObject {
      * @param {number} tick. Tick count.
      */
     public draw(_: number): void {
-        const { left, top } = this.location;
-
         const angle = getAngle(KeyboardState);
 
         if (angle !== -1) {
@@ -84,5 +82,15 @@ export default class Player extends BaseGameObject {
      */
     public getHitbox(): Hitbox {
         return getFrameHitbox(this.location, this.frame, DimensionProvider().maxPixelSize);
+    }
+
+    /**
+     * Returns the top/left of the nozzle.
+     */
+    public getNozzleLocation(): GameLocation {
+        return {
+            left: this.location.left + DimensionProvider().minPixelSize * 2,
+            top: this.location.top - DimensionProvider().minPixelSize * 2,
+        };
     }
 }
