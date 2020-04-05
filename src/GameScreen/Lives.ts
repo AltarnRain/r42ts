@@ -56,7 +56,7 @@ export function draw(): void {
     // Start five game pixels from the right.
     for (let lives = 1; lives <= 7; lives++) {
         if (lives <= lifeCount) {
-            left = left - DimensionProvider().maxPixelSize * 2 - getFrameDimensions(lifeFrame).width;
+            left = left - DimensionProvider().maxPixelSize * 2 - getFrameDimensions(lifeFrame, DimensionProvider().maxPixelSize).width;
             renderFrame({ left, top }, lifeFrame);
         }
     }

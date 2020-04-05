@@ -84,7 +84,7 @@ export default class BirdEnemy extends BaseEnemyObject {
         this.frameProvider = new FrameProvider(this.frames, getRandomFrameKeyIndex(this.frames));
         this.currentFrame = this.frameProvider.getFrame();
 
-        const { width, height } = getFrameDimensions(BirdFrames.F0);
+        const { width, height } = getFrameDimensions(BirdFrames.F0, DimensionProvider().maxPixelSize);
 
         // Calculate random left position
         const left = randomNumberInRange(
@@ -182,6 +182,6 @@ export default class BirdEnemy extends BaseEnemyObject {
      * @returns {Hitbox}. Bird's hitbox.
      */
     public getHitbox(): Hitbox {
-        return getFrameHitbox(this.location, this.currentFrame);
+        return getFrameHitbox(this.location, this.currentFrame, DimensionProvider().maxPixelSize);
     }
 }

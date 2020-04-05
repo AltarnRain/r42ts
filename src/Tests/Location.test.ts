@@ -10,7 +10,7 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import { fallsWithin } from "../Utility/Location";
+import * as Location from "../Utility/Location";
 
 test("fallsWithin", () => {
     // Arrange
@@ -20,8 +20,29 @@ test("fallsWithin", () => {
     };
 
     // Act
-    const within = fallsWithin(location, 0, 150, 0, 200);
+    const within = Location.fallsWithin(location, 0, 150, 0, 200);
 
     // Assert
     expect(within).toBe(true);
+});
+
+test("calculateDistance", () => {
+
+    const distance = Location.calculateDistance({left: 0, top: 0}, {left: 1, top: 0});
+
+    expect(distance).toBeGreaterThan(0);
+});
+
+test("", () => {
+    // Arrange
+    const location: GameLocation = {
+        left: 0,
+        top: 0,
+    };
+
+    // Act
+    const newLocation = Location.getNewLocation(location, 45, 5);
+
+    // Assert
+    expect(newLocation === location).toBe(false);
 });

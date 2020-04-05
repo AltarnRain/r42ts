@@ -11,6 +11,7 @@ import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
 import { getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
+import DimensionProvider from "../Providers/DimensionProvider";
 
 /**
  * Module:          Explosion Center
@@ -88,6 +89,6 @@ export default class ExplosionCenter extends BaseGameObject {
      * @returns {Hitbox}. The hitbox.
      */
     public getHitbox(): Hitbox {
-        return getFrameHitbox(this.location, this.frame);
+        return getFrameHitbox(this.location, this.frame, DimensionProvider().maxPixelSize);
     }
 }

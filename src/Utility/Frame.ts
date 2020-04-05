@@ -116,10 +116,10 @@ export function setFrameColor(frame: Frame, color: string) {
  * @param {Frame} frame. A frame.
  * @returns {width, height}.
  */
-export function getFrameDimensions(frame: Frame): { width: number; height: number } {
+export function getFrameDimensions(frame: Frame, pixelSize: number): { width: number; height: number } {
     return {
-        width: frame[0].length * DimensionProvider().averagePixelSize,
-        height: frame.length * DimensionProvider().averagePixelSize,
+        width: frame[0].length * pixelSize,
+        height: frame.length * pixelSize,
     };
 }
 
@@ -128,8 +128,8 @@ export function getFrameDimensions(frame: Frame): { width: number; height: numbe
  * @param {number} location.
  * @param {frame} frame.
  */
-export function getFrameCenter(location: GameLocation, frame: Frame): GameLocation {
-    const dimensions = getFrameDimensions(frame);
+export function getFrameCenter(location: GameLocation, frame: Frame, pixelSize: number): GameLocation {
+    const dimensions = getFrameDimensions(frame, pixelSize);
 
     return {
         left: location.left + dimensions.width / 2,
@@ -164,14 +164,10 @@ export function getFrameByIndex(frames: Frames, index: number): Frame | undefine
  * @param {Frame} frame. A frame
  * @returns {Hitbox}. The frame's hitbox.
  */
-export function getFrameHitbox(location: GameLocation, frame: Frame): Hitbox {
+export function getFrameHitbox(location: GameLocation, frame: Frame, pixelSize: number): Hitbox {
 
-    const {
-        minPixelSize
-    } = DimensionProvider();
-
-    const width = frame[0].length * minPixelSize;
-    const height = frame.length * minPixelSize;
+    const width = frame[0].length * pixelSize;
+    const height = frame.length * pixelSize;
 
     return {
         top: location.top,

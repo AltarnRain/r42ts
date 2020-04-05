@@ -51,7 +51,7 @@ export function draw(): void {
         const frame = getFrameByIndex(frames, parseInt(n, 10));
 
         const actualSpacing = cnt === 0 ? 0 : spacing;
-        let left = cnt * (getFrameDimensions(frame).width + actualSpacing);
+        let left = cnt * (getFrameDimensions(frame, DimensionProvider().maxPixelSize).width + actualSpacing);
         left = leftStartPosition + left;
         renderFrame({ left, top: 0 }, frame);
         cnt++;

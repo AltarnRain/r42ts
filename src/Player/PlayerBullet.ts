@@ -39,6 +39,6 @@ export default class PlayerBullet extends Particle {
      * Returns the player bullets hitbox.
      */
     public getHitbox(): Hitbox {
-        return getFrameHitbox(this.location, this.frame);
+        return getFrameHitbox(this.location, this.frame, DimensionProvider().maxPixelSize);
     }
 }

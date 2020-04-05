@@ -12,61 +12,26 @@
 import "jest";
 import { Frames } from "../Types/Types";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
-import { cloneObject, getRandomArrayElement, padLeft } from "../Utility/Lib";
+import * as Lib from "../Utility/Lib";
 
 test("getRandomArrayElement", () => {
     const arr = ["a"];
 
-    const result = getRandomArrayElement(arr);
+    const result = Lib.getRandomArrayElement(arr);
 
     expect(result).toBe("a");
 });
 
-test("getRandomFramesKeyIndex single key", () => {
-
-    // Arrange
-    const frames: Frames = {
-        F0: [],
-    };
-
-    // Act
-    const index = getRandomFrameKeyIndex(frames);
-
-    // Assert
-    expect(index).toBe(0);
-});
-
-test("getRandomFramesKeyIndex multiple keys", () => {
-
-    // Arrange
-    const frames: Frames = {
-        F0: [],
-        F1: [],
-        F2: [],
-    };
-
-    const indexes: number[] = [];
-
-    // Act
-    for (let i = 0; i < 100; i++) {
-        indexes.push(getRandomFrameKeyIndex(frames));
-    }
-
-    // Assert
-    expect(indexes.every((i) => i >= 0)).toBe(true);
-    expect(indexes.every((i) => i <= 2)).toBe(true);
-});
-
 test("pad left", () => {
     // Act
-    const result1 = padLeft("1", 6, "0");
-    const result2 = padLeft("12", 6, "0");
-    const result3 = padLeft("123", 6, "0");
-    const result4 = padLeft("1234", 6, "0");
-    const result5 = padLeft("12345", 6, "0");
-    const result6 = padLeft("123456", 6, "0");
-    const result7 = padLeft("1234567", 6, "0");
-    const result8 = padLeft("", 6, "0");
+    const result1 = Lib.padLeft("1", 6, "0");
+    const result2 = Lib.padLeft("12", 6, "0");
+    const result3 = Lib.padLeft("123", 6, "0");
+    const result4 = Lib.padLeft("1234", 6, "0");
+    const result5 = Lib.padLeft("12345", 6, "0");
+    const result6 = Lib.padLeft("123456", 6, "0");
+    const result7 = Lib.padLeft("1234567", 6, "0");
+    const result8 = Lib.padLeft("", 6, "0");
 
     // Assert
     expect(result1).toBe("000001");
@@ -92,7 +57,7 @@ test("clone frames", () => {
     };
 
     // Act
-    const clonedFrames = cloneObject(original);
+    const clonedFrames = Lib.cloneObject(original);
 
     // Assert
 
@@ -119,10 +84,9 @@ test("setVariableFrameColors", () => {
         ]
     };
 
-    const clonedFrames = cloneObject(original);
+    const clonedFrames = Lib.cloneObject(original);
 
     const f0 = clonedFrames.F0[0].length;
 
     expect(f0).toBe(1);
 });
-
