@@ -60,7 +60,6 @@ export function draw(): void {
                 left,
                 top: 0
             }, frames);
-
         }
     }
 }

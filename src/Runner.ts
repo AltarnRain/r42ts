@@ -9,6 +9,8 @@
  * Responsibility:  Main game loop.
  */
 
+import { BaseDestructableObject } from "./Base/BaseDestructableObject";
+import { BaseEnemyObject } from "./Base/BaseEnemyObject";
 import BaseGameObject from "./Base/BaseGameObject";
 import { DrawGameField } from "./GameScreen/StaticRenders";
 import KeyboardState from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
@@ -29,12 +31,12 @@ const fps = 1000 / 60;
 /**
  * Array of current game objects on screen.
  */
-let enemies: BaseGameObject[] = [];
+let enemies: BaseEnemyObject[] = [];
 
 /**
  * Animation frame handler.
  */
-let handler: number = 0;
+let animationHandle: number = 0;
 
 /**
  * Keeps track of the last tick when the animation was fired.
@@ -45,7 +47,7 @@ let lastTick: number = 0;
 /**
  * Reference to the player object.
  */
-let player: BaseGameObject;
+let player: Player;
 
 /**
  * Quick reference to the player bullet.
@@ -66,14 +68,14 @@ let explosionCenters: ExplosionCenter[] = [];
  * Start the runner.
  */
 export function start(): void {
-    handler = window.requestAnimationFrame(run);
+    animationHandle = window.requestAnimationFrame(run);
 }
 
 /**
  * Stop the runner.
  */
 export function stop(): void {
-    window.cancelAnimationFrame(handler);
+    window.cancelAnimationFrame(animationHandle);
 }
 
 /**
@@ -87,86 +89,62 @@ function run(tick: number): void {
     // Self destruct
     updateState();
 
-    handler = window.requestAnimationFrame(run);
+    animationHandle = window.requestAnimationFrame(run);
 }
 
 /**
  * Called every request animation frame.
  */
 function updateState() {
+
     if (KeyboardState.selfDestruct) {
-        if (enemies.length > 0 && player !== undefined) {
-            const assets = [
-                ...enemies,
-                player
-            ];
-            // Reset main rendering.
-            enemies = [];
-            player = undefined;
-            const explosionsLocations = assets.map((a) => explosionLocationProvider(a));
-            for (const explosionsLocation of explosionsLocations) {
-                const center = new ExplosionCenter(explosionsLocation.explosion.frame, explosionsLocation.location, explosionsLocation.explosion.explosionCenterDelay);
-                const newParticles = particleProvider(explosionsLocation.explosion, explosionsLocation.location);
-                particles.push(...newParticles);
-                explosionCenters.push(center);
-            }
-        }
+        selfDestruct();
     }
 
     if (KeyboardState.fire && playerBullet === undefined && player !== undefined) {
         playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, player.getLocation());
     }
 
-    if (player !== undefined || playerBullet !== undefined) {
-        const hittableObjects = [
-            ...enemies,
-            ...particles,
-            ...explosionCenters
-        ].filter((o) => o !== undefined);
+    if (player !== undefined) {
+        const hittableObjects = getHittableObjects();
 
         if (hittableObjects.length > 0) {
             for (const hittableObject of hittableObjects) {
-                const type = hittableObject.getObjectType();
-                switch (type) {
-                    case "explosion":
-                    case "particle":
-                    case "enemy": {
-                        // Check if player got hit.
-                        if (player !== undefined) {
-                            // Get all the locations of hittable objects and check if the player might be hit.
-                            const hittableObjectLocations = hittableObject.getLocations();
-                            const playerLocations = player.getLocations();
-                            const playerExplosion = player.getExplosion();
-                            const playerLocation = player.getLocation();
-                            hittableObjectLocations.forEach((hloc) => {
-                                playerLocations.forEach((ploc) => {
-                                    const playerHit = overlaps(hloc, ploc);
-                                    if (playerHit) {
-                                        renderExplosion(playerExplosion, playerLocation);
-                                        player = undefined;
-                                        Lives.removeLife();
-                                    }
-                                });
-                            });
-                        }
+
+                {
+                    // Get all the locations of hittable objects and check if the player might be hit.
+                    const hittableObjectLocations = hittableObject.getLocations();
+                    const playerLocations = player.getLocations();
+
+                    // Check if the player was hit.
+                    for (const hittableObjectLocation of hittableObjectLocations) {
+                        playerLocations.forEach((ploc) => {
+                            const playerHit = overlaps(hittableObjectLocation, ploc);
+                            if (playerHit) {
+                                const playerExplosion = player.getExplosion();
+                                const playerLocation = player.getLocation();
+                                renderExplosion(playerExplosion, playerLocation);
+                                player = undefined;
+                                Lives.removeLife();
+                            }
+                        });
                     }
-                    case "playerbullet": {
-                        if (playerBullet) {
-                            const hittableObjectLocations = hittableObject.getLocations();
-                            const playerBulletLocations = playerBullet.getLocations();
-                            hittableObjectLocations.forEach((hloc) => {
-                                playerBulletLocations.forEach((ploc) => {
-                                    const hit = overlaps(hloc, ploc);
-                                    if (hit) {
-                                        playerBullet = undefined;
-                                        if (hittableObject.getObjectType() === "enemy") {
-                                            renderExplosion(hittableObject.getExplosion(), hittableObject.getLocation());
-                                            ScoreBoard.addToScore(hittableObject.getPoints());
-                                            enemies = enemies.filter((e) => e !== hittableObject);
-                                        }
-                                    }
-                                });
-                            });
+                }
+
+                // Check if the player bullet hit something.
+                if (playerBullet && isEnemy(hittableObject)) {
+                    const playerBulletLocations = playerBullet.getLocations();
+                    const hittableObjectLocations = hittableObject.getLocations();
+
+                    for (const playerBulletLocation of playerBulletLocations) {
+                        for (const hittableObjectLocation of hittableObjectLocations) {
+                            const hit = overlaps(hittableObjectLocation, playerBulletLocation);
+                            if (hit) {
+                                playerBullet = undefined;
+                                renderExplosion(hittableObject.getExplosion(), hittableObject.getLocation());
+                                ScoreBoard.addToScore(hittableObject.getPoints());
+                                enemies = enemies.filter((e) => e !== hittableObject);
+                            }
                         }
                     }
                 }
@@ -174,6 +152,7 @@ function updateState() {
         }
     }
 }
+
 
 /**
  * Called every request animation frame. Draws objects.
@@ -218,6 +197,48 @@ function draw(tick: number) {
     }
 }
 
+function selfDestruct() {
+    if (enemies.length > 0 && player !== undefined) {
+        const destructableObjects = getDestructableObjects();
+        // Reset main rendering.
+        enemies = [];
+        player = undefined;
+        const explosionsLocations = destructableObjects.map((a) => explosionLocationProvider(a));
+        for (const explosionsLocation of explosionsLocations) {
+            const center = new ExplosionCenter(explosionsLocation.explosion.frame, explosionsLocation.location, explosionsLocation.explosion.explosionCenterDelay);
+            const newParticles = particleProvider(explosionsLocation.explosion, explosionsLocation.location);
+            particles.push(...newParticles);
+            explosionCenters.push(center);
+        }
+    }
+}
+
+function getDestructableObjects(): BaseDestructableObject[] {
+    return [
+        ...enemies,
+        player
+    ];
+}
+
+/**
+ * Returns all gameobject that can be hit.
+ * @returns {BaseGameObject[]}. An array of objects that can be hit by the player.
+ */
+function getHittableObjects(): BaseGameObject[] {
+    const returnValue: BaseGameObject[] = [
+        ...enemies,
+        ...particles,
+        ...explosionCenters
+    ].filter((o) => o !== undefined);
+
+    return returnValue;
+}
+
+/**
+ * Renders an explosion and explosion center.
+ * @param {Explosion} explosion. An explosion asset.
+ * @param {GameLocation} location. The center location where the explosion occurs.
+ */
 function renderExplosion(explosion: Explosion, location: GameLocation) {
     const center = new ExplosionCenter(explosion.frame, location, explosion.explosionCenterDelay);
     const newParticles = particleProvider(explosion, location);
@@ -226,18 +247,36 @@ function renderExplosion(explosion: Explosion, location: GameLocation) {
 }
 
 /**
- * Register an IDrawable class.
- * @param drawable.
- * @returns {() => void}. Function to remove the object from the array of drawable objects.
+ * Register a game object.
+ * @param {BaseGameObject} gameobject.
  */
-export function register(gameObject: BaseGameObject): void {
-    enemies.push(gameObject);
+export function register(gameobject: BaseGameObject): void {
+    if (isEnemy(gameobject)) {
+        enemies.push(gameobject);
+    } else if (isPlayer(gameobject)) {
+        player = gameobject;
+    } else if (isParticel(gameobject)) {
+        particles.push(gameobject);
+    }
 }
 
 /**
- * Registeres the player
- * @param {Player} value. Player object.
+ * TypeGuard for enemies
  */
-export function registerPlayer(value: Player) {
-    player = value;
+function isEnemy(value: BaseGameObject): value is BaseEnemyObject {
+    return value && value.getObjectType() === "enemy";
+}
+
+/**
+ * TypeGuard for the player
+ */
+function isPlayer(value: BaseGameObject): value is Player {
+    return value && value.getObjectType() === "player";
+}
+
+/**
+ * TypeGuard for particles.
+ */
+function isParticel(value: BaseGameObject): value is Particle {
+    return value && value.getObjectType() === "particle";
 }

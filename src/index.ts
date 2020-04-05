@@ -35,7 +35,7 @@ window.onload = () => {
                     Runner.register(bird);
                 }
 
-                Runner.registerPlayer(player);
+                Runner.register(player);
 
                 // player starts with two lives by default.
                 Lives.setLives(2);

@@ -4,16 +4,15 @@
  * See LICENSE.MD.
  */
 
-import BaseGameObject from "../Base/BaseGameObject";
+import { BaseDestructableObject } from "../Base/BaseDestructableObject";
 import ExplosionLocation from "../Models/ExplosionLocation";
-import GameLocation from "../Models/GameLocation";
 
 /**
  * Module:          ExplosionLocationProvider
  * Responsibility:  Provide an explosion location
  */
 
-export default function explosionLocationProvider(obj: BaseGameObject): ExplosionLocation {
+export default function explosionLocationProvider(obj: BaseDestructableObject): ExplosionLocation {
     return {
         location : obj.getLocation(),
         explosion: obj.getExplosion(),

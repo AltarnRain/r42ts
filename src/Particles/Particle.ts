@@ -5,7 +5,6 @@
  */
 
 import BaseGameObject from "../Base/BaseGameObject";
-import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
@@ -44,21 +43,12 @@ export default class Particle extends BaseGameObject {
      * Construct the particle.
      */
     constructor(frame: Frame, angle: number, speed: number, acceleration: number, location: GameLocation) {
-        super();
-
-        this.location = { ...location };
+        super(location);
 
         this.frame = cloneObject(frame);
         this.angle = angle;
         this.speed = speed;
         this.acceleration = acceleration;
-    }
-
-    /**
-     * Returns an explosion asset.
-     */
-    public getExplosion(): Explosion {
-        return undefined;
     }
 
     /**
@@ -92,12 +82,5 @@ export default class Particle extends BaseGameObject {
      */
     public getLocations(): GameLocation[] {
         return getFrameLocations(this.frame, this.location);
-    }
-
-    /**
-     * Return the points of a particle.
-     */
-    public getPoints(): number {
-        return 0;
     }
 }

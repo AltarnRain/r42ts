@@ -4,13 +4,12 @@
  * See LICENSE.MD.
  */
 
-import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { GameObjectType } from "../Types/Types";
 
 /**
- * Module:          IDraw
- * Responsibility:  Contract for a class that has something that can be drawn.
+ * Module:          BaseGameObject
+ * Responsibility:  Base class for all enemies.
  */
 
 export default abstract class BaseGameObject {
@@ -18,6 +17,15 @@ export default abstract class BaseGameObject {
      * Game object location.
      */
     protected location: GameLocation;
+
+    /**
+     *
+     */
+    constructor(location?: GameLocation) {
+        if (location) {
+            this.location = {...location};
+        }
+    }
 
     /**
      * Animate the object
@@ -38,18 +46,7 @@ export default abstract class BaseGameObject {
     public abstract getLocations(): GameLocation[];
 
     /**
-     * Get the explosion asset for this object. Returns undefined if the game object doesn't have an explosion.
-     * For example: bullets and particles.
-     */
-    public abstract getExplosion(): Explosion | undefined;
-
-    /**
      * Returns the object type.
      */
     public abstract getObjectType(): GameObjectType;
-
-    /**
-     * Returns the point worth.
-     */
-    public abstract getPoints(): number;
 }

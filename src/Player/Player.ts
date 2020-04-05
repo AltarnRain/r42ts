@@ -31,11 +31,9 @@ export default class Player extends BaseGameObject {
      * Construct the class.
      */
     constructor(location?: GameLocation) {
-        super();
+        super(location);
 
-        if (location) {
-            this.location = { ...location };
-        } else {
+        if (!location) {
             this.location = {
                 left: DimensionProvider().fullWidth / 2,
                 top: DimensionProvider().fullHeight * 0.9,
