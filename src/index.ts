@@ -30,7 +30,7 @@ window.onload = () => {
                 registerListeners();
                 const player = new Player();
 
-                for (let i = 0; i < 20; i ++) {
+                for (let i = 0; i < 1; i++) {
                     const bird = new BirdEnemy();
                     Runner.register(bird);
                 }
@@ -52,11 +52,18 @@ window.onload = () => {
                     removePhaser: () => Phasers.removePhaser(),
                     setSpeed: (n: number) => Runner.setEnemySpeed(n),
                     toggleHitboxes: () => Runner.toggleHitboxes(),
+                    addBirds: (n: number) => {
+                        for (let i = 0; i < n; i++) {
+                            const bird = new BirdEnemy();
+                            Runner.register(bird);
+                        }
+                    },
+                    togglePlayerImmortality: () => Runner.togglePlayerImmortality(),
                 };
 
                 Runner.start();
                 Runner.toggleHitboxes();
-
+                Runner.togglePlayerImmortality();
                 break;
             }
 
