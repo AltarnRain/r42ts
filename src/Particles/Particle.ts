@@ -83,4 +83,9 @@ export default class Particle extends BaseGameObject {
     public getLocations(): GameLocation[] {
         return getFrameLocations(this.frame, this.location);
     }
+
+    public getCurrentFrame(): Frame {
+        return this.frame;
+    }
+
 }

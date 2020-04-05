@@ -5,7 +5,7 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import { GameObjectType } from "../Types/Types";
+import { Frame, GameObjectType } from "../Types/Types";
 
 /**
  * Module:          BaseGameObject
@@ -49,4 +49,6 @@ export default abstract class BaseGameObject {
      * Returns the object type.
      */
     public abstract getObjectType(): GameObjectType;
+
+    public abstract getCurrentFrame(): Frame;
 }

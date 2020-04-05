@@ -51,9 +51,11 @@ window.onload = () => {
                     setPhasers: (n: number) => Phasers.setPhasers(n),
                     removePhaser: () => Phasers.removePhaser(),
                     setSpeed: (n: number) => Runner.setEnemySpeed(n),
+                    toggleHitboxes: () => Runner.toggleHitboxes(),
                 };
 
                 Runner.start();
+                Runner.toggleHitboxes();
 
                 break;
             }

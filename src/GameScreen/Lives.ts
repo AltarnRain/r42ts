@@ -5,7 +5,7 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
-import { PlayerFrames } from "../Player/PlayerFrames";
+import { PlayerFrame } from "../Player/PlayerFrames";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { getFrameDimensions, setFrameColor } from "../Utility/Frame";
@@ -17,7 +17,7 @@ import { cloneObject } from "../Utility/Lib";
  */
 
 // Clone the player frames so we can safely alter them.
-const lifeFrame = cloneObject(PlayerFrames);
+const lifeFrame = cloneObject(PlayerFrame);
 
 // Lives are completely yellow player ships
 setFrameColor(lifeFrame, CGAColors.yellow);

@@ -19,9 +19,12 @@ import { Frame, GameObjectType } from "../Types/Types";
 import { convertFrameColor, getFrameLocations } from "../Utility/Frame";
 import { cloneObject, getAngle, getNewLocation } from "../Utility/Lib";
 import PlayerExplosion from "./PlayerExplosion";
-import { PlayerFrames } from "./PlayerFrames";
+import { PlayerFrame } from "./PlayerFrames";
 
 export default class Player extends BaseGameObject {
+    public getCurrentFrame(): Frame {
+        return PlayerFrame;
+    }
     /**
      * Frames used by the player ship
      */
@@ -40,7 +43,7 @@ export default class Player extends BaseGameObject {
             };
         }
 
-        this.frame = cloneObject(PlayerFrames);
+        this.frame = cloneObject(PlayerFrame);
 
         convertFrameColor(this.frame);
     }

@@ -39,4 +39,6 @@ export interface GameDimensions {
     maxPixelSize: number;
 
     minPixelSize: number;
+
+    averagePixelSize: number;
 }

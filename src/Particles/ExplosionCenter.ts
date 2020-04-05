@@ -58,9 +58,7 @@ export default class ExplosionCenter extends BaseGameObject {
 
         renderFrame(this.location, this.frame);
     }
-    public getExplosion(): Explosion {
-        return undefined;
-    }
+
     public getObjectType(): GameObjectType {
         return "explosion";
     }
@@ -76,10 +74,7 @@ export default class ExplosionCenter extends BaseGameObject {
         return getFrameLocations(this.frame, this.location);
     }
 
-    /**
-     * Gets the points.
-     */
-    public getPoints(): number {
-        return 0;
+    public getCurrentFrame(): Frame {
+        return this.frame;
     }
 }

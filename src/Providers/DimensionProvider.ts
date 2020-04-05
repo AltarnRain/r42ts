@@ -49,7 +49,8 @@ export default function DimensionProvider(node?: Node): GameDimensions {
             gameFieldHeight,
             scoreBoardHeight,
             maxPixelSize,
-            minPixelSize
+            minPixelSize,
+            averagePixelSize: (maxPixelSize + minPixelSize) / 2,
         };
     }
 

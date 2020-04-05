@@ -176,4 +176,8 @@ export default class BirdEnemy extends BaseEnemyObject {
     public getPoints(): number {
         return 200;
     }
+
+    public getCurrentFrame(): Frame {
+        return this.currentFrame;
+    }
 }

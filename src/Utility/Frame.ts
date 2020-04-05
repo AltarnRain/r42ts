@@ -8,6 +8,7 @@ import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import { Frame, Frames } from "../Types/Types";
 import HexToCGAConverter from "./HexToCGAConverter";
+import { Hitbox } from "./hitbox";
 import { getRandomArrayElement } from "./Lib";
 
 /**
@@ -117,8 +118,8 @@ export function setFrameColor(frame: Frame, color: string) {
  */
 export function getFrameDimensions(frame: Frame): { width: number; height: number } {
     return {
-        width: frame[0].length * DimensionProvider().maxPixelSize,
-        height: frame.length * DimensionProvider().maxPixelSize,
+        width: frame[0].length * DimensionProvider().averagePixelSize,
+        height: frame.length * DimensionProvider().averagePixelSize,
     };
 }
 
@@ -180,4 +181,25 @@ export function getRandomFrameKeyIndex(frames: Frames): number {
  */
 export function getFrameByIndex(frames: Frames, index: number): Frame | undefined {
     return frames["F" + index];
+}
+
+export function getFrameHitbox(location: GameLocation, frame: Frame): Hitbox {
+
+    const width = frame[0].length * DimensionProvider().minPixelSize;
+    const center = getFrameCenter(location, frame);
+
+    return {
+        radius: width / 2,
+        location: center,
+    };
+}
+
+export function hit(location1: GameLocation, radius1: number, location2: GameLocation, radius2: number): boolean {
+
+    const xd = location1.left - location2.left;
+    const yd = location1.top - location2.top;
+
+    const distance = Math.sqrt(Math.pow(xd, 2) + Math.pow(yd, 2));
+
+    return (distance - radius1 - radius2) <= 0;
 }

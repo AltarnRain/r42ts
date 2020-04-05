@@ -22,9 +22,12 @@ import Particle from "./Particles/Particle";
 import Player from "./Player/Player";
 import PlayerBullet from "./Player/PlayerBullet";
 import PlayerBulletFrame from "./Player/PlayerBulletFrame";
+import { PlayerFrame } from "./Player/PlayerFrames";
+import CtxProvider from "./Providers/CtxProvider";
 import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
 import particleProvider from "./Providers/ParticleProvider";
-import { overlaps } from "./Utility/Lib";
+import { getFrameHitbox, hit } from "./Utility/Frame";
+import { ObjectHitbox } from "./Utility/hitbox";
 
 const fps = 1000 / 60;
 
@@ -63,6 +66,11 @@ let particles: Particle[] = [];
  * Explosion centers on the screen.
  */
 let explosionCenters: ExplosionCenter[] = [];
+
+/**
+ * DEBUGGING: When true draws the hitboxes around all game objects.
+ */
+let drawHitboxes = false;
 
 /**
  * Start the runner.
@@ -105,54 +113,41 @@ function updateState() {
         playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, player.getLocation());
     }
 
-    if (player !== undefined) {
-        const hittableObjects = getHittableObjects();
+    const hittableObjectHitboxes = getHittableObjectsHitboxes();
 
-        if (hittableObjects.length > 0) {
-            for (const hittableObject of hittableObjects) {
+    // There's stuff that can get hit or hit something.
+    if (hittableObjectHitboxes.length > 0) {
+        for (const hittableObject of hittableObjectHitboxes) {
 
-                {
-                    // Get all the locations of hittable objects and check if the player might be hit.
-                    const hittableObjectLocations = hittableObject.getLocations();
-                    const playerLocations = player.getLocations();
-
-                    // Check if the player was hit.
-                    for (const hittableObjectLocation of hittableObjectLocations) {
-                        playerLocations.forEach((ploc) => {
-                            const playerHit = overlaps(hittableObjectLocation, ploc);
-                            if (playerHit) {
-                                const playerExplosion = player.getExplosion();
-                                const playerLocation = player.getLocation();
-                                renderExplosion(playerExplosion, playerLocation);
-                                player = undefined;
-                                Lives.removeLife();
-                            }
-                        });
-                    }
+            // Check if the player got hit.
+            if (player) {
+                const playerHitbox = getFrameHitbox(player.getLocation(), PlayerFrame);
+                if (hit(playerHitbox.location, playerHitbox.radius, hittableObject.hitbox.location, hittableObject.hitbox.radius)) {
+                    const playerExplosion = player.getExplosion();
+                    const playerLocation = player.getLocation();
+                    renderExplosion(playerExplosion, playerLocation);
+                    player = undefined;
+                    Lives.removeLife();
                 }
+            }
 
-                // Check if the player bullet hit something.
-                if (playerBullet && isEnemy(hittableObject)) {
-                    const playerBulletLocations = playerBullet.getLocations();
-                    const hittableObjectLocations = hittableObject.getLocations();
+            // Check if the player hit something.
+            if (playerBullet) {
 
-                    for (const playerBulletLocation of playerBulletLocations) {
-                        for (const hittableObjectLocation of hittableObjectLocations) {
-                            const hit = overlaps(hittableObjectLocation, playerBulletLocation);
-                            if (hit) {
-                                playerBullet = undefined;
-                                renderExplosion(hittableObject.getExplosion(), hittableObject.getLocation());
-                                ScoreBoard.addToScore(hittableObject.getPoints());
-                                enemies = enemies.filter((e) => e !== hittableObject);
-                            }
-                        }
+                if (isEnemy(hittableObject.object)) {
+                    const playerBulletHitbox = getFrameHitbox(playerBullet.getLocation(), playerBullet.getCurrentFrame());
+
+                    if (hit(playerBulletHitbox.location, playerBulletHitbox.radius, hittableObject.hitbox.location, hittableObject.hitbox.radius)) {
+                        playerBullet = undefined;
+                        renderExplosion(hittableObject.object.getExplosion(), hittableObject.object.getLocation());
+                        ScoreBoard.addToScore(hittableObject.object.getPoints());
+                        enemies = enemies.filter((e) => e !== hittableObject.object);
                     }
                 }
             }
         }
     }
 }
-
 
 /**
  * Called every request animation frame. Draws objects.
@@ -193,10 +188,49 @@ function draw(tick: number) {
             playerBullet.draw(tick);
         }
 
+        // Debugging. Show the hitboxes on screen.
+        if (drawHitboxes) {
+            const hittableObjectHitboxes = [
+                ...getHittableObjectsHitboxes(),
+            ];
+
+            // Add player if defined.
+            if (player) {
+                hittableObjectHitboxes.push(getObjectHitbox(player));
+            }
+
+            // Add bullet if defined.
+            if (playerBullet) {
+                hittableObjectHitboxes.push(getObjectHitbox(playerBullet));
+            }
+
+            // Draw a circle around each object using the
+            // coordiates and radius of the hitbox.
+            for (const hittableObjectHitbox of hittableObjectHitboxes) {
+                const ctx = CtxProvider();
+
+                ctx.beginPath();
+                ctx.strokeStyle = "white";
+                ctx.lineWidth = 2;
+                ctx.arc(
+                    hittableObjectHitbox.hitbox.location.left,
+                    hittableObjectHitbox.hitbox.location.top,
+                    hittableObjectHitbox.hitbox.radius,
+                    0,
+                    Math.PI * 2);
+
+                ctx.stroke();
+                ctx.closePath();
+            }
+        }
+
         lastTick = tick;
     }
 }
 
+/**
+ * Triggers the self destruct sequence.
+ */
 function selfDestruct() {
     if (enemies.length > 0 && player !== undefined) {
         const destructableObjects = getDestructableObjects();
@@ -213,6 +247,10 @@ function selfDestruct() {
     }
 }
 
+/**
+ * Returns objects that can be destroyed.
+ * @returns {BaseDestructableObject}. Objects which return an Explosion asset.
+ */
 function getDestructableObjects(): BaseDestructableObject[] {
     return [
         ...enemies,
@@ -221,17 +259,28 @@ function getDestructableObjects(): BaseDestructableObject[] {
 }
 
 /**
- * Returns all gameobject that can be hit.
- * @returns {BaseGameObject[]}. An array of objects that can be hit by the player.
+ * Returns all gameobject that can kill the player with their hitboxes.
+ * @returns {BaseGameObject[]}. An array of objects that can be hit by the player or hit the player.
  */
-function getHittableObjects(): BaseGameObject[] {
-    const returnValue: BaseGameObject[] = [
+function getHittableObjectsHitboxes(): ObjectHitbox[] {
+    const returnValue: ObjectHitbox[] = [
         ...enemies,
         ...particles,
         ...explosionCenters
-    ].filter((o) => o !== undefined);
-
+    ].filter((o) => o !== undefined)
+        .map((ho) => getObjectHitbox(ho));
     return returnValue;
+}
+
+/**
+ * getObjectHitbox.
+ * @param {BaseGameObject} object. A base game object.
+ */
+function getObjectHitbox(baseGameObject: BaseGameObject): ObjectHitbox {
+    return {
+        hitbox: getFrameHitbox(baseGameObject.getLocation(), baseGameObject.getCurrentFrame()),
+        object: baseGameObject,
+    };
 }
 
 /**
@@ -266,6 +315,13 @@ export function register(gameobject: BaseGameObject): void {
  */
 export function setEnemySpeed(value: number): void {
     enemies.forEach((e) => e.setSpeed(value));
+}
+
+/**
+ * DEBUGGING ONLY: Toggles drawing hitboxes around the enemy, player and player bullet.
+ */
+export function toggleHitboxes(): void {
+    drawHitboxes = !drawHitboxes;
 }
 
 /**

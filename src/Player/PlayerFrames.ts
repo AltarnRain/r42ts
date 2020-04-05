@@ -11,7 +11,7 @@ import { Frame } from "../Types/Types";
  * Responsibility:  Contains the frame of the player ship.
  */
 
-export const PlayerFrames: Frame = [
+export const PlayerFrame: Frame = [
     ["0", "0", "B", "B", "0", "0"],
     ["A", "B", "F", "F", "B", "A"],
     ["B", "F", "0", "0", "F", "B"]
