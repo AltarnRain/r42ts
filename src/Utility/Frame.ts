@@ -180,21 +180,3 @@ export function getFrameHitbox(location: GameLocation, frame: Frame): Hitbox {
         bottom: location.top + height,
     };
 }
-
-/**
- * hit.
- * @param {GameLocation} location1. Location of the first object.
- * @param {number} radius1. Radius of the first object
- * @param {GameLocation} location2. Location of the second object
- * @param {numbr} radius2. Radius of the second object.
- * @returns {boolean}. True if the objects hit/overlap.
- */
-export function hit(location1: GameLocation, radius1: number, location2: GameLocation, radius2: number): boolean {
-
-    const xd = location1.left - location2.left;
-    const yd = location1.top - location2.top;
-
-    const distance = Math.sqrt(Math.pow(xd, 2) + Math.pow(yd, 2));
-
-    return (distance - radius1 - radius2) <= 0;
-}

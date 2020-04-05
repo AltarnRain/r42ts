@@ -122,7 +122,7 @@ export default class BirdEnemy extends BaseEnemyObject {
      * Called by a TickHandler when its time to move.
      */
     public move(): void {
-        this.location = getNewLocation(this.angle, this.speed, this.location.left, this.location.top);
+        this.location = getNewLocation(this.angle, this.speed, this.location);
 
         if (this.location.left <= 0 || this.location.left >= DimensionProvider().fullWidth - this.frameWidth) {
             this.angle = 180 - this.angle;

@@ -12,7 +12,6 @@
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardState";
 import GameLocation from "../Models/GameLocation";
 import { Hitbox } from "../Models/Hitbox";
-import { Frames } from "../Types/Types";
 
 /**
  * Gets the next X coordinats based on the angle, speed and the current X coordinate.
@@ -72,10 +71,10 @@ export function getAngle(state: KeyboardState): number {
  * @param {number} left. The current left coordinate of the object.
  * @returns {Location}. The new location of the object.
  */
-export function getNewLocation(angle: number, speed: number, left: number, top: number): GameLocation {
+export function getNewLocation(angle: number, speed: number, location: GameLocation): GameLocation {
 
-    const nextLeft = getNextX(angle, speed, left);
-    const nextTop = getNextY(angle, speed, top);
+    const nextLeft = getNextX(angle, speed, location.left);
+    const nextTop = getNextY(angle, speed, location.top);
 
     return {
         left: nextLeft,
@@ -176,20 +175,4 @@ export function overlaps(hitbox1: Hitbox, hitbox2: Hitbox): boolean {
     }
 
     return true;
-}
-
-/**
- * Checks if a location falls within an area.
- * @param {GameLocation} location.
- * @param {number} top. Top of the area.
- * @param {number} bottom. Bottom of the area.
- * @param {number} left. Left of the area.
- * @param {number} right. Right of the area.
- */
-export function fallsWithin(location: GameLocation, top: number, bottom: number, left: number, right: number): boolean {
-
-    const yBounds = location.top > top && location.top < bottom;
-    const xBounds = location.left > left && location.left < right;
-
-    return xBounds && yBounds;
 }

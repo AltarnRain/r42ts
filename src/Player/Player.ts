@@ -72,7 +72,7 @@ export default class Player extends BaseGameObject {
         const angle = getAngle(KeyboardState);
 
         if (angle !== -1) {
-            this.location = getNewLocation(angle, 15, left, top);
+            this.location = getNewLocation(angle, 15, this.location);
         }
 
         renderFrame(this.location, this.frame);

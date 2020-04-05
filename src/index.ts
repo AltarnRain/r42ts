@@ -59,11 +59,13 @@ window.onload = () => {
                         }
                     },
                     togglePlayerImmortality: () => Runner.togglePlayerImmortality(),
+                    toggleRenderPhaser: () => Runner.toggleRenderPhaser(),
                 };
 
                 Runner.start();
                 Runner.toggleHitboxes();
                 Runner.togglePlayerImmortality();
+                Runner.toggleRenderPhaser();
                 break;
             }
 

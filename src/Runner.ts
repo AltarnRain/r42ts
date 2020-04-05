@@ -19,10 +19,12 @@ import GameLocation from "./Models/GameLocation";
 import { Level, Lives, Phasers, ScoreBoard } from "./Modules";
 import ExplosionCenter from "./Particles/ExplosionCenter";
 import Particle from "./Particles/Particle";
+import { drawPhaser } from "./Player/drawPhaser";
 import Player from "./Player/Player";
 import PlayerBullet from "./Player/PlayerBullet";
 import PlayerBulletFrame from "./Player/PlayerBulletFrame";
 import CtxProvider from "./Providers/CtxProvider";
+import DimensionProvider from "./Providers/DimensionProvider";
 import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
 import particleProvider from "./Providers/ParticleProvider";
 import { overlaps } from "./Utility/Lib";
@@ -74,6 +76,11 @@ let drawHitboxes = false;
  * DEBUGGING: When true the player is immortal.
  */
 let playerIsImmortal = false;
+
+/**
+ * DEBIGGIN: Phaser is rendered against a random game object. Limit to one object and set speed to test.
+ */
+let renderPhaser = false;
 
 /**
  * Start the runner.
@@ -224,6 +231,11 @@ function draw(tick: number) {
             }
         }
 
+        if (renderPhaser && player && enemies.length > 0) {
+            const enemyloc = enemies[0].getLocation();
+            drawPhaser(player.getLocation(), enemyloc, DimensionProvider().averagePixelSize);
+        }
+
         lastTick = tick;
     }
 }
@@ -316,6 +328,13 @@ export function toggleHitboxes(): void {
  */
 export function togglePlayerImmortality(): void {
     playerIsImmortal = !playerIsImmortal;
+}
+
+/**
+ * Toggles rendering the phaser.
+ */
+export function toggleRenderPhaser(): void {
+    renderPhaser = !renderPhaser;
 }
 
 /**
