@@ -77,4 +77,12 @@ export default class FrameProvider {
             this.add *= -1;
         }
     }
+
+    /**
+     * Returns the current frame index.
+     * @returns {number}. The current frame index.
+     */
+    public getCurrentIndex(): number {
+        return this.frameIndex;
+    }
 }

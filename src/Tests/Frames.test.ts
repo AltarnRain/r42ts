@@ -36,14 +36,14 @@ test("getFrameByIndex", () => {
     if (result1) {
         expect(result1[0][0]).toBe("a");
     }
-    
+
     expect(result2).toBeUndefined();
 });
 
 test("getFrameCenter", () => {
 
     // Act
-    const result = Frame.getFrameCenter({top: 0, left: 0}, frames.F0, 5);
+    const result = Frame.getFrameCenter({ top: 0, left: 0 }, frames.F0, 5);
 
     // Assert
     expect(result).toBeDefined();

@@ -22,7 +22,7 @@ import renderFrame from "../../Render/RenderFrame";
 import { Frame, Frames, GameObjectType } from "../../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
 import { cloneObject, getNewLocation, getRandomArrayElement, randomNumberInRange } from "../../Utility/Lib";
-import BirdFrames from "./BirdFrames";
+import { BirdFrameOffsets, BirdFrames } from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 
@@ -183,7 +183,23 @@ export default class BirdEnemy extends BaseEnemyObject {
      * @returns {Hitbox}. Bird's hitbox.
      */
     public getHitbox(): Hitbox {
-        return getFrameHitbox(this.location, this.currentFrame, DimensionProvider().averagePixelSize);
+
+        const {
+            averagePixelSize,
+        } = DimensionProvider();
+
+        const currentIndex = this.frameProvider.getCurrentIndex();
+        const birdHitbox = getFrameHitbox(this.location, this.currentFrame, averagePixelSize);
+
+        const offsets = BirdFrameOffsets[currentIndex];
+
+        // Frame has offsets.
+        if (offsets) {
+            birdHitbox.left = birdHitbox.left + offsets.left * averagePixelSize;
+            birdHitbox.right = birdHitbox.right - offsets.right * averagePixelSize;
+        }
+
+        return birdHitbox;
     }
 
     /**

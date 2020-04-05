@@ -9,9 +9,10 @@
  * Responsibility:  Define animation frames for the bird enemy.
  */
 
+import { Hitbox } from "../../Models/Hitbox";
 import { Frames } from "../../Types/Types";
 
-const BirdFrames: Frames = {
+export const BirdFrames: Frames = {
     F0: [
         ["0", "0", "0", "0", "0", "0", "0"],
         ["0", "0", "V", "0", "V", "0", "0"],
@@ -35,7 +36,12 @@ const BirdFrames: Frames = {
         ["0", "V", "V", "0", "V", "V", "0"],
         ["0", "0", "0", "V", "0", "0", "0"],
         ["0", "0", "0", "0", "0", "0", "0"],
-    ]
+    ],
 };
 
-export default BirdFrames;
+export const BirdFrameOffsets = [
+    {
+        left: 1,
+        right: 1,
+    }
+];
