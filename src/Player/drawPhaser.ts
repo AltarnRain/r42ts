@@ -8,11 +8,11 @@ import CGAColors from "../Constants/CGAColors";
 import GameLocation from "../Models/GameLocation";
 import renderFrame from "../Render/RenderFrame";
 import { Frame } from "../Types/Types";
-import { cloneObject, getNewLocation as getNextLocation } from "../Utility/Lib";
+import { getNewLocation as getNextLocation } from "../Utility/Lib";
 import { calculateDistance } from "../Utility/Location";
 
 const phaserFrame: Frame = [
-    [CGAColors.yellow]
+    [CGAColors.yellow, CGAColors.yellow]
 ];
 
 /**
@@ -22,19 +22,31 @@ const phaserFrame: Frame = [
 
 export function drawPhaser(source: GameLocation, target: GameLocation, speed: number): void {
 
-    const clonedFrame = cloneObject(phaserFrame);
     const dx = Math.abs(source.left - target.left);
     const dy = Math.abs(source.top - target.top);
 
     let currentLocation = { ...source };
 
-    const t = dx / dy;
-    const angle = Math.tan(t);
+    // Get the angle in degrees.
+    let angle = Math.atan2(dy, dx) * 180 / Math.PI * -1;
+
+    // bottom left is handler right by default. No if needed.
+
+    // source is to the bottom right of the object.
+    if (source.left > target.left && source.top > target.top) {
+        angle = 180 - angle;
+    } else if (source.left < target.left && source.top < target.top) {
+        // source is to the top left of the object.
+        angle = angle * -1;
+    } else if (source.left > target.left && source.top < target.top) {
+        // source is to the top right of the object.
+        angle = angle - 180 * -1;
+    }
 
     let distance = calculateDistance(source, target);
 
     while (distance >= 0) {
-        renderFrame(currentLocation, clonedFrame);
+        renderFrame(currentLocation, phaserFrame);
         distance -= speed;
 
         currentLocation = getNextLocation(angle, speed, currentLocation);
