@@ -8,8 +8,7 @@ import { Frames } from "../Types/Types";
 
 /**
  * Module:          Numbers
- * Responsibility:  A raster collection that contains all characters used in the game. The characters are stored in a 2d array. A "V" is a pixel, a "0" is not.
- * No color information is stored here. Color is determined by the game.
+ * Responsibility:  Numbers 0 to 9.
  */
 
 const Numbers: Frames = {

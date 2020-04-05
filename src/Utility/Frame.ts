@@ -8,7 +8,7 @@ import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import { Frame, Frames } from "../Types/Types";
 import HexToCGAConverter from "./HexToCGAConverter";
-import { Hitbox } from "./hitbox";
+import { Hitbox } from "../Models/Hitbox";
 import { getRandomArrayElement } from "./Lib";
 
 /**
@@ -138,32 +138,6 @@ export function getFrameCenter(location: GameLocation, frame: Frame): GameLocati
 }
 
 /**
- * Calculates a game location for every colored pixel in a frame.
- * @param {Frame} frame. A frame.
- * @param {GameLocation }location. Top left location coordinates.
- */
-export function getFrameLocations(frame: Frame, location: GameLocation): GameLocation[] {
-    const returnValue: GameLocation[] = [];
-
-    const {
-        maxPixelSize
-    } = DimensionProvider();
-
-    frame.forEach((row, rowIndex) => row.forEach((col, colIndex) => {
-        if (col !== "0") {
-            const pixelLocation: GameLocation = {
-                left: colIndex * maxPixelSize + location.left,
-                top: rowIndex * maxPixelSize + location.top,
-            };
-
-            returnValue.push(pixelLocation);
-        }
-    }));
-
-    return returnValue;
-}
-
-/**
  * Returns a random frame index.
  * @param {Frames} frames.
  * @returns {number}. Frame index.
@@ -178,11 +152,18 @@ export function getRandomFrameKeyIndex(frames: Frames): number {
  * Returns a frame by index. Returns undefined if the frame is not defined.
  * @param {Frames} frames. Frames.
  * @param {number} index. Index of the frame.
+ * @returns {Frame | undefined}. Returns the frame if one was found for the passed index, otherwise returns undefined.
  */
 export function getFrameByIndex(frames: Frames, index: number): Frame | undefined {
     return frames["F" + index];
 }
 
+/**
+ * getFrameHitbox
+ * @param {GameLocation} location. A Location.
+ * @param {Frame} frame. A frame
+ * @returns {Hitbox}. The frame's hitbox.
+ */
 export function getFrameHitbox(location: GameLocation, frame: Frame): Hitbox {
 
     const width = frame[0].length * DimensionProvider().minPixelSize;
@@ -194,6 +175,14 @@ export function getFrameHitbox(location: GameLocation, frame: Frame): Hitbox {
     };
 }
 
+/**
+ * hit.
+ * @param {GameLocation} location1. Location of the first object.
+ * @param {number} radius1. Radius of the first object
+ * @param {GameLocation} location2. Location of the second object
+ * @param {numbr} radius2. Radius of the second object.
+ * @returns {boolean}. True if the objects hit/overlap.
+ */
 export function hit(location1: GameLocation, radius1: number, location2: GameLocation, radius2: number): boolean {
 
     const xd = location1.left - location2.left;

@@ -13,9 +13,8 @@ import getGameControlKeys, { GameControlKeys } from "../../Constants/KeyConstant
 import KeyboardState from "./KeyboardState";
 
 /**
- * Construct the keyboard state provider.
+ * Define the base keyboard state.
  */
-
 const KeyboardState: KeyboardState = {
     up: false,
     down: false,
@@ -64,11 +63,19 @@ export function registerListeners(): void {
     window.addEventListener("keydown", onKeyDown);
 }
 
+/**
+ * Removes the event listeners
+ */
 export function unregisterListeners(): void {
     window.removeEventListener("keyup", onKeyUp);
     window.removeEventListener("keydown", onKeyDown);
 }
 
+/**
+ * Updates the keyboard state object.
+ * @param {string} key. Keyboard string code.
+ * @param {boolean} keyDown. True when the key is held down, false if the key is let go.
+ */
 function updateState(key: string, keyDown: boolean): void {
     switch (key) {
         case GameControlKeys.ArrowUp:

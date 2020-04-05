@@ -13,33 +13,48 @@ import { Frame } from "../Types/Types";
 
 export default interface Explosion {
 
-    frame: Frame;
-
     /**
-     * Explosion particles.
+     * Explosion center frame.
      */
-    particles: Frame[];
+    explosionCenterFrame: Frame;
 
     /**
-     * Angles. The number of angles also determines the number of particles.
+     * Particle frames used by the explosion.
+     */
+    particleFrames: Frame[];
+
+    /**
+     * The indexes to use to draw each particle. The number of indexes determine the number of particles.
+     */
+    particleFrameIndexes: number[];
+
+    /**
+     * The angle for each particle. Must contain an angle for each particleFrameIndex.
      */
     angles: number[];
-
-    /**
-     * Angle frames. The particle frame to combine with each angle.
-     */
-    particleFrames: number[];
 
     /**
      * Explosion center delay
      */
     explosionCenterDelay: number;
 
+    /**
+     * Particle speeds. Used when each particle has its own speed.
+     */
     speeds: number[];
 
+    /**
+     * Acceleration of a particle. Set to 1 to let it travel at a constant speed.
+     */
     acceleration: number;
 
+    /**
+     * Wehn true use the particle speed. When false, the speeds array must contain a speed for each particle.
+     */
     useSpeed: boolean;
 
+    /**
+     * Particle speed.
+     */
     speed: number;
 }

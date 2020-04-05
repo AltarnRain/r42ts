@@ -13,12 +13,12 @@
 import Explosion from "../Models/Explosion";
 
 const Explosion01: Explosion = {
-    frame: [
+    explosionCenterFrame: [
         ["F", "0", "F", "0"],
         ["F", "F", "F", "F"],
         ["0", "F", "0", "F"],
     ],
-    particles: [
+    particleFrames: [
         [
             ["F"],
         ],
@@ -27,7 +27,7 @@ const Explosion01: Explosion = {
         ],
     ],
     angles: [150, 180, 210, 330, 0, 30], // ul, l, ll, ur, r,
-    particleFrames: [0, 1, 0, 0, 1, 0],
+    particleFrameIndexes: [0, 1, 0, 0, 1, 0],
     speed: 20,
     acceleration: 1.05,
     explosionCenterDelay: 300,

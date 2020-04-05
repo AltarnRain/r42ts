@@ -21,10 +21,10 @@ export default function particleProvider(explosion: Explosion, location: GameLoc
     const loc = cloneObject(location);
 
     const particles: Particle[] = [];
-    for (let i = 0; i < exp.particleFrames.length; i++) {
+    for (let i = 0; i < exp.particleFrameIndexes.length; i++) {
         // Create an array with every particle frame.
-        const particleFrameIndex = exp.particleFrames[i];
-        const particleFrame = exp.particles[particleFrameIndex];
+        const particleFrameIndex = exp.particleFrameIndexes[i];
+        const particleFrame = exp.particleFrames[particleFrameIndex];
 
         convertFrameColor(particleFrame);
 

@@ -13,11 +13,11 @@
 import Explosion from "../Models/Explosion";
 
 const PlayerExplosion: Explosion = {
-    frame: [
+    explosionCenterFrame: [
         ["0", "0", "2", "2", "0", "0"],
         ["4", "E", "0", "0", "E", "4"],
     ],
-    particles: [
+    particleFrames: [
         [
             ["C", "C"], // red block
         ],
@@ -34,7 +34,7 @@ const PlayerExplosion: Explosion = {
             ["C", "F"], // red white block
         ],
     ],
-    particleFrames: [
+    particleFrameIndexes: [
         0, 0, 0, 0, 0,
         1, 1, 1, 1,
         2, 2, 2, 2,

@@ -19,7 +19,8 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     protected speed: number;
 
     /**
-     *
+     * Construct the object.
+     * @param {number} speed. Speed of the enemy.
      */
     constructor(speed: number) {
         super();
@@ -28,6 +29,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
 
     /**
      * Returns the point worth.
+     * @returns {number}. Point worth of the enemy.
      */
     public abstract getPoints(): number;
 

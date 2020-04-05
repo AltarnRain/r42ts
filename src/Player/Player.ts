@@ -23,7 +23,7 @@ import { PlayerFrame } from "./PlayerFrames";
 
 export default class Player extends BaseGameObject {
     /**
-     * Frames used by the player ship
+     * Frame used by the player ship
      */
     private frame: Frame;
 

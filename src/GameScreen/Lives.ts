@@ -16,10 +16,7 @@ import { cloneObject } from "../Utility/Lib";
  * Responsibility:  Draws player lives
  */
 
-// Clone the player frames so we can safely alter them.
 const lifeFrame = cloneObject(PlayerFrame);
-
-// Lives are completely yellow player ships
 setFrameColor(lifeFrame, CGAColors.yellow);
 
 const top = DimensionProvider().maxPixelSize;

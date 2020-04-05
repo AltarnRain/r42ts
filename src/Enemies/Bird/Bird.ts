@@ -14,12 +14,11 @@ import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import Explosion from "../../Models/Explosion";
-import GameLocation from "../../Models/GameLocation";
 import DimensionProvider from "../../Providers/DimensionProvider";
 import FrameProvider from "../../Providers/FrameProvider";
 import renderFrame from "../../Render/RenderFrame";
 import { Frame, Frames, GameObjectType } from "../../Types/Types";
-import { getFrameDimensions, getFrameLocations, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
+import { getFrameDimensions, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
 import { cloneObject, getNewLocation, getRandomArrayElement, randomNumberInRange } from "../../Utility/Lib";
 import BirdFrames from "./BirdFrames";
 

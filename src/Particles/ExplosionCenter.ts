@@ -5,11 +5,9 @@
  */
 
 import BaseGameObject from "../Base/BaseGameObject";
-import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
-import { getFrameLocations } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 
 /**
@@ -68,14 +66,25 @@ export default class ExplosionCenter extends BaseGameObject {
         renderFrame(this.location, this.frame);
     }
 
+    /**
+     * getObjecType.
+     * @returns {GameObjectType}. Explosion.
+     */
     public getObjectType(): GameObjectType {
         return "explosion";
     }
 
+    /**
+     * Returns true when the explosion center should vanish from the game screen.
+     */
     public fizzledOut(): boolean {
         return this.fizzled;
     }
 
+    /**
+     * Retuns the explosion center frame
+     * @returns {Frame}. Explosion center frame.
+     */
     public getCurrentFrame(): Frame {
         return this.frame;
     }

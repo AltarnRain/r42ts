@@ -19,10 +19,7 @@ import { cloneObject, padLeft } from "../Utility/Lib";
 
 const leftStartPosition = 4 * DimensionProvider().maxPixelSize;
 const spacing = 2 * DimensionProvider().maxPixelSize;
-
-// Create a clone of the number character frames so we can set their color without ruining the asset.
 const frames = cloneObject(Numbers);
-
 setVariableFramesColor(frames, CGAColors.yellow);
 
 let score = 0;
@@ -44,7 +41,7 @@ export function addToScore(value: number): void {
 }
 
 /**
- * 'Draws' the scoreboard.
+ * Draws the scoreboard.
  */
 export function draw(): void {
     const scoreString = padLeft(score.toString(), 6, "0");

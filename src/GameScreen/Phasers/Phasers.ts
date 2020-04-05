@@ -15,7 +15,7 @@ import Phaser from "./PhaserFrame";
  */
 
 /**
- * Current level.
+ * Current phaser.
  */
 let phaserCount: number = 1;
 
@@ -26,15 +26,15 @@ const maxDraw = 10;
 const frames = cloneObject(Phaser);
 
 /**
- * Set the level.
- * @param {number} value. Value to set the level to.
+ * Set the phaser.
+ * @param {number} value. Value to set the phaser to.
  */
 export function setPhasers(value: number): void {
     phaserCount = value;
 }
 
 /**
- * Adds one level.
+ * Adds one phaser.
  */
 export function addPhaser(): void {
     phaserCount++;
@@ -48,7 +48,7 @@ export function removePhaser(): void {
 }
 
 /**
- * Draw the level indicator.
+ * Draw the phaser indicator.
  */
 export function draw(): void {
 

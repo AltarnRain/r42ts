@@ -27,7 +27,7 @@ import CtxProvider from "./Providers/CtxProvider";
 import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
 import particleProvider from "./Providers/ParticleProvider";
 import { getFrameHitbox, hit } from "./Utility/Frame";
-import { ObjectHitbox } from "./Utility/hitbox";
+import { ObjectHitbox } from "./Models/ObjectHitbox";
 
 const fps = 1000 / 60;
 
@@ -239,7 +239,7 @@ function selfDestruct() {
         player = undefined;
         const explosionsLocations = destructableObjects.map((a) => explosionLocationProvider(a));
         for (const explosionsLocation of explosionsLocations) {
-            const center = new ExplosionCenter(explosionsLocation.explosion.frame, explosionsLocation.location, explosionsLocation.explosion.explosionCenterDelay);
+            const center = new ExplosionCenter(explosionsLocation.explosion.explosionCenterFrame, explosionsLocation.location, explosionsLocation.explosion.explosionCenterDelay);
             const newParticles = particleProvider(explosionsLocation.explosion, explosionsLocation.location);
             particles.push(...newParticles);
             explosionCenters.push(center);
@@ -289,7 +289,7 @@ function getObjectHitbox(baseGameObject: BaseGameObject): ObjectHitbox {
  * @param {GameLocation} location. The center location where the explosion occurs.
  */
 function renderExplosion(explosion: Explosion, location: GameLocation) {
-    const center = new ExplosionCenter(explosion.frame, location, explosion.explosionCenterDelay);
+    const center = new ExplosionCenter(explosion.explosionCenterFrame, location, explosion.explosionCenterDelay);
     const newParticles = particleProvider(explosion, location);
     particles.push(...newParticles);
     explosionCenters.push(center);

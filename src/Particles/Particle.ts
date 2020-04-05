@@ -9,7 +9,6 @@ import GameLocation from "../Models/GameLocation";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
-import { getFrameLocations } from "../Utility/Frame";
 import { cloneObject, fallsWithin, getNewLocation } from "../Utility/Lib";
 
 /**
