@@ -7,11 +7,11 @@
 import BaseGameObject from "../Base/BaseGameObject";
 import GameLocation from "../Models/GameLocation";
 import { Hitbox } from "../Models/Hitbox";
+import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
 import { getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
-import DimensionProvider from "../Providers/DimensionProvider";
 
 /**
  * Module:          Explosion Center
