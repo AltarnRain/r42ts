@@ -19,7 +19,8 @@ export default abstract class BaseGameObject {
     protected location: GameLocation;
 
     /**
-     *
+     * Construct the object.
+     * @param {Location?} location. A location. Optional. Some objects determine their own location.
      */
     constructor(location?: GameLocation) {
         if (location) {
@@ -45,5 +46,9 @@ export default abstract class BaseGameObject {
      */
     public abstract getObjectType(): GameObjectType;
 
+    /**
+     * Return the current frame
+     * @returns {Frame}. The current frame.
+     */
     public abstract getCurrentFrame(): Frame;
 }
