@@ -20,9 +20,9 @@ const phaserFrame: Frame = [
  * Responsibility:  Draw the player's phaser beam.
  */
 
-export function drawPhaser(source: GameLocation, target: GameLocation, pixelSize: number): void {
+export function drawPhasor(source: GameLocation, target: GameLocation, pixelSize: number): void {
 
-    const dx = Math.abs(source.left - target.left + pixelSize) ;
+    const dx = Math.abs(source.left - target.left + pixelSize);
     const dy = Math.abs(source.top - target.top);
 
     let currentLocation = { ...source };

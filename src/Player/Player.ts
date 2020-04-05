@@ -81,7 +81,7 @@ export default class Player extends BaseGameObject {
      * @return {Hitbox}. Players hitbox.
      */
     public getHitbox(): Hitbox {
-        return getFrameHitbox(this.location, this.frame, DimensionProvider().maxPixelSize);
+        return getFrameHitbox(this.location, this.frame, DimensionProvider().averagePixelSize);
     }
 
     /**

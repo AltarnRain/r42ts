@@ -30,11 +30,4 @@ export default class PlayerBullet extends Particle {
     public getObjectType(): GameObjectType {
         return "playerbullet";
     }
-
-    /**
-     * Returns the player bullets hitbox.
-     */
-    public getHitbox(): Hitbox {
-        return getFrameHitbox(this.location, this.frame, DimensionProvider().maxPixelSize);
-    }
 }

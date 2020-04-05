@@ -48,6 +48,14 @@ export function removePhaser(): void {
 }
 
 /**
+ * Gets the number of phasers available to the player.
+ * @returns {number}. The number of phasers.
+ */
+export function getPhaserCount(): number {
+    return phaserCount;
+}
+
+/**
  * Draw the phaser indicator.
  */
 export function draw(): void {

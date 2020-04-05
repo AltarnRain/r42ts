@@ -183,7 +183,7 @@ export default class BirdEnemy extends BaseEnemyObject {
      * @returns {Hitbox}. Bird's hitbox.
      */
     public getHitbox(): Hitbox {
-        return getFrameHitbox(this.location, this.currentFrame, DimensionProvider().maxPixelSize);
+        return getFrameHitbox(this.location, this.currentFrame, DimensionProvider().averagePixelSize);
     }
 
     /**
@@ -191,6 +191,6 @@ export default class BirdEnemy extends BaseEnemyObject {
      * @returns {GameLocation}. GameLocation located at the center of the object.
      */
     public getCenterLocation(): GameLocation {
-        return getFrameCenter(this.location, this.currentFrame, DimensionProvider().maxPixelSize);
+        return getFrameCenter(this.location, this.currentFrame, DimensionProvider().averagePixelSize);
     }
 }

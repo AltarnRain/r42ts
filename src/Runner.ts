@@ -18,7 +18,7 @@ import GameLocation from "./Models/GameLocation";
 import { Level, Lives, Phasers, ScoreBoard } from "./Modules";
 import ExplosionCenter from "./Particles/ExplosionCenter";
 import Particle from "./Particles/Particle";
-import { drawPhaser } from "./Player/drawPhaser";
+import { drawPhasor } from "./Player/DrawPhaser";
 import Player from "./Player/Player";
 import PlayerBullet from "./Player/PlayerBullet";
 import PlayerBulletFrame from "./Player/PlayerBulletFrame";
@@ -26,7 +26,7 @@ import CtxProvider from "./Providers/CtxProvider";
 import DimensionProvider from "./Providers/DimensionProvider";
 import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
 import particleProvider from "./Providers/ParticleProvider";
-import { overlaps } from "./Utility/Lib";
+import { getRandomArrayElement, overlaps } from "./Utility/Lib";
 
 const fps = 1000 / 60;
 
@@ -67,6 +67,16 @@ let particles: Particle[] = [];
 let explosionCenters: ExplosionCenter[] = [];
 
 /**
+ * Flag to track if the phaser is beam is currently being fired.
+ */
+let phaserOnScreen = false;
+
+/**
+ * Pause flag
+ */
+let pause = false;
+
+/**
  * DEBUGGING: When true draws the hitboxes around all game objects.
  */
 let drawHitboxes = false;
@@ -102,8 +112,6 @@ export function stop(): void {
 function run(tick: number): void {
     // Runs all animation at the passed FPS
     draw(tick);
-
-    // Self destruct
     updateState();
 
     animationHandle = window.requestAnimationFrame(run);
@@ -116,6 +124,10 @@ function updateState() {
 
     if (KeyboardState.selfDestruct) {
         selfDestruct();
+    }
+
+    if (KeyboardState.phraser) {
+        handlePhaser();
     }
 
     if (KeyboardState.fire && playerBullet === undefined && player !== undefined) {
@@ -143,7 +155,6 @@ function updateState() {
 
             // Check if the player hit something.
             if (playerBullet && isEnemy(hittableObject)) {
-
                 if (overlaps(playerBullet.getHitbox(), hittableObjectHitbox)) {
                     playerBullet = undefined;
                     renderExplosion(hittableObject.getLocation(), hittableObject.getExplosion());
@@ -160,6 +171,10 @@ function updateState() {
  * @param {number} tick. Tick.
  */
 function draw(tick: number) {
+    if (pause) {
+        return;
+    }
+
     if (tick - lastTick > fps) {
 
         DrawGameField();
@@ -232,7 +247,7 @@ function draw(tick: number) {
 
         if (renderPhaser && player && enemies.length > 0) {
             const enemy = enemies[0];
-            drawPhaser(player.getNozzleLocation(), enemy.getCenterLocation(), DimensionProvider().averagePixelSize);
+            drawPhasor(player.getNozzleLocation(), enemy.getCenterLocation(), DimensionProvider().averagePixelSize);
         }
 
         lastTick = tick;
@@ -256,6 +271,37 @@ function selfDestruct() {
 
         enemies = [];
         player = undefined;
+    }
+}
+
+function handlePhaser(): void {
+    if (player !== undefined && enemies.length > 0 && Phasers.getPhaserCount() > 0 && phaserOnScreen === false) {
+
+        // Prefent accidental double phasors when the player holds the button to long.
+        phaserOnScreen = true;
+
+        const randomEnemy = getRandomArrayElement(enemies);
+        const playerNozzleLocation = player.getNozzleLocation();
+        const randomEnemyCenter = randomEnemy.getCenterLocation();
+        const randomEnemyExplosion = randomEnemy.getExplosion();
+
+        Phasers.removePhaser();
+        drawPhasor(playerNozzleLocation, randomEnemyCenter, DimensionProvider().maxPixelSize);
+
+        // Pause the game for a very brief period. This is what the original game did
+        // when you fired a phasor shot.
+        pause = true;
+
+        window.setTimeout(() => {
+            // Unpause the game to let rendering continue.
+            pause = false;
+
+            renderExplosion(randomEnemy.getLocation(), randomEnemyExplosion);
+            enemies = enemies.filter((e) => e !== randomEnemy);
+
+            // set phasor to undefined to flag it as not in use.
+            phaserOnScreen = false;
+        }, 80);
     }
 }
 
