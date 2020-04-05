@@ -10,7 +10,7 @@
  */
 
 import Explosion01 from "../../Assets/Explosion01";
-import BaseGameObject from "../../Base/BaseGameObject";
+import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import Explosion from "../../Models/Explosion";
@@ -24,10 +24,8 @@ import { cloneObject, getNewLocation, getRandomArrayElement, randomNumberInRange
 import BirdFrames from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
-const speed = 11;
 
-export default class BirdEnemy extends BaseGameObject {
-
+export default class BirdEnemy extends BaseEnemyObject {
     /**
      * Handles frame ticks.
      */
@@ -72,7 +70,7 @@ export default class BirdEnemy extends BaseGameObject {
      * Creates the object.
      */
     constructor() {
-        super();
+        super(0);
         this.angle = getRandomArrayElement([2, 358, 178, 182]);
 
         this.onFrameChange = this.onFrameChange.bind(this);
@@ -124,7 +122,7 @@ export default class BirdEnemy extends BaseGameObject {
      * Called by a TickHandler when its time to move.
      */
     public move(): void {
-        this.location = getNewLocation(this.angle, speed, this.location.left, this.location.top);
+        this.location = getNewLocation(this.angle, this.speed, this.location.left, this.location.top);
 
         if (this.location.left <= 0 || this.location.left >= DimensionProvider().fullWidth - this.frameWidth) {
             this.angle = 180 - this.angle;

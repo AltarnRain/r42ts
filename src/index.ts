@@ -50,6 +50,7 @@ window.onload = () => {
                     addPhaser: () => Phasers.addPhaser(),
                     setPhasers: (n: number) => Phasers.setPhasers(n),
                     removePhaser: () => Phasers.removePhaser(),
+                    setSpeed: (n: number) => Runner.setEnemySpeed(n),
                 };
 
                 Runner.start();

@@ -261,6 +261,14 @@ export function register(gameobject: BaseGameObject): void {
 }
 
 /**
+ * Updates the speed for all enemies.
+ * @param {number} value.
+ */
+export function setEnemySpeed(value: number): void {
+    enemies.forEach((e) => e.setSpeed(value));
+}
+
+/**
  * TypeGuard for enemies
  */
 function isEnemy(value: BaseGameObject): value is BaseEnemyObject {
