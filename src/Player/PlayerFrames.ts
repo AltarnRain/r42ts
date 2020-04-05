@@ -14,5 +14,6 @@ import { Frame } from "../Types/Types";
 export const PlayerFrame: Frame = [
     ["0", "0", "B", "B", "0", "0"],
     ["A", "B", "F", "F", "B", "A"],
-    ["B", "F", "0", "0", "F", "B"]
+    ["B", "F", "0", "0", "F", "B"],
+    ["0", "0", "0", "0", "0", "0"], // increase hitbox at the bottom
 ];
