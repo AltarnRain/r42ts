@@ -50,7 +50,7 @@ let lastTick: number = 0;
 /**
  * Reference to the player object.
  */
-let player: Player;
+let player: Player | undefined;
 
 /**
  * Quick reference to the player bullet.
@@ -245,29 +245,19 @@ function draw(tick: number) {
  */
 function selfDestruct() {
     if (enemies.length > 0 && player !== undefined) {
-        const destructableObjects = getDestructableObjects();
+
         // Reset main rendering.
-        enemies = [];
-        player = undefined;
-        const explosionsLocations = destructableObjects.map((a) => explosionLocationProvider(a));
+        const explosionsLocations = enemies.map((a) => explosionLocationProvider(a));
         for (const explosionsLocation of explosionsLocations) {
             const center = new ExplosionCenter(explosionsLocation.explosion.explosionCenterFrame, explosionsLocation.location, explosionsLocation.explosion.explosionCenterDelay);
             const newParticles = particleProvider(explosionsLocation.explosion, explosionsLocation.location);
             particles.push(...newParticles);
             explosionCenters.push(center);
         }
-    }
-}
 
-/**
- * Returns objects that can be destroyed.
- * @returns {BaseDestructableObject}. Objects which return an Explosion asset.
- */
-function getDestructableObjects(): BaseDestructableObject[] {
-    return [
-        ...enemies,
-        player
-    ];
+        enemies = [];
+        player = undefined;
+    }
 }
 
 /**

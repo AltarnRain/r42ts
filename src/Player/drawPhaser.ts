@@ -4,14 +4,15 @@
  * See LICENSE.MD.
  */
 
+import CGAColors from "../Constants/CGAColors";
 import GameLocation from "../Models/GameLocation";
 import renderFrame from "../Render/RenderFrame";
 import { Frame } from "../Types/Types";
-import { getNewLocation as getNextLocation } from "../Utility/Lib";
+import { cloneObject, getNewLocation as getNextLocation } from "../Utility/Lib";
 import { calculateDistance } from "../Utility/Location";
 
 const phaserFrame: Frame = [
-    ["E"]
+    [CGAColors.yellow]
 ];
 
 /**
@@ -21,6 +22,7 @@ const phaserFrame: Frame = [
 
 export function drawPhaser(source: GameLocation, target: GameLocation, speed: number): void {
 
+    const clonedFrame = cloneObject(phaserFrame);
     const dx = Math.abs(source.left - target.left);
     const dy = Math.abs(source.top - target.top);
 
@@ -32,7 +34,7 @@ export function drawPhaser(source: GameLocation, target: GameLocation, speed: nu
     let distance = calculateDistance(source, target);
 
     while (distance >= 0) {
-        renderFrame(currentLocation, phaserFrame);
+        renderFrame(currentLocation, clonedFrame);
         distance -= speed;
 
         currentLocation = getNextLocation(angle, speed, currentLocation);

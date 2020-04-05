@@ -33,7 +33,10 @@ test("getFrameByIndex", () => {
     const result2 = Frame.getFrameByIndex(frames, 3);
 
     expect(result1).toBeDefined();
-    expect(result1[0][0]).toBe("a");
+    if (result1) {
+        expect(result1[0][0]).toBe("a");
+    }
+    
     expect(result2).toBeUndefined();
 });
 

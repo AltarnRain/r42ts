@@ -6,7 +6,6 @@
 
 import GameLocation from "../Models/GameLocation";
 import { Hitbox } from "../Models/Hitbox";
-import DimensionProvider from "../Providers/DimensionProvider";
 import { Frame, Frames } from "../Types/Types";
 import HexToCGAConverter from "./HexToCGAConverter";
 import { getRandomArrayElement } from "./Lib";
@@ -154,8 +153,14 @@ export function getRandomFrameKeyIndex(frames: Frames): number {
  * @param {number} index. Index of the frame.
  * @returns {Frame | undefined}. Returns the frame if one was found for the passed index, otherwise returns undefined.
  */
-export function getFrameByIndex(frames: Frames, index: number): Frame | undefined {
-    return frames["F" + index];
+export function getFrameByIndex(frames: Frames, index: number): Frame {
+    const frame = frames["F" + index];
+
+    if (!frame) {
+        throw new Error("No frame found");
+    }
+
+    return frame;
 }
 
 /**

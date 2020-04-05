@@ -8,7 +8,6 @@ import Numbers from "../Assets/Numbers";
 import CGAColors from "../Constants/CGAColors";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import { Frames } from "../Types/Types";
 import { getFrameByIndex, getFrameDimensions, setVariableFramesColor } from "../Utility/Frame";
 import { cloneObject, padLeft } from "../Utility/Lib";
 

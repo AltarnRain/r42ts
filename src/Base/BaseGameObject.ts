@@ -17,7 +17,7 @@ export default abstract class BaseGameObject {
     /**
      * Game object location.
      */
-    protected location: GameLocation;
+    protected location!: GameLocation;
 
     /**
      * Construct the object.
