@@ -301,7 +301,7 @@ function handlePhaser(): void {
 
             // set phasor to undefined to flag it as not in use.
             phaserOnScreen = false;
-        }, 80);
+        }, 100);
     }
 }
 
