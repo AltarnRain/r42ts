@@ -40,4 +40,9 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     public setSpeed(value: number): void {
         this.speed = value;
     }
+
+    /**
+     * Returns the enemies hitpoints.
+     */
+    public abstract getHitpoints(): number;
 }

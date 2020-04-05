@@ -5,7 +5,8 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import { Frame, GameObjectType } from "../Types/Types";
+import { Hitbox } from "../Models/Hitbox";
+import { GameObjectType } from "../Types/Types";
 
 /**
  * Module:          BaseGameObject
@@ -47,8 +48,7 @@ export default abstract class BaseGameObject {
     public abstract getObjectType(): GameObjectType;
 
     /**
-     * Return the current frame
-     * @returns {Frame}. The current frame.
+     * Returns the object's hitbox.
      */
-    public abstract getCurrentFrame(): Frame;
+    public abstract getHitbox(): Hitbox;
 }

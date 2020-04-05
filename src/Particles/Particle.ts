@@ -6,9 +6,11 @@
 
 import BaseGameObject from "../Base/BaseGameObject";
 import GameLocation from "../Models/GameLocation";
+import { Hitbox } from "../Models/Hitbox";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
+import { getFrameHitbox } from "../Utility/Frame";
 import { cloneObject, fallsWithin, getNewLocation } from "../Utility/Lib";
 
 /**
@@ -82,10 +84,10 @@ export default class Particle extends BaseGameObject {
     }
 
     /**
-     * Returns the current particle frame.
-     * @returns {Frame}. The current frame.
+     * Returns the particles hitbox.
+     * @returns {Hitbox}. The hitbox.
      */
-    public getCurrentFrame(): Frame {
-        return this.frame;
+    public getHitbox(): Hitbox {
+        return getFrameHitbox(this.location, this.frame);
     }
 }

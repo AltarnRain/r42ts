@@ -16,18 +16,18 @@ import { DrawGameField } from "./GameScreen/StaticRenders";
 import KeyboardState from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Explosion from "./Models/Explosion";
 import GameLocation from "./Models/GameLocation";
+import { ObjectHitbox } from "./Models/ObjectHitbox";
 import { Level, Lives, Phasers, ScoreBoard } from "./Modules";
 import ExplosionCenter from "./Particles/ExplosionCenter";
 import Particle from "./Particles/Particle";
 import Player from "./Player/Player";
 import PlayerBullet from "./Player/PlayerBullet";
 import PlayerBulletFrame from "./Player/PlayerBulletFrame";
-import { PlayerFrame } from "./Player/PlayerFrames";
 import CtxProvider from "./Providers/CtxProvider";
 import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
 import particleProvider from "./Providers/ParticleProvider";
-import { getFrameHitbox, hit } from "./Utility/Frame";
-import { ObjectHitbox } from "./Models/ObjectHitbox";
+import { getFrameHitbox } from "./Utility/Frame";
+import { overlaps } from "./Utility/Lib";
 
 const fps = 1000 / 60;
 
@@ -113,16 +113,17 @@ function updateState() {
         playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, player.getLocation());
     }
 
-    const hittableObjectHitboxes = getHittableObjectsHitboxes();
+    const hittableObjectHitboxes = getHittableObjects();
 
     // There's stuff that can get hit or hit something.
     if (hittableObjectHitboxes.length > 0) {
         for (const hittableObject of hittableObjectHitboxes) {
 
+            const hittableObjectHitbox = hittableObject.getHitbox();
+
             // Check if the player got hit.
             if (player) {
-                const playerHitbox = getFrameHitbox(player.getLocation(), PlayerFrame);
-                if (hit(playerHitbox.location, playerHitbox.radius, hittableObject.hitbox.location, hittableObject.hitbox.radius)) {
+                if (overlaps(player.getHitbox(), hittableObjectHitbox)) {
                     const playerExplosion = player.getExplosion();
                     const playerLocation = player.getLocation();
                     renderExplosion(playerExplosion, playerLocation);
@@ -134,14 +135,13 @@ function updateState() {
             // Check if the player hit something.
             if (playerBullet) {
 
-                if (isEnemy(hittableObject.object)) {
-                    const playerBulletHitbox = getFrameHitbox(playerBullet.getLocation(), playerBullet.getCurrentFrame());
+                if (isEnemy(hittableObject)) {
 
-                    if (hit(playerBulletHitbox.location, playerBulletHitbox.radius, hittableObject.hitbox.location, hittableObject.hitbox.radius)) {
+                    if (overlaps(playerBullet.getHitbox(), hittableObjectHitbox)) {
                         playerBullet = undefined;
-                        renderExplosion(hittableObject.object.getExplosion(), hittableObject.object.getLocation());
-                        ScoreBoard.addToScore(hittableObject.object.getPoints());
-                        enemies = enemies.filter((e) => e !== hittableObject.object);
+                        renderExplosion(hittableObject.getExplosion(), hittableObject.getLocation());
+                        ScoreBoard.addToScore(hittableObject.getPoints());
+                        enemies = enemies.filter((e) => e !== hittableObject);
                     }
                 }
             }
@@ -191,17 +191,17 @@ function draw(tick: number) {
         // Debugging. Show the hitboxes on screen.
         if (drawHitboxes) {
             const hittableObjectHitboxes = [
-                ...getHittableObjectsHitboxes(),
+                ...getHittableObjects(),
             ];
 
             // Add player if defined.
             if (player) {
-                hittableObjectHitboxes.push(getObjectHitbox(player));
+                hittableObjectHitboxes.push(player);
             }
 
             // Add bullet if defined.
             if (playerBullet) {
-                hittableObjectHitboxes.push(getObjectHitbox(playerBullet));
+                hittableObjectHitboxes.push(playerBullet);
             }
 
             // Draw a circle around each object using the
@@ -209,15 +209,15 @@ function draw(tick: number) {
             for (const hittableObjectHitbox of hittableObjectHitboxes) {
                 const ctx = CtxProvider();
 
-                ctx.beginPath();
-                ctx.strokeStyle = "white";
-                ctx.lineWidth = 2;
-                ctx.arc(
-                    hittableObjectHitbox.hitbox.location.left,
-                    hittableObjectHitbox.hitbox.location.top,
-                    hittableObjectHitbox.hitbox.radius,
-                    0,
-                    Math.PI * 2);
+                // ctx.beginPath();
+                // ctx.strokeStyle = "white";
+                // ctx.lineWidth = 2;
+                // ctx.arc(
+                //     hittableObjectHitbox.hitbox.location.left,
+                //     hittableObjectHitbox.hitbox.location.top,
+                //     hittableObjectHitbox.hitbox.radius,
+                //     0,
+                //     Math.PI * 2);
 
                 ctx.stroke();
                 ctx.closePath();
@@ -262,25 +262,12 @@ function getDestructableObjects(): BaseDestructableObject[] {
  * Returns all gameobject that can kill the player with their hitboxes.
  * @returns {BaseGameObject[]}. An array of objects that can be hit by the player or hit the player.
  */
-function getHittableObjectsHitboxes(): ObjectHitbox[] {
-    const returnValue: ObjectHitbox[] = [
+function getHittableObjects(): BaseGameObject[] {
+    return [
         ...enemies,
         ...particles,
         ...explosionCenters
-    ].filter((o) => o !== undefined)
-        .map((ho) => getObjectHitbox(ho));
-    return returnValue;
-}
-
-/**
- * getObjectHitbox.
- * @param {BaseGameObject} object. A base game object.
- */
-function getObjectHitbox(baseGameObject: BaseGameObject): ObjectHitbox {
-    return {
-        hitbox: getFrameHitbox(baseGameObject.getLocation(), baseGameObject.getCurrentFrame()),
-        object: baseGameObject,
-    };
+    ].filter((o) => o !== undefined);
 }
 
 /**
@@ -304,7 +291,7 @@ export function register(gameobject: BaseGameObject): void {
         enemies.push(gameobject);
     } else if (isPlayer(gameobject)) {
         player = gameobject;
-    } else if (isParticel(gameobject)) {
+    } else if (isParticle(gameobject)) {
         particles.push(gameobject);
     }
 }
@@ -341,6 +328,6 @@ function isPlayer(value: BaseGameObject): value is Player {
 /**
  * TypeGuard for particles.
  */
-function isParticel(value: BaseGameObject): value is Particle {
+function isParticle(value: BaseGameObject): value is Particle {
     return value && value.getObjectType() === "particle";
 }

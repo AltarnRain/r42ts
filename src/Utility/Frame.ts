@@ -5,10 +5,10 @@
  */
 
 import GameLocation from "../Models/GameLocation";
+import { Hitbox } from "../Models/Hitbox";
 import DimensionProvider from "../Providers/DimensionProvider";
 import { Frame, Frames } from "../Types/Types";
 import HexToCGAConverter from "./HexToCGAConverter";
-import { Hitbox } from "../Models/Hitbox";
 import { getRandomArrayElement } from "./Lib";
 
 /**
@@ -166,12 +166,18 @@ export function getFrameByIndex(frames: Frames, index: number): Frame | undefine
  */
 export function getFrameHitbox(location: GameLocation, frame: Frame): Hitbox {
 
-    const width = frame[0].length * DimensionProvider().minPixelSize;
-    const center = getFrameCenter(location, frame);
+    const {
+        minPixelSize
+    } = DimensionProvider();
+
+    const width = frame[0].length * minPixelSize;
+    const height = frame.length * minPixelSize;
 
     return {
-        radius: width / 2,
-        location: center,
+        top: location.top,
+        left: location.left,
+        right: location.left + width * minPixelSize,
+        bottom: location.top + height * minPixelSize,
     };
 }
 

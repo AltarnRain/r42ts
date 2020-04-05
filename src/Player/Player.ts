@@ -13,10 +13,11 @@ import BaseGameObject from "../Base/BaseGameObject";
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
+import { Hitbox } from "../Models/Hitbox";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
-import { convertFrameColor } from "../Utility/Frame";
+import { convertFrameColor, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject, getAngle, getNewLocation } from "../Utility/Lib";
 import PlayerExplosion from "./PlayerExplosion";
 import { PlayerFrame } from "./PlayerFrames";
@@ -78,10 +79,10 @@ export default class Player extends BaseGameObject {
     }
 
     /**
-     * Returns the current player frame.
-     * @returns {Frame}. Current player frame.
+     * Returns the player's hitbox
+     * @return {Hitbox}. Players hitbox.
      */
-    public getCurrentFrame(): Frame {
-        return PlayerFrame;
+    public getHitbox(): Hitbox {
+        return getFrameHitbox(this.location, this.frame);
     }
 }

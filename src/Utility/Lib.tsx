@@ -11,7 +11,7 @@
 
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardState";
 import GameLocation from "../Models/GameLocation";
-import DimensionProvider from "../Providers/DimensionProvider";
+import { Hitbox } from "../Models/Hitbox";
 import { Frames } from "../Types/Types";
 
 /**
@@ -161,34 +161,16 @@ export function randomNumberInRange(max: number, min: number): number {
 }
 
 /**
- * Returns true if two positions overlap.
- * @param {number} x1. Coordinate.
- * @param {number} x2. Coordinate.
- * @param {number} y1. Coordinate.
- * @param {number} y2. Coordinate.
- * @returns {boolean}. True if the locations overlap, false otherwise.
+ * Returns true if two hitboxes overlap.
+ * @param {Hitbox} hitbox1.
+ * @param {Hitbox} hitbox2.
  */
-export function overlaps(location1: GameLocation, location2: GameLocation): boolean {
-
-    const {
-        maxPixelSize
-    } = DimensionProvider();
-
-    const left1 = location1.left;
-    const right1 = left1 + maxPixelSize;
-    const top1 = location1.top;
-    const bottom1 = top1 + maxPixelSize;
-
-    const left2 = location2.left;
-    const right2 = left2 + maxPixelSize;
-    const top2 = location2.top;
-    const bottom2 = top2 + maxPixelSize;
-
-    if (bottom1 < top2 || top1 > bottom2) {
+export function overlaps(hitbox1: Hitbox, hitbox2: Hitbox): boolean {
+    if (hitbox1.bottom < hitbox2.top || hitbox1.top > hitbox2.bottom) {
         return false;
     }
 
-    if (right2 < left1 || left2 > right1) {
+    if (hitbox2.right < hitbox2.left || hitbox2.left > hitbox1.right) {
         return false;
     }
 

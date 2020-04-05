@@ -14,11 +14,12 @@ import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import Explosion from "../../Models/Explosion";
+import { Hitbox } from "../../Models/Hitbox";
 import DimensionProvider from "../../Providers/DimensionProvider";
 import FrameProvider from "../../Providers/FrameProvider";
 import renderFrame from "../../Render/RenderFrame";
 import { Frame, Frames, GameObjectType } from "../../Types/Types";
-import { getFrameDimensions, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
+import { getFrameDimensions, getFrameHitbox, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
 import { cloneObject, getNewLocation, getRandomArrayElement, randomNumberInRange } from "../../Utility/Lib";
 import BirdFrames from "./BirdFrames";
 
@@ -169,7 +170,18 @@ export default class BirdEnemy extends BaseEnemyObject {
         return 200;
     }
 
-    public getCurrentFrame(): Frame {
-        return this.currentFrame;
+    /**
+     * Return the birds remaining hitpoints. 0.
+     */
+    public getHitpoints(): number {
+        return 0;
+    }
+
+    /**
+     * Returns the bird's hitbox.
+     * @returns {Hitbox}. Bird's hitbox.
+     */
+    public getHitbox(): Hitbox {
+        return getFrameHitbox(this.location, this.currentFrame);
     }
 }

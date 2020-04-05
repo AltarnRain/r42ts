@@ -9,19 +9,15 @@
  * Responsibility:  Defins a hitbox.
  */
 
-import GameLocation from "./GameLocation";
-
 /**
  * Model for a hitbox.
  */
 export interface Hitbox {
-    /**
-     * Radius of the hitbox.
-     */
-    radius: number;
+    left: number;
 
-    /**
-     * Location of the hitbox.
-     */
-    location: GameLocation;
+    right: number;
+
+    top: number;
+
+    bottom: number;
 }

@@ -5,10 +5,11 @@
  */
 
 import GameLocation from "../Models/GameLocation";
+import { Hitbox } from "../Models/Hitbox";
 import Particle from "../Particles/Particle";
 import DimensionProvider from "../Providers/DimensionProvider";
 import { Frame, GameObjectType } from "../Types/Types";
-import { convertFrameColor } from "../Utility/Frame";
+import { convertFrameColor, getFrameHitbox } from "../Utility/Frame";
 
 /**
  * Module:          Player bullet
@@ -32,5 +33,12 @@ export default class PlayerBullet extends Particle {
 
     public getObjectType(): GameObjectType {
         return "playerbullet";
+    }
+
+    /**
+     * Returns the player bullets hitbox.
+     */
+    public getHitbox(): Hitbox {
+        return getFrameHitbox(this.location, this.frame);
     }
 }

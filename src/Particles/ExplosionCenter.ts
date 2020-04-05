@@ -6,8 +6,10 @@
 
 import BaseGameObject from "../Base/BaseGameObject";
 import GameLocation from "../Models/GameLocation";
+import { Hitbox } from "../Models/Hitbox";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
+import { getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 
 /**
@@ -82,10 +84,10 @@ export default class ExplosionCenter extends BaseGameObject {
     }
 
     /**
-     * Retuns the explosion center frame
-     * @returns {Frame}. Explosion center frame.
+     * Returns the ExplosionCenter's hitbox.
+     * @returns {Hitbox}. The hitbox.
      */
-    public getCurrentFrame(): Frame {
-        return this.frame;
+    public getHitbox(): Hitbox {
+        return getFrameHitbox(this.location, this.frame);
     }
 }
