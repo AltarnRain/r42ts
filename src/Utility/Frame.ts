@@ -176,8 +176,8 @@ export function getFrameHitbox(location: GameLocation, frame: Frame): Hitbox {
     return {
         top: location.top,
         left: location.left,
-        right: location.left + width * minPixelSize,
-        bottom: location.top + height * minPixelSize,
+        right: location.left + width,
+        bottom: location.top + height,
     };
 }
 

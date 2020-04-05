@@ -166,15 +166,15 @@ export function randomNumberInRange(max: number, min: number): number {
  * @param {Hitbox} hitbox2.
  */
 export function overlaps(hitbox1: Hitbox, hitbox2: Hitbox): boolean {
+
+    if (hitbox1.right < hitbox2.left || hitbox1.left > hitbox2.right) {
+        return false;
+    }
+
     if (hitbox1.bottom < hitbox2.top || hitbox1.top > hitbox2.bottom) {
         return false;
     }
 
-    if (hitbox2.right < hitbox2.left || hitbox2.left > hitbox1.right) {
-        return false;
-    }
-
-    // Rectangles overlap
     return true;
 }
 
@@ -188,7 +188,7 @@ export function overlaps(hitbox1: Hitbox, hitbox2: Hitbox): boolean {
  */
 export function fallsWithin(location: GameLocation, top: number, bottom: number, left: number, right: number): boolean {
 
-    const yBounds = location.top > top  && location.top < bottom;
+    const yBounds = location.top > top && location.top < bottom;
     const xBounds = location.left > left && location.left < right;
 
     return xBounds && yBounds;

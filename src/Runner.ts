@@ -113,11 +113,11 @@ function updateState() {
         playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, player.getLocation());
     }
 
-    const hittableObjectHitboxes = getHittableObjects();
+    const hittableObjects = getHittableObjects();
 
     // There's stuff that can get hit or hit something.
-    if (hittableObjectHitboxes.length > 0) {
-        for (const hittableObject of hittableObjectHitboxes) {
+    if (hittableObjects.length > 0) {
+        for (const hittableObject of hittableObjects) {
 
             const hittableObjectHitbox = hittableObject.getHitbox();
 
@@ -126,23 +126,20 @@ function updateState() {
                 if (overlaps(player.getHitbox(), hittableObjectHitbox)) {
                     const playerExplosion = player.getExplosion();
                     const playerLocation = player.getLocation();
-                    renderExplosion(playerExplosion, playerLocation);
+                    renderExplosion(playerLocation, playerExplosion);
                     player = undefined;
                     Lives.removeLife();
                 }
             }
 
             // Check if the player hit something.
-            if (playerBullet) {
+            if (playerBullet && isEnemy(hittableObject)) {
 
-                if (isEnemy(hittableObject)) {
-
-                    if (overlaps(playerBullet.getHitbox(), hittableObjectHitbox)) {
-                        playerBullet = undefined;
-                        renderExplosion(hittableObject.getExplosion(), hittableObject.getLocation());
-                        ScoreBoard.addToScore(hittableObject.getPoints());
-                        enemies = enemies.filter((e) => e !== hittableObject);
-                    }
+                if (overlaps(playerBullet.getHitbox(), hittableObjectHitbox)) {
+                    playerBullet = undefined;
+                    renderExplosion(hittableObject.getLocation(), hittableObject.getExplosion());
+                    ScoreBoard.addToScore(hittableObject.getPoints());
+                    enemies = enemies.filter((e) => e !== hittableObject);
                 }
             }
         }
@@ -190,34 +187,34 @@ function draw(tick: number) {
 
         // Debugging. Show the hitboxes on screen.
         if (drawHitboxes) {
-            const hittableObjectHitboxes = [
+            const hittableObjects = [
                 ...getHittableObjects(),
             ];
 
             // Add player if defined.
             if (player) {
-                hittableObjectHitboxes.push(player);
+                hittableObjects.push(player);
             }
 
             // Add bullet if defined.
             if (playerBullet) {
-                hittableObjectHitboxes.push(playerBullet);
+                hittableObjects.push(playerBullet);
             }
 
             // Draw a circle around each object using the
             // coordiates and radius of the hitbox.
-            for (const hittableObjectHitbox of hittableObjectHitboxes) {
+            for (const hittableObject of hittableObjects) {
+                const hitbox = hittableObject.getHitbox();
                 const ctx = CtxProvider();
 
-                // ctx.beginPath();
-                // ctx.strokeStyle = "white";
-                // ctx.lineWidth = 2;
-                // ctx.arc(
-                //     hittableObjectHitbox.hitbox.location.left,
-                //     hittableObjectHitbox.hitbox.location.top,
-                //     hittableObjectHitbox.hitbox.radius,
-                //     0,
-                //     Math.PI * 2);
+                ctx.beginPath();
+                ctx.strokeStyle = "white";
+                ctx.rect(
+                    hitbox.left,
+                    hitbox.top,
+                    hitbox.right - hitbox.left,
+                    hitbox.bottom - hitbox.top);
+                ctx.lineWidth = 2;
 
                 ctx.stroke();
                 ctx.closePath();
@@ -275,7 +272,7 @@ function getHittableObjects(): BaseGameObject[] {
  * @param {Explosion} explosion. An explosion asset.
  * @param {GameLocation} location. The center location where the explosion occurs.
  */
-function renderExplosion(explosion: Explosion, location: GameLocation) {
+function renderExplosion(location: GameLocation, explosion: Explosion) {
     const center = new ExplosionCenter(explosion.explosionCenterFrame, location, explosion.explosionCenterDelay);
     const newParticles = particleProvider(explosion, location);
     particles.push(...newParticles);
