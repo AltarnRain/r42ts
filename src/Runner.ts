@@ -16,7 +16,6 @@ import { DrawGameField } from "./GameScreen/StaticRenders";
 import KeyboardState from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Explosion from "./Models/Explosion";
 import GameLocation from "./Models/GameLocation";
-import { ObjectHitbox } from "./Models/ObjectHitbox";
 import { Level, Lives, Phasers, ScoreBoard } from "./Modules";
 import ExplosionCenter from "./Particles/ExplosionCenter";
 import Particle from "./Particles/Particle";
@@ -26,7 +25,6 @@ import PlayerBulletFrame from "./Player/PlayerBulletFrame";
 import CtxProvider from "./Providers/CtxProvider";
 import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
 import particleProvider from "./Providers/ParticleProvider";
-import { getFrameHitbox } from "./Utility/Frame";
 import { overlaps } from "./Utility/Lib";
 
 const fps = 1000 / 60;
@@ -71,6 +69,11 @@ let explosionCenters: ExplosionCenter[] = [];
  * DEBUGGING: When true draws the hitboxes around all game objects.
  */
 let drawHitboxes = false;
+
+/**
+ * DEBUGGING: When true the player is immortal.
+ */
+let playerIsImmortal = false;
 
 /**
  * Start the runner.
@@ -122,7 +125,7 @@ function updateState() {
             const hittableObjectHitbox = hittableObject.getHitbox();
 
             // Check if the player got hit.
-            if (player) {
+            if (player && playerIsImmortal === false) {
                 if (overlaps(player.getHitbox(), hittableObjectHitbox)) {
                     const playerExplosion = player.getExplosion();
                     const playerLocation = player.getLocation();
@@ -306,6 +309,13 @@ export function setEnemySpeed(value: number): void {
  */
 export function toggleHitboxes(): void {
     drawHitboxes = !drawHitboxes;
+}
+
+/**
+ * DEBUGGING ONLY: Toggles player immortality.
+ */
+export function togglePlayerImmortality(): void {
+    playerIsImmortal = !playerIsImmortal;
 }
 
 /**
