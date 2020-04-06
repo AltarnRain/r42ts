@@ -23,7 +23,7 @@ import renderFrame from "../../Render/RenderFrame";
 import { Frame, GameObjectType } from "../../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
 import { cloneObject, getRandomArrayElement, randomNumberInRange } from "../../Utility/Lib";
-import { getOffsetLocation, getNewLocation } from "../../Utility/Location";
+import { getNewLocation, getOffsetLocation } from "../../Utility/Location";
 import { BirdFrames } from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
@@ -33,8 +33,10 @@ const {
     maxPixelSize,
     fullHeight,
     gameFieldTop,
-    fullWidth
+    fullWidth,
 } = DimensionProvider();
+
+const negativeMaxPixelSize = maxPixelSize * -1;
 
 export default class BirdEnemy extends BaseEnemyObject {
     /**
@@ -78,6 +80,11 @@ export default class BirdEnemy extends BaseEnemyObject {
     private frameHeight: number;
 
     /**
+     * Location offset to display frames over one another. Also used for hitbox calculation.
+     */
+    private offsetLocation: GameLocation;
+
+    /**
      * Creates the object.
      */
     constructor() {
@@ -112,6 +119,8 @@ export default class BirdEnemy extends BaseEnemyObject {
             top,
         };
 
+        this.offsetLocation = this.calculateOffsetLocation();
+
         this.frameWidth = width;
         this.frameHeight = height;
     }
@@ -124,30 +133,35 @@ export default class BirdEnemy extends BaseEnemyObject {
         this.frameTickHandler.tick(tick);
         this.colorTickHandler.tick(tick);
 
-        const location = this.move();
+        this.move();
 
-        renderFrame(location, this.currentFrame);
+        renderFrame(this.offsetLocation, this.currentFrame);
     }
 
     /**
      * Called by a TickHandler when its time to move.
      */
-    public move(): GameLocation {
+    public move(): void {
 
         this.location = getNewLocation(this.location, this.angle, this.speed);
 
-        const frameOffsets = BirdFrames.offSets[this.frameProvider.getCurrentIndex()];
-        const offsetLocation = getOffsetLocation(this.location, frameOffsets, averagePixelSize);
+        this.offsetLocation = this.calculateOffsetLocation();
 
-        if (offsetLocation.left <= 0 || offsetLocation.left >= fullWidth - this.frameWidth) {
+        if (this.offsetLocation.left <= 0 || this.offsetLocation.left >= fullWidth - this.frameWidth) {
             this.angle = 180 - this.angle;
         }
 
-        if (offsetLocation.top <= gameFieldTop || offsetLocation.top >= fullHeight - this.frameHeight) {
+        if (this.offsetLocation.top <= gameFieldTop || this.offsetLocation.top >= fullHeight - this.frameHeight) {
             this.angle *= -1;
         }
+    }
 
-        return offsetLocation;
+    /**
+     * Calculates the offsetLocation
+     */
+    private calculateOffsetLocation(): GameLocation {
+        const frameOffsets = BirdFrames.offSets[this.frameProvider.getCurrentIndex()];
+        return getOffsetLocation(this.location, frameOffsets, averagePixelSize);
     }
 
     /**
@@ -199,8 +213,7 @@ export default class BirdEnemy extends BaseEnemyObject {
      * @returns {GameRectangle}. Bird's hitbox.
      */
     public getHitbox(): GameRectangle {
-        const birdHitbox = getFrameHitbox(this.location, this.currentFrame, averagePixelSize);
-        return birdHitbox;
+        return getFrameHitbox(this.offsetLocation, this.currentFrame, averagePixelSize, { top: negativeMaxPixelSize, bottom: 0 });
     }
 
     /**

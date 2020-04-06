@@ -70,7 +70,7 @@ export function getNewLocation(location: GameLocation, angle: number, speed: num
  */
 export function getOffsetLocation(location: GameLocation, offset: GameLocation, pixelSize: number): GameLocation {
     return {
-        left: location.left += offset.left * pixelSize,
-        top: location.top += offset.top * pixelSize
+        left: location.left + offset.left * pixelSize,
+        top: location.top + offset.top * pixelSize
     };
 }
