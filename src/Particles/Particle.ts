@@ -19,6 +19,13 @@ import { fallsWithin, getNewLocation } from "../Utility/Location";
  * Responsibility:  Render a single particle.
  */
 
+const {
+    averagePixelSize
+} = DimensionProvider();
+
+const topOffset = averagePixelSize / 2 * -1;
+const bottomOffset = averagePixelSize / 2;
+
 export default class Particle extends BaseGameObject {
 
     /**
@@ -89,6 +96,6 @@ export default class Particle extends BaseGameObject {
      * @returns {GameRectangle}. The hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(this.location, this.frame, DimensionProvider().averagePixelSize);
+        return getFrameHitbox(this.location, this.frame, averagePixelSize, topOffset, bottomOffset);
     }
 }

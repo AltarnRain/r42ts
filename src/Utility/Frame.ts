@@ -167,24 +167,22 @@ export function getFrameByIndex(frames: Frames, index: number): Frame {
  * getFrameHitbox
  * @param {GameLocation} location. A Location.
  * @param {Frame} frame. A frame
+ * @param {number} pixelSize.
+ * @param {number} topOffset.
+ * @param {number} bottomOffset.
  * @returns {GameRectangle}. The frame's hitbox.
  */
-export function getFrameHitbox(location: GameLocation, frame: Frame, pixelSize: number, offset?: { top: number; bottom: number }): GameRectangle {
+export function getFrameHitbox(location: GameLocation, frame: Frame, pixelSize: number, topOffset: number, bottomOffset: number): GameRectangle {
 
     const width = frame[0].length * pixelSize;
     const height = frame.length * pixelSize;
 
     const returnValue = {
-        top: location.top,
+        top: location.top + topOffset,
         left: location.left,
         right: location.left + width,
-        bottom: location.top + height,
+        bottom: location.top + height + bottomOffset,
     };
-
-    if (offset) {
-        returnValue.top += offset.top;
-        returnValue.bottom += offset.bottom;
-    }
 
     return returnValue;
 }

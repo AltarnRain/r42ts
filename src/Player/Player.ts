@@ -89,7 +89,7 @@ export default class Player extends BaseGameObject {
      * @return {GameRectangle}. Players hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(this.location, this.frame, averagePixelSize);
+        return getFrameHitbox(this.location, this.frame, averagePixelSize,  0, averagePixelSize );
     }
 
     /**
