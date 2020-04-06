@@ -68,9 +68,9 @@ export function getNewLocation(location: GameLocation, angle: number, speed: num
  * @param {number} pixelSize. Pixel size used to calculate the actual location.
  * @returns {GameLocation}. A new game location offset to animation overlap.
  */
-export function getOffsetLocation(location: GameLocation, offset: GameLocation, pixelSize: number): GameLocation {
+export function getOffsetLocation(location: GameLocation, leftOffset: number, topOffset: number): GameLocation {
     return {
-        left: location.left + offset.left * pixelSize,
-        top: location.top + offset.top * pixelSize
+        left: location.left + leftOffset,
+        top: location.top + topOffset,
     };
 }

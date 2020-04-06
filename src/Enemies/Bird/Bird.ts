@@ -85,6 +85,11 @@ export default class BirdEnemy extends BaseEnemyObject {
     private offsetLocation: GameLocation;
 
     /**
+     * Precaculated offsets for every frame.
+     */
+    private offSets: GameLocation[];
+
+    /**
      * Creates the object.
      */
     constructor() {
@@ -118,6 +123,13 @@ export default class BirdEnemy extends BaseEnemyObject {
             left,
             top,
         };
+
+        this.offSets = BirdFrames.offSets.map((o) => {
+            return {
+                left: o.left * averagePixelSize,
+                top: o.top * averagePixelSize,
+            }
+        });
 
         this.offsetLocation = this.calculateOffsetLocation();
 
@@ -160,8 +172,8 @@ export default class BirdEnemy extends BaseEnemyObject {
      * Calculates the offsetLocation
      */
     private calculateOffsetLocation(): GameLocation {
-        const frameOffsets = BirdFrames.offSets[this.frameProvider.getCurrentIndex()];
-        return getOffsetLocation(this.location, frameOffsets, averagePixelSize);
+        const frameOffsets = this.offSets[this.frameProvider.getCurrentIndex()];
+        return getOffsetLocation(this.location, frameOffsets.left, frameOffsets.top);
     }
 
     /**
