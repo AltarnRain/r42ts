@@ -51,7 +51,6 @@ export default function DimensionProvider(node?: Node): GameDimensions {
             maxPixelSize,
             minPixelSize,
             averagePixelSize: (maxPixelSize + minPixelSize) / 2,
-            
         };
     }
 

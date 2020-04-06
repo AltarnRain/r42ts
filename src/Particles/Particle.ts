@@ -7,10 +7,11 @@
 import BaseGameObject from "../Base/BaseGameObject";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
+import { GameSize } from "../Models/Gamesize";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
-import { getFrameHitbox } from "../Utility/Frame";
+import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { fallsWithin, getNewLocation } from "../Utility/Location";
 
@@ -49,6 +50,11 @@ export default class Particle extends BaseGameObject {
     protected acceleration: number;
 
     /**
+     * Dimensions of the particle.
+     */
+    private dimensions: GameSize;
+
+    /**
      * Construct the particle.
      */
     constructor(frame: Frame, angle: number, speed: number, acceleration: number, location: GameLocation) {
@@ -58,6 +64,8 @@ export default class Particle extends BaseGameObject {
         this.angle = angle;
         this.speed = speed;
         this.acceleration = acceleration;
+
+        this.dimensions = getFrameDimensions(frame, averagePixelSize);
     }
 
     /**
@@ -96,6 +104,6 @@ export default class Particle extends BaseGameObject {
      * @returns {GameRectangle}. The hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(this.location, this.frame, averagePixelSize, topOffset, bottomOffset);
+        return getFrameHitbox(this.location, this.dimensions.width, this.dimensions.height, topOffset, bottomOffset);
     }
 }

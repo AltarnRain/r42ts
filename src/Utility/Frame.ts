@@ -6,6 +6,7 @@
 
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
+import { GameSize } from "../Models/Gamesize";
 import { Frame, Frames } from "../Types/Types";
 import HexToCGAConverter from "./HexToCGAConverter";
 import { getRandomArrayElement } from "./Lib";
@@ -115,7 +116,7 @@ export function setFrameColor(frame: Frame, color: string) {
  * @param {Frame} frame. A frame.
  * @returns {width, height}.
  */
-export function getFrameDimensions(frame: Frame, pixelSize: number): { width: number; height: number } {
+export function getFrameDimensions(frame: Frame, pixelSize: number): GameSize {
     return {
         width: frame[0].length * pixelSize,
         height: frame.length * pixelSize,
@@ -172,17 +173,11 @@ export function getFrameByIndex(frames: Frames, index: number): Frame {
  * @param {number} bottomOffset.
  * @returns {GameRectangle}. The frame's hitbox.
  */
-export function getFrameHitbox(location: GameLocation, frame: Frame, pixelSize: number, topOffset: number, bottomOffset: number): GameRectangle {
-
-    const width = frame[0].length * pixelSize;
-    const height = frame.length * pixelSize;
-
-    const returnValue = {
+export function getFrameHitbox(location: GameLocation, width: number, height: number, topOffset: number, bottomOffset: number): GameRectangle {
+    return {
         top: location.top + topOffset,
         left: location.left,
         right: location.left + width,
         bottom: location.top + height + bottomOffset,
     };
-
-    return returnValue;
 }

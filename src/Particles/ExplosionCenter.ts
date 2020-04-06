@@ -7,16 +7,21 @@
 import BaseGameObject from "../Base/BaseGameObject";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
+import { GameSize } from "../Models/Gamesize";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
-import { getFrameHitbox } from "../Utility/Frame";
+import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 
 /**
  * Module:          Explosion Center
  * Responsibility:  Render an explosion center.
  */
+
+const {
+    averagePixelSize,
+} = DimensionProvider();
 
 export default class ExplosionCenter extends BaseGameObject {
 
@@ -41,6 +46,11 @@ export default class ExplosionCenter extends BaseGameObject {
     private fizzled = false;
 
     /**
+     * Explosion dimensions.
+     */
+    private dimensions: GameSize;
+
+    /**
      * Construct the Explosion center object.
      * @param {Frame} frame. Explosion frame.
      * @param {GameLocation} location. Location where the explosion will appear.
@@ -51,6 +61,8 @@ export default class ExplosionCenter extends BaseGameObject {
 
         this.frame = cloneObject(frame);
         this.fizzleTime = fizzleTime;
+
+        this.dimensions = getFrameDimensions(frame, averagePixelSize);
     }
 
     /**
@@ -89,6 +101,6 @@ export default class ExplosionCenter extends BaseGameObject {
      * @returns {GameRectangle}. The hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(this.location, this.frame, DimensionProvider().minPixelSize, 0, 0);
+        return getFrameHitbox(this.location, this.dimensions.width, this.dimensions.height, 0, 0);
     }
 }

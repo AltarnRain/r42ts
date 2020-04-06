@@ -128,7 +128,7 @@ export default class BirdEnemy extends BaseEnemyObject {
             return {
                 left: o.left * averagePixelSize,
                 top: o.top * averagePixelSize,
-            }
+            };
         });
 
         this.offsetLocation = this.calculateOffsetLocation();
@@ -225,7 +225,8 @@ export default class BirdEnemy extends BaseEnemyObject {
      * @returns {GameRectangle}. Bird's hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(this.offsetLocation, this.currentFrame, averagePixelSize, negativeMaxPixelSize, 0);
+        const dimensions = getFrameDimensions(this.currentFrame, averagePixelSize);
+        return getFrameHitbox(this.offsetLocation, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
     }
 
     /**
