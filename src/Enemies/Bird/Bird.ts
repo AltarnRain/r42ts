@@ -15,16 +15,26 @@ import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import Explosion from "../../Models/Explosion";
 import GameLocation from "../../Models/GameLocation";
-import { Hitbox } from "../../Models/Hitbox";
+import { GameRectangle } from "../../Models/GameRectangle";
+import { OffsetFrames } from "../../Models/OffsetFrames";
 import DimensionProvider from "../../Providers/DimensionProvider";
 import FrameProvider from "../../Providers/FrameProvider";
 import renderFrame from "../../Render/RenderFrame";
-import { Frame, Frames, GameObjectType } from "../../Types/Types";
+import { Frame, GameObjectType } from "../../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
-import { cloneObject, getNewLocation, getRandomArrayElement, randomNumberInRange } from "../../Utility/Lib";
-import { BirdFrameOffsets, BirdFrames } from "./BirdFrames";
+import { cloneObject, getRandomArrayElement, randomNumberInRange } from "../../Utility/Lib";
+import { getOffsetLocation, getNewLocation } from "../../Utility/Location";
+import { BirdFrames } from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
+
+const {
+    averagePixelSize,
+    maxPixelSize,
+    fullHeight,
+    gameFieldTop,
+    fullWidth
+} = DimensionProvider();
 
 export default class BirdEnemy extends BaseEnemyObject {
     /**
@@ -50,7 +60,7 @@ export default class BirdEnemy extends BaseEnemyObject {
     /**
      * Bird fames
      */
-    private frames: Frames;
+    private offsetFrames: OffsetFrames;
 
     /**
      * The current frame that should be rendered.
@@ -77,25 +87,25 @@ export default class BirdEnemy extends BaseEnemyObject {
         this.onFrameChange = this.onFrameChange.bind(this);
         this.onColorChange = this.onColorChange.bind(this);
 
-        this.frames = cloneObject(BirdFrames);
+        this.offsetFrames = cloneObject(BirdFrames);
 
         this.frameTickHandler = new TickHandler(80, this.onFrameChange);
         this.colorTickHandler = new TickHandler(40, this.onColorChange);
 
-        this.frameProvider = new FrameProvider(this.frames, getRandomFrameKeyIndex(this.frames));
+        this.frameProvider = new FrameProvider(this.offsetFrames.frames, getRandomFrameKeyIndex(this.offsetFrames.frames));
         this.currentFrame = this.frameProvider.getFrame();
 
-        const { width, height } = getFrameDimensions(BirdFrames.F0, DimensionProvider().maxPixelSize);
+        const { width, height } = getFrameDimensions(this.currentFrame, maxPixelSize);
 
         // Calculate random left position
         const left = randomNumberInRange(
-            DimensionProvider().fullWidth - width,
+            fullWidth - width,
             width
         );
 
         const top = randomNumberInRange(
-            DimensionProvider().gameFieldTop + height + 250,
-            DimensionProvider().gameFieldTop + height);
+            gameFieldTop + height + averagePixelSize * 5,
+            gameFieldTop + height);
 
         this.location = {
             left,
@@ -114,24 +124,30 @@ export default class BirdEnemy extends BaseEnemyObject {
         this.frameTickHandler.tick(tick);
         this.colorTickHandler.tick(tick);
 
-        this.move();
+        const location = this.move();
 
-        renderFrame(this.location, this.currentFrame);
+        renderFrame(location, this.currentFrame);
     }
 
     /**
      * Called by a TickHandler when its time to move.
      */
-    public move(): void {
-        this.location = getNewLocation(this.angle, this.speed, this.location);
+    public move(): GameLocation {
 
-        if (this.location.left <= 0 || this.location.left >= DimensionProvider().fullWidth - this.frameWidth) {
+        this.location = getNewLocation(this.location, this.angle, this.speed);
+
+        const frameOffsets = BirdFrames.offSets[this.frameProvider.getCurrentIndex()];
+        const offsetLocation = getOffsetLocation(this.location, frameOffsets, averagePixelSize);
+
+        if (offsetLocation.left <= 0 || offsetLocation.left >= fullWidth - this.frameWidth) {
             this.angle = 180 - this.angle;
         }
 
-        if (this.location.top <= DimensionProvider().gameFieldTop || this.location.top >= DimensionProvider().fullHeight - this.frameHeight) {
+        if (offsetLocation.top <= gameFieldTop || offsetLocation.top >= fullHeight - this.frameHeight) {
             this.angle *= -1;
         }
+
+        return offsetLocation;
     }
 
     /**
@@ -161,7 +177,7 @@ export default class BirdEnemy extends BaseEnemyObject {
      * Called by a TickHandler when the bird should change color.
      */
     private onColorChange(): void {
-        setRandomFrameColors(this.frames, colors);
+        setRandomFrameColors(this.offsetFrames.frames, colors);
     }
 
     /**
@@ -180,25 +196,10 @@ export default class BirdEnemy extends BaseEnemyObject {
 
     /**
      * Returns the bird's hitbox.
-     * @returns {Hitbox}. Bird's hitbox.
+     * @returns {GameRectangle}. Bird's hitbox.
      */
-    public getHitbox(): Hitbox {
-
-        const {
-            averagePixelSize,
-        } = DimensionProvider();
-
-        const currentIndex = this.frameProvider.getCurrentIndex();
+    public getHitbox(): GameRectangle {
         const birdHitbox = getFrameHitbox(this.location, this.currentFrame, averagePixelSize);
-
-        const offsets = BirdFrameOffsets[currentIndex];
-
-        // Frame has offsets.
-        if (offsets) {
-            birdHitbox.left = birdHitbox.left + offsets.left * averagePixelSize;
-            birdHitbox.right = birdHitbox.right - offsets.right * averagePixelSize;
-        }
-
         return birdHitbox;
     }
 
@@ -207,6 +208,6 @@ export default class BirdEnemy extends BaseEnemyObject {
      * @returns {GameLocation}. GameLocation located at the center of the object.
      */
     public getCenterLocation(): GameLocation {
-        return getFrameCenter(this.location, this.currentFrame, DimensionProvider().averagePixelSize);
+        return getFrameCenter(this.location, this.currentFrame, averagePixelSize);
     }
 }

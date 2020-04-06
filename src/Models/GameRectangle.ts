@@ -12,7 +12,7 @@
 /**
  * Model for a hitbox.
  */
-export interface Hitbox {
+export interface GameRectangle {
     left: number;
 
     right: number;

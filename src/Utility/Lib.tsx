@@ -11,7 +11,7 @@
 
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardState";
 import GameLocation from "../Models/GameLocation";
-import { Hitbox } from "../Models/Hitbox";
+import { GameRectangle } from "../Models/GameRectangle";
 
 /**
  * Gets the next X coordinats based on the angle, speed and the current X coordinate.
@@ -61,25 +61,6 @@ export function getAngle(state: KeyboardState): number {
     }
 
     return angle;
-}
-
-/**
- * Calculates a new location.
- * @param {number} angle. The angle of the object.
- * @param {number} speed. The speed the of the object
- * @param {number} right. The right outer bounds where the object can travel
- * @param {number} left. The current left coordinate of the object.
- * @returns {Location}. The new location of the object.
- */
-export function getNewLocation(angle: number, speed: number, location: GameLocation): GameLocation {
-
-    const nextLeft = getNextX(angle, speed, location.left);
-    const nextTop = getNextY(angle, speed, location.top);
-
-    return {
-        left: nextLeft,
-        top: nextTop,
-    };
 }
 
 /**
@@ -161,10 +142,10 @@ export function randomNumberInRange(max: number, min: number): number {
 
 /**
  * Returns true if two hitboxes overlap.
- * @param {Hitbox} hitbox1.
- * @param {Hitbox} hitbox2.
+ * @param {GameRectangle} hitbox1.
+ * @param {GameRectangle} hitbox2.
  */
-export function overlaps(hitbox1: Hitbox, hitbox2: Hitbox): boolean {
+export function overlaps(hitbox1: GameRectangle, hitbox2: GameRectangle): boolean {
 
     if (hitbox1.right < hitbox2.left || hitbox1.left > hitbox2.right) {
         return false;

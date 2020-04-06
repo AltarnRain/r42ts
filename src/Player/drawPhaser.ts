@@ -8,8 +8,7 @@ import CGAColors from "../Constants/CGAColors";
 import GameLocation from "../Models/GameLocation";
 import renderFrame from "../Render/RenderFrame";
 import { Frame } from "../Types/Types";
-import { getNewLocation as getNextLocation } from "../Utility/Lib";
-import { calculateDistance } from "../Utility/Location";
+import { calculateDistance, getNewLocation } from "../Utility/Location";
 
 const phaserFrame: Frame = [
     [CGAColors.yellow, CGAColors.yellow]
@@ -49,6 +48,6 @@ export function drawPhasor(source: GameLocation, target: GameLocation, pixelSize
         renderFrame(currentLocation, phaserFrame);
         distance -= pixelSize;
 
-        currentLocation = getNextLocation(angle, pixelSize, currentLocation);
+        currentLocation = getNewLocation(currentLocation, angle, pixelSize);
     }
 }

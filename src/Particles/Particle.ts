@@ -6,13 +6,13 @@
 
 import BaseGameObject from "../Base/BaseGameObject";
 import GameLocation from "../Models/GameLocation";
-import { Hitbox } from "../Models/Hitbox";
+import { GameRectangle } from "../Models/GameRectangle";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
 import { getFrameHitbox } from "../Utility/Frame";
-import { cloneObject, getNewLocation } from "../Utility/Lib";
-import { fallsWithin } from "../Utility/Location";
+import { cloneObject } from "../Utility/Lib";
+import { fallsWithin, getNewLocation } from "../Utility/Location";
 
 /**
  * Module:          Particle
@@ -66,7 +66,7 @@ export default class Particle extends BaseGameObject {
      */
     public draw(_: number): void {
         renderFrame(this.location, this.frame);
-        this.location = getNewLocation(this.angle, this.speed, this.location);
+        this.location = getNewLocation(this.location, this.angle, this.speed);
         this.speed *= this.acceleration;
     }
 
@@ -86,9 +86,9 @@ export default class Particle extends BaseGameObject {
 
     /**
      * Returns the particles hitbox.
-     * @returns {Hitbox}. The hitbox.
+     * @returns {GameRectangle}. The hitbox.
      */
-    public getHitbox(): Hitbox {
+    public getHitbox(): GameRectangle {
         return getFrameHitbox(this.location, this.frame, DimensionProvider().averagePixelSize);
     }
 }

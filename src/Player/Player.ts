@@ -13,14 +13,15 @@ import BaseGameObject from "../Base/BaseGameObject";
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
-import { Hitbox } from "../Models/Hitbox";
+import { GameRectangle } from "../Models/GameRectangle";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
 import { convertFrameColor, getFrameHitbox } from "../Utility/Frame";
-import { cloneObject, getAngle, getNewLocation } from "../Utility/Lib";
+import { cloneObject, getAngle } from "../Utility/Lib";
 import PlayerExplosion from "./PlayerExplosion";
 import { PlayerFrame } from "./PlayerFrames";
+import { getNewLocation } from "../Utility/Location";
 
 export default class Player extends BaseGameObject {
     /**
@@ -70,7 +71,7 @@ export default class Player extends BaseGameObject {
         const angle = getAngle(KeyboardState);
 
         if (angle !== -1) {
-            this.location = getNewLocation(angle, 15, this.location);
+            this.location = getNewLocation(this.location, angle, 15);
         }
 
         renderFrame(this.location, this.frame);
@@ -78,9 +79,9 @@ export default class Player extends BaseGameObject {
 
     /**
      * Returns the player's hitbox
-     * @return {Hitbox}. Players hitbox.
+     * @return {GameRectangle}. Players hitbox.
      */
-    public getHitbox(): Hitbox {
+    public getHitbox(): GameRectangle {
         return getFrameHitbox(this.location, this.frame, DimensionProvider().averagePixelSize);
     }
 

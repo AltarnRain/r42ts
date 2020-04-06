@@ -10,14 +10,14 @@
  */
 
 import BaseGameObject from "../Base/BaseGameObject";
-import { Hitbox } from "./Hitbox";
+import { GameRectangle } from "./GameRectangle";
 
 export interface ObjectHitbox {
 
     /**
      * The object's hitbox.
      */
-    hitbox: Hitbox;
+    hitbox: GameRectangle;
 
     /**
      * The game object.

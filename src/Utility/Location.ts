@@ -60,3 +60,17 @@ export function getNewLocation(location: GameLocation, angle: number, speed: num
         top: nextTop,
     };
 }
+
+/**
+ * Offsets a location using the given offsers and return a new GameLocation object.
+ * @param {GameLocation} location. Original location.
+ * @param {GameLocation} offset. Location usable for rendering.
+ * @param {number} pixelSize. Pixel size used to calculate the actual location.
+ * @returns {GameLocation}. A new game location offset to animation overlap.
+ */
+export function getOffsetLocation(location: GameLocation, offset: GameLocation, pixelSize: number): GameLocation {
+    return {
+        left: location.left += offset.left * pixelSize,
+        top: location.top += offset.top * pixelSize
+    };
+}

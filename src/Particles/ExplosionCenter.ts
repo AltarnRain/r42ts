@@ -6,7 +6,7 @@
 
 import BaseGameObject from "../Base/BaseGameObject";
 import GameLocation from "../Models/GameLocation";
-import { Hitbox } from "../Models/Hitbox";
+import { GameRectangle } from "../Models/GameRectangle";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
@@ -86,9 +86,9 @@ export default class ExplosionCenter extends BaseGameObject {
 
     /**
      * Returns the ExplosionCenter's hitbox.
-     * @returns {Hitbox}. The hitbox.
+     * @returns {GameRectangle}. The hitbox.
      */
-    public getHitbox(): Hitbox {
+    public getHitbox(): GameRectangle {
         return getFrameHitbox(this.location, this.frame, DimensionProvider().minPixelSize);
     }
 }

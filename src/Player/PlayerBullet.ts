@@ -5,11 +5,9 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import { Hitbox } from "../Models/Hitbox";
 import Particle from "../Particles/Particle";
-import DimensionProvider from "../Providers/DimensionProvider";
 import { Frame, GameObjectType } from "../Types/Types";
-import { convertFrameColor, getFrameHitbox } from "../Utility/Frame";
+import { convertFrameColor } from "../Utility/Frame";
 
 /**
  * Module:          Player bullet

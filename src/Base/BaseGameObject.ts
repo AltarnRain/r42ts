@@ -5,7 +5,7 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import { Hitbox } from "../Models/Hitbox";
+import { GameRectangle } from "../Models/GameRectangle";
 import { GameObjectType } from "../Types/Types";
 
 /**
@@ -50,5 +50,5 @@ export default abstract class BaseGameObject {
     /**
      * Returns the object's hitbox.
      */
-    public abstract getHitbox(): Hitbox;
+    public abstract getHitbox(): GameRectangle;
 }

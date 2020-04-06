@@ -5,7 +5,7 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import { Hitbox } from "../Models/Hitbox";
+import { GameRectangle } from "../Models/GameRectangle";
 import { Frame, Frames } from "../Types/Types";
 import HexToCGAConverter from "./HexToCGAConverter";
 import { getRandomArrayElement } from "./Lib";
@@ -167,9 +167,9 @@ export function getFrameByIndex(frames: Frames, index: number): Frame {
  * getFrameHitbox
  * @param {GameLocation} location. A Location.
  * @param {Frame} frame. A frame
- * @returns {Hitbox}. The frame's hitbox.
+ * @returns {GameRectangle}. The frame's hitbox.
  */
-export function getFrameHitbox(location: GameLocation, frame: Frame, pixelSize: number): Hitbox {
+export function getFrameHitbox(location: GameLocation, frame: Frame, pixelSize: number): GameRectangle {
 
     const width = frame[0].length * pixelSize;
     const height = frame.length * pixelSize;
