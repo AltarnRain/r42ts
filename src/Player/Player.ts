@@ -19,9 +19,16 @@ import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
 import { convertFrameColor, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject, getAngle } from "../Utility/Lib";
+import { getNewLocation } from "../Utility/Location";
 import PlayerExplosion from "./PlayerExplosion";
 import { PlayerFrame } from "./PlayerFrames";
-import { getNewLocation } from "../Utility/Location";
+
+const {
+    minPixelSize,
+    fullWidth,
+    fullHeight,
+    averagePixelSize
+} = DimensionProvider();
 
 export default class Player extends BaseGameObject {
     /**
@@ -37,8 +44,8 @@ export default class Player extends BaseGameObject {
 
         if (!location) {
             this.location = {
-                left: DimensionProvider().fullWidth / 2,
-                top: DimensionProvider().fullHeight * 0.9,
+                left: fullWidth / 2,
+                top: fullHeight * 0.9,
             };
         }
 
@@ -82,7 +89,7 @@ export default class Player extends BaseGameObject {
      * @return {GameRectangle}. Players hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(this.location, this.frame, DimensionProvider().averagePixelSize);
+        return getFrameHitbox(this.location, this.frame, averagePixelSize);
     }
 
     /**
@@ -90,8 +97,8 @@ export default class Player extends BaseGameObject {
      */
     public getNozzleLocation(): GameLocation {
         return {
-            left: this.location.left + DimensionProvider().minPixelSize * 2,
-            top: this.location.top - DimensionProvider().minPixelSize * 1,
+            left: this.location.left + minPixelSize * 2,
+            top: this.location.top - minPixelSize * 1,
         };
     }
 }
