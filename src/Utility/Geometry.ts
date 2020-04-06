@@ -62,7 +62,6 @@ export function getAngle(state: KeyboardState): number {
     return angle;
 }
 
-
 /**
  * Returns true if two hitboxes overlap.
  * @param {GameRectangle} hitbox1.

@@ -10,7 +10,7 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import { getNextX, getNextY } from "./Lib";
+import { getNextX, getNextY } from "./Geometry";
 
 /**
  * Calculate distance in pixels.

@@ -27,7 +27,7 @@ import DimensionProvider from "./Providers/DimensionProvider";
 import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
 import particleProvider from "./Providers/ParticleProvider";
 import { getRandomArrayElement } from "./Utility/Array";
-import { overlaps } from "./Utility/Lib";
+import { overlaps } from "./Utility/Geometry";
 
 const fps = 1000 / 60;
 
