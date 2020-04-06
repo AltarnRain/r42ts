@@ -11,16 +11,7 @@
 
 import "jest";
 import { Frames } from "../Types/Types";
-import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import * as Lib from "../Utility/Lib";
-
-test("getRandomArrayElement", () => {
-    const arr = ["a"];
-
-    const result = Lib.getRandomArrayElement(arr);
-
-    expect(result).toBe("a");
-});
 
 test("pad left", () => {
     // Act

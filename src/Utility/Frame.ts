@@ -8,8 +8,8 @@ import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/Gamesize";
 import { Frame, Frames } from "../Types/Types";
+import { getRandomArrayElement } from "./Array";
 import HexToCGAConverter from "./HexToCGAConverter";
-import { getRandomArrayElement } from "./Lib";
 
 /**
  * Module:          Frame

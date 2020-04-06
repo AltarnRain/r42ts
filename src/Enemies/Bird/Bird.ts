@@ -21,8 +21,9 @@ import DimensionProvider from "../../Providers/DimensionProvider";
 import FrameProvider from "../../Providers/FrameProvider";
 import renderFrame from "../../Render/RenderFrame";
 import { Frame, GameObjectType } from "../../Types/Types";
+import { getRandomArrayElement } from "../../Utility/Array";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
-import { cloneObject, getRandomArrayElement, randomNumberInRange } from "../../Utility/Lib";
+import { cloneObject, randomNumberInRange } from "../../Utility/Lib";
 import { getNewLocation, getOffsetLocation } from "../../Utility/Location";
 import { BirdFrames } from "./BirdFrames";
 
