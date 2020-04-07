@@ -8,7 +8,7 @@ import Numbers from "../Assets/Numbers";
 import CGAColors from "../Constants/CGAColors";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import { getFrameByIndex, getFrameDimensions, setVariableFramesColor } from "../Utility/Frame";
+import { convertVariableFramesColor, getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { padLeft } from "../Utility/String";
 
@@ -20,7 +20,6 @@ import { padLeft } from "../Utility/String";
 const leftStartPosition = 4 * DimensionProvider().maxPixelSize;
 const spacing = 2 * DimensionProvider().maxPixelSize;
 const frames = cloneObject(Numbers);
-setVariableFramesColor(frames, CGAColors.yellow);
 
 let score = 0;
 

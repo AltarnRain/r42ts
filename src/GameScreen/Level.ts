@@ -8,7 +8,7 @@ import Numbers from "../Assets/Numbers";
 import CGAColors from "../Constants/CGAColors";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import { getFrameByIndex, setVariableFramesColor } from "../Utility/Frame";
+import { convertVariableFramesColor, getFrameByIndex } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { padLeft } from "../Utility/String";
 
@@ -28,7 +28,7 @@ const leftNumberLeft = DimensionProvider().fullWidth - DimensionProvider().maxPi
 
 // Create frames.
 const frames = cloneObject(Numbers);
-setVariableFramesColor(frames, CGAColors.yellow);
+convertVariableFramesColor(frames, CGAColors.yellow);
 
 /**
  * Set the level.

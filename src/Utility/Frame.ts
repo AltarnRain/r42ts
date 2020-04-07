@@ -63,10 +63,10 @@ export function convertFrameColor(frame: Frame) {
  * Updates a frame that uses variable (V) colors to a passed color.
  * @param {Frames} frames. All frames.
  */
-export function setVariableFramesColor(frames: Frames, color: string): void {
+export function convertVariableFramesColor(frames: Frames, color: string): void {
     Object.keys(frames).forEach((key) => {
         const frame = frames[key];
-        setVariableFrameColor(frame, color);
+        convertVariableFrameColor(frame, color);
     });
 }
 
@@ -75,7 +75,7 @@ export function setVariableFramesColor(frames: Frames, color: string): void {
  * @param {Frame} frame. A frame.
  * @param {string} color. Color.
  */
-export function setVariableFrameColor(frame: Frame, color: string) {
+export function convertVariableFrameColor(frame: Frame, color: string) {
     frame.forEach((row, rowIndex) => {
         row.forEach((cellColor, cellIndex) => {
             if (cellColor === "V") {
