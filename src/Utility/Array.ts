@@ -1,15 +1,13 @@
+/**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
 
 /**
- * Get's the dimensions of a 2d array.
- * @param {any[]}. Any array.
- * @returns {rows: number, columns: number}. The dimensions of the 2d array.
+ * Module:          Array
+ * Responsibility:  Array utilities
  */
-export function get2dArrayDimensions(array: any[][]): { rows: number, columns: number } {
-    return {
-        rows: array.length,
-        columns: array[0].length,
-    };
-}
 
 /**
  * Returns a random element from an array
@@ -23,13 +21,4 @@ export function getRandomArrayElement<T>(arr: T[]): T {
         const randomIndex = Math.floor(Math.random() * arr.length);
         return arr[randomIndex];
     }
-}
-
-/**
- * Returns a number between 0 and the number of elements in the array.
- * @param {any[]} arr. An array of any type.
- * @returns {number}. A randomly selected index from the array.
- */
-export function getRandomArrayIndex(arr: any[]): number {
-    return Math.floor(Math.random() * arr.length - 1);
 }

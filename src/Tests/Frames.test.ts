@@ -4,24 +4,52 @@
  * See LICENSE.MD.
  */
 
-import { Frames } from "../Types/Types";
-import * as Frame from "../Utility/Frame";
-
 /**
  * Module:          Frames.test
  * Responsibility:  Test the Frame utility class.
  */
 
-// Arrange
-// Arrange
+import CGAColors from "../Constants/CGAColors";
+import { Frame as FrameType, Frames } from "../Types/Types";
+import * as Frame from "../Utility/Frame";
+
 const frames: Frames = {
     F0: [["a"]],
     F1: [["b"]],
 };
 
-test("getRandomFramesKeyIndex single key", () => {
+test("setRandomFrameColors", () => {
+    // Arrange
+    const variableFrame: Frames = {
+        F0: [["V"]]
+    };
+
     // Act
-    const index = Frame.getRandomFrameKeyIndex(frames);
+    Frame.setRandomFrameColors(variableFrame, ["test"]);
+
+    // Assert
+    expect(variableFrame.F0[0][0]).toBe("test");
+});
+
+test("convertFrameColor", () => {
+    // Arrange
+    const f: FrameType = [["E"]];
+
+    // Act
+    Frame.convertFrameColor(f);
+
+    // Assert
+    expect(f[0][0]).toBe(CGAColors.yellow);
+});
+
+test("getRandomFramesKeyIndex single key", () => {
+
+    const f: Frames = {
+        F: [[]],
+    };
+
+    // Act
+    const index = Frame.getRandomFrameKeyIndex(f);
 
     // Assert
     expect(index).toBe(0);
@@ -30,14 +58,9 @@ test("getRandomFramesKeyIndex single key", () => {
 test("getFrameByIndex", () => {
     // Act
     const result1 = Frame.getFrameByIndex(frames, 0);
-    const result2 = Frame.getFrameByIndex(frames, 3);
-
     expect(result1).toBeDefined();
-    if (result1) {
-        expect(result1[0][0]).toBe("a");
-    }
-
-    expect(result2).toBeUndefined();
+    expect(result1[0][0]).toBe("a");
+    expect(() => Frame.getFrameByIndex(frames, 3)).toThrow();
 });
 
 test("getFrameCenter", () => {
