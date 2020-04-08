@@ -44,4 +44,9 @@ export default interface KeyboardState {
      * When true the backspace key is held down.
      */
     selfDestruct: boolean;
+
+    /**
+     * When true the space bar key is held down.
+     */
+    space: boolean;
 }

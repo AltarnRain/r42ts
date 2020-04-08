@@ -23,6 +23,7 @@ const KeyboardState: KeyboardState = {
     fire: false,
     phraser: false,
     selfDestruct: false,
+    space: false,
 };
 
 /**
@@ -98,6 +99,9 @@ function updateState(key: string, keyDown: boolean): void {
             break;
         case GameControlKeys.F2:
             KeyboardState.phraser = keyDown;
+            break;
+        case GameControlKeys.Space:
+            KeyboardState.space = keyDown;
             break;
     }
 }
