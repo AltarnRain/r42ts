@@ -5,7 +5,7 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
-import { PlayerFrame } from "../Player/PlayerFrames";
+import { PlayerFrame } from "../Player/PlayerShip/PlayerFrames";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { getFrameDimensions, setFrameColor } from "../Utility/Frame";

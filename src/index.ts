@@ -12,7 +12,7 @@
 import BirdEnemy from "./Enemies/Bird/Bird";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import { Level, Lives, Phasers, ScoreBoard } from "./Modules";
-import Player from "./Player/Player";
+import Player from "./Player/PlayerShip/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
 import * as Runner from "./Runner";
 
