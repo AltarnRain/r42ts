@@ -4,11 +4,11 @@
  * See LICENSE.MD.
  */
 
-import CGAColors from "../Constants/CGAColors";
-import GameLocation from "../Models/GameLocation";
-import renderFrame from "../Render/RenderFrame";
-import { Frame } from "../Types/Types";
-import { calculateDistance, getNewLocation } from "../Utility/Location";
+import CGAColors from "../../Constants/CGAColors";
+import GameLocation from "../../Models/GameLocation";
+import renderFrame from "../../Render/RenderFrame";
+import { Frame } from "../../Types/Types";
+import { calculateDistance, getNewLocation } from "../../Utility/Location";
 
 const phaserFrame: Frame = [
     [CGAColors.yellow, CGAColors.yellow]

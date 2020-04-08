@@ -9,19 +9,19 @@
  * Responsibility:  Player ship
  */
 
-import BaseGameObject from "../Base/BaseGameObject";
-import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
-import Explosion from "../Models/Explosion";
-import GameLocation from "../Models/GameLocation";
-import { GameRectangle } from "../Models/GameRectangle";
-import { GameSize } from "../Models/Gamesize";
-import DimensionProvider from "../Providers/DimensionProvider";
-import renderFrame from "../Render/RenderFrame";
-import { Frame, GameObjectType } from "../Types/Types";
-import { convertFrameColor, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
-import { getAngle } from "../Utility/Geometry";
-import { cloneObject } from "../Utility/Lib";
-import { getNewLocation } from "../Utility/Location";
+import BaseGameObject from "../../Base/BaseGameObject";
+import KeyboardState from "../../Handlers/KeyboardStateHandler/KeyboardStateHandler";
+import Explosion from "../../Models/Explosion";
+import GameLocation from "../../Models/GameLocation";
+import { GameRectangle } from "../../Models/GameRectangle";
+import { GameSize } from "../../Models/Gamesize";
+import DimensionProvider from "../../Providers/DimensionProvider";
+import renderFrame from "../../Render/RenderFrame";
+import { Frame, GameObjectType } from "../../Types/Types";
+import { convertFrameColor, getFrameDimensions, getFrameHitbox } from "../../Utility/Frame";
+import { getAngle } from "../../Utility/Geometry";
+import { cloneObject } from "../../Utility/Lib";
+import { getNewLocation } from "../../Utility/Location";
 import PlayerExplosion from "./PlayerExplosion";
 import { PlayerFrame } from "./PlayerFrames";
 

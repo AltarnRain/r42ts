@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frame } from "../Types/Types";
+import { Frame } from "../../Types/Types";
 
 /**
  * Module:          PlayerFrames

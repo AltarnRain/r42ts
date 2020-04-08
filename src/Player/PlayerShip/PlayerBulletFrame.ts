@@ -9,7 +9,7 @@
  * Responsibility:  Contains frames for the player's bullet.
  */
 
-import { Frames } from "../Types/Types";
+import { Frames } from "../../Types/Types";
 
 const PlayerBulletFrame: Frames = {
     F0: [

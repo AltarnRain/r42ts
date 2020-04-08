@@ -4,10 +4,10 @@
  * See LICENSE.MD.
  */
 
-import GameLocation from "../Models/GameLocation";
-import Particle from "../Particles/Particle";
-import { Frame, GameObjectType } from "../Types/Types";
-import { convertFrameColor } from "../Utility/Frame";
+import GameLocation from "../../Models/GameLocation";
+import Particle from "../../Particles/Particle";
+import { Frame, GameObjectType } from "../../Types/Types";
+import { convertFrameColor } from "../../Utility/Frame";
 
 /**
  * Module:          Player bullet
