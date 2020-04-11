@@ -12,7 +12,7 @@
 import BirdEnemy from "./Enemies/Bird/Bird";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import { Level, Lives, Phasers, ScoreBoard } from "./Modules";
-import Player from "./Player/PlayerShip/Player";
+import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
 import * as Runner from "./Runner";
 
@@ -30,7 +30,7 @@ window.onload = () => {
                 registerListeners();
                 const player = new Player();
 
-                for (let i = 0; i < 1; i++) {
+                for (let i = 0; i < 0; i++) {
                     const bird = new BirdEnemy();
                     Runner.register(bird);
                 }
