@@ -16,12 +16,11 @@ import GameLocation from "../../Models/GameLocation";
 import { GameRectangle } from "../../Models/GameRectangle";
 import { GameSize } from "../../Models/Gamesize";
 import DimensionProvider from "../../Providers/DimensionProvider";
-import renderFrame from "../../Render/RenderFrame";
-import { Frame, GameObjectType } from "../../Types/Types";
+import { GameObjectType } from "../../Types/Types";
 import { convertFrameColor, getFrameDimensions, getFrameHitbox } from "../../Utility/Frame";
 import { getAngle } from "../../Utility/Geometry";
 import { cloneObject } from "../../Utility/Lib";
-import { getNewLocation } from "../../Utility/Location";
+import { fallsWithin, getNewLocation } from "../../Utility/Location";
 import PlayerExplosion from "./PlayerExplosion";
 import { PlayerFrame } from "./PlayerFrames";
 
@@ -29,14 +28,16 @@ const {
     minPixelSize,
     fullWidth,
     fullHeight,
-    averagePixelSize
+    averagePixelSize,
+    gameFieldTop,
+
 } = DimensionProvider();
 
+const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
+const maxBottom = fullHeight - shipDimensions.height;
+const maxRight = fullWidth - shipDimensions.width;
+
 export default class Player extends BaseGameObject {
-    /**
-     * Frame dimensions.
-     */
-    private dimensions: GameSize;
 
     /**
      * Construct the class.
@@ -52,8 +53,6 @@ export default class Player extends BaseGameObject {
         }
 
         this.currentFrame = cloneObject(PlayerFrame);
-
-        this.dimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
 
         convertFrameColor(this.currentFrame);
     }
@@ -78,7 +77,10 @@ export default class Player extends BaseGameObject {
         const angle = getAngle(KeyboardState);
 
         if (angle !== -1) {
-            this.location = getNewLocation(this.location, angle, 15);
+            const newLocation = getNewLocation(this.location, angle, 15);
+            if (fallsWithin(newLocation, gameFieldTop, maxBottom, 0, maxRight)) {
+                this.location = newLocation;
+            }
         }
     }
 
@@ -87,7 +89,7 @@ export default class Player extends BaseGameObject {
      * @return {GameRectangle}. Players hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(this.location, this.dimensions.width, this.dimensions.height, 0,  averagePixelSize );
+        return getFrameHitbox(this.location, shipDimensions.width, shipDimensions.height, 0, averagePixelSize);
     }
 
     /**
