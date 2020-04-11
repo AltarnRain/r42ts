@@ -30,7 +30,7 @@ window.onload = () => {
                 registerListeners();
                 const player = new Player();
 
-                for (let i = 0; i < 20; i++) {
+                for (let i = 0; i < 1; i++) {
                     const bird = new BirdEnemy();
                     Runner.register(bird);
                 }

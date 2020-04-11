@@ -89,7 +89,7 @@ export default class BirdEnemy extends BaseEnemyObject {
      * Creates the object.
      */
     constructor() {
-        super(0);
+        super(10);
         this.angle = getRandomArrayElement([2, 358, 178, 182]);
 
         this.onFrameChange = this.onFrameChange.bind(this);
@@ -144,7 +144,10 @@ export default class BirdEnemy extends BaseEnemyObject {
 
         this.location = this.calculateOffsetLocation();
 
-        if (this.location.left <= 0 || this.location.left >= fullWidth - this.frameWidth) {
+        const leftLimit = averagePixelSize * 2;
+        const rightLimit = fullWidth - this.frameWidth - averagePixelSize * 2;
+
+        if (this.location.left <= leftLimit || this.location.left >= rightLimit) {
             this.angle = 180 - this.angle;
         }
 
@@ -155,6 +158,7 @@ export default class BirdEnemy extends BaseEnemyObject {
 
     /**
      * Calculates the offsetLocation
+     * @returns {GameLocation}. GameLocation offset to let the frames render over one another.
      */
     private calculateOffsetLocation(): GameLocation {
         const frameOffsets = this.offSets[this.frameProvider.getCurrentIndex()];
