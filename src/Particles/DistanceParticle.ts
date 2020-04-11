@@ -16,7 +16,15 @@ import Particle from "./Particle";
  */
 
 export default class DistanceParticle extends Particle {
-    private startPosition: GameLocation;
+
+    /**
+     * The end position for the particle.
+     */
+    private endPosition: GameLocation;
+
+    /**
+     * The distance the distance the particle must travel.
+     */
     private distance: number;
 
     /**
@@ -25,7 +33,7 @@ export default class DistanceParticle extends Particle {
     constructor(frame: Frame, angle: number, speed: number, acceleration: number, location: GameLocation, distance: number) {
         super(frame, angle, speed, acceleration, location);
 
-        this.startPosition = {...location};
+        this.endPosition = { ...location };
 
         this.distance = distance;
 
@@ -37,6 +45,6 @@ export default class DistanceParticle extends Particle {
      * @returns {boolean}. Returns true if the particle has not yet reached its destination.
      */
     public traveling(): boolean {
-        return calculateDistance(this.startPosition, this.location) < this.distance;
+        return calculateDistance(this.endPosition, this.location) < this.distance;
     }
 }
