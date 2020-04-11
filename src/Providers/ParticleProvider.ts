@@ -15,7 +15,7 @@ import Particle from "../Particles/Particle";
 import { convertFrameColor } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 
-export default function particleProvider(explosion: Explosion, location: GameLocation) {
+export default function particleProvider(location: GameLocation, explosion: Explosion) {
 
     const exp = cloneObject(explosion);
     const loc = cloneObject(location);

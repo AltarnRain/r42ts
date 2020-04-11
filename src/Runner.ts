@@ -123,22 +123,31 @@ function run(tick: number): void {
  */
 function updateState(tick: number) {
 
+    // Handle all state changes that can only happen if the player is alive.
+    if (player !== undefined) {
+        player.updateState();
+
+        // Player is alive. Space pauses the game.
+        if (KeyboardState.selfDestruct) {
+            selfDestruct(player);
+        }
+
+        if (KeyboardState.phraser) {
+            handlePhaser(player);
+        }
+
+        if (playerBullet === undefined) {
+            if (KeyboardState.fire) {
+                playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, player.getNozzleLocation());
+            }
+        } else {
+            playerBullet.updateState();
+        }
+
+    }
+
     enemies.forEach((e) => e.updateState(tick));
     particles.forEach((e) => e.updateState());
-    player?.updateState();
-    playerBullet?.updateState();
-
-    if (KeyboardState.selfDestruct) {
-        selfDestruct();
-    }
-
-    if (KeyboardState.phraser) {
-        handlePhaser();
-    }
-
-    if (KeyboardState.fire && playerBullet === undefined && player !== undefined) {
-        playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, player.getNozzleLocation());
-    }
 
     const hittableObjects = getHittableObjects();
 
@@ -149,7 +158,7 @@ function updateState(tick: number) {
             const hittableObjectHitbox = hittableObject.getHitbox();
 
             // Check if the player got hit.
-            if (player && playerIsImmortal === false) {
+            if (player !== undefined && playerIsImmortal === false) {
                 if (overlaps(player.getHitbox(), hittableObjectHitbox)) {
                     const playerExplosion = player.getExplosion();
                     const playerLocation = player.getLocation();
@@ -257,31 +266,33 @@ function draw(tick: number) {
 /**
  * Triggers the self destruct sequence.
  */
-function selfDestruct() {
-    if (enemies.length > 0 && player !== undefined) {
+function selfDestruct(alivePlayer: Player) {
+    if (enemies.length) {
 
         // Reset main rendering.
         const explosionsLocations = enemies.map((a) => explosionLocationProvider(a));
         for (const explosionsLocation of explosionsLocations) {
             const center = new ExplosionCenter(explosionsLocation.explosion.explosionCenterFrame, explosionsLocation.location, explosionsLocation.explosion.explosionCenterDelay);
-            const newParticles = particleProvider(explosionsLocation.explosion, explosionsLocation.location);
+            const newParticles = particleProvider(explosionsLocation.location, explosionsLocation.explosion);
             particles.push(...newParticles);
             explosionCenters.push(center);
         }
+
+        renderExplosion(alivePlayer.getLocation(), alivePlayer.getExplosion());
 
         enemies = [];
         player = undefined;
     }
 }
 
-function handlePhaser(): void {
-    if (player !== undefined && enemies.length > 0 && Phasers.getPhaserCount() > 0 && phaserOnScreen === false) {
+function handlePhaser(alivePlayer: Player): void {
+    if (enemies.length > 0 && Phasers.getPhaserCount() > 0 && phaserOnScreen === false) {
 
         // Prevent accidental double phasors when the player holds the button to long.
         phaserOnScreen = true;
 
         const randomEnemy = getRandomArrayElement(enemies);
-        const playerNozzleLocation = player.getNozzleLocation();
+        const playerNozzleLocation = alivePlayer.getNozzleLocation();
         const randomEnemyCenter = randomEnemy.getCenterLocation();
         const randomEnemyExplosion = randomEnemy.getExplosion();
 
@@ -325,7 +336,7 @@ function getHittableObjects(): BaseGameObject[] {
  */
 function renderExplosion(location: GameLocation, explosion: Explosion) {
     const center = new ExplosionCenter(explosion.explosionCenterFrame, location, explosion.explosionCenterDelay);
-    const newParticles = particleProvider(explosion, location);
+    const newParticles = particleProvider(location, explosion);
     particles.push(...newParticles);
     explosionCenters.push(center);
 }
