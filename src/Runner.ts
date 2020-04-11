@@ -203,6 +203,10 @@ function draw(tick: number) {
             particles = particles.filter((p) => p.traveling());
         }
 
+        if (particles.length === 0) {
+            pause = true;
+        }
+
         if (explosionCenters.length > 0) {
             explosionCenters.forEach((ec) => ec.draw(tick));
             explosionCenters = explosionCenters.filter((ec) => ec.fizzledOut());
