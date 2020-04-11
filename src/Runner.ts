@@ -112,7 +112,7 @@ export function stop(): void {
  */
 function run(tick: number): void {
     // Runs all animation at the passed FPS
-    updateState();
+    updateState(tick);
     draw(tick);
 
     animationHandle = window.requestAnimationFrame(run);
@@ -121,9 +121,9 @@ function run(tick: number): void {
 /**
  * Called every request animation frame.
  */
-function updateState() {
+function updateState(tick: number) {
 
-    enemies.forEach((e) => e.updateState());
+    enemies.forEach((e) => e.updateState(tick));
     particles.forEach((e) => e.updateState());
     player?.updateState();
     playerBullet?.updateState();

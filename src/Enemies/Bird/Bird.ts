@@ -76,9 +76,9 @@ export default class BirdEnemy extends BaseEnemyObject {
     private frameHeight: number;
 
     /**
-     * Location offset to display frames over one another. Also used for hitbox calculation.
+     * The actual location of the bird without offsets.
      */
-    private offsetLocation: GameLocation;
+    private actualLocation: GameLocation;
 
     /**
      * Precaculated offsets for every frame.
@@ -115,7 +115,7 @@ export default class BirdEnemy extends BaseEnemyObject {
             gameFieldTop + height + averagePixelSize * 5,
             gameFieldTop + height);
 
-        this.location = {
+        this.actualLocation = {
             left,
             top,
         };
@@ -127,36 +127,28 @@ export default class BirdEnemy extends BaseEnemyObject {
             };
         });
 
-        this.offsetLocation = this.calculateOffsetLocation();
+        this.location = this.calculateOffsetLocation();
 
         this.frameWidth = width;
         this.frameHeight = height;
     }
 
     /**
-     * Called from autside.
-     * @param {number} tick. Called from outside whenever a tick occurs.
+     * Updates the objects state.
      */
-    public draw(tick: number): void {
+    public updateState(tick: number): void {
         this.frameTickHandler.tick(tick);
         this.colorTickHandler.tick(tick);
 
-        renderFrame(this.offsetLocation, this.currentFrame);
-    }
+        this.actualLocation = getNewLocation(this.actualLocation, this.angle, this.speed);
 
-    /**
-     * Updates the objects state.
-     */
-    public updateState(): void {
-        this.location = getNewLocation(this.location, this.angle, this.speed);
+        this.location = this.calculateOffsetLocation();
 
-        this.offsetLocation = this.calculateOffsetLocation();
-
-        if (this.offsetLocation.left <= 0 || this.offsetLocation.left >= fullWidth - this.frameWidth) {
+        if (this.location.left <= 0 || this.location.left >= fullWidth - this.frameWidth) {
             this.angle = 180 - this.angle;
         }
 
-        if (this.offsetLocation.top <= gameFieldTop || this.offsetLocation.top >= fullHeight - this.frameHeight) {
+        if (this.location.top <= gameFieldTop || this.location.top >= fullHeight - this.frameHeight) {
             this.angle *= -1;
         }
     }
@@ -166,7 +158,7 @@ export default class BirdEnemy extends BaseEnemyObject {
      */
     private calculateOffsetLocation(): GameLocation {
         const frameOffsets = this.offSets[this.frameProvider.getCurrentIndex()];
-        return getOffsetLocation(this.location, frameOffsets.left, frameOffsets.top);
+        return getOffsetLocation(this.actualLocation, frameOffsets.left, frameOffsets.top);
     }
 
     /**
@@ -219,7 +211,7 @@ export default class BirdEnemy extends BaseEnemyObject {
      */
     public getHitbox(): GameRectangle {
         const dimensions = getFrameDimensions(this.currentFrame, averagePixelSize);
-        return getFrameHitbox(this.offsetLocation, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
+        return getFrameHitbox(this.location, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
     }
 
     /**

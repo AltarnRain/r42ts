@@ -46,7 +46,7 @@ export default abstract class BaseGameObject {
     /**
      * Called to update the state of the object. Runs outside the draw loop for more accuracy.
      */
-    public abstract updateState(): void;
+    public abstract updateState(tick: number): void;
 
     /**
      * Get the game location for colision detection.
