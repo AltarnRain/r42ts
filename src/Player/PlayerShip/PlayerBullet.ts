@@ -22,7 +22,7 @@ export default class PlayerBullet extends Particle {
     constructor(frame: Frame, angle: number, speed: number, acceleration: number, location: GameLocation) {
         super(frame, angle, speed, acceleration, location);
 
-        convertFrameColor(this.frame);
+        convertFrameColor(this.currentFrame);
     }
 
     public getObjectType(): GameObjectType {

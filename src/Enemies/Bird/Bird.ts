@@ -66,11 +66,6 @@ export default class BirdEnemy extends BaseEnemyObject {
     private offsetFrames: OffsetFrames;
 
     /**
-     * The current frame that should be rendered.
-     */
-    private currentFrame: Frame;
-
-    /**
      * Frame width
      */
     private frameWidth: number;

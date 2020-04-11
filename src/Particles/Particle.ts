@@ -28,12 +28,6 @@ const topOffset = averagePixelSize / 2 * -1;
 const bottomOffset = averagePixelSize / 2;
 
 export default class Particle extends BaseGameObject {
-
-    /**
-     * Frame of the particle.
-     */
-    protected frame: Frame;
-
     /**
      * Particle angle.
      */
@@ -60,7 +54,7 @@ export default class Particle extends BaseGameObject {
     constructor(frame: Frame, angle: number, speed: number, acceleration: number, location: GameLocation) {
         super(location);
 
-        this.frame = cloneObject(frame);
+        this.currentFrame = cloneObject(frame);
         this.angle = angle;
         this.speed = speed;
         this.acceleration = acceleration;
@@ -74,13 +68,6 @@ export default class Particle extends BaseGameObject {
      */
     public getObjectType(): GameObjectType {
         return "particle";
-    }
-
-    /**
-     * Draw the particle
-     */
-    public draw(_: number): void {
-        renderFrame(this.location, this.frame);
     }
 
     /**

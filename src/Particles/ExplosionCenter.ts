@@ -31,11 +31,6 @@ export default class ExplosionCenter extends BaseGameObject {
     private startTick: number | undefined;
 
     /**
-     * Explosion center frame.
-     */
-    private frame: Frame;
-
-    /**
      * Time until the explosion center fizzeles out.
      */
     private fizzleTime: number;
@@ -59,7 +54,7 @@ export default class ExplosionCenter extends BaseGameObject {
     constructor(frame: Frame, location: GameLocation, fizzleTime: number) {
         super(location);
 
-        this.frame = cloneObject(frame);
+        this.currentFrame = cloneObject(frame);
         this.fizzleTime = fizzleTime;
 
         this.dimensions = getFrameDimensions(frame, averagePixelSize);
@@ -78,7 +73,7 @@ export default class ExplosionCenter extends BaseGameObject {
             this.fizzled = true;
         }
 
-        renderFrame(this.location, this.frame);
+        super.draw(tick);
     }
 
     /**

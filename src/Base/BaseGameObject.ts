@@ -6,7 +6,8 @@
 
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
-import { GameObjectType } from "../Types/Types";
+import renderFrame from "../Render/RenderFrame";
+import { Frame, GameObjectType } from "../Types/Types";
 
 /**
  * Module:          BaseGameObject
@@ -18,6 +19,11 @@ export default abstract class BaseGameObject {
      * Game object location.
      */
     protected location!: GameLocation;
+
+    /**
+     * Current frame of the object
+     */
+    protected currentFrame!: Frame;
 
     /**
      * Construct the object.
@@ -33,7 +39,9 @@ export default abstract class BaseGameObject {
      * Animate the object
      * @param {number} tick. Current tick.
      */
-    public abstract draw(tick: number): void;
+    public draw(tick: number): void {
+        renderFrame(this.location, this.currentFrame);
+    }
 
     /**
      * Called to update the state of the object. Runs outside the draw loop for more accuracy.

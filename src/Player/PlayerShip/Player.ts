@@ -34,11 +34,6 @@ const {
 
 export default class Player extends BaseGameObject {
     /**
-     * Frame used by the player ship
-     */
-    private frame: Frame;
-
-    /**
      * Frame dimensions.
      */
     private dimensions: GameSize;
@@ -56,11 +51,11 @@ export default class Player extends BaseGameObject {
             };
         }
 
-        this.frame = cloneObject(PlayerFrame);
+        this.currentFrame = cloneObject(PlayerFrame);
 
         this.dimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
 
-        convertFrameColor(this.frame);
+        convertFrameColor(this.currentFrame);
     }
 
     /**
@@ -77,14 +72,6 @@ export default class Player extends BaseGameObject {
      */
     public getObjectType(): GameObjectType {
         return "player";
-    }
-
-    /**
-     * Called when a tick occurs.
-     * @param {number} tick. Tick count.
-     */
-    public draw(_: number): void {
-        renderFrame(this.location, this.frame);
     }
 
     public updateState(): void {
