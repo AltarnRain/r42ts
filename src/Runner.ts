@@ -289,6 +289,7 @@ function handlePhaser(): void {
 
         Phasers.removePhaser();
         drawPhasor(playerNozzleLocation, randomEnemyCenter, DimensionProvider().maxPixelSize);
+        ScoreBoard.addToScore(randomEnemy.getPoints());
 
         // Pause the game for a very brief period. This is what the original game did
         // when you fired a phasor shot.
