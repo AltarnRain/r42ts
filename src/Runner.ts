@@ -200,7 +200,7 @@ function draw(tick: number) {
 
         if (particles.length > 0) {
             particles.forEach((p) => p.draw(tick));
-            particles = particles.filter((p) => p.inScreen());
+            particles = particles.filter((p) => p.traveling());
         }
 
         if (explosionCenters.length > 0) {
@@ -209,7 +209,7 @@ function draw(tick: number) {
         }
 
         // Bullet left the field.
-        if (playerBullet && !playerBullet.inScreen()) {
+        if (playerBullet && !playerBullet.traveling()) {
             playerBullet = undefined;
         }
 

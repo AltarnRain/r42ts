@@ -79,10 +79,10 @@ export default class Particle extends BaseGameObject {
     }
 
     /**
-     * Returns true if the particle is still in the game field.
+     * Returns true if the particle is traveling.
      * @returns {boolean}. True if the particle is in the game field.
      */
-    public inScreen(): boolean {
+    public traveling(): boolean {
         const {
             gameFieldTop,
             fullWidth,

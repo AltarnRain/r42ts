@@ -4,11 +4,11 @@
  * See LICENSE.MD.
  */
 
-import { Frame } from "../Types/Types";
+import { Frame, Frames } from "../Types/Types";
 
 /**
  * Module:          PlayerFrames
- * Responsibility:  Contains the frame of the player ship.
+ * Responsibility:  Contains player related frames
  */
 
 export const PlayerFrame: Frame = [
@@ -16,3 +16,17 @@ export const PlayerFrame: Frame = [
     ["A", "B", "F", "F", "B", "A"],
     ["B", "F", "0", "0", "F", "B"],
 ];
+
+export const PlayerFormationFrames: Frames = {
+    F0: [["B", "B"]],  // nozzle tip
+    F1: [["F", "F"]],  // nozle bottom
+    F2: [              // left wing
+        ["A", "B"],
+        ["B", "F"],
+    ],
+    F3: [              // right wing
+        ["B", "A"],
+        ["F", "B"]
+    ],
+};
+
