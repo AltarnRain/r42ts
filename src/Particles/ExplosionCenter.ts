@@ -61,10 +61,9 @@ export default class ExplosionCenter extends BaseGameObject {
     }
 
     /**
-     * Draws the explosion center.
-     * @param {number} tick. Current tick.
+     * Updates the state of the object.
      */
-    public draw(tick: number): void {
+    public updateState(tick: number): void {
         if (this.startTick === undefined) {
             this.startTick = tick;
         }
@@ -72,15 +71,6 @@ export default class ExplosionCenter extends BaseGameObject {
         if (tick > this.startTick + this.fizzleTime) {
             this.fizzled = true;
         }
-
-        super.draw(tick);
-    }
-
-    /**
-     * Updates the state of the object.
-     */
-    public updateState(): void {
-        // Does nothing. Explosion center doesn't have state.
     }
 
     /**

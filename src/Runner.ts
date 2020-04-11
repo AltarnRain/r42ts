@@ -24,7 +24,6 @@ import PlayerBullet from "./Player/PlayerShip/PlayerBullet";
 import PlayerBulletFrame from "./Player/PlayerShip/PlayerBulletFrame";
 import CtxProvider from "./Providers/CtxProvider";
 import DimensionProvider from "./Providers/DimensionProvider";
-import explosionLocationProvider from "./Providers/ExplosionLocationProvider";
 import particleProvider from "./Providers/ParticleProvider";
 import { getRandomArrayElement } from "./Utility/Array";
 import { overlaps } from "./Utility/Geometry";
@@ -160,9 +159,7 @@ function updateState(tick: number) {
             // Check if the player got hit.
             if (player !== undefined && playerIsImmortal === false) {
                 if (overlaps(player.getHitbox(), hittableObjectHitbox)) {
-                    const playerExplosion = player.getExplosion();
-                    const playerLocation = player.getLocation();
-                    renderExplosion(playerLocation, playerExplosion);
+                    renderExplosion(player.getLocation(), player.getExplosion());
                     player = undefined;
                     Lives.removeLife();
                 }
@@ -270,12 +267,9 @@ function selfDestruct(alivePlayer: Player) {
     if (enemies.length) {
 
         // Reset main rendering.
-        const explosionsLocations = enemies.map((a) => explosionLocationProvider(a));
-        for (const explosionsLocation of explosionsLocations) {
-            const center = new ExplosionCenter(explosionsLocation.explosion.explosionCenterFrame, explosionsLocation.location, explosionsLocation.explosion.explosionCenterDelay);
-            const newParticles = particleProvider(explosionsLocation.location, explosionsLocation.explosion);
-            particles.push(...newParticles);
-            explosionCenters.push(center);
+
+        for (const enemy of enemies) {
+            renderExplosion(enemy.getCenterLocation(), enemy.getExplosion());
         }
 
         renderExplosion(alivePlayer.getLocation(), alivePlayer.getExplosion());
