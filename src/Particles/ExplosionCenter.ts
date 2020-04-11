@@ -82,6 +82,13 @@ export default class ExplosionCenter extends BaseGameObject {
     }
 
     /**
+     * Updates the state of the object.
+     */
+    public updateState(): void {
+        // Does nothing. Explosion center doesn't have state.
+    }
+
+    /**
      * getObjecType.
      * @returns {GameObjectType}. Explosion.
      */

@@ -84,13 +84,15 @@ export default class Player extends BaseGameObject {
      * @param {number} tick. Tick count.
      */
     public draw(_: number): void {
+        renderFrame(this.location, this.frame);
+    }
+
+    public updateState(): void {
         const angle = getAngle(KeyboardState);
 
         if (angle !== -1) {
             this.location = getNewLocation(this.location, angle, 15);
         }
-
-        renderFrame(this.location, this.frame);
     }
 
     /**

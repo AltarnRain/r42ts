@@ -81,6 +81,12 @@ export default class Particle extends BaseGameObject {
      */
     public draw(_: number): void {
         renderFrame(this.location, this.frame);
+    }
+
+    /**
+     * Updates the state of the particle.
+     */
+    public updateState(): void {
         this.location = getNewLocation(this.location, this.angle, this.speed);
         this.speed *= this.acceleration;
     }

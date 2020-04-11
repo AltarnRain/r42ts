@@ -146,16 +146,13 @@ export default class BirdEnemy extends BaseEnemyObject {
         this.frameTickHandler.tick(tick);
         this.colorTickHandler.tick(tick);
 
-        this.move();
-
         renderFrame(this.offsetLocation, this.currentFrame);
     }
 
     /**
-     * Called by a TickHandler when its time to move.
+     * Updates the objects state.
      */
-    public move(): void {
-
+    public updateState(): void {
         this.location = getNewLocation(this.location, this.angle, this.speed);
 
         this.offsetLocation = this.calculateOffsetLocation();

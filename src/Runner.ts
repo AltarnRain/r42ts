@@ -123,6 +123,10 @@ function run(tick: number): void {
  */
 function updateState() {
 
+    enemies.forEach((e) => e.updateState());
+    particles.forEach((e) => e.updateState());
+    player?.updateState();
+
     if (KeyboardState.selfDestruct) {
         selfDestruct();
     }
@@ -179,16 +183,12 @@ function draw(tick: number) {
     if (tick - lastTick > fps) {
 
         DrawGameField();
-
         Level.draw();
         Lives.draw();
         ScoreBoard.draw();
         Phasers.draw();
 
-        if (player) {
-            player.draw(tick);
-        }
-
+        player?.draw(tick);
         enemies.forEach((go) => go.draw(tick));
 
         if (particles.length > 0) {

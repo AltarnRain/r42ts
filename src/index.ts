@@ -30,7 +30,7 @@ window.onload = () => {
                 registerListeners();
                 const player = new Player();
 
-                for (let i = 0; i < 1; i++) {
+                for (let i = 0; i < 20; i++) {
                     const bird = new BirdEnemy();
                     Runner.register(bird);
                 }
@@ -39,7 +39,7 @@ window.onload = () => {
 
                 // player starts with two lives by default.
                 Lives.setLives(2);
-                Phasers.setPhasers(50);
+                Phasers.setPhasers(10);
 
                 (window as any).r42 = {
                     updateScore: (n: number) => ScoreBoard.updateScore(n),
@@ -64,7 +64,7 @@ window.onload = () => {
                 };
 
                 Runner.start();
-                Runner.toggleHitboxes();
+                // Runner.toggleHitboxes();
                 Runner.togglePlayerImmortality();
                 // Runner.toggleRenderPhaser();
                 break;
