@@ -207,9 +207,7 @@ function draw(tick: number) {
             playerBullet = undefined;
         }
 
-        if (playerBullet !== undefined) {
-            playerBullet.draw(tick);
-        }
+        playerBullet?.draw(tick);
 
         // Debugging. Show the hitboxes on screen.
         if (drawHitboxes) {
@@ -279,7 +277,7 @@ function selfDestruct() {
 function handlePhaser(): void {
     if (player !== undefined && enemies.length > 0 && Phasers.getPhaserCount() > 0 && phaserOnScreen === false) {
 
-        // Prefent accidental double phasors when the player holds the button to long.
+        // Prevent accidental double phasors when the player holds the button to long.
         phaserOnScreen = true;
 
         const randomEnemy = getRandomArrayElement(enemies);
@@ -302,7 +300,7 @@ function handlePhaser(): void {
             renderExplosion(randomEnemy.getLocation(), randomEnemyExplosion);
             enemies = enemies.filter((e) => e !== randomEnemy);
 
-            // set phasor to undefined to flag it as not in use.
+            // Set phasorOnScreen to false
             phaserOnScreen = false;
         }, 100);
     }
