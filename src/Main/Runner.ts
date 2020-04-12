@@ -64,7 +64,7 @@ export function register(gameobject: BaseGameObject): void {
     } else if (isPlayer(gameobject)) {
         state.player = gameobject;
     } else if (isParticle(gameobject)) {
-        state.particles.push(gameobject);
+        state.enemyParticles.push(gameobject);
     }
 }
 
@@ -115,7 +115,7 @@ function run(tick: number): void {
 function updateState(tick: number) {
 
     // First update the runner's own state by removing particles that can be removed.
-    state.particles = state.particles.filter((p) => p.traveling());
+    state.enemyParticles = state.enemyParticles.filter((p) => p.traveling());
 
     // Remove explosion centers that have spend their alloted time on screen.
     state.explosionCenters = state.explosionCenters.filter((ec) => ec.fizzledOut());
@@ -127,10 +127,10 @@ function updateState(tick: number) {
     // Trigger self destruct sequence.
     if (KeyboardState.selfDestruct && playerIsAlive(state.player)) {
         for (const enemy of state.enemies) {
-            queueRenderExplosion(enemy.getCenterLocation(), enemy.getExplosion());
+            queueRenderExplosion(enemy.getCenterLocation(), enemy.getExplosion(), state.enemyParticles);
         }
 
-        queueRenderExplosion(state.player.getLocation(), state.player.getExplosion());
+        queueRenderExplosion(state.player.getLocation(), state.player.getExplosion(), state.playerShipParticles);
 
         state.enemies = [];
         state.player = undefined;
@@ -152,7 +152,7 @@ function updateState(tick: number) {
     }
 
     state.enemies.forEach((e) => e.updateState(tick));
-    state.particles.forEach((e) => e.updateState());
+    state.enemyParticles.forEach((e) => e.updateState());
 
     // Bullet left the field. Set to undefined.
     if (state.playerBullet && !state.playerBullet.traveling()) {
@@ -192,7 +192,7 @@ function updateState(tick: number) {
  * @param {Player} player. Player object.
  */
 function handlePlayerDeath(player: Player): void {
-    queueRenderExplosion(player.getLocation(), player.getExplosion());
+    queueRenderExplosion(player.getLocation(), player.getExplosion(), state.playerShipParticles);
     state.player = undefined;
     Lives.removeLife();
 
@@ -208,31 +208,38 @@ function draw(tick: number): void {
         return;
     }
 
-    if (tick - state.lastTick > fps) {
+    // Draw the static stuff.
+    DrawGameField();
+    Level.draw();
+    Lives.draw();
+    ScoreBoard.draw();
+    Phasers.draw();
 
-        DrawGameField();
-        Level.draw();
-        Lives.draw();
-        ScoreBoard.draw();
-        Phasers.draw();
+    // If defined, draw the player
+    state.player?.draw(tick);
 
-        state.player?.draw(tick);
-        state.enemies.forEach((go) => go.draw(tick));
-        state.particles.forEach((p) => p.draw(tick));
-        state.explosionCenters.forEach((ec) => ec.draw(tick));
+    // Draw all enemies
+    state.enemies.forEach((go) => go.draw(tick));
 
-        state.playerBullet?.draw(tick);
+    // Draw enemy particles.
+    state.enemyParticles.forEach((p) => p.draw(tick));
 
-        if (state.debugging.renderPhaser && playerIsAlive(state.player) && state.enemies.length > 0) {
-            const enemy = state.enemies[0];
-            drawPhasor(state.player.getNozzleLocation(), enemy.getCenterLocation(), DimensionProvider().averagePixelSize);
-        }
+    // Draw playerShipParticles.
+    state.playerShipParticles.forEach((p) => p.draw(tick));
 
-        // Debugging. Show the hitboxes on screen.
-        renderHitboxes();
+    // Draw the explosion centers.
+    state.explosionCenters.forEach((ec) => ec.draw(tick));
 
-        state.lastTick = tick;
+    // If there's a player bullet, draw it.
+    state.playerBullet?.draw(tick);
+
+    if (state.debugging.renderPhaser && playerIsAlive(state.player) && state.enemies.length > 0) {
+        const enemy = state.enemies[0];
+        drawPhasor(state.player.getNozzleLocation(), enemy.getCenterLocation(), DimensionProvider().averagePixelSize);
     }
+
+    // Debugging. Show the hitboxes on screen.
+    renderHitboxes();
 }
 
 /**
@@ -251,7 +258,7 @@ function handleEnemyDestruction(enemy: BaseEnemyObject) {
         }
     });
 
-    queueRenderExplosion(enemy.getLocation(), enemy.getExplosion());
+    queueRenderExplosion(enemy.getLocation(), enemy.getExplosion(), state.enemyParticles);
     ScoreBoard.addToScore(enemy.getPoints());
 }
 
@@ -291,7 +298,7 @@ function handlePhaser(player: Player): void {
 function getHittableObjects(): BaseGameObject[] {
     return [
         ...state.enemies,
-        ...state.particles,
+        ...state.enemyParticles,
         ...state.explosionCenters
     ].filter((o) => o !== undefined);
 }
@@ -300,12 +307,14 @@ function getHittableObjects(): BaseGameObject[] {
  * queue's an explosion center and the explosion particles.
  * @param {Explosion} explosion. An explosion asset.
  * @param {GameLocation} location. The center location where the explosion occurs.
+ * @param {Particle[]} targetParticleArray. The array where the particles will be pushed into. Helps keep track of particles belonging to the player or an enemy.
  */
-function queueRenderExplosion(location: GameLocation, explosion: Explosion): void {
+function queueRenderExplosion(location: GameLocation, explosion: Explosion, targetParticleArray: Particle[]): void {
     const center = new ExplosionCenter(explosion.explosionCenterFrame, location, explosion.explosionCenterDelay);
     const newParticles = particleProvider(location, explosion);
-    state.particles.push(...newParticles);
     state.explosionCenters.push(center);
+
+    targetParticleArray.push(...newParticles);
 }
 
 // #region Internal TypeGuards
@@ -382,7 +391,10 @@ function initState(): RunnerState {
         explosionCenters: [],
 
         // Array of particles moving on the screen.
-        particles: [],
+        enemyParticles: [],
+
+        // Array of particles dedicated to the player's ship explosion.
+        playerShipParticles: [],
 
         // Flag to track if the phaser is currently on the screen.
         // Used to prevent double phaser shots because KeyDown will re-trigger
@@ -394,7 +406,7 @@ function initState(): RunnerState {
 
         numberOfEnemies: 0,
 
-        onPlayerDestroyed: () => { /* Empty on purpose. */},
+        onPlayerDestroyed: () => { /* Empty on purpose. */ },
 
         // Options for debugging.
         debugging: {
