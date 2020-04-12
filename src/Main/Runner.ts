@@ -96,7 +96,7 @@ function run(tick: number): void {
         // gets prority over rendering the game.
         state.drawHandle = window.setTimeout(() => {
             // Draw everything.
-            draw(tick);
+            draw();
 
             // Draw is done, set the state's draw handle to undefined to trigger
             // a new draw.
@@ -203,7 +203,7 @@ function handlePlayerDeath(player: Player): void {
  * Called every request animation frame. Draws objects.
  * @param {number} tick. Tick.
  */
-function draw(tick: number): void {
+function draw(): void {
     if (state.pause) {
         return;
     }
@@ -216,22 +216,22 @@ function draw(tick: number): void {
     Phasers.draw();
 
     // If defined, draw the player
-    state.player?.draw(tick);
+    state.player?.draw();
 
     // Draw all enemies
-    state.enemies.forEach((go) => go.draw(tick));
+    state.enemies.forEach((e) => e.draw());
 
     // Draw enemy particles.
-    state.enemyParticles.forEach((p) => p.draw(tick));
+    state.enemyParticles.forEach((p) => p.draw());
 
     // Draw playerShipParticles.
-    state.playerShipParticles.forEach((p) => p.draw(tick));
+    state.playerShipParticles.forEach((p) => p.draw());
 
     // Draw the explosion centers.
-    state.explosionCenters.forEach((ec) => ec.draw(tick));
+    state.explosionCenters.forEach((ec) => ec.draw());
 
     // If there's a player bullet, draw it.
-    state.playerBullet?.draw(tick);
+    state.playerBullet?.draw();
 
     if (state.debugging.renderPhaser && playerIsAlive(state.player) && state.enemies.length > 0) {
         const enemy = state.enemies[0];

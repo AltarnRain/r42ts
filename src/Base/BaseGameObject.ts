@@ -37,9 +37,8 @@ export default abstract class BaseGameObject {
 
     /**
      * Animate the object
-     * @param {number} tick. Current tick.
      */
-    public draw(tick: number): void {
+    public draw(): void {
         renderFrame(this.location, this.currentFrame);
     }
 
