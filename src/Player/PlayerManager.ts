@@ -36,7 +36,7 @@ const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
 
 const shipSpawnLocation = {
     top: gameFieldHeight * 0.8,
-    left: (fullWidth / 2) - (shipDimensions.width / 2),
+    left: (fullWidth / 2) - shipDimensions.width,
 };
 
 /**
@@ -47,7 +47,7 @@ export function onPlayerDeath(): void {
 }
 
 export function begin(): void {
-    state.playerFormationParticles = PlayerFormationParticleProvider(shipSpawnLocation);
+    state.playerFormationParticles = PlayerFormationParticleProvider(shipSpawnLocation, 10000);
 
     // Register the formation particles so they're rendered.
     state.playerFormationParticles.forEach((p) => Runner.register(p));
@@ -64,7 +64,7 @@ function handleRespawn(): void {
     // Only respawn the player if all the particles have gone off the screen.
     // TODO: Shoulw include bullets.
     if (Runner.getParticleCount() === 0) {
-        state.playerFormationParticles = PlayerFormationParticleProvider(shipSpawnLocation);
+        state.playerFormationParticles = PlayerFormationParticleProvider(shipSpawnLocation, 0);
         state.playerFormationParticles.forEach((p) => Runner.register(p));
 
         killHandleFormationTimeout();

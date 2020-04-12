@@ -83,6 +83,7 @@ export function overlaps(hitbox1: GameRectangle, hitbox2: GameRectangle): boolea
 /**
  * returns the reverse angle
  * @param {number} angle. An angle in degrees
+ * @returns {number}. The angle in the opposite direction.
  */
 export function reverseDegreeAngle(angle: number): number {
     let newAngle = angle += 180;
