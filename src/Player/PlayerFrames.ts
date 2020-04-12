@@ -29,4 +29,3 @@ export const PlayerFormationFrames: Frames = {
         ["F", "B"]
     ],
 };
-
