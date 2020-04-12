@@ -20,7 +20,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     protected currentSpeed: number;
 
     /**
-     * The original speed of the object
+     * The original speed of the object.
      */
     protected baseSpeed: number;
 
@@ -61,5 +61,8 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
      */
     public abstract getHitpoints(): number;
 
+    /**
+     * Returns the center of the
+     */
     public abstract getCenterLocation(): GameLocation;
 }
