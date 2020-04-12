@@ -17,11 +17,6 @@ import PlayerBullet from "../Player/PlayerBullet";
 
 export interface RunnerState {
     /**
-     * Event handler for enemy destruction
-     */
-    onEnemyDestruction: () => void;
-
-    /**
      * Array of current game objects on screen.
      */
 
@@ -72,6 +67,11 @@ export interface RunnerState {
      * Draw handle
      */
     drawHandle: number | undefined;
+
+    /**
+     * Counts the number of register enemies.
+     */
+    numberOfEnemies: number;
 
     /**
      * Debugging options.

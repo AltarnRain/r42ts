@@ -33,61 +33,15 @@ const fps = 1000 / 60;
 
 // Initialise the base runner state.
 // This object is the Single Source Of truth for the runner.
-const state: RunnerState = {
-    // Array for all enemy objects.
-    enemies: [],
-
-    // Handle used to terminate the animatio request.
-    gameLoopHandle: 0,
-
-    // Last tick that was rendered.
-    lastTick: 0,
-
-    // Reference to the player object. Used to render player actions and update player state.
-    // When undefined the player is dead.
-    player: undefined,
-
-    // Reference to the player bullet object.
-    // When undefined there's no bullet traveling on the screen.
-    playerBullet: undefined,
-
-    // Flag if the game is paused or not.
-    pause: false,
-
-    // Array of explosion centers currently on the screen.
-    explosionCenters: [],
-
-    // Array of particles moving on the screen.
-    particles: [],
-
-    // Flag to track if the phaser is currently on the screen.
-    // Used to prevent double phaser shots because KeyDown will re-trigger
-    // a phaser shot.
-    phaserOnScreen: false,
-
-    // Handle for a setTimeOut.
-    drawHandle: undefined,
-
-    // Called when an enemy is destroyed.
-    onEnemyDestruction: () => { /* Empty handler */ },
-
-    // Options for debugging.
-    debugging: {
-        // Draws hitboxes around all game objects.
-        drawHitboxes: false,
-
-        // Disables hit detection for the player.
-        playerIsImmortal: false,
-
-        // Draws the phaser. Picks the first enemy in the enemies array.
-        renderPhaser: false,
-    }
-};
+const state: RunnerState = initState();
 
 /**
  * Start the runner.
  */
 export function start(): void {
+
+    // Store the number of enemies when the game loop starts.
+    state.numberOfEnemies = state.enemies.length;
     state.gameLoopHandle = window.requestAnimationFrame(run);
 }
 
@@ -96,6 +50,22 @@ export function start(): void {
  */
 export function stop(): void {
     window.cancelAnimationFrame(state.gameLoopHandle);
+
+    resetState();
+}
+
+/**
+ * Register a game object.
+ * @param {BaseGameObject} gameobject.
+ */
+export function register(gameobject: BaseGameObject): void {
+    if (isEnemy(gameobject)) {
+        state.enemies.push(gameobject);
+    } else if (isPlayer(gameobject)) {
+        state.player = gameobject;
+    } else if (isParticle(gameobject)) {
+        state.particles.push(gameobject);
+    }
 }
 
 /**
@@ -254,7 +224,6 @@ function handleEnemyDestruction(enemy: BaseEnemyObject) {
     state.enemies = state.enemies.filter((e) => e !== enemy);
     queueRenderExplosion(enemy.getLocation(), enemy.getExplosion());
     ScoreBoard.addToScore(enemy.getPoints());
-    state.onEnemyDestruction();
 }
 
 /**
@@ -312,35 +281,7 @@ function queueRenderExplosion(location: GameLocation, explosion: Explosion): voi
     state.explosionCenters.push(center);
 }
 
-/**
- * Register a game object.
- * @param {BaseGameObject} gameobject.
- */
-export function register(gameobject: BaseGameObject): void {
-    if (isEnemy(gameobject)) {
-        state.enemies.push(gameobject);
-    } else if (isPlayer(gameobject)) {
-        state.player = gameobject;
-    } else if (isParticle(gameobject)) {
-        state.particles.push(gameobject);
-    }
-}
-
-/**
- * Register an event handler that allows other parts of the game to act on the destruction of an enemy.
- * @param {() => void} f. A function that accepts no parameters and return nothing.
- */
-export function registerEnemyDestructionHandler(f: () => void) {
-    state.onEnemyDestruction = f;
-}
-
-/**
- * Updates the speed for all enemies.
- * @param {number} value.
- */
-export function setEnemySpeed(value: number): void {
-    state.enemies.forEach((e) => e.setSpeed(value));
-}
+// #region Internal TypeGuards
 
 /**
  * Increases all enemies speed.
@@ -379,6 +320,80 @@ function isParticle(value: BaseGameObject): value is Particle {
 function playerIsAlive(value: Player | undefined): value is Player {
     return value !== undefined;
 }
+
+// #endregion
+
+// #region State initialisation and reset
+
+/**
+ * initState. Initializes the Runner state.
+ * @returns {RunnerState}. Fresh state for the Runner module.
+ */
+function initState(): RunnerState {
+    return {
+        // Array for all enemy objects.
+        enemies: [],
+
+        // Handle used to terminate the animatio request.
+        gameLoopHandle: 0,
+
+        // Last tick that was rendered.
+        lastTick: 0,
+
+        // Reference to the player object. Used to render player actions and update player state.
+        // When undefined the player is dead.
+        player: undefined,
+
+        // Reference to the player bullet object.
+        // When undefined there's no bullet traveling on the screen.
+        playerBullet: undefined,
+
+        // Flag if the game is paused or not.
+        pause: false,
+
+        // Array of explosion centers currently on the screen.
+        explosionCenters: [],
+
+        // Array of particles moving on the screen.
+        particles: [],
+
+        // Flag to track if the phaser is currently on the screen.
+        // Used to prevent double phaser shots because KeyDown will re-trigger
+        // a phaser shot.
+        phaserOnScreen: false,
+
+        // Handle for a setTimeOut.
+        drawHandle: undefined,
+
+        numberOfEnemies: 0,
+
+        // Options for debugging.
+        debugging: {
+            // Draws hitboxes around all game objects.
+            drawHitboxes: false,
+
+            // Disables hit detection for the player.
+            playerIsImmortal: false,
+
+            // Draws the phaser. Picks the first enemy in the enemies array.
+            renderPhaser: false,
+        }
+    };
+}
+
+/**
+ * resetState. Resets the runner's state.
+ */
+function resetState(): void {
+    const freshState = initState();
+
+    // I do not want a string key indexer on the RunnerState definition, nor do I want to define it with 'let'
+    Object.keys(state).forEach((key) => {
+        (state as any)[key] = (freshState as any)[key];
+    });
+}
+
+// #endregion
 
 //#region  Debugging
 
@@ -429,6 +444,14 @@ export function togglePlayerImmortality(): void {
  */
 export function toggleRenderPhaser(): void {
     state.debugging.renderPhaser = !state.debugging.renderPhaser;
+}
+
+/**
+ * Sets all enemies speed.
+ * @param {number} speed. The speed to set.
+ */
+export function setEnemySpeed(speed: number): void {
+    state.enemies.forEach((e) => e.setSpeed(speed));
 }
 
 //#endregion

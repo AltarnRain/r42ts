@@ -38,7 +38,6 @@ const maxBottom = fullHeight - shipDimensions.height;
 const maxRight = fullWidth - shipDimensions.width;
 
 export default class Player extends BaseGameObject {
-
     /**
      * Construct the class.
      */

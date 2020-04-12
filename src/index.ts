@@ -36,16 +36,6 @@ window.onload = () => {
 
                 Runner.register(player);
 
-                let remainingEnemies = 20;
-
-                // Increase enemy speed by 10% of their base speed whenever one is destroyed.
-                Runner.registerEnemyDestructionHandler(() => {
-                    remainingEnemies--;
-                    if (remainingEnemies > 0) {
-                        Runner.increaseEnemySpeed((20 / remainingEnemies));
-                    }
-                });
-
                 // PlayerFormationParticleProvider({ left: 600, top: 1000 }).forEach((p) => Runner.register(p));
 
                 // player starts with two lives by default.
