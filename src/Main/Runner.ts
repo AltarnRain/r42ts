@@ -163,6 +163,8 @@ function updateState(tick: number) {
             // Check if the player got hit.
             if (playerIsAlive(state.player) && state.debugging.playerIsImmortal === false) {
                 if (overlaps(state.player.getHitbox(), hittableObjectHitbox)) {
+
+                    // Player was hit. Render the explosion.
                     queueRenderExplosion(state.player.getLocation(), state.player.getExplosion());
                     state.player = undefined;
                     Lives.removeLife();
@@ -221,7 +223,16 @@ function draw(tick: number): void {
  * @param {BaseEnemyObject} enemy.
  */
 function handleEnemyDestruction(enemy: BaseEnemyObject) {
-    state.enemies = state.enemies.filter((e) => e !== enemy);
+
+    const remainingEnemies = state.enemies.length - 1;
+    state.enemies = state.enemies.filter((e) => {
+        if (e !== enemy) {
+            e.increaseSpeed(state.numberOfEnemies / remainingEnemies)
+            return true;
+        } else {
+            return false;
+        }
+    });
     queueRenderExplosion(enemy.getLocation(), enemy.getExplosion());
     ScoreBoard.addToScore(enemy.getPoints());
 }
@@ -366,6 +377,8 @@ function initState(): RunnerState {
         drawHandle: undefined,
 
         numberOfEnemies: 0,
+
+        onPlayerDestroyed: () => { /* Empty on purpose. */},
 
         // Options for debugging.
         debugging: {

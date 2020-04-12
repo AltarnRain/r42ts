@@ -81,4 +81,9 @@ export interface RunnerState {
         playerIsImmortal: boolean;
         renderPhaser: boolean;
     };
+
+    /**
+     * Call back function to take action outside the runner that the player's been destroyed.
+     */
+    onPlayerDestroyed(): void;
 }
