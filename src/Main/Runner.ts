@@ -68,6 +68,9 @@ const state: RunnerState = {
     // Handle for a setTimeOut.
     drawHandle: undefined,
 
+    // Called when an enemy is destroyed.
+    onEnemyDestruction: () => { /* Empty handler */ },
+
     // Options for debugging.
     debugging: {
         // Draws hitboxes around all game objects.
@@ -251,6 +254,7 @@ function handleEnemyDestruction(enemy: BaseEnemyObject) {
     state.enemies = state.enemies.filter((e) => e !== enemy);
     queueRenderExplosion(enemy.getLocation(), enemy.getExplosion());
     ScoreBoard.addToScore(enemy.getPoints());
+    state.onEnemyDestruction();
 }
 
 /**
@@ -320,6 +324,14 @@ export function register(gameobject: BaseGameObject): void {
     } else if (isParticle(gameobject)) {
         state.particles.push(gameobject);
     }
+}
+
+/**
+ * Register an event handler that allows other parts of the game to act on the destruction of an enemy.
+ * @param {() => void} f. A function that accepts no parameters and return nothing.
+ */
+export function registerEnemyDestructionHandler(f: () => void) {
+    state.onEnemyDestruction = f;
 }
 
 /**

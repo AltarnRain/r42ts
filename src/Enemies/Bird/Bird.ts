@@ -89,7 +89,7 @@ export default class BirdEnemy extends BaseEnemyObject {
      * Creates the object.
      */
     constructor() {
-        super(4);
+        super(3);
         this.angle = getRandomArrayElement([2, 358, 178, 182]);
 
         this.onFrameChange = this.onFrameChange.bind(this);

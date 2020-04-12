@@ -53,7 +53,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
      * @param {number} value. Values below 1 decrease speed, values above 1 increase speed.
      */
     public increaseSpeed(value: number): void {
-        this.currentSpeed = this.baseSpeed * value;
+        this.currentSpeed = (this.baseSpeed * (value - 1)) + this.baseSpeed;
     }
 
     /**

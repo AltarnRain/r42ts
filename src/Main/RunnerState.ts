@@ -17,6 +17,11 @@ import PlayerBullet from "../Player/PlayerBullet";
 
 export interface RunnerState {
     /**
+     * Event handler for enemy destruction
+     */
+    onEnemyDestruction: () => void;
+
+    /**
      * Array of current game objects on screen.
      */
 
