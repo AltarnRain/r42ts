@@ -69,6 +69,14 @@ export function register(gameobject: BaseGameObject): void {
 }
 
 /**
+ * Register a call back for a player death event.
+ * @param {() => void} callback. A function that is called when the player dies.
+ */
+export function registerOnPlayerDeath(callback: () => void): void {
+    state.onPlayerDestroyed = callback;
+}
+
+/**
  * Runs the main game loop.
  * @param {number} tick. The current tick.
  */
@@ -126,14 +134,13 @@ function updateState(tick: number) {
 
         state.enemies = [];
         state.player = undefined;
-
     }
 
     // Hit a random enemy with a phasor.
+    // In order to fire a phaser there must be enemies, the player must have a phaser charge, a phaser cannot
+    // currently being fired (=on screen) and the player must be alive.
     if (KeyboardState.phraser && state.enemies.length > 0 && Phasers.getPhaserCount() > 0 && state.phaserOnScreen === false && playerIsAlive(state.player)) {
-        handlePhaser(state.player, (destroyedEnemy) => {
-            handleEnemyDestruction(destroyedEnemy);
-        });
+        handlePhaser(state.player);
     }
 
     if (state.playerBullet === undefined) {
@@ -165,9 +172,7 @@ function updateState(tick: number) {
                 if (overlaps(state.player.getHitbox(), hittableObjectHitbox)) {
 
                     // Player was hit. Render the explosion.
-                    queueRenderExplosion(state.player.getLocation(), state.player.getExplosion());
-                    state.player = undefined;
-                    Lives.removeLife();
+                    handlePlayerDeath(state.player);
                 }
             }
 
@@ -180,6 +185,18 @@ function updateState(tick: number) {
             }
         }
     }
+}
+
+/**
+ * handles a player's death event.
+ * @param {Player} player. Player object.
+ */
+function handlePlayerDeath(player: Player): void {
+    queueRenderExplosion(player.getLocation(), player.getExplosion());
+    state.player = undefined;
+    Lives.removeLife();
+
+    state.onPlayerDestroyed();
 }
 
 /**
@@ -227,28 +244,27 @@ function handleEnemyDestruction(enemy: BaseEnemyObject) {
     const remainingEnemies = state.enemies.length - 1;
     state.enemies = state.enemies.filter((e) => {
         if (e !== enemy) {
-            e.increaseSpeed(state.numberOfEnemies / remainingEnemies)
+            e.increaseSpeed(state.numberOfEnemies / remainingEnemies);
             return true;
         } else {
             return false;
         }
     });
+
     queueRenderExplosion(enemy.getLocation(), enemy.getExplosion());
     ScoreBoard.addToScore(enemy.getPoints());
 }
 
 /**
  * Handles the firing of a phasor charge.
+ * @param {Player} player. Player object
  */
-function handlePhaser(alivePlayer: Player, callback: (destroyedEnemy: BaseEnemyObject) => void): void {
-    // In order to fire a phaser there must be enemies, the player must have a phaser charge, a phaser cannot
-    // currently being fired (=on screen) and the player must be alive.
-
+function handlePhaser(player: Player): void {
     // Prevent accidental double phasors when the player holds the button to long.
     state.phaserOnScreen = true;
 
     const randomEnemy = getRandomArrayElement(state.enemies);
-    const playerNozzleLocation = alivePlayer.getNozzleLocation();
+    const playerNozzleLocation = player.getNozzleLocation();
     const randomEnemyCenter = randomEnemy.getCenterLocation();
 
     // Remove one phaser.
@@ -264,7 +280,7 @@ function handlePhaser(alivePlayer: Player, callback: (destroyedEnemy: BaseEnemyO
         state.phaserOnScreen = false;
 
         // Deal the with the enemy that got hit.
-        callback(randomEnemy);
+        handleEnemyDestruction(randomEnemy);
     }, 100);
 }
 
