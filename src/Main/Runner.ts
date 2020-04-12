@@ -35,7 +35,7 @@ const fps = 1000 / 60;
 // This object is the Single Source Of truth for the runner.
 const state: RunnerState = {
     // Array for all enemy objects.
-    enemies:  [],
+    enemies: [],
 
     // Handle used to terminate the animatio request.
     gameLoopHandle: 0,
@@ -64,6 +64,9 @@ const state: RunnerState = {
     // Used to prevent double phaser shots because KeyDown will re-trigger
     // a phaser shot.
     phaserOnScreen: false,
+
+    // Handle for a setTimeOut.
+    drawHandle: undefined,
 
     // Options for debugging.
     debugging: {
@@ -104,8 +107,21 @@ function run(tick: number): void {
     // For example, explosions and particles that moved out of the game's playing field.
     updateState(tick);
 
-    // Draw everything.
-    draw(tick);
+    // Drawing is async. Don't draw when there's a draw is process. Keep calculating the state
+    if (state.drawHandle === undefined) {
+
+        // use a setTimeOut 0 to push drawing the game to the back of the
+        // callback queue. This means updating the game state
+        // gets prority over rendering the game.
+        state.drawHandle = window.setTimeout(() => {
+            // Draw everything.
+            draw(tick);
+
+            // Draw is done, set the state's draw handle to undefined to trigger
+            // a new draw.
+            state.drawHandle = undefined;
+        }, 0);
+    }
 
     // Queue the next state update and render.
     state.gameLoopHandle = window.requestAnimationFrame(run);
@@ -199,7 +215,7 @@ function updateState(tick: number) {
  * Called every request animation frame. Draws objects.
  * @param {number} tick. Tick.
  */
-function draw(tick: number) {
+function draw(tick: number): void {
     if (state.pause) {
         return;
     }

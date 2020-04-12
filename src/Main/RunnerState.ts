@@ -64,6 +64,11 @@ export interface RunnerState {
     pause: boolean;
 
     /**
+     * Draw handle
+     */
+    drawHandle: number | undefined;
+
+    /**
      * Debugging options.
      */
     debugging: {
