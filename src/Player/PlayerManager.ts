@@ -22,6 +22,7 @@ Runner.registerOnPlayerDeath(onPlayerDeath);
 const state: PlayerManagerState = {
     player: undefined,
     playerFormationParticles: [],
+    handleFormationHandler: 0,
 };
 
 const {
@@ -41,7 +42,7 @@ const shipCenterSreenLocation = {
  * Callback called by the runner when the player dies.
  */
 export function onPlayerDeath(): void {
-    window.setTimeout(handleRespawn);
+    state.handleFormationHandler = window.setTimeout(handleRespawn);
 }
 
 export function begin(): void {
@@ -50,7 +51,7 @@ export function begin(): void {
     // Register the formation particles so they're rendered.
     state.playerFormationParticles.forEach((p) => Runner.register(p));
 
-    window.setTimeout(handleFormation, 0);
+    state.handleFormationHandler = window.setTimeout(handleFormation, 0);
 }
 
 /**
@@ -58,18 +59,18 @@ export function begin(): void {
  * have moved off screen.
  */
 function handleRespawn(): void {
-    if (Runner.playerParticlesOnScreen() === false) {
-        state.playerFormationParticles = PlayerFormationParticleProvider(shipCenterSreenLocation);
+    state.playerFormationParticles = PlayerFormationParticleProvider(shipCenterSreenLocation);
+    state.playerFormationParticles.forEach((p) => Runner.register(p));
 
-        // Register the formation particles so they're rendered.
-        state.playerFormationParticles.forEach((p) => Runner.register(p));
+    killHandleFormationTimeout();
 
-        // Start check if the formation parciles have reached their destination.
-        window.setTimeout(handleFormation, 0);
+    // Start check if the formation parciles have reached their destination.
+    state.handleFormationHandler = window.setTimeout(handleFormation, 0);
+}
 
-    } else {
-        // Particles still on the screen, queue a new call to check if this has changed.
-        window.setTimeout(handleRespawn, 0);
+function killHandleFormationTimeout() {
+    if (state.handleFormationHandler !== undefined) {
+        window.clearTimeout(state.handleFormationHandler);
     }
 }
 
@@ -80,10 +81,13 @@ function handleFormation(): void {
     // Check if all the particles have reached their destination, that's when we register a new player object in the runner.
     if (state.playerFormationParticles.every((p) => p.traveling() === false)) {
         const player = new Player(shipCenterSreenLocation);
-        console.log(shipCenterSreenLocation);
         Runner.register(player);
+
+        // Reset array content to allow garbage collection to destroy the particle objects.
+        state.playerFormationParticles = [];
     } else {
+        killHandleFormationTimeout();
         // Particles are still moving, queue a new check.
-        window.setTimeout(handleFormation, 0);
+        state.handleFormationHandler = window.setTimeout(handleFormation, 0);
     }
 }

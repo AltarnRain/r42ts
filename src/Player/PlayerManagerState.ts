@@ -19,4 +19,9 @@ export default interface PlayerManagerState {
     player: Player | undefined;
 
     playerFormationParticles: DistanceParticle[];
+
+    /**
+     * Handler for the setTimeOut used to detect if the formation of the player ship is done.
+     */
+    handleFormationHandler: number | undefined;
 }
