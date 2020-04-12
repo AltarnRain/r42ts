@@ -40,7 +40,7 @@ export interface RunnerState {
     /**
      * Particles travelling on the screen.
      */
-    enemyParticles: Particle[];
+    generalParticles: Particle[];
 
     /**
      * Keep track of the player's ship particles seperately so we can track when all the

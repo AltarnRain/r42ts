@@ -14,7 +14,6 @@ import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
-import { GameSize } from "../Models/Gamesize";
 import DimensionProvider from "../Providers/DimensionProvider";
 import { GameObjectType } from "../Types/Types";
 import { convertFrameColor, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
@@ -41,15 +40,8 @@ export default class Player extends BaseGameObject {
     /**
      * Construct the class.
      */
-    constructor(location?: GameLocation) {
+    constructor(location: GameLocation) {
         super(location);
-
-        if (!location) {
-            this.location = {
-                left: fullWidth / 2,
-                top: fullHeight * 0.9,
-            };
-        }
 
         this.currentFrame = cloneObject(PlayerFrame);
 

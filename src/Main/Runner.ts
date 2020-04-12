@@ -29,8 +29,6 @@ import { getRandomArrayElement } from "../Utility/Array";
 import { overlaps } from "../Utility/Geometry";
 import { RunnerState } from "./RunnerState";
 
-const fps = 1000 / 60;
-
 // Initialise the base runner state.
 // This object is the Single Source Of truth for the runner.
 const state: RunnerState = initState();
@@ -39,7 +37,6 @@ const state: RunnerState = initState();
  * Start the runner.
  */
 export function start(): void {
-
     // Store the number of enemies when the game loop starts.
     state.numberOfEnemies = state.enemies.length;
     state.gameLoopHandle = window.requestAnimationFrame(run);
@@ -64,7 +61,7 @@ export function register(gameobject: BaseGameObject): void {
     } else if (isPlayer(gameobject)) {
         state.player = gameobject;
     } else if (isParticle(gameobject)) {
-        state.enemyParticles.push(gameobject);
+        state.generalParticles.push(gameobject);
     }
 }
 
@@ -74,6 +71,14 @@ export function register(gameobject: BaseGameObject): void {
  */
 export function registerOnPlayerDeath(callback: () => void): void {
     state.onPlayerDestroyed = callback;
+}
+
+/**
+ * playerParticlesOnScreen
+ * @returns {boolean}. Returns true if there's player ship's paricles on the screen.
+ */
+export function playerParticlesOnScreen(): boolean {
+    return state.playerShipParticles.length > 0;
 }
 
 /**
@@ -88,7 +93,7 @@ function run(tick: number): void {
     // For example, explosions and particles that moved out of the game's playing field.
     updateState(tick);
 
-    // Drawing is async. Don't draw when there's a draw is process. Keep calculating the state
+    // Drawing is async. Don't draw when there's a draw is process. Keep calculating the state.
     if (state.drawHandle === undefined) {
 
         // use a setTimeOut 0 to push drawing the game to the back of the
@@ -115,7 +120,10 @@ function run(tick: number): void {
 function updateState(tick: number) {
 
     // First update the runner's own state by removing particles that can be removed.
-    state.enemyParticles = state.enemyParticles.filter((p) => p.traveling());
+    state.generalParticles = state.generalParticles.filter((p) => p.traveling());
+
+    // Remove player ship particles when they move out of the screen.
+    state.playerShipParticles = state.playerShipParticles.filter((p) => p.traveling());
 
     // Remove explosion centers that have spend their alloted time on screen.
     state.explosionCenters = state.explosionCenters.filter((ec) => ec.fizzledOut());
@@ -127,7 +135,7 @@ function updateState(tick: number) {
     // Trigger self destruct sequence.
     if (KeyboardState.selfDestruct && playerIsAlive(state.player)) {
         for (const enemy of state.enemies) {
-            queueRenderExplosion(enemy.getCenterLocation(), enemy.getExplosion(), state.enemyParticles);
+            queueRenderExplosion(enemy.getCenterLocation(), enemy.getExplosion(), state.generalParticles);
         }
 
         queueRenderExplosion(state.player.getLocation(), state.player.getExplosion(), state.playerShipParticles);
@@ -152,7 +160,7 @@ function updateState(tick: number) {
     }
 
     state.enemies.forEach((e) => e.updateState(tick));
-    state.enemyParticles.forEach((e) => e.updateState());
+    state.generalParticles.forEach((e) => e.updateState());
 
     // Bullet left the field. Set to undefined.
     if (state.playerBullet && !state.playerBullet.traveling()) {
@@ -222,7 +230,7 @@ function draw(): void {
     state.enemies.forEach((e) => e.draw());
 
     // Draw enemy particles.
-    state.enemyParticles.forEach((p) => p.draw());
+    state.generalParticles.forEach((p) => p.draw());
 
     // Draw playerShipParticles.
     state.playerShipParticles.forEach((p) => p.draw());
@@ -258,7 +266,7 @@ function handleEnemyDestruction(enemy: BaseEnemyObject) {
         }
     });
 
-    queueRenderExplosion(enemy.getLocation(), enemy.getExplosion(), state.enemyParticles);
+    queueRenderExplosion(enemy.getLocation(), enemy.getExplosion(), state.generalParticles);
     ScoreBoard.addToScore(enemy.getPoints());
 }
 
@@ -298,7 +306,7 @@ function handlePhaser(player: Player): void {
 function getHittableObjects(): BaseGameObject[] {
     return [
         ...state.enemies,
-        ...state.enemyParticles,
+        ...state.generalParticles,
         ...state.explosionCenters
     ].filter((o) => o !== undefined);
 }
@@ -388,7 +396,7 @@ function initState(): RunnerState {
         explosionCenters: [],
 
         // Array of particles moving on the screen.
-        enemyParticles: [],
+        generalParticles: [],
 
         // Array of particles dedicated to the player's ship explosion.
         playerShipParticles: [],

@@ -11,8 +11,7 @@
 
 import BirdEnemy from "./Enemies/Bird/Bird";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
-import { Level, Lives, Phasers, Runner, ScoreBoard } from "./Modules";
-import Player from "./Player/Player";
+import { Level, Lives, Phasers, PlayerManager, Runner, ScoreBoard } from "./Modules";
 import DimensionProvider from "./Providers/DimensionProvider";
 
 window.onload = () => {
@@ -27,18 +26,17 @@ window.onload = () => {
             case "playground": {
 
                 registerListeners();
-                const player = new Player();
 
-                for (let i = 0; i < 20; i++) {
+                for (let i = 0; i < 0; i++) {
                     const bird = new BirdEnemy();
                     Runner.register(bird);
                 }
 
-                Runner.register(player);
+                // Register the onPLayerDeath callback in the runner.
+                Runner.registerOnPlayerDeath(PlayerManager.onPlayerDeath);
 
-                // PlayerFormationParticleProvider({ left: 600, top: 1000 }).forEach((p) => Runner.register(p));
+                PlayerManager.begin();
 
-                // player starts with two lives by default.
                 Lives.setLives(2);
                 Phasers.setPhasers(10);
 
