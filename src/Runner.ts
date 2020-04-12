@@ -122,31 +122,43 @@ function run(tick: number): void {
  */
 function updateState(tick: number) {
 
-    // Handle all state changes that can only happen if the player is alive.
-    if (player !== undefined) {
-        player.updateState();
+    // First update the runner's own state by removing objects that can be removed.
+    particles = particles.filter((p) => p.traveling());
 
-        // Player is alive. Space pauses the game.
-        if (KeyboardState.selfDestruct) {
-            selfDestruct(player);
+    if (particles.length === 0) {
+        pause = true;
+    }
+
+    explosionCenters = explosionCenters.filter((ec) => ec.fizzledOut());
+
+    // Immediately update the player state because if the player is destroyed the
+    // player object will be undefined.
+    player?.updateState();
+
+    // Player is alive. Space pauses the game.
+    if (KeyboardState.selfDestruct) {
+        selfDestruct();
+    }
+
+    if (KeyboardState.phraser) {
+        handlePhaser();
+    }
+
+    if (playerBullet === undefined) {
+        if (KeyboardState.fire && playerIsAlive(player)) {
+            playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, player.getNozzleLocation());
         }
-
-        if (KeyboardState.phraser) {
-            handlePhaser(player);
-        }
-
-        if (playerBullet === undefined) {
-            if (KeyboardState.fire) {
-                playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, player.getNozzleLocation());
-            }
-        } else {
-            playerBullet.updateState();
-        }
-
+    } else {
+        playerBullet.updateState();
     }
 
     enemies.forEach((e) => e.updateState(tick));
     particles.forEach((e) => e.updateState());
+
+    // Bullet left the field.
+    if (playerBullet && !playerBullet.traveling()) {
+        playerBullet = undefined;
+    }
 
     const hittableObjects = getHittableObjects();
 
@@ -157,9 +169,9 @@ function updateState(tick: number) {
             const hittableObjectHitbox = hittableObject.getHitbox();
 
             // Check if the player got hit.
-            if (player !== undefined && playerIsImmortal === false) {
+            if (playerIsAlive(player) && playerIsImmortal === false) {
                 if (overlaps(player.getHitbox(), hittableObjectHitbox)) {
-                    renderExplosion(player.getLocation(), player.getExplosion());
+                    queueRenderExplosion(player.getLocation(), player.getExplosion());
                     player = undefined;
                     Lives.removeLife();
                 }
@@ -169,7 +181,7 @@ function updateState(tick: number) {
             if (playerBullet && isEnemy(hittableObject)) {
                 if (overlaps(playerBullet.getHitbox(), hittableObjectHitbox)) {
                     playerBullet = undefined;
-                    renderExplosion(hittableObject.getLocation(), hittableObject.getExplosion());
+                    queueRenderExplosion(hittableObject.getLocation(), hittableObject.getExplosion());
                     ScoreBoard.addToScore(hittableObject.getPoints());
                     enemies = enemies.filter((e) => e !== hittableObject);
                 }
@@ -197,25 +209,8 @@ function draw(tick: number) {
 
         player?.draw(tick);
         enemies.forEach((go) => go.draw(tick));
-
-        if (particles.length > 0) {
-            particles.forEach((p) => p.draw(tick));
-            particles = particles.filter((p) => p.traveling());
-        }
-
-        if (particles.length === 0) {
-            pause = true;
-        }
-
-        if (explosionCenters.length > 0) {
-            explosionCenters.forEach((ec) => ec.draw(tick));
-            explosionCenters = explosionCenters.filter((ec) => ec.fizzledOut());
-        }
-
-        // Bullet left the field.
-        if (playerBullet && !playerBullet.traveling()) {
-            playerBullet = undefined;
-        }
+        particles.forEach((p) => p.draw(tick));
+        explosionCenters.forEach((ec) => ec.draw(tick));
 
         playerBullet?.draw(tick);
 
@@ -267,30 +262,37 @@ function draw(tick: number) {
 /**
  * Triggers the self destruct sequence.
  */
-function selfDestruct(alivePlayer: Player) {
-    if (enemies.length) {
-
-        // Reset main rendering.
-
+function selfDestruct() {
+    // Do not permit self destruct if there's no ememies. Also, the player
+    // has to be alive.
+    if (enemies.length > 0 && playerIsAlive(player)) {
         for (const enemy of enemies) {
-            renderExplosion(enemy.getCenterLocation(), enemy.getExplosion());
+            queueRenderExplosion(enemy.getCenterLocation(), enemy.getExplosion());
         }
 
-        renderExplosion(alivePlayer.getLocation(), alivePlayer.getExplosion());
+        queueRenderExplosion(player.getLocation(), player.getExplosion());
 
         enemies = [];
         player = undefined;
     }
 }
 
-function handlePhaser(alivePlayer: Player): void {
-    if (enemies.length > 0 && Phasers.getPhaserCount() > 0 && phaserOnScreen === false) {
+/**
+ * playerIsAlive.
+ * @returns {boolean}. Returns true if the player is alove.
+ */
+function playerIsAlive(value: Player | undefined): value is Player {
+    return value !== undefined;
+}
+
+function handlePhaser(): void {
+    if (enemies.length > 0 && Phasers.getPhaserCount() > 0 && phaserOnScreen === false && playerIsAlive(player)) {
 
         // Prevent accidental double phasors when the player holds the button to long.
         phaserOnScreen = true;
 
         const randomEnemy = getRandomArrayElement(enemies);
-        const playerNozzleLocation = alivePlayer.getNozzleLocation();
+        const playerNozzleLocation = player.getNozzleLocation();
         const randomEnemyCenter = randomEnemy.getCenterLocation();
         const randomEnemyExplosion = randomEnemy.getExplosion();
 
@@ -306,7 +308,7 @@ function handlePhaser(alivePlayer: Player): void {
             // Unpause the game to let rendering continue.
             pause = false;
 
-            renderExplosion(randomEnemy.getLocation(), randomEnemyExplosion);
+            queueRenderExplosion(randomEnemy.getLocation(), randomEnemyExplosion);
             enemies = enemies.filter((e) => e !== randomEnemy);
 
             // Set phasorOnScreen to false
@@ -332,7 +334,7 @@ function getHittableObjects(): BaseGameObject[] {
  * @param {Explosion} explosion. An explosion asset.
  * @param {GameLocation} location. The center location where the explosion occurs.
  */
-function renderExplosion(location: GameLocation, explosion: Explosion) {
+function queueRenderExplosion(location: GameLocation, explosion: Explosion) {
     const center = new ExplosionCenter(explosion.explosionCenterFrame, location, explosion.explosionCenterDelay);
     const newParticles = particleProvider(location, explosion);
     particles.push(...newParticles);
