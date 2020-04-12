@@ -65,6 +65,14 @@ export function register(gameobject: BaseGameObject): void {
 }
 
 /**
+ * Returns the number of particles on the screen
+ * @returns {number}. Number of particle on screen.
+ */
+export function getParticleCount(): number {
+    return state.particles.length;
+}
+
+/**
  * Register a call back for a player death event.
  * @param {() => void} callback. A function that is called when the player dies.
  */
