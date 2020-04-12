@@ -40,13 +40,7 @@ export interface RunnerState {
     /**
      * Particles travelling on the screen.
      */
-    generalParticles: Particle[];
-
-    /**
-     * Keep track of the player's ship particles seperately so we can track when all the
-     * Ship's particles have moved out of the screen when the player dies.
-     */
-    playerShipParticles: Particle[];
+    particles: Particle[];
 
     /**
      * Explosion centers on the screen.
