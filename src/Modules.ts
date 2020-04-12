@@ -13,7 +13,7 @@ import * as level from "./GameScreen/Level";
 import * as lives from "./GameScreen/Lives";
 import * as phaser from "./GameScreen/Phasers/Phasers";
 import * as scoreBord from "./GameScreen/ScoreBoard";
-import * as runner from "./Runner";
+import * as runner from "./Main/Runner";
 
 export { runner as Runner };
 export { lives as Lives };

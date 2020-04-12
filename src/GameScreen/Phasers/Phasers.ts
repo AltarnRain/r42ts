@@ -43,7 +43,7 @@ export function addPhaser(): void {
 /**
  * Removes one phaser
  */
-export function removePhaser(): void {
+export function reduceByOneCharge(): void {
     phaserCount--;
 }
 

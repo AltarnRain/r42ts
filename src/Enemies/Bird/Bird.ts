@@ -89,7 +89,7 @@ export default class BirdEnemy extends BaseEnemyObject {
      * Creates the object.
      */
     constructor() {
-        super(10);
+        super(4);
         this.angle = getRandomArrayElement([2, 358, 178, 182]);
 
         this.onFrameChange = this.onFrameChange.bind(this);
@@ -112,7 +112,7 @@ export default class BirdEnemy extends BaseEnemyObject {
         );
 
         const top = randomNumberInRange(
-            gameFieldTop + height + averagePixelSize * 5,
+            gameFieldTop + height + averagePixelSize * 20 ,
             gameFieldTop + height);
 
         this.actualLocation = {
