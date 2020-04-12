@@ -17,7 +17,12 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     /**
      * Enemy speed.
      */
-    protected speed: number;
+    protected currentSpeed: number;
+
+    /**
+     * The original speed of the object
+     */
+    protected baseSpeed: number;
 
     /**
      * Construct the object.
@@ -25,7 +30,8 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
      */
     constructor(speed: number) {
         super();
-        this.speed = speed;
+        this.currentSpeed = speed;
+        this.baseSpeed = speed;
     }
 
     /**
@@ -39,7 +45,15 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
      * @param {Number} value.
      */
     public setSpeed(value: number): void {
-        this.speed = value;
+        this.currentSpeed = value;
+    }
+
+    /**
+     * increases the speed of an enemy. Uses the base speed to calculate a new speed.
+     * @param {number} value. Values below 1 decrease speed, values above 1 increase speed.
+     */
+    public increaseSpeed(value: number): void {
+        this.currentSpeed = this.baseSpeed * value;
     }
 
     /**

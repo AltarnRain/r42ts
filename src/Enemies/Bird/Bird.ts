@@ -140,7 +140,7 @@ export default class BirdEnemy extends BaseEnemyObject {
         this.frameTickHandler.tick(tick);
         this.colorTickHandler.tick(tick);
 
-        this.actualLocation = getNewLocation(this.actualLocation, this.angle, this.speed);
+        this.actualLocation = getNewLocation(this.actualLocation, this.angle, this.currentSpeed);
 
         this.location = this.calculateOffsetLocation();
 

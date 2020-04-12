@@ -159,9 +159,7 @@ function updateState(tick: number) {
     // Hit a random enemy with a phasor.
     if (KeyboardState.phraser && state.enemies.length > 0 && Phasers.getPhaserCount() > 0 && state.phaserOnScreen === false && playerIsAlive(state.player)) {
         handlePhaser(state.player, (destroyedEnemy) => {
-            queueRenderExplosion(destroyedEnemy.getLocation(), destroyedEnemy.getExplosion());
-            state.enemies = state.enemies.filter((e) => e !== destroyedEnemy);
-            ScoreBoard.addToScore(destroyedEnemy.getPoints());
+            handleEnemyDestruction(destroyedEnemy);
         });
     }
 
@@ -199,12 +197,10 @@ function updateState(tick: number) {
             }
 
             // Check if the player hit something.
-            if (state.playerBullet && isEnemy(hittableObject)) {
+            if (state.playerBullet !== undefined && isEnemy(hittableObject)) {
                 if (overlaps(state.playerBullet.getHitbox(), hittableObjectHitbox)) {
                     state.playerBullet = undefined;
-                    queueRenderExplosion(hittableObject.getLocation(), hittableObject.getExplosion());
-                    ScoreBoard.addToScore(hittableObject.getPoints());
-                    state.enemies = state.enemies.filter((e) => e !== hittableObject);
+                    handleEnemyDestruction(hittableObject);
                 }
             }
         }
@@ -247,41 +243,14 @@ function draw(tick: number): void {
     }
 }
 
-function renderHitboxes() {
-    if (state.debugging.drawHitboxes) {
-        const hittableObjects = [
-            ...getHittableObjects(),
-        ];
-        // Add player if defined.
-        if (state.player) {
-            hittableObjects.push(state.player);
-        }
-        // Add bullet if defined.
-        if (state.playerBullet) {
-            hittableObjects.push(state.playerBullet);
-        }
-        // Draw a circle around each object using the
-        // coordiates and radius of the hitbox.
-        for (const hittableObject of hittableObjects) {
-            const hitbox = hittableObject.getHitbox();
-            const ctx = CtxProvider();
-            ctx.beginPath();
-            ctx.strokeStyle = "white";
-            ctx.rect(hitbox.left, hitbox.top, hitbox.right - hitbox.left, hitbox.bottom - hitbox.top);
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.closePath();
-        }
-    }
-}
-
 /**
- * playerIsAlive.
- * @param {Player | undefined}. A player object.
- * @returns {boolean}. Returns true if the player is alove.
+ * handles the destruction of an enemy.
+ * @param {BaseEnemyObject} enemy.
  */
-function playerIsAlive(value: Player | undefined): value is Player {
-    return value !== undefined;
+function handleEnemyDestruction(enemy: BaseEnemyObject) {
+    state.enemies = state.enemies.filter((e) => e !== enemy);
+    queueRenderExplosion(enemy.getLocation(), enemy.getExplosion());
+    ScoreBoard.addToScore(enemy.getPoints());
 }
 
 /**
@@ -362,24 +331,11 @@ export function setEnemySpeed(value: number): void {
 }
 
 /**
- * DEBUGGING ONLY: Toggles drawing hitboxes around the enemy, player and player bullet.
+ * Increases all enemies speed.
+ * @param {number} value.
  */
-export function toggleHitboxes(): void {
-    state.debugging.drawHitboxes = !state.debugging.drawHitboxes;
-}
-
-/**
- * DEBUGGING ONLY: Toggles player immortality.
- */
-export function togglePlayerImmortality(): void {
-    state.debugging.playerIsImmortal = !state.debugging.playerIsImmortal;
-}
-
-/**
- * Toggles rendering the phaser.
- */
-export function toggleRenderPhaser(): void {
-    state.debugging.renderPhaser = !state.debugging.renderPhaser;
+export function increaseEnemySpeed(value: number): void {
+    state.enemies.forEach((e) => e.increaseSpeed(value));
 }
 
 /**
@@ -402,3 +358,65 @@ function isPlayer(value: BaseGameObject): value is Player {
 function isParticle(value: BaseGameObject): value is Particle {
     return value && value.getObjectType() === "particle";
 }
+
+/**
+ * TypeGuard that checks if the player is alive.
+ * @param {Player | undefined}. A player object.
+ * @returns {boolean}. Returns true if the player is alove.
+ */
+function playerIsAlive(value: Player | undefined): value is Player {
+    return value !== undefined;
+}
+
+//#region  Debugging
+
+function renderHitboxes() {
+    if (state.debugging.drawHitboxes) {
+        const hittableObjects = [
+            ...getHittableObjects(),
+        ];
+        // Add player if defined.
+        if (state.player) {
+            hittableObjects.push(state.player);
+        }
+        // Add bullet if defined.
+        if (state.playerBullet) {
+            hittableObjects.push(state.playerBullet);
+        }
+        // Draw a circle around each object using the
+        // coordiates and radius of the hitbox.
+        for (const hittableObject of hittableObjects) {
+            const hitbox = hittableObject.getHitbox();
+            const ctx = CtxProvider();
+            ctx.beginPath();
+            ctx.strokeStyle = "white";
+            ctx.rect(hitbox.left, hitbox.top, hitbox.right - hitbox.left, hitbox.bottom - hitbox.top);
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.closePath();
+        }
+    }
+}
+
+/**
+ * DEBUGGING ONLY: Toggles drawing hitboxes around the enemy, player and player bullet.
+ */
+export function toggleHitboxes(): void {
+    state.debugging.drawHitboxes = !state.debugging.drawHitboxes;
+}
+
+/**
+ * DEBUGGING ONLY: Toggles player immortality.
+ */
+export function togglePlayerImmortality(): void {
+    state.debugging.playerIsImmortal = !state.debugging.playerIsImmortal;
+}
+
+/**
+ * Toggles rendering the phaser.
+ */
+export function toggleRenderPhaser(): void {
+    state.debugging.renderPhaser = !state.debugging.renderPhaser;
+}
+
+//#endregion
