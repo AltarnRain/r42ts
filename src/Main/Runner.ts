@@ -373,9 +373,6 @@ function initState(): RunnerState {
         // Handle used to terminate the animatio request.
         gameLoopHandle: 0,
 
-        // Last tick that was rendered.
-        lastTick: 0,
-
         // Reference to the player object. Used to render player actions and update player state.
         // When undefined the player is dead.
         player: undefined,

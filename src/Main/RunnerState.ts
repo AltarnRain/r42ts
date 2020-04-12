@@ -28,12 +28,6 @@ export interface RunnerState {
     gameLoopHandle: number;
 
     /**
-     * Keeps track of the last tick when the animation was fired.
-     * Used to determine when to call the next frame.
-     */
-    lastTick: number;
-
-    /**
      * Reference to the player object.
      */
     player: Player | undefined;
