@@ -30,7 +30,7 @@ const Explosion01: Explosion = {
     particleFrameIndexes: [0, 1, 0, 0, 1, 0],
     speed: 20,
     acceleration: 1.05,
-    explosionCenterDelay: 300,
+    explosionCenterDelay: 20,
     speeds: [], // not used, all particles travel at the same speed
     useSpeed: true,
 };

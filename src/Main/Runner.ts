@@ -47,7 +47,6 @@ export function start(): void {
  */
 export function stop(): void {
     window.cancelAnimationFrame(state.gameLoopHandle);
-
     resetState();
 }
 
@@ -61,7 +60,7 @@ export function register(gameobject: BaseGameObject): void {
     } else if (isPlayer(gameobject)) {
         state.player = gameobject;
     } else if (isParticle(gameobject)) {
-        state.generalParticles.push(gameobject);
+        state.particles.push(gameobject);
     }
 }
 
@@ -71,14 +70,6 @@ export function register(gameobject: BaseGameObject): void {
  */
 export function registerOnPlayerDeath(callback: () => void): void {
     state.onPlayerDestroyed = callback;
-}
-
-/**
- * playerParticlesOnScreen
- * @returns {boolean}. Returns true if there's player ship's paricles on the screen.
- */
-export function playerParticlesOnScreen(): boolean {
-    return state.playerShipParticles.length > 0;
 }
 
 /**
@@ -119,26 +110,43 @@ function run(tick: number): void {
  */
 function updateState(tick: number) {
 
-    // First update the runner's own state by removing particles that can be removed.
-    state.generalParticles = state.generalParticles.filter((p) => p.traveling());
-
-    // Remove player ship particles when they move out of the screen.
-    state.playerShipParticles = state.playerShipParticles.filter((p) => p.traveling());
-
-    // Remove explosion centers that have spend their alloted time on screen.
-    state.explosionCenters = state.explosionCenters.filter((ec) => ec.fizzledOut());
-
-    // Immediately update the player state because if the player is destroyed the
-    // player object will be undefined.
+    // Update object states.
+    state.enemies.forEach((e) => e.updateState(tick));
     state.player?.updateState();
+    state.playerBullet?.updateState();
 
-    // Trigger self destruct sequence.
+    // Remove objects no longer required.
+    if (state.playerBullet?.traveling() === false) {
+        state.playerBullet = undefined;
+    }
+
+    // Update state and remove particles that are done traveling.
+    state.particles = state.particles.filter((p) => {
+        if (p.traveling()) {
+            p.updateState();
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    // Update explosion center state and remove if they're done burning.
+    state.explosionCenters = state.explosionCenters.filter((ec) => {
+        if (ec.burning()) {
+            ec.updateState(tick);
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    // Keyboard events.
     if (KeyboardState.selfDestruct && playerIsAlive(state.player)) {
         for (const enemy of state.enemies) {
-            queueRenderExplosion(enemy.getCenterLocation(), enemy.getExplosion(), state.generalParticles);
+            queueExplosionRender(enemy.getCenterLocation(), enemy.getExplosion());
         }
 
-        queueRenderExplosion(state.player.getLocation(), state.player.getExplosion(), state.playerShipParticles);
+        queueExplosionRender(state.player.getLocation(), state.player.getExplosion());
 
         state.enemies = [];
         state.player = undefined;
@@ -155,18 +163,9 @@ function updateState(tick: number) {
         if (KeyboardState.fire && playerIsAlive(state.player)) {
             state.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, state.player.getNozzleLocation());
         }
-    } else {
-        state.playerBullet.updateState();
     }
 
-    state.enemies.forEach((e) => e.updateState(tick));
-    state.generalParticles.forEach((e) => e.updateState());
-
-    // Bullet left the field. Set to undefined.
-    if (state.playerBullet && !state.playerBullet.traveling()) {
-        state.playerBullet = undefined;
-    }
-
+    // Hit detection.
     const hittableObjects = getHittableObjects();
 
     // There's stuff that can get hit or hit something.
@@ -196,18 +195,6 @@ function updateState(tick: number) {
 }
 
 /**
- * handles a player's death event.
- * @param {Player} player. Player object.
- */
-function handlePlayerDeath(player: Player): void {
-    queueRenderExplosion(player.getLocation(), player.getExplosion(), state.playerShipParticles);
-    state.player = undefined;
-    Lives.removeLife();
-
-    state.onPlayerDestroyed();
-}
-
-/**
  * Called every request animation frame. Draws objects.
  * @param {number} tick. Tick.
  */
@@ -230,10 +217,7 @@ function draw(): void {
     state.enemies.forEach((e) => e.draw());
 
     // Draw enemy particles.
-    state.generalParticles.forEach((p) => p.draw());
-
-    // Draw playerShipParticles.
-    state.playerShipParticles.forEach((p) => p.draw());
+    state.particles.forEach((p) => p.draw());
 
     // Draw the explosion centers.
     state.explosionCenters.forEach((ec) => ec.draw());
@@ -266,7 +250,7 @@ function handleEnemyDestruction(enemy: BaseEnemyObject) {
         }
     });
 
-    queueRenderExplosion(enemy.getLocation(), enemy.getExplosion(), state.generalParticles);
+    queueExplosionRender(enemy.getLocation(), enemy.getExplosion());
     ScoreBoard.addToScore(enemy.getPoints());
 }
 
@@ -300,13 +284,25 @@ function handlePhaser(player: Player): void {
 }
 
 /**
+ * handles a player's death event.
+ * @param {Player} player. Player object.
+ */
+function handlePlayerDeath(player: Player): void {
+    queueExplosionRender(player.getLocation(), player.getExplosion());
+    state.player = undefined;
+    Lives.removeLife();
+
+    state.onPlayerDestroyed();
+}
+
+/**
  * Returns all gameobject that can kill the player with their hitboxes.
  * @returns {BaseGameObject[]}. An array of objects that can be hit by the player or hit the player.
  */
 function getHittableObjects(): BaseGameObject[] {
     return [
         ...state.enemies,
-        ...state.generalParticles,
+        ...state.particles,
         ...state.explosionCenters
     ].filter((o) => o !== undefined);
 }
@@ -317,12 +313,12 @@ function getHittableObjects(): BaseGameObject[] {
  * @param {GameLocation} location. The center location where the explosion occurs.
  * @param {Particle[]} targetParticleArray. The array where the particles will be pushed into. Helps keep track of particles belonging to the player or an enemy.
  */
-function queueRenderExplosion(location: GameLocation, explosion: Explosion, targetParticleArray: Particle[]): void {
+function queueExplosionRender(location: GameLocation, explosion: Explosion): void {
     const center = new ExplosionCenter(explosion.explosionCenterFrame, location, explosion.explosionCenterDelay);
     const newParticles = particleProvider(location, explosion);
     state.explosionCenters.push(center);
 
-    targetParticleArray.push(...newParticles);
+    state.particles.push(...newParticles);
 }
 
 // #region Internal TypeGuards
@@ -396,10 +392,7 @@ function initState(): RunnerState {
         explosionCenters: [],
 
         // Array of particles moving on the screen.
-        generalParticles: [],
-
-        // Array of particles dedicated to the player's ship explosion.
-        playerShipParticles: [],
+        particles: [],
 
         // Flag to track if the phaser is currently on the screen.
         // Used to prevent double phaser shots because KeyDown will re-trigger

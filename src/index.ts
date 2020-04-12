@@ -27,7 +27,7 @@ window.onload = () => {
 
                 registerListeners();
 
-                for (let i = 0; i < 0; i++) {
+                for (let i = 0; i < 20; i++) {
                     const bird = new BirdEnemy();
                     Runner.register(bird);
                 }
@@ -64,7 +64,7 @@ window.onload = () => {
 
                 Runner.start();
                 // Runner.toggleHitboxes();
-                Runner.togglePlayerImmortality();
+                // Runner.togglePlayerImmortality();
                 // Runner.toggleRenderPhaser();
                 break;
             }

@@ -33,12 +33,12 @@ export default class ExplosionCenter extends BaseGameObject {
     /**
      * Time until the explosion center fizzeles out.
      */
-    private fizzleTime: number;
+    private burnTime: number;
 
     /**
      * Set to true when the fizzle time has passed.
      */
-    private fizzled = false;
+    private isBurning = true;
 
     /**
      * Explosion dimensions.
@@ -55,7 +55,7 @@ export default class ExplosionCenter extends BaseGameObject {
         super(location);
 
         this.currentFrame = cloneObject(frame);
-        this.fizzleTime = fizzleTime;
+        this.burnTime = fizzleTime;
 
         this.dimensions = getFrameDimensions(frame, averagePixelSize);
     }
@@ -68,8 +68,8 @@ export default class ExplosionCenter extends BaseGameObject {
             this.startTick = tick;
         }
 
-        if (tick > this.startTick + this.fizzleTime) {
-            this.fizzled = true;
+        if (tick > this.startTick + this.burnTime) {
+            this.isBurning = false;
         }
     }
 
@@ -84,8 +84,8 @@ export default class ExplosionCenter extends BaseGameObject {
     /**
      * Returns true when the explosion center should vanish from the game screen.
      */
-    public fizzledOut(): boolean {
-        return this.fizzled;
+    public burning(): boolean {
+        return this.isBurning;
     }
 
     /**
