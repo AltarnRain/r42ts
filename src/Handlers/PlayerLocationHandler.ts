@@ -7,11 +7,11 @@
 import GameLocation from "../Models/GameLocation";
 import { PlayerFrame } from "../Player/PlayerFrames";
 import DimensionProvider from "../Providers/DimensionProvider";
+import { MoveLimits } from "../Types/Types";
 import { getFrameDimensions } from "../Utility/Frame";
 import { getAngle } from "../Utility/Geometry";
 import { fallsWithin, getNewLocation } from "../Utility/Location";
 import KeyboardState from "./KeyboardStateHandler/KeyboardStateHandler";
-import { MoveLimits } from "../Types/Types";
 
 /**
  * Module:          PlayerLocationHandler
