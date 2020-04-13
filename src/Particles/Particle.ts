@@ -4,12 +4,11 @@
  * See LICENSE.MD.
  */
 
-import BaseGameObject from "../Base/BaseGameObject";
+import BaseParticle from "../Base/BaseParticle";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/Gamesize";
 import DimensionProvider from "../Providers/DimensionProvider";
-import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
@@ -27,7 +26,7 @@ const {
 const topOffset = averagePixelSize / 2 * -1;
 const bottomOffset = averagePixelSize / 2;
 
-export default class Particle extends BaseGameObject {
+export default class Particle extends BaseParticle {
     /**
      * Particle angle.
      */
@@ -60,14 +59,6 @@ export default class Particle extends BaseGameObject {
         this.acceleration = acceleration;
 
         this.dimensions = getFrameDimensions(frame, averagePixelSize);
-    }
-
-    /**
-     * Returns the object type.
-     * @returns {GameObjectType}. The game object type.
-     */
-    public getObjectType(): GameObjectType {
-        return "particle";
     }
 
     /**

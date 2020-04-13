@@ -9,6 +9,7 @@ import ExplosionCenter from "../Particles/ExplosionCenter";
 import Particle from "../Particles/Particle";
 import Player from "../Player/Player";
 import PlayerBullet from "../Player/PlayerBullet";
+import BaseParticle from "../Base/BaseParticle";
 
 /**
  * Module:          RunnerState
@@ -21,12 +22,7 @@ export interface RunnerState {
      */
 
     enemies: BaseEnemyObject[];
-
-    /**
-     * Animation frame handler.
-     */
-    gameLoopHandle: number;
-
+    
     /**
      * Reference to the player object.
      */
@@ -40,7 +36,7 @@ export interface RunnerState {
     /**
      * Particles travelling on the screen.
      */
-    particles: Particle[];
+    particles: BaseParticle[];
 
     /**
      * Explosion centers on the screen.

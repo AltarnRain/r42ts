@@ -17,7 +17,7 @@ import PlayerFormationParticle from "./Particles/PlayerFormationParticle";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
 import DimensionProvider from "./Providers/DimensionProvider";
 
-const mouseCursorLocation: GameLocation = { left: 0, top: 0};
+const mouseCursorLocation: GameLocation = { left: 0, top: 0 };
 
 window.onload = () => {
 
@@ -32,13 +32,19 @@ window.onload = () => {
 
                 registerListeners();
 
-                const p = new PlayerFormationParticle({top: 500, left: 500}, mouseCursorLocation, PlayerFormationFrames.F0, 5);
+                // const p = [
+                //     new PlayerFormationParticle({ top: 10, left: 1500 }, mouseCursorLocation, PlayerFormationFrames.F0, 5),
+                //     new PlayerFormationParticle({ top: 50, left: 500 }, mouseCursorLocation, PlayerFormationFrames.F0, 5),
+                //     new PlayerFormationParticle({ top: 100, left: 0 }, mouseCursorLocation, PlayerFormationFrames.F0, 5),
+                //     new PlayerFormationParticle({ top: 150, left: 50 }, mouseCursorLocation, PlayerFormationFrames.F0, 5),
+                //     new PlayerFormationParticle({ top: 500, left: 5 }, mouseCursorLocation, PlayerFormationFrames.F0, 5),
+                // ];
 
-                window.addEventListener("mousemove", (e: MouseEvent) => {
-                    p.setUpdatedTargetLocation({left: e.offsetX, top: e.offsetY });
-                });
+                // window.addEventListener("mousemove", (e: MouseEvent) => {
+                //     p.forEach((x) => x.setUpdatedTargetLocation({ left: e.offsetX, top: e.offsetY }));
+                // });
 
-                Runner.register(p);
+                // p.forEach((x) => Runner.register(x));
 
                 for (let i = 0; i < 0; i++) {
                     const bird = new BirdEnemy();

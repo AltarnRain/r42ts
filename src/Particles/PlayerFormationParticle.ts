@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import BaseGameObject from "../Base/BaseGameObject";
+import BaseParticle from "../Base/BaseParticle";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import renderFrame from "../Render/RenderFrame";
@@ -19,7 +19,7 @@ import { calculateDistance, getNewLocation } from "../Utility/Location";
  * Responsibility:  A particle that travels a distance and then stops being drawn.
  */
 
-export default class PlayerFormationParticle extends BaseGameObject {
+export default class PlayerFormationParticle extends BaseParticle {
 
     /**
      * Current particle location

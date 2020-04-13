@@ -11,13 +11,13 @@
 
 import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BaseGameObject from "../Base/BaseGameObject";
+import BaseParticle from "../Base/BaseParticle";
 import { DrawGameField } from "../GameScreen/StaticRenders";
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { Level, Lives, Phasers, ScoreBoard } from "../Modules";
 import ExplosionCenter from "../Particles/ExplosionCenter";
-import Particle from "../Particles/Particle";
 import { drawPhasor } from "../Player/DrawPhaser";
 import Player from "../Player/Player";
 import PlayerBullet from "../Player/PlayerBullet";
@@ -39,14 +39,12 @@ const state: RunnerState = initState();
 export function start(): void {
     // Store the number of enemies when the game loop starts.
     state.numberOfEnemies = state.enemies.length;
-    state.gameLoopHandle = window.requestAnimationFrame(run);
 }
 
 /**
  * Stop the runner.
  */
 export function stop(): void {
-    window.cancelAnimationFrame(state.gameLoopHandle);
     resetState();
 }
 
@@ -54,13 +52,13 @@ export function stop(): void {
  * Register a game object.
  * @param {BaseGameObject} gameobject.
  */
-export function register(gameobject: BaseGameObject): void {
-    if (isEnemy(gameobject)) {
+export function register(gameobject: BaseGameObject | BaseParticle): void {
+    if (isParticle(gameobject)) {
+        state.particles.push(gameobject);
+    } else if (isEnemy(gameobject)) {
         state.enemies.push(gameobject);
     } else if (isPlayer(gameobject)) {
         state.player = gameobject;
-    } else if (isParticle(gameobject)) {
-        state.particles.push(gameobject);
     }
 }
 
@@ -84,7 +82,7 @@ export function registerOnPlayerDeath(callback: () => void): void {
  * Runs the main game loop.
  * @param {number} tick. The current tick.
  */
-function run(tick: number): void {
+export function run(tick: number): void {
     // Always update the state before drawing on the canvas. This means
     // the player is seeing the latest version of the game's state
     // and it will feel much more accurate. It also
@@ -107,9 +105,6 @@ function run(tick: number): void {
             state.drawHandle = undefined;
         }, 0);
     }
-
-    // Queue the next state update and render.
-    state.gameLoopHandle = window.requestAnimationFrame(run);
 }
 
 /**
@@ -131,7 +126,7 @@ function updateState(tick: number) {
     // Update state and remove particles that are done traveling.
     state.particles = state.particles.filter((p) => {
         if (p.traveling()) {
-            p.updateState();
+            p.updateState(tick);
             return true;
         } else {
             return false;
@@ -342,21 +337,21 @@ export function increaseEnemySpeed(value: number): void {
 /**
  * TypeGuard for enemies
  */
-function isEnemy(value: BaseGameObject): value is BaseEnemyObject {
+function isEnemy(value: any): value is BaseEnemyObject {
     return value && value.getObjectType() === "enemy";
 }
 
 /**
  * TypeGuard for the player
  */
-function isPlayer(value: BaseGameObject): value is Player {
+function isPlayer(value: any): value is Player {
     return value && value.getObjectType() === "player";
 }
 
 /**
  * TypeGuard for particles.
  */
-function isParticle(value: BaseGameObject): value is Particle {
+function isParticle(value: any): value is BaseParticle {
     return value && value.getObjectType() === "particle";
 }
 
@@ -381,9 +376,6 @@ function initState(): RunnerState {
     return {
         // Array for all enemy objects.
         enemies: [],
-
-        // Handle used to terminate the animatio request.
-        gameLoopHandle: 0,
 
         // Reference to the player object. Used to render player actions and update player state.
         // When undefined the player is dead.
