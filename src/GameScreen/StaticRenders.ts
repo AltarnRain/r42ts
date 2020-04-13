@@ -53,3 +53,29 @@ export function drawGameFieldBorder(): void {
     ctx.stroke();
     ctx.closePath();
 }
+
+export function drawGrid(): void {
+    const ctx = CtxProvider();
+    for (let r = 0; r < 200; r += 1) {
+        ctx.beginPath();
+        const y = r * 30 + DimensionProvider().gameFieldTop;
+        ctx.lineTo(0, y);
+        ctx.lineTo(DimensionProvider().fullWidth, y);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "white";
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+    for (let r = 0; r < 200; r += 2) {
+        ctx.beginPath();
+        const x = r * 20;
+        ctx.lineTo(x, 0);
+        ctx.lineTo(x, DimensionProvider().fullHeight);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "white";
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+}

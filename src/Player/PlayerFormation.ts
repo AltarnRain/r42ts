@@ -4,14 +4,14 @@
  * See LICENSE.MD.
  */
 
+import { setPlayerLocation } from "../Handlers/PlayerLocationHandler";
 import GameLocation from "../Models/GameLocation";
 import { PlayerLocationHandler } from "../Modules";
-import PlayerFormationParticle from "../Particles/PlayerFormationParticle";
 import DimensionProvider from "../Providers/DimensionProvider";
-import renderFrame from "../Render/RenderFrame";
 import { TickFunction } from "../Types/Types";
 import { getNewLocation } from "../Utility/Location";
-import { PlayerFormationFrames, PlayerFrame } from "./PlayerFrames";
+import PlayerFormationPart from "./PlayerFormationPart";
+import { PlayerFormationFrames } from "./PlayerFrames";
 
 /**
  * Module:          PlayerFormation
@@ -23,16 +23,27 @@ const {
 } = DimensionProvider();
 
 const particleTravelDistance = averagePixelSize * 60;
+const nozzleDistance = particleTravelDistance + averagePixelSize;
 const nozzleOutAngle = 270;
-const leftWingOutAngle = 210;
-const rightWingOutAngle = 330;
+const leftWingOutAngle = 200;
+const rightWingOutAngle = 340;
 
-let particles: PlayerFormationParticle[] = [];
+let nozzleTipPart: PlayerFormationPart;
+let nozzleBottomPart: PlayerFormationPart;
+let leftWingPart: PlayerFormationPart;
+let rightWingPart: PlayerFormationPart;
+
+let allParts: PlayerFormationPart[] = [];
 
 let nozzleTipStartLocation: GameLocation;
 let nozzleBottomStartLocation: GameLocation;
 let leftWingStartLocation: GameLocation;
 let rightWingStartLocation: GameLocation;
+
+let nozzleTipEndLocation: GameLocation;
+let nozzleBottomEndLocation: GameLocation;
+let leftWingEndLocation: GameLocation;
+let rightWingEndLocation: GameLocation;
 
 let done: () => void;
 
@@ -42,52 +53,35 @@ let updateStateLocal: TickFunction;
  * Set the particle locations in the module
  * @param {GameLocation} targetLocation.
  */
-function setParticleLocations(targetLocation: GameLocation): void {
+function setPartLocations(targetLocation: GameLocation): void {
 
-    const nozzleDistance = particleTravelDistance + averagePixelSize * 6;
+    const nozzleOrigin = { ...targetLocation, left: targetLocation.left + averagePixelSize * 2, top: targetLocation.top + averagePixelSize };
 
-    nozzleTipStartLocation = getNewLocation({
-        left: targetLocation.left,
-        top: targetLocation.top,
-    }, nozzleOutAngle, nozzleDistance);
+    nozzleTipStartLocation = getNewLocation(nozzleOrigin, nozzleOutAngle, nozzleDistance);
+    nozzleBottomStartLocation = getNewLocation(nozzleOrigin, nozzleOutAngle, particleTravelDistance);
 
-    nozzleBottomStartLocation = getNewLocation({
-        left: targetLocation.left,
-        top: targetLocation.top
-    }, nozzleOutAngle, particleTravelDistance);
+    const leftWingOrigin = { ...targetLocation, top: targetLocation.top + averagePixelSize };
+    const rightWingOrigin = { left: targetLocation.left + averagePixelSize * 4, top: targetLocation.top };
 
-    leftWingStartLocation = getNewLocation({
-        left: targetLocation.left,
-        top: targetLocation.top,
-    }, leftWingOutAngle, particleTravelDistance);
+    leftWingStartLocation = getNewLocation(leftWingOrigin, leftWingOutAngle, particleTravelDistance);
+    rightWingStartLocation = getNewLocation(rightWingOrigin, rightWingOutAngle, particleTravelDistance);
 
-    rightWingStartLocation = getNewLocation({
-        left: targetLocation.left,
-        top: targetLocation.top,
-    }, rightWingOutAngle, particleTravelDistance);
-}
-
-/**
- * Calculate the endpoint for the formation particles.
- * @param {GameLocation} targetLocation. The location where the player will spawn.
- */
-function getEndpoint(targetLocation: GameLocation) {
-    return {
-        left: targetLocation.left + averagePixelSize * 2,
-        top: targetLocation.top
-    };
+    nozzleTipEndLocation = { ...targetLocation, left: targetLocation.left + averagePixelSize * 2, };
+    nozzleBottomEndLocation = { ...targetLocation, left: targetLocation.left + averagePixelSize * 2 };
+    leftWingEndLocation = { ...targetLocation, top: targetLocation.top + averagePixelSize * 1, left: targetLocation.left + averagePixelSize };
+    rightWingEndLocation = { ...targetLocation, top: targetLocation.top + averagePixelSize * 1, left: targetLocation.left + averagePixelSize * 3 };
 }
 
 /**
  * Creates the player formation particles.
- * @param {GameLocation} targetLocation. Location where the particles should go to.
  */
-function createParticles(targetLocation: GameLocation, travelTime: number): void {
-    particles = [];
-    particles.push(new PlayerFormationParticle(nozzleTipStartLocation, targetLocation, PlayerFormationFrames.F0, travelTime));
-    particles.push(new PlayerFormationParticle(nozzleBottomStartLocation, targetLocation, PlayerFormationFrames.F1, travelTime));
-    particles.push(new PlayerFormationParticle(leftWingStartLocation, targetLocation, PlayerFormationFrames.F2, travelTime));
-    particles.push(new PlayerFormationParticle(rightWingStartLocation, targetLocation, PlayerFormationFrames.F3, travelTime));
+function createParticles(): void {
+    nozzleTipPart = new PlayerFormationPart(nozzleTipStartLocation, nozzleTipEndLocation, PlayerFormationFrames.F0, 0);
+    nozzleBottomPart = new PlayerFormationPart(nozzleBottomStartLocation, nozzleBottomEndLocation, PlayerFormationFrames.F1, 0);
+    leftWingPart = new PlayerFormationPart(leftWingStartLocation, leftWingEndLocation, PlayerFormationFrames.F2, 0);
+    rightWingPart = new PlayerFormationPart(rightWingStartLocation, rightWingEndLocation, PlayerFormationFrames.F3, 0);
+
+    allParts = [nozzleTipPart, nozzleBottomPart, leftWingPart, rightWingPart].filter((p) => p !== undefined);
 }
 
 /**
@@ -95,21 +89,25 @@ function createParticles(targetLocation: GameLocation, travelTime: number): void
  * @param {() => void)} formationDoneCallback. Called when the formation animation has completed.
  */
 export function formFast(targetLocation: GameLocation, formationDoneCallback: () => void): void {
-    PlayerLocationHandler.setMoveLimit("immobile");
-    const endpoint = getEndpoint(targetLocation);
-    setParticleLocations(endpoint);
-    createParticles(endpoint, 20);
+    setPlayerLocation(targetLocation);
+    setPartLocations(targetLocation);
+    createParticles();
 
+    allParts.forEach((p) => p.setSpeed(20));
+
+    PlayerLocationHandler.setMoveLimit("immobile");
     done = formationDoneCallback;
     updateStateLocal = updateStateFast;
 }
 
 export function formSlow(targetLocation: GameLocation, formationDoneCallback: () => void): void {
-    PlayerLocationHandler.setMoveLimit("sideways");
-    const endpoint = getEndpoint(targetLocation);
-    setParticleLocations(endpoint);
-    createParticles(endpoint, 10);
+    setPlayerLocation(targetLocation);
+    setPartLocations(targetLocation);
+    createParticles();
 
+    allParts.forEach((p) => p.setSpeed(10));
+
+    PlayerLocationHandler.setMoveLimit("sideways");
     done = formationDoneCallback;
     updateStateLocal = updateStateSlow;
 }
@@ -117,12 +115,11 @@ export function formSlow(targetLocation: GameLocation, formationDoneCallback: ()
 export function draw(tick: number): void {
     if (updateStateLocal) {
         updateStateLocal(tick);
+        allParts.forEach((p) => {
+            p.updateState(tick);
+            p.draw();
+        });
     }
-
-    particles?.forEach((p) => {
-        p.updateState(tick);
-        p.draw();
-    });
 }
 
 /**
@@ -130,7 +127,7 @@ export function draw(tick: number): void {
  * @param {number} tick. Current tick.
  */
 function updateStateFast(tick: number): void {
-    if (particles?.every((p) => p.traveling() === false)) {
+    if (allParts.every((p) => p.traveling() === false)) {
         // Particles are done moving, lift player movement limit
         PlayerLocationHandler.setMoveLimit("none");
         if (done) {
@@ -142,7 +139,7 @@ function updateStateFast(tick: number): void {
 function updateStateSlow(tick: number): void {
     // renderFrame(PlayerLocationHandler.getPlayerLocation(), PlayerFrame);
 
-    if (particles?.every((p) => p.traveling() === false)) {
+    if (allParts.every((p) => p.traveling() === false)) {
         // Particles are done moving, lift player movement limit
         PlayerLocationHandler.setMoveLimit("none");
         if (done) {
@@ -150,10 +147,11 @@ function updateStateSlow(tick: number): void {
         }
     } else {
         PlayerLocationHandler.movePlayer(5);
+        setPartLocations(PlayerLocationHandler.getPlayerLocation());
 
-        particles.forEach((p) => {
-            const endpoint = getEndpoint(PlayerLocationHandler.getPlayerLocation());
-            p.setUpdatedTargetLocation(endpoint);
-        });
+        nozzleTipPart?.setUpdatedTargetLocation(nozzleTipEndLocation);
+        nozzleBottomPart?.setUpdatedTargetLocation(nozzleBottomEndLocation);
+        leftWingPart?.setUpdatedTargetLocation(leftWingEndLocation);
+        rightWingPart?.setUpdatedTargetLocation(rightWingEndLocation);
     }
 }

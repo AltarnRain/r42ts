@@ -101,7 +101,7 @@ export function movePlayer(speed: number): void {
         // No default;
     }
 
-    const angle = getAngle(KeyboardState);
+    const angle = getAngle(keyboardState);
 
     if (angle !== -1) {
         const newLocation = getNewLocation(playerLocation, angle, speed);

@@ -12,7 +12,7 @@
 import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BaseGameObject from "../Base/BaseGameObject";
 import BaseParticle from "../Base/BaseParticle";
-import { clearGameFieldBackground } from "../GameScreen/StaticRenders";
+import { clearGameFieldBackground, drawGameFieldBorder, drawGrid } from "../GameScreen/StaticRenders";
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
@@ -28,6 +28,7 @@ import particleProvider from "../Providers/ParticleProvider";
 import { getRandomArrayElement } from "../Utility/Array";
 import { overlaps } from "../Utility/Geometry";
 import { RunnerState } from "./RunnerState";
+import { drawGameScreen } from "../GameScreen/DrawGameScreen";
 
 // Initialise the base runner state.
 // This object is the Single Source Of truth for the runner.
@@ -208,6 +209,8 @@ function draw(): void {
 
     // Begin by drawing a black rectangle on the game field before drawing game objects.
     clearGameFieldBackground();
+
+    // drawGrid();  
 
     // If defined, draw the player
     state.player?.draw();

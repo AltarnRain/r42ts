@@ -4,11 +4,9 @@
  * See LICENSE.MD.
  */
 
-import BaseParticle from "../Base/BaseParticle";
 import GameLocation from "../Models/GameLocation";
-import { GameRectangle } from "../Models/GameRectangle";
 import renderFrame from "../Render/RenderFrame";
-import { Frame, GameObjectType } from "../Types/Types";
+import { Frame } from "../Types/Types";
 import { convertFrameColor } from "../Utility/Frame";
 import { calculateVector } from "../Utility/Geometry";
 import { cloneObject } from "../Utility/Lib";
@@ -19,7 +17,7 @@ import { calculateDistance, getNewLocation } from "../Utility/Location";
  * Responsibility:  A particle that travels a distance and then stops being drawn.
  */
 
-export default class PlayerFormationParticle extends BaseParticle {
+export default class PlayerFormationPart {
 
     /**
      * Current particle location
@@ -38,10 +36,14 @@ export default class PlayerFormationParticle extends BaseParticle {
     private speed: number;
 
     /**
+     * The current frame.
+     */
+    private currentFrame: Frame;
+
+    /**
      * Construct the distance particle.
      */
     constructor(sourceLocation: GameLocation, targetLocation: GameLocation, frame: Frame, speed: number) {
-        super();
 
         this.currentFrame = cloneObject(frame);
         convertFrameColor(this.currentFrame);
@@ -55,9 +57,10 @@ export default class PlayerFormationParticle extends BaseParticle {
      * Update the state of the object.
      */
     public updateState(_: number): void {
-        const angle = calculateVector(this.currentLocation, this.targetLocation);
-        this.currentLocation = getNewLocation(this.currentLocation, angle, this.speed);
-
+        if (this.traveling()) {
+            const angle = calculateVector(this.currentLocation, this.targetLocation);
+            this.currentLocation = getNewLocation(this.currentLocation, angle, this.speed);
+        }
     }
 
     /**
@@ -68,27 +71,11 @@ export default class PlayerFormationParticle extends BaseParticle {
     }
 
     /**
-     * Returns the object type.
-     */
-    public getObjectType(): GameObjectType {
-        return "particle";
-    }
-
-    /**
      * Set the target location form the outside.
      * @param {GameLocation} targetLocation. The target location.
      */
     public setUpdatedTargetLocation(targetLocation: GameLocation): void {
         this.targetLocation = { ...targetLocation };
-    }
-
-    public getHitbox(): GameRectangle {
-        return {
-            left: 0,
-            bottom: 0,
-            right: 0,
-            top: 0,
-        };
     }
 
     /**
