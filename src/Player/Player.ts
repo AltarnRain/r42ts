@@ -9,43 +9,40 @@
  * Responsibility:  Player ship
  */
 
-import BaseGameObject from "../Base/BaseGameObject";
-import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
+import { getPlayerLocation, movePlayer, setPlayerLocation } from "../Handlers/PlayerLocationHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import DimensionProvider from "../Providers/DimensionProvider";
-import { GameObjectType } from "../Types/Types";
+import { Frame, GameObjectType } from "../Types/Types";
 import { convertFrameColor, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
-import { getAngle } from "../Utility/Geometry";
 import { cloneObject } from "../Utility/Lib";
-import { fallsWithin, getNewLocation } from "../Utility/Location";
 import PlayerExplosion from "./PlayerExplosion";
 import { PlayerFrame } from "./PlayerFrames";
 
 const {
     minPixelSize,
-    fullWidth,
-    fullHeight,
     averagePixelSize,
-    gameFieldTop,
 
 } = DimensionProvider();
 
 const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
-const maxBottom = fullHeight - shipDimensions.height;
-const maxRight = fullWidth - shipDimensions.width;
 
-export default class Player extends BaseGameObject {
+export default class Player {
+
+    private frame: Frame;
+
     /**
      * Construct the class.
      */
     constructor(location: GameLocation) {
-        super(location);
 
-        this.currentFrame = cloneObject(PlayerFrame);
+        // Set the player location in the PlayerLocationHandler.
+        setPlayerLocation(location);
 
-        convertFrameColor(this.currentFrame);
+        this.frame = cloneObject(PlayerFrame);
+
+        convertFrameColor(cloneObject(PlayerFrame));
     }
 
     /**
@@ -65,14 +62,7 @@ export default class Player extends BaseGameObject {
     }
 
     public updateState(): void {
-        const angle = getAngle(KeyboardState);
-
-        if (angle !== -1) {
-            const newLocation = getNewLocation(this.location, angle, 15);
-            if (fallsWithin(newLocation, gameFieldTop, maxBottom, 0, maxRight)) {
-                this.location = newLocation;
-            }
-        }
+        movePlayer();
     }
 
     /**
@@ -80,7 +70,7 @@ export default class Player extends BaseGameObject {
      * @return {GameRectangle}. Players hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(this.location, shipDimensions.width, shipDimensions.height, 0, averagePixelSize);
+        return getFrameHitbox(getPlayerLocation(), shipDimensions.width, shipDimensions.height, 0, averagePixelSize);
     }
 
     /**
@@ -88,8 +78,8 @@ export default class Player extends BaseGameObject {
      */
     public getNozzleLocation(): GameLocation {
         return {
-            left: this.location.left + minPixelSize * 2,
-            top: this.location.top - minPixelSize * 1,
+            left: getPlayerLocation().left + minPixelSize * 2,
+            top: getPlayerLocation().top - minPixelSize * 1,
         };
     }
 }
