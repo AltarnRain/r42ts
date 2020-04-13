@@ -206,6 +206,7 @@ function draw(): void {
         return;
     }
 
+    // Begin by drawing a black rectangle on the game field before drawing game objects.
     clearGameFieldBackground();
 
     // If defined, draw the player

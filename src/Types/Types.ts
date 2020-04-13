@@ -34,4 +34,4 @@ export type TickFunction = (tick: number) => void;
 /**
  * Movement Limits for the player.
  */
-export type MoveLimits = "sideways" | "forceup" | "none";
+export type MoveLimits = "immobile" | "sideways" | "forceup" | "none";

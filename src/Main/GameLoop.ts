@@ -11,8 +11,14 @@ import { TickFunction } from "../Types/Types";
  * Responsibility:  Manage the game's loop.
  */
 
+/**
+ * A handle for the main animation loop.
+ */
 let handle: number = 0;
 
+/**
+ * Functions that subscripbe to the game tick.
+ */
 let subscriptions: TickFunction[] = [];
 
 /**

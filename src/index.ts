@@ -12,11 +12,9 @@
 import BirdEnemy from "./Enemies/Bird/Bird";
 import { drawGameScreen } from "./GameScreen/DrawGameScreen";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
-import { GameLoop, Level, Lives, Phasers, Runner, ScoreBoard } from "./Modules";
+import { GameLoop, Level, Lives, Phasers, PlayerLocationHandler, Runner, ScoreBoard, PlayerFormation } from "./Modules";
 import Player from "./Player/Player";
-import { PlayerFrame } from "./Player/PlayerFrames";
 import DimensionProvider from "./Providers/DimensionProvider";
-import { getFrameDimensions } from "./Utility/Frame";
 
 window.onload = () => {
 
@@ -36,9 +34,19 @@ window.onload = () => {
                 } = DimensionProvider();
 
                 registerListeners();
-
                 GameLoop.register(drawGameScreen);
                 GameLoop.register(Runner.run);
+
+                for (let i = 0; i < 0; i++) {
+                    const bird = new BirdEnemy();
+                    Runner.register(bird);
+                }
+
+                GameLoop.register(PlayerFormation.updateState);
+
+                PlayerFormation.formFast(PlayerLocationHandler.getShipSpawnLocation(), () => {
+                    Runner.register(new Player(PlayerLocationHandler.getShipSpawnLocation()));
+                });
 
                 // const p = [
                 //     new PlayerFormationParticle({ top: 10, left: 1500 }, mouseCursorLocation, PlayerFormationFrames.F0, 5),
@@ -54,19 +62,7 @@ window.onload = () => {
 
                 // p.forEach((x) => Runner.register(x));
 
-                const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
-
-                const shipSpawnLocation = {
-                    top: gameFieldHeight * 0.8,
-                    left: (fullWidth / 2) - shipDimensions.width,
-                };
-
-                Runner.register(new Player(shipSpawnLocation));
-
-                for (let i = 0; i < 20; i++) {
-                    const bird = new BirdEnemy();
-                    Runner.register(bird);
-                }
+                // Runner.register(new Player(shipSpawnLocation));
 
                 // Register the onPLayerDeath callback in the runner.
                 // Runner.registerOnPlayerDeath(PlayerManager.onPlayerDeath);

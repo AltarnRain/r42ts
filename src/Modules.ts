@@ -16,6 +16,7 @@ import * as scoreBord from "./GameScreen/ScoreBoard";
 import * as playerLocationHandler from "./Handlers/PlayerLocationHandler";
 import * as gameLoop from "./Main/GameLoop";
 import * as runner from "./Main/Runner";
+import * as playerFormation from "./Player/PlayerFormation";
 
 export { runner as Runner };
 export { lives as Lives };
@@ -24,3 +25,4 @@ export { level as Level };
 export { phaser as Phasers };
 export { gameLoop as GameLoop };
 export { playerLocationHandler as PlayerLocationHandler };
+export { playerFormation as PlayerFormation };

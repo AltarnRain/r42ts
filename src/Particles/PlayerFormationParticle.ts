@@ -56,6 +56,7 @@ export default class PlayerFormationParticle extends BaseParticle {
      */
     public updateState(_: number): void {
         const angle = this.getAngle();
+
         this.currentLocation = getNewLocation(this.currentLocation, angle, this.speed);
     }
 
@@ -111,6 +112,14 @@ export default class PlayerFormationParticle extends BaseParticle {
      * @returns {boolean}. True if the particle is still traveling.
      */
     public traveling(): boolean {
-        return this.getDistance() > 10;
+        return this.getDistance() > 20;
+    }
+
+    /**
+     * Sets the speed of the particle.
+     * @param {number} speed. Desired particle speed.
+     */
+    public setSpeed(speed: number): void {
+        this.speed = speed;
     }
 }

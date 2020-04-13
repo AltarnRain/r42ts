@@ -19,13 +19,12 @@ import KeyboardState from "./KeyboardStateHandler/KeyboardStateHandler";
  *                  That uses the player location or needs to change it.
  */
 
-let playerLocation: GameLocation;
-
 const {
     gameFieldTop,
     averagePixelSize,
     fullHeight,
     fullWidth,
+    gameFieldHeight
 } = DimensionProvider();
 
 const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
@@ -34,13 +33,26 @@ const maxRight = fullWidth - shipDimensions.width;
 
 let moveLimit: MoveLimits = "none";
 
+let playerLocation: GameLocation;
+const shipSpawnLocation = {
+    top: gameFieldHeight * 0.8,
+    left: (fullWidth / 2) - shipDimensions.width,
+};
+
+/**
+ * Gets the ship's spawn location, center screen.
+ */
+export function getShipSpawnLocation(): GameLocation {
+    return {...shipSpawnLocation};
+}
+
 /**
  * Returns the player location as a new object.
  * @returns {GameLocation}. The current player location.
  */
 export function getPlayerLocation(): GameLocation {
     // Spread to avoid changes to the playerLocation.
-    return {...playerLocation};
+    return { ...playerLocation };
 }
 
 /**
@@ -70,6 +82,9 @@ export function movePlayer(speed: number): void {
     // Certain levels limit the movement of the player.
     // We'll use a fresh keyboardState object and make some adjustments.
     switch (moveLimit) {
+        case "immobile":
+            // Player cannot move
+            return;
         case "sideways":
             // Used when the player forms. Override the keyboard state.
             keyboardState.down = keyboardState.up = false;
@@ -82,7 +97,7 @@ export function movePlayer(speed: number): void {
         case "none":
         // Make not changes and allow 360 degrees of freedown
         default:
-            // No default;
+        // No default;
     }
 
     const angle = getAngle(KeyboardState);
