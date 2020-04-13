@@ -30,3 +30,5 @@ export type GameObjectType = "particle" | "enemy" | "player" | "particle" | "exp
  * A function that accepts a 'tick' as a parameter.
  */
 export type TickFunction = (tick: number) => void;
+
+export type MoveLimits = "sideways" | "forceup" | "none";

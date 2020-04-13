@@ -12,6 +12,7 @@
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
+import { PlayerLocationHandler } from "../Modules";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
@@ -19,7 +20,6 @@ import { convertFrameColor, getFrameDimensions, getFrameHitbox } from "../Utilit
 import { cloneObject } from "../Utility/Lib";
 import PlayerExplosion from "./PlayerExplosion";
 import { PlayerFrame } from "./PlayerFrames";
-import { PlayerLocationHandler } from "../Modules";
 
 const {
     minPixelSize,
