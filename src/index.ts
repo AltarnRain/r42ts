@@ -10,14 +10,13 @@
  */
 
 import BirdEnemy from "./Enemies/Bird/Bird";
+import { drawGameScreen } from "./GameScreen/DrawGameScreen";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
-import GameLocation from "./Models/GameLocation";
-import { Level, Lives, Phasers, Runner, ScoreBoard } from "./Modules";
-import PlayerFormationParticle from "./Particles/PlayerFormationParticle";
-import { PlayerFormationFrames } from "./Player/PlayerFrames";
+import { GameLoop, Level, Lives, Phasers, Runner, ScoreBoard } from "./Modules";
+import Player from "./Player/Player";
+import { PlayerFrame } from "./Player/PlayerFrames";
 import DimensionProvider from "./Providers/DimensionProvider";
-
-const mouseCursorLocation: GameLocation = { left: 0, top: 0 };
+import { getFrameDimensions } from "./Utility/Frame";
 
 window.onload = () => {
 
@@ -30,7 +29,16 @@ window.onload = () => {
         switch (window.location.search.replace("?", "")) {
             case "playground": {
 
+                const {
+                    gameFieldHeight,
+                    averagePixelSize,
+                    fullWidth
+                } = DimensionProvider();
+
                 registerListeners();
+
+                GameLoop.register(drawGameScreen);
+                GameLoop.register(Runner.run);
 
                 // const p = [
                 //     new PlayerFormationParticle({ top: 10, left: 1500 }, mouseCursorLocation, PlayerFormationFrames.F0, 5),
@@ -46,7 +54,16 @@ window.onload = () => {
 
                 // p.forEach((x) => Runner.register(x));
 
-                for (let i = 0; i < 0; i++) {
+                const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
+
+                const shipSpawnLocation = {
+                    top: gameFieldHeight * 0.8,
+                    left: (fullWidth / 2) - shipDimensions.width,
+                };
+
+                Runner.register(new Player(shipSpawnLocation));
+
+                for (let i = 0; i < 20; i++) {
                     const bird = new BirdEnemy();
                     Runner.register(bird);
                 }
@@ -82,6 +99,8 @@ window.onload = () => {
                 };
 
                 Runner.start();
+                GameLoop.Start();
+
                 // Runner.toggleHitboxes();
                 // Runner.togglePlayerImmortality();
                 // Runner.toggleRenderPhaser();

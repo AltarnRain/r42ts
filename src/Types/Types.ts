@@ -25,3 +25,8 @@ export type Frame = string[][];
  * The types of game objects.
  */
 export type GameObjectType = "particle" | "enemy" | "player" | "particle" | "explosion" | "playerbullet" | "playerformartionparticle";
+
+/**
+ * A function that accepts a 'tick' as a parameter.
+ */
+export type TickFunction = (tick: number) => void;

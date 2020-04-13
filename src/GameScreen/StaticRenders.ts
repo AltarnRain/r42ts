@@ -14,42 +14,41 @@ import CGAColors from "../Constants/CGAColors";
 import CtxProvider from "../Providers/CtxProvider";
 import DimensionProvider from "../Providers/DimensionProvider";
 
-/**
- * Renders the complete game field background.
- */
-export function DrawGameField(): void {
-    clearBlackground();
-    drawScoreBoardBackGround();
-    drawGameFieldBorder();
-    drawScoreBoardBackGround();
-}
+const {
+    gameFieldTop,
+    fullWidth,
+    scoreBoardHeight,
+    maxPixelSize,
+    fullHeight,
+    gameFieldHeight,
+} = DimensionProvider();
 
 /**
  * Renders the entire canvas black
  */
-function clearBlackground(): void {
+export function clearGameFieldBackground(): void {
     const ctx = CtxProvider();
     ctx.fillStyle = CGAColors.black;
-    ctx.fillRect(0, 0, DimensionProvider().fullWidth, DimensionProvider().fullHeight);
+    ctx.fillRect(0, gameFieldTop, fullWidth, fullHeight);
 }
 
 /**
  * Draws a blue rectangle where the game's action takes place.
  */
-function drawScoreBoardBackGround(): void {
+export function drawScoreBoardBackGround(): void {
     const ctx = CtxProvider();
     ctx.fillStyle = CGAColors.red;
-    ctx.fillRect(0, 0, DimensionProvider().fullWidth, DimensionProvider().scoreBoardHeight);
+    ctx.fillRect(0, 0, fullWidth, scoreBoardHeight);
 }
 
 /**
  * Draws a solid red recangle where the game's score is displayed.
  */
-function drawGameFieldBorder(): void {
+export function drawGameFieldBorder(): void {
     const ctx = CtxProvider();
     ctx.beginPath();
-    ctx.rect(0, DimensionProvider().scoreBoardHeight, DimensionProvider().fullWidth, DimensionProvider().gameFieldHeight);
-    ctx.lineWidth = DimensionProvider().maxPixelSize;
+    ctx.rect(0, scoreBoardHeight, fullWidth, gameFieldHeight);
+    ctx.lineWidth = maxPixelSize;
     ctx.strokeStyle = CGAColors.blue;
     ctx.stroke();
     ctx.closePath();

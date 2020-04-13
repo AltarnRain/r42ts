@@ -12,11 +12,10 @@
 import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BaseGameObject from "../Base/BaseGameObject";
 import BaseParticle from "../Base/BaseParticle";
-import { DrawGameField } from "../GameScreen/StaticRenders";
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
-import { Level, Lives, Phasers, ScoreBoard } from "../Modules";
+import { Lives, Phasers, ScoreBoard, StaticRenders } from "../Modules";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import { drawPhasor } from "../Player/DrawPhaser";
 import Player from "../Player/Player";
@@ -206,12 +205,7 @@ function draw(): void {
         return;
     }
 
-    // Draw the static stuff.
-    DrawGameField();
-    Level.draw();
-    Lives.draw();
-    ScoreBoard.draw();
-    Phasers.draw();
+    StaticRenders.clearGameFieldBackground();
 
     // If defined, draw the player
     state.player?.draw();

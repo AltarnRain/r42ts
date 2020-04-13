@@ -5,8 +5,8 @@
  */
 
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardState";
-import { GameRectangle } from "../Models/GameRectangle";
 import GameLocation from "../Models/GameLocation";
+import { GameRectangle } from "../Models/GameRectangle";
 
 /**
  * Module:          Geometry
