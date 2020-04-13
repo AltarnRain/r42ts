@@ -31,6 +31,9 @@ const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
 const maxBottom = fullHeight - shipDimensions.height;
 const maxRight = fullWidth - shipDimensions.width;
 
+/**
+ * Returns the player location as a new object.
+ */
 export function getPlayerLocation(): GameLocation {
     return playerLocation;
 }
@@ -39,11 +42,11 @@ export function setPlayerLocation(location: GameLocation): void {
     playerLocation = { ...location };
 }
 
-export function movePlayer(): void {
+export function movePlayer(speed: number): void {
     const angle = getAngle(KeyboardState);
 
     if (angle !== -1) {
-        const newLocation = getNewLocation(playerLocation, angle, 15);
+        const newLocation = getNewLocation(playerLocation, angle, speed);
         if (fallsWithin(newLocation, gameFieldTop, maxBottom, 0, maxRight)) {
             playerLocation = newLocation;
         }

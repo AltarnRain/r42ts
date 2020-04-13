@@ -9,12 +9,13 @@
  * Responsibility:  Draws all the stuff the player needs to see aside from enemies.
  */
 
-import { Level, Lives, Phasers, ScoreBoard, StaticRenders } from "../Modules";
+import { Level, Lives, Phasers, ScoreBoard } from "../Modules";
+import { drawGameFieldBorder, drawScoreBoardBackGround } from "./StaticRenders";
 
 export function drawGameScreen(tick: number): void {
     // Draw the static stuff.
-    StaticRenders.drawScoreBoardBackGround();
-    StaticRenders.drawGameFieldBorder();
+    drawScoreBoardBackGround();
+    drawGameFieldBorder();
     Level.draw();
     Lives.draw();
     ScoreBoard.draw();

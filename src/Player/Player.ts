@@ -9,16 +9,17 @@
  * Responsibility:  Player ship
  */
 
-import { getPlayerLocation, movePlayer, setPlayerLocation } from "../Handlers/PlayerLocationHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import DimensionProvider from "../Providers/DimensionProvider";
+import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
 import { convertFrameColor, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import PlayerExplosion from "./PlayerExplosion";
 import { PlayerFrame } from "./PlayerFrames";
+import { PlayerLocationHandler } from "../Modules";
 
 const {
     minPixelSize,
@@ -38,11 +39,11 @@ export default class Player {
     constructor(location: GameLocation) {
 
         // Set the player location in the PlayerLocationHandler.
-        setPlayerLocation(location);
+        PlayerLocationHandler.setPlayerLocation(location);
 
         this.frame = cloneObject(PlayerFrame);
 
-        convertFrameColor(cloneObject(PlayerFrame));
+        convertFrameColor(this.frame);
     }
 
     /**
@@ -61,8 +62,26 @@ export default class Player {
         return "player";
     }
 
+    /**
+     * Draw the player's ship.
+     */
+    public draw(): void {
+        renderFrame(PlayerLocationHandler.getPlayerLocation(), this.frame);
+    }
+
+    /**
+     * Updates the player's state. Means movement.
+     */
     public updateState(): void {
-        movePlayer();
+        // Use the PlayerLocationHandler to move the player.
+        PlayerLocationHandler.movePlayer(10);
+    }
+
+    /**
+     * Returns the player location.
+     */
+    public getLocation(): GameLocation {
+        return PlayerLocationHandler.getPlayerLocation();
     }
 
     /**
@@ -70,7 +89,7 @@ export default class Player {
      * @return {GameRectangle}. Players hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(getPlayerLocation(), shipDimensions.width, shipDimensions.height, 0, averagePixelSize);
+        return getFrameHitbox(PlayerLocationHandler.getPlayerLocation(), shipDimensions.width, shipDimensions.height, 0, averagePixelSize);
     }
 
     /**
@@ -78,8 +97,8 @@ export default class Player {
      */
     public getNozzleLocation(): GameLocation {
         return {
-            left: getPlayerLocation().left + minPixelSize * 2,
-            top: getPlayerLocation().top - minPixelSize * 1,
+            left: PlayerLocationHandler.getPlayerLocation().left + minPixelSize * 2,
+            top: PlayerLocationHandler.getPlayerLocation().top - minPixelSize * 1,
         };
     }
 }

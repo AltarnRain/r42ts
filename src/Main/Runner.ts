@@ -12,10 +12,11 @@
 import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BaseGameObject from "../Base/BaseGameObject";
 import BaseParticle from "../Base/BaseParticle";
+import { clearGameFieldBackground } from "../GameScreen/StaticRenders";
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
-import { Lives, Phasers, ScoreBoard, StaticRenders } from "../Modules";
+import { Lives, Phasers, ScoreBoard } from "../Modules";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import { drawPhasor } from "../Player/DrawPhaser";
 import Player from "../Player/Player";
@@ -51,7 +52,7 @@ export function stop(): void {
  * Register a game object.
  * @param {BaseGameObject} gameobject.
  */
-export function register(gameobject: BaseGameObject | BaseParticle): void {
+export function register(gameobject: BaseGameObject | BaseParticle | Player): void {
     if (isParticle(gameobject)) {
         state.particles.push(gameobject);
     } else if (isEnemy(gameobject)) {
@@ -205,7 +206,7 @@ function draw(): void {
         return;
     }
 
-    StaticRenders.clearGameFieldBackground();
+    clearGameFieldBackground();
 
     // If defined, draw the player
     state.player?.draw();
@@ -435,14 +436,17 @@ function renderHitboxes() {
         const hittableObjects = [
             ...getHittableObjects(),
         ];
+
         // Add player if defined.
         if (state.player) {
-            hittableObjects.push(state.player);
+            hittableObjects.push(state.player as any);
         }
+
         // Add bullet if defined.
         if (state.playerBullet) {
             hittableObjects.push(state.playerBullet);
         }
+
         // Draw a circle around each object using the
         // coordiates and radius of the hitbox.
         for (const hittableObject of hittableObjects) {
