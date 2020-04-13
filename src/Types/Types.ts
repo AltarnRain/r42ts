@@ -31,4 +31,7 @@ export type GameObjectType = "particle" | "enemy" | "player" | "particle" | "exp
  */
 export type TickFunction = (tick: number) => void;
 
+/**
+ * Movement Limits for the player.
+ */
 export type MoveLimits = "sideways" | "forceup" | "none";
