@@ -5,7 +5,7 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import DistanceParticle from "../Particles/DistanceParticle";
+import PlayerFormationParticle from "../Particles/PlayerFormationParticle";
 import DimensionProvider from "../Providers/DimensionProvider";
 import { reverseDegreeAngle } from "../Utility/Geometry";
 import { getNewLocation } from "../Utility/Location";
@@ -31,7 +31,7 @@ const nozzleInAngle = reverseDegreeAngle(nozzleOutAngle);
 const leftWindInAngle = reverseDegreeAngle(leftWingOutAngle);
 const rightWingInAngle = reverseDegreeAngle(rightWingOutAngle);
 
-export function PlayerFormationParticleProvider(targetLocation: GameLocation, speedIncrease: number): DistanceParticle[] {
+export function PlayerFormationParticleProvider(targetLocation: GameLocation, speedIncrease: number): PlayerFormationParticle[] {
 
     // Calculate the starting postions of the player formation particles.
     const nozzleDistance = particleTravelDistance + averagePixelSize * 6;
@@ -59,11 +59,11 @@ export function PlayerFormationParticleProvider(targetLocation: GameLocation, sp
     const particleSpeed = (x + speedIncrease) / particleTravelDistance;
     const nozzleTipSpeed = particleSpeed * (nozzleDistance / particleTravelDistance);
 
-    const particles: DistanceParticle[] = [];
-    particles.push(new DistanceParticle(PlayerFormationFrames.F0, nozzleInAngle, nozzleTipSpeed, 1, nozzleTipStartLocation, nozzleDistance));
-    particles.push(new DistanceParticle(PlayerFormationFrames.F1, nozzleInAngle, particleSpeed, 1, nozzleBottomStartLocation, particleTravelDistance));
-    particles.push(new DistanceParticle(PlayerFormationFrames.F2, leftWindInAngle, particleSpeed, 1, leftWingStartLocation, particleTravelDistance));
-    particles.push(new DistanceParticle(PlayerFormationFrames.F3, rightWingInAngle, particleSpeed, 1, rightWingStartLocation, particleTravelDistance));
+    const particles: PlayerFormationParticle[] = [];
+    // particles.push(new PlayerFormationParticle(PlayerFormationFrames.F0, nozzleInAngle, nozzleTipSpeed, 1, nozzleTipStartLocation, nozzleDistance));
+    // particles.push(new PlayerFormationParticle(PlayerFormationFrames.F1, nozzleInAngle, particleSpeed, 1, nozzleBottomStartLocation, particleTravelDistance));
+    // particles.push(new PlayerFormationParticle(PlayerFormationFrames.F2, leftWindInAngle, particleSpeed, 1, leftWingStartLocation, particleTravelDistance));
+    // particles.push(new PlayerFormationParticle(PlayerFormationFrames.F3, rightWingInAngle, particleSpeed, 1, rightWingStartLocation, particleTravelDistance));
 
     return particles;
 }

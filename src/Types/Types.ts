@@ -24,4 +24,4 @@ export type Frame = string[][];
 /**
  * The types of game objects.
  */
-export type GameObjectType = "particle" | "enemy" | "player" | "particle" | "explosion" | "playerbullet";
+export type GameObjectType = "particle" | "enemy" | "player" | "particle" | "explosion" | "playerbullet" | "playerformartionparticle";

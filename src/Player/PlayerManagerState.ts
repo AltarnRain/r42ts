@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import DistanceParticle from "../Particles/DistanceParticle";
+import PlayerFormationParticle from "../Particles/PlayerFormationParticle";
 import Player from "./Player";
 
 /**
@@ -18,7 +18,7 @@ export default interface PlayerManagerState {
      */
     player: Player | undefined;
 
-    playerFormationParticles: DistanceParticle[];
+    playerFormationParticles: PlayerFormationParticle[];
 
     /**
      * Handler for the setTimeOut used to detect if the formation of the player ship is done.
