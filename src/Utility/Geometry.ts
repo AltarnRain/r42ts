@@ -6,6 +6,7 @@
 
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardState";
 import { GameRectangle } from "../Models/GameRectangle";
+import GameLocation from "../Models/GameLocation";
 
 /**
  * Module:          Geometry
@@ -93,4 +94,30 @@ export function reverseDegreeAngle(angle: number): number {
     }
 
     return newAngle;
+}
+
+/**
+ * Calculates the angle from the source location to the target location.
+ * @param {GameLocation} start. Begin point of the vector.
+ * @param {GameLocation} end. End point of the factor.
+ * @returns {number}. The angle to towards the target in degrees.
+ */
+export function calculateVector(start: GameLocation, end: GameLocation): number {
+    const dx = Math.abs(start.left - end.left);
+    const dy = Math.abs(start.top - end.top);
+
+    // Get the angle in degrees.
+    let angle = Math.atan2(dy, dx) * 180 / Math.PI * -1;
+    // bottom left is handler right by default. No if needed.
+    // source is to the bottom right of the object.
+    if (start.left > end.left && start.top > end.top) {
+        angle = 180 - angle;
+    } else if (start.left < end.left && start.top < end.top) {
+        // source is to the top left of the object.
+        angle = angle * -1;
+    } else if (start.left > end.left && start.top < end.top) {
+        // source is to the top right of the object.
+        angle = angle - 180 * -1;
+    }
+    return angle;
 }

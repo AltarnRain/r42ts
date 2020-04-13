@@ -8,6 +8,7 @@ import CGAColors from "../Constants/CGAColors";
 import GameLocation from "../Models/GameLocation";
 import renderFrame from "../Render/RenderFrame";
 import { Frame } from "../Types/Types";
+import { calculateVector as calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getNewLocation } from "../Utility/Location";
 
 const phaserFrame: Frame = [
@@ -21,33 +22,15 @@ const phaserFrame: Frame = [
 
 export function drawPhasor(source: GameLocation, target: GameLocation, pixelSize: number): void {
 
-    const dx = Math.abs(source.left - target.left + pixelSize);
-    const dy = Math.abs(source.top - target.top);
-
-    let currentLocation = { ...source };
-
-    // Get the angle in degrees.
-    let angle = Math.atan2(dy, dx) * 180 / Math.PI * -1;
-
-    // bottom left is handler right by default. No if needed.
-
-    // source is to the bottom right of the object.
-    if (source.left > target.left && source.top > target.top) {
-        angle = 180 - angle;
-    } else if (source.left < target.left && source.top < target.top) {
-        // source is to the top left of the object.
-        angle = angle * -1;
-    } else if (source.left > target.left && source.top < target.top) {
-        // source is to the top right of the object.
-        angle = angle - 180 * -1;
-    }
-
+    // offset left by one game pixel to ensure the phaser appears at the nozzle of the ship.
+    let offsetSourceLocation = { ...source, left: source.left + pixelSize };
+    const angle = calculateAngle(offsetSourceLocation, target);
     let distance = calculateDistance(source, target);
 
     while (distance >= 0) {
-        renderFrame(currentLocation, phaserFrame);
+        renderFrame(offsetSourceLocation, phaserFrame);
         distance -= pixelSize;
 
-        currentLocation = getNewLocation(currentLocation, angle, pixelSize);
+        offsetSourceLocation = getNewLocation(offsetSourceLocation, angle, pixelSize);
     }
 }
