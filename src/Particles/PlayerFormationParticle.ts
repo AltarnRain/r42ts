@@ -55,9 +55,9 @@ export default class PlayerFormationParticle extends BaseParticle {
      * Update the state of the object.
      */
     public updateState(_: number): void {
-        const angle = this.getAngle();
-
+        const angle = calculateVector(this.currentLocation, this.targetLocation);
         this.currentLocation = getNewLocation(this.currentLocation, angle, this.speed);
+
     }
 
     /**
@@ -65,22 +65,6 @@ export default class PlayerFormationParticle extends BaseParticle {
      */
     public draw(): void {
         renderFrame(this.currentLocation, this.currentFrame);
-    }
-
-    /**
-     * Calculate the angle the particle should be headed towards to reach its target.
-     * @returns {number}. An angle.
-     */
-    private getAngle(): number {
-        return calculateVector(this.currentLocation, this.targetLocation);
-    }
-
-    /**
-     * Calculate the distance the particle has to travel to reach its target destination.
-     * @returns {number}. Distance is real pixels.
-     */
-    private getDistance(): number {
-        return calculateDistance(this.currentLocation, this.targetLocation);
     }
 
     /**
@@ -112,7 +96,8 @@ export default class PlayerFormationParticle extends BaseParticle {
      * @returns {boolean}. True if the particle is still traveling.
      */
     public traveling(): boolean {
-        return this.getDistance() > 20;
+        const distance = calculateDistance(this.currentLocation, this.targetLocation);
+        return distance > 20;
     }
 
     /**

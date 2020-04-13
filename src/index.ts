@@ -12,7 +12,7 @@
 import BirdEnemy from "./Enemies/Bird/Bird";
 import { drawGameScreen } from "./GameScreen/DrawGameScreen";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
-import { GameLoop, Level, Lives, Phasers, PlayerLocationHandler, Runner, ScoreBoard, PlayerFormation } from "./Modules";
+import { GameLoop, Level, Lives, Phasers, PlayerFormation, PlayerLocationHandler, Runner, ScoreBoard } from "./Modules";
 import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
 
@@ -42,10 +42,11 @@ window.onload = () => {
                     Runner.register(bird);
                 }
 
-                GameLoop.register(PlayerFormation.updateState);
+                const subscription = GameLoop.register(PlayerFormation.draw);
 
-                PlayerFormation.formFast(PlayerLocationHandler.getShipSpawnLocation(), () => {
-                    Runner.register(new Player(PlayerLocationHandler.getShipSpawnLocation()));
+                PlayerFormation.formSlow(PlayerLocationHandler.getShipSpawnLocation(), () => {
+                    subscription();
+                    Runner.register(new Player(PlayerLocationHandler.getPlayerLocation()));
                 });
 
                 // const p = [

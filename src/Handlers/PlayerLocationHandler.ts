@@ -33,11 +33,12 @@ const maxRight = fullWidth - shipDimensions.width;
 
 let moveLimit: MoveLimits = "none";
 
-let playerLocation: GameLocation;
 const shipSpawnLocation = {
     top: gameFieldHeight * 0.8,
     left: (fullWidth / 2) - shipDimensions.width,
 };
+
+let playerLocation: GameLocation = {...shipSpawnLocation};
 
 /**
  * Gets the ship's spawn location, center screen.
