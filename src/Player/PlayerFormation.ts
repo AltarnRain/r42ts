@@ -93,7 +93,7 @@ export function formFast(targetLocation: GameLocation, formationDoneCallback: ()
     setPartLocations(targetLocation);
     createParticles();
 
-    allParts.forEach((p) => p.setSpeed(20));
+    allParts.forEach((p) => p.setSpeed(30));
 
     PlayerLocationHandler.setMoveLimit("immobile");
     done = formationDoneCallback;

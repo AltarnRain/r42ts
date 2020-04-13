@@ -44,31 +44,10 @@ window.onload = () => {
 
                 const subscription = GameLoop.register(PlayerFormation.draw);
 
-                PlayerFormation.formSlow(PlayerLocationHandler.getShipSpawnLocation(), () => {
+                PlayerFormation.formFast(PlayerLocationHandler.getShipSpawnLocation(), () => {
                     subscription();
                     Runner.register(new Player(PlayerLocationHandler.getPlayerLocation()));
                 });
-
-                // const p = [
-                //     new PlayerFormationParticle({ top: 10, left: 1500 }, mouseCursorLocation, PlayerFormationFrames.F0, 5),
-                //     new PlayerFormationParticle({ top: 50, left: 500 }, mouseCursorLocation, PlayerFormationFrames.F0, 5),
-                //     new PlayerFormationParticle({ top: 100, left: 0 }, mouseCursorLocation, PlayerFormationFrames.F0, 5),
-                //     new PlayerFormationParticle({ top: 150, left: 50 }, mouseCursorLocation, PlayerFormationFrames.F0, 5),
-                //     new PlayerFormationParticle({ top: 500, left: 5 }, mouseCursorLocation, PlayerFormationFrames.F0, 5),
-                // ];
-
-                // window.addEventListener("mousemove", (e: MouseEvent) => {
-                //     p.forEach((x) => x.setUpdatedTargetLocation({ left: e.offsetX, top: e.offsetY }));
-                // });
-
-                // p.forEach((x) => Runner.register(x));
-
-                // Runner.register(new Player(shipSpawnLocation));
-
-                // Register the onPLayerDeath callback in the runner.
-                // Runner.registerOnPlayerDeath(PlayerManager.onPlayerDeath);
-
-                // PlayerManager.begin();
 
                 Lives.setLives(2);
                 Phasers.setPhasers(10);
