@@ -43,7 +43,7 @@ window.onload = () => {
                     bird.setSpeed(0);
                 }
 
-                const subscription = GameLoop.register(PlayerFormation.draw);
+                const subscription = GameLoop.register(PlayerFormation.handlePlayerShipFormation);
 
                 PlayerFormation.formSlow(PlayerLocationHandler.getShipSpawnLocation(), () => {
                     subscription();

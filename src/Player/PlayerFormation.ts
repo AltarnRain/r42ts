@@ -59,7 +59,7 @@ let rightWingEndLocation: GameLocation;
 
 let done: () => void;
 
-let updateStateLocal: TickFunction;
+let formationSpeed: "slow" | "fast" = "slow";
 
 /**
  * Set the particle locations in the module
@@ -101,6 +101,7 @@ function createParticles(): void {
  * @param {() => void)} formationDoneCallback. Called when the formation animation has completed.
  */
 export function formFast(targetLocation: GameLocation, formationDoneCallback: () => void): void {
+    formationSpeed = "fast";
     setPlayerLocation(targetLocation);
     setPartLocations(targetLocation);
     createParticles();
@@ -109,29 +110,39 @@ export function formFast(targetLocation: GameLocation, formationDoneCallback: ()
 
     PlayerLocationHandler.setMoveLimit("immobile");
     done = formationDoneCallback;
-    updateStateLocal = updateStateFast;
 }
 
+/**
+ * Handles a slow ship formation which allows the player alter their warp in location.
+ * @param {GameLocation} targetLocation. Location where the ship formation should be headed to initially.
+ * @param {() => void} formationDoneCallback. Called when the ship formation is complete.
+ */
 export function formSlow(targetLocation: GameLocation, formationDoneCallback: () => void): void {
+    formationSpeed = "slow";
     setPlayerLocation(targetLocation);
     setPartLocations(targetLocation);
     createParticles();
 
     allMovingParts.forEach((p) => p.setSpeed(10));
 
-    // PlayerLocationHandler.setMoveLimit("sideways");
+    PlayerLocationHandler.setMoveLimit("sideways");
     done = formationDoneCallback;
-    updateStateLocal = updateStateSlow;
 }
 
-export function draw(tick: number): void {
-    if (updateStateLocal) {
-        updateStateLocal(tick);
-        allMovingParts.forEach((p) => {
-            p.updateState(tick);
-            p.draw();
-        });
+/**
+ * Main function that draws the player formation.
+ */
+export function handlePlayerShipFormation(_: number): void {
+    if (formationSpeed === "slow") {
+        updateStateSlow();
+    } else if (formationSpeed === "fast") {
+        updateStateFast();
     }
+
+    allMovingParts.forEach((p) => {
+        p.updateState();
+        p.draw();
+    });
 }
 
 /**
@@ -141,9 +152,19 @@ export function draw(tick: number): void {
 function updateStateFast(): void {
     if (allMovingParts.every((p) => p.traveling() === false)) {
         PlayerLocationHandler.setMoveLimit("none");
-        if (done) {
-            done();
-        }
+        handleFormationComplete();
+    }
+
+}
+
+/**
+ * Handles the completion of the ship forming.
+ */
+function handleFormationComplete() {
+    allMovingParts = [];
+    partsDoneTraveling = [];
+    if (done) {
+        done();
     }
 }
 
@@ -155,6 +176,9 @@ function updateStateSlow(): void {
         if (p.traveling()) {
             return true;
         } else {
+            // When a ship part is done traveling, queue the render of a ship part that moves
+            // with the same speed as the player's final location.
+            // This gives the illusion that a part has arrived and the ship is forming piece by piece.
             switch (p) {
                 case nozzleTopPart:
                     partsDoneTraveling.push({ frame: partFrames.F0, offset: { top: 0, left: nozzleLeftOffset } });
@@ -175,11 +199,12 @@ function updateStateSlow(): void {
     });
 
     partsDoneTraveling.forEach((pdt) => {
-        let location = PlayerLocationHandler.getPlayerLocation();
+        const currentPlayerLocation = PlayerLocationHandler.getPlayerLocation();
 
-        location = {
-            top: location.top + pdt.offset.top,
-            left: location.left + pdt.offset.left,
+        // Calculate the ship part using the player location and the offsets.
+        const location = {
+            top: currentPlayerLocation.top + pdt.offset.top,
+            left: currentPlayerLocation.left + pdt.offset.left,
         };
 
         renderFrame(location, pdt.frame);

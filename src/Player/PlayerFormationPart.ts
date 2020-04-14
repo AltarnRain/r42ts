@@ -56,7 +56,7 @@ export default class PlayerFormationPart {
     /**
      * Update the state of the object.
      */
-    public updateState(_: number): void {
+    public updateState(): void {
         const angle = calculateAngle(this.currentLocation, this.targetLocation);
         this.currentLocation = getNewLocation(this.currentLocation, angle, this.speed);
     }
