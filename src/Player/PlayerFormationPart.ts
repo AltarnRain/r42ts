@@ -8,7 +8,7 @@ import GameLocation from "../Models/GameLocation";
 import renderFrame from "../Render/RenderFrame";
 import { Frame } from "../Types/Types";
 import { convertFrameColor } from "../Utility/Frame";
-import { calculateVector } from "../Utility/Geometry";
+import { calculateAngle } from "../Utility/Geometry";
 import { cloneObject } from "../Utility/Lib";
 import { calculateDistance, getNewLocation } from "../Utility/Location";
 
@@ -57,10 +57,8 @@ export default class PlayerFormationPart {
      * Update the state of the object.
      */
     public updateState(_: number): void {
-        if (this.traveling()) {
-            const angle = calculateVector(this.currentLocation, this.targetLocation);
-            this.currentLocation = getNewLocation(this.currentLocation, angle, this.speed);
-        }
+        const angle = calculateAngle(this.currentLocation, this.targetLocation);
+        this.currentLocation = getNewLocation(this.currentLocation, angle, this.speed);
     }
 
     /**

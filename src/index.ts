@@ -37,9 +37,10 @@ window.onload = () => {
                 GameLoop.register(drawGameScreen);
                 GameLoop.register(Runner.run);
 
-                for (let i = 0; i < 20; i++) {
+                for (let i = 0; i < 1; i++) {
                     const bird = new BirdEnemy();
                     Runner.register(bird);
+                    bird.setSpeed(0);
                 }
 
                 const subscription = GameLoop.register(PlayerFormation.draw);
