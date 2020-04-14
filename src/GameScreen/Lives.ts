@@ -47,6 +47,13 @@ export function removeLife(): void {
 }
 
 /**
+ * Returns the remaining player lives.
+ */
+export function getLives(): number {
+    return lifeCount;
+}
+
+/**
  * Draws the player lives.
  */
 export function draw(): void {

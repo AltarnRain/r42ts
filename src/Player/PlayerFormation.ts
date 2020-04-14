@@ -132,7 +132,7 @@ export function formSlow(targetLocation: GameLocation, formationDoneCallback: ()
 /**
  * Main function that draws the player formation.
  */
-export function handlePlayerShipFormation(_: number): void {
+export function updateState(): void {
     if (formationSpeed === "slow") {
         updateStateSlow();
     } else if (formationSpeed === "fast") {
@@ -141,7 +141,25 @@ export function handlePlayerShipFormation(_: number): void {
 
     allMovingParts.forEach((p) => {
         p.updateState();
-        p.draw();
+    });
+}
+
+/**
+ * Draw the moving parts.
+ */
+export function draw(): void {
+    allMovingParts.forEach((p) => p.draw());
+
+    partsDoneTraveling.forEach((pdt) => {
+        const currentPlayerLocation = PlayerLocationHandler.getPlayerLocation();
+
+        // Calculate the ship part using the player location and the offsets.
+        const location = {
+            top: currentPlayerLocation.top + pdt.offset.top,
+            left: currentPlayerLocation.left + pdt.offset.left,
+        };
+
+        renderFrame(location, pdt.frame);
     });
 }
 
@@ -195,18 +213,6 @@ function updateStateSlow(): void {
 
             return false;
         }
-    });
-
-    partsDoneTraveling.forEach((pdt) => {
-        const currentPlayerLocation = PlayerLocationHandler.getPlayerLocation();
-
-        // Calculate the ship part using the player location and the offsets.
-        const location = {
-            top: currentPlayerLocation.top + pdt.offset.top,
-            left: currentPlayerLocation.left + pdt.offset.left,
-        };
-
-        renderFrame(location, pdt.frame);
     });
 
     if (allMovingParts.every((p) => p.traveling() === false)) {

@@ -16,7 +16,7 @@ import { clearGameFieldBackground } from "../GameScreen/StaticRenders";
 import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
-import { Lives, Phasers, ScoreBoard } from "../Modules";
+import { Lives, Phasers, PlayerFormation, PlayerLocationHandler, ScoreBoard } from "../Modules";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import { drawPhasor } from "../Player/DrawPhaser";
 import Player from "../Player/Player";
@@ -71,14 +71,6 @@ export function getParticleCount(): number {
 }
 
 /**
- * Register a call back for a player death event.
- * @param {() => void} callback. A function that is called when the player dies.
- */
-export function registerOnPlayerDeath(callback: () => void): void {
-    state.onPlayerDestroyed = callback;
-}
-
-/**
  * Runs the main game loop.
  * @param {number} tick. The current tick.
  */
@@ -113,6 +105,17 @@ export function run(tick: number): void {
  */
 function updateState(tick: number) {
 
+    if (state.playerFormationPhase === "begin" && getParticleCount() === 0) {
+        state.playerFormationPhase = "inprogress";
+
+        PlayerFormation.formSlow(PlayerLocationHandler.getShipSpawnLocation(), () => {
+            register(new Player(PlayerLocationHandler.getPlayerLocation()));
+            state.playerFormationPhase = undefined;
+        });
+    } else if (state.playerFormationPhase === "inprogress") {
+        PlayerFormation.updateState();
+    }
+
     // Update object states.
     state.enemies.forEach((e) => e.updateState(tick));
     state.player?.updateState();
@@ -144,7 +147,7 @@ function updateState(tick: number) {
     });
 
     // Keyboard events.
-    if (KeyboardState.selfDestruct && playerIsAlive(state.player)) {
+    if (playerIsAlive(state.player) && KeyboardState.selfDestruct) {
         for (const enemy of state.enemies) {
             queueExplosionRender(enemy.getCenterLocation(), enemy.getExplosion());
         }
@@ -158,14 +161,12 @@ function updateState(tick: number) {
     // Hit a random enemy with a phasor.
     // In order to fire a phaser there must be enemies, the player must have a phaser charge, a phaser cannot
     // currently being fired (=on screen) and the player must be alive.
-    if (KeyboardState.phraser && state.enemies.length > 0 && Phasers.getPhaserCount() > 0 && state.phaserOnScreen === false && playerIsAlive(state.player)) {
+    if (playerIsAlive(state.player) && KeyboardState.phraser && state.enemies.length > 0 && Phasers.getPhaserCount() > 0 && state.phaserOnScreen === false) {
         handlePhaser(state.player);
     }
 
-    if (state.playerBullet === undefined) {
-        if (KeyboardState.fire && playerIsAlive(state.player)) {
-            state.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 30, 1, state.player.getNozzleLocation());
-        }
+    if (playerIsAlive(state.player) && KeyboardState.fire && state.playerBullet === undefined) {
+        state.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 30, 1, state.player.getNozzleLocation());
     }
 
     // Hit detection.
@@ -209,30 +210,30 @@ function draw(): void {
     // Begin by drawing a black rectangle on the game field before drawing game objects.
     clearGameFieldBackground();
 
-    // drawGrid();
-
-    // If defined, draw the player
+    // Draw all the game objects
     state.player?.draw();
-
-    // Draw all enemies
     state.enemies.forEach((e) => e.draw());
-
-    // Draw enemy particles.
     state.particles.forEach((p) => p.draw());
-
-    // Draw the explosion centers.
     state.explosionCenters.forEach((ec) => ec.draw());
-
-    // If there's a player bullet, draw it.
     state.playerBullet?.draw();
 
+    if (state.playerFormationPhase === "inprogress") {
+        PlayerFormation.draw();
+    }
+
+    DEBUGGING_drawPhasor();
+
+    // Debugging. Show the hitboxes on screen.
+    DEBUGGING_renderHitboxes();
+
+    // drawGrid();
+}
+
+function DEBUGGING_drawPhasor() {
     if (state.debugging.renderPhaser && playerIsAlive(state.player) && state.enemies.length > 0) {
         const enemy = state.enemies[0];
         drawPhasor(state.player.getNozzleLocation(), enemy.getCenterLocation(), DimensionProvider().averagePixelSize);
     }
-
-    // Debugging. Show the hitboxes on screen.
-    renderHitboxes();
 }
 
 /**
@@ -293,7 +294,11 @@ function handlePlayerDeath(player: Player): void {
     state.player = undefined;
     Lives.removeLife();
 
-    state.onPlayerDestroyed();
+    if (Lives.getLives() > 0) {
+        state.playerFormationPhase = "begin";
+    } else {
+        // TODO: handle game over.
+    }
 }
 
 /**
@@ -402,7 +407,7 @@ function initState(): RunnerState {
 
         numberOfEnemies: 0,
 
-        onPlayerDestroyed: () => { /* Empty on purpose. */ },
+        playerFormationPhase: undefined,
 
         // Options for debugging.
         debugging: {
@@ -434,7 +439,7 @@ function resetState(): void {
 
 //#region  Debugging
 
-function renderHitboxes() {
+function DEBUGGING_renderHitboxes() {
     if (state.debugging.drawHitboxes) {
         const hittableObjects = [
             ...getHittableObjects(),
