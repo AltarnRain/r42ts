@@ -8,7 +8,7 @@ import CGAColors from "../Constants/CGAColors";
 import GameLocation from "../Models/GameLocation";
 import renderFrame from "../Render/RenderFrame";
 import { Frame } from "../Types/Types";
-import { calculateVector as calculateAngle } from "../Utility/Geometry";
+import { calculateAngle as calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getNewLocation } from "../Utility/Location";
 
 const phaserFrame: Frame = [
@@ -23,7 +23,7 @@ const phaserFrame: Frame = [
 export function drawPhasor(source: GameLocation, target: GameLocation, pixelSize: number): void {
 
     // offset left by one game pixel to ensure the phaser appears at the nozzle of the ship.
-    let offsetSourceLocation = { ...source, left: source.left + pixelSize };
+    let offsetSourceLocation = { ...source, left: source.left };
     const angle = calculateAngle(offsetSourceLocation, target);
     let distance = calculateDistance(source, target);
 
