@@ -26,7 +26,7 @@ const Explosion01: Explosion = {
             ["F", "F"]
         ],
     ],
-    angles: [150, 180, 210, 330, 0, 30], // ul, l, ll, ur, r,
+    angles: [160, 180, 200, 340, 0, 20],
     particleFrameIndexes: [0, 1, 0, 0, 1, 0],
     speed: 20,
     acceleration: 1.05,
