@@ -37,14 +37,14 @@ window.onload = () => {
                 GameLoop.register(drawGameScreen);
                 GameLoop.register(Runner.run);
 
-                for (let i = 0; i < 0; i++) {
+                for (let i = 0; i < 20; i++) {
                     const bird = new BirdEnemy();
                     Runner.register(bird);
                 }
 
                 const subscription = GameLoop.register(PlayerFormation.draw);
 
-                PlayerFormation.formFast(PlayerLocationHandler.getShipSpawnLocation(), () => {
+                PlayerFormation.formSlow(PlayerLocationHandler.getShipSpawnLocation(), () => {
                     subscription();
                     Runner.register(new Player(PlayerLocationHandler.getPlayerLocation()));
                 });

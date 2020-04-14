@@ -123,12 +123,11 @@ export function draw(tick: number): void {
 }
 
 /**
- * Check if the player particles are done moving.
+ * Handles the fast formation of a player.
  * @param {number} tick. Current tick.
  */
-function updateStateFast(tick: number): void {
+function updateStateFast(): void {
     if (allParts.every((p) => p.traveling() === false)) {
-        // Particles are done moving, lift player movement limit
         PlayerLocationHandler.setMoveLimit("none");
         if (done) {
             done();
@@ -136,11 +135,11 @@ function updateStateFast(tick: number): void {
     }
 }
 
-function updateStateSlow(tick: number): void {
-    // renderFrame(PlayerLocationHandler.getPlayerLocation(), PlayerFrame);
-
+/**
+ * Handles the slow formation of the player. The player can move sideways.
+ */
+function updateStateSlow(): void {
     if (allParts.every((p) => p.traveling() === false)) {
-        // Particles are done moving, lift player movement limit
         PlayerLocationHandler.setMoveLimit("none");
         if (done) {
             done();
@@ -149,9 +148,9 @@ function updateStateSlow(tick: number): void {
         PlayerLocationHandler.movePlayer(5);
         setPartLocations(PlayerLocationHandler.getPlayerLocation());
 
-        nozzleTipPart?.setUpdatedTargetLocation(nozzleTipEndLocation);
-        nozzleBottomPart?.setUpdatedTargetLocation(nozzleBottomEndLocation);
-        leftWingPart?.setUpdatedTargetLocation(leftWingEndLocation);
-        rightWingPart?.setUpdatedTargetLocation(rightWingEndLocation);
+        nozzleTipPart.setUpdatedTargetLocation(nozzleTipEndLocation);
+        nozzleBottomPart.setUpdatedTargetLocation(nozzleBottomEndLocation);
+        leftWingPart.setUpdatedTargetLocation(leftWingEndLocation);
+        rightWingPart.setUpdatedTargetLocation(rightWingEndLocation);
     }
 }

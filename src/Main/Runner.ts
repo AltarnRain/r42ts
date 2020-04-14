@@ -164,7 +164,7 @@ function updateState(tick: number) {
 
     if (state.playerBullet === undefined) {
         if (KeyboardState.fire && playerIsAlive(state.player)) {
-            state.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 50, 1, state.player.getNozzleLocation());
+            state.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 30, 1, state.player.getNozzleLocation());
         }
     }
 
