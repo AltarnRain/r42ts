@@ -154,7 +154,6 @@ function updateStateFast(): void {
         PlayerLocationHandler.setMoveLimit("none");
         handleFormationComplete();
     }
-
 }
 
 /**
@@ -212,9 +211,7 @@ function updateStateSlow(): void {
 
     if (allMovingParts.every((p) => p.traveling() === false)) {
         PlayerLocationHandler.setMoveLimit("none");
-        if (done) {
-            done();
-        }
+        handleFormationComplete();
     } else {
         PlayerLocationHandler.movePlayer(5);
         setPartLocations(PlayerLocationHandler.getPlayerLocation());

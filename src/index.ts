@@ -43,15 +43,19 @@ window.onload = () => {
                     bird.setSpeed(0);
                 }
 
-                const subscription = GameLoop.register(PlayerFormation.handlePlayerShipFormation);
-
-                PlayerFormation.formSlow(PlayerLocationHandler.getShipSpawnLocation(), () => {
-                    subscription();
-                    Runner.register(new Player(PlayerLocationHandler.getPlayerLocation()));
-                });
-
                 Lives.setLives(2);
                 Phasers.setPhasers(10);
+
+                Runner.register(new Player(PlayerLocationHandler.getShipSpawnLocation()));
+
+                Runner.registerOnPlayerDeath(() => {
+                    const subscription = GameLoop.register(PlayerFormation.handlePlayerShipFormation);
+
+                    PlayerFormation.formSlow(PlayerLocationHandler.getShipSpawnLocation(), () => {
+                        subscription();
+                        Runner.register(new Player(PlayerLocationHandler.getPlayerLocation()));
+                    });
+                });
 
                 (window as any).r42 = {
                     updateScore: (n: number) => ScoreBoard.updateScore(n),
