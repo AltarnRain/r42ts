@@ -15,6 +15,9 @@ import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardState
 import { GameLoop, Level, Lives, Phasers, PlayerFormation, PlayerLocationHandler, Runner, ScoreBoard } from "./Modules";
 import Player from "./Player/Player";
 import DimensionProvider from "./Providers/DimensionProvider";
+import PlayerFormationPart from "./Player/PlayerFormationPart";
+import { PlayerFormationFrames } from "./Player/PlayerFrames";
+import renderFrame from "./Render/RenderFrame";
 
 window.onload = () => {
 
@@ -46,7 +49,12 @@ window.onload = () => {
                 Lives.setLives(2);
                 Phasers.setPhasers(10);
 
-                Runner.register(new Player(PlayerLocationHandler.getShipSpawnLocation()));
+                PlayerFormation.formSlow(PlayerLocationHandler.getShipSpawnLocation(), () => {
+                    Runner.register(new Player(PlayerLocationHandler.getPlayerLocation()));
+                });
+
+                GameLoop.register(PlayerFormation.updateState);
+                GameLoop.register(PlayerFormation.draw);
 
                 (window as any).r42 = {
                     updateScore: (n: number) => ScoreBoard.updateScore(n),
@@ -84,3 +92,24 @@ window.onload = () => {
         }
     }
 };
+
+/**
+ * Uses the player formation part to draw a block on the screen
+ * 4 other blocks should converge on this block and stop moving when they overlap.
+ */
+function testAngleCalculation(): void {
+    const target = { top: 500, left: 700 };
+    const p1 = new PlayerFormationPart({ top: 500, left: 100 }, target, PlayerFormationFrames.F0, 1);
+    const p2 = new PlayerFormationPart({ top: 500, left: 1300 }, target, PlayerFormationFrames.F0, 1);
+    const p3 = new PlayerFormationPart({ top: 100, left: 700 }, target, PlayerFormationFrames.F0, 1);
+    const p4 = new PlayerFormationPart({ top: 800, left: 700 }, target, PlayerFormationFrames.F0, 1);
+    GameLoop.register(p1.updateState);
+    GameLoop.register(p1.draw);
+    GameLoop.register(p2.updateState);
+    GameLoop.register(p2.draw);
+    GameLoop.register(p3.updateState);
+    GameLoop.register(p3.draw);
+    GameLoop.register(p4.updateState);
+    GameLoop.register(p4.draw);
+    GameLoop.register((tick) => renderFrame(target, PlayerFormationFrames.F0));
+}

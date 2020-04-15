@@ -102,27 +102,44 @@ export function reverseDegreeAngle(angle: number): number {
  * @param {GameLocation} end. End point of the factor.
  * @returns {number}. The angle to towards the target in degrees.
  */
-export function calculateAngle(start: GameLocation, end: GameLocation): number {
-    let dx = Math.abs(start.left - end.left);
-    let dy = Math.abs(start.top - end.top);
+export function calculateAngle(start: GameLocation, end: GameLocation): number | undefined {
+    const dx = Math.abs(start.left - end.left);
+    const dy = Math.abs(start.top - end.top);
 
-    // Bit of a hack here but if the dx = 0 or dy is zero you get the wrong angle.
-    dy = dy === 0 ? 0.00000000001 : dy;
-    dx = dx === 0 ? 0.00000000001 : dx;
-
-    // Get the angle in degrees.
-    let angle = Math.atan2(dy, dx) * 180 / Math.PI;
-    // bottom left is handler right by default. No if needed.
-    // source is to the bottom right of the object.
-    if (start.left > end.left && start.top > end.top) {
-        angle = 180 - angle;
-    } else if (start.left < end.left && start.top < end.top) {
-        // source is to the top left of the object.
-        angle = angle * -1;
-    } else if (start.left > end.left && start.top < end.top) {
-        // source is to the top right of the object.
-        angle = angle - 180 * -1;
+    // Singularity.
+    if (dx === 0 && dy === 0) {
+        return undefined;
     }
 
-    return angle *= -1;
+    if (dy === 0) {
+        // Target is located on the right.
+        if (start.left > end.left) {
+            return 180;
+        } else {
+            return 270;
+        }
+    } else if (dx === 0) {
+        // Target is located downwards
+        if (start.top > end.top) {
+            return 270;
+        } else {
+            return 90;
+        }
+    } else {
+        // Get the angle in degrees.
+        let angle = Math.atan2(dy, dx) * 180 / Math.PI;
+        // bottom left is handler right by default. No if needed.
+        // source is to the bottom right of the object.
+        if (start.left > end.left && start.top > end.top) {
+            angle = 180 - angle;
+        } else if (start.left < end.left && start.top < end.top) {
+            // source is to the top left of the object.
+            angle = angle * -1;
+        } else if (start.left > end.left && start.top < end.top) {
+            // source is to the top right of the object.
+            angle = angle - 180 * -1;
+        }
+
+        return angle *= -1;
+    }
 }

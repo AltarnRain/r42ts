@@ -12,7 +12,7 @@ import DimensionProvider from "../Providers/DimensionProvider";
 import { Frame, GameObjectType } from "../Types/Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
-import { fallsWithin, getNewLocation } from "../Utility/Location";
+import { fallsWithin, getLocation } from "../Utility/Location";
 
 /**
  * Module:          Particle
@@ -65,7 +65,7 @@ export default class Particle extends BaseParticle {
      * Updates the state of the particle.
      */
     public updateState(): void {
-        this.location = getNewLocation(this.location, this.angle, this.speed);
+        this.location = getLocation(this.location, this.angle, this.speed);
         this.speed *= this.acceleration;
     }
 

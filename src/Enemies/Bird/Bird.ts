@@ -24,7 +24,7 @@ import { Frame, GameObjectType } from "../../Types/Types";
 import { getRandomArrayElement } from "../../Utility/Array";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
 import { cloneObject, randomNumberInRange } from "../../Utility/Lib";
-import { getNewLocation, getOffsetLocation } from "../../Utility/Location";
+import { getLocation, getOffsetLocation } from "../../Utility/Location";
 import { BirdFrames } from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
@@ -140,7 +140,7 @@ export default class BirdEnemy extends BaseEnemyObject {
         this.frameTickHandler.tick(tick);
         this.colorTickHandler.tick(tick);
 
-        this.actualLocation = getNewLocation(this.actualLocation, this.angle, this.currentSpeed);
+        this.actualLocation = getLocation(this.actualLocation, this.angle, this.currentSpeed);
 
         this.location = this.calculateOffsetLocation();
 

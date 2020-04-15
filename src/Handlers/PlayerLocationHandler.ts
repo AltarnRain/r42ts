@@ -10,7 +10,7 @@ import DimensionProvider from "../Providers/DimensionProvider";
 import { MoveLimits } from "../Types/Types";
 import { getFrameDimensions } from "../Utility/Frame";
 import { getAngle } from "../Utility/Geometry";
-import { fallsWithin, getNewLocation } from "../Utility/Location";
+import { fallsWithin, getLocation } from "../Utility/Location";
 import KeyboardState from "./KeyboardStateHandler/KeyboardStateHandler";
 
 /**
@@ -102,9 +102,8 @@ export function movePlayer(speed: number): void {
     }
 
     const angle = getAngle(keyboardState);
-
     if (angle !== -1) {
-        const newLocation = getNewLocation(playerLocation, angle, speed);
+        const newLocation = getLocation(playerLocation, angle, speed);
         if (fallsWithin(newLocation, gameFieldTop, maxBottom, 0, maxRight)) {
             playerLocation = newLocation;
         }

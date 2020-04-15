@@ -43,14 +43,18 @@ export function fallsWithin(location: GameLocation, top: number, bottom: number,
 }
 
 /**
- * Calculates a new location.
+ * Calculates a location.
  * @param {number} angle. The angle of the object.
  * @param {number} speed. The speed the of the object
  * @param {number} right. The right outer bounds where the object can travel
  * @param {number} left. The current left coordinate of the object.
- * @returns {Location}. The new location of the object.
+ * @returns {Location}. The location of the object. If angle is undefined the original location is returns as a new object.
  */
-export function getNewLocation(location: GameLocation, angle: number, speed: number): GameLocation {
+export function getLocation(location: GameLocation, angle: number | undefined, speed: number): GameLocation {
+
+    if (angle === undefined) {
+        return { ...location };
+    }
 
     const nextLeft = getNextX(angle, speed, location.left);
     const nextTop = getNextY(angle, speed, location.top);

@@ -8,11 +8,9 @@ import { setPlayerLocation } from "../Handlers/PlayerLocationHandler";
 import GameLocation from "../Models/GameLocation";
 import { PlayerLocationHandler } from "../Modules";
 import DimensionProvider from "../Providers/DimensionProvider";
-import renderFrame from "../Render/RenderFrame";
-import { Frame, TickFunction } from "../Types/Types";
 import { convertFramesColors } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
-import { getNewLocation } from "../Utility/Location";
+import { getLocation } from "../Utility/Location";
 import PlayerFormationPart from "./PlayerFormationPart";
 import { PlayerFormationFrames } from "./PlayerFrames";
 
@@ -45,8 +43,6 @@ let rightWingPart: PlayerFormationPart;
 
 let allMovingParts: PlayerFormationPart[] = [];
 
-let partsDoneTraveling: Array<{ frame: Frame; offset: GameLocation }> = [];
-
 let nozzleTipStartLocation: GameLocation;
 let nozzleBottomStartLocation: GameLocation;
 let leftWingStartLocation: GameLocation;
@@ -71,17 +67,17 @@ function setPartLocations(targetLocation: GameLocation): void {
     const leftWingOrigin = { ...targetLocation, top: targetLocation.top + wingsTopOffset };
     const rightWingOrigin = { top: targetLocation.top + wingsTopOffset, left: targetLocation.left + rightWingLeftOffset };
 
-    nozzleTipStartLocation = getNewLocation(nozzleOrigin, nozzleOutAngle, nozzleDistance);
-    nozzleBottomStartLocation = getNewLocation(nozzleOrigin, nozzleOutAngle, particleTravelDistance);
+    nozzleTipStartLocation = getLocation(nozzleOrigin, nozzleOutAngle, nozzleDistance);
+    nozzleBottomStartLocation = getLocation(nozzleOrigin, nozzleOutAngle, particleTravelDistance);
 
-    leftWingStartLocation = getNewLocation(leftWingOrigin, leftWingOutAngle, particleTravelDistance);
-    rightWingStartLocation = getNewLocation(rightWingOrigin, rightWingOutAngle, particleTravelDistance);
+    leftWingStartLocation = getLocation(leftWingOrigin, leftWingOutAngle, particleTravelDistance);
+    rightWingStartLocation = getLocation(rightWingOrigin, rightWingOutAngle, particleTravelDistance);
 
     nozzleTipEndLocation = { ...targetLocation, left: targetLocation.left + averagePixelSize * 2, };
-    nozzleBottomEndLocation = { ...targetLocation, left: targetLocation.left + averagePixelSize * 2 };
+    nozzleBottomEndLocation = { ...targetLocation, left: targetLocation.left + averagePixelSize * 2, top: targetLocation.top + averagePixelSize };
 
-    leftWingEndLocation = { ...targetLocation, top: targetLocation.top + averagePixelSize * 1, left: targetLocation.left + averagePixelSize };
-    rightWingEndLocation = { ...targetLocation, top: targetLocation.top + averagePixelSize * 1, left: targetLocation.left + averagePixelSize * 3 };
+    leftWingEndLocation = { ...targetLocation, top: targetLocation.top + averagePixelSize * 1, left: targetLocation.left };
+    rightWingEndLocation = { ...targetLocation, top: targetLocation.top + averagePixelSize * 1, left: targetLocation.left + averagePixelSize * 4};
 }
 
 /**
@@ -149,18 +145,6 @@ export function updateState(): void {
  */
 export function draw(): void {
     allMovingParts.forEach((p) => p.draw());
-
-    partsDoneTraveling.forEach((pdt) => {
-        const currentPlayerLocation = PlayerLocationHandler.getPlayerLocation();
-
-        // Calculate the ship part using the player location and the offsets.
-        const location = {
-            top: currentPlayerLocation.top + pdt.offset.top,
-            left: currentPlayerLocation.left + pdt.offset.left,
-        };
-
-        renderFrame(location, pdt.frame);
-    });
 }
 
 /**
@@ -179,7 +163,6 @@ function updateStateFast(): void {
  */
 function handleFormationComplete() {
     allMovingParts = [];
-    partsDoneTraveling = [];
     if (done) {
         done();
     }
@@ -189,32 +172,6 @@ function handleFormationComplete() {
  * Handles the slow formation of the player. The player can move sideways.
  */
 function updateStateSlow(): void {
-    allMovingParts = allMovingParts.filter((p) => {
-        if (p.traveling()) {
-            return true;
-        } else {
-            // When a ship part is done traveling, queue the render of a ship part that moves
-            // with the same speed as the player's final location.
-            // This gives the illusion that a part has arrived and the ship is forming piece by piece.
-            switch (p) {
-                case nozzleTopPart:
-                    partsDoneTraveling.push({ frame: partFrames.F0, offset: { top: 0, left: nozzleLeftOffset } });
-                    break;
-                case nozzleBottomPart:
-                    partsDoneTraveling.push({ frame: partFrames.F1, offset: { top: averagePixelSize, left: nozzleLeftOffset } });
-                    break;
-                case leftWingPart:
-                    partsDoneTraveling.push({ frame: partFrames.F2, offset: { top: wingsTopOffset, left: 0 } });
-                    break;
-                case rightWingPart:
-                    partsDoneTraveling.push({ frame: partFrames.F3, offset: { top: wingsTopOffset, left: rightWingLeftOffset } });
-                    break;
-            }
-
-            return false;
-        }
-    });
-
     if (allMovingParts.every((p) => p.traveling() === false)) {
         PlayerLocationHandler.setMoveLimit("none");
         handleFormationComplete();

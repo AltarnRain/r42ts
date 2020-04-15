@@ -10,7 +10,7 @@ import { Frame } from "../Types/Types";
 import { convertFrameColor } from "../Utility/Frame";
 import { calculateAngle } from "../Utility/Geometry";
 import { cloneObject } from "../Utility/Lib";
-import { calculateDistance, getNewLocation } from "../Utility/Location";
+import { calculateDistance, getLocation } from "../Utility/Location";
 
 /**
  * Module:          DestinationParticle
@@ -51,6 +51,9 @@ export default class PlayerFormationPart {
         this.currentLocation = { ...sourceLocation };
         this.targetLocation = { ...targetLocation };
         this.speed = speed;
+
+        this.updateState = this.updateState.bind(this);
+        this.draw = this.draw.bind(this);
     }
 
     /**
@@ -58,7 +61,13 @@ export default class PlayerFormationPart {
      */
     public updateState(): void {
         const angle = calculateAngle(this.currentLocation, this.targetLocation);
-        this.currentLocation = getNewLocation(this.currentLocation, angle, this.speed);
+        const distance = calculateDistance(this.currentLocation, this.targetLocation);
+
+        if (distance > 10) {
+            this.currentLocation = getLocation(this.currentLocation, angle, this.speed > distance ? distance : this.speed);
+        } else {
+            this.currentLocation = {...this.targetLocation};
+        }
     }
 
     /**
@@ -82,7 +91,7 @@ export default class PlayerFormationPart {
      */
     public traveling(): boolean {
         const distance = calculateDistance(this.currentLocation, this.targetLocation);
-        return distance > 20;
+        return distance > 5;
     }
 
     /**

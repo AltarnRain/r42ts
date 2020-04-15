@@ -41,7 +41,7 @@ test("", () => {
     };
 
     // Act
-    const newLocation = Location.getNewLocation(location, 45, 5);
+    const newLocation = Location.getLocation(location, 45, 5);
 
     // Assert
     expect(newLocation === location).toBe(false);

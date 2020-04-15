@@ -9,7 +9,7 @@ import GameLocation from "../Models/GameLocation";
 import renderFrame from "../Render/RenderFrame";
 import { Frame } from "../Types/Types";
 import { calculateAngle as calculateAngle } from "../Utility/Geometry";
-import { calculateDistance, getNewLocation } from "../Utility/Location";
+import { calculateDistance, getLocation } from "../Utility/Location";
 
 const phaserFrame: Frame = [
     [CGAColors.yellow, CGAColors.yellow]
@@ -31,6 +31,6 @@ export function drawPhasor(source: GameLocation, target: GameLocation, pixelSize
         renderFrame(offsetSourceLocation, phaserFrame);
         distance -= pixelSize;
 
-        offsetSourceLocation = getNewLocation(offsetSourceLocation, angle, pixelSize);
+        offsetSourceLocation = getLocation(offsetSourceLocation, angle, pixelSize);
     }
 }
