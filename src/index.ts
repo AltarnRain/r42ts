@@ -14,9 +14,9 @@ import { drawGameScreen } from "./GameScreen/DrawGameScreen";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import { GameLoop, Level, Lives, Phasers, PlayerFormation, PlayerLocationHandler, Runner, ScoreBoard } from "./Modules";
 import Player from "./Player/Player";
-import DimensionProvider from "./Providers/DimensionProvider";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
+import DimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 
 window.onload = () => {
@@ -47,9 +47,9 @@ window.onload = () => {
                 }
 
                 Lives.setLives(2);
-                Phasers.setPhasers(10);
+                Phasers.setPhasers(1);
 
-                PlayerFormation.formSlow(PlayerLocationHandler.getShipSpawnLocation(), () => {
+                PlayerFormation.formFast(PlayerLocationHandler.getShipSpawnLocation(), () => {
                     Runner.register(new Player(PlayerLocationHandler.getPlayerLocation()));
                 });
 
@@ -77,6 +77,8 @@ window.onload = () => {
                     togglePlayerImmortality: () => Runner.togglePlayerImmortality(),
                     toggleRenderPhaser: () => Runner.toggleRenderPhaser(),
                 };
+
+                // testAngleCalculation();
 
                 Runner.start();
                 GameLoop.Start();
