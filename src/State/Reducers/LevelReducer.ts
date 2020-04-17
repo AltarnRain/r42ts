@@ -13,8 +13,11 @@ export function levelReducer(state: LevelState = initState(), action: ActionPayl
             case GameActions.removeEnemy:
                 draft.enemies = draft.enemies.filter((e) => e !== action.payload);
                 break;
-            case GameActions.togglePause:
-                draft.pause = !draft.pause;
+            case GameActions.pauseOn:
+                draft.pause = true;
+                break;
+            case GameActions.pauseOff:
+                draft.pause = false;
                 break;
             case GameActions.addExplosionCenter:
                 draft.explosionCenters.push(action.payload);
@@ -40,9 +43,6 @@ export function levelReducer(state: LevelState = initState(), action: ActionPayl
             case GameActions.level:
                 draft.level = action.payload;
                 break;
-            case GameActions.addToScore:
-                draft.score += action.payload;
-                break;
         }
     });
 }
@@ -56,6 +56,5 @@ function initState(): LevelState {
         phaserOnScreen: false,
         numberOfEnemies: 0,
         level: 1,
-        score: 0,
     };
 }

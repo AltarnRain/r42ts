@@ -17,15 +17,22 @@ import GameActions from "../GameActions";
 export default function debuggingReducer(state: DebuggingState = initState(), action: ActionPayload<any>): DebuggingState {
     return produce(state, (draft) => {
         switch (action.type) {
-            case GameActions.togglePlayerImmortality:
-                draft.playerIsImmortal = !draft.playerIsImmortal;
+            case GameActions.playerImmortal:
+                draft.playerIsImmortal = true;
                 break;
-            case GameActions.toggleRenderPhaser:
-                draft.renderPhaser = !draft.renderPhaser;
+            case GameActions.playerMortal:
+                draft.playerIsImmortal = false;
                 break;
-            case GameActions.toggleHitboxes:
-                draft.renderPhaser = !draft.renderPhaser;
+            case GameActions.renderPhaserOn:
+                draft.renderPhaser = true;
                 break;
+            case GameActions.renderPhaserOff:
+                draft.renderPhaser = false;
+            case GameActions.hitboxesOn:
+                draft.drawHitboxes = true;
+                break;
+            case GameActions.hitboxesOff:
+                draft.drawHitboxes = false;
         }
     });
 }

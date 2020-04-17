@@ -17,15 +17,6 @@ import GameActions from "../GameActions";
 export default function playerReducer(state: PlayerState = initState(), action: ActionPayload<any>): PlayerState {
     return produce(state, (draft) => {
         switch (action.type) {
-            case GameActions.setLives:
-                draft.lives = action.payload;
-                break;
-            case GameActions.addLife:
-                draft.lives += 1;
-                break;
-            case GameActions.removeLife:
-                draft.lives -= 1;
-                break;
             case GameActions.setPlayer:
                 draft.player = action.payload;
                 break;
@@ -36,9 +27,7 @@ export default function playerReducer(state: PlayerState = initState(), action: 
             case GameActions.setPlayerFormationPhase:
                 draft.playerFormationPhase = action.payload;
                 break;
-            case GameActions.increaseScore:
-                draft.score += action.payload;
-                break;
+
         }
     });
 }
@@ -48,11 +37,8 @@ export default function playerReducer(state: PlayerState = initState(), action: 
  */
 function initState(): PlayerState {
     return {
-        lives: 2,
-        phaserCount: 1,
         player: undefined,
         playerBullet: undefined,
         playerFormationPhase: "begin",
-        score: 0,
     };
 }

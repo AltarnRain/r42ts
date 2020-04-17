@@ -14,11 +14,6 @@ import PlayerBullet from "../../Player/PlayerBullet";
 
 export default interface PlayerState {
     /**
-     * Lives remaining to the player
-     */
-    lives: number;
-
-    /**
      * Reference to the player object.
      */
     player: Player | undefined;
@@ -33,13 +28,4 @@ export default interface PlayerState {
      */
     playerFormationPhase: "begin" | "inprogress" | undefined;
 
-    /**
-     * The number of phasers the player has
-     */
-    phaserCount: number;
-
-    /**
-     * The player's score.
-     */
-    score: number;
 }

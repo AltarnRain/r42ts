@@ -49,7 +49,7 @@ window.onload = () => {
                 Lives.setLives(2);
                 Phasers.setPhasers(1);
 
-                PlayerFormation.formFast(PlayerLocationHandler.getShipSpawnLocation(), () => {
+                PlayerFormation.formSlow(PlayerLocationHandler.getShipSpawnLocation(), () => {
                     Runner.register(new Player(PlayerLocationHandler.getPlayerLocation()));
                 });
 

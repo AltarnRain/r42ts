@@ -1,10 +1,11 @@
 enum GameActions {
-    togglePlayerImmortality,
-    toggleRenderPhaser,
-    toggleHitboxes,
+    playerImmortal,
+    renderPhaserOn,
+    renderPhaserOff,
+    hitboxesOn,
+    hitboxesOff,
     addEnemy,
     removeEnemy,
-    togglePause,
     addExplosionCenter,
     removeExplosionCenter,
     addParticle,
@@ -20,7 +21,10 @@ enum GameActions {
     setPlayer,
     setBullet,
     setPlayerFormationPhase,
-    increaseScore
+    increaseScore,
+    pauseOn,
+    pauseOff,
+    playerMortal
 }
 
 export default GameActions;

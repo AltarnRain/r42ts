@@ -35,3 +35,8 @@ export type TickFunction = (tick: number) => void;
  * Movement Limits for the player.
  */
 export type MoveLimits = "immobile" | "sideways" | "forceup" | "none";
+
+/**
+ * Defines the phases of the player formation.
+ */
+export type PlayerFormationPhases = "begin" | "inprogress" | undefined;

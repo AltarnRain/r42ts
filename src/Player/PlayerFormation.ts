@@ -105,7 +105,6 @@ export function formFast(targetLocation: GameLocation, formationDoneCallback: ()
     allMovingParts.forEach((p) => p.setSpeed(20));
 
     PlayerLocationHandler.setMoveLimit("immobile");
-    done = formationDoneCallback;
 }
 
 /**
@@ -122,7 +121,6 @@ export function formSlow(targetLocation: GameLocation, formationDoneCallback: ()
     allMovingParts.forEach((p) => p.setSpeed(10));
 
     PlayerLocationHandler.setMoveLimit("sideways");
-    done = formationDoneCallback;
 }
 
 /**

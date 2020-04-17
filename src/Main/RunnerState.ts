@@ -9,6 +9,7 @@ import BaseParticle from "../Base/BaseParticle";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import Player from "../Player/Player";
 import PlayerBullet from "../Player/PlayerBullet";
+import { PlayerFormationPhases } from "../Types/Types";
 
 /**
  * Module:          RunnerState
@@ -65,7 +66,7 @@ export interface RunnerState {
     /**
      * Flag if the player's ship is forming after death.
      */
-    playerFormationPhase: "begin" | "inprogress" | undefined;
+    playerFormationPhase: PlayerFormationPhases;
 
     /**
      * Debugging options.

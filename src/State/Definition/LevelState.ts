@@ -44,7 +44,8 @@ export default interface LevelState {
      */
     numberOfEnemies: number;
 
+    /**
+     * The level.
+     */
     level: number;
-
-    score: number;
 }
