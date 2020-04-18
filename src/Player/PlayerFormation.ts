@@ -56,6 +56,8 @@ let rightWingEndLocation: GameLocation;
 
 let formationSpeed: "slow" | "fast" = "slow";
 
+let done: () => void;
+
 /**
  * Set the particle locations in the module
  * @param {GameLocation} targetLocation.
@@ -105,7 +107,7 @@ export function formFast(targetLocation: GameLocation, formationDoneCallback: ()
     allMovingParts.forEach((p) => p.setSpeed(20));
 
     dispatch<MoveLimits>("setPlayerMovementLimit", "immobile");
-    formationDoneCallback();
+    done = formationDoneCallback;
 }
 
 /**
@@ -122,6 +124,7 @@ export function formSlow(targetLocation: GameLocation, formationDoneCallback: ()
     allMovingParts.forEach((p) => p.setSpeed(10));
 
     dispatch<MoveLimits>("setPlayerMovementLimit", "sideways");
+    done = formationDoneCallback;
 }
 
 /**
@@ -146,7 +149,9 @@ export function updateState(): void {
     });
 
     if (allMovingParts.every((p) => p.traveling() === false)) {
+        allMovingParts = [];
         dispatch<MoveLimits>("setPlayerMovementLimit", "none");
+        done();
     }
 }
 

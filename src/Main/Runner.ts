@@ -31,7 +31,7 @@ import { PlayerFormationPhases } from "../Types/Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { overlaps } from "../Utility/Geometry";
 
-let drawHandle: number | undefined = 0;
+let drawHandle: number | undefined;
 
 /**
  * Runs the main game loop.
@@ -69,12 +69,13 @@ export function run(tick: number): void {
 function updateState(tick: number) {
 
     const { playerState, levelState, debuggingState, gameState, keyboardState } = appState();
+
     if (playerState.playerFormationPhase === "begin" && levelState.particles.length === 0) {
 
         dispatch<PlayerFormationPhases>("setPlayerFormationPhase", "inprogress");
 
         PlayerFormation.formSlow(getShipSpawnLocation(), () => {
-            dispatch<PlayerShip>("setPlayer", new PlayerShip(playerState.playerLocation));
+            dispatch<PlayerShip>("setPlayer", new PlayerShip());
             dispatch<PlayerFormationPhases>("setPlayerFormationPhase", undefined);
         });
     } else if (playerState.playerFormationPhase === "inprogress") {

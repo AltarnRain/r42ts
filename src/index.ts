@@ -11,12 +11,15 @@
 
 import BirdEnemy from "./Enemies/Bird/Bird";
 import { drawGameScreen } from "./GameScreen/DrawGameScreen";
-import { GameLoop, Level, Lives, Phasers, PlayerFormation, PlayerLocationHandler, Runner, ScoreBoard } from "./Modules";
+import { GameLoop, Level, Lives, Phasers, PlayerFormation, Runner, ScoreBoard } from "./Modules";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
+import PlayerShip from "./Player/PlayerShip";
 import DimensionProvider from "./Providers/DimensionProvider";
-import renderFrame from "./Render/RenderFrame";
 import getShipSpawnLocation from "./Providers/PlayerSpawnLocationProvider";
+import renderFrame from "./Render/RenderFrame";
+import { dispatch } from "./State/Store";
+import { registerListeners } from "./Utility/KeyboardEvents";
 
 window.onload = () => {
 
@@ -35,6 +38,8 @@ window.onload = () => {
                     fullWidth
                 } = DimensionProvider();
 
+                registerListeners();
+
                 GameLoop.register(drawGameScreen);
                 GameLoop.register(Runner.run);
 
@@ -47,12 +52,13 @@ window.onload = () => {
                 Lives.setLives(2);
                 Phasers.setPhasers(1);
 
+                const s1 = GameLoop.register(PlayerFormation.updateState);
+                const s2 = GameLoop.register(PlayerFormation.draw);
                 PlayerFormation.formSlow(getShipSpawnLocation(), () => {
-                    // Runner.register(new PlayerShip(PlayerLocationHandler.getPlayerLocation()));
+                    dispatch("setPlayer", new PlayerShip());
+                    s1();
+                    s2();
                 });
-
-                GameLoop.register(PlayerFormation.updateState);
-                GameLoop.register(PlayerFormation.draw);
 
                 (window as any).r42 = {
                     updateScore: (n: number) => ScoreBoard.updateScore(n),
@@ -64,8 +70,8 @@ window.onload = () => {
                     addPhaser: () => Phasers.addPhaser(),
                     setPhasers: (n: number) => Phasers.setPhasers(n),
                     removePhaser: () => Phasers.reduceByOneCharge(),
-                    // setSpeed: (n: number) => Runner.setEnemySpeed(n),
-                    // toggleHitboxes: () => Runner.toggleHitboxes(),
+                    // setSpeed: (n: number) => dispatch<number>("set"),
+                    // toggleHitboxes: () => dispatchEvent,
                     addBirds: (n: number) => {
                         for (let i = 0; i < n; i++) {
                             const bird = new BirdEnemy();

@@ -40,10 +40,7 @@ export default class PlayerShip {
     /**
      * Construct the class.
      */
-    constructor(location: GameLocation) {
-
-        // Set the player location in the PlayerLocationHandler.
-        dispatch<GameLocation>("setPlayerLocation", location);
+    constructor() {
         this.frame = cloneObject(PlayerFrame);
         convertFrameColor(this.frame);
     }
