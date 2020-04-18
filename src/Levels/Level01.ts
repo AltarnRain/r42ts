@@ -4,10 +4,15 @@
  * See LICENSE.MD.
  */
 
+import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import { BirdSpawnLocations } from "../Enemies/Bird/BirdSpawnLoctions";
-import { PlayerFormation } from "../Modules";
+import { drawLevelBannerWithTimeout } from "../GameScreen/LevelBanner";
+import GameLocation from "../Models/GameLocation";
+import { GameLoop, PlayerFormation, Runner } from "../Modules";
+import PlayerShip from "../Player/PlayerShip";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
+import { dispatch } from "../State/Store";
 
 /**
  * Module:          Level 01
@@ -20,8 +25,17 @@ export class Level01 {
 
         const enemies = BirdSpawnLocations.map((l) => new BirdEnemy(l, 3));
 
+        dispatch<BaseEnemyObject[]>("setEnemies", enemies);
+        dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
+
+        const sub = GameLoop.register(PlayerFormation.run);
+
         PlayerFormation.formFast(getShipSpawnLocation(), () => {
-            
+            sub();
+            drawLevelBannerWithTimeout(1, 500, () => {
+                dispatch<PlayerShip>("setPlayer", new PlayerShip());
+                GameLoop.register(Runner.run);
+            });
         });
     }
 }

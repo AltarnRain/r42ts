@@ -43,7 +43,7 @@ function initState(): PlayerState {
     return {
         ship: undefined,
         playerBullet: undefined,
-        playerFormationPhase: "begin",
+        playerFormationPhase: undefined,
         moveLimit: "none",
         playerLocation: getShipSpawnLocation(),
     };

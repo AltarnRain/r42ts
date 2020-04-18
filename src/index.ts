@@ -9,14 +9,14 @@
  * Responsibility:  Entry point for the game
  */
 
-import { drawLevelBanner } from "./GameScreen/LevelBanner";
-import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
-import { GameLoop } from "./Modules";
+import { Level01 } from "./Levels/Level01";
+import { GameLoop, StatusBar } from "./Modules";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
 import DimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 import { dispatch } from "./State/Store";
+import { registerListeners } from "./Utility/KeyboardEvents";
 
 window.onload = () => {
 
@@ -35,19 +35,19 @@ window.onload = () => {
                     fullWidth
                 } = DimensionProvider();
 
-                // StatusBar.subscribeToChanges();
+                StatusBar.subscribeToChanges();
 
-                // dispatch<number>("setLives", 10);
-                // dispatch<number>("setPhasers", 30);
-                // dispatch<number>("setLevel", 2);
-                // dispatch<number>("increaseScore", 2000);
+                dispatch<number>("setLives", 10);
+                dispatch<number>("setPhasers", 30);
+                dispatch<number>("setLevel", 2);
+                dispatch<number>("increaseScore", 2000);
 
-                // registerListeners();
+                registerListeners();
 
                 // GameLoop.register(Runner.run);
 
-                drawGameFieldBorder();
-                drawLevelBanner(9);
+                // drawGameFieldBorder();
+                // drawLevelBanner(9);
 
                 // const birds = BirdSpawnLocations.map((bs) =>  new BirdEnemy(bs, 3));
                 // dispatch<BaseEnemyObject[]>("setEnemies", birds);
@@ -89,6 +89,9 @@ window.onload = () => {
 
                 // Runner.start();
                 GameLoop.Start();
+
+                const l = new Level01();
+                l.start();
 
                 // Runner.toggleHitboxes();
                 // Runner.togglePlayerImmortality();

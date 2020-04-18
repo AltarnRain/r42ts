@@ -81,7 +81,7 @@ function updateState(tick: number) {
     }
 
     if (playerState.playerFormationPhase === "inprogress") {
-        PlayerFormation.updateState();
+        PlayerFormation.run();
     }
 
     // Update object states.
@@ -192,7 +192,7 @@ function draw(): void {
     player.playerBullet?.draw();
 
     if (player.playerFormationPhase === "inprogress") {
-        PlayerFormation.draw();
+        PlayerFormation.run();
     }
 
     DEBUGGING_drawPhasor();
@@ -273,7 +273,7 @@ function handlePlayerDeath(player: PlayerShip): void {
     dispatch("removeLife");
 
     if (gameState.lives > 0) {
-        dispatch<PlayerFormationPhases>("setPlayerFormationPhase", "inprogress");
+        dispatch<PlayerFormationPhases>("setPlayerFormationPhase", "begin");
     } else {
         // TODO: handle game over.
     }

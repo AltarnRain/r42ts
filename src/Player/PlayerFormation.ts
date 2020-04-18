@@ -8,12 +8,13 @@ import GameLocation from "../Models/GameLocation";
 import { PlayerMovementHandler } from "../Modules";
 import DimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
-import { MoveLimits } from "../Types/Types";
+import { MoveLimits, PlayerFormationPhases } from "../Types/Types";
 import { convertFramesColors } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { getLocation } from "../Utility/Location";
 import PlayerFormationPart from "./PlayerFormationPart";
 import { PlayerFormationFrames } from "./PlayerFrames";
+import { clearGameFieldBackground } from "../GameScreen/StaticRenders";
 
 /**
  * Module:          PlayerFormation
@@ -127,10 +128,15 @@ export function formSlow(targetLocation: GameLocation, formationDoneCallback: ()
     done = formationDoneCallback;
 }
 
+export function run(tick?: number): void {
+    updateState();
+    draw();
+}
+
 /**
  * Main function that draws the player formation.
  */
-export function updateState(): void {
+function updateState(): void {
     const {playerState, keyboardState } = appState();
 
     if (keyboardState.space === false && formationSpeed === "slow" && allMovingParts.some((p) => p.traveling())) {
@@ -146,6 +152,7 @@ export function updateState(): void {
         leftWingPart?.setUpdatedTargetLocation(leftWingEndLocation);
         rightWingPart?.setUpdatedTargetLocation(rightWingEndLocation);
     } else if (formationSpeed === "fast") {
+        clearGameFieldBackground();
         allMovingParts.forEach((p) => {
             p.updateState();
         });
@@ -161,6 +168,6 @@ export function updateState(): void {
 /**
  * Draw the moving parts.
  */
-export function draw(): void {
+function draw(): void {
     allMovingParts.forEach((p) => p.draw());
 }

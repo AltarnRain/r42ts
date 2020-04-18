@@ -51,6 +51,13 @@ const barwidth = maxPixelSize * 30;
 const roundWidth = 76 * maxPixelSize;
 const charSpacing = maxPixelSize * 2;
 
+export function drawLevelBannerWithTimeout(level: number, timeout: number, callback: () => void): void {
+    drawLevelBanner(level);
+    window.setTimeout(() => {
+        callback();
+    }, timeout);
+}
+
 export function drawLevelBanner(level: number): void {
 
     let barcolor: string;
