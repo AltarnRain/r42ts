@@ -5,7 +5,8 @@
  */
 
 import DebuggingState from "./DebuggingState";
-import { GameState } from "./GameState";
+import GameState from "./GameState";
+import KeyboardState from "./KeyboardState";
 import LevelState from "./LevelState";
 import PlayerState from "./PlayerState";
 
@@ -31,5 +32,13 @@ export default interface ApplicationState {
 
     debuggingState: DebuggingState;
 
+    /**
+     * Over all state of the game. Keeps track of score, lives, phaser charges, etc.
+     */
     gameState: GameState;
+
+    /**
+     * Current state of the game control keys.
+     */
+    keyboardState: KeyboardState;
 }

@@ -9,7 +9,7 @@
  * Responsibility:  Overall state of the game
  */
 
-export interface GameState {
+export default interface GameState {
     score: number;
     level: number;
     lives: number;

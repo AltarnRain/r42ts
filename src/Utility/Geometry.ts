@@ -4,9 +4,9 @@
  * See LICENSE.MD.
  */
 
-import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardState";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
+import KeyboardState from "../State/Definition/KeyboardState";
 
 /**
  * Module:          Geometry

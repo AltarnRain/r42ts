@@ -11,7 +11,7 @@ import { MoveLimits } from "../Types/Types";
 import { getFrameDimensions } from "../Utility/Frame";
 import { getAngle } from "../Utility/Geometry";
 import { fallsWithin, getLocation } from "../Utility/Location";
-import KeyboardState from "./KeyboardStateHandler/KeyboardStateHandler";
+import { appState } from "../State/Store";
 
 /**
  * Module:          PlayerLocationHandler
@@ -78,7 +78,9 @@ export function setMoveLimit(limit: MoveLimits): void {
  * @param {number} speed. Speed the ship can travel. Can vary depending on the level or if the player ship is forming.
  */
 export function movePlayer(speed: number): void {
-    const keyboardState = { ...KeyboardState };
+    const { keyboardState } = appState();
+
+    const localKeyboardState ={ ... keyboardState};
 
     // Certain levels limit the movement of the player.
     // We'll use a fresh keyboardState object and make some adjustments.
@@ -88,12 +90,12 @@ export function movePlayer(speed: number): void {
             return;
         case "sideways":
             // Used when the player forms. Override the keyboard state.
-            keyboardState.down = keyboardState.up = false;
+            localKeyboardState.down =   localKeyboardState.up = false;
             break;
         case "forceup":
             // Used when the player travels through a warp gate.
-            keyboardState.up = true;
-            keyboardState.down = false;
+            localKeyboardState.up = true;
+            localKeyboardState.down = false;
             break;
         case "none":
         // Make not changes and allow 360 degrees of freedown
@@ -101,7 +103,7 @@ export function movePlayer(speed: number): void {
         // No default;
     }
 
-    const angle = getAngle(keyboardState);
+    const angle = getAngle(localKeyboardState);
     if (angle !== -1) {
         const newLocation = getLocation(playerLocation, angle, speed);
         if (fallsWithin(newLocation, gameFieldTop, maxBottom, 0, maxRight)) {

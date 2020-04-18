@@ -11,11 +11,9 @@
 
 import BirdEnemy from "./Enemies/Bird/Bird";
 import { drawGameScreen } from "./GameScreen/DrawGameScreen";
-import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import { GameLoop, Level, Lives, Phasers, PlayerFormation, PlayerLocationHandler, Runner, ScoreBoard } from "./Modules";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
-import PlayerShip from "./Player/PlayerShip";
 import DimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 
@@ -36,7 +34,6 @@ window.onload = () => {
                     fullWidth
                 } = DimensionProvider();
 
-                registerListeners();
                 GameLoop.register(drawGameScreen);
                 GameLoop.register(Runner.run);
 

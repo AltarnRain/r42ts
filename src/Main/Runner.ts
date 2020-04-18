@@ -13,7 +13,6 @@ import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BaseGameObject from "../Base/BaseGameObject";
 import BaseParticle from "../Base/BaseParticle";
 import { clearGameFieldBackground } from "../GameScreen/StaticRenders";
-import KeyboardState from "../Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { Lives, Phasers, PlayerFormation, PlayerLocationHandler, ScoreBoard } from "../Modules";
@@ -41,11 +40,11 @@ export function run(tick: number): void {
     // Always update the state before drawing on the canvas. This means
     // the player is seeing the latest version of the game's state
     // and it will feel much more accurate. It also
-    // means the game will not render objects that are about to be removed from the game's 
+    // means the game will not render objects that are about to be removed from the game's
     // For example, explosions and particles that moved out of the game's playing field.
     updateState(tick);
 
-    // Drawing is async. Don't draw when there's a draw is process. Keep calculating the 
+    // Drawing is async. Don't draw when there's a draw is process. Keep calculating the
     if (drawHandle === undefined) {
 
         // use a setTimeOut 0 to push drawing the game to the back of the
@@ -68,7 +67,7 @@ export function run(tick: number): void {
  */
 function updateState(tick: number) {
 
-    const { playerState, levelState, debuggingState, gameState } = appState();
+    const { playerState, levelState, debuggingState, gameState, keyboardState } = appState();
     if (playerState.playerFormationPhase === "begin" && levelState.particles.length === 0) {
 
         dispatch<PlayerFormationPhases>("setPlayerFormationPhase", "inprogress");
@@ -111,7 +110,7 @@ function updateState(tick: number) {
     });
 
     // Keyboard events.
-    if (playerIsAlive(playerState.ship) && KeyboardState.selfDestruct) {
+    if (playerIsAlive(playerState.ship) && keyboardState.selfDestruct) {
         for (const enemy of levelState.enemies) {
             queueExplosionRender(enemy.getCenterLocation(), enemy.getExplosion());
         }
@@ -126,13 +125,13 @@ function updateState(tick: number) {
     // In order to fire a phaser there must be enemies, the player must have a phaser charge, a phaser cannot
     // currently being fired (=on screen) and the player must be alive.
     if (playerIsAlive(playerState.ship) &&
-        KeyboardState.phraser &&
+        keyboardState.phraser &&
         levelState.enemies.length > 0 &&
         gameState.phasers > 0 && levelState.phaserOnScreen === false) {
         handlePhaser(playerState.ship);
     }
 
-    if (playerIsAlive(playerState.ship) && KeyboardState.fire && playerState.playerBullet === undefined) {
+    if (playerIsAlive(playerState.ship) && keyboardState.fire && playerState.playerBullet === undefined) {
         playerState.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 30, 1, playerState.ship.getNozzleLocation());
     }
 
@@ -265,7 +264,7 @@ function handlePlayerDeath(player: PlayerShip): void {
     Lives.removeLife();
 
     if (Lives.getLives() > 0) {
-        dispatch<PlayerFormationPhases>("setPlayerFormationPhase", "inprogress")
+        dispatch<PlayerFormationPhases>("setPlayerFormationPhase", "inprogress");
     } else {
         // TODO: handle game over.
     }

@@ -30,7 +30,9 @@ type GameActions =
     "registerParticle" |
     "registerEnemy" |
     "setEnemies" |
-    "addParticles"
+    "addParticles" |
+    "keydown" |
+    "keyup"
     ;
 
 export default GameActions;

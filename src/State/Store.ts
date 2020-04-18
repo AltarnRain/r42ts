@@ -5,6 +5,7 @@ import LevelState from "./Definition/LevelState";
 import GameActions from "./GameActions";
 import debuggingReducer from "./Reducers/DebuggingReducer";
 import { gameStateReducer } from "./Reducers/GameStateReducer";
+import { keyboardStateReducer } from "./Reducers/KeyboardStateReducer";
 import { levelReducer } from "./Reducers/LevelReducer";
 import playerReducer from "./Reducers/PlayerReducer";
 
@@ -16,6 +17,7 @@ const reducers: ReducersMapObject<ApplicationState, ActionPayload<any>> = {
     playerState: playerReducer,
     debuggingState: debuggingReducer,
     gameState: gameStateReducer,
+    keyboardState: keyboardStateReducer
 };
 
 const allReducers = combineReducers(reducers);

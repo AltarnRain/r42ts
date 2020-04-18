@@ -6,8 +6,7 @@
 
 import produce from "immer";
 import ActionPayload from "../ActionPayLoad";
-import { GameState } from "../Definition/GameState";
-import GameActions from "../GameActions";
+import GameState from "../Definition/GameState";
 
 /**
  * Module:          GameStateReducer
