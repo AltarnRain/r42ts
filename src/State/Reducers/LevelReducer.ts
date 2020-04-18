@@ -21,9 +21,6 @@ export function levelReducer(state: LevelState = initState(), action: ActionPayl
             case "removeExplosionCenter":
                 draft.explosionCenters = draft.explosionCenters.filter((e) => e !== action.payload);
                 break;
-            case "addParticle":
-                draft.particles.push(action.payload);
-                break;
             case "addParticles":
                 draft.particles.push(...action.payload);
                 break;
@@ -38,12 +35,6 @@ export function levelReducer(state: LevelState = initState(), action: ActionPayl
                 break;
             case "resetLevelState":
                 draft = initState();
-                break;
-            case "registerParticle":
-                draft.particles.push(action.payload);
-                break;
-            case "registerEnemy":
-                draft.enemies.push(action.payload);
                 break;
             case "setEnemies":
                 draft.enemies = action.payload;

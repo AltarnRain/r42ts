@@ -1,43 +1,46 @@
 type GameActions =
+    // Debugging
     "playerImmortal" |
+    "playerMortal" |
     "renderPhaserOn" |
     "renderPhaserOff" |
     "hitboxesOn" |
     "hitboxesOff" |
+
+    // Level
+    "resetLevelState" |
+    "setEnemies" |
+    "addParticles" |
     "removeEnemy" |
     "addExplosionCenter" |
     "removeExplosionCenter" |
-    "addParticle" |
     "removeParticle" |
     "phaserOnScreen" |
     "phaserOffScreen" |
-    "level" |
-    "addToScore" |
-    "setLives" |
-    "addLife" |
-    "removeLife" |
+
+    // Player
     "setPlayer" |
     "setBullet" |
     "setPlayerFormationPhase" |
+    "setPlayerMovementLimit" |
+    "setPlayerLocation" |
+
+    // GameState
+    "setLives" |
+    "addLife" |
+    "removeLife" |
     "increaseScore" |
     "pauseOn" |
     "pauseOff" |
-    "playerMortal" |
-    "resetLevelState" |
-    "registerObject" |
-    "registerParticle" |
-    "registerEnemy" |
-    "setEnemies" |
-    "addParticles" |
+    "addLevel" |
+    "setLevel" |
+
+    // Keyboard
     "keydown" |
     "keyup" |
-    "setPlayerMovementLimit" |
-    "setPlayerLocation" |
     "addPhaser" |
     "removePhaser" |
-    "setPhasers" |
-    "addLevel" |
-    "setLevel"
+    "setPhasers"
     ;
 
 export default GameActions;
