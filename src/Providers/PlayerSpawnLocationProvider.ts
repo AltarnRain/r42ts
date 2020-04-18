@@ -23,7 +23,7 @@ const {
 const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
 
 const shipSpawnLocation = {
-    top: gameFieldHeight * 0.8,
+    top: gameFieldHeight * 0.99,
     left: (fullWidth / 2) - shipDimensions.width,
 };
 

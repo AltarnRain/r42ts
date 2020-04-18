@@ -133,7 +133,6 @@ export function formSlow(targetLocation: GameLocation, formationDoneCallback: ()
 export function updateState(): void {
     const {playerState, keyboardState } = appState();
 
-    console.log(keyboardState.space);
     if (keyboardState.space === false && formationSpeed === "slow" && allMovingParts.some((p) => p.traveling())) {
         allMovingParts.forEach((p) => {
             p.updateState();
