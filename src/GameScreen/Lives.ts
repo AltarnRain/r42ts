@@ -8,6 +8,7 @@ import CGAColors from "../Constants/CGAColors";
 import { PlayerFrame } from "../Player/PlayerFrames";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
+import { appState } from "../State/Store";
 import { getFrameDimensions, setFrameColor } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 
@@ -22,47 +23,16 @@ setFrameColor(lifeFrame, CGAColors.yellow);
 const top = DimensionProvider().maxPixelSize;
 const leftStartPostion = DimensionProvider().fullWidth - DimensionProvider().maxPixelSize * 18;
 
-let lifeCount = 0;
-
-/**
- * Sets the number of player lives.
- * @param {number} lives. Player lives.
- */
-export function setLives(value: number): void {
-    lifeCount = value;
-}
-
-/**
- * Adds one life.
- */
-export function addLife(): void {
-    lifeCount++;
-}
-
-/**
- * Removes one life.
- */
-export function removeLife(): void {
-    lifeCount--;
-}
-
-/**
- * Returns the remaining player lives.
- */
-export function getLives(): number {
-    return lifeCount;
-}
-
 /**
  * Draws the player lives.
  */
 export function draw(): void {
-
+    const { gameState } = appState();
     let left = leftStartPostion;
 
     // Start five game pixels from the right.
     for (let lives = 1; lives <= 7; lives++) {
-        if (lives <= lifeCount) {
+        if (lives <= gameState.lives) {
             left = left - DimensionProvider().maxPixelSize * 2 - getFrameDimensions(lifeFrame, DimensionProvider().maxPixelSize).width;
             renderFrame({ left, top }, lifeFrame);
         }

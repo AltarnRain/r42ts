@@ -28,6 +28,14 @@ export function gameStateReducer(state: GameState = initState(), action: ActionP
             case "removeLife":
                 draft.lives -= 1;
                 break;
+            case "setPhasers":
+                draft.phasers = action.payload;
+                break;
+            case "addPhaser":
+                draft.phasers++;
+                break;
+            case "removePhaser":
+                draft.phasers--;
         }
     });
 }

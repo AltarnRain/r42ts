@@ -11,12 +11,10 @@
 
 import BirdEnemy from "./Enemies/Bird/Bird";
 import { drawGameScreen } from "./GameScreen/DrawGameScreen";
-import { GameLoop, Level, Lives, Phasers, PlayerFormation, Runner, ScoreBoard } from "./Modules";
+import { GameLoop, Level, Lives, Phasers, Runner, ScoreBoard } from "./Modules";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
-import PlayerShip from "./Player/PlayerShip";
 import DimensionProvider from "./Providers/DimensionProvider";
-import getShipSpawnLocation from "./Providers/PlayerSpawnLocationProvider";
 import renderFrame from "./Render/RenderFrame";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
@@ -45,31 +43,31 @@ window.onload = () => {
 
                 for (let i = 0; i < 1; i++) {
                     const bird = new BirdEnemy();
-                    // Runner.register(bird);
+                    dispatch<BirdEnemy>("addEnemy", bird);
                     bird.setSpeed(0);
                 }
 
-                Lives.setLives(2);
-                Phasers.setPhasers(1);
+                dispatch<number>("setLives", 2);
+                dispatch<number>("setPhasers", 1);
 
-                const s1 = GameLoop.register(PlayerFormation.updateState);
-                const s2 = GameLoop.register(PlayerFormation.draw);
-                PlayerFormation.formSlow(getShipSpawnLocation(), () => {
-                    dispatch("setPlayer", new PlayerShip());
-                    s1();
-                    s2();
-                });
+                // const s1 = GameLoop.register(PlayerFormation.updateState);
+                // const s2 = GameLoop.register(PlayerFormation.draw);
+                // PlayerFormation.formSlow(getShipSpawnLocation(), () => {
+                //     dispatch("setPlayer", new PlayerShip());
+                //     s1();
+                //     s2();
+                // });
 
                 (window as any).r42 = {
                     updateScore: (n: number) => ScoreBoard.updateScore(n),
                     addToScore: (n: number) => ScoreBoard.addToScore(n),
-                    setLives: (n: number) => Lives.setLives(n),
-                    addLife: () => Lives.addLife(),
-                    setLevel: (n: number) => Level.setLevel(n),
-                    addLevel: () => Level.addLevel(),
-                    addPhaser: () => Phasers.addPhaser(),
-                    setPhasers: (n: number) => Phasers.setPhasers(n),
-                    removePhaser: () => Phasers.reduceByOneCharge(),
+                    // setLives: (n: number) => Lives.setLives(n),
+                    // addLife: () => Lives.addLife(),
+                    // setLevel: (n: number) => Level.setLevel(n),
+                    // addLevel: () => Level.addLevel(),
+                    // addPhaser: () => Phasers.addPhaser(),
+                    // setPhasers: (n: number) => Phasers.setPhasers(n),
+                    // removePhaser: () => Phasers.reduceByOneCharge(),
                     // setSpeed: (n: number) => dispatch<number>("set"),
                     // toggleHitboxes: () => dispatchEvent,
                     addBirds: (n: number) => {

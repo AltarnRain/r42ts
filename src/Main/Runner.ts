@@ -177,6 +177,8 @@ function draw(): void {
     }
 
     // Begin by drawing a black rectangle on the game field before drawing game objects.
+    // This MUST be done here before the game objects are drawn otherwise
+    // this function might fire at the wrong time and clear the game field.
     clearGameFieldBackground();
 
     // Draw all the game objects
@@ -240,7 +242,7 @@ function handlePhaser(player: PlayerShip): void {
     const randomEnemyCenter = randomEnemy.getCenterLocation();
 
     // Remove one phaser.
-    Phasers.reduceByOneCharge();
+    dispatch("removePhaser");
     drawPhasor(playerNozzleLocation, randomEnemyCenter, DimensionProvider().maxPixelSize);
 
     // Pause the game for a very brief period. This is what the original game did
@@ -262,13 +264,13 @@ function handlePhaser(player: PlayerShip): void {
  */
 function handlePlayerDeath(player: PlayerShip): void {
 
-    const { playerState } = appState();
+    const { playerState, gameState } = appState();
 
     queueExplosionRender(playerState.playerLocation, player.getExplosion());
     dispatch<PlayerShip>("setPlayer", undefined);
-    Lives.removeLife();
+    dispatch("removeLife");
 
-    if (Lives.getLives() > 0) {
+    if (gameState.lives > 0) {
         dispatch<PlayerFormationPhases>("setPlayerFormationPhase", "inprogress");
     } else {
         // TODO: handle game over.

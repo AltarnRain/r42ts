@@ -34,7 +34,9 @@ type GameActions =
     "keydown" |
     "keyup" |
     "setPlayerMovementLimit" |
-    "setPlayerLocation"
+    "setPlayerLocation" |
+    "addPhaser" |
+    "removePhaser" |
+    "setPhasers"
     ;
-
 export default GameActions;
