@@ -9,7 +9,7 @@
  * Responsibility:  Entry point for the game
  */
 
-import BirdEnemy from "./Enemies/Bird/Bird";
+import BirdEnemy from "./Enemies/Bird/BirdEnemy";
 import { drawGameScreen } from "./GameScreen/DrawGameScreen";
 import { GameLoop, Level, Lives, Phasers, Runner, ScoreBoard } from "./Modules";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
