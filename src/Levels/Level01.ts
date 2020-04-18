@@ -4,19 +4,19 @@
  * See LICENSE.MD.
  */
 
+import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import { BirdSpawnLocations } from "../Enemies/Bird/BirdSpawnLoctions";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import GameLocation from "../Models/GameLocation";
 import { GameLoop, PlayerFormation, Runner } from "../Modules";
 import { PlayerFrame } from "../Player/PlayerFrames";
+import PlayerShip from "../Player/PlayerShip";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
-import { appState, dispatch } from "../State/Store";
-import { cloneObject } from "../Utility/Lib";
+import { dispatch } from "../State/Store";
 import { convertFrameColor } from "../Utility/Frame";
-import PlayerShip from "../Player/PlayerShip";
-import { BaseEnemyObject } from "../Base/BaseEnemyObject";
+import { cloneObject } from "../Utility/Lib";
 
 /**
  * Module:          Level 01
@@ -30,10 +30,10 @@ export class Level01 {
 
     public start(): void {
 
-        const { playerState } = appState();
         const enemies = BirdSpawnLocations.map((l) => new BirdEnemy(l, 3));
 
         dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
+        dispatch<number>("setLevel", 1);
 
         const formationSub = GameLoop.register(PlayerFormation.run);
         const levelSub = GameLoop.register(() => drawLevelBanner(1));

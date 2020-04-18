@@ -31,24 +31,13 @@ import { PlayerFormationPhases } from "../Types/Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { overlaps } from "../Utility/Geometry";
 
-let drawHandle: number | undefined;
-
 /**
  * Runs the main game loop.
  * @param {number} tick. The current tick.
  */
 export function run(tick: number): void {
-    // Always update the state before drawing on the canvas. This means
-    // the player is seeing the latest version of the game's state
-    // and it will feel much more accurate. It also
-    // means the game will not render objects that are about to be removed from the game's
-    // For example, explosions and particles that moved out of the game's playing field.
     updateState(tick);
-
-
     draw();
-
-
 }
 
 /**
@@ -56,8 +45,11 @@ export function run(tick: number): void {
  * @param {number} tick. Pass the tick count because some objects update their state depending on passed ticks.
  */
 function updateState(tick: number) {
-
     const { playerState, levelState, debuggingState, gameState, keyboardState } = appState();
+
+    if (levelState.pause) {
+        return;
+    }
 
     if (playerState.playerFormationPhase === "begin" && levelState.particles.length === 0) {
 
@@ -163,9 +155,6 @@ function updateState(tick: number) {
  */
 function draw(): void {
     const { levelState: level, playerState: player } = appState();
-    if (level.pause) {
-        return;
-    }
 
     // Draw all the game objects
     player.ship?.draw();
