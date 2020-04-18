@@ -88,8 +88,8 @@ export default class BirdEnemy extends BaseEnemyObject {
     /**
      * Creates the object.
      */
-    constructor() {
-        super(3);
+    constructor(location: GameLocation, speed: number) {
+        super(location, speed);
         this.angle = getRandomArrayElement([2, 358, 178, 182]);
 
         this.onFrameChange = this.onFrameChange.bind(this);
@@ -105,20 +105,7 @@ export default class BirdEnemy extends BaseEnemyObject {
 
         const { width, height } = getFrameDimensions(this.currentFrame, maxPixelSize);
 
-        // Calculate random left position
-        const left = randomNumberInRange(
-            fullWidth - width,
-            width
-        );
-
-        const top = randomNumberInRange(
-            gameFieldTop + height + averagePixelSize * 20 ,
-            gameFieldTop + height);
-
-        this.actualLocation = {
-            left,
-            top,
-        };
+        this.actualLocation = {...this.location};
 
         this.offSets = BirdFrames.offSets.map((o) => {
             return {

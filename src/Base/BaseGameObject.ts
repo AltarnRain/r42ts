@@ -18,7 +18,7 @@ export default abstract class BaseGameObject {
     /**
      * Game object location.
      */
-    protected location!: GameLocation;
+    protected location: GameLocation;
 
     /**
      * Current frame of the object
@@ -29,10 +29,8 @@ export default abstract class BaseGameObject {
      * Construct the object.
      * @param {Location?} location. A location. Optional. Some objects determine their own location.
      */
-    constructor(location?: GameLocation) {
-        if (location) {
-            this.location = {...location};
-        }
+    constructor(location: GameLocation) {
+        this.location = { ...location };
     }
 
     /**

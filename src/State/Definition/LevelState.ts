@@ -14,6 +14,7 @@ import ExplosionCenter from "../../Particles/ExplosionCenter";
  */
 
 export default interface LevelState {
+
     /**
      * Array of current game objects on screen.
      */
@@ -42,5 +43,5 @@ export default interface LevelState {
     /**
      * Counts the number of register enemies.
      */
-    numberOfEnemies: number;
+    totalNumberOfEnemies: number;
 }

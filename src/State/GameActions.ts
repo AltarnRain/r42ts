@@ -4,7 +4,6 @@ type GameActions =
     "renderPhaserOff" |
     "hitboxesOn" |
     "hitboxesOff" |
-    "addEnemy" |
     "removeEnemy" |
     "addExplosionCenter" |
     "removeExplosionCenter" |
@@ -12,7 +11,6 @@ type GameActions =
     "removeParticle" |
     "phaserOnScreen" |
     "phaserOffScreen" |
-    "numberOfEnemies" |
     "level" |
     "addToScore" |
     "setLives" |

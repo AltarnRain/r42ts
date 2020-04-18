@@ -28,8 +28,8 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
      * Construct the object.
      * @param {number} speed. Speed of the enemy.
      */
-    constructor(speed: number) {
-        super();
+    constructor(location: GameLocation, speed: number) {
+        super(location);
         this.currentSpeed = speed;
         this.baseSpeed = speed;
     }

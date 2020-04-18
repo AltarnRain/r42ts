@@ -215,11 +215,10 @@ function DEBUGGING_drawPhasor() {
  * @param {BaseEnemyObject} enemy.
  */
 function handleEnemyDestruction(enemy: BaseEnemyObject) {
-    const { levelState: level } = appState();
-    const remainingEnemies = level.enemies.length - 1;
-    level.enemies.forEach((e) => {
+    const { levelState} = appState();
+    levelState.enemies.forEach((e) => {
         if (e !== enemy) {
-            e.increaseSpeed(level.numberOfEnemies / remainingEnemies);
+            e.increaseSpeed(levelState.totalNumberOfEnemies / (levelState.enemies.length - 1));
         } else {
             dispatch<BaseEnemyObject>("removeEnemy", e);
         }
@@ -237,7 +236,7 @@ function handlePhaser(player: PlayerShip): void {
     const { levelState: level } = appState();
 
     // Prevent accidental double phasors when the player holds the button to long.
-    level.phaserOnScreen = true;
+    dispatch("phaserOnScreen");
 
     const randomEnemy = getRandomArrayElement(level.enemies);
     const playerNozzleLocation = player.getNozzleLocation();
@@ -249,11 +248,11 @@ function handlePhaser(player: PlayerShip): void {
 
     // Pause the game for a very brief period. This is what the original game did
     // when you fired a phasor shot.
-    level.pause = true;
+    dispatch("pauseOn");
     window.setTimeout(() => {
         // Unpause the game to let rendering continue.
-        level.pause = false;
-        level.phaserOnScreen = false;
+        dispatch("pauseOff");
+        dispatch("phaserOffScreen");
 
         // Deal the with the enemy that got hit.
         handleEnemyDestruction(randomEnemy);

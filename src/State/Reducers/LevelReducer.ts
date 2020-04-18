@@ -1,15 +1,11 @@
 import produce from "immer";
 import ActionPayload from "../ActionPayLoad";
 import LevelState from "../Definition/LevelState";
-import GameActions from "../GameActions";
 
 export function levelReducer(state: LevelState = initState(), action: ActionPayload<any>): LevelState {
 
     return produce(state, (draft) => {
         switch (action.type) {
-            case "addEnemy":
-                draft.enemies.push(action.payload);
-                break;
             case "removeEnemy":
                 draft.enemies = draft.enemies.filter((e) => e !== action.payload);
                 break;
@@ -40,9 +36,6 @@ export function levelReducer(state: LevelState = initState(), action: ActionPayl
             case "phaserOffScreen":
                 draft.phaserOnScreen = false;
                 break;
-            case "numberOfEnemies":
-                draft.numberOfEnemies = action.payload;
-                break;
             case "resetLevelState":
                 draft = initState();
                 break;
@@ -54,6 +47,7 @@ export function levelReducer(state: LevelState = initState(), action: ActionPayl
                 break;
             case "setEnemies":
                 draft.enemies = action.payload;
+                draft.totalNumberOfEnemies = action.payload.length;
                 break;
         }
     });
@@ -66,6 +60,6 @@ function initState(): LevelState {
         explosionCenters: [],
         particles: [],
         phaserOnScreen: false,
-        numberOfEnemies: 0,
+        totalNumberOfEnemies: 0,
     };
 }
