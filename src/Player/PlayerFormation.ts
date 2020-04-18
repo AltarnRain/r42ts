@@ -5,7 +5,7 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import { PlayerLocationHandler } from "../Modules";
+import { PlayerMovementHandler } from "../Modules";
 import DimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types/Types";
@@ -138,7 +138,7 @@ export function updateState(): void {
             p.updateState();
         });
 
-        PlayerLocationHandler.movePlayer(5);
+        PlayerMovementHandler.movePlayer(5);
         setPartLocations(playerState.playerLocation);
 
         nozzleTopPart?.setUpdatedTargetLocation(nozzleTipEndLocation);

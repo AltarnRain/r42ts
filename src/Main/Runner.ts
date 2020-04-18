@@ -12,10 +12,10 @@
 import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BaseGameObject from "../Base/BaseGameObject";
 import BaseParticle from "../Base/BaseParticle";
-import { clearGameFieldBackground } from "../GameScreen/StaticRenders";
+import { clearGameFieldBackground, drawGameFieldBorder } from "../GameScreen/StaticRenders";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
-import { Lives, Phasers, PlayerFormation, ScoreBoard } from "../Modules";
+import { PlayerFormation } from "../Modules";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import Particle from "../Particles/Particle";
 import { drawPhasor } from "../Player/DrawPhaser";
@@ -182,6 +182,7 @@ function draw(): void {
     // This MUST be done here before the game objects are drawn otherwise
     // this function might fire at the wrong time and clear the game field.
     clearGameFieldBackground();
+    drawGameFieldBorder();
 
     // Draw all the game objects
     player.ship?.draw();
@@ -225,7 +226,7 @@ function handleEnemyDestruction(enemy: BaseEnemyObject) {
     });
 
     queueExplosionRender(enemy.getLocation(), enemy.getExplosion());
-    ScoreBoard.addToScore(enemy.getPoints());
+    dispatch<number>("increaseScore", enemy.getPoints());
 }
 
 /**

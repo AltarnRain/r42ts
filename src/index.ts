@@ -9,11 +9,7 @@
  * Responsibility:  Entry point for the game
  */
 
-import { BaseEnemyObject } from "./Base/BaseEnemyObject";
-import BirdEnemy from "./Enemies/Bird/BirdEnemy";
-import { BirdSpawnLocations } from "./Enemies/Bird/BirdSpawnLoctions";
-import { drawGameScreen } from "./GameScreen/DrawGameScreen";
-import { GameLoop, Runner, ScoreBoard } from "./Modules";
+import { GameLoop, Runner, StatusBar } from "./Modules";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
 import DimensionProvider from "./Providers/DimensionProvider";
@@ -38,17 +34,23 @@ window.onload = () => {
                     fullWidth
                 } = DimensionProvider();
 
-                registerListeners();
+                StatusBar.subscribeToChanges();
 
-                GameLoop.register(drawGameScreen);
-                GameLoop.register(Runner.run);
-
-                const birds = BirdSpawnLocations.map((bs) =>  new BirdEnemy(bs, 3));
-                dispatch<BaseEnemyObject[]>("setEnemies", birds);
-
-                dispatch<number>("setLives", 2);
+                dispatch<number>("setLives", 10);
                 dispatch<number>("setPhasers", 30);
                 dispatch<number>("setLevel", 2);
+                dispatch<number>("increaseScore", 2000);
+
+                registerListeners();
+
+                GameLoop.register(Runner.run);
+
+                // const birds = BirdSpawnLocations.map((bs) =>  new BirdEnemy(bs, 3));
+                // dispatch<BaseEnemyObject[]>("setEnemies", birds);
+
+                // dispatch<number>("setLives", 2);
+                // dispatch<number>("setPhasers", 30);
+                // dispatch<number>("setLevel", 2);
 
                 // const s1 = GameLoop.register(PlayerFormation.updateState);
                 // const s2 = GameLoop.register(PlayerFormation.draw);
@@ -59,8 +61,7 @@ window.onload = () => {
                 // });
 
                 (window as any).r42 = {
-                    updateScore: (n: number) => ScoreBoard.updateScore(n),
-                    addToScore: (n: number) => ScoreBoard.addToScore(n),
+                    increaseScore: (n: number) => dispatch<number>("increaseScore", 200),
                     // setLives: (n: number) => Lives.setLives(n),
                     // addLife: () => Lives.addLife(),
                     // setLevel: (n: number) => Level.setLevel(n),

@@ -17,7 +17,7 @@ import DimensionProvider from "../Providers/DimensionProvider";
 const {
     gameFieldTop,
     fullWidth,
-    scoreBoardHeight,
+    statusBarHeight: scoreBoardHeight,
     maxPixelSize,
     fullHeight,
     gameFieldHeight,
@@ -30,15 +30,6 @@ export function clearGameFieldBackground(): void {
     const ctx = CtxProvider();
     ctx.fillStyle = CGAColors.black;
     ctx.fillRect(0, gameFieldTop, fullWidth, fullHeight);
-}
-
-/**
- * Draws a blue rectangle where the game's action takes place.
- */
-export function drawScoreBoardBackGround(): void {
-    const ctx = CtxProvider();
-    ctx.fillStyle = CGAColors.red;
-    ctx.fillRect(0, 0, fullWidth, scoreBoardHeight);
 }
 
 /**

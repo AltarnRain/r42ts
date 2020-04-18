@@ -12,10 +12,10 @@
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
-import { PlayerLocationHandler } from "../Modules";
+import { PlayerMovementHandler } from "../Modules";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import { appState, dispatch } from "../State/Store";
+import { appState } from "../State/Store";
 import { Frame, GameObjectType } from "../Types/Types";
 import { convertFrameColor, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
@@ -74,7 +74,7 @@ export default class PlayerShip {
      */
     public updateState(): void {
         // Use the PlayerLocationHandler to move the player.
-        PlayerLocationHandler.movePlayer(10);
+        PlayerMovementHandler.movePlayer(10);
     }
 
     /**

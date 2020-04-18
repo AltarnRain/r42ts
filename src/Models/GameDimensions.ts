@@ -34,7 +34,7 @@ export interface GameDimensions {
     /**
      * The game field height
      */
-    scoreBoardHeight: number;
+    statusBarHeight: number;
 
     /**
      * Maxiumum height of each pixel.
