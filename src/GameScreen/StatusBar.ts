@@ -19,7 +19,7 @@ import { appState, appStore } from "../State/Store";
 import { convertFrameColor, convertVariableFramesColor, getFrameByIndex, getFrameDimensions, setFrameColor } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { padLeft } from "../Utility/String";
-import Phaser from "./Phasers/PhaserFrame";
+import { Frame } from "../Types/Types";
 
 const ctx = CtxProvider();
 
@@ -45,7 +45,15 @@ const phaserStartPosition = scoreBackgroundWidth;
 const phaserSpacing = maxPixelSize * 2;
 const phaserDrawLimit = 10;
 const phaserBackgroundWidth = (phaserSpacing + maxPixelSize * 2) * (phaserDrawLimit - 1);
-const phaserFrame = cloneObject(Phaser);
+
+const phaserFrame: Frame = [
+    ["E", "0"],
+    ["E", "0"],
+    ["E", "E"],
+    ["0", "E"],
+    ["0", "E"],
+];
+
 convertFrameColor(phaserFrame);
 
 // Lives constants.
