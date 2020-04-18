@@ -131,9 +131,13 @@ export function formSlow(targetLocation: GameLocation, formationDoneCallback: ()
  * Main function that draws the player formation.
  */
 export function updateState(): void {
-    const {playerState } = appState();
+    const {playerState, keyboardState } = appState();
 
-    if (formationSpeed === "slow" && allMovingParts.some((p) => p.traveling())) {
+    if (formationSpeed === "slow" && allMovingParts.some((p) => p.traveling() && keyboardState.space === false)) {
+
+        allMovingParts.forEach((p) => {
+            p.updateState();
+        });
 
         PlayerLocationHandler.movePlayer(5);
         setPartLocations(playerState.playerLocation);
@@ -142,11 +146,11 @@ export function updateState(): void {
         nozzleBottomPart?.setUpdatedTargetLocation(nozzleBottomEndLocation);
         leftWingPart?.setUpdatedTargetLocation(leftWingEndLocation);
         rightWingPart?.setUpdatedTargetLocation(rightWingEndLocation);
+    } else {
+        allMovingParts.forEach((p) => {
+            p.updateState();
+        });
     }
-
-    allMovingParts.forEach((p) => {
-        p.updateState();
-    });
 
     if (allMovingParts.every((p) => p.traveling() === false)) {
         allMovingParts = [];

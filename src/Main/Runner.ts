@@ -134,7 +134,7 @@ function updateState(tick: number) {
     }
 
     if (playerIsAlive(playerState.ship) && keyboardState.fire && playerState.playerBullet === undefined) {
-        playerState.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 30, 1, playerState.ship.getNozzleLocation());
+        dispatch<PlayerBullet>("setBullet", new PlayerBullet(PlayerBulletFrame.F0, 270, 30, 1, playerState.ship.getNozzleLocation()));
     }
 
     // Hit detection.
@@ -158,7 +158,7 @@ function updateState(tick: number) {
             // Check if the player hit something.
             if (playerState.playerBullet !== undefined && isEnemy(hittableObject)) {
                 if (overlaps(playerState.playerBullet.getHitbox(), hittableObjectHitbox)) {
-                    playerState.playerBullet = undefined;
+                    dispatch<PlayerBullet>("setBullet", undefined);
                     handleEnemyDestruction(hittableObject);
                 }
             }
