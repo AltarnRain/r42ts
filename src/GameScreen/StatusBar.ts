@@ -16,10 +16,10 @@ import CtxProvider from "../Providers/CtxProvider";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState, appStore } from "../State/Store";
+import { Frame } from "../Types/Types";
 import { convertFrameColor, convertVariableFramesColor, getFrameByIndex, getFrameDimensions, setFrameColor } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { padLeft } from "../Utility/String";
-import { Frame } from "../Types/Types";
 
 const ctx = CtxProvider();
 
