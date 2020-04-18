@@ -78,7 +78,9 @@ function updateState(tick: number) {
             dispatch<PlayerShip>("setPlayer", new PlayerShip());
             dispatch<PlayerFormationPhases>("setPlayerFormationPhase", undefined);
         });
-    } else if (playerState.playerFormationPhase === "inprogress") {
+    }
+
+    if (playerState.playerFormationPhase === "inprogress") {
         PlayerFormation.updateState();
     }
 

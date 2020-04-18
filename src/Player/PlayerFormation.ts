@@ -133,8 +133,8 @@ export function formSlow(targetLocation: GameLocation, formationDoneCallback: ()
 export function updateState(): void {
     const {playerState, keyboardState } = appState();
 
-    if (formationSpeed === "slow" && allMovingParts.some((p) => p.traveling() && keyboardState.space === false)) {
-
+    console.log(keyboardState.space);
+    if (keyboardState.space === false && formationSpeed === "slow" && allMovingParts.some((p) => p.traveling())) {
         allMovingParts.forEach((p) => {
             p.updateState();
         });
@@ -146,7 +146,7 @@ export function updateState(): void {
         nozzleBottomPart?.setUpdatedTargetLocation(nozzleBottomEndLocation);
         leftWingPart?.setUpdatedTargetLocation(leftWingEndLocation);
         rightWingPart?.setUpdatedTargetLocation(rightWingEndLocation);
-    } else {
+    } else if (formationSpeed === "fast") {
         allMovingParts.forEach((p) => {
             p.updateState();
         });

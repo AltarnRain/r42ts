@@ -1,16 +1,39 @@
 import { dispatch } from "../State/Store";
 
+type GameKeys =
+    "ArrowUp" |
+    "ArrowDown" |
+    "ArrowLeft" |
+    "ArrowRight" |
+    "Backspace" |
+    "F1" |
+    "F2" |
+    "Space";
+
+export const allGameKeys: GameKeys[] = [
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowUp",
+    "Backspace",
+    "F1",
+    "F2",
+    "Space",
+];
+
 /**
  * onKeyDown. Fired when a game control key is pushed down..
  * @param {KeyboardEvent} event. A keyboard event.
  */
 function onKeyDown(event: KeyboardEvent): void {
 
-    // Only dispatch if the key is a game control key.
-    event.stopPropagation();
-    event.preventDefault();
+    if (allGameKeys.find((k) => k === event.code)) {
+        // Only dispatch if the key is a game control key.
+        event.stopPropagation();
+        event.preventDefault();
 
-    dispatch<string>("keydown", event.code);
+        dispatch<string>("keydown", event.code);
+    }
 }
 
 /**
@@ -19,11 +42,13 @@ function onKeyDown(event: KeyboardEvent): void {
  */
 function onKeyUp(event: KeyboardEvent): void {
 
-    // Only dispatch if the key is a game control key.
-    event.stopPropagation();
-    event.preventDefault();
+    if (allGameKeys.find((k) => k === event.code)) {
+        // Only dispatch if the key is a game control key.
+        event.stopPropagation();
+        event.preventDefault();
 
-    dispatch<string>("keyup", event.code);
+        dispatch<string>("keyup", event.code);
+    }
 }
 
 /**
