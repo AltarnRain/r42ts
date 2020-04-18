@@ -2,6 +2,7 @@ import { combineReducers, createStore, ReducersMapObject, Store } from "redux";
 import ActionPayload from "./ActionPayLoad";
 import ApplicationState from "./Definition/ApplicationState";
 import LevelState from "./Definition/LevelState";
+import GameActions from "./GameActions";
 import debuggingReducer from "./Reducers/DebuggingReducer";
 import { gameStateReducer } from "./Reducers/GameStateReducer";
 import { levelReducer } from "./Reducers/LevelReducer";
@@ -37,6 +38,6 @@ export function appState(): ApplicationState {
     return appStore().getState();
 }
 
-export function dispatch(action: ActionPayload<any>): void {
-    store.dispatch(action);
+export function dispatch<T>(type: GameActions, payload?: T): void {
+    store.dispatch({type, payload });
 }

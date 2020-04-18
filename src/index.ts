@@ -13,9 +13,9 @@ import BirdEnemy from "./Enemies/Bird/Bird";
 import { drawGameScreen } from "./GameScreen/DrawGameScreen";
 import { registerListeners } from "./Handlers/KeyboardStateHandler/KeyboardStateHandler";
 import { GameLoop, Level, Lives, Phasers, PlayerFormation, PlayerLocationHandler, Runner, ScoreBoard } from "./Modules";
-import Player from "./Player/Player";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
+import PlayerShip from "./Player/PlayerShip";
 import DimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 
@@ -42,7 +42,7 @@ window.onload = () => {
 
                 for (let i = 0; i < 1; i++) {
                     const bird = new BirdEnemy();
-                    Runner.register(bird);
+                    // Runner.register(bird);
                     bird.setSpeed(0);
                 }
 
@@ -50,7 +50,7 @@ window.onload = () => {
                 Phasers.setPhasers(1);
 
                 PlayerFormation.formSlow(PlayerLocationHandler.getShipSpawnLocation(), () => {
-                    Runner.register(new Player(PlayerLocationHandler.getPlayerLocation()));
+                    // Runner.register(new PlayerShip(PlayerLocationHandler.getPlayerLocation()));
                 });
 
                 GameLoop.register(PlayerFormation.updateState);
@@ -66,21 +66,21 @@ window.onload = () => {
                     addPhaser: () => Phasers.addPhaser(),
                     setPhasers: (n: number) => Phasers.setPhasers(n),
                     removePhaser: () => Phasers.reduceByOneCharge(),
-                    setSpeed: (n: number) => Runner.setEnemySpeed(n),
-                    toggleHitboxes: () => Runner.toggleHitboxes(),
+                    // setSpeed: (n: number) => Runner.setEnemySpeed(n),
+                    // toggleHitboxes: () => Runner.toggleHitboxes(),
                     addBirds: (n: number) => {
                         for (let i = 0; i < n; i++) {
                             const bird = new BirdEnemy();
-                            Runner.register(bird);
+                            // Runner.register(bird);
                         }
                     },
-                    togglePlayerImmortality: () => Runner.togglePlayerImmortality(),
-                    toggleRenderPhaser: () => Runner.toggleRenderPhaser(),
+                    // togglePlayerImmortality: () => Runner.togglePlayerImmortality(),
+                    // toggleRenderPhaser: () => Runner.toggleRenderPhaser(),
                 };
 
                 // testAngleCalculation();
 
-                Runner.start();
+                // Runner.start();
                 GameLoop.Start();
 
                 // Runner.toggleHitboxes();

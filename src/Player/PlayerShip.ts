@@ -29,7 +29,7 @@ const {
 
 const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
 
-export default class Player {
+export default class PlayerShip {
 
     /**
      * Reference to the player's ships frame.

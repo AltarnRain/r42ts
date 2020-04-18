@@ -17,14 +17,14 @@ import GameActions from "../GameActions";
 export default function playerReducer(state: PlayerState = initState(), action: ActionPayload<any>): PlayerState {
     return produce(state, (draft) => {
         switch (action.type) {
-            case GameActions.setPlayer:
-                draft.player = action.payload;
+            case "setPlayer":
+                draft.ship = action.payload;
                 break;
 
-            case GameActions.setBullet:
+            case "setBullet":
                 draft.playerBullet = action.payload;
                 break;
-            case GameActions.setPlayerFormationPhase:
+            case "setPlayerFormationPhase":
                 draft.playerFormationPhase = action.payload;
                 break;
 
@@ -37,7 +37,7 @@ export default function playerReducer(state: PlayerState = initState(), action: 
  */
 function initState(): PlayerState {
     return {
-        player: undefined,
+        ship: undefined,
         playerBullet: undefined,
         playerFormationPhase: "begin",
     };

@@ -17,16 +17,16 @@ import GameActions from "../GameActions";
 export function gameStateReducer(state: GameState = initState(), action: ActionPayload<any>): GameState {
     return produce(state, (draft) => {
         switch (action.type) {
-            case GameActions.increaseScore:
+            case "increaseScore":
                 draft.score += action.payload;
                 break;
-            case GameActions.setLives:
+            case "setLives":
                 draft.lives = action.payload;
                 break;
-            case GameActions.addLife:
+            case "addLife":
                 draft.lives += 1;
                 break;
-            case GameActions.removeLife:
+            case "removeLife":
                 draft.lives -= 1;
                 break;
         }

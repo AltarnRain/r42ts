@@ -4,8 +4,8 @@
  * See LICENSE.MD.
  */
 
-import Player from "../../Player/Player";
 import PlayerBullet from "../../Player/PlayerBullet";
+import PlayerShip from "../../Player/PlayerShip";
 
 /**
  * Module:          PlayerState
@@ -16,7 +16,7 @@ export default interface PlayerState {
     /**
      * Reference to the player object.
      */
-    player: Player | undefined;
+    ship: PlayerShip | undefined;
 
     /**
      * Quick reference to the player bullet.

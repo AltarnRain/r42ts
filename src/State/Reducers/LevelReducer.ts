@@ -7,41 +7,56 @@ export function levelReducer(state: LevelState = initState(), action: ActionPayl
 
     return produce(state, (draft) => {
         switch (action.type) {
-            case GameActions.addEnemy:
+            case "addEnemy":
                 draft.enemies.push(action.payload);
                 break;
-            case GameActions.removeEnemy:
+            case "removeEnemy":
                 draft.enemies = draft.enemies.filter((e) => e !== action.payload);
                 break;
-            case GameActions.pauseOn:
+            case "pauseOn":
                 draft.pause = true;
                 break;
-            case GameActions.pauseOff:
+            case "pauseOff":
                 draft.pause = false;
                 break;
-            case GameActions.addExplosionCenter:
+            case "addExplosionCenter":
                 draft.explosionCenters.push(action.payload);
                 break;
-            case GameActions.removeExplosionCenter:
+            case "removeExplosionCenter":
                 draft.explosionCenters = draft.explosionCenters.filter((e) => e !== action.payload);
                 break;
-            case GameActions.addParticle:
+            case "addParticle":
                 draft.particles.push(action.payload);
                 break;
-            case GameActions.removeParticle:
+            case "addParticles":
+                draft.particles.push(...action.payload);
+                break;
+            case "removeParticle":
                 draft.particles = draft.particles.filter((p) => p !== action.payload);
                 break;
-            case GameActions.phaserOnScreen:
+            case "phaserOnScreen":
                 draft.phaserOnScreen = true;
                 break;
-            case GameActions.phaserOffScreen:
+            case "phaserOffScreen":
                 draft.phaserOnScreen = false;
                 break;
-            case GameActions.numberOfEnemies:
+            case "numberOfEnemies":
                 draft.numberOfEnemies = action.payload;
                 break;
-            case GameActions.level:
+            case "level":
                 draft.level = action.payload;
+                break;
+            case "resetLevelState":
+                draft = initState();
+                break;
+            case "registerParticle":
+                draft.particles.push(action.payload);
+                break;
+            case "registerEnemy":
+                draft.enemies.push(action.payload);
+                break;
+            case "setEnemies":
+                draft.enemies = action.payload;
                 break;
         }
     });
