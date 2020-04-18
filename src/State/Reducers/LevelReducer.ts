@@ -43,9 +43,6 @@ export function levelReducer(state: LevelState = initState(), action: ActionPayl
             case "numberOfEnemies":
                 draft.numberOfEnemies = action.payload;
                 break;
-            case "level":
-                draft.level = action.payload;
-                break;
             case "resetLevelState":
                 draft = initState();
                 break;
@@ -70,6 +67,5 @@ function initState(): LevelState {
         particles: [],
         phaserOnScreen: false,
         numberOfEnemies: 0,
-        level: 1,
     };
 }

@@ -37,6 +37,9 @@ type GameActions =
     "setPlayerLocation" |
     "addPhaser" |
     "removePhaser" |
-    "setPhasers"
+    "setPhasers" |
+    "addLevel" |
+    "setLevel"
     ;
+
 export default GameActions;

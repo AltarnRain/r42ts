@@ -49,6 +49,7 @@ window.onload = () => {
 
                 dispatch<number>("setLives", 2);
                 dispatch<number>("setPhasers", 1);
+                dispatch<number>("setLevel", 2);
 
                 // const s1 = GameLoop.register(PlayerFormation.updateState);
                 // const s2 = GameLoop.register(PlayerFormation.draw);

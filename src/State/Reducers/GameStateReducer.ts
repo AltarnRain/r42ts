@@ -36,6 +36,13 @@ export function gameStateReducer(state: GameState = initState(), action: ActionP
                 break;
             case "removePhaser":
                 draft.phasers--;
+            case "addLevel":
+                draft.level++;
+                break;
+            case "setLevel":
+                draft.level = action.payload;
+                break;
+
         }
     });
 }

@@ -40,6 +40,11 @@ export function appState(): ApplicationState {
     return appStore().getState();
 }
 
+/**
+ * Typed dispatch function. Use the generic to add payload type checking.
+ * @param {GameActions} type. Predefinted game actions.
+ * @param {T} payload. An optional payload.
+ */
 export function dispatch<T>(type: GameActions, payload?: T): void {
     store.dispatch({type, payload });
 }

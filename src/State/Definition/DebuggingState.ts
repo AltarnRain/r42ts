@@ -10,7 +10,18 @@
  */
 
 export default interface DebuggingState {
+    /**
+     * When true draws hitboxes around game objects.
+     */
     drawHitboxes: boolean;
+
+    /**
+     * When true the player cannot die.
+     */
     playerIsImmortal: boolean;
+
+    /**
+     * When true the player's phaser will be drawn pointing at an enemy.
+     */
     renderPhaser: boolean;
 }

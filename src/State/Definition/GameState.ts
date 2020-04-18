@@ -10,8 +10,23 @@
  */
 
 export default interface GameState {
+    /**
+     * Current score.
+     */
     score: number;
+
+    /**
+     * Current level
+     */
     level: number;
+
+    /**
+     * The player's remaining lives.
+     */
     lives: number;
+
+    /**
+     * The player's phaser charges.
+     */
     phasers: number;
 }

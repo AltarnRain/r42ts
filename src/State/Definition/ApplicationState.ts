@@ -11,8 +11,8 @@ import LevelState from "./LevelState";
 import PlayerState from "./PlayerState";
 
 /**
- * Module:          GameState
- * Responsibility:  Definitiob of the Game's state
+ * Module:          ApplicationState
+ * Responsibility:  Defines the global managed state for the entire application.
  */
 
 export default interface ApplicationState {
@@ -22,7 +22,7 @@ export default interface ApplicationState {
     levelState: LevelState;
 
     /**
-     * State of the player
+     * State of the player.
      */
     playerState: PlayerState;
 

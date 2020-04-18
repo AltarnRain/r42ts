@@ -43,9 +43,4 @@ export default interface LevelState {
      * Counts the number of register enemies.
      */
     numberOfEnemies: number;
-
-    /**
-     * The level.
-     */
-    level: number;
 }
