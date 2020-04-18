@@ -10,6 +10,7 @@
  */
 
 import { drawLevelBanner } from "./GameScreen/LevelBanner";
+import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 import { GameLoop } from "./Modules";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
@@ -45,6 +46,7 @@ window.onload = () => {
 
                 // GameLoop.register(Runner.run);
 
+                drawGameFieldBorder();
                 drawLevelBanner(9);
 
                 // const birds = BirdSpawnLocations.map((bs) =>  new BirdEnemy(bs, 3));

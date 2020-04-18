@@ -22,7 +22,6 @@ import { cloneObject } from "../Utility/Lib";
 
 const {
     fullHeight,
-    fullWidth,
     maxPixelSize
 } = DimensionProvider();
 
@@ -42,27 +41,44 @@ const roundCharacters = [
     greenCharacters.D,
 ];
 
-const charStarPos = 0;
-
 const {
-    height,
     width
 } = getFrameDimensions(Characters.R, maxPixelSize);
 
+const top = fullHeight * 0.25;
+const left = maxPixelSize * 22;
+const barwidth = maxPixelSize * 30;
+const roundWidth = 76 * maxPixelSize;
 const charSpacing = maxPixelSize * 2;
 
 export function drawLevelBanner(level: number): void {
 
+    let barcolor: string;
+    let bartop = top;
+    for (let i = 0; i < 3; i++) {
+        if (i % 2 === 0) {
+            barcolor = CGAColors.red;
+        } else {
+            barcolor = CGAColors.brown;
+        }
+
+        ctx.fillStyle = barcolor;
+        ctx.fillRect(left, bartop, barwidth, maxPixelSize);
+        ctx.fillRect(left + roundWidth, bartop, barwidth, maxPixelSize);
+
+        bartop += maxPixelSize * 2;
+    }
+
     let levelNumberStartPos: number = 0;
     for (let i = 0; i < 5; i++) {
         const spacing = i === 0 ? 0 : charSpacing * i;
-        const left = charStarPos + spacing + width * i;
+        const charLeft = left + barwidth + charSpacing * 2 + spacing + width * i;
         const location: GameLocation = {
-            left,
-            top: 0,
+            left: charLeft,
+            top,
         };
 
-        levelNumberStartPos = left;
+        levelNumberStartPos = charLeft;
 
         renderFrame(location, roundCharacters[i]);
     }
@@ -95,13 +111,13 @@ export function drawLevelBanner(level: number): void {
     if (leftNumber && leftNumberFrame) {
         renderFrame({
             left: levelNumberStartPos,
-            top: 0,
+            top,
         }, leftNumberFrame);
     }
 
     // Always render the right number.
     renderFrame({
         left: rightNumberPosition,
-        top: 0,
+        top,
     }, rightNumberFrame);
 }
