@@ -8,13 +8,12 @@ import GameLocation from "../Models/GameLocation";
 import { PlayerMovementHandler } from "../Modules";
 import DimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
-import { MoveLimits, PlayerFormationPhases } from "../Types/Types";
+import { MoveLimits } from "../Types/Types";
 import { convertFramesColors } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { getLocation } from "../Utility/Location";
 import PlayerFormationPart from "./PlayerFormationPart";
 import { PlayerFormationFrames } from "./PlayerFrames";
-import { clearGameFieldBackground } from "../GameScreen/StaticRenders";
 
 /**
  * Module:          PlayerFormation
@@ -152,7 +151,6 @@ function updateState(): void {
         leftWingPart?.setUpdatedTargetLocation(leftWingEndLocation);
         rightWingPart?.setUpdatedTargetLocation(rightWingEndLocation);
     } else if (formationSpeed === "fast") {
-        clearGameFieldBackground();
         allMovingParts.forEach((p) => {
             p.updateState();
         });

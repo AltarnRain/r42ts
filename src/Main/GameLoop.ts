@@ -5,6 +5,8 @@
  */
 
 import { TickFunction } from "../Types/Types";
+import { clearGameFieldBackground, drawGameFieldBorder } from "../GameScreen/StaticRenders";
+import { drawLevelBanner } from "../GameScreen/LevelBanner";
 
 /**
  * Module:          GameLoop
@@ -54,6 +56,9 @@ export function register(f: TickFunction): () => void {
  * @param {number} tick. Current animation tick.
  */
 function run(tick: number): void {
+    clearGameFieldBackground();
+    drawGameFieldBorder();
+
     subscriptions.forEach((f) => f(tick));
     handle = window.requestAnimationFrame(run);
 }

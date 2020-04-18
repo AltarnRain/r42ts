@@ -45,21 +45,10 @@ export function run(tick: number): void {
     // For example, explosions and particles that moved out of the game's playing field.
     updateState(tick);
 
-    // Drawing is async. Don't draw when there's a draw is process. Keep calculating the
-    if (drawHandle === undefined) {
 
-        // use a setTimeOut 0 to push drawing the game to the back of the
-        // callback queue. This means updating the game state
-        // gets prority over rendering the game.
-        drawHandle = window.setTimeout(() => {
-            // Draw everything.
-            draw();
+    draw();
 
-            // Draw is done, set the state's draw handle to undefined to trigger
-            // a new draw.
-            drawHandle = undefined;
-        }, 0);
-    }
+
 }
 
 /**
@@ -178,12 +167,6 @@ function draw(): void {
         return;
     }
 
-    // Begin by drawing a black rectangle on the game field before drawing game objects.
-    // This MUST be done here before the game objects are drawn otherwise
-    // this function might fire at the wrong time and clear the game field.
-    clearGameFieldBackground();
-    drawGameFieldBorder();
-
     // Draw all the game objects
     player.ship?.draw();
     level.enemies.forEach((e) => e.draw());
@@ -216,7 +199,7 @@ function DEBUGGING_drawPhasor() {
  * @param {BaseEnemyObject} enemy.
  */
 function handleEnemyDestruction(enemy: BaseEnemyObject) {
-    const { levelState} = appState();
+    const { levelState } = appState();
     levelState.enemies.forEach((e) => {
         if (e !== enemy) {
             e.increaseSpeed(levelState.totalNumberOfEnemies / (levelState.enemies.length - 1));
@@ -284,7 +267,7 @@ function handlePlayerDeath(player: PlayerShip): void {
  * @returns {BaseGameObject[]}. An array of objects that can be hit by the player or hit the player.
  */
 function getHittableObjects(): BaseGameObject[] {
-    const {levelState} = appState();
+    const { levelState } = appState();
     return [
         ...levelState.enemies,
         ...levelState.particles,
@@ -337,7 +320,7 @@ function isEnemy(value: any): value is BaseEnemyObject {
 //#region  Debugging
 
 function DEBUGGING_renderHitboxes() {
-    const {debuggingState, playerState} = appState();
+    const { debuggingState, playerState } = appState();
     if (debuggingState.drawHitboxes) {
         const hittableObjects = [
             ...getHittableObjects(),

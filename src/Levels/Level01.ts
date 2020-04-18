@@ -4,38 +4,53 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import { BirdSpawnLocations } from "../Enemies/Bird/BirdSpawnLoctions";
-import { drawLevelBannerWithTimeout } from "../GameScreen/LevelBanner";
+import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import GameLocation from "../Models/GameLocation";
 import { GameLoop, PlayerFormation, Runner } from "../Modules";
-import PlayerShip from "../Player/PlayerShip";
+import { PlayerFrame } from "../Player/PlayerFrames";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
-import { dispatch } from "../State/Store";
+import renderFrame from "../Render/RenderFrame";
+import { appState, dispatch } from "../State/Store";
+import { cloneObject } from "../Utility/Lib";
+import { convertFrameColor } from "../Utility/Frame";
+import PlayerShip from "../Player/PlayerShip";
+import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 
 /**
  * Module:          Level 01
  * Responsibility:  Define the first level.
  */
 
+const frame = cloneObject(PlayerFrame);
+convertFrameColor(frame);
+
 export class Level01 {
 
     public start(): void {
 
+        const { playerState } = appState();
         const enemies = BirdSpawnLocations.map((l) => new BirdEnemy(l, 3));
 
-        dispatch<BaseEnemyObject[]>("setEnemies", enemies);
         dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
 
-        const sub = GameLoop.register(PlayerFormation.run);
+        const formationSub = GameLoop.register(PlayerFormation.run);
+        const levelSub = GameLoop.register(() => drawLevelBanner(1));
 
         PlayerFormation.formFast(getShipSpawnLocation(), () => {
-            sub();
-            drawLevelBannerWithTimeout(1, 500, () => {
-                dispatch<PlayerShip>("setPlayer", new PlayerShip());
-                GameLoop.register(Runner.run);
+            formationSub();
+            const drawPlayer = GameLoop.register(() => {
+                renderFrame(getShipSpawnLocation(), frame);
             });
+
+            window.setTimeout(() => {
+                drawPlayer();
+                levelSub();
+                dispatch<PlayerShip>("setPlayer", new PlayerShip());
+                dispatch<BaseEnemyObject[]>("setEnemies", enemies);
+                GameLoop.register(Runner.run);
+            }, 1000);
         });
     }
 }
