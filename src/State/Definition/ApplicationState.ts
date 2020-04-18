@@ -5,9 +5,9 @@
  */
 
 import DebuggingState from "./DebuggingState";
+import { GameState } from "./GameState";
 import LevelState from "./LevelState";
 import PlayerState from "./PlayerState";
-import { GameState } from "./GameState";
 
 /**
  * Module:          GameState
@@ -18,18 +18,18 @@ export default interface ApplicationState {
     /**
      * The level state. Only the current level.
      */
-    level: LevelState;
+    levelState: LevelState;
 
     /**
      * State of the player
      */
-    player: PlayerState;
+    playerState: PlayerState;
 
     /**
      * Debugging state. Only used for development.
      */
 
-    debugging: DebuggingState;
+    debuggingState: DebuggingState;
 
     gameState: GameState;
 }

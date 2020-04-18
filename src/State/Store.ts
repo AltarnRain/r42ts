@@ -12,9 +12,9 @@ import playerReducer from "./Reducers/PlayerReducer";
  * All reducer that build the application state.
  */
 const reducers: ReducersMapObject<ApplicationState, ActionPayload<any>> = {
-    level: levelReducer,
-    player: playerReducer,
-    debugging: debuggingReducer,
+    levelState: levelReducer,
+    playerState: playerReducer,
+    debuggingState: debuggingReducer,
     gameState: gameStateReducer,
 };
 

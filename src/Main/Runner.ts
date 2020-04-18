@@ -41,11 +41,11 @@ export function run(tick: number): void {
     // Always update the state before drawing on the canvas. This means
     // the player is seeing the latest version of the game's state
     // and it will feel much more accurate. It also
-    // means the game will not render objects that are about to be removed from the game's state.
+    // means the game will not render objects that are about to be removed from the game's 
     // For example, explosions and particles that moved out of the game's playing field.
     updateState(tick);
 
-    // Drawing is async. Don't draw when there's a draw is process. Keep calculating the state.
+    // Drawing is async. Don't draw when there's a draw is process. Keep calculating the 
     if (drawHandle === undefined) {
 
         // use a setTimeOut 0 to push drawing the game to the back of the
@@ -68,8 +68,8 @@ export function run(tick: number): void {
  */
 function updateState(tick: number) {
 
-    const state = appState();
-    if (state.player.playerFormationPhase === "begin" && state.level.particles.length === 0) {
+    const { playerState, levelState, debuggingState, gameState } = appState();
+    if (playerState.playerFormationPhase === "begin" && levelState.particles.length === 0) {
 
         dispatch<PlayerFormationPhases>("setPlayerFormationPhase", "inprogress");
 
@@ -77,22 +77,22 @@ function updateState(tick: number) {
             dispatch<PlayerShip>("setPlayer", new PlayerShip(PlayerLocationHandler.getPlayerLocation()));
             dispatch<PlayerFormationPhases>("setPlayerFormationPhase", undefined);
         });
-    } else if (state.player.playerFormationPhase === "inprogress") {
+    } else if (playerState.playerFormationPhase === "inprogress") {
         PlayerFormation.updateState();
     }
 
     // Update object states.
-    state.level.enemies.forEach((e) => e.updateState(tick));
-    state.player.ship?.updateState();
-    state.player.playerBullet?.updateState();
+    levelState.enemies.forEach((e) => e.updateState(tick));
+    playerState.ship?.updateState();
+    playerState.playerBullet?.updateState();
 
     // Remove objects no longer required.
-    if (state.player.playerBullet?.traveling() === false) {
+    if (playerState.playerBullet?.traveling() === false) {
         dispatch<PlayerBullet>("setBullet", undefined);
     }
 
     // Update state and remove particles that are done traveling.
-    state.level.particles.forEach((p) => {
+    levelState.particles.forEach((p) => {
         if (p.traveling()) {
             p.updateState(tick);
         } else {
@@ -101,7 +101,7 @@ function updateState(tick: number) {
     });
 
     // Update explosion center state and remove if they're done burning.
-    state.level.explosionCenters.filter((ec) => {
+    levelState.explosionCenters.filter((ec) => {
         if (ec.burning()) {
             ec.updateState(tick);
             return true;
@@ -111,12 +111,12 @@ function updateState(tick: number) {
     });
 
     // Keyboard events.
-    if (playerIsAlive(state.player.ship) && KeyboardState.selfDestruct) {
-        for (const enemy of state.level.enemies) {
+    if (playerIsAlive(playerState.ship) && KeyboardState.selfDestruct) {
+        for (const enemy of levelState.enemies) {
             queueExplosionRender(enemy.getCenterLocation(), enemy.getExplosion());
         }
 
-        queueExplosionRender(state.player.ship.getLocation(), state.player.ship.getExplosion());
+        queueExplosionRender(playerState.ship.getLocation(), playerState.ship.getExplosion());
 
         dispatch<PlayerShip>("setPlayer", undefined);
         dispatch<BaseEnemyObject[]>("setEnemies", []);
@@ -125,15 +125,15 @@ function updateState(tick: number) {
     // Hit a random enemy with a phasor.
     // In order to fire a phaser there must be enemies, the player must have a phaser charge, a phaser cannot
     // currently being fired (=on screen) and the player must be alive.
-    if (playerIsAlive(state.player.ship) &&
+    if (playerIsAlive(playerState.ship) &&
         KeyboardState.phraser &&
-        state.level.enemies.length > 0 &&
-        state.gameState.phasers > 0 && state.level.phaserOnScreen === false) {
-        handlePhaser(state.player.ship);
+        levelState.enemies.length > 0 &&
+        gameState.phasers > 0 && levelState.phaserOnScreen === false) {
+        handlePhaser(playerState.ship);
     }
 
-    if (playerIsAlive(state.player.ship) && KeyboardState.fire && state.player.playerBullet === undefined) {
-        state.player.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 30, 1, state.player.ship.getNozzleLocation());
+    if (playerIsAlive(playerState.ship) && KeyboardState.fire && playerState.playerBullet === undefined) {
+        playerState.playerBullet = new PlayerBullet(PlayerBulletFrame.F0, 270, 30, 1, playerState.ship.getNozzleLocation());
     }
 
     // Hit detection.
@@ -146,18 +146,18 @@ function updateState(tick: number) {
             const hittableObjectHitbox = hittableObject.getHitbox();
 
             // Check if the player got hit.
-            if (playerIsAlive(state.player.ship) && state.debugging.playerIsImmortal === false) {
-                if (overlaps(state.player.ship.getHitbox(), hittableObjectHitbox)) {
+            if (playerIsAlive(playerState.ship) && debuggingState.playerIsImmortal === false) {
+                if (overlaps(playerState.ship.getHitbox(), hittableObjectHitbox)) {
 
                     // Player was hit. Render the explosion.
-                    handlePlayerDeath(state.player.ship);
+                    handlePlayerDeath(playerState.ship);
                 }
             }
 
             // Check if the player hit something.
-            if (state.player.playerBullet !== undefined && isEnemy(hittableObject)) {
-                if (overlaps(state.player.playerBullet.getHitbox(), hittableObjectHitbox)) {
-                    state.player.playerBullet = undefined;
+            if (playerState.playerBullet !== undefined && isEnemy(hittableObject)) {
+                if (overlaps(playerState.playerBullet.getHitbox(), hittableObjectHitbox)) {
+                    playerState.playerBullet = undefined;
                     handleEnemyDestruction(hittableObject);
                 }
             }
@@ -170,8 +170,8 @@ function updateState(tick: number) {
  * @param {number} tick. Tick.
  */
 function draw(): void {
-    const state = appState();
-    if (state.level.pause) {
+    const { levelState: level, playerState: player } = appState();
+    if (level.pause) {
         return;
     }
 
@@ -179,13 +179,13 @@ function draw(): void {
     clearGameFieldBackground();
 
     // Draw all the game objects
-    state.player.ship?.draw();
-    state.level.enemies.forEach((e) => e.draw());
-    state.level.particles.forEach((p) => p.draw());
-    state.level.explosionCenters.forEach((ec) => ec.draw());
-    state.player.playerBullet?.draw();
+    player.ship?.draw();
+    level.enemies.forEach((e) => e.draw());
+    level.particles.forEach((p) => p.draw());
+    level.explosionCenters.forEach((ec) => ec.draw());
+    player.playerBullet?.draw();
 
-    if (state.player.playerFormationPhase === "inprogress") {
+    if (player.playerFormationPhase === "inprogress") {
         PlayerFormation.draw();
     }
 
@@ -198,10 +198,10 @@ function draw(): void {
 }
 
 function DEBUGGING_drawPhasor() {
-    const state = appState();
-    if (state.debugging.renderPhaser && playerIsAlive(state.player.ship) && state.level.enemies.length > 0) {
-        const enemy = state.level.enemies[0];
-        drawPhasor(state.player.ship.getNozzleLocation(), enemy.getCenterLocation(), DimensionProvider().averagePixelSize);
+    const { debuggingState: debugging, playerState: player, levelState: level } = appState();
+    if (debugging.renderPhaser && playerIsAlive(player.ship) && level.enemies.length > 0) {
+        const enemy = level.enemies[0];
+        drawPhasor(player.ship.getNozzleLocation(), enemy.getCenterLocation(), DimensionProvider().averagePixelSize);
     }
 }
 
@@ -210,11 +210,11 @@ function DEBUGGING_drawPhasor() {
  * @param {BaseEnemyObject} enemy.
  */
 function handleEnemyDestruction(enemy: BaseEnemyObject) {
-    const state = appState();
-    const remainingEnemies = state.level.enemies.length - 1;
-    state.level.enemies.forEach((e) => {
+    const { levelState: level } = appState();
+    const remainingEnemies = level.enemies.length - 1;
+    level.enemies.forEach((e) => {
         if (e !== enemy) {
-            e.increaseSpeed(state.level.numberOfEnemies / remainingEnemies);
+            e.increaseSpeed(level.numberOfEnemies / remainingEnemies);
         } else {
             dispatch<BaseEnemyObject>("removeEnemy", e);
         }
@@ -229,12 +229,12 @@ function handleEnemyDestruction(enemy: BaseEnemyObject) {
  * @param {PlayerShip} player. Player object
  */
 function handlePhaser(player: PlayerShip): void {
-    const state = appState();
+    const { levelState: level } = appState();
 
     // Prevent accidental double phasors when the player holds the button to long.
-    state.level.phaserOnScreen = true;
+    level.phaserOnScreen = true;
 
-    const randomEnemy = getRandomArrayElement(state.level.enemies);
+    const randomEnemy = getRandomArrayElement(level.enemies);
     const playerNozzleLocation = player.getNozzleLocation();
     const randomEnemyCenter = randomEnemy.getCenterLocation();
 
@@ -244,11 +244,11 @@ function handlePhaser(player: PlayerShip): void {
 
     // Pause the game for a very brief period. This is what the original game did
     // when you fired a phasor shot.
-    state.level.pause = true;
+    level.pause = true;
     window.setTimeout(() => {
         // Unpause the game to let rendering continue.
-        state.level.pause = false;
-        state.level.phaserOnScreen = false;
+        level.pause = false;
+        level.phaserOnScreen = false;
 
         // Deal the with the enemy that got hit.
         handleEnemyDestruction(randomEnemy);
@@ -260,13 +260,12 @@ function handlePhaser(player: PlayerShip): void {
  * @param {PlayerShip} player. Player object.
  */
 function handlePlayerDeath(player: PlayerShip): void {
-    const state = appState();
     queueExplosionRender(player.getLocation(), player.getExplosion());
-    state.player.ship = undefined;
+    dispatch<PlayerShip>("setPlayer", undefined);
     Lives.removeLife();
 
     if (Lives.getLives() > 0) {
-        state.player.playerFormationPhase = "begin";
+        dispatch<PlayerFormationPhases>("setPlayerFormationPhase", "inprogress")
     } else {
         // TODO: handle game over.
     }
@@ -277,11 +276,11 @@ function handlePlayerDeath(player: PlayerShip): void {
  * @returns {BaseGameObject[]}. An array of objects that can be hit by the player or hit the player.
  */
 function getHittableObjects(): BaseGameObject[] {
-    const state = appState();
+    const {levelState} = appState();
     return [
-        ...state.level.enemies,
-        ...state.level.particles,
-        ...state.level.explosionCenters
+        ...levelState.enemies,
+        ...levelState.particles,
+        ...levelState.explosionCenters
     ].filter((o) => o !== undefined);
 }
 
@@ -306,7 +305,7 @@ function queueExplosionRender(location: GameLocation, explosion: Explosion): voi
  * @param {number} value.
  */
 export function increaseEnemySpeed(value: number): void {
-    appState().level.enemies.forEach((e) => e.increaseSpeed(value));
+    appState().levelState.enemies.forEach((e) => e.increaseSpeed(value));
 }
 
 /**
@@ -330,20 +329,20 @@ function isEnemy(value: any): value is BaseEnemyObject {
 //#region  Debugging
 
 function DEBUGGING_renderHitboxes() {
-    const state = appState();
-    if (state.debugging.drawHitboxes) {
+    const {debuggingState, playerState} = appState();
+    if (debuggingState.drawHitboxes) {
         const hittableObjects = [
             ...getHittableObjects(),
         ];
 
         // Add player if defined.
-        if (state.player) {
-            hittableObjects.push(state.player as any);
+        if (playerState) {
+            hittableObjects.push(playerState as any);
         }
 
         // Add bullet if defined.
-        if (state.player.playerBullet) {
-            hittableObjects.push(state.player.playerBullet);
+        if (playerState.playerBullet) {
+            hittableObjects.push(playerState.playerBullet);
         }
 
         // Draw a circle around each object using the
