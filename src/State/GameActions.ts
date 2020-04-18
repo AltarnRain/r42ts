@@ -32,7 +32,9 @@ type GameActions =
     "setEnemies" |
     "addParticles" |
     "keydown" |
-    "keyup"
+    "keyup" |
+    "setPlayerMovementLimit" |
+    "setPlayerLocation"
     ;
 
 export default GameActions;

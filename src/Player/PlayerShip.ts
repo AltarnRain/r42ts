@@ -15,6 +15,7 @@ import { GameRectangle } from "../Models/GameRectangle";
 import { PlayerLocationHandler } from "../Modules";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
+import { appState, dispatch } from "../State/Store";
 import { Frame, GameObjectType } from "../Types/Types";
 import { convertFrameColor, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
@@ -42,10 +43,8 @@ export default class PlayerShip {
     constructor(location: GameLocation) {
 
         // Set the player location in the PlayerLocationHandler.
-        PlayerLocationHandler.setPlayerLocation(location);
-
+        dispatch<GameLocation>("setPlayerLocation", location);
         this.frame = cloneObject(PlayerFrame);
-
         convertFrameColor(this.frame);
     }
 
@@ -69,7 +68,8 @@ export default class PlayerShip {
      * Draw the player's ship.
      */
     public draw(): void {
-        renderFrame(PlayerLocationHandler.getPlayerLocation(), this.frame);
+        const { playerState } = appState();
+        renderFrame(playerState.playerLocation, this.frame);
     }
 
     /**
@@ -81,27 +81,22 @@ export default class PlayerShip {
     }
 
     /**
-     * Returns the player location.
-     */
-    public getLocation(): GameLocation {
-        return PlayerLocationHandler.getPlayerLocation();
-    }
-
-    /**
      * Returns the player's hitbox
      * @return {GameRectangle}. Players hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(PlayerLocationHandler.getPlayerLocation(), shipDimensions.width, shipDimensions.height, 0, averagePixelSize);
+        const { playerState} = appState();
+        return getFrameHitbox(playerState.playerLocation, shipDimensions.width, shipDimensions.height, 0, averagePixelSize);
     }
 
     /**
      * Returns the top/left of the nozzle.
      */
     public getNozzleLocation(): GameLocation {
+        const { playerState } = appState();
         return {
-            left: PlayerLocationHandler.getPlayerLocation().left + minPixelSize * 2,
-            top: PlayerLocationHandler.getPlayerLocation().top - minPixelSize * 1,
+            left: playerState.playerLocation.left + minPixelSize * 2,
+            top: playerState.playerLocation.top - minPixelSize * 1,
         };
     }
 }

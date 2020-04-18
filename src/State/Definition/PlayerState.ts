@@ -4,8 +4,10 @@
  * See LICENSE.MD.
  */
 
+import GameLocation from "../../Models/GameLocation";
 import PlayerBullet from "../../Player/PlayerBullet";
 import PlayerShip from "../../Player/PlayerShip";
+import { MoveLimits } from "../../Types/Types";
 
 /**
  * Module:          PlayerState
@@ -28,4 +30,7 @@ export default interface PlayerState {
      */
     playerFormationPhase: "begin" | "inprogress" | undefined;
 
+    moveLimit: MoveLimits;
+
+    playerLocation: GameLocation;
 }

@@ -13,7 +13,7 @@ import * as level from "./GameScreen/Level";
 import * as lives from "./GameScreen/Lives";
 import * as phaser from "./GameScreen/Phasers/Phasers";
 import * as scoreBord from "./GameScreen/ScoreBoard";
-import * as playerLocationHandler from "./Handlers/PlayerLocationHandler";
+import * as playerLocationHandler from "./Handlers/PlayerMovementHandler";
 import * as gameLoop from "./Main/GameLoop";
 import * as runner from "./Main/Runner";
 import * as playerFormation from "./Player/PlayerFormation";

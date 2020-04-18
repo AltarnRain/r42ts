@@ -5,9 +5,9 @@
  */
 
 import produce from "immer";
+import getShipSpawnLocation from "../../Providers/PlayerSpawnLocationProvider";
 import ActionPayload from "../ActionPayLoad";
 import PlayerState from "../Definition/PlayerState";
-import GameActions from "../GameActions";
 
 /**
  * Module:          playerReducer
@@ -20,14 +20,18 @@ export default function playerReducer(state: PlayerState = initState(), action: 
             case "setPlayer":
                 draft.ship = action.payload;
                 break;
-
             case "setBullet":
                 draft.playerBullet = action.payload;
                 break;
             case "setPlayerFormationPhase":
                 draft.playerFormationPhase = action.payload;
                 break;
-
+            case "setPlayerMovementLimit":
+                draft.moveLimit = action.payload;
+                break;
+            case "setPlayerLocation":
+                draft.playerLocation = { ...action.payload };
+                break;
         }
     });
 }
@@ -40,5 +44,7 @@ function initState(): PlayerState {
         ship: undefined,
         playerBullet: undefined,
         playerFormationPhase: "begin",
+        moveLimit: "none",
+        playerLocation: getShipSpawnLocation(),
     };
 }

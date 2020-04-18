@@ -15,7 +15,7 @@ import BaseParticle from "../Base/BaseParticle";
 import { clearGameFieldBackground } from "../GameScreen/StaticRenders";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
-import { Lives, Phasers, PlayerFormation, PlayerLocationHandler, ScoreBoard } from "../Modules";
+import { Lives, Phasers, PlayerFormation, ScoreBoard } from "../Modules";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import Particle from "../Particles/Particle";
 import { drawPhasor } from "../Player/DrawPhaser";
@@ -25,6 +25,7 @@ import PlayerShip from "../Player/PlayerShip";
 import CtxProvider from "../Providers/CtxProvider";
 import DimensionProvider from "../Providers/DimensionProvider";
 import particleProvider from "../Providers/ParticleProvider";
+import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { appState, dispatch } from "../State/Store";
 import { PlayerFormationPhases } from "../Types/Types";
 import { getRandomArrayElement } from "../Utility/Array";
@@ -72,8 +73,8 @@ function updateState(tick: number) {
 
         dispatch<PlayerFormationPhases>("setPlayerFormationPhase", "inprogress");
 
-        PlayerFormation.formSlow(PlayerLocationHandler.getShipSpawnLocation(), () => {
-            dispatch<PlayerShip>("setPlayer", new PlayerShip(PlayerLocationHandler.getPlayerLocation()));
+        PlayerFormation.formSlow(getShipSpawnLocation(), () => {
+            dispatch<PlayerShip>("setPlayer", new PlayerShip(playerState.playerLocation));
             dispatch<PlayerFormationPhases>("setPlayerFormationPhase", undefined);
         });
     } else if (playerState.playerFormationPhase === "inprogress") {
@@ -115,7 +116,7 @@ function updateState(tick: number) {
             queueExplosionRender(enemy.getCenterLocation(), enemy.getExplosion());
         }
 
-        queueExplosionRender(playerState.ship.getLocation(), playerState.ship.getExplosion());
+        queueExplosionRender(playerState.playerLocation, playerState.ship.getExplosion());
 
         dispatch<PlayerShip>("setPlayer", undefined);
         dispatch<BaseEnemyObject[]>("setEnemies", []);
@@ -259,7 +260,10 @@ function handlePhaser(player: PlayerShip): void {
  * @param {PlayerShip} player. Player object.
  */
 function handlePlayerDeath(player: PlayerShip): void {
-    queueExplosionRender(player.getLocation(), player.getExplosion());
+
+    const { playerState } = appState();
+
+    queueExplosionRender(playerState.playerLocation, player.getExplosion());
     dispatch<PlayerShip>("setPlayer", undefined);
     Lives.removeLife();
 

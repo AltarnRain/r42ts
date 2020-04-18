@@ -4,10 +4,11 @@
  * See LICENSE.MD.
  */
 
-import { setPlayerLocation } from "../Handlers/PlayerLocationHandler";
 import GameLocation from "../Models/GameLocation";
 import { PlayerLocationHandler } from "../Modules";
 import DimensionProvider from "../Providers/DimensionProvider";
+import { appState, dispatch } from "../State/Store";
+import { MoveLimits } from "../Types/Types";
 import { convertFramesColors } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { getLocation } from "../Utility/Location";
@@ -53,8 +54,6 @@ let nozzleBottomEndLocation: GameLocation;
 let leftWingEndLocation: GameLocation;
 let rightWingEndLocation: GameLocation;
 
-let done: () => void;
-
 let formationSpeed: "slow" | "fast" = "slow";
 
 /**
@@ -98,13 +97,15 @@ function createParticles(): void {
  */
 export function formFast(targetLocation: GameLocation, formationDoneCallback: () => void): void {
     formationSpeed = "fast";
-    setPlayerLocation(targetLocation);
+    dispatch<GameLocation>("setPlayerLocation", targetLocation);
+
     setPartLocations(targetLocation);
     createParticles();
 
     allMovingParts.forEach((p) => p.setSpeed(20));
 
-    PlayerLocationHandler.setMoveLimit("immobile");
+    dispatch<MoveLimits>("setPlayerMovementLimit", "immobile");
+    formationDoneCallback();
 }
 
 /**
@@ -114,28 +115,39 @@ export function formFast(targetLocation: GameLocation, formationDoneCallback: ()
  */
 export function formSlow(targetLocation: GameLocation, formationDoneCallback: () => void): void {
     formationSpeed = "slow";
-    setPlayerLocation(targetLocation);
+    dispatch<GameLocation>("setPlayerLocation", targetLocation);
     setPartLocations(targetLocation);
     createParticles();
 
     allMovingParts.forEach((p) => p.setSpeed(10));
 
-    PlayerLocationHandler.setMoveLimit("sideways");
+    dispatch<MoveLimits>("setPlayerMovementLimit", "sideways");
 }
 
 /**
  * Main function that draws the player formation.
  */
 export function updateState(): void {
-    if (formationSpeed === "slow") {
-        updateStateSlow();
-    } else if (formationSpeed === "fast") {
-        updateStateFast();
+    const {playerState } = appState();
+
+    if (formationSpeed === "slow" && allMovingParts.some((p) => p.traveling())) {
+
+        PlayerLocationHandler.movePlayer(5);
+        setPartLocations(playerState.playerLocation);
+
+        nozzleTopPart?.setUpdatedTargetLocation(nozzleTipEndLocation);
+        nozzleBottomPart?.setUpdatedTargetLocation(nozzleBottomEndLocation);
+        leftWingPart?.setUpdatedTargetLocation(leftWingEndLocation);
+        rightWingPart?.setUpdatedTargetLocation(rightWingEndLocation);
     }
 
     allMovingParts.forEach((p) => {
         p.updateState();
     });
+
+    if (allMovingParts.every((p) => p.traveling() === false)) {
+        dispatch<MoveLimits>("setPlayerMovementLimit", "none");
+    }
 }
 
 /**
@@ -143,43 +155,4 @@ export function updateState(): void {
  */
 export function draw(): void {
     allMovingParts.forEach((p) => p.draw());
-}
-
-/**
- * Handles the fast formation of a player.
- * @param {number} tick. Current tick.
- */
-function updateStateFast(): void {
-    if (allMovingParts.every((p) => p.traveling() === false)) {
-        PlayerLocationHandler.setMoveLimit("none");
-        handleFormationComplete();
-    }
-}
-
-/**
- * Handles the completion of the ship forming.
- */
-function handleFormationComplete() {
-    allMovingParts = [];
-    if (done) {
-        done();
-    }
-}
-
-/**
- * Handles the slow formation of the player. The player can move sideways.
- */
-function updateStateSlow(): void {
-    if (allMovingParts.every((p) => p.traveling() === false)) {
-        PlayerLocationHandler.setMoveLimit("none");
-        handleFormationComplete();
-    } else {
-        PlayerLocationHandler.movePlayer(5);
-        setPartLocations(PlayerLocationHandler.getPlayerLocation());
-
-        nozzleTopPart?.setUpdatedTargetLocation(nozzleTipEndLocation);
-        nozzleBottomPart?.setUpdatedTargetLocation(nozzleBottomEndLocation);
-        leftWingPart?.setUpdatedTargetLocation(leftWingEndLocation);
-        rightWingPart?.setUpdatedTargetLocation(rightWingEndLocation);
-    }
 }

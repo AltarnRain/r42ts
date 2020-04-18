@@ -16,6 +16,7 @@ import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
 import DimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
+import getShipSpawnLocation from "./Providers/PlayerSpawnLocationProvider";
 
 window.onload = () => {
 
@@ -46,7 +47,7 @@ window.onload = () => {
                 Lives.setLives(2);
                 Phasers.setPhasers(1);
 
-                PlayerFormation.formSlow(PlayerLocationHandler.getShipSpawnLocation(), () => {
+                PlayerFormation.formSlow(getShipSpawnLocation(), () => {
                     // Runner.register(new PlayerShip(PlayerLocationHandler.getPlayerLocation()));
                 });
 
