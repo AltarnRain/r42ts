@@ -21,7 +21,6 @@ type GameActions =
     // Player
     "setPlayer" |
     "setBullet" |
-    "setPlayerFormationPhase" |
     "setPlayerMovementLimit" |
     "setPlayerLocation" |
 

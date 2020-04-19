@@ -5,8 +5,6 @@
  */
 
 import { TickFunction } from "../Types/Types";
-import { clearGameFieldBackground, drawGameFieldBorder } from "../GameScreen/StaticRenders";
-import { drawLevelBanner } from "../GameScreen/LevelBanner";
 
 /**
  * Module:          GameLoop
@@ -16,12 +14,18 @@ import { drawLevelBanner } from "../GameScreen/LevelBanner";
 /**
  * A handle for the main animation loop.
  */
-let handle: number = 0;
+let handle: number | undefined;
+
+let drawOnceHandle: number | undefined;
 
 /**
  * Functions that subscripbe to the game tick.
  */
-let subscriptions: TickFunction[] = [];
+let updateStateFunctions: TickFunction[] = [];
+
+let backgroundDrawFunctions: Array<() => void> = [];
+
+let callOnce: Array<() => void> = [];
 
 /**
  * Start game loop
@@ -34,8 +38,18 @@ export function Start(): void {
  * Stop game loop and clear subscriptions.
  */
 export function Stop(): void {
-    window.cancelAnimationFrame(handle);
-    subscriptions = [];
+
+    if (handle !== undefined) {
+        window.cancelAnimationFrame(handle);
+    }
+
+    if (drawOnceHandle !== undefined) {
+        window.clearTimeout(drawOnceHandle);
+    }
+
+    updateStateFunctions = [];
+    backgroundDrawFunctions = [];
+    callOnce = [];
 }
 
 /**
@@ -43,12 +57,35 @@ export function Stop(): void {
  * @param {TickFunction} f. A function that handles a tick
  * @returns {() => void}. A function that removes the tick handler funtion from the subscription array.
  */
-export function register(f: TickFunction): () => void {
-    subscriptions.push(f);
+export function registerUpdateState(f: TickFunction): () => void {
+    updateStateFunctions.push(f);
 
     return () => {
-        subscriptions = subscriptions.filter((s) => s !== f);
+        updateStateFunctions = updateStateFunctions.filter((s) => s !== f);
     };
+}
+
+/**
+ * Register a function that draws the background.
+ * @param {function} f. Background draw function
+ * @returns {function}. Function to remove the background draw from the queue.
+ */
+export function registerStatic(f: () => void): () => void {
+    backgroundDrawFunctions.push(f);
+
+    return () => {
+        backgroundDrawFunctions = backgroundDrawFunctions.filter((d) => d !== f);
+    };
+}
+
+/**
+ * Registers a function that is called once, but only if there is currently no render in progress.
+ * @param {function} f. A function.
+ */
+export function registerCallOnce(f: () => void): void {
+    if (drawOnceHandle === undefined) {
+        callOnce.push(f);
+    }
 }
 
 /**
@@ -56,9 +93,15 @@ export function register(f: TickFunction): () => void {
  * @param {number} tick. Current animation tick.
  */
 function run(tick: number): void {
-    clearGameFieldBackground();
-    drawGameFieldBorder();
-
-    subscriptions.forEach((f) => f(tick));
     handle = window.requestAnimationFrame(run);
+
+    updateStateFunctions.forEach((f) => f(tick));
+
+    // drawOnceHandle = window.setTimeout(() => {
+    backgroundDrawFunctions.forEach((f) => f());
+    callOnce.forEach((f) => f());
+    callOnce = [];
+    drawOnceHandle = undefined;
+    // }, 0);
+
 }

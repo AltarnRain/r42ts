@@ -25,11 +25,6 @@ export default interface PlayerState {
      */
     playerBullet: PlayerBullet | undefined;
 
-    /**
-     * Flag if the player's ship is forming after death.
-     */
-    playerFormationPhase: "begin" | "inprogress" | undefined;
-
     moveLimit: MoveLimits;
 
     playerLocation: GameLocation;

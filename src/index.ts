@@ -9,8 +9,9 @@
  * Responsibility:  Entry point for the game
  */
 
+import { drawStatusBar } from "./GameScreen/StatusBar";
 import { Level01 } from "./Levels/Level01";
-import { GameLoop, StatusBar } from "./Modules";
+import { GameLoop, PlayerSpawnManager, Runner } from "./Modules";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
 import DimensionProvider from "./Providers/DimensionProvider";
@@ -35,7 +36,7 @@ window.onload = () => {
                     fullWidth
                 } = DimensionProvider();
 
-                StatusBar.subscribeToChanges();
+                GameLoop.registerStatic(drawStatusBar);
 
                 dispatch<number>("setLives", 10);
                 dispatch<number>("setPhasers", 30);
@@ -43,6 +44,9 @@ window.onload = () => {
                 dispatch<number>("increaseScore", 2000);
 
                 registerListeners();
+
+                GameLoop.registerUpdateState(PlayerSpawnManager.run);
+                GameLoop.registerUpdateState(Runner.run);
 
                 // GameLoop.register(Runner.run);
 
@@ -87,11 +91,11 @@ window.onload = () => {
 
                 // testAngleCalculation();
 
-                // Runner.start();
-                GameLoop.Start();
-
                 const l = new Level01();
                 l.start();
+
+                // Runner.start();
+                GameLoop.Start();
 
                 // Runner.toggleHitboxes();
                 // Runner.togglePlayerImmortality();
@@ -115,13 +119,13 @@ function testAngleCalculation(): void {
     const p2 = new PlayerFormationPart({ top: 500, left: 1300 }, target, PlayerFormationFrames.F0, 1);
     const p3 = new PlayerFormationPart({ top: 100, left: 700 }, target, PlayerFormationFrames.F0, 1);
     const p4 = new PlayerFormationPart({ top: 800, left: 700 }, target, PlayerFormationFrames.F0, 1);
-    GameLoop.register(p1.updateState);
-    GameLoop.register(p1.draw);
-    GameLoop.register(p2.updateState);
-    GameLoop.register(p2.draw);
-    GameLoop.register(p3.updateState);
-    GameLoop.register(p3.draw);
-    GameLoop.register(p4.updateState);
-    GameLoop.register(p4.draw);
-    GameLoop.register((tick) => renderFrame(target, PlayerFormationFrames.F0));
+    GameLoop.registerUpdateState(p1.updateState);
+    GameLoop.registerUpdateState(p1.draw);
+    GameLoop.registerUpdateState(p2.updateState);
+    GameLoop.registerUpdateState(p2.draw);
+    GameLoop.registerUpdateState(p3.updateState);
+    GameLoop.registerUpdateState(p3.draw);
+    GameLoop.registerUpdateState(p4.updateState);
+    GameLoop.registerUpdateState(p4.draw);
+    GameLoop.registerUpdateState((tick) => renderFrame(target, PlayerFormationFrames.F0));
 }

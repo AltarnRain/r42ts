@@ -12,10 +12,9 @@
 import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BaseGameObject from "../Base/BaseGameObject";
 import BaseParticle from "../Base/BaseParticle";
-import { clearGameFieldBackground, drawGameFieldBorder } from "../GameScreen/StaticRenders";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
-import { PlayerFormation } from "../Modules";
+import { GameLoop } from "../Modules";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import Particle from "../Particles/Particle";
 import { drawPhasor } from "../Player/DrawPhaser";
@@ -25,9 +24,7 @@ import PlayerShip from "../Player/PlayerShip";
 import CtxProvider from "../Providers/CtxProvider";
 import DimensionProvider from "../Providers/DimensionProvider";
 import particleProvider from "../Providers/ParticleProvider";
-import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { appState, dispatch } from "../State/Store";
-import { PlayerFormationPhases } from "../Types/Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { overlaps } from "../Utility/Geometry";
 
@@ -37,7 +34,8 @@ import { overlaps } from "../Utility/Geometry";
  */
 export function run(tick: number): void {
     updateState(tick);
-    draw();
+
+    GameLoop.registerCallOnce(draw);
 }
 
 /**
@@ -49,20 +47,6 @@ function updateState(tick: number) {
 
     if (levelState.pause) {
         return;
-    }
-
-    if (playerState.playerFormationPhase === "begin" && levelState.particles.length === 0) {
-
-        dispatch<PlayerFormationPhases>("setPlayerFormationPhase", "inprogress");
-
-        PlayerFormation.formSlow(getShipSpawnLocation(), () => {
-            dispatch<PlayerShip>("setPlayer", new PlayerShip());
-            dispatch<PlayerFormationPhases>("setPlayerFormationPhase", undefined);
-        });
-    }
-
-    if (playerState.playerFormationPhase === "inprogress") {
-        PlayerFormation.run();
     }
 
     // Update object states.
@@ -163,10 +147,6 @@ function draw(): void {
     level.explosionCenters.forEach((ec) => ec.draw());
     player.playerBullet?.draw();
 
-    if (player.playerFormationPhase === "inprogress") {
-        PlayerFormation.run();
-    }
-
     DEBUGGING_drawPhasor();
 
     // Debugging. Show the hitboxes on screen.
@@ -238,17 +218,11 @@ function handlePhaser(player: PlayerShip): void {
  */
 function handlePlayerDeath(player: PlayerShip): void {
 
-    const { playerState, gameState } = appState();
+    const { playerState } = appState();
 
     queueExplosionRender(playerState.playerLocation, player.getExplosion());
     dispatch<PlayerShip>("setPlayer", undefined);
     dispatch("removeLife");
-
-    if (gameState.lives > 0) {
-        dispatch<PlayerFormationPhases>("setPlayerFormationPhase", "begin");
-    } else {
-        // TODO: handle game over.
-    }
 }
 
 /**

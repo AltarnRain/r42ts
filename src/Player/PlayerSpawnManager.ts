@@ -5,8 +5,9 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import { PlayerMovementHandler } from "../Modules";
+import { GameLoop, PlayerMovementHandler } from "../Modules";
 import DimensionProvider from "../Providers/DimensionProvider";
+import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types/Types";
 import { convertFramesColors } from "../Utility/Frame";
@@ -14,6 +15,7 @@ import { cloneObject } from "../Utility/Lib";
 import { getLocation } from "../Utility/Location";
 import PlayerFormationPart from "./PlayerFormationPart";
 import { PlayerFormationFrames } from "./PlayerFrames";
+import PlayerShip from "./PlayerShip";
 
 /**
  * Module:          PlayerFormation
@@ -54,9 +56,9 @@ let nozzleBottomEndLocation: GameLocation;
 let leftWingEndLocation: GameLocation;
 let rightWingEndLocation: GameLocation;
 
-let formationSpeed: "slow" | "fast" = "slow";
+let formationSpeed: "slow" | "fast";
 
-let done: () => void;
+let formationInProgress = false;
 
 /**
  * Set the particle locations in the module
@@ -97,39 +99,41 @@ function createParticles(): void {
  * Forms the player quickly. Does not allow movement.
  * @param {() => void)} formationDoneCallback. Called when the formation animation has completed.
  */
-export function formFast(targetLocation: GameLocation, formationDoneCallback: () => void): void {
-    formationSpeed = "fast";
-    dispatch<GameLocation>("setPlayerLocation", targetLocation);
-
-    setPartLocations(targetLocation);
-    createParticles();
-
-    allMovingParts.forEach((p) => p.setSpeed(20));
-
-    dispatch<MoveLimits>("setPlayerMovementLimit", "immobile");
-    done = formationDoneCallback;
-}
-
-/**
- * Handles a slow ship formation which allows the player alter their warp in location.
- * @param {GameLocation} targetLocation. Location where the ship formation should be headed to initially.
- * @param {() => void} formationDoneCallback. Called when the ship formation is complete.
- */
-export function formSlow(targetLocation: GameLocation, formationDoneCallback: () => void): void {
-    formationSpeed = "slow";
+function setupFormation(targetLocation: GameLocation, speed: "fast" | "slow", limit: MoveLimits ): void {
+    formationSpeed = speed;
     dispatch<GameLocation>("setPlayerLocation", targetLocation);
     setPartLocations(targetLocation);
     createParticles();
 
-    allMovingParts.forEach((p) => p.setSpeed(10));
+    if (speed === "fast") {
 
-    dispatch<MoveLimits>("setPlayerMovementLimit", "sideways");
-    done = formationDoneCallback;
+        allMovingParts.forEach((p) => p.setSpeed(20));
+    } else {
+        allMovingParts.forEach((p) => p.setSpeed(10));
+    }
+
+    dispatch<MoveLimits>("setPlayerMovementLimit", limit);
+    formationInProgress = true;
 }
 
 export function run(tick?: number): void {
-    updateState();
-    draw();
+    const { playerState, levelState } = appState();
+
+    if (playerState.ship === undefined && formationInProgress === false) {
+        if (levelState.enemies.length > 0) { // Enemies in the level
+            if (levelState.particles.length === 0) { // wait till there's no particles.
+                setupFormation(getShipSpawnLocation(), "slow", "sideways"); // Start the slow formation where the player has control.
+            }
+        } else {
+            // No enemies, fast formation
+            setupFormation(getShipSpawnLocation(), "fast", "immobile");
+        }
+    }
+
+    if (formationInProgress) {
+        updateState();
+        GameLoop.registerCallOnce(draw);
+    }
 }
 
 /**
@@ -157,9 +161,10 @@ function updateState(): void {
     }
 
     if (allMovingParts.every((p) => p.traveling() === false)) {
-        allMovingParts = [];
         dispatch<MoveLimits>("setPlayerMovementLimit", "none");
-        done();
+        dispatch<PlayerShip>("setPlayer", new PlayerShip());
+        allMovingParts = [];
+        formationInProgress = false;
     }
 }
 

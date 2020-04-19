@@ -9,7 +9,7 @@ import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import { BirdSpawnLocations } from "../Enemies/Bird/BirdSpawnLoctions";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import GameLocation from "../Models/GameLocation";
-import { GameLoop, PlayerFormation, Runner } from "../Modules";
+import { GameLoop, PlayerSpawnManager, Runner } from "../Modules";
 import { PlayerFrame } from "../Player/PlayerFrames";
 import PlayerShip from "../Player/PlayerShip";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
@@ -17,6 +17,7 @@ import renderFrame from "../Render/RenderFrame";
 import { dispatch } from "../State/Store";
 import { convertFrameColor } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
+import { drawGameFieldBorder, clearGameFieldBackground } from "../GameScreen/StaticRenders";
 
 /**
  * Module:          Level 01
@@ -30,27 +31,19 @@ export class Level01 {
 
     public start(): void {
 
+        GameLoop.registerStatic(clearGameFieldBackground);
+        GameLoop.registerStatic(drawGameFieldBorder);
+
         const enemies = BirdSpawnLocations.map((l) => new BirdEnemy(l, 3));
 
         dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
         dispatch<number>("setLevel", 1);
 
-        const formationSub = GameLoop.register(PlayerFormation.run);
-        const levelSub = GameLoop.register(() => drawLevelBanner(1));
+        const levelSub = GameLoop.registerStatic(() => drawLevelBanner(1));
 
-        PlayerFormation.formFast(getShipSpawnLocation(), () => {
-            formationSub();
-            const drawPlayer = GameLoop.register(() => {
-                renderFrame(getShipSpawnLocation(), frame);
-            });
-
-            window.setTimeout(() => {
-                drawPlayer();
-                levelSub();
-                dispatch<PlayerShip>("setPlayer", new PlayerShip());
-                dispatch<BaseEnemyObject[]>("setEnemies", enemies);
-                GameLoop.register(Runner.run);
-            }, 1000);
-        });
+        window.setTimeout(() => {
+            levelSub();
+            dispatch<BaseEnemyObject[]>("setEnemies", enemies);
+        }, 1000);
     }
 }

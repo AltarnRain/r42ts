@@ -70,30 +70,14 @@ const leftNumberLeft = fullWidth - (numberFrameWidth * 2.5);
 const rightNumberLeft = leftNumberLeft + numberFrameWidth + maxPixelSize;
 const levelBackgroundWidth = fullWidth - levelStartPosition;
 
-let reduxSubscription: () => void;
-
-let currentScore: number | undefined;
-let currentPhaserCount: number | undefined;
-let currentLevel: number | undefined;
-let currentLives: number | undefined;
-
-export function subscribeToChanges(): void {
-    currentScore = undefined;
-    currentPhaserCount = undefined;
-    currentLives = undefined;
-    currentLevel = undefined;
-    reduxSubscription = appStore().subscribe(() => {
-        drawScore();
-        drawPhasers();
-        drawLives();
-        drawLevel();
-    });
-}
-
-export function desubscribeToChanges(): void {
-    if (reduxSubscription) {
-        reduxSubscription();
-    }
+/**
+ * Main funtion that draw the entire status bar.
+ */
+export function drawStatusBar(): void {
+    drawScore();
+    drawPhasers();
+    drawLives();
+    drawLevel();
 }
 
 /**
@@ -102,44 +86,40 @@ export function desubscribeToChanges(): void {
 function drawScore(): void {
     const { gameState } = appState();
 
-    if (gameState.score !== currentScore) {
-        currentScore = gameState.score;
-        ctx.fillStyle = CGAColors.red;
-        ctx.fillRect(0, 0, scoreBackgroundWidth, statusBarHeight);
+    ctx.fillStyle = CGAColors.red;
+    ctx.fillRect(0, 0, scoreBackgroundWidth, statusBarHeight);
 
-        const scoreString = padLeft(gameState.score.toString(), 6, "0");
+    const scoreString = padLeft(gameState.score.toString(), 6, "0");
 
-        let cnt = 0;
-        for (const n of scoreString) {
-            const frame = getFrameByIndex(numberFrames, parseInt(n, 10));
+    let cnt = 0;
+    for (const n of scoreString) {
+        const frame = getFrameByIndex(numberFrames, parseInt(n, 10));
 
-            const actualSpacing = cnt === 0 ? 0 : scoreSpacing;
-            let left = cnt * (getFrameDimensions(frame, DimensionProvider().maxPixelSize).width + actualSpacing);
-            left = scoreStartPosition + left;
-            renderFrame({ left, top: 0 }, frame);
-            cnt++;
-        }
+        const actualSpacing = cnt === 0 ? 0 : scoreSpacing;
+        let left = cnt * (getFrameDimensions(frame, DimensionProvider().maxPixelSize).width + actualSpacing);
+        left = scoreStartPosition + left;
+        renderFrame({ left, top: 0 }, frame);
+        cnt++;
     }
+
 }
 
 function drawPhasers(): void {
     const { gameState } = appState();
 
-    if (gameState.phasers !== currentPhaserCount) {
-        currentPhaserCount = gameState.phasers;
-        ctx.fillStyle = CGAColors.red;
-        ctx.fillRect(phaserStartPosition, 0, phaserBackgroundWidth, statusBarHeight);
+    ctx.fillStyle = CGAColors.red;
+    ctx.fillRect(phaserStartPosition, 0, phaserBackgroundWidth, statusBarHeight);
 
-        for (let i = 0; i < gameState.phasers; i++) {
-            const actualSpacing = i === 0 ? 0 : phaserSpacing;
-            const left = phaserStartPosition + i * maxPixelSize + i * actualSpacing;
-            if (i <= phaserDrawLimit) {
-                renderFrame({
-                    left,
-                    top: 0
-                }, phaserFrame);
-            }
+    for (let i = 0; i < gameState.phasers; i++) {
+        const actualSpacing = i === 0 ? 0 : phaserSpacing;
+        const left = phaserStartPosition + i * maxPixelSize + i * actualSpacing;
+        if (i <= phaserDrawLimit) {
+            renderFrame({
+                left,
+                top: 0
+            }, phaserFrame);
         }
+
     }
 }
 
@@ -149,18 +129,15 @@ function drawPhasers(): void {
 function drawLives(): void {
     const { gameState } = appState();
 
-    if (gameState.lives !== currentLives) {
-        currentLives = gameState.lives;
-        ctx.fillStyle = CGAColors.red;
-        ctx.fillRect(livesStartPostion, 0, livesBackgroundWidth, statusBarHeight);
+    ctx.fillStyle = CGAColors.red;
+    ctx.fillRect(livesStartPostion, 0, livesBackgroundWidth, statusBarHeight);
 
-        let left = livesStartPostion;
+    let left = livesStartPostion;
 
-        for (let lives = 1; lives <= livesDrawLimit; lives++) {
-            if (lives <= gameState.lives) {
-                renderFrame({ left, top: maxPixelSize }, lifeFrame);
-                left += livesSpacing + liveFrameWidth;
-            }
+    for (let lives = 1; lives <= livesDrawLimit; lives++) {
+        if (lives <= gameState.lives) {
+            renderFrame({ left, top: maxPixelSize }, lifeFrame);
+            left += livesSpacing + liveFrameWidth;
         }
     }
 }
@@ -168,23 +145,20 @@ function drawLives(): void {
 function drawLevel(): void {
     const { gameState } = appState();
 
-    if (gameState.level !== currentLevel) {
-        currentLevel = gameState.level;
-        ctx.fillStyle = CGAColors.red;
-        ctx.fillRect(levelStartPosition, 0, levelBackgroundWidth, statusBarHeight);
+    ctx.fillStyle = CGAColors.red;
+    ctx.fillRect(levelStartPosition, 0, levelBackgroundWidth, statusBarHeight);
 
-        const paddedLevelString = padLeft(gameState.level.toString(), 2, "0");
+    const paddedLevelString = padLeft(gameState.level.toString(), 2, "0");
 
-        const rightNumber = parseInt(paddedLevelString[1], 10);
-        const leftNumber = parseInt(paddedLevelString[0], 10);
+    const rightNumber = parseInt(paddedLevelString[1], 10);
+    const leftNumber = parseInt(paddedLevelString[0], 10);
 
-        const rightFrame = getFrameByIndex(numberFrames, rightNumber);
-        const leftFrame = getFrameByIndex(numberFrames, leftNumber);
+    const rightFrame = getFrameByIndex(numberFrames, rightNumber);
+    const leftFrame = getFrameByIndex(numberFrames, leftNumber);
 
-        renderFrame({
-            left: leftNumberLeft, top: 0
-        }, leftFrame);
+    renderFrame({
+        left: leftNumberLeft, top: 0
+    }, leftFrame);
 
-        renderFrame({ left: rightNumberLeft, top: 0 }, rightFrame);
-    }
+    renderFrame({ left: rightNumberLeft, top: 0 }, rightFrame);
 }

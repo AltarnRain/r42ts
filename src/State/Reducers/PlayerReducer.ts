@@ -23,9 +23,6 @@ export default function playerReducer(state: PlayerState = initState(), action: 
             case "setBullet":
                 draft.playerBullet = action.payload;
                 break;
-            case "setPlayerFormationPhase":
-                draft.playerFormationPhase = action.payload;
-                break;
             case "setPlayerMovementLimit":
                 draft.moveLimit = action.payload;
                 break;
@@ -43,7 +40,6 @@ function initState(): PlayerState {
     return {
         ship: undefined,
         playerBullet: undefined,
-        playerFormationPhase: undefined,
         moveLimit: "none",
         playerLocation: getShipSpawnLocation(),
     };
