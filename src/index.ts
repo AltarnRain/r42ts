@@ -10,7 +10,7 @@
  */
 
 import { drawStatusBar } from "./GameScreen/StatusBar";
-import { Level01 } from "./Levels/Level01";
+import { Level01 as level01 } from "./Levels/Level01";
 import { GameLoop, PlayerSpawnManager, Runner } from "./Modules";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
@@ -91,8 +91,7 @@ window.onload = () => {
 
                 // testAngleCalculation();
 
-                const l = new Level01();
-                l.start();
+                level01();
 
                 // Runner.start();
                 GameLoop.Start();

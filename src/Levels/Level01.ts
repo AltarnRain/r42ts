@@ -25,25 +25,22 @@ import { cloneObject } from "../Utility/Lib";
 const frame = cloneObject(PlayerFrame);
 convertFrameColor(frame);
 
-export class Level01 {
+export function Level01(): void {
 
-    public start(): void {
+    GameLoop.registerStatic(clearGameFieldBackground);
+    GameLoop.registerStatic(drawGameFieldBorder);
 
-        GameLoop.registerStatic(clearGameFieldBackground);
-        GameLoop.registerStatic(drawGameFieldBorder);
+    const enemies = BirdSpawnLocations.map((l) => new BirdEnemy(l, 3));
 
-        const enemies = BirdSpawnLocations.map((l) => new BirdEnemy(l, 3));
+    dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
+    dispatch<number>("setLevel", 1);
 
-        dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
-        dispatch<number>("setLevel", 1);
+    dispatch<boolean>("showingLevelBanner", true);
+    const levelSub = GameLoop.registerStatic(() => drawLevelBanner(1));
 
-        dispatch<boolean>("showingLevelBanner", true);
-        const levelSub = GameLoop.registerStatic(() => drawLevelBanner(1));
-
-        window.setTimeout(() => {
-            levelSub();
-            dispatch<boolean>("showingLevelBanner", false);
-            dispatch<BaseEnemyObject[]>("setEnemies", enemies);
-        }, 1000);
-    }
+    window.setTimeout(() => {
+        levelSub();
+        dispatch<boolean>("showingLevelBanner", false);
+        dispatch<BaseEnemyObject[]>("setEnemies", enemies);
+    }, 1000);
 }
