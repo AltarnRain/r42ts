@@ -36,15 +36,25 @@ export function gameStateReducer(state: GameState = initState(), action: ActionP
                 break;
             case "removePhaser":
                 draft.phasers--;
+                break;
             case "addLevel":
                 draft.level++;
                 break;
             case "setLevel":
                 draft.level = action.payload;
                 break;
+            case "levelRunning":
+                draft.levelRunning = action.payload;
+                break;
             case "showingLevelBanner":
                 draft.showingLevelBanner = action.payload;
                 break;
+            case "nextLevel":
+                if (draft.level === 42) {
+                    draft.level = 1;
+                } else {
+                    draft.level++;
+                }
         }
     });
 }
@@ -56,5 +66,6 @@ function initState(): GameState {
         score: 0,
         phasers: 2,
         showingLevelBanner: false,
+        levelRunning: false,
     };
 }

@@ -122,11 +122,11 @@ export function run(tick?: number): void {
     if (playerState.ship === undefined && formationInProgress === false) {
         if (levelState.enemies.length > 0) { // Enemies in the level
             if (levelState.particles.length === 0) { // wait till there's no particles.
-                setupFormation(getShipSpawnLocation(), "slow", "sideways"); // Start the slow formation where the player has control.
+                setupFormation(playerState.playerLocation, "slow", "sideways"); // Start the slow formation where the player has control.
             }
         } else {
             // No enemies, fast formation
-            setupFormation(getShipSpawnLocation(), "fast", "immobile");
+            setupFormation(playerState.playerLocation, "fast", "immobile");
         }
     }
 

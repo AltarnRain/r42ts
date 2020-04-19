@@ -6,6 +6,7 @@
 
 import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
 import BaseParticle from "../../Base/BaseParticle";
+import GameLocation from "../../Models/GameLocation";
 import ExplosionCenter from "../../Particles/ExplosionCenter";
 
 /**
@@ -31,11 +32,6 @@ export default interface LevelState {
     explosionCenters: ExplosionCenter[];
 
     /**
-     * Flag to track if the phaser is beam is currently being fired.
-     */
-    phaserOnScreen: boolean;
-
-    /**
      * Pause flag
      */
     pause: boolean;
@@ -44,4 +40,6 @@ export default interface LevelState {
      * Counts the number of register enemies.
      */
     totalNumberOfEnemies: number;
+
+    phaserFrames: GameLocation[];
 }

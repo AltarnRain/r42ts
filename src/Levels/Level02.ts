@@ -22,15 +22,13 @@ import { dispatch } from "../State/Store";
 /**
  * Sets up level 01.
  */
-class Level01 extends BaseLevel {
-
+class Level02 extends BaseLevel {
     public start(): void {
         super.start();
-
         this.enemies = BirdSpawnLocations.map((l) => new BirdEnemy(l, 3));
-        dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
+        this.registerSubscription(GameLoop.registerUpdateState(Runner.run));
         this.begin();
     }
 }
 
-export default Level01;
+export default Level02;

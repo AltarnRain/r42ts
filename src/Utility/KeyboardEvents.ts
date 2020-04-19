@@ -1,4 +1,4 @@
-import { dispatch, appStore, appState } from "../State/Store";
+import { appState, dispatch } from "../State/Store";
 
 type GameKeys =
     "ArrowUp" |

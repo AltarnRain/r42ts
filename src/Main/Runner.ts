@@ -10,23 +10,30 @@
  */
 
 import { BaseEnemyObject } from "../Base/BaseEnemyObject";
-import BaseGameObject from "../Base/BaseGameObject";
 import BaseParticle from "../Base/BaseParticle";
+import CGAColors from "../Constants/CGAColors";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { GameLoop } from "../Modules";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import Particle from "../Particles/Particle";
-import { drawPhasor } from "../Player/DrawPhaser";
+import getPhaserFrames from "../Player/GetPhaserFrames";
 import PlayerBullet from "../Player/PlayerBullet";
 import PlayerBulletFrame from "../Player/PlayerBulletFrame";
 import PlayerShip from "../Player/PlayerShip";
 import CtxProvider from "../Providers/CtxProvider";
 import DimensionProvider from "../Providers/DimensionProvider";
 import particleProvider from "../Providers/ParticleProvider";
+import renderFrame from "../Render/RenderFrame";
 import { appState, dispatch } from "../State/Store";
+import { Frame } from "../Types/Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { overlaps } from "../Utility/Geometry";
+import { getHittableObjects } from "../Utility/StateHelper";
+
+const phaserFrame: Frame = [
+    [CGAColors.yellow, CGAColors.yellow]
+];
 
 /**
  * Runs the main game loop.
@@ -34,7 +41,6 @@ import { overlaps } from "../Utility/Geometry";
  */
 export function run(tick: number): void {
     updateState(tick);
-
     GameLoop.registerCallOnce(draw);
 }
 
@@ -96,7 +102,7 @@ function updateState(tick: number) {
     if (playerIsAlive(playerState.ship) &&
         keyboardState.phraser &&
         levelState.enemies.length > 0 &&
-        gameState.phasers > 0 && levelState.phaserOnScreen === false) {
+        gameState.phasers > 0 && levelState.phaserFrames.length === 0) {
         handlePhaser(playerState.ship);
     }
 
@@ -131,6 +137,10 @@ function updateState(tick: number) {
             }
         }
     }
+
+    if (gameState.levelRunning && levelState.enemies.length === 0 && levelState.particles.length === 0) {
+        dispatch("nextLevel");
+    }
 }
 
 /**
@@ -138,14 +148,16 @@ function updateState(tick: number) {
  * @param {number} tick. Tick.
  */
 function draw(): void {
-    const { levelState: level, playerState: player } = appState();
+    const { levelState, playerState } = appState();
 
     // Draw all the game objects
-    player.ship?.draw();
-    level.enemies.forEach((e) => e.draw());
-    level.particles.forEach((p) => p.draw());
-    level.explosionCenters.forEach((ec) => ec.draw());
-    player.playerBullet?.draw();
+    levelState.enemies.forEach((e) => e.draw());
+    levelState.particles.forEach((p) => p.draw());
+    levelState.explosionCenters.forEach((ec) => ec.draw());
+    levelState.phaserFrames.forEach((pf) => renderFrame(pf, phaserFrame));
+
+    playerState.ship?.draw();
+    playerState.playerBullet?.draw();
 
     DEBUGGING_drawPhasor();
 
@@ -159,7 +171,7 @@ function DEBUGGING_drawPhasor() {
     const { debuggingState: debugging, playerState: player, levelState: level } = appState();
     if (debugging.renderPhaser && playerIsAlive(player.ship) && level.enemies.length > 0) {
         const enemy = level.enemies[0];
-        drawPhasor(player.ship.getNozzleLocation(), enemy.getCenterLocation(), DimensionProvider().averagePixelSize);
+        getPhaserFrames(player.ship.getNozzleLocation(), enemy.getCenterLocation(), DimensionProvider().averagePixelSize);
     }
 }
 
@@ -186,18 +198,16 @@ function handleEnemyDestruction(enemy: BaseEnemyObject) {
  * @param {PlayerShip} player. Player object
  */
 function handlePhaser(player: PlayerShip): void {
-    const { levelState: level } = appState();
+    const { levelState } = appState();
 
-    // Prevent accidental double phasors when the player holds the button to long.
-    dispatch("phaserOnScreen");
-
-    const randomEnemy = getRandomArrayElement(level.enemies);
+    const randomEnemy = getRandomArrayElement(levelState.enemies);
     const playerNozzleLocation = player.getNozzleLocation();
     const randomEnemyCenter = randomEnemy.getCenterLocation();
 
     // Remove one phaser.
     dispatch("removePhaser");
-    drawPhasor(playerNozzleLocation, randomEnemyCenter, DimensionProvider().maxPixelSize);
+    const frames = getPhaserFrames(playerNozzleLocation, randomEnemyCenter, DimensionProvider().maxPixelSize);
+    dispatch<GameLocation[]>("setPhaserFrames", frames);
 
     // Pause the game for a very brief period. This is what the original game did
     // when you fired a phasor shot.
@@ -205,10 +215,10 @@ function handlePhaser(player: PlayerShip): void {
     window.setTimeout(() => {
         // Unpause the game to let rendering continue.
         dispatch("pauseOff");
-        dispatch("phaserOffScreen");
 
         // Deal the with the enemy that got hit.
         handleEnemyDestruction(randomEnemy);
+        dispatch("clearPhaserFrames");
     }, 100);
 }
 
@@ -223,19 +233,6 @@ function handlePlayerDeath(player: PlayerShip): void {
     queueExplosionRender(playerState.playerLocation, player.getExplosion());
     dispatch<PlayerShip>("setPlayer", undefined);
     dispatch("removeLife");
-}
-
-/**
- * Returns all gameobject that can kill the player with their hitboxes.
- * @returns {BaseGameObject[]}. An array of objects that can be hit by the player or hit the player.
- */
-function getHittableObjects(): BaseGameObject[] {
-    const { levelState } = appState();
-    return [
-        ...levelState.enemies,
-        ...levelState.particles,
-        ...levelState.explosionCenters
-    ].filter((o) => o !== undefined);
 }
 
 /**

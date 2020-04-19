@@ -30,5 +30,13 @@ export default interface GameState {
      */
     phasers: number;
 
+    /**
+     * The level banner is currently on screen.
+     */
     showingLevelBanner: false;
+
+    /**
+     * When true the level is running at the moment. Used in addition with other state checks that can only occur if the level is active.
+     */
+    levelRunning: false;
 }

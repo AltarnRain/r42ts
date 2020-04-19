@@ -27,18 +27,18 @@ export function levelReducer(state: LevelState = initState(), action: ActionPayl
             case "removeParticle":
                 draft.particles = draft.particles.filter((p) => p !== action.payload);
                 break;
-            case "phaserOnScreen":
-                draft.phaserOnScreen = true;
-                break;
-            case "phaserOffScreen":
-                draft.phaserOnScreen = false;
-                break;
             case "resetLevelState":
                 draft = initState();
                 break;
             case "setEnemies":
                 draft.enemies = action.payload;
                 draft.totalNumberOfEnemies = action.payload.length;
+                break;
+            case "setPhaserFrames":
+                draft.phaserFrames = action.payload;
+                break;
+            case "clearPhaserFrames":
+                draft.phaserFrames = [];
                 break;
         }
     });
@@ -50,7 +50,7 @@ function initState(): LevelState {
         pause: false,
         explosionCenters: [],
         particles: [],
-        phaserOnScreen: false,
         totalNumberOfEnemies: 0,
+        phaserFrames: [],
     };
 }

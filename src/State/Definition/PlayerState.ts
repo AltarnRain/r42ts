@@ -25,7 +25,13 @@ export default interface PlayerState {
      */
     playerBullet: PlayerBullet | undefined;
 
+    /**
+     * Movement limitations for the player
+     */
     moveLimit: MoveLimits;
 
+    /**
+     * Location of the player
+     */
     playerLocation: GameLocation;
 }

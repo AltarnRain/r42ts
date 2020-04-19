@@ -15,8 +15,8 @@ type GameActions =
     "addExplosionCenter" |
     "removeExplosionCenter" |
     "removeParticle" |
-    "phaserOnScreen" |
-    "phaserOffScreen" |
+    "setPhaserFrames" |
+    "clearPhaserFrames" |
 
     // Player
     "setPlayer" |
@@ -34,6 +34,8 @@ type GameActions =
     "addLevel" |
     "setLevel" |
     "showingLevelBanner" |
+    "nextLevel" |
+    "levelRunning" |
 
     // Keyboard
     "keydown" |

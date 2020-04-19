@@ -23,10 +23,15 @@ const {
     gameFieldHeight,
 } = DimensionProvider();
 
+export function drawBackground(): void {
+    clearGameFieldBackground();
+    drawGameFieldBorder();
+}
+
 /**
  * Renders the entire canvas black
  */
-export function clearGameFieldBackground(): void {
+function clearGameFieldBackground(): void {
     const ctx = CtxProvider();
     ctx.fillStyle = CGAColors.black;
     ctx.fillRect(0, gameFieldTop, fullWidth, fullHeight);
@@ -35,7 +40,7 @@ export function clearGameFieldBackground(): void {
 /**
  * Draws a solid red recangle where the game's score is displayed.
  */
-export function drawGameFieldBorder(): void {
+function drawGameFieldBorder(): void {
     const ctx = CtxProvider();
     ctx.beginPath();
     ctx.rect(0, scoreBoardHeight, fullWidth, gameFieldHeight);

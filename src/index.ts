@@ -10,8 +10,8 @@
  */
 
 import { drawStatusBar } from "./GameScreen/StatusBar";
-import { Level01 as level01 } from "./Levels/Level01";
-import { GameLoop, PlayerSpawnManager, Runner } from "./Modules";
+import "./Levels/LevelManager";
+import { GameLoop, PlayerSpawnManager } from "./Modules";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
 import DimensionProvider from "./Providers/DimensionProvider";
@@ -40,13 +40,12 @@ window.onload = () => {
 
                 dispatch<number>("setLives", 10);
                 dispatch<number>("setPhasers", 30);
-                dispatch<number>("setLevel", 2);
+                dispatch<number>("setLevel", 1);
                 dispatch<number>("increaseScore", 2000);
 
                 registerListeners();
 
                 GameLoop.registerUpdateState(PlayerSpawnManager.run);
-                GameLoop.registerUpdateState(Runner.run);
 
                 // GameLoop.register(Runner.run);
 
@@ -90,8 +89,6 @@ window.onload = () => {
                 };
 
                 // testAngleCalculation();
-
-                level01();
 
                 // Runner.start();
                 GameLoop.Start();
