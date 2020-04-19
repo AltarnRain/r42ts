@@ -44,6 +44,9 @@ abstract class BaseLevel {
      */
     constructor(stateManager: TickFunction) {
         this.stateManager = stateManager;
+
+        // bind to this. Monitors are executed from a different execution context.
+        this.monitorLevelWon = this.monitorLevelWon.bind(this);
     }
 
     /**
@@ -90,7 +93,7 @@ abstract class BaseLevel {
      */
     protected clearedEnemies(): boolean {
         const { levelState} = appState();
-        return levelState.enemies.length === 0 && levelState.particles.length === 0;
+        return levelState?.enemies.length === 0 && levelState?.particles.length === 0;
     }
 
     /**

@@ -9,17 +9,19 @@
  * Responsibility:  Entry point for the game
  */
 
+import { BaseEnemyObject } from "./Base/BaseEnemyObject";
+import CGAColors from "./Constants/CGAColors";
+import RobotEnemy from "./Enemies/Robot/RobotEnemy";
+import { drawBackground } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
-import "./Levels/LevelManager";
+// import "./Levels/LevelManager";
+import enemyLevelRunner from "./Main/EnemeyLevelRunner";
 import GameLoop from "./Main/GameLoop";
-import playerRunner from "./Main/PlayerRunner";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
-import { PlayerSpawnManager as playerSpawnManager } from "./Player/PlayerSpawnManager";
 import DimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 import { dispatch } from "./State/Store";
-import { registerListeners } from "./Utility/KeyboardEvents";
 
 window.onload = () => {
 
@@ -38,17 +40,32 @@ window.onload = () => {
                     fullWidth
                 } = DimensionProvider();
 
-                GameLoop.registerStatic(drawStatusBar);
+                GameLoop.registerBackgroundDrawing(drawStatusBar);
+                GameLoop.registerBackgroundDrawing(drawBackground);
 
-                dispatch<number>("setLives", 10);
-                dispatch<number>("setPhasers", 30);
-                dispatch<number>("setLevel", 1);
-                dispatch<number>("increaseScore", 2000);
+                const r = new RobotEnemy({ top: 500, left: 600 }, 0, CGAColors.green);
 
-                registerListeners();
+                dispatch<BaseEnemyObject[]>("setEnemies", [r]);
 
-                GameLoop.registerUpdateState(playerSpawnManager);
-                GameLoop.registerUpdateState(playerRunner);
+                GameLoop.registerUpdateState(enemyLevelRunner);
+
+                // dispatch<number>("setLives", 10);
+                // dispatch<number>("setPhasers", 30);
+                // dispatch<number>("setLevel", 1);
+                // dispatch<number>("increaseScore", 2000);
+
+                // convertVariableFramesColor(RobotFrames.frames, CGAColors.lightGreen);
+                // convertVariableFrameColor(Explosion02.explosionCenterFrame, CGAColors.lightGreen);
+
+                // GameLoop.registerBackgroundDrawing(() => renderFrame({top: 500, left: 500}, RobotFrames.frames.F0 ));
+                // GameLoop.registerBackgroundDrawing(() => renderFrame({top: 500, left: 600}, RobotFrames.frames.F1 ));
+                // GameLoop.registerBackgroundDrawing(() => renderFrame({top: 500, left: 700}, RobotFrames.frames.F3 ));
+                // GameLoop.registerBackgroundDrawing(() => renderFrame({top: 500, left: 800}, Explosion02.explosionCenterFrame ));
+
+                // registerListeners();
+
+                // GameLoop.registerUpdateState(playerSpawnManager);
+                // GameLoop.registerUpdateState(playerRunner);
 
                 // GameLoop.register(Runner.run);
 
