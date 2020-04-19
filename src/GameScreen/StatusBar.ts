@@ -96,7 +96,7 @@ function drawScore(): void {
         const frame = getFrameByIndex(numberFrames, parseInt(n, 10));
 
         const actualSpacing = cnt === 0 ? 0 : scoreSpacing;
-        let left = cnt * (getFrameDimensions(frame, DimensionProvider().maxPixelSize).width + actualSpacing);
+        let left = cnt * (getFrameDimensions(frame, maxPixelSize).width + actualSpacing);
         left = scoreStartPosition + left;
         renderFrame({ left, top: 0 }, frame);
         cnt++;

@@ -54,9 +54,9 @@ export function drawGrid(): void {
     const ctx = CtxProvider();
     for (let r = 0; r < 200; r += 1) {
         ctx.beginPath();
-        const y = r * 30 + DimensionProvider().gameFieldTop;
+        const y = r * 30 + gameFieldTop;
         ctx.lineTo(0, y);
-        ctx.lineTo(DimensionProvider().fullWidth, y);
+        ctx.lineTo(fullWidth, y);
         ctx.lineWidth = 1;
         ctx.strokeStyle = "white";
         ctx.stroke();
@@ -67,7 +67,7 @@ export function drawGrid(): void {
         ctx.beginPath();
         const x = r * 20;
         ctx.lineTo(x, 0);
-        ctx.lineTo(x, DimensionProvider().fullHeight);
+        ctx.lineTo(x, fullHeight);
         ctx.lineWidth = 1;
         ctx.strokeStyle = "white";
         ctx.stroke();
