@@ -19,7 +19,8 @@ import RobotFrames from "./RobotFrames";
  */
 
 const {
-    fullWidth
+    fullWidth,
+    gameFieldTop
 } = DimensionProvider();
 
 export default class RobotEnemey extends BaseEnemyObject {
@@ -36,7 +37,7 @@ export default class RobotEnemey extends BaseEnemyObject {
         this.frameProvider = new FrameProvider(this.offSetFrames.frames, 0);
         this.currentFrame = this.frameProvider.getFrame();
 
-        this.angle = 360;
+        this.angle = 5;
 
         this.location = this.getOffsetLocation();
     }
@@ -48,10 +49,14 @@ export default class RobotEnemey extends BaseEnemyObject {
     public updateState(tick: number): void {
         super.updateState(tick);
 
-        const { width } = this.getCurrentFrameDimensions();
+        const { width, height } = this.getCurrentFrameDimensions();
 
         if (this.actualLocation.left + width > fullWidth) {
             this.actualLocation.left = 0;
+        }
+
+        if (this.location.top > fullWidth * 0.5) {
+            this.actualLocation.top = gameFieldTop + height;
         }
     }
 
