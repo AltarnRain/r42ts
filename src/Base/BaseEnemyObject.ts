@@ -12,20 +12,24 @@
 import TickHandler from "../Handlers/TickHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
+import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/Gamesize";
 import { OffsetFrames } from "../Models/OffsetFrames";
+import Particle from "../Particles/Particle";
 import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
 import { GameObjectType } from "../Types/Types";
-import { getFrameCenter, getFrameDimensions } from "../Utility/Frame";
+import { getFrameCenter, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { getLocation, getOffsetLocation } from "../Utility/Location";
 import { BaseDestructableObject } from "./BaseDestructableObject";
 
 const {
     averagePixelSize,
-    maxPixelSize
+    maxPixelSize,
 } = DimensionProvider();
+
+const negativeMaxPixelSize = maxPixelSize * -1;
 
 export abstract class BaseEnemyObject extends BaseDestructableObject {
 
@@ -70,6 +74,11 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     protected offSetFrames: OffsetFrames;
 
     /**
+     * When true this enemy will fire bullets.
+     */
+    private enemyCanFire: boolean;
+
+    /**
      * Construct the object.
      * @param {number} speed. Speed of the enemy.
      */
@@ -95,6 +104,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
         });
 
         this.explosion = explosion;
+        this.enemyCanFire = false;
     }
 
     /**
@@ -123,6 +133,11 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
      * Return the angle an enemy.
      */
     protected abstract getAngle(): number;
+
+    /**
+     * Returns the bullet frame.
+     */
+    public abstract getBulletParticle(): Particle | undefined;
 
     /**
      * Called by a TickHandler when the next frame is up.
@@ -189,5 +204,22 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
      */
     public getObjectType(): GameObjectType {
         return "enemy";
+    }
+
+    /**
+     * Returns the bird's hitbox.
+     * @returns {GameRectangle}. Bird's hitbox.
+     */
+    public getHitbox(): GameRectangle {
+        const dimensions = getFrameDimensions(this.currentFrame, averagePixelSize);
+        return getFrameHitbox(this.location, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
+    }
+
+    /**
+     * Sets the can fire flag.
+     * @param {boolean} value.
+     */
+    public setCanFire(value: boolean): void {
+        this.enemyCanFire = value;
     }
 }

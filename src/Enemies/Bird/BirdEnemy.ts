@@ -13,31 +13,23 @@ import Explosion01 from "../../Assets/Explosion01";
 import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
-import Explosion from "../../Models/Explosion";
 import GameLocation from "../../Models/GameLocation";
-import { GameRectangle } from "../../Models/GameRectangle";
-import { OffsetFrames } from "../../Models/OffsetFrames";
+import Particle from "../../Particles/Particle";
 import DimensionProvider from "../../Providers/DimensionProvider";
 import FrameProvider from "../../Providers/FrameProvider";
-import renderFrame from "../../Render/RenderFrame";
-import { Frame, GameObjectType } from "../../Types/Types";
+import { Frame } from "../../Types/Types";
 import { getRandomArrayElement } from "../../Utility/Array";
-import { getFrameCenter, getFrameDimensions, getFrameHitbox, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
-import { cloneObject, randomNumberInRange } from "../../Utility/Lib";
-import { getLocation, getOffsetLocation } from "../../Utility/Location";
+import { getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
 import { BirdFrames } from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 
 const {
     averagePixelSize,
-    maxPixelSize,
     fullHeight,
     gameFieldTop,
     fullWidth,
 } = DimensionProvider();
-
-const negativeMaxPixelSize = maxPixelSize * -1;
 
 export default class BirdEnemy extends BaseEnemyObject {
 
@@ -90,11 +82,8 @@ export default class BirdEnemy extends BaseEnemyObject {
         }
     }
 
-    /**
-     * Called by a TickHandler when the bird should change color.
-     */
-    private onColorChange(): void {
-        setRandomFrameColors(this.offSetFrames.frames, colors);
+    public getBulletFrame(): Frame {
+        return {} as Frame;
     }
 
     /**
@@ -105,15 +94,20 @@ export default class BirdEnemy extends BaseEnemyObject {
     }
 
     /**
-     * Returns the bird's hitbox.
-     * @returns {GameRectangle}. Bird's hitbox.
+     * Returns a bullet particle.
      */
-    public getHitbox(): GameRectangle {
-        const dimensions = getFrameDimensions(this.currentFrame, averagePixelSize);
-        return getFrameHitbox(this.location, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
+    public getBulletParticle(): Particle | undefined {
+        return undefined;
     }
 
     protected getAngle(): number {
         return this.angle;
+    }
+
+    /**
+     * Called by a TickHandler when the bird should change color.
+     */
+    private onColorChange(): void {
+        setRandomFrameColors(this.offSetFrames.frames, colors);
     }
 }
