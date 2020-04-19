@@ -25,16 +25,14 @@ import RobotFrames from "./RobotFrames";
 
 export default class RobotEnemey extends BaseEnemyObject {
     private frames: Frames;
-    private frameProvider: FrameProvider;
 
     private explosion: Explosion;
     private angle: number;
-    private frameTickHandler: TickHandler;
 
-    constructor(location: GameLocation, speed: number, color: string) {
-        super(location, speed);
+    private actualLocation: GameLocation;
 
-        this.onFrameChange = this.onFrameChange.bind(this);
+    constructor(location: GameLocation, speed: number, frameChangeTime: number, color: string) {
+        super(location, speed, frameChangeTime);
 
         this.frames = cloneObject(RobotFrames.frames);
         convertVariableFramesColor(this.frames, color);
@@ -48,7 +46,7 @@ export default class RobotEnemey extends BaseEnemyObject {
 
         this.angle = 360;
 
-        this.frameTickHandler = new TickHandler(300, this.onFrameChange);
+        this.actualLocation = {...location};
     }
 
     public getPoints(): number {
@@ -56,7 +54,7 @@ export default class RobotEnemey extends BaseEnemyObject {
     }
 
     public getCenterLocation(): GameLocation {
-        return { top: 0, left: 0 };
+        return {} as GameLocation;
     }
 
     public getExplosion(): Explosion {
@@ -64,14 +62,10 @@ export default class RobotEnemey extends BaseEnemyObject {
     }
 
     public updateState(tick: number): void {
-        this.frameTickHandler.tick(tick);
+        super.updateState(tick);
     }
 
     public getHitbox(): GameRectangle {
         return {} as GameRectangle;
-    }
-
-    private onFrameChange(): void {
-        this.currentFrame = this.frameProvider.getNextFrame();
     }
 }

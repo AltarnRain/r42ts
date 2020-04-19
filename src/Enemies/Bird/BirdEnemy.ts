@@ -40,20 +40,11 @@ const {
 const negativeMaxPixelSize = maxPixelSize * -1;
 
 export default class BirdEnemy extends BaseEnemyObject {
-    /**
-     * Handles frame ticks.
-     */
-    private frameTickHandler: TickHandler;
 
     /**
      * Hanels color changes.
      */
     private colorTickHandler: TickHandler;
-
-    /**
-     * The frame provider.
-     */
-    private frameProvider: FrameProvider;
 
     /**
      * Angle
@@ -88,16 +79,14 @@ export default class BirdEnemy extends BaseEnemyObject {
     /**
      * Creates the object.
      */
-    constructor(location: GameLocation, speed: number) {
-        super(location, speed);
+    constructor(location: GameLocation, speed: number, frameChangetime: number) {
+        super(location, speed, frameChangetime);
         this.angle = getRandomArrayElement([2, 358, 178, 182]);
 
-        this.onFrameChange = this.onFrameChange.bind(this);
         this.onColorChange = this.onColorChange.bind(this);
 
         this.offsetFrames = cloneObject(BirdFrames);
 
-        this.frameTickHandler = new TickHandler(80, this.onFrameChange);
         this.colorTickHandler = new TickHandler(40, this.onColorChange);
 
         this.frameProvider = new FrameProvider(this.offsetFrames.frames, getRandomFrameKeyIndex(this.offsetFrames.frames));
@@ -124,7 +113,8 @@ export default class BirdEnemy extends BaseEnemyObject {
      * Updates the objects state.
      */
     public updateState(tick: number): void {
-        this.frameTickHandler.tick(tick);
+        super.updateState(tick);
+
         this.colorTickHandler.tick(tick);
 
         this.actualLocation = getLocation(this.actualLocation, this.angle, this.currentSpeed);
@@ -158,13 +148,6 @@ export default class BirdEnemy extends BaseEnemyObject {
      */
     public getExplosion(): Explosion {
         return Explosion01;
-    }
-
-    /**
-     * Called by a TickHandler when the next frame is up.
-     */
-    private onFrameChange(): void {
-        this.currentFrame = this.frameProvider.getNextFrame();
     }
 
     /**

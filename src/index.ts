@@ -43,7 +43,7 @@ window.onload = () => {
                 GameLoop.registerBackgroundDrawing(drawStatusBar);
                 GameLoop.registerBackgroundDrawing(drawBackground);
 
-                const r = new RobotEnemy({ top: 500, left: 600 }, 0, CGAColors.green);
+                const r = new RobotEnemy({ top: 500, left: 600 }, 0, 200, CGAColors.green);
 
                 dispatch<BaseEnemyObject[]>("setEnemies", [r]);
 

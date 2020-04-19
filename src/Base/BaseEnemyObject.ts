@@ -9,7 +9,9 @@
  * Responsibility:  Base class for enemies.
  */
 
+import TickHandler from "../Handlers/TickHandler";
 import GameLocation from "../Models/GameLocation";
+import FrameProvider from "../Providers/FrameProvider";
 import { GameObjectType } from "../Types/Types";
 import { BaseDestructableObject } from "./BaseDestructableObject";
 
@@ -26,13 +28,38 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     protected baseSpeed: number;
 
     /**
+     * The frame provider.
+     */
+    protected frameProvider!: FrameProvider;
+
+    /**
+     * Frame tick handler.
+     */
+    private frameTickHandler: TickHandler;
+
+    /**
      * Construct the object.
      * @param {number} speed. Speed of the enemy.
      */
-    constructor(location: GameLocation, speed: number) {
+    constructor(location: GameLocation, speed: number, frameChangeTime: number) {
         super(location);
         this.currentSpeed = speed;
         this.baseSpeed = speed;
+
+        this.onFrameChange = this.onFrameChange.bind(this);
+
+        this.frameTickHandler = new TickHandler(frameChangeTime, this.onFrameChange);
+    }
+
+    /**
+     * Called by a TickHandler when the next frame is up.
+     */
+    private onFrameChange(): void {
+        this.currentFrame = this.frameProvider.getNextFrame();
+    }
+
+    public updateState(tick: number) {
+        this.frameTickHandler.tick(tick);
     }
 
     /**

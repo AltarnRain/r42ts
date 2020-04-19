@@ -20,7 +20,7 @@ import GameLoop from "../Main/GameLoop";
 class Level02 extends BaseLevel {
     public start(): void {
         super.start();
-        this.enemies = BirdSpawnLocations.map((l) => new BirdEnemy(l, 3));
+        this.enemies = BirdSpawnLocations.map((l) => new BirdEnemy(l, 3, 80));
         this.begin();
     }
 }
