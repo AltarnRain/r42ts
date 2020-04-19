@@ -34,6 +34,11 @@ const phaserFrame: Frame = [
     [CGAColors.yellow, CGAColors.yellow]
 ];
 
+const {
+    maxPixelSize,
+    averagePixelSize
+} = DimensionProvider();
+
 /**
  * Runs the main game loop.
  * @param {number} tick. The current tick.
@@ -156,7 +161,7 @@ function DEBUGGING_drawPhasor() {
     const { debuggingState: debugging, playerState: player, levelState: level } = appState();
     if (debugging.renderPhaser && playerIsAlive(player.ship) && level.enemies.length > 0) {
         const enemy = level.enemies[0];
-        getPhaserFrames(player.ship.getNozzleLocation(), enemy.getCenterLocation(), DimensionProvider().averagePixelSize);
+        getPhaserFrames(player.ship.getNozzleLocation(), enemy.getCenterLocation(), averagePixelSize);
     }
 }
 
@@ -191,7 +196,7 @@ function handlePhaser(player: PlayerShip): void {
 
     // Remove one phaser.
     dispatch("removePhaser");
-    const frames = getPhaserFrames(playerNozzleLocation, randomEnemyCenter, DimensionProvider().maxPixelSize);
+    const frames = getPhaserFrames(playerNozzleLocation, randomEnemyCenter, maxPixelSize);
     dispatch<GameLocation[]>("setPhaserFrames", frames);
 
     // Pause the game for a very brief period. This is what the original game did
