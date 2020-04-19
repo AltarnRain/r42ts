@@ -4,10 +4,10 @@
  * See LICENSE.MD.
  */
 
+import { movePlayer } from "../Handlers/PlayerMovementHandler";
+import GameLoop from "../Main/GameLoop";
 import GameLocation from "../Models/GameLocation";
-import { GameLoop, PlayerMovementHandler } from "../Modules";
 import DimensionProvider from "../Providers/DimensionProvider";
-import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types/Types";
 import { convertFramesColors } from "../Utility/Frame";
@@ -116,7 +116,7 @@ function setupFormation(targetLocation: GameLocation, speed: "fast" | "slow", li
     formationInProgress = true;
 }
 
-export function run(tick?: number): void {
+export function PlayerSpawnManager(tick?: number): void {
     const { playerState, levelState } = appState();
 
     if (playerState.ship === undefined && formationInProgress === false) {
@@ -147,7 +147,7 @@ function updateState(): void {
             p.updateState();
         });
 
-        PlayerMovementHandler.movePlayer(5);
+        movePlayer(5);
         setPartLocations(playerState.playerLocation);
 
         nozzleTopPart?.setUpdatedTargetLocation(nozzleTipEndLocation);

@@ -14,12 +14,10 @@ import BaseParticle from "../Base/BaseParticle";
 import CGAColors from "../Constants/CGAColors";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
-import { GameLoop } from "../Modules";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import Particle from "../Particles/Particle";
 import getPhaserFrames from "../Player/GetPhaserFrames";
 import PlayerBullet from "../Player/PlayerBullet";
-import PlayerBulletFrame from "../Player/PlayerBulletFrame";
 import PlayerShip from "../Player/PlayerShip";
 import CtxProvider from "../Providers/CtxProvider";
 import DimensionProvider from "../Providers/DimensionProvider";
@@ -30,6 +28,7 @@ import { Frame } from "../Types/Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { overlaps } from "../Utility/Geometry";
 import { getHittableObjects } from "../Utility/StateHelper";
+import GameLoop from "./GameLoop";
 
 const phaserFrame: Frame = [
     [CGAColors.yellow, CGAColors.yellow]
@@ -39,7 +38,7 @@ const phaserFrame: Frame = [
  * Runs the main game loop.
  * @param {number} tick. The current tick.
  */
-export function run(tick: number): void {
+export default function enemeyLevelRunner(tick: number): void {
     updateState(tick);
     GameLoop.registerCallOnce(draw);
 }
@@ -57,34 +56,8 @@ function updateState(tick: number) {
 
     // Update object states.
     levelState.enemies.forEach((e) => e.updateState(tick));
-    playerState.ship?.updateState();
-    playerState.playerBullet?.updateState();
 
-    // Remove objects no longer required.
-    if (playerState.playerBullet?.traveling() === false) {
-        dispatch<PlayerBullet>("setBullet", undefined);
-    }
-
-    // Update state and remove particles that are done traveling.
-    levelState.particles.forEach((p) => {
-        if (p.traveling()) {
-            p.updateState(tick);
-        } else {
-            dispatch<BaseParticle>("removeParticle", p);
-        }
-    });
-
-    // Update explosion center state and remove if they're done burning.
-    levelState.explosionCenters.filter((ec) => {
-        if (ec.burning()) {
-            ec.updateState(tick);
-            return true;
-        } else {
-            dispatch<ExplosionCenter>("removeExplosionCenter", ec);
-        }
-    });
-
-    // Keyboard events.
+    // SelfDestruct
     if (playerIsAlive(playerState.ship) && keyboardState.selfDestruct) {
         for (const enemy of levelState.enemies) {
             queueExplosionRender(enemy.getCenterLocation(), enemy.getExplosion());
@@ -106,9 +79,24 @@ function updateState(tick: number) {
         handlePhaser(playerState.ship);
     }
 
-    if (playerIsAlive(playerState.ship) && keyboardState.fire && playerState.playerBullet === undefined) {
-        dispatch<PlayerBullet>("setBullet", new PlayerBullet(PlayerBulletFrame.F0, 270, 30, 1, playerState.ship.getNozzleLocation()));
-    }
+    // Update state and remove particles that are done traveling.
+    levelState.particles.forEach((p) => {
+        if (p.traveling()) {
+            p.updateState(tick);
+        } else {
+            dispatch<BaseParticle>("removeParticle", p);
+        }
+    });
+
+    // Update explosion center state and remove if they're done burning.
+    levelState.explosionCenters.filter((ec) => {
+        if (ec.burning()) {
+            ec.updateState(tick);
+            return true;
+        } else {
+            dispatch<ExplosionCenter>("removeExplosionCenter", ec);
+        }
+    });
 
     // Hit detection.
     const hittableObjects = getHittableObjects();
@@ -148,16 +136,13 @@ function updateState(tick: number) {
  * @param {number} tick. Tick.
  */
 function draw(): void {
-    const { levelState, playerState } = appState();
+    const { levelState } = appState();
 
     // Draw all the game objects
     levelState.enemies.forEach((e) => e.draw());
     levelState.particles.forEach((p) => p.draw());
     levelState.explosionCenters.forEach((ec) => ec.draw());
     levelState.phaserFrames.forEach((pf) => renderFrame(pf, phaserFrame));
-
-    playerState.ship?.draw();
-    playerState.playerBullet?.draw();
 
     DEBUGGING_drawPhasor();
 
@@ -227,7 +212,6 @@ function handlePhaser(player: PlayerShip): void {
  * @param {PlayerShip} player. Player object.
  */
 function handlePlayerDeath(player: PlayerShip): void {
-
     const { playerState } = appState();
 
     queueExplosionRender(playerState.playerLocation, player.getExplosion());

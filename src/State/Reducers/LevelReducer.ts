@@ -1,3 +1,14 @@
+/**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
+/**
+ * Module:          LevelReducuer
+ * Responsibility:  LevelReducer.
+ */
+
 import produce from "immer";
 import ActionPayload from "../ActionPayLoad";
 import LevelState from "../Definition/LevelState";

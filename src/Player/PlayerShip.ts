@@ -9,10 +9,10 @@
  * Responsibility:  Player ship
  */
 
+import { movePlayer } from "../Handlers/PlayerMovementHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
-import { PlayerMovementHandler } from "../Modules";
 import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
@@ -74,7 +74,7 @@ export default class PlayerShip {
      */
     public updateState(): void {
         // Use the PlayerLocationHandler to move the player.
-        PlayerMovementHandler.movePlayer(10);
+        movePlayer(10);
     }
 
     /**

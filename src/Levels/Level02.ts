@@ -4,19 +4,14 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BaseLevel from "../Base/BaseLevel";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import { BirdSpawnLocations } from "../Enemies/Bird/BirdSpawnLoctions";
-import { drawLevelBanner } from "../GameScreen/LevelBanner";
-import GameLocation from "../Models/GameLocation";
-import { GameLoop, Runner } from "../Modules";
-import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
-import { dispatch } from "../State/Store";
+import GameLoop from "../Main/GameLoop";
 
 /**
- * Module:          Level 01
- * Responsibility:  Define the first level.
+ * Module:          Level 02
+ * Responsibility:  Define the second level.
  */
 
 /**
@@ -26,7 +21,6 @@ class Level02 extends BaseLevel {
     public start(): void {
         super.start();
         this.enemies = BirdSpawnLocations.map((l) => new BirdEnemy(l, 3));
-        this.registerSubscription(GameLoop.registerUpdateState(Runner.run));
         this.begin();
     }
 }

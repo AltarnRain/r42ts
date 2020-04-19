@@ -11,9 +11,11 @@
 
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import "./Levels/LevelManager";
-import { GameLoop, PlayerSpawnManager } from "./Modules";
+import GameLoop from "./Main/GameLoop";
+import playerRunner from "./Main/PlayerRunner";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
+import { PlayerSpawnManager as playerSpawnManager } from "./Player/PlayerSpawnManager";
 import DimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 import { dispatch } from "./State/Store";
@@ -45,7 +47,8 @@ window.onload = () => {
 
                 registerListeners();
 
-                GameLoop.registerUpdateState(PlayerSpawnManager.run);
+                GameLoop.registerUpdateState(playerSpawnManager);
+                GameLoop.registerUpdateState(playerRunner);
 
                 // GameLoop.register(Runner.run);
 
@@ -67,26 +70,9 @@ window.onload = () => {
                 //     s2();
                 // });
 
-                (window as any).r42 = {
-                    increaseScore: (n: number) => dispatch<number>("increaseScore", 200),
-                    // setLives: (n: number) => Lives.setLives(n),
-                    // addLife: () => Lives.addLife(),
-                    // setLevel: (n: number) => Level.setLevel(n),
-                    // addLevel: () => Level.addLevel(),
-                    // addPhaser: () => Phasers.addPhaser(),
-                    // setPhasers: (n: number) => Phasers.setPhasers(n),
-                    // removePhaser: () => Phasers.reduceByOneCharge(),
-                    // setSpeed: (n: number) => dispatch<number>("set"),
-                    // toggleHitboxes: () => dispatchEvent,
-                    // addBirds: (n: number) => {
-                    //     for (let i = 0; i < n; i++) {
-                    //         const bird = new BirdEnemy();
-                    //         // Runner.register(bird);
-                    //     }
-                    // },
-                    // togglePlayerImmortality: () => Runner.togglePlayerImmortality(),
-                    // toggleRenderPhaser: () => Runner.toggleRenderPhaser(),
-                };
+                // (window as any).r42 = {
+                //     d: (type: GameActions, action: ActionPayload<any>) => dispatch(type, action),
+                // };
 
                 // testAngleCalculation();
 

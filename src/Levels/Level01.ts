@@ -4,13 +4,10 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BaseLevel from "../Base/BaseLevel";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import { BirdSpawnLocations } from "../Enemies/Bird/BirdSpawnLoctions";
-import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import GameLocation from "../Models/GameLocation";
-import { GameLoop, Runner } from "../Modules";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { dispatch } from "../State/Store";
 
