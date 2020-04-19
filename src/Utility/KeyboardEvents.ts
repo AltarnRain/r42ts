@@ -1,4 +1,4 @@
-import { dispatch } from "../State/Store";
+import { dispatch, appStore, appState } from "../State/Store";
 
 type GameKeys =
     "ArrowUp" |
@@ -27,7 +27,8 @@ export const allGameKeys: GameKeys[] = [
  */
 function onKeyDown(event: KeyboardEvent): void {
 
-    if (allGameKeys.find((k) => k === event.code)) {
+    const { gameState } = appState();
+    if (gameState.showingLevelBanner === false && allGameKeys.find((k) => k === event.code)) {
         // Only dispatch if the key is a game control key.
         event.stopPropagation();
         event.preventDefault();

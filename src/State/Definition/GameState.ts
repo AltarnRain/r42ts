@@ -29,4 +29,6 @@ export default interface GameState {
      * The player's phaser charges.
      */
     phasers: number;
+
+    showingLevelBanner: false;
 }

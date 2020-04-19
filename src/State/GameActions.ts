@@ -33,6 +33,7 @@ type GameActions =
     "pauseOff" |
     "addLevel" |
     "setLevel" |
+    "showingLevelBanner" |
 
     // Keyboard
     "keydown" |

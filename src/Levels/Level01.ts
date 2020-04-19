@@ -8,16 +8,14 @@ import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import { BirdSpawnLocations } from "../Enemies/Bird/BirdSpawnLoctions";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
+import { clearGameFieldBackground, drawGameFieldBorder } from "../GameScreen/StaticRenders";
 import GameLocation from "../Models/GameLocation";
-import { GameLoop, PlayerSpawnManager, Runner } from "../Modules";
+import { GameLoop } from "../Modules";
 import { PlayerFrame } from "../Player/PlayerFrames";
-import PlayerShip from "../Player/PlayerShip";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
-import renderFrame from "../Render/RenderFrame";
 import { dispatch } from "../State/Store";
 import { convertFrameColor } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
-import { drawGameFieldBorder, clearGameFieldBackground } from "../GameScreen/StaticRenders";
 
 /**
  * Module:          Level 01
@@ -39,10 +37,12 @@ export class Level01 {
         dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
         dispatch<number>("setLevel", 1);
 
+        dispatch<boolean>("showingLevelBanner", true);
         const levelSub = GameLoop.registerStatic(() => drawLevelBanner(1));
 
         window.setTimeout(() => {
             levelSub();
+            dispatch<boolean>("showingLevelBanner", false);
             dispatch<BaseEnemyObject[]>("setEnemies", enemies);
         }, 1000);
     }
