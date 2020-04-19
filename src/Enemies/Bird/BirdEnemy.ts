@@ -19,7 +19,7 @@ import DimensionProvider from "../../Providers/DimensionProvider";
 import FrameProvider from "../../Providers/FrameProvider";
 import { Frame } from "../../Types/Types";
 import { getRandomArrayElement } from "../../Utility/Array";
-import { getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
+import { getRandomFrameKeyIndex, setRandomFrameColors, convertVariableFrameColor } from "../../Utility/Frame";
 import { BirdFrames } from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
@@ -56,6 +56,10 @@ export default class BirdEnemy extends BaseEnemyObject {
 
         this.frameProvider = new FrameProvider(this.offSetFrames.frames, getRandomFrameKeyIndex(this.offSetFrames.frames));
         this.currentFrame = this.frameProvider.getFrame();
+
+        convertVariableFrameColor(this.explosion.explosionCenterFrame, CGAColors.white);
+        convertVariableFrameColor(this.explosion.particleFrames[0], CGAColors.white);
+        convertVariableFrameColor(this.explosion.particleFrames[1], CGAColors.white);
 
         this.location = this.getOffsetLocation();
     }

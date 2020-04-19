@@ -9,19 +9,18 @@
  * Responsibility:  Entry point for the game
  */
 
-import { BaseEnemyObject } from "./Base/BaseEnemyObject";
-import CGAColors from "./Constants/CGAColors";
-import RobotEnemy from "./Enemies/Robot/RobotEnemy.1";
 import { drawBackground } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
-// import "./Levels/LevelManager";
-import enemyLevelRunner from "./Main/EnemeyLevelRunner";
+import subscribeToLevelChange from "./Levels/LevelManager";
 import GameLoop from "./Main/GameLoop";
+import playerRunner from "./Main/PlayerRunner";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
+import playerSpawnManager from "./Player/PlayerSpawnManager";
 import DimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 import { dispatch } from "./State/Store";
+import { registerListeners } from "./Utility/KeyboardEvents";
 
 window.onload = () => {
 
@@ -33,39 +32,18 @@ window.onload = () => {
 
         switch (window.location.search.replace("?", "")) {
             case "playground": {
-
-                const {
-                    gameFieldHeight,
-                    averagePixelSize,
-                    fullWidth
-                } = DimensionProvider();
+                subscribeToLevelChange();
+                registerListeners();
 
                 GameLoop.registerBackgroundDrawing(drawStatusBar);
                 GameLoop.registerBackgroundDrawing(drawBackground);
 
-                const r = new RobotEnemy({ top: 500, left: 600 }, 10, 400, CGAColors.green);
+                dispatch<number>("setLives", 10);
+                dispatch<number>("setPhasers", 30);
+                dispatch<number>("setLevel", 2);
 
-                dispatch<BaseEnemyObject[]>("setEnemies", [r]);
-
-                GameLoop.registerUpdateState(enemyLevelRunner);
-
-                // dispatch<number>("setLives", 10);
-                // dispatch<number>("setPhasers", 30);
-                // dispatch<number>("setLevel", 1);
-                // dispatch<number>("increaseScore", 2000);
-
-                // convertVariableFramesColor(RobotFrames.frames, CGAColors.lightGreen);
-                // convertVariableFrameColor(Explosion02.explosionCenterFrame, CGAColors.lightGreen);
-
-                // GameLoop.registerBackgroundDrawing(() => renderFrame({top: 500, left: 500}, RobotFrames.frames.F0 ));
-                // GameLoop.registerBackgroundDrawing(() => renderFrame({top: 500, left: 600}, RobotFrames.frames.F1 ));
-                // GameLoop.registerBackgroundDrawing(() => renderFrame({top: 500, left: 700}, RobotFrames.frames.F3 ));
-                // GameLoop.registerBackgroundDrawing(() => renderFrame({top: 500, left: 800}, Explosion02.explosionCenterFrame ));
-
-                // registerListeners();
-
-                // GameLoop.registerUpdateState(playerSpawnManager);
-                // GameLoop.registerUpdateState(playerRunner);
+                GameLoop.registerUpdateState(playerSpawnManager);
+                GameLoop.registerUpdateState(playerRunner);
 
                 // GameLoop.register(Runner.run);
 

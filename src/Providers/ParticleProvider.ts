@@ -26,8 +26,6 @@ export default function particleProvider(location: GameLocation, explosion: Expl
         const particleFrameIndex = exp.particleFrameIndexes[i];
         const particleFrame = exp.particleFrames[particleFrameIndex];
 
-        convertFrameColor(particleFrame);
-
         const angle = exp.angles[i];
         const speed = exp.useSpeed ? exp.speed : exp.speeds[i];
 

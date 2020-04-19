@@ -116,7 +116,7 @@ function setupFormation(targetLocation: GameLocation, speed: "fast" | "slow", li
     formationInProgress = true;
 }
 
-export function PlayerSpawnManager(tick?: number): void {
+export default function PlayerSpawnManager(tick?: number): void {
     const { playerState, levelState } = appState();
 
     if (playerState.ship === undefined && formationInProgress === false) {

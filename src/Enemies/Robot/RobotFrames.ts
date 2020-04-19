@@ -50,7 +50,7 @@ export const RobotFrames: OffsetFrames = {
             left: 0,
         },
         {
-            top: -5,
+            top: -4,
             left: 0,
         },
         {

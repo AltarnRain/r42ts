@@ -5,8 +5,8 @@
  */
 
 import BaseLevel from "../Base/BaseLevel";
-import BirdEnemy from "../Enemies/Bird/BirdEnemy";
-import { BirdSpawnLocations } from "../Enemies/Bird/BirdSpawnLoctions";
+import RobotEnemy from "../Enemies/Robot/RobotEnemy";
+import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 
 /**
  * Module:          Level 02
@@ -19,7 +19,7 @@ import { BirdSpawnLocations } from "../Enemies/Bird/BirdSpawnLoctions";
 class Level02 extends BaseLevel {
     public start(): void {
         super.start();
-        this.enemies = BirdSpawnLocations.map((l) => new BirdEnemy(l, 3, 80));
+        this.enemies = robotSpawnLocationsAndColor.map((lc) => new RobotEnemy(lc.location, 2, 200, lc.color));
         this.begin();
     }
 }

@@ -17,7 +17,7 @@ const spacing = 20;
 
 const secondRowLeftStart = 30;
 
-export const BirdSpawnLocations: GameLocation[] = [];
+const birdSpawnLocations: GameLocation[] = [];
 
 const {
     averagePixelSize,
@@ -26,7 +26,7 @@ const {
 
 // Top row birds.
 for (let i = 0; i < 7; i++) {
-    BirdSpawnLocations.push({
+    birdSpawnLocations.push({
         left: (firstRowLeftStart * averagePixelSize) + spacing * i * averagePixelSize,
         top: gameFieldTop + averagePixelSize * 5,
     });
@@ -34,7 +34,7 @@ for (let i = 0; i < 7; i++) {
 
 // Second row birds.
 for (let i = 0; i < 6; i++) {
-    BirdSpawnLocations.push({
+    birdSpawnLocations.push({
         left: (secondRowLeftStart * averagePixelSize) + spacing * i * averagePixelSize,
         top: gameFieldTop + averagePixelSize * 15,
     });
@@ -42,8 +42,10 @@ for (let i = 0; i < 6; i++) {
 
 // Third row birds.
 for (let i = 0; i < 7; i++) {
-    BirdSpawnLocations.push({
+    birdSpawnLocations.push({
         left: (firstRowLeftStart * averagePixelSize) + spacing * i * averagePixelSize,
         top: gameFieldTop + averagePixelSize * 25,
     });
 }
+
+export default birdSpawnLocations;

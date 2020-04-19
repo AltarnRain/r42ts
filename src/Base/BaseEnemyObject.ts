@@ -84,6 +84,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
      */
     constructor(location: GameLocation, speed: number, frameChangeTime: number, offsetFrames: OffsetFrames, explosion: Explosion) {
         super(location);
+
         this.currentSpeed = speed;
         this.baseSpeed = speed;
 
@@ -103,7 +104,6 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
             };
         });
 
-        this.explosion = explosion;
         this.enemyCanFire = false;
     }
 

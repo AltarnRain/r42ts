@@ -14,16 +14,16 @@ import Explosion from "../Models/Explosion";
 
 const Explosion01: Explosion = {
     explosionCenterFrame: [
-        ["F", "0", "F", "0"],
-        ["F", "F", "F", "F"],
-        ["0", "F", "0", "F"],
+        ["V", "0", "V", "0"],
+        ["V", "V", "V", "V"],
+        ["0", "V", "0", "V"],
     ],
     particleFrames: [
         [
-            ["F"],
+            ["V"],
         ],
         [
-            ["F", "F"]
+            ["V", "V"]
         ],
     ],
     angles: [160, 180, 200, 340, 0, 20],

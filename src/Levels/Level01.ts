@@ -6,7 +6,7 @@
 
 import BaseLevel from "../Base/BaseLevel";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
-import { BirdSpawnLocations } from "../Enemies/Bird/BirdSpawnLoctions";
+import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
 import GameLocation from "../Models/GameLocation";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { dispatch } from "../State/Store";
@@ -24,7 +24,7 @@ class Level01 extends BaseLevel {
     public start(): void {
         super.start();
 
-        this.enemies = BirdSpawnLocations.map((l) => new BirdEnemy(l, 3, 80));
+        this.enemies = birdSpawnLocations.map((l) => new BirdEnemy(l, 3, 80));
         dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
         this.begin();
     }
