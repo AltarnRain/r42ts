@@ -45,7 +45,7 @@ const {
  */
 export default function enemeyLevelRunner(tick: number): void {
     updateState(tick);
-    GameLoop.registerCallOnce(draw);
+    GameLoop.registerDraw(draw);
 }
 
 /**
@@ -129,10 +129,6 @@ function updateState(tick: number) {
                 }
             }
         }
-    }
-
-    if (gameState.levelRunning && levelState.enemies.length === 0 && levelState.particles.length === 0) {
-        dispatch("nextLevel");
     }
 }
 

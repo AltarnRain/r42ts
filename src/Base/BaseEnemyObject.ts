@@ -10,6 +10,7 @@
  */
 
 import GameLocation from "../Models/GameLocation";
+import { GameObjectType } from "../Types/Types";
 import { BaseDestructableObject } from "./BaseDestructableObject";
 
 export abstract class BaseEnemyObject extends BaseDestructableObject {
@@ -57,12 +58,21 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     }
 
     /**
-     * Returns the enemies hitpoints.
+     * Returns the enemies hitpoints. Returns 0 by default. Only meteorites have hitpoints.
      */
-    public abstract getHitpoints(): number;
+    public getHitpoints(): number {
+        return 0;
+    }
 
     /**
      * Returns the center of the
      */
     public abstract getCenterLocation(): GameLocation;
+
+    /**
+     * Always an enemy
+     */
+    public getObjectType(): GameObjectType {
+        return "enemy";
+    }
 }

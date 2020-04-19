@@ -43,9 +43,6 @@ export function gameStateReducer(state: GameState = initState(), action: ActionP
             case "setLevel":
                 draft.level = action.payload;
                 break;
-            case "levelRunning":
-                draft.levelRunning = action.payload;
-                break;
             case "showingLevelBanner":
                 draft.showingLevelBanner = action.payload;
                 break;
@@ -65,7 +62,6 @@ function initState(): GameState {
         lives: 2,
         score: 0,
         phasers: 2,
-        showingLevelBanner: false,
-        levelRunning: false,
+        showingLevelBanner: false
     };
 }

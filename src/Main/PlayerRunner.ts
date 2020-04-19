@@ -16,7 +16,7 @@ import GameLoop from "./GameLoop";
 
 export default function playerRunner(tick: number): void {
     updateState();
-    GameLoop.registerCallOnce(draw);
+    GameLoop.registerDraw(draw);
 }
 
 function updateState(): void {

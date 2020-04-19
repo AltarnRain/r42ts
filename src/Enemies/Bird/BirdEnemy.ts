@@ -161,14 +161,6 @@ export default class BirdEnemy extends BaseEnemyObject {
     }
 
     /**
-     * Returns the game object type.
-     * @returns {GameObjectType}. The game object type.
-     */
-    public getObjectType(): GameObjectType {
-        return "enemy";
-    }
-
-    /**
      * Called by a TickHandler when the next frame is up.
      */
     private onFrameChange(): void {
@@ -187,13 +179,6 @@ export default class BirdEnemy extends BaseEnemyObject {
      */
     public getPoints(): number {
         return 200;
-    }
-
-    /**
-     * Return the birds remaining hitpoints. 0.
-     */
-    public getHitpoints(): number {
-        return 0;
     }
 
     /**

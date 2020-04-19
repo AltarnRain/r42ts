@@ -80,7 +80,7 @@ export namespace GameLoop {
      * @param {function} f. Background draw function
      * @returns {function}. Function to remove the background draw from the queue.
      */
-    export function registerStatic(f: () => void): () => void {
+    export function registerBackgroundDrawing(f: () => void): () => void {
         backgroundDrawFunctions.push(f);
 
         return () => {
@@ -92,7 +92,7 @@ export namespace GameLoop {
      * Registers a function that is called once, but only if there is currently no render in progress.
      * @param {function} f. A function.
      */
-    export function registerCallOnce(f: () => void): void {
+    export function registerDraw(f: () => void): void {
         if (drawOnceHandle === undefined) {
             callOnce.push(f);
         }

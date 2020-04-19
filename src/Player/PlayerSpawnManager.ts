@@ -132,7 +132,7 @@ export function PlayerSpawnManager(tick?: number): void {
 
     if (formationInProgress) {
         updateState();
-        GameLoop.registerCallOnce(draw);
+        GameLoop.registerDraw(draw);
     }
 }
 

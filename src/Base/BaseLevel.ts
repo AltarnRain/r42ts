@@ -51,8 +51,8 @@ abstract class BaseLevel {
      */
     public start(): void {
         const { gameState } = appState();
-        this.registerSubscription(GameLoop.registerStatic(drawBackground));
-        this.levelBannerSub = GameLoop.registerStatic(() => drawLevelBanner(gameState.level));
+        this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
+        this.levelBannerSub = GameLoop.registerBackgroundDrawing(() => drawLevelBanner(gameState.level));
 
         dispatch<boolean>("showingLevelBanner", true);
     }
@@ -74,7 +74,7 @@ abstract class BaseLevel {
             this.levelBannerSub();
             dispatch<boolean>("showingLevelBanner", false);
             dispatch<BaseEnemyObject[]>("setEnemies", this.enemies);
-            dispatch<boolean>("levelRunning", true);
+            this.registerSubscription(GameLoop.registerUpdateState(this.monitorLevelWon));
         }, 1000);
     }
 
@@ -83,7 +83,23 @@ abstract class BaseLevel {
      */
     public dispose(): void {
         this.subscriptions.forEach((s) => s());
-        dispatch<boolean>("levelRunning", false);
+    }
+
+    /**
+     * Returns true if all the enemies are cleared. Can be used for QoL in monitorLevelWon.
+     */
+    protected clearedEnemies(): boolean {
+        const { levelState} = appState();
+        return levelState.enemies.length === 0 && levelState.particles.length === 0;
+    }
+
+    /**
+     * Monitors if the level is won. By default it checks if the level is clear of ememies.
+     */
+    public monitorLevelWon(): void {
+        if (this.clearedEnemies()) {
+            dispatch("nextLevel");
+        }
     }
 }
 

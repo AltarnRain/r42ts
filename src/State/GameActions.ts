@@ -35,7 +35,6 @@ type GameActions =
     "setLevel" |
     "showingLevelBanner" |
     "nextLevel" |
-    "levelRunning" |
 
     // Keyboard
     "keydown" |
