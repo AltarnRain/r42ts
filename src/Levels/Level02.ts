@@ -7,7 +7,6 @@
 import BaseLevel from "../Base/BaseLevel";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import { BirdSpawnLocations } from "../Enemies/Bird/BirdSpawnLoctions";
-import GameLoop from "../Main/GameLoop";
 
 /**
  * Module:          Level 02

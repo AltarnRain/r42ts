@@ -52,16 +52,6 @@ export default class BirdEnemy extends BaseEnemyObject {
     private angle: number = 0;
 
     /**
-     * Frame width
-     */
-    private frameWidth: number;
-
-    /**
-     * Frame height.
-     */
-    private frameHeight: number;
-
-    /**
      * Creates the object.
      */
     constructor(location: GameLocation, speed: number, frameChangetime: number) {
@@ -75,10 +65,7 @@ export default class BirdEnemy extends BaseEnemyObject {
         this.frameProvider = new FrameProvider(this.offSetFrames.frames, getRandomFrameKeyIndex(this.offSetFrames.frames));
         this.currentFrame = this.frameProvider.getFrame();
 
-        const { width, height } = getFrameDimensions(this.currentFrame, maxPixelSize);
-
-        this.frameWidth = width;
-        this.frameHeight = height;
+        this.location = this.getOffsetLocation();
     }
 
     /**
@@ -89,14 +76,16 @@ export default class BirdEnemy extends BaseEnemyObject {
 
         this.colorTickHandler.tick(tick);
 
+        const { width, height} = this.getCurrentFrameDimensions();
+
         const leftLimit = averagePixelSize * 2;
-        const rightLimit = fullWidth - this.frameWidth - averagePixelSize * 2;
+        const rightLimit = fullWidth - width - averagePixelSize * 2;
 
         if (this.location.left <= leftLimit || this.location.left >= rightLimit) {
             this.angle = 180 - this.angle;
         }
 
-        if (this.location.top <= gameFieldTop || this.location.top >= fullHeight - this.frameHeight) {
+        if (this.location.top <= gameFieldTop || this.location.top >= fullHeight - height) {
             this.angle *= -1;
         }
     }

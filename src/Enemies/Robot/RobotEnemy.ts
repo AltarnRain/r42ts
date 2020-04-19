@@ -6,20 +6,21 @@
 
 import Explosion02 from "../../Assets/Explosion02";
 import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
-import CGAColors from "../../Constants/CGAColors";
-import Explosion from "../../Models/Explosion";
 import GameLocation from "../../Models/GameLocation";
 import { GameRectangle } from "../../Models/GameRectangle";
+import DimensionProvider from "../../Providers/DimensionProvider";
 import FrameProvider from "../../Providers/FrameProvider";
-import { Frames } from "../../Types/Types";
 import { convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
-import { cloneObject } from "../../Utility/Lib";
 import RobotFrames from "./RobotFrames";
 
 /**
  * Module:          RobotEnemey
  * Responsibility:  Handles the Robot enemeny first seen in level 2.
  */
+
+const {
+    fullWidth
+} = DimensionProvider();
 
 export default class RobotEnemey extends BaseEnemyObject {
 
@@ -28,13 +29,16 @@ export default class RobotEnemey extends BaseEnemyObject {
     constructor(location: GameLocation, speed: number, frameChangeTime: number, color: string) {
         super(location, speed, frameChangeTime, RobotFrames, Explosion02);
 
-
         convertVariableFrameColor(this.explosion.explosionCenterFrame, color);
-        convertVariableFrameColor(this.explosion.particleFrames[0], CGAColors.green);
+        convertVariableFrameColor(this.explosion.particleFrames[0], color);
+        convertVariableFramesColor(this.offSetFrames.frames, color);
 
+        this.frameProvider = new FrameProvider(this.offSetFrames.frames, 0);
         this.currentFrame = this.frameProvider.getFrame();
 
         this.angle = 360;
+
+        this.location = this.getOffsetLocation();
     }
 
     public getPoints(): number {
@@ -43,6 +47,12 @@ export default class RobotEnemey extends BaseEnemyObject {
 
     public updateState(tick: number): void {
         super.updateState(tick);
+
+        const { width } = this.getCurrentFrameDimensions();
+
+        if (this.actualLocation.left + width > fullWidth) {
+            this.actualLocation.left = 0;
+        }
     }
 
     public getHitbox(): GameRectangle {
@@ -52,5 +62,4 @@ export default class RobotEnemey extends BaseEnemyObject {
     protected getAngle(): number {
         return this.angle;
     }
-
 }

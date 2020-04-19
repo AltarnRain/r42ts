@@ -12,17 +12,19 @@
 import TickHandler from "../Handlers/TickHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
+import { GameSize } from "../Models/Gamesize";
 import { OffsetFrames } from "../Models/OffsetFrames";
 import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
 import { GameObjectType } from "../Types/Types";
-import { getFrameCenter } from "../Utility/Frame";
+import { getFrameCenter, getFrameDimensions } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { getLocation, getOffsetLocation } from "../Utility/Location";
 import { BaseDestructableObject } from "./BaseDestructableObject";
 
 const {
-    averagePixelSize
+    averagePixelSize,
+    maxPixelSize
 } = DimensionProvider();
 
 export abstract class BaseEnemyObject extends BaseDestructableObject {
@@ -38,7 +40,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     protected baseSpeed: number;
 
     /**
-     * The frame provider.
+     * The frame provider. Must be set in an inheriting class.
      */
     protected frameProvider!: FrameProvider;
 
@@ -50,7 +52,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     /**
      * The real location the enemy has, without offsets
      */
-    private actualLocation: GameLocation;
+    protected actualLocation: GameLocation;
 
     /**
      * Offets for each frame.
@@ -80,7 +82,6 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
         this.explosion = cloneObject(explosion);
 
         this.actualLocation = { ...this.location };
-        this.location = this.calculateOffsetLocation();
 
         this.onFrameChange = this.onFrameChange.bind(this);
 
@@ -105,11 +106,22 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     }
 
     /**
+     * Returns the with and height of the current frame.
+     * @returns {GameSize}.
+     */
+    protected getCurrentFrameDimensions(): GameSize {
+        return getFrameDimensions(this.currentFrame, maxPixelSize);
+    }
+
+    /**
      * Returns the point worth.
      * @returns {number}. Point worth of the enemy.
      */
     public abstract getPoints(): number;
 
+    /**
+     * Return the angle an enemy.
+     */
     protected abstract getAngle(): number;
 
     /**
@@ -121,21 +133,25 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
 
     /**
      * Base implementation of a state update.
-     * @param {number} tick 
+     * @param {number} tick
      */
     public updateState(tick: number) {
         this.frameTickHandler.tick(tick);
         this.actualLocation = getLocation(this.actualLocation, this.getAngle(), this.currentSpeed);
-        this.location = this.calculateOffsetLocation();
+        this.location = this.getOffsetLocation();
     }
 
     /**
      * Calculates the offsetLocation
      * @returns {GameLocation}. GameLocation offset to let the frames render over one another.
      */
-    private calculateOffsetLocation(): GameLocation {
+    protected getOffsetLocation(): GameLocation {
         const frameOffsets = this.offSets[this.frameProvider.getCurrentIndex()];
-        return getOffsetLocation(this.actualLocation, frameOffsets.left, frameOffsets.top);
+        if (frameOffsets !== undefined) {
+            return getOffsetLocation(this.actualLocation, frameOffsets.left, frameOffsets.top);
+        } else {
+            return this.actualLocation;
+        }
     }
 
     /**
