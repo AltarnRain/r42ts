@@ -52,11 +52,6 @@ export default class BirdEnemy extends BaseEnemyObject {
     private angle: number = 0;
 
     /**
-     * Bird fames
-     */
-    private offsetFrames: OffsetFrames;
-
-    /**
      * Frame width
      */
     private frameWidth: number;
@@ -67,43 +62,20 @@ export default class BirdEnemy extends BaseEnemyObject {
     private frameHeight: number;
 
     /**
-     * The actual location of the bird without offsets.
-     */
-    private actualLocation: GameLocation;
-
-    /**
-     * Precaculated offsets for every frame.
-     */
-    private offSets: GameLocation[];
-
-    /**
      * Creates the object.
      */
     constructor(location: GameLocation, speed: number, frameChangetime: number) {
-        super(location, speed, frameChangetime);
+        super(location, speed, frameChangetime, BirdFrames, Explosion01);
         this.angle = getRandomArrayElement([2, 358, 178, 182]);
 
         this.onColorChange = this.onColorChange.bind(this);
 
-        this.offsetFrames = cloneObject(BirdFrames);
-
         this.colorTickHandler = new TickHandler(40, this.onColorChange);
 
-        this.frameProvider = new FrameProvider(this.offsetFrames.frames, getRandomFrameKeyIndex(this.offsetFrames.frames));
+        this.frameProvider = new FrameProvider(this.offSetFrames.frames, getRandomFrameKeyIndex(this.offSetFrames.frames));
         this.currentFrame = this.frameProvider.getFrame();
 
         const { width, height } = getFrameDimensions(this.currentFrame, maxPixelSize);
-
-        this.actualLocation = {...this.location};
-
-        this.offSets = BirdFrames.offSets.map((o) => {
-            return {
-                left: o.left * averagePixelSize,
-                top: o.top * averagePixelSize,
-            };
-        });
-
-        this.location = this.calculateOffsetLocation();
 
         this.frameWidth = width;
         this.frameHeight = height;
@@ -116,10 +88,6 @@ export default class BirdEnemy extends BaseEnemyObject {
         super.updateState(tick);
 
         this.colorTickHandler.tick(tick);
-
-        this.actualLocation = getLocation(this.actualLocation, this.angle, this.currentSpeed);
-
-        this.location = this.calculateOffsetLocation();
 
         const leftLimit = averagePixelSize * 2;
         const rightLimit = fullWidth - this.frameWidth - averagePixelSize * 2;
@@ -134,27 +102,10 @@ export default class BirdEnemy extends BaseEnemyObject {
     }
 
     /**
-     * Calculates the offsetLocation
-     * @returns {GameLocation}. GameLocation offset to let the frames render over one another.
-     */
-    private calculateOffsetLocation(): GameLocation {
-        const frameOffsets = this.offSets[this.frameProvider.getCurrentIndex()];
-        return getOffsetLocation(this.actualLocation, frameOffsets.left, frameOffsets.top);
-    }
-
-    /**
-     * Returns the explosion asset.
-     * @returns {Explosion}. An explosion asset.
-     */
-    public getExplosion(): Explosion {
-        return Explosion01;
-    }
-
-    /**
      * Called by a TickHandler when the bird should change color.
      */
     private onColorChange(): void {
-        setRandomFrameColors(this.offsetFrames.frames, colors);
+        setRandomFrameColors(this.offSetFrames.frames, colors);
     }
 
     /**
@@ -173,11 +124,7 @@ export default class BirdEnemy extends BaseEnemyObject {
         return getFrameHitbox(this.location, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
     }
 
-    /**
-     * Returns the center location of the object.
-     * @returns {GameLocation}. GameLocation located at the center of the object.
-     */
-    public getCenterLocation(): GameLocation {
-        return getFrameCenter(this.location, this.currentFrame, averagePixelSize);
+    protected getAngle(): number {
+        return this.angle;
     }
 }

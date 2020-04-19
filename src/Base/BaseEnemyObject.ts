@@ -10,10 +10,20 @@
  */
 
 import TickHandler from "../Handlers/TickHandler";
+import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
+import { OffsetFrames } from "../Models/OffsetFrames";
+import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
 import { GameObjectType } from "../Types/Types";
+import { getFrameCenter } from "../Utility/Frame";
+import { cloneObject } from "../Utility/Lib";
+import { getLocation, getOffsetLocation } from "../Utility/Location";
 import { BaseDestructableObject } from "./BaseDestructableObject";
+
+const {
+    averagePixelSize
+} = DimensionProvider();
 
 export abstract class BaseEnemyObject extends BaseDestructableObject {
 
@@ -38,18 +48,69 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     private frameTickHandler: TickHandler;
 
     /**
+     * The real location the enemy has, without offsets
+     */
+    private actualLocation: GameLocation;
+
+    /**
+     * Offets for each frame.
+     */
+    private offSets: GameLocation[];
+
+    /**
+     * Explosion for the enemy.
+     */
+    protected explosion: Explosion;
+
+    /**
+     * Frames with offsets.
+     */
+    protected offSetFrames: OffsetFrames;
+
+    /**
      * Construct the object.
      * @param {number} speed. Speed of the enemy.
      */
-    constructor(location: GameLocation, speed: number, frameChangeTime: number) {
+    constructor(location: GameLocation, speed: number, frameChangeTime: number, offsetFrames: OffsetFrames, explosion: Explosion) {
         super(location);
         this.currentSpeed = speed;
         this.baseSpeed = speed;
 
+        this.offSetFrames = cloneObject(offsetFrames);
+        this.explosion = cloneObject(explosion);
+
+        this.actualLocation = { ...this.location };
+        this.location = this.calculateOffsetLocation();
+
         this.onFrameChange = this.onFrameChange.bind(this);
 
         this.frameTickHandler = new TickHandler(frameChangeTime, this.onFrameChange);
+
+        this.offSets = offsetFrames.offSets.map((o) => {
+            return {
+                left: o.left * averagePixelSize,
+                top: o.top * averagePixelSize,
+            };
+        });
+
+        this.explosion = explosion;
     }
+
+    /**
+     * Returns the explosion asset.
+     * @returns {Explosion}. An explosion asset.
+     */
+    public getExplosion(): Explosion {
+        return this.explosion;
+    }
+
+    /**
+     * Returns the point worth.
+     * @returns {number}. Point worth of the enemy.
+     */
+    public abstract getPoints(): number;
+
+    protected abstract getAngle(): number;
 
     /**
      * Called by a TickHandler when the next frame is up.
@@ -58,15 +119,24 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
         this.currentFrame = this.frameProvider.getNextFrame();
     }
 
+    /**
+     * Base implementation of a state update.
+     * @param {number} tick 
+     */
     public updateState(tick: number) {
         this.frameTickHandler.tick(tick);
+        this.actualLocation = getLocation(this.actualLocation, this.getAngle(), this.currentSpeed);
+        this.location = this.calculateOffsetLocation();
     }
 
     /**
-     * Returns the point worth.
-     * @returns {number}. Point worth of the enemy.
+     * Calculates the offsetLocation
+     * @returns {GameLocation}. GameLocation offset to let the frames render over one another.
      */
-    public abstract getPoints(): number;
+    private calculateOffsetLocation(): GameLocation {
+        const frameOffsets = this.offSets[this.frameProvider.getCurrentIndex()];
+        return getOffsetLocation(this.actualLocation, frameOffsets.left, frameOffsets.top);
+    }
 
     /**
      * Set the speed of the enemy.
@@ -92,10 +162,12 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     }
 
     /**
-     * Returns the center of the
+     * Returns the center location of the object.
+     * @returns {GameLocation}. GameLocation located at the center of the object.
      */
-    public abstract getCenterLocation(): GameLocation;
-
+    public getCenterLocation(): GameLocation {
+        return getFrameCenter(this.location, this.currentFrame, averagePixelSize);
+    }
     /**
      * Always an enemy
      */

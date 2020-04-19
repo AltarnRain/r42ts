@@ -4,11 +4,9 @@
  * See LICENSE.MD.
  */
 
-import Explosion01 from "../../Assets/Explosion01";
 import Explosion02 from "../../Assets/Explosion02";
 import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
 import CGAColors from "../../Constants/CGAColors";
-import TickHandler from "../../Handlers/TickHandler";
 import Explosion from "../../Models/Explosion";
 import GameLocation from "../../Models/GameLocation";
 import { GameRectangle } from "../../Models/GameRectangle";
@@ -24,41 +22,23 @@ import RobotFrames from "./RobotFrames";
  */
 
 export default class RobotEnemey extends BaseEnemyObject {
-    private frames: Frames;
 
-    private explosion: Explosion;
     private angle: number;
 
-    private actualLocation: GameLocation;
-
     constructor(location: GameLocation, speed: number, frameChangeTime: number, color: string) {
-        super(location, speed, frameChangeTime);
+        super(location, speed, frameChangeTime, RobotFrames, Explosion02);
 
-        this.frames = cloneObject(RobotFrames.frames);
-        convertVariableFramesColor(this.frames, color);
 
-        this.explosion = cloneObject(Explosion02);
         convertVariableFrameColor(this.explosion.explosionCenterFrame, color);
         convertVariableFrameColor(this.explosion.particleFrames[0], CGAColors.green);
 
-        this.frameProvider = new FrameProvider(this.frames, 0);
         this.currentFrame = this.frameProvider.getFrame();
 
         this.angle = 360;
-
-        this.actualLocation = {...location};
     }
 
     public getPoints(): number {
         return 100;
-    }
-
-    public getCenterLocation(): GameLocation {
-        return {} as GameLocation;
-    }
-
-    public getExplosion(): Explosion {
-        return Explosion01;
     }
 
     public updateState(tick: number): void {
@@ -68,4 +48,9 @@ export default class RobotEnemey extends BaseEnemyObject {
     public getHitbox(): GameRectangle {
         return {} as GameRectangle;
     }
+
+    protected getAngle(): number {
+        return this.angle;
+    }
+
 }
