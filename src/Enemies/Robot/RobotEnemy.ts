@@ -7,6 +7,7 @@
 import Explosion02 from "../../Assets/Explosion02";
 import { twoPXBullet } from "../../Assets/twoPXBullet";
 import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
+import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import GameLocation from "../../Models/GameLocation";
 import Particle from "../../Particles/Particle";
@@ -23,8 +24,6 @@ import RobotFrames from "./RobotFrames";
  */
 
 const {
-    fullWidth,
-    gameFieldTop,
     averagePixelSize
 } = DimensionProvider();
 
@@ -36,14 +35,12 @@ export default class RobotEnemy extends BaseEnemyObject {
     private bulletFrame: Frame;
 
     /**
-     * Angle of the enemy
+     * Tick since the last bullet fire.
      */
-    private angle: number;
-
     private bulletTick: number = 0;
 
-    constructor(location: GameLocation, speed: number, frameChangeTime: number, color: string, canFire: (self: BaseEnemyObject) => boolean) {
-        super(location, speed, frameChangeTime, RobotFrames, Explosion02, canFire);
+    constructor(location: GameLocation, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, canFire: (self: BaseEnemyObject) => boolean) {
+        super(location, frameChangeTime, RobotFrames, Explosion02, locationProvider, canFire);
 
         convertVariableFrameColor(this.explosion.explosionCenterFrame, color);
         convertVariableFrameColor(this.explosion.particleFrames[0], color);
@@ -51,9 +48,6 @@ export default class RobotEnemy extends BaseEnemyObject {
 
         this.frameProvider = new FrameProvider(this.offSetFrames.frames, 0);
         this.currentFrame = this.frameProvider.getFrame();
-
-        this.angle = 3;
-
         this.location = this.getOffsetLocation();
 
         this.bulletFrame = cloneObject(twoPXBullet);
@@ -66,24 +60,6 @@ export default class RobotEnemy extends BaseEnemyObject {
      */
     public getPoints(): number {
         return 100;
-    }
-
-    /**
-     * Update the robot enemy state.
-     * @param {number} tick. Current tick
-     */
-    public updateState(tick: number): void {
-        super.updateState(tick);
-
-        const { width, height } = this.getCurrentFrameDimensions();
-
-        if (this.actualLocation.left + width > fullWidth) {
-            this.actualLocation.left = 0;
-        }
-
-        if (this.location.top > fullWidth * 0.5) {
-            this.actualLocation.top = gameFieldTop + height;
-        }
     }
 
     /**
@@ -107,12 +83,5 @@ export default class RobotEnemy extends BaseEnemyObject {
         }
 
         return undefined;
-    }
-
-    /**
-     * Returns the angle of the robot enemy.
-     */
-    protected getAngle(): number {
-        return this.angle;
     }
 }

@@ -8,6 +8,7 @@ import { BaseEnemyObject } from "../Base/BaseEnemyObject";
 import BaseLevel from "../Base/BaseLevel";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
+import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
 import { appState } from "../State/Store";
 
 /**
@@ -16,12 +17,12 @@ import { appState } from "../State/Store";
  */
 
 /**
- * Sets up level 01.
+ * Sets up level 02.
  */
 class Level02 extends BaseLevel {
     public start(): void {
         super.start();
-        this.enemies = robotSpawnLocationsAndColor.map((lc) => new RobotEnemy(lc.location, 2, 200, lc.color, canFire));
+        this.enemies = robotSpawnLocationsAndColor.map((lc) => new RobotEnemy(lc.location, 200, lc.color, new VanishRightAppearLeft(2, 1) , canFire));
         this.begin();
     }
 }

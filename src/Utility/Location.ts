@@ -10,8 +10,8 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import { getNextX, getNextY } from "./Geometry";
 import speedProvider from "../Providers/SpeedProvider";
+import { getNextX, getNextY } from "./Geometry";
 
 /**
  * Calculate distance in pixels.

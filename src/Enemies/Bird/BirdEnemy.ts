@@ -11,25 +11,17 @@
 
 import Explosion01 from "../../Assets/Explosion01";
 import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
+import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import GameLocation from "../../Models/GameLocation";
 import Particle from "../../Particles/Particle";
-import DimensionProvider from "../../Providers/DimensionProvider";
 import FrameProvider from "../../Providers/FrameProvider";
 import { Frame } from "../../Types/Types";
-import { getRandomArrayElement } from "../../Utility/Array";
-import { getRandomFrameKeyIndex, setRandomFrameColors, convertVariableFrameColor } from "../../Utility/Frame";
+import { convertVariableFrameColor, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
 import { BirdFrames } from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
-
-const {
-    averagePixelSize,
-    fullHeight,
-    gameFieldTop,
-    fullWidth,
-} = DimensionProvider();
 
 export default class BirdEnemy extends BaseEnemyObject {
 
@@ -39,16 +31,10 @@ export default class BirdEnemy extends BaseEnemyObject {
     private colorTickHandler: TickHandler;
 
     /**
-     * Angle
-     */
-    private angle: number = 0;
-
-    /**
      * Creates the object.
      */
-    constructor(location: GameLocation, speed: number, frameChangetime: number) {
-        super(location, speed, frameChangetime, BirdFrames, Explosion01);
-        this.angle = getRandomArrayElement([2, 358, 178, 182]);
+    constructor(location: GameLocation, frameChangetime: number, locationProvider: BaseLocationProvider) {
+        super(location, frameChangetime, BirdFrames, Explosion01, locationProvider);
 
         this.onColorChange = this.onColorChange.bind(this);
 
@@ -71,19 +57,6 @@ export default class BirdEnemy extends BaseEnemyObject {
         super.updateState(tick);
 
         this.colorTickHandler.tick(tick);
-
-        const { width, height} = this.getCurrentFrameDimensions();
-
-        const leftLimit = averagePixelSize * 2;
-        const rightLimit = fullWidth - width - averagePixelSize * 2;
-
-        if (this.location.left <= leftLimit || this.location.left >= rightLimit) {
-            this.angle = 180 - this.angle;
-        }
-
-        if (this.location.top <= gameFieldTop || this.location.top >= fullHeight - height) {
-            this.angle *= -1;
-        }
     }
 
     public getBulletFrame(): Frame {
@@ -107,10 +80,6 @@ export default class BirdEnemy extends BaseEnemyObject {
 
     protected shouldFire(): boolean {
         return false;
-    }
-
-    protected getAngle(): number {
-        return this.angle;
     }
 
     /**

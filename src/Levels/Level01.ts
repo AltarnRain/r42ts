@@ -7,9 +7,11 @@
 import BaseLevel from "../Base/BaseLevel";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
+import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
 import GameLocation from "../Models/GameLocation";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { dispatch } from "../State/Store";
+import { getRandomArrayElement } from "../Utility/Array";
 
 /**
  * Module:          Level 01
@@ -24,7 +26,12 @@ class Level01 extends BaseLevel {
     public start(): void {
         super.start();
 
-        this.enemies = birdSpawnLocations.map((l) => new BirdEnemy(l, 3, 80));
+        this.enemies = birdSpawnLocations.map((l) => {
+            const randomAngle = getRandomArrayElement([2, 358, 178, 182]);
+            const locationProvider = new SideToSideUpAndDown(3, randomAngle);
+            return new BirdEnemy(l, 100, locationProvider);
+        });
+
         dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
         this.begin();
     }

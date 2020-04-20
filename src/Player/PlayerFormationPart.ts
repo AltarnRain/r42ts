@@ -5,13 +5,13 @@
  */
 
 import GameLocation from "../Models/GameLocation";
+import speedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame } from "../Types/Types";
 import { convertFrameColor } from "../Utility/Frame";
 import { calculateAngle } from "../Utility/Geometry";
 import { cloneObject } from "../Utility/Lib";
 import { calculateDistance, getLocation } from "../Utility/Location";
-import speedProvider from "../Providers/SpeedProvider";
 
 /**
  * Module:          DestinationParticle

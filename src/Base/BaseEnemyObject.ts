@@ -22,8 +22,9 @@ import { appState } from "../State/Store";
 import { GameObjectType } from "../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
-import { getLocation, getOffsetLocation } from "../Utility/Location";
+import { getOffsetLocation } from "../Utility/Location";
 import { BaseDestructableObject } from "./BaseDestructableObject";
+import BaseLocationProvider from "./BaseLocationProvider";
 
 const {
     averagePixelSize,
@@ -33,16 +34,6 @@ const {
 const negativeMaxPixelSize = maxPixelSize * -1;
 
 export abstract class BaseEnemyObject extends BaseDestructableObject {
-
-    /**
-     * Enemy speed.
-     */
-    protected currentSpeed: number;
-
-    /**
-     * The original speed of the object.
-     */
-    protected baseSpeed: number;
 
     /**
      * The frame provider. Must be set in an inheriting class.
@@ -80,20 +71,24 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     private canFire?: (sef: BaseEnemyObject) => boolean;
 
     /**
+     * Provides location. Can be used to alter the movement behaviour of enemies.
+     */
+    private locationProvider: BaseLocationProvider;
+
+    /**
      * Construct the object.
      * @param {number} speed. Speed of the enemy.
      */
     constructor(
         location: GameLocation,
-        speed: number,
         frameChangeTime: number,
         offsetFrames: OffsetFrames,
         explosion: Explosion,
+        locationProvider: BaseLocationProvider,
         canFire?: (self: BaseEnemyObject) => boolean) {
         super(location);
 
-        this.currentSpeed = speed;
-        this.baseSpeed = speed;
+        this.locationProvider = locationProvider;
 
         this.offSetFrames = cloneObject(offsetFrames);
         this.explosion = cloneObject(explosion);
@@ -138,11 +133,6 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     public abstract getPoints(): number;
 
     /**
-     * Return the angle an enemy.
-     */
-    protected abstract getAngle(): number;
-
-    /**
      * Returns the bullet frame.
      */
     protected abstract getBulletParticle(tick: number): Particle | undefined;
@@ -160,7 +150,8 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
      */
     public updateState(tick: number) {
         this.frameTickHandler.tick(tick);
-        this.actualLocation = getLocation(this.actualLocation, this.getAngle(), this.currentSpeed);
+        const { width, height } = getFrameDimensions(this.currentFrame, averagePixelSize);
+        this.actualLocation = this.locationProvider.getLocation(this.actualLocation, width, height);
         this.location = this.getOffsetLocation();
     }
 
@@ -178,19 +169,11 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     }
 
     /**
-     * Set the speed of the enemy.
-     * @param {Number} value.
-     */
-    public setSpeed(value: number): void {
-        this.currentSpeed = value;
-    }
-
-    /**
      * increases the speed of an enemy. Uses the base speed to calculate a new speed.
      * @param {number} value. Values below 1 decrease speed, values above 1 increase speed.
      */
     public increaseSpeed(value: number): void {
-        this.currentSpeed = this.baseSpeed * value;
+        this.locationProvider.increaseSpeed(value);
     }
 
     /**
