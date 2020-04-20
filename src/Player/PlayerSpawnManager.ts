@@ -106,9 +106,9 @@ function setupFormation(targetLocation: GameLocation, speed: "fast" | "slow", li
     createParticles();
 
     if (speed === "fast") {
-        allMovingParts.forEach((p) => p.setSpeed(30));
+        allMovingParts.forEach((p) => p.setSpeed(17));
     } else {
-        allMovingParts.forEach((p) => p.setSpeed(10));
+        allMovingParts.forEach((p) => p.setSpeed(6));
     }
 
     dispatch<MoveLimits>("setPlayerMovementLimit", limit);

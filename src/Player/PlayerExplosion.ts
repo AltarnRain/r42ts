@@ -38,7 +38,7 @@ const PlayerExplosion: Explosion = {
         0, 0, 0, 0, 0,
         1, 1, 1, 1,
         2, 2, 2, 2,
-        3, 3, 3, 3,
+        2, 3, 3, 3,
         4, 4, 4, 4,
         0, 0,
         0, 0,
@@ -53,13 +53,13 @@ const PlayerExplosion: Explosion = {
         0, 0 // two red blocks
     ],
     speeds: [
-        3, 6, 9, 10, 11, // Speeds for the first angles.
-        3, 6, 9, 10, // Speeds for the second row of angles.
-        3, 6, 9, 10, // Speeds for the third row of angles.
-        3, 6, 9, 10, // Speeds for the fourh row of angles.
-        3, 6, 9, 10, // Speeds for the fith fow of angles
-        5, 10, // Speeds for the fith fow of angles
-        5, 10, // Speeds for the fith fow of angles
+        2, 3.5, 5, 6, 7, // Speeds for the first angles.
+        2, 3.5, 5, 6, // Speeds for the second row of angles.
+        2, 3.5, 5, 6, // Speeds for the third row of angles.
+        2, 3.5, 5, 6, // Speeds for the fourh row of angles.
+        2, 3.5, 5, 6, // Speeds for the fith fow of angles
+        3, 6, // Speeds for the fith fow of angles
+        3, 6, // Speeds for the fith fow of angles
     ],
     acceleration: 1.05,
     explosionCenterDelay: 150,

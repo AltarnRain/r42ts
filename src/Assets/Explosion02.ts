@@ -15,7 +15,7 @@ const Explosion02: Explosion = {
     ],
     angles: [160, 180, 200, 340, 0, 20],
     particleFrameIndexes: [0, 0, 0, 0, 0, 0],
-    speed: 20,
+    speed: 12,
     acceleration: 1.05,
     explosionCenterDelay: 20,
     speeds: [], // not used, all particles travel at the same speed

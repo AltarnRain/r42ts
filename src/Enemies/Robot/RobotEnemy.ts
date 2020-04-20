@@ -77,7 +77,7 @@ export default class RobotEnemy extends BaseEnemyObject {
                 const location = { ...this.getCenterLocation() };
                 location.top = location.top + averagePixelSize * 4;
                 location.left = location.left - averagePixelSize;
-                const bullet = new Particle(this.bulletFrame, 90, 5, 1, location);
+                const bullet = new Particle(this.bulletFrame, 90, 3, 1, location);
                 return bullet;
             }
         }

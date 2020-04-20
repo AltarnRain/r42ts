@@ -41,12 +41,12 @@ window.onload = () => {
                 GameLoop.registerBackgroundDrawing(drawBackground);
                 GameLoop.registerUpdateState(playerSpawnManager);
                 GameLoop.registerUpdateState(playerRunner);
-                dispatch<boolean>("playerImmortal", true);
+                // dispatch<boolean>("playerImmortal", true);
                 // GameLoop.registerUpdateState(calcFPS);
 
                 dispatch<number>("setLives", 10);
                 dispatch<number>("setPhasers", 30);
-                dispatch<number>("setLevel", 0);
+                dispatch<number>("setLevel", 1);
                 GameLoop.Start();
                 break;
             }

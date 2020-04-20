@@ -28,7 +28,7 @@ export default class Level01 extends BaseLevel {
 
         this.enemies = birdSpawnLocations.map((l) => {
             const randomAngle = getRandomArrayElement([2, 358, 178, 182]);
-            const locationProvider = new SideToSideUpAndDown(3, randomAngle);
+            const locationProvider = new SideToSideUpAndDown(1.5, randomAngle);
             return new BirdEnemy(l, 100, locationProvider);
         });
 

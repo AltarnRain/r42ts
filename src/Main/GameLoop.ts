@@ -11,13 +11,6 @@ import { TickFunction } from "../Types/Types";
  * Responsibility:  Manage the game's loop.
  */
 
-let lastTick = 0;
-
-/**
- * Fps limit for monitors that use a refresh rate above 60.
- */
-const fps = Math.floor(1000 / 60);
-
 /**
  * A handle for the main animation loop.
  */
@@ -48,6 +41,9 @@ let callOnce: Array<() => void> = [];
  */
 const stateUpdateFrequency = 10;
 
+/**
+ * handle for the state timeout.
+ */
 let stateHandle: number;
 
 export namespace GameLoop {
@@ -73,8 +69,8 @@ export namespace GameLoop {
             window.cancelAnimationFrame(drawhandle);
         }
 
-        if (drawOnceHandle !== undefined) {
-            window.clearTimeout(drawOnceHandle);
+        if (stateHandle !== undefined) {
+            window.clearTimeout(stateHandle);
         }
 
         updateStateFunctions = [];
@@ -122,14 +118,13 @@ export namespace GameLoop {
      * Runner function. Calls all functions that subscribed to the game loop.
      * @param {number} tick. Current animation tick.
      */
-    function runDraw(tick: number): void {
+    function runDraw(): void {
         drawhandle = window.requestAnimationFrame(runDraw);
 
         backgroundDrawFunctions.forEach((f) => f());
         callOnce.forEach((f) => f());
         callOnce = [];
         drawOnceHandle = undefined;
-        lastTick = tick;
     }
 }
 
