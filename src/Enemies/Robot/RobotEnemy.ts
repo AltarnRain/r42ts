@@ -91,12 +91,12 @@ export default class RobotEnemy extends BaseEnemyObject {
      * @returns {boolean}.
      */
     protected getBulletParticle(tick: number): Particle | undefined {
+
         // 200 tick timeout between bullets.
         if (tick - this.bulletTick > 200) {
             this.bulletTick = tick;
-
             // 50% change to fire.
-            const rnd = Math.ceil(Math.random() * 2);
+            const rnd = Math.floor(Math.random() * 2);
             if (rnd === 1) {
                 const location = { ...this.getCenterLocation() };
                 location.top = location.top + averagePixelSize * 4;
@@ -107,14 +107,6 @@ export default class RobotEnemy extends BaseEnemyObject {
         }
 
         return undefined;
-    }
-
-    /**
-     * True when the enemy Robot should fire a bullet.
-     * @returns {boolean}.
-     */
-    protected shouldFire(): boolean {
-        return true;
     }
 
     /**

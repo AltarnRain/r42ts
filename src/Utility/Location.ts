@@ -11,6 +11,7 @@
 
 import GameLocation from "../Models/GameLocation";
 import { getNextX, getNextY } from "./Geometry";
+import speedProvider from "../Providers/SpeedProvider";
 
 /**
  * Calculate distance in pixels.
@@ -56,8 +57,10 @@ export function getLocation(location: GameLocation, angle: number | undefined, s
         return { ...location };
     }
 
-    const nextLeft = getNextX(angle, speed, location.left);
-    const nextTop = getNextY(angle, speed, location.top);
+    const relativeSpeed = speedProvider(speed);
+
+    const nextLeft = getNextX(angle, relativeSpeed, location.left);
+    const nextTop = getNextY(angle, relativeSpeed, location.top);
 
     return {
         left: nextLeft,

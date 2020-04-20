@@ -61,14 +61,21 @@ function updateState(tick: number) {
     }
 
     // Update object states.
+
+    const newParticles: Particle[] = [];
+
     levelState.enemies.forEach((e) => {
         e.updateState(tick);
         const bullet = e.getBullet(tick);
 
         if (bullet !== undefined) {
-            dispatch<Particle[]>("addParticles", [bullet]);
+            newParticles.push(bullet);
         }
     });
+
+    if (newParticles.length > 0) {
+        dispatch<Particle[]>("addParticles", newParticles);
+    }
 
     // SelfDestruct
     if (playerIsAlive(playerState.ship) && keyboardState.selfDestruct) {

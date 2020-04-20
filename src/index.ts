@@ -40,7 +40,7 @@ window.onload = () => {
 
                 dispatch<number>("setLives", 10);
                 dispatch<number>("setPhasers", 30);
-                dispatch<number>("setLevel", 1);
+                dispatch<number>("setLevel", 2);
 
                 GameLoop.registerUpdateState(playerSpawnManager);
                 GameLoop.registerUpdateState(playerRunner);

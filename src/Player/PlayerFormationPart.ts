@@ -11,6 +11,7 @@ import { convertFrameColor } from "../Utility/Frame";
 import { calculateAngle } from "../Utility/Geometry";
 import { cloneObject } from "../Utility/Lib";
 import { calculateDistance, getLocation } from "../Utility/Location";
+import speedProvider from "../Providers/SpeedProvider";
 
 /**
  * Module:          DestinationParticle
@@ -64,7 +65,7 @@ export default class PlayerFormationPart {
         const distance = calculateDistance(this.currentLocation, this.targetLocation);
 
         if (distance > 10) {
-            this.currentLocation = getLocation(this.currentLocation, angle, this.speed > distance ? distance : this.speed);
+            this.currentLocation = getLocation(this.currentLocation, angle, speedProvider(this.speed) > distance ? distance : this.speed);
         } else {
             this.currentLocation = {...this.targetLocation};
         }

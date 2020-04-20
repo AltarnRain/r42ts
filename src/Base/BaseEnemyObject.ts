@@ -148,11 +148,6 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     protected abstract getBulletParticle(tick: number): Particle | undefined;
 
     /**
-     * Returns true when the enemy should fire a bullet. Only called if the enemy can fire.
-     */
-    protected abstract shouldFire(): boolean;
-
-    /**
      * Called by a TickHandler when the next frame is up.
      */
     private onFrameChange(): void {

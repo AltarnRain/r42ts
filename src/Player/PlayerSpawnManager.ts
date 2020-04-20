@@ -106,7 +106,6 @@ function setupFormation(targetLocation: GameLocation, speed: "fast" | "slow", li
     createParticles();
 
     if (speed === "fast") {
-
         allMovingParts.forEach((p) => p.setSpeed(20));
     } else {
         allMovingParts.forEach((p) => p.setSpeed(10));
