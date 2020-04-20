@@ -11,6 +11,13 @@ import { TickFunction } from "../Types/Types";
  * Responsibility:  Manage the game's loop.
  */
 
+let lastTick = 0;
+
+/**
+ * Fps limit for monitors that use a refresh rate above 60.
+ */
+const fps = Math.floor(1000 / 60);
+
 /**
  * A handle for the main animation loop.
  */
@@ -103,17 +110,20 @@ export namespace GameLoop {
      * @param {number} tick. Current animation tick.
      */
     function run(tick: number): void {
+
+        if (tick - lastTick > fps) {
+
+            updateStateFunctions.forEach((f) => f(tick));
+
+            // drawOnceHandle = window.setTimeout(() => {
+            backgroundDrawFunctions.forEach((f) => f());
+            callOnce.forEach((f) => f());
+            callOnce = [];
+            drawOnceHandle = undefined;
+            // }, 0);
+            lastTick = tick;
+        }
         handle = window.requestAnimationFrame(run);
-
-        updateStateFunctions.forEach((f) => f(tick));
-
-        // drawOnceHandle = window.setTimeout(() => {
-        backgroundDrawFunctions.forEach((f) => f());
-        callOnce.forEach((f) => f());
-        callOnce = [];
-        drawOnceHandle = undefined;
-        // }, 0);
-
     }
 }
 
