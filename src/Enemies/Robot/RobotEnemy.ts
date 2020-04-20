@@ -40,8 +40,8 @@ export default class RobotEnemy extends BaseEnemyObject {
      */
     private angle: number;
 
-    constructor(location: GameLocation, speed: number, frameChangeTime: number, color: string) {
-        super(location, speed, frameChangeTime, RobotFrames, Explosion02);
+    constructor(location: GameLocation, speed: number, frameChangeTime: number, color: string, canFire: (self: BaseEnemyObject) => boolean) {
+        super(location, speed, frameChangeTime, RobotFrames, Explosion02, canFire);
 
         convertVariableFrameColor(this.explosion.explosionCenterFrame, color);
         convertVariableFrameColor(this.explosion.particleFrames[0], color);

@@ -23,6 +23,8 @@ import { getFrameCenter, getFrameDimensions, getFrameHitbox } from "../Utility/F
 import { cloneObject } from "../Utility/Lib";
 import { getLocation, getOffsetLocation } from "../Utility/Location";
 import { BaseDestructableObject } from "./BaseDestructableObject";
+import BaseLevel from "./BaseLevel";
+import { appState } from "../State/Store";
 
 const {
     averagePixelSize,
@@ -76,13 +78,19 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     /**
      * When true this enemy will fire bullets.
      */
-    private enemyCanFire: boolean;
+    private canFire?: (sef: BaseEnemyObject) => boolean;
 
     /**
      * Construct the object.
      * @param {number} speed. Speed of the enemy.
      */
-    constructor(location: GameLocation, speed: number, frameChangeTime: number, offsetFrames: OffsetFrames, explosion: Explosion) {
+    constructor(
+        location: GameLocation,
+        speed: number,
+        frameChangeTime: number,
+        offsetFrames: OffsetFrames,
+        explosion: Explosion,
+        canFire?: (self: BaseEnemyObject) => boolean) {
         super(location);
 
         this.currentSpeed = speed;
@@ -104,7 +112,8 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
             };
         });
 
-        this.enemyCanFire = false;
+        // Bind canFire to the current instance.
+        this.canFire = canFire?.bind(this);
     }
 
     /**
@@ -137,7 +146,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     /**
      * Returns the bullet frame.
      */
-    public abstract getBulletParticle(): Particle | undefined;
+    protected abstract getBulletParticle(): Particle | undefined;
 
     /**
      * Called by a TickHandler when the next frame is up.
@@ -199,6 +208,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     public getCenterLocation(): GameLocation {
         return getFrameCenter(this.location, this.currentFrame, averagePixelSize);
     }
+
     /**
      * Always an enemy
      */
@@ -216,10 +226,28 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     }
 
     /**
-     * Sets the can fire flag.
-     * @param {boolean} value.
+     * firedBullet. Returns true if the enemy fired a bullet.
+     * @returns {boolean}. True when the enemy fired a bullet.
      */
-    public setCanFire(value: boolean): void {
-        this.enemyCanFire = value;
+    public getBullet(): Particle | undefined {
+        const { playerState } = appState();
+
+        // Enemies never fire bullets when the player is dead.
+        if (playerState.ship === undefined) {
+            return undefined;
+        }
+
+        if (this.canFire === undefined) {
+            return undefined;
+        } else {
+            // This may seem like a weird function call but keep in mind canFire is passed into the
+            // object from the outside and typed to accept a base enemy object. I
+            // do NOT want 'this' magic within canFire so I opted to use a parameter.
+            if (this.canFire(this)) {
+                return this.getBulletParticle();
+            } else {
+                return undefined;
+            }
+        }
     }
 }
