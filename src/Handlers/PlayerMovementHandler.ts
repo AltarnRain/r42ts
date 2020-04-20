@@ -25,7 +25,7 @@ const {
 } = DimensionProvider();
 
 const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
-const maxBottom = fullHeight - shipDimensions.height;
+const maxBottom = fullHeight - shipDimensions.height - averagePixelSize / 2;
 const maxRight = fullWidth - shipDimensions.width;
 
 /**
