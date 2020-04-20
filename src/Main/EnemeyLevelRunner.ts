@@ -22,6 +22,7 @@ import PlayerShip from "../Player/PlayerShip";
 import CtxProvider from "../Providers/CtxProvider";
 import DimensionProvider from "../Providers/DimensionProvider";
 import particleProvider from "../Providers/ParticleProvider";
+import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState, dispatch } from "../State/Store";
 import { Frame } from "../Types/Types";
@@ -225,6 +226,7 @@ function handlePlayerDeath(player: PlayerShip): void {
     queueExplosionRender(playerState.playerLocation, player.getExplosion());
     dispatch<PlayerShip>("setPlayer", undefined);
     dispatch("removeLife");
+    dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
 }
 
 /**

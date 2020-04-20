@@ -19,12 +19,6 @@ export default function playerReducer(state: PlayerState = initState(), action: 
         switch (action.type) {
             case "setPlayer":
                 draft.ship = action.payload;
-
-                // Setting to undefined means the player has died. Set the location to the spawnlocation.
-                if (action.payload === undefined) {
-                    draft.playerLocation = getShipSpawnLocation();
-                }
-
                 break;
             case "setBullet":
                 draft.playerBullet = action.payload;
