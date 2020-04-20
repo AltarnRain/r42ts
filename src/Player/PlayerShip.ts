@@ -37,6 +37,9 @@ export default class PlayerShip {
      */
     private frame: Frame;
 
+    /**
+     * Player explosion.
+     */
     private explosion: Explosion;
 
     /**
@@ -81,6 +84,7 @@ export default class PlayerShip {
      */
     public updateState(): void {
         // Use the PlayerLocationHandler to move the player.
+        // 10 pixels per frame roughly 3 seconds from left to right. This maches the original pretty closely.
         movePlayer(10);
     }
 
