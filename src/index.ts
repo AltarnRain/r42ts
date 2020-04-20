@@ -14,7 +14,6 @@ import { drawStatusBar } from "./GameScreen/StatusBar";
 import subscribeToLevelChange from "./Levels/LevelManager";
 import GameLoop from "./Main/GameLoop";
 import playerRunner from "./Main/PlayerRunner";
-import GameLocation from "./Models/GameLocation";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
@@ -22,7 +21,6 @@ import DimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
-import { getLocation } from "./Utility/Location";
 
 window.onload = () => {
 
@@ -41,12 +39,12 @@ window.onload = () => {
                 GameLoop.registerBackgroundDrawing(drawBackground);
                 GameLoop.registerUpdateState(playerSpawnManager);
                 GameLoop.registerUpdateState(playerRunner);
-                // dispatch<boolean>("playerImmortal", true);
+                dispatch<boolean>("playerImmortal", true);
                 // GameLoop.registerUpdateState(calcFPS);
 
                 dispatch<number>("setLives", 10);
                 dispatch<number>("setPhasers", 300);
-                dispatch<number>("setLevel", 1);
+                dispatch<number>("setLevel", 2);
                 GameLoop.Start();
                 break;
             }

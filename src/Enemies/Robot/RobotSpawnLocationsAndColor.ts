@@ -9,6 +9,7 @@ import GameLocation from "../../Models/GameLocation";
 import DimensionProvider from "../../Providers/DimensionProvider";
 import { getFrameDimensions } from "../../Utility/Frame";
 import RobotFrames from "./RobotFrames";
+import { getRandomArrayElement } from "../../Utility/Array";
 
 /**
  * Module:          RobotSpawnLocations
@@ -27,51 +28,21 @@ const top = gameFieldTop + averagePixelSize * 20;
 const left = averagePixelSize * 15;
 const spacing = averagePixelSize * 3;
 
+const colors = [
+    CGAColors.lightBlue,
+    CGAColors.lightCyan,
+    CGAColors.lightRed,
+    CGAColors.lightGreen,
+    CGAColors.lightBlue,
+    CGAColors.lightMagenta,
+    CGAColors.lightCyan,
+];
+
 for (let i = 0; i < 14; i++) {
     const actualSpacing = i === 0 ? 0 : spacing * i;
     const actualLeft = left + i * width + spacing;
 
-    let color = "";
-
-    switch (i) {
-        case 0:
-            color = CGAColors.lightBlue;
-            break;
-        case 1:
-            color = CGAColors.lightCyan;
-            break;
-        case 2:
-            color = CGAColors.lightRed;
-            break;
-        case 3:
-            color = CGAColors.lightGreen;
-            break;
-        case 4:
-            color = CGAColors.lightMagenta;
-            break;
-        case 6:
-            color = CGAColors.lightBlue;
-            break;
-        case 7:
-            color = CGAColors.lightMagenta;
-            break;
-        case 8:
-            color = CGAColors.lightRed;
-            break;
-        case 9:
-            color = CGAColors.lightBlue;
-            break;
-        case 10:
-            color = CGAColors.lightMagenta;
-            break;
-        case 11:
-            color = CGAColors.lightCyan;
-            break;
-        case 12:
-        case 13:
-            color = CGAColors.lightGreen;
-            break;
-    }
+    const color = getRandomArrayElement(colors);
 
     const value = {
         location: {

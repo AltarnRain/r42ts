@@ -22,7 +22,7 @@ import { appState } from "../State/Store";
 export default class Level02 extends BaseLevel {
     public start(): void {
         super.start();
-        this.enemies = robotSpawnLocationsAndColor.map((lc) => new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(1.5, 5) , canFire));
+        this.enemies = robotSpawnLocationsAndColor.map((lc) => new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(1.5, 5), canFire));
         this.begin();
     }
 }
