@@ -25,8 +25,8 @@ const ctx = CtxProvider();
 
 const {
     fullWidth,
-    maxPixelSize,
-    statusBarHeight
+    statusBarHeight,
+    minPixelSize
 } = DimensionProvider();
 
 const numberFrames = cloneObject(Numbers);
@@ -36,15 +36,15 @@ const lifeFrame = cloneObject(PlayerFrame);
 setFrameColor(lifeFrame, CGAColors.yellow);
 
 // Score constants
-const scoreStartPosition = 4 * maxPixelSize;
-const scoreSpacing = 2 * maxPixelSize;
-const scoreBackgroundWidth = 46 * maxPixelSize;
+const scoreStartPosition = 4 * minPixelSize;
+const scoreSpacing = 2 * minPixelSize;
+const scoreBackgroundWidth = 46 * minPixelSize;
 
 // Phaser constants.
 const phaserStartPosition = scoreBackgroundWidth;
-const phaserSpacing = maxPixelSize * 2;
+const phaserSpacing = minPixelSize * 2;
 const phaserDrawLimit = 10;
-const phaserBackgroundWidth = (phaserSpacing + maxPixelSize * 2) * (phaserDrawLimit - 1);
+const phaserBackgroundWidth = (phaserSpacing + minPixelSize * 2) * (phaserDrawLimit - 1);
 
 const phaserFrame: Frame = [
     ["E", "0"],
@@ -58,16 +58,16 @@ convertFrameColor(phaserFrame);
 
 // Lives constants.
 const livesDrawLimit = 7;
-const livesSpacing = 2 * maxPixelSize;
+const livesSpacing = 2 * minPixelSize;
 const livesStartPostion = scoreBackgroundWidth + phaserBackgroundWidth;
-const liveFrameWidth = getFrameDimensions(lifeFrame, maxPixelSize).width;
+const liveFrameWidth = getFrameDimensions(lifeFrame, minPixelSize).width;
 const livesBackgroundWidth = liveFrameWidth * livesDrawLimit + (livesSpacing * (livesDrawLimit - 1));
 
 // Level number constants.
 const levelStartPosition = scoreBackgroundWidth + phaserBackgroundWidth + livesBackgroundWidth;
-const numberFrameWidth = getFrameDimensions(numberFrames.F0, maxPixelSize).width;
+const numberFrameWidth = getFrameDimensions(numberFrames.F0, minPixelSize).width;
 const leftNumberLeft = fullWidth - (numberFrameWidth * 2.5);
-const rightNumberLeft = leftNumberLeft + numberFrameWidth + maxPixelSize;
+const rightNumberLeft = leftNumberLeft + numberFrameWidth + minPixelSize;
 const levelBackgroundWidth = fullWidth - levelStartPosition;
 
 /**
@@ -96,7 +96,7 @@ function drawScore(): void {
         const frame = getFrameByIndex(numberFrames, parseInt(n, 10));
 
         const actualSpacing = cnt === 0 ? 0 : scoreSpacing;
-        let left = cnt * (getFrameDimensions(frame, maxPixelSize).width + actualSpacing);
+        let left = cnt * (getFrameDimensions(frame, minPixelSize).width + actualSpacing);
         left = scoreStartPosition + left;
         renderFrame({ left, top: 0 }, frame);
         cnt++;
@@ -112,7 +112,7 @@ function drawPhasers(): void {
 
     for (let i = 0; i < gameState.phasers; i++) {
         const actualSpacing = i === 0 ? 0 : phaserSpacing;
-        const left = phaserStartPosition + i * maxPixelSize + i * actualSpacing;
+        const left = phaserStartPosition + i * minPixelSize + i * actualSpacing;
         if (i <= phaserDrawLimit) {
             renderFrame({
                 left,
@@ -136,7 +136,7 @@ function drawLives(): void {
 
     for (let lives = 1; lives <= livesDrawLimit; lives++) {
         if (lives <= gameState.lives) {
-            renderFrame({ left, top: maxPixelSize }, lifeFrame);
+            renderFrame({ left, top: minPixelSize }, lifeFrame);
             left += livesSpacing + liveFrameWidth;
         }
     }
