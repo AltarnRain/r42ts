@@ -83,9 +83,7 @@ export default class PlayerShip {
      * Updates the player's state. Means movement.
      */
     public updateState(): void {
-        // Use the PlayerLocationHandler to move the player.
-        // 10 pixels per frame roughly 3 seconds from left to right. This maches the original pretty closely.
-        movePlayer(10);
+        movePlayer(5.9);
     }
 
     /**

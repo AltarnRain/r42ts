@@ -21,7 +21,7 @@ const fps = Math.floor(1000 / 60);
 /**
  * A handle for the main animation loop.
  */
-let handle: number | undefined;
+let drawhandle: number | undefined;
 
 /**
  * Handle for the draw setTimeout
@@ -43,12 +43,25 @@ let backgroundDrawFunctions: Array<() => void> = [];
  */
 let callOnce: Array<() => void> = [];
 
+/**
+ * Frequency at which the state is updated. This is NOT the same as FPS
+ */
+const stateUpdateFrequency = 10;
+
+let stateHandle: number;
+
 export namespace GameLoop {
     /**
      * Start game loop
      */
     export function Start(): void {
-        handle = window.requestAnimationFrame(run);
+
+        stateHandle = window.setInterval(() => {
+            //  Use Date.now to pass tick into the state update
+            updateStateFunctions.forEach((f) => f(Date.now()));
+        }, stateUpdateFrequency);
+
+        drawhandle = window.requestAnimationFrame(runDraw);
     }
 
     /**
@@ -56,8 +69,8 @@ export namespace GameLoop {
      */
     export function Stop(): void {
 
-        if (handle !== undefined) {
-            window.cancelAnimationFrame(handle);
+        if (drawhandle !== undefined) {
+            window.cancelAnimationFrame(drawhandle);
         }
 
         if (drawOnceHandle !== undefined) {
@@ -109,21 +122,14 @@ export namespace GameLoop {
      * Runner function. Calls all functions that subscribed to the game loop.
      * @param {number} tick. Current animation tick.
      */
-    function run(tick: number): void {
+    function runDraw(tick: number): void {
+        drawhandle = window.requestAnimationFrame(runDraw);
 
-        if (tick - lastTick > fps) {
-
-            updateStateFunctions.forEach((f) => f(tick));
-
-            // drawOnceHandle = window.setTimeout(() => {
-            backgroundDrawFunctions.forEach((f) => f());
-            callOnce.forEach((f) => f());
-            callOnce = [];
-            drawOnceHandle = undefined;
-            // }, 0);
-            lastTick = tick;
-        }
-        handle = window.requestAnimationFrame(run);
+        backgroundDrawFunctions.forEach((f) => f());
+        callOnce.forEach((f) => f());
+        callOnce = [];
+        drawOnceHandle = undefined;
+        lastTick = tick;
     }
 }
 
