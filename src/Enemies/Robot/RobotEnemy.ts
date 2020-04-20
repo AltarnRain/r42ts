@@ -9,7 +9,6 @@ import { twoPXBullet } from "../../Assets/twoPXBullet";
 import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
 import CGAColors from "../../Constants/CGAColors";
 import GameLocation from "../../Models/GameLocation";
-import { GameRectangle } from "../../Models/GameRectangle";
 import Particle from "../../Particles/Particle";
 import DimensionProvider from "../../Providers/DimensionProvider";
 import FrameProvider from "../../Providers/FrameProvider";
@@ -25,7 +24,8 @@ import RobotFrames from "./RobotFrames";
 
 const {
     fullWidth,
-    gameFieldTop
+    gameFieldTop,
+    averagePixelSize
 } = DimensionProvider();
 
 export default class RobotEnemy extends BaseEnemyObject {
@@ -39,6 +39,8 @@ export default class RobotEnemy extends BaseEnemyObject {
      * Angle of the enemy
      */
     private angle: number;
+
+    private bulletTick: number = 0;
 
     constructor(location: GameLocation, speed: number, frameChangeTime: number, color: string, canFire: (self: BaseEnemyObject) => boolean) {
         super(location, speed, frameChangeTime, RobotFrames, Explosion02, canFire);
@@ -86,11 +88,38 @@ export default class RobotEnemy extends BaseEnemyObject {
 
     /**
      * Returns the bullet frame.
+     * @returns {boolean}.
      */
-    public getBulletParticle(): Particle | undefined {
+    protected getBulletParticle(tick: number): Particle | undefined {
+
+        // 200 tick timeout between bullets.
+        if (tick - this.bulletTick > 200 ) {
+            this.bulletTick = tick;
+            // 50% change to fire.
+            const rnd = Math.floor(Math.random() * 2);
+            if (rnd === 1) {
+                const location = { ...this.getCenterLocation() };
+                location.top = location.top + averagePixelSize * 4;
+                location.left = location.left - averagePixelSize;
+                const bullet = new Particle(this.bulletFrame, 90, 5, 1, location);
+                return bullet;
+            }
+        }
+
         return undefined;
     }
 
+    /**
+     * True when the enemy Robot should fire a bullet.
+     * @returns {boolean}.
+     */
+    protected shouldFire(): boolean {
+        return true;
+    }
+
+    /**
+     * Returns the angle of the robot enemy.
+     */
     protected getAngle(): number {
         return this.angle;
     }

@@ -100,9 +100,13 @@ export default class BirdEnemy extends BaseEnemyObject {
     /**
      * Returns a bullet particle.
      */
-    public getBulletParticle(): Particle | undefined {
+    protected getBulletParticle(): Particle {
         // TODO: Bird will fire diagolan bullets on hard mode.
-        return undefined;
+        return {} as Particle;
+    }
+
+    protected shouldFire(): boolean {
+        return false;
     }
 
     protected getAngle(): number {

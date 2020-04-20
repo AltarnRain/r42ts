@@ -18,13 +18,12 @@ import { OffsetFrames } from "../Models/OffsetFrames";
 import Particle from "../Particles/Particle";
 import DimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
+import { appState } from "../State/Store";
 import { GameObjectType } from "../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { getLocation, getOffsetLocation } from "../Utility/Location";
 import { BaseDestructableObject } from "./BaseDestructableObject";
-import BaseLevel from "./BaseLevel";
-import { appState } from "../State/Store";
 
 const {
     averagePixelSize,
@@ -146,7 +145,12 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     /**
      * Returns the bullet frame.
      */
-    protected abstract getBulletParticle(): Particle | undefined;
+    protected abstract getBulletParticle(tick: number): Particle | undefined;
+
+    /**
+     * Returns true when the enemy should fire a bullet. Only called if the enemy can fire.
+     */
+    protected abstract shouldFire(): boolean;
 
     /**
      * Called by a TickHandler when the next frame is up.
@@ -229,7 +233,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
      * firedBullet. Returns true if the enemy fired a bullet.
      * @returns {boolean}. True when the enemy fired a bullet.
      */
-    public getBullet(): Particle | undefined {
+    public getBullet(tick: number): Particle | undefined {
         const { playerState } = appState();
 
         // Enemies never fire bullets when the player is dead.
@@ -244,7 +248,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
             // object from the outside and typed to accept a base enemy object. I
             // do NOT want 'this' magic within canFire so I opted to use a parameter.
             if (this.canFire(this)) {
-                return this.getBulletParticle();
+                return this.getBulletParticle(tick);
             } else {
                 return undefined;
             }

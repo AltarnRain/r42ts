@@ -60,7 +60,14 @@ function updateState(tick: number) {
     }
 
     // Update object states.
-    levelState.enemies.forEach((e) => e.updateState(tick));
+    levelState.enemies.forEach((e) => {
+        e.updateState(tick);
+        const bullet = e.getBullet(tick);
+
+        if (bullet !== undefined) {
+            dispatch<Particle[]>("addParticles", [bullet]);
+        }
+    });
 
     // SelfDestruct
     if (playerIsAlive(playerState.ship) && keyboardState.selfDestruct) {
