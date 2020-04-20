@@ -17,7 +17,7 @@ import DimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
 import { Frame, GameObjectType } from "../Types/Types";
-import { convertFrameColor, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
+import { convertFrameColor, convertFramesColors, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import PlayerExplosion from "./PlayerExplosion";
 import { PlayerFrame } from "./PlayerFrames";
@@ -37,12 +37,19 @@ export default class PlayerShip {
      */
     private frame: Frame;
 
+    private explosion: Explosion;
+
     /**
      * Construct the class.
      */
     constructor() {
         this.frame = cloneObject(PlayerFrame);
         convertFrameColor(this.frame);
+
+        this.explosion = cloneObject(PlayerExplosion);
+        convertFrameColor(this.explosion.explosionCenterFrame);
+
+        this.explosion.particleFrames.forEach((p) => convertFrameColor(p));
     }
 
     /**
@@ -50,7 +57,7 @@ export default class PlayerShip {
      * @returns {Explosion}. Player explosion.
      */
     public getExplosion(): Explosion {
-        return PlayerExplosion;
+        return this.explosion;
     }
 
     /**
@@ -82,7 +89,7 @@ export default class PlayerShip {
      * @return {GameRectangle}. Players hitbox.
      */
     public getHitbox(): GameRectangle {
-        const { playerState} = appState();
+        const { playerState } = appState();
         return getFrameHitbox(playerState.playerLocation, shipDimensions.width, shipDimensions.height, 0, averagePixelSize);
     }
 
