@@ -5,6 +5,9 @@
  */
 
 import BaseLevel from "../Base/BaseLevel";
+import RobotEnemy from "../Enemies/Robot/RobotEnemy";
+import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
+import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
 import GameLocation from "../Models/GameLocation";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { dispatch } from "../State/Store";
@@ -27,9 +30,14 @@ export default class Level00 extends BaseLevel {
     }
 
     public start(): void {
-        super.start();
-
+        // super.start();
+        this.enemies = [];
+        // this.enemies = robotSpawnLocationsAndColor.map((lc) => new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(2, 0) , robotCanFire));
         dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
         this.begin();
     }
+}
+
+function robotCanFire(): boolean {
+    return false;
 }
