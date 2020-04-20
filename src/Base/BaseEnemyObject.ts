@@ -172,6 +172,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
      */
     public increaseSpeed(value: number): void {
         this.locationProvider.increaseSpeed(value);
+        this.frameTickHandler.increaseSpeed(value);
     }
 
     /**

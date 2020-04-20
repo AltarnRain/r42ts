@@ -27,12 +27,18 @@ export default class TickHandler {
     private onTimePassed: (tick: number) => void;
 
     /**
+     * Base time between actions without modification
+     */
+    private baseTime: number;
+
+    /**
      * Creates the TickHandler class.
      * @param {number} time. The time that should pass between ticks.
      * @param {() => void} onTickPassed. The function to call when the specified time has passed between ticks.
      */
     constructor(time: number, onTimePassed: (tick: number) => void) {
         this.time = time;
+        this.baseTime = time;
         this.onTimePassed = onTimePassed;
     }
 
@@ -46,5 +52,13 @@ export default class TickHandler {
 
             this.lastTick = tick;
         }
+    }
+
+    /**
+     * Increase speed means lowering time between actions.
+     * @param {number} factor. 1 = no change. > 1 means faster. 
+     */
+    public increaseSpeed(factor: number): void {
+        this.time = this.baseTime *  1 / factor;
     }
 }

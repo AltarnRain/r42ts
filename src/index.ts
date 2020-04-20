@@ -45,7 +45,7 @@ window.onload = () => {
                 // GameLoop.registerUpdateState(calcFPS);
 
                 dispatch<number>("setLives", 10);
-                dispatch<number>("setPhasers", 30);
+                dispatch<number>("setPhasers", 300);
                 dispatch<number>("setLevel", 1);
                 GameLoop.Start();
                 break;
