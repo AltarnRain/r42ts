@@ -36,9 +36,7 @@ export default class BirdEnemy extends BaseEnemyObject {
     constructor(location: GameLocation, frameChangetime: number, locationProvider: BaseLocationProvider) {
         super(location, frameChangetime, BirdFrames, Explosion01, locationProvider);
 
-        this.onColorChange = this.onColorChange.bind(this);
-
-        this.colorTickHandler = new TickHandler(40, this.onColorChange);
+        this.colorTickHandler = new TickHandler(40, () => this.onColorChange());
 
         this.frameProvider = new FrameProvider(this.offSetFrames.frames, getRandomFrameKeyIndex(this.offSetFrames.frames));
         this.currentFrame = this.frameProvider.getFrame();

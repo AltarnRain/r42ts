@@ -52,9 +52,6 @@ export default class PlayerFormationPart {
         this.currentLocation = { ...sourceLocation };
         this.targetLocation = { ...targetLocation };
         this.speed = speed;
-
-        this.updateState = this.updateState.bind(this);
-        this.draw = this.draw.bind(this);
     }
 
     /**

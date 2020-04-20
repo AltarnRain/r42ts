@@ -46,23 +46,23 @@ export const RobotFrames: OffsetFrames = {
     },
     offSets: [
         {
-            top: -5,
+            top: -6,
             left: 0,
         },
         {
-            top: -4,
+            top: -3,
             left: 0,
-        },
-        {
-            top: -2,
-            left: 0,
-        },
-        {
-            top: 1 ,
-            left: 0
         },
         {
             top: 0,
+            left: 0,
+        },
+        {
+            top: 3,
+            left: 0
+        },
+        {
+            top: 6,
             left: 0
         }
     ]

@@ -24,14 +24,14 @@ export default class TickHandler {
     /**
      * The function called when the time between ticks has passed.
      */
-    private onTimePassed: () => void;
+    private onTimePassed: (tick: number) => void;
 
     /**
      * Creates the TickHandler class.
      * @param {number} time. The time that should pass between ticks.
      * @param {() => void} onTickPassed. The function to call when the specified time has passed between ticks.
      */
-    constructor(time: number, onTimePassed: () => void) {
+    constructor(time: number, onTimePassed: (tick: number) => void) {
         this.time = time;
         this.onTimePassed = onTimePassed;
     }
@@ -42,7 +42,7 @@ export default class TickHandler {
      */
     public tick(tick: number): void {
         if (tick - this.lastTick >= this.time) {
-            this.onTimePassed();
+            this.onTimePassed(tick);
 
             this.lastTick = tick;
         }

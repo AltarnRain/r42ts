@@ -95,9 +95,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
 
         this.actualLocation = { ...this.location };
 
-        this.onFrameChange = this.onFrameChange.bind(this);
-
-        this.frameTickHandler = new TickHandler(frameChangeTime, this.onFrameChange);
+        this.frameTickHandler = new TickHandler(frameChangeTime, () => this.onFrameChange());
 
         this.offSets = offsetFrames.offSets.map((o) => {
             return {
@@ -107,7 +105,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
         });
 
         // Bind canFire to the current instance.
-        this.canFire = canFire?.bind(this);
+        this.canFire = canFire;
     }
 
     /**

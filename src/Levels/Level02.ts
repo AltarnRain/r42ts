@@ -19,10 +19,10 @@ import { appState } from "../State/Store";
 /**
  * Sets up level 02.
  */
-class Level02 extends BaseLevel {
+export default class Level02 extends BaseLevel {
     public start(): void {
         super.start();
-        this.enemies = robotSpawnLocationsAndColor.map((lc) => new RobotEnemy(lc.location, 200, lc.color, new VanishRightAppearLeft(2, 1) , canFire));
+        this.enemies = robotSpawnLocationsAndColor.map((lc) => new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(2, 5) , canFire));
         this.begin();
     }
 }
@@ -44,5 +44,3 @@ function canFire(self: BaseEnemyObject): boolean {
 
     return false;
 }
-
-export default Level02;

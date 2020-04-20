@@ -39,14 +39,17 @@ abstract class BaseLevel {
     protected stateManager: TickFunction;
 
     /**
+     * Function passed from the outside the internally checks if the level is won.
+     */
+    private monitorLevelWon: () => boolean;
+
+    /**
      * Constructs the base level
      * @param {TickFunction} stateManager. A function that will handle the state for the level.
      */
-    constructor(stateManager: TickFunction) {
+    constructor(stateManager: TickFunction, monitorLevelWon: () => boolean) {
         this.stateManager = stateManager;
-
-        // bind to this. Monitors are executed from a different execution context.
-        this.monitorLevelWon = this.monitorLevelWon.bind(this);
+        this.monitorLevelWon = monitorLevelWon;
     }
 
     /**
@@ -77,7 +80,7 @@ abstract class BaseLevel {
             this.levelBannerSub();
             dispatch<boolean>("showingLevelBanner", false);
             dispatch<BaseEnemyObject[]>("setEnemies", this.enemies);
-            this.registerSubscription(GameLoop.registerUpdateState(this.monitorLevelWon));
+            this.registerSubscription(GameLoop.registerUpdateState(() => this.monitorLevelWonRun()));
         }, 1000);
     }
 
@@ -88,19 +91,8 @@ abstract class BaseLevel {
         this.subscriptions.forEach((s) => s());
     }
 
-    /**
-     * Returns true if all the enemies are cleared. Can be used for QoL in monitorLevelWon.
-     */
-    protected clearedEnemies(): boolean {
-        const { levelState} = appState();
-        return levelState?.enemies.length === 0 && levelState?.particles.length === 0;
-    }
-
-    /**
-     * Monitors if the level is won. By default it checks if the level is clear of ememies.
-     */
-    public monitorLevelWon(): void {
-        if (this.clearedEnemies()) {
+    private  monitorLevelWonRun(): void {
+        if (this.monitorLevelWon()) {
             dispatch("nextLevel");
         }
     }

@@ -58,7 +58,7 @@ export function gameStateReducer(state: GameState = initState(), action: ActionP
 
 function initState(): GameState {
     return {
-        level: 1,
+        level: 0,
         lives: 2,
         score: 0,
         phasers: 2,
