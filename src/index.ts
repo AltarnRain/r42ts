@@ -14,6 +14,7 @@ import { drawStatusBar } from "./GameScreen/StatusBar";
 import subscribeToLevelChange from "./Levels/LevelManager";
 import GameLoop from "./Main/GameLoop";
 import playerRunner from "./Main/PlayerRunner";
+import GameLocation from "./Models/GameLocation";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
@@ -21,6 +22,7 @@ import DimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
+import { getLocation } from "./Utility/Location";
 
 window.onload = () => {
 
@@ -37,54 +39,55 @@ window.onload = () => {
 
                 GameLoop.registerBackgroundDrawing(drawStatusBar);
                 GameLoop.registerBackgroundDrawing(drawBackground);
+                GameLoop.registerUpdateState(playerSpawnManager);
+                GameLoop.registerUpdateState(playerRunner);
+                // GameLoop.registerUpdateState(calcFPS);
 
                 dispatch<number>("setLives", 10);
                 dispatch<number>("setPhasers", 30);
                 dispatch<number>("setLevel", 1);
-
-                GameLoop.registerUpdateState(playerSpawnManager);
-                GameLoop.registerUpdateState(playerRunner);
-
-                // GameLoop.register(Runner.run);
-
-                // drawGameFieldBorder();
-                // drawLevelBanner(9);
-
-                // const birds = BirdSpawnLocations.map((bs) =>  new BirdEnemy(bs, 3));
-                // dispatch<BaseEnemyObject[]>("setEnemies", birds);
-
-                // dispatch<number>("setLives", 2);
-                // dispatch<number>("setPhasers", 30);
-                // dispatch<number>("setLevel", 2);
-
-                // const s1 = GameLoop.register(PlayerFormation.updateState);
-                // const s2 = GameLoop.register(PlayerFormation.draw);
-                // PlayerFormation.formSlow(getShipSpawnLocation(), () => {
-                //     dispatch("setPlayer", new PlayerShip());
-                //     s1();
-                //     s2();
-                // });
-
-                // (window as any).r42 = {
-                //     d: (type: GameActions, action: ActionPayload<any>) => dispatch(type, action),
-                // };
-
-                // testAngleCalculation();
-
-                // Runner.start();
                 GameLoop.Start();
-
-                // Runner.toggleHitboxes();
-                // Runner.togglePlayerImmortality();
-                // Runner.toggleRenderPhaser();
                 break;
             }
-
             default:
             // StartGame();
         }
     }
 };
+
+function calcFPS(opts: any) {
+    const requestFrame = window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame;
+
+    if (!requestFrame) {
+        return true
+            ;
+    }
+    // Check if "true" is returned;
+    // pick default FPS, show error, etc...
+    function checker(): void {
+        if (index--) {
+            requestFrame(checker);
+        } else {
+            // var result = 3*Math.round(count*1000/3/(performance.now()-start));
+            const result = count * 1000 / (performance.now() - start);
+            if (typeof opts.callback === "function") {
+                opts.callback(result);
+            }
+
+            // tslint:disable-next-line: no-console
+            console.log("Calculated: " + result + " frames per second");
+        }
+    }
+    if (!opts) {
+        opts = {};
+    }
+
+    const count = opts.count || 60;
+    let index = count;
+    const start = performance.now();
+    checker();
+}
 
 /**
  * Uses the player formation part to draw a block on the screen
