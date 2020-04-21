@@ -49,7 +49,7 @@ window.onload = () => {
 
                 dispatch<number>("setLives", 2);
                 dispatch<number>("setLevel", level);
-                GameLoop.Start
+                GameLoop.Start();
 
                 (window as any).r42 = {
                     setLevel: (n: number) => dispatch<number>("setLevel", n),
@@ -68,7 +68,6 @@ window.onload = () => {
         }
     }
 };
-
 
 /**
  * Uses the player formation part to draw a block on the screen
