@@ -11,8 +11,8 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
-import CtxProvider from "../Providers/CtxProvider";
-import DimensionProvider from "../Providers/DimensionProvider";
+import ctxProvider from "../Providers/CtxProvider";
+import dimensionProvider from "../Providers/DimensionProvider";
 
 const {
     gameFieldTop,
@@ -21,7 +21,7 @@ const {
     maxPixelSize,
     fullHeight,
     gameFieldHeight,
-} = DimensionProvider();
+} = dimensionProvider();
 
 export function drawBackground(): void {
     clearGameFieldBackground();
@@ -32,7 +32,7 @@ export function drawBackground(): void {
  * Renders the entire canvas black
  */
 function clearGameFieldBackground(): void {
-    const ctx = CtxProvider();
+    const ctx = ctxProvider();
     ctx.fillStyle = CGAColors.black;
     ctx.fillRect(0, gameFieldTop, fullWidth, fullHeight);
 }
@@ -41,7 +41,7 @@ function clearGameFieldBackground(): void {
  * Draws a solid red recangle where the game's score is displayed.
  */
 function drawGameFieldBorder(): void {
-    const ctx = CtxProvider();
+    const ctx = ctxProvider();
     ctx.beginPath();
     ctx.rect(0, scoreBoardHeight, fullWidth, gameFieldHeight);
     ctx.lineWidth = maxPixelSize;
@@ -50,8 +50,11 @@ function drawGameFieldBorder(): void {
     ctx.closePath();
 }
 
-export function drawGrid(): void {
-    const ctx = CtxProvider();
+/**
+ * Debugggin function. Draws a grid in the screen for animation alignment.
+ */
+export function DEBUGGING_drawGrid(): void {
+    const ctx = ctxProvider();
     for (let r = 0; r < 200; r += 1) {
         ctx.beginPath();
         const y = r * 30 + gameFieldTop;
@@ -73,5 +76,4 @@ export function drawGrid(): void {
         ctx.stroke();
         ctx.closePath();
     }
-
 }

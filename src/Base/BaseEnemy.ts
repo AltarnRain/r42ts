@@ -5,35 +5,37 @@
  */
 
 /**
- * Module:          Base class for enemies.
- * Responsibility:  Base class for enemies.
+ * Module:          BaseEnemy
+ * Responsibility:  Base class for all enemies.
+ *                  This class provides contacts and default methods that will work
+ *                  for most enemies in the game leaving specifics to derived classes.
  */
 
 import TickHandler from "../Handlers/TickHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
-import { GameSize } from "../Models/Gamesize";
+import { GameSize } from "../Models/GameSize";
 import { OffsetFrames } from "../Models/OffsetFrames";
 import Particle from "../Particles/Particle";
-import DimensionProvider from "../Providers/DimensionProvider";
+import dimensionProvider from "../Providers/DimensionProvider";
 import FrameProvider from "../Providers/FrameProvider";
 import { appState } from "../State/Store";
 import { GameObjectType } from "../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { getOffsetLocation } from "../Utility/Location";
-import { BaseDestructableObject } from "./BaseDestructableObject";
+import { BaseDestructableObject as BaseDestructable } from "./BaseDestructableObject";
 import BaseLocationProvider from "./BaseLocationProvider";
 
 const {
     averagePixelSize,
     maxPixelSize,
-} = DimensionProvider();
+} = dimensionProvider();
 
 const negativeMaxPixelSize = maxPixelSize * -1;
 
-export abstract class BaseEnemyObject extends BaseDestructableObject {
+export abstract class BaseEnemy extends BaseDestructable {
 
     /**
      * The frame provider. Must be set in an inheriting class.
@@ -41,12 +43,12 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     protected frameProvider!: FrameProvider;
 
     /**
-     * Frame tick handler.
+     * Frame tick handler. Handles changes in the frames.
      */
     private frameTickHandler: TickHandler;
 
     /**
-     * The real location the enemy has, without offsets
+     * The real location the enemy has, without offsets.
      */
     protected actualLocation: GameLocation;
 
@@ -66,9 +68,9 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     protected offSetFrames: OffsetFrames;
 
     /**
-     * When true this enemy will fire bullets.
+     * When true this enemy will fire bullets. Passed in from the constructor.
      */
-    private canFire?: (sef: BaseEnemyObject) => boolean;
+    private canFire?: (sef: BaseEnemy) => boolean;
 
     /**
      * Provides location. Can be used to alter the movement behaviour of enemies.
@@ -76,17 +78,22 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     private locationProvider: BaseLocationProvider;
 
     /**
-     * Construct the object.
-     * @param {number} speed. Speed of the enemy.
+     * Construct the enemy.
+     * @param {GameLocation} startLocation. Start location of the enemy.
+     * @param {number} frameChangeTime. Time in ms between frames.
+     * @param {OffsetFrames} offsetFrames. Frames with offsets.
+     * @param {Explosion} explosion. Explosion asset. Aka. BOOM animation.
+     * @param {BaseLocationProvider} locationProvider. Handles the locations of the enemy. Can be used to inject movement behaviour.
+     * @param {function} canFire. A function that checks if the enemy can fire a bullet. Injected from the outside.
      */
     constructor(
-        location: GameLocation,
+        startLocation: GameLocation,
         frameChangeTime: number,
         offsetFrames: OffsetFrames,
         explosion: Explosion,
         locationProvider: BaseLocationProvider,
-        canFire?: (self: BaseEnemyObject) => boolean) {
-        super(location);
+        canFire?: (self: BaseEnemy) => boolean) {
+        super(startLocation);
 
         this.locationProvider = locationProvider;
 
@@ -167,7 +174,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     }
 
     /**
-     * increases the speed of an enemy. Uses the base speed to calculate a new speed.
+     * Increases the speed of an enemy.
      * @param {number} value. Values below 1 decrease speed, values above 1 increase speed.
      */
     public increaseSpeed(value: number): void {
@@ -198,7 +205,7 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     }
 
     /**
-     * Returns the bird's hitbox.
+     * Returns the current frame's hitbox.
      * @returns {GameRectangle}. Bird's hitbox.
      */
     public getHitbox(): GameRectangle {
@@ -207,8 +214,8 @@ export abstract class BaseEnemyObject extends BaseDestructableObject {
     }
 
     /**
-     * firedBullet. Returns true if the enemy fired a bullet.
-     * @returns {boolean}. True when the enemy fired a bullet.
+     * Returns a particle if the enemy fired a bullet.
+     * @returns {Particle | undefined}. When the enemy fired a bullet a particle object is return, otherwise undefined.
      */
     public getBullet(tick: number): Particle | undefined {
         const { playerState } = appState();

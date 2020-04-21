@@ -14,9 +14,10 @@ import ActionPayload from "../ActionPayLoad";
 import KeyboardState from "../Definition/KeyboardState";
 
 /**
- * Updates the keyboard state object.
- * @param {string} key. Keyboard string code.
- * @param {boolean} keyDown. True when the key is held down, false if the key is let go.
+ * keyboardStateReducer
+ * @param {DebuggingState} state. The current state.
+ * @param {ActionPayload<any>} action. The desired action with optional paylood.
+ * @returns {KeyboardState}. New state.
  */
 export function keyboardStateReducer(state: KeyboardState = initState(), action: ActionPayload<string>): KeyboardState {
 
@@ -60,6 +61,10 @@ export function keyboardStateReducer(state: KeyboardState = initState(), action:
     });
 }
 
+/**
+ * Initialize KeyboardState
+ * @returns {KeyboardState}. Initial keyboard state.
+ */
 function initState(): KeyboardState {
     return {
         up: false,

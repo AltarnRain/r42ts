@@ -11,9 +11,15 @@
 
 import produce from "immer";
 import ActionPayload from "../ActionPayLoad";
-import LevelState from "../Definition/LevelState";
+import EnemyLevelState from "../Definition/EnemyLevelState";
 
-export function levelReducer(state: LevelState = initState(), action: ActionPayload<any>): LevelState {
+/**
+ * enemyLevelReducer
+ * @param {EnemyLevelState} state. The current state.
+ * @param {ActionPayload<any>} action. The desired action with optional paylood.
+ * @returns {EnemyLevelState}. New state.
+ */
+export function enemyLevelReducer(state: EnemyLevelState = initState(), action: ActionPayload<any>): EnemyLevelState {
 
     return produce(state, (draft) => {
         switch (action.type) {
@@ -55,7 +61,7 @@ export function levelReducer(state: LevelState = initState(), action: ActionPayl
     });
 }
 
-function initState(): LevelState {
+function initState(): EnemyLevelState {
     return {
         enemies: [],
         pause: false,

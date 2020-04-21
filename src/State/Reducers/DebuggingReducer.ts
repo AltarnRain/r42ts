@@ -14,6 +14,12 @@ import GameActions from "../GameActions";
  * Responsibility:  Handles the debugging state.
  */
 
+/**
+ * debuggingReducer
+ * @param {DebuggingState} state. The current state.
+ * @param {ActionPayload<any>} action. The desired action with optional paylood.
+ * @returns {DebuggingState}. New state.
+ */
 export default function debuggingReducer(state: DebuggingState = initState(), action: ActionPayload<any>): DebuggingState {
     return produce(state, (draft) => {
         switch (action.type) {

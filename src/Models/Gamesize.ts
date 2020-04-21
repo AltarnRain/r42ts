@@ -10,6 +10,13 @@
  */
 
 export interface GameSize {
+    /**
+     * Width of something
+     */
     width: number;
+
+    /**
+     * Height of something.
+     */
     height: number;
 }

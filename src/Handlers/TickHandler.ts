@@ -56,7 +56,7 @@ export default class TickHandler {
 
     /**
      * Increase speed means lowering time between actions.
-     * @param {number} factor. 1 = no change. > 1 means faster. 
+     * @param {number} factor. 1 = no change. > 1 means faster.
      */
     public increaseSpeed(factor: number): void {
         this.time = this.baseTime *  1 / factor;

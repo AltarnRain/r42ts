@@ -13,11 +13,24 @@
  * Model for a hitbox.
  */
 export interface GameRectangle {
+    /**
+     * Left coordinate
+     */
     left: number;
 
+    /**
+     * Right coordinate
+     */
     right: number;
+
+    /**
+     * Top coordinate
+     */
 
     top: number;
 
+    /**
+     * Bottom coordinate
+     */
     bottom: number;
 }

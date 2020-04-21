@@ -9,11 +9,11 @@
  * Responsibility:  Player ship
  */
 
-import { movePlayer } from "../Handlers/PlayerMovementHandler";
+import { movePlayer } from "../Handlers/MovePlayer";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
-import DimensionProvider from "../Providers/DimensionProvider";
+import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
 import { Frame, GameObjectType } from "../Types/Types";
@@ -26,7 +26,7 @@ const {
     minPixelSize,
     averagePixelSize,
 
-} = DimensionProvider();
+} = dimensionProvider();
 
 const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
 
@@ -97,6 +97,7 @@ export default class PlayerShip {
 
     /**
      * Returns the top/left of the nozzle.
+     * @returns { GameLocation}. Returns the location of the ship's nozzlel
      */
     public getNozzleLocation(): GameLocation {
         const { playerState } = appState();

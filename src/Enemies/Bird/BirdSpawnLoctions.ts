@@ -5,29 +5,27 @@
  */
 
 import GameLocation from "../../Models/GameLocation";
-import DimensionProvider from "../../Providers/DimensionProvider";
+import dimensionProvider from "../../Providers/DimensionProvider";
 
 /**
  * Module:          BirdSpawnLocations
- * Responsibility:  Define the spawn locations for the bird enemy.
+ * Responsibility:  Define the spawn locations for the BirdEnemy.
  */
 
-const firstRowLeftStart = 20;
-const spacing = 20;
-
+const firstAndThirdRowLeftStart = 20;
 const secondRowLeftStart = 30;
-
+const spacing = 20;
 const birdSpawnLocations: GameLocation[] = [];
 
 const {
     averagePixelSize,
     gameFieldTop,
-} = DimensionProvider();
+} = dimensionProvider();
 
 // Top row birds.
 for (let i = 0; i < 7; i++) {
     birdSpawnLocations.push({
-        left: (firstRowLeftStart * averagePixelSize) + spacing * i * averagePixelSize,
+        left: (firstAndThirdRowLeftStart * averagePixelSize) + spacing * i * averagePixelSize,
         top: gameFieldTop + averagePixelSize * 5,
     });
 }
@@ -43,7 +41,7 @@ for (let i = 0; i < 6; i++) {
 // Third row birds.
 for (let i = 0; i < 7; i++) {
     birdSpawnLocations.push({
-        left: (firstRowLeftStart * averagePixelSize) + spacing * i * averagePixelSize,
+        left: (firstAndThirdRowLeftStart * averagePixelSize) + spacing * i * averagePixelSize,
         top: gameFieldTop + averagePixelSize * 25,
     });
 }

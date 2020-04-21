@@ -6,11 +6,11 @@
 
 /**
  * Module:          Bird enemy
- * Responsibility:  Defines the behaviour of the bird enemy.
+ * Responsibility:  Defines the behaviour of the bird enemy first seen in level 1.
  */
 
 import Explosion01 from "../../Assets/Explosion01";
-import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
+import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
@@ -23,7 +23,7 @@ import { BirdFrames } from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 
-export default class BirdEnemy extends BaseEnemyObject {
+export default class BirdEnemy extends BaseEnemy {
 
     /**
      * Hanels color changes.
@@ -50,6 +50,7 @@ export default class BirdEnemy extends BaseEnemyObject {
 
     /**
      * Updates the objects state.
+     * @param {tick: number} tick. Current tick.
      */
     public updateState(tick: number): void {
         super.updateState(tick);
@@ -57,12 +58,17 @@ export default class BirdEnemy extends BaseEnemyObject {
         this.colorTickHandler.tick(tick);
     }
 
+    /**
+     * Returns the frame of the birds bullet.
+     */
     public getBulletFrame(): Frame {
+        // TODO: Implement.
         return {} as Frame;
     }
 
     /**
      * Returns the points for the bird.
+     * @returns {number}. Points rewarded when the BirdEnemy is destroyed.
      */
     public getPoints(): number {
         return 200;
@@ -70,14 +76,11 @@ export default class BirdEnemy extends BaseEnemyObject {
 
     /**
      * Returns a bullet particle.
+     * @returns {Particle}. Bullet particle of the BirdEnemy.
      */
     protected getBulletParticle(): Particle {
         // TODO: Bird will fire diagolan bullets on hard mode.
         return {} as Particle;
-    }
-
-    protected shouldFire(): boolean {
-        return false;
     }
 
     /**

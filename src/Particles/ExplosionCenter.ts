@@ -7,9 +7,8 @@
 import BaseGameObject from "../Base/BaseGameObject";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
-import { GameSize } from "../Models/Gamesize";
-import DimensionProvider from "../Providers/DimensionProvider";
-import renderFrame from "../Render/RenderFrame";
+import { GameSize } from "../Models/GameSize";
+import dimensionProvider from "../Providers/DimensionProvider";
 import { Frame, GameObjectType } from "../Types/Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
@@ -21,7 +20,7 @@ import { cloneObject } from "../Utility/Lib";
 
 const {
     averagePixelSize,
-} = DimensionProvider();
+} = dimensionProvider();
 
 export default class ExplosionCenter extends BaseGameObject {
 
@@ -49,19 +48,20 @@ export default class ExplosionCenter extends BaseGameObject {
      * Construct the Explosion center object.
      * @param {Frame} frame. Explosion frame.
      * @param {GameLocation} location. Location where the explosion will appear.
-     * @param {number} fizzleTime. Time in ticks how long the explosion center should remain visible.
+     * @param {number} burnTime. Time in ticks how long the explosion center should remain visible.
      */
-    constructor(frame: Frame, location: GameLocation, fizzleTime: number) {
+    constructor(location: GameLocation, frame: Frame,  burnTime: number) {
         super(location);
 
         this.currentFrame = cloneObject(frame);
-        this.burnTime = fizzleTime;
+        this.burnTime = burnTime;
 
         this.dimensions = getFrameDimensions(frame, averagePixelSize);
     }
 
     /**
      * Updates the state of the object.
+     * @param {number} tick. Current tick.
      */
     public updateState(tick: number): void {
         if (this.startTick === undefined) {
@@ -83,6 +83,7 @@ export default class ExplosionCenter extends BaseGameObject {
 
     /**
      * Returns true when the explosion center should vanish from the game screen.
+     * @returns {boolean}. True if the explosion center is still burning hot!
      */
     public burning(): boolean {
         return this.isBurning;

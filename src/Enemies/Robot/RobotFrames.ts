@@ -1,3 +1,14 @@
+/**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
+/**
+ * Module:          RobotFrames
+ * Responsibility:  Define the frames of the RobotEnemy
+ */
+
 import { OffsetFrames } from "../../Models/OffsetFrames";
 
 export const RobotFrames: OffsetFrames = {

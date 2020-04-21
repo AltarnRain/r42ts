@@ -4,22 +4,22 @@
  * See LICENSE.MD.
  */
 
-import CGAColors from "../../Constants/CGAColors";
-import GameLocation from "../../Models/GameLocation";
-import DimensionProvider from "../../Providers/DimensionProvider";
-import { getFrameDimensions } from "../../Utility/Frame";
-import RobotFrames from "./RobotFrames";
-import { getRandomArrayElement } from "../../Utility/Array";
-
 /**
  * Module:          RobotSpawnLocations
  * Responsibility:  Returns the robot spawn locations.
  */
 
+import CGAColors from "../../Constants/CGAColors";
+import GameLocation from "../../Models/GameLocation";
+import dimensionProvider from "../../Providers/DimensionProvider";
+import { getRandomArrayElement } from "../../Utility/Array";
+import { getFrameDimensions } from "../../Utility/Frame";
+import RobotFrames from "./RobotFrames";
+
 const {
     averagePixelSize,
     gameFieldTop
-} = DimensionProvider();
+} = dimensionProvider();
 
 const robotSpawnLocationsAndColor: Array<{ location: GameLocation, color: string }> = [];
 const { width } = getFrameDimensions(RobotFrames.frames.F0, averagePixelSize);

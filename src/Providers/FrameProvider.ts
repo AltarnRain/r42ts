@@ -6,7 +6,7 @@
 
 /**
  * Module:          FrameProvider
- * Responsibility:  Provide the next frame to animate.
+ * Responsibility:  Provide frames for animations.
  */
 
 import { Frame, Frames } from "../Types/Types";
@@ -35,7 +35,8 @@ export default class FrameProvider {
 
     /**
      * Initializes the EnemyBase class
-     * @param {Asset} asset. Any asset.
+     * @param {Frames} frames. Frames.
+     * @param {number} startFrameIndex. The first frame to return.
      */
     constructor(frames: Frames, startFrameIndex: number) {
         this.frames = frames;
@@ -45,7 +46,6 @@ export default class FrameProvider {
 
     /**
      * Gets the name frame from an enemy.
-     * @param {tick} tick. Current game tick
      * @returns {Frame}. A frame
      */
     public getFrame(): Frame {

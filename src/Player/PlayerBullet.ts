@@ -18,9 +18,14 @@ export default class PlayerBullet extends Particle {
 
     /**
      * Construct the object.
+     * @param {GameLocation} startLocation. Initial location of the player bullet.
+     * @param {Frame} frame. Bullet frame.
+     * @param {number} angle. Bullet angle.
+     * @param {number} speed. Speed of the bullet.
+     * @param {number} acceleration. Acceleration of the bullet.
      */
-    constructor(frame: Frame, angle: number, speed: number, acceleration: number, location: GameLocation) {
-        super(frame, angle, speed, acceleration, location);
+    constructor(startLocation: GameLocation, frame: Frame, angle: number, speed: number) {
+        super(startLocation, frame, angle, speed, 1);
 
         convertFrameColor(this.currentFrame);
     }

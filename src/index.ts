@@ -17,7 +17,7 @@ import playerRunner from "./Main/PlayerRunner";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
-import DimensionProvider from "./Providers/DimensionProvider";
+import dimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
@@ -27,8 +27,8 @@ window.onload = () => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     if (canvas) {
         // Initialize the dimentions of the canvas.
-        canvas.width = DimensionProvider().fullWidth;
-        canvas.height = DimensionProvider().fullHeight;
+        canvas.width = dimensionProvider().fullWidth;
+        canvas.height = dimensionProvider().fullHeight;
 
         switch (window.location.search.replace("?", "")) {
             case "playground": {
@@ -49,7 +49,7 @@ window.onload = () => {
 
                 dispatch<number>("setLives", 2);
                 dispatch<number>("setLevel", level);
-                GameLoop.Start();
+                GameLoop.Start
 
                 (window as any).r42 = {
                     setLevel: (n: number) => dispatch<number>("setLevel", n),

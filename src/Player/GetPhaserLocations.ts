@@ -9,11 +9,11 @@ import { calculateAngle as calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
 
 /**
- * Module:          Phaser
- * Responsibility:  Draw the player's phaser beam.
+ * Module:          GetPhaserFrames
+ * Responsibility:  Calculate the game locations to draw a phaser beam.
  */
 
-export default function getPhaserFrames(source: GameLocation, target: GameLocation, pixelSize: number): GameLocation[] {
+export default function getPhaserLocations(source: GameLocation, target: GameLocation, pixelSize: number): GameLocation[] {
 
     // offset left by one game pixel to ensure the phaser appears at the nozzle of the ship.
     let offsetSourceLocation = { ...source, left: source.left };

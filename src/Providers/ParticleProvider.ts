@@ -12,13 +12,18 @@
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import Particle from "../Particles/Particle";
-import { convertFrameColor } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 
-export default function particleProvider(location: GameLocation, explosion: Explosion) {
+/**
+ * particleProvider. Provides particle objects based on an Explosion asset.
+ * @param {GameLocation} startLocation. Initial location of the particles.
+ * @param {Explosion} explosion. Explosion asset used to generate particle objects.
+ * @returns {Particle[]}. Resulting particles.
+ */
+export default function particleProvider(startLocation: GameLocation, explosion: Explosion): Particle[] {
 
     const exp = cloneObject(explosion);
-    const loc = cloneObject(location);
+    const loc = cloneObject(startLocation);
 
     const particles: Particle[] = [];
     for (let i = 0; i < exp.particleFrameIndexes.length; i++) {
@@ -29,7 +34,7 @@ export default function particleProvider(location: GameLocation, explosion: Expl
         const angle = exp.angles[i];
         const speed = exp.useSpeed ? exp.speed : exp.speeds[i];
 
-        const p = new Particle(particleFrame, angle, speed, exp.acceleration, loc);
+        const p = new Particle(loc, particleFrame, angle, speed, exp.acceleration);
         particles.push(p);
     }
 

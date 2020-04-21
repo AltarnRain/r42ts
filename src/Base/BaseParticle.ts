@@ -8,7 +8,7 @@ import { GameObjectType } from "../Types/Types";
 import BaseGameObject from "./BaseGameObject";
 
 /**
- * Module:          ParticleBase
+ * Module:          BaseParticle
  * Responsibility:  Base class for all particles
  */
 

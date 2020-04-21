@@ -13,6 +13,12 @@ import GameState from "../Definition/GameState";
  * Responsibility:  Reducer for the game state
  */
 
+/**
+ * gameStateReducer
+ * @param {DebuggingState} state. The current state.
+ * @param {ActionPayload<any>} action. The desired action with optional paylood.
+ * @returns {GameState}. New state.
+ */
 export function gameStateReducer(state: GameState = initState(), action: ActionPayload<any>): GameState {
     return produce(state, (draft) => {
         switch (action.type) {
@@ -57,6 +63,10 @@ export function gameStateReducer(state: GameState = initState(), action: ActionP
     });
 }
 
+/**
+ * Initialize the state
+ * @returns {GameState}. Fresh GameState.
+ */
 function initState(): GameState {
     return {
         level: 0,

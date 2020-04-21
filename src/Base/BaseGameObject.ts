@@ -11,7 +11,7 @@ import { Frame, GameObjectType } from "../Types/Types";
 
 /**
  * Module:          BaseGameObject
- * Responsibility:  Base class for all enemies.
+ * Responsibility:  Base class for all game objects.
  */
 
 export default abstract class BaseGameObject {
@@ -42,11 +42,13 @@ export default abstract class BaseGameObject {
 
     /**
      * Called to update the state of the object. Runs outside the draw loop for more accuracy.
+     * @param {number} tick. The current tick. Can be used to handle state updates that have a certain frequency.
      */
     public abstract updateState(tick: number): void;
 
     /**
      * Get the game location for colision detection.
+     * @returns {GameLocation}. The location of the object.
      */
     public getLocation(): GameLocation {
         return this.location;
@@ -54,11 +56,13 @@ export default abstract class BaseGameObject {
 
     /**
      * Returns the object type.
+     * @returns {GameObjectType}. The type of object.
      */
     public abstract getObjectType(): GameObjectType;
 
     /**
      * Returns the object's hitbox.
+     * @returns {GameRectangle}. The hitbox of the object.
      */
     public abstract getHitbox(): GameRectangle;
 }

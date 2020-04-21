@@ -4,25 +4,25 @@
  * See LICENSE.MD.
  */
 
+/**
+ * Module:          MovePlayer
+ * Responsibility:  Handles changes to the player location due to movement. Also provides a single source of truth for any class or module
+ *                  That uses the player location or needs to change it.
+ */
+
 import { PlayerFrame } from "../Player/PlayerFrames";
-import DimensionProvider from "../Providers/DimensionProvider";
+import dimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
 import { getFrameDimensions } from "../Utility/Frame";
 import { getAngle } from "../Utility/Geometry";
 import { fallsWithin, getLocation } from "../Utility/Location";
-
-/**
- * Module:          PlayerLocationHandler
- * Responsibility:  Handles changes to the player location due to movement. Also provides a single source of truth for any class or module
- *                  That uses the player location or needs to change it.
- */
 
 const {
     gameFieldTop,
     averagePixelSize,
     fullHeight,
     fullWidth,
-} = DimensionProvider();
+} = dimensionProvider();
 
 const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
 const maxBottom = fullHeight - shipDimensions.height - averagePixelSize / 2;
@@ -35,7 +35,7 @@ const maxRight = fullWidth - shipDimensions.width;
 export function movePlayer(speed: number): void {
     const { keyboardState, playerState } = appState();
 
-    const localKeyboardState = { ... keyboardState};
+    const localKeyboardState = { ...keyboardState };
 
     // Certain levels limit the movement of the player.
     // We'll use a fresh keyboardState object and make some adjustments.
@@ -45,7 +45,7 @@ export function movePlayer(speed: number): void {
             return;
         case "sideways":
             // Used when the player forms. Override the keyboard state.
-            localKeyboardState.down =   localKeyboardState.up = false;
+            localKeyboardState.down = localKeyboardState.up = false;
             break;
         case "forceup":
             // Used when the player travels through a warp gate.

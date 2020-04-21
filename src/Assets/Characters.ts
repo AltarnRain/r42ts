@@ -8,7 +8,11 @@ import { Frames } from "../Types/Types";
 
 /**
  * Module:          Characters
- * Responsibility:  Define character frames.
+ * Responsibility:  Define character frames. A to Z with some other characters
+ *                  All these are all frames which can be rendered directly.
+ *                  on screen using the renderFrame function.
+ *                  Their colors are "V". Meaning "Variant" so they
+ *                  can be set with a single function call.
  */
 
 const Characters: Frames = {

@@ -6,20 +6,15 @@
 
 /**
  * Module:          GameLoop
- * Responsibility:  Manage the game's loop.
+ * Responsibility:  Handles all functions that should be called within the GameLoop.
  */
 
 import { TickFunction } from "../Types/Types";
 
 /**
- * A handle for the main animation loop.
+ * A handle for the main loop.
  */
-let drawhandle: number | undefined;
-
-/**
- * Handle for the draw setTimeout
- */
-let drawOnceHandle: number | undefined;
+let mainHandle: number | undefined;
 
 /**
  * Functions that subscripbe to the game tick.
@@ -32,16 +27,16 @@ let updateStateFunctions: TickFunction[] = [];
 let backgroundDrawFunctions: Array<() => void> = [];
 
 /**
- * Functions that are executed once.
+ * Functions that draw.
  */
-let callOnce: Array<() => void> = [];
+let drawFunctions: Array<() => void> = [];
 
 export namespace GameLoop {
     /**
      * Start game loop
      */
     export function Start(): void {
-        drawhandle = window.requestAnimationFrame(run);
+        mainHandle = window.requestAnimationFrame(run);
     }
 
     /**
@@ -49,13 +44,13 @@ export namespace GameLoop {
      */
     export function Stop(): void {
 
-        if (drawhandle !== undefined) {
-            window.cancelAnimationFrame(drawhandle);
+        if (mainHandle !== undefined) {
+            window.cancelAnimationFrame(mainHandle);
         }
 
         updateStateFunctions = [];
         backgroundDrawFunctions = [];
-        callOnce = [];
+        drawFunctions = [];
     }
 
     /**
@@ -89,9 +84,7 @@ export namespace GameLoop {
      * @param {function} f. A function.
      */
     export function registerDraw(f: () => void): void {
-        if (drawOnceHandle === undefined) {
-            callOnce.push(f);
-        }
+        drawFunctions.push(f);
     }
 
     /**
@@ -99,12 +92,11 @@ export namespace GameLoop {
      * @param {number} tick. Current animation tick.
      */
     function run(tick: number): void {
-        drawhandle = window.requestAnimationFrame(run);
+        mainHandle = window.requestAnimationFrame(run);
         updateStateFunctions.forEach((f) => f(tick));
         backgroundDrawFunctions.forEach((f) => f());
-        callOnce.forEach((f) => f());
-        callOnce = [];
-        drawOnceHandle = undefined;
+        drawFunctions.forEach((f) => f());
+        drawFunctions = [];
     }
 }
 

@@ -5,8 +5,8 @@
  */
 
 /**
- * Module:          Frames
- * Responsibility:  Define frames
+ * Module:          Types
+ * Responsibility:  Define Types
  */
 
 import Dictionary from "../Models/Dictionary";
@@ -24,7 +24,7 @@ export type Frame = string[][];
 /**
  * The types of game objects.
  */
-export type GameObjectType = "particle" | "enemy" | "player" | "particle" | "explosion" | "playerbullet" | "playerformartionparticle";
+export type GameObjectType = "particle" | "enemy" | "player" | "particle" | "explosion" | "playerbullet";
 
 /**
  * A function that accepts a 'tick' as a parameter.

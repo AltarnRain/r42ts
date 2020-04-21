@@ -9,11 +9,11 @@
  * Responsibility:  Calculate the relative speed based on the screensize.
  */
 
-import DimensionProvider from "./DimensionProvider";
+import dimensionProvider from "./DimensionProvider";
 
 const {
     fullWidth
-} = DimensionProvider();
+} = dimensionProvider();
 
 export default function speedProvider(speed: number): number {
     // 1793 is the size of the canvas when I was developing the game. All game speeds are based on this.

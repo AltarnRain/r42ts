@@ -4,30 +4,30 @@
  * See LICENSE.MD.
  */
 
+/**
+ * Module:          RobotEnemey
+ * Responsibility:  Handles the Robot enemeny first seen in level 2.
+ */
+
 import Explosion02 from "../../Assets/Explosion02";
 import { twoPXBullet } from "../../Assets/twoPXBullet";
-import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
+import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import GameLocation from "../../Models/GameLocation";
 import Particle from "../../Particles/Particle";
-import DimensionProvider from "../../Providers/DimensionProvider";
+import dimensionProvider from "../../Providers/DimensionProvider";
 import FrameProvider from "../../Providers/FrameProvider";
 import { Frame } from "../../Types/Types";
 import { convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
 import RobotFrames from "./RobotFrames";
 
-/**
- * Module:          RobotEnemey
- * Responsibility:  Handles the Robot enemeny first seen in level 2.
- */
-
 const {
     averagePixelSize
-} = DimensionProvider();
+} = dimensionProvider();
 
-export default class RobotEnemy extends BaseEnemyObject {
+export default class RobotEnemy extends BaseEnemy {
 
     /**
      * The bullet frame of the robot.
@@ -39,7 +39,7 @@ export default class RobotEnemy extends BaseEnemyObject {
      */
     private bulletTick: number = 0;
 
-    constructor(location: GameLocation, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, canFire: (self: BaseEnemyObject) => boolean) {
+    constructor(location: GameLocation, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, canFire: (self: BaseEnemy) => boolean) {
         super(location, frameChangeTime, RobotFrames, Explosion02, locationProvider, canFire);
 
         convertVariableFrameColor(this.explosion.explosionCenterFrame, color);
@@ -77,7 +77,7 @@ export default class RobotEnemy extends BaseEnemyObject {
                 const location = { ...this.getCenterLocation() };
                 location.top = location.top + averagePixelSize * 4;
                 location.left = location.left - averagePixelSize;
-                const bullet = new Particle(this.bulletFrame, 90, 3, 1, location);
+                const bullet = new Particle(location,  this.bulletFrame, 90, 3, 1);
                 return bullet;
             }
         }

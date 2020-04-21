@@ -13,16 +13,15 @@ import { GameDimensions } from "../Models/GameDimensions";
 
 let gameDimensions: GameDimensions;
 
-export default function DimensionProvider(node?: Node): GameDimensions {
+/**
+ * dimensionProvider. Single function responsible for all dimensions important to the game.
+ * @param {Node} node. Node
+ * @returns {GameDimensions}. An object with dimensions.
+ */
+export default function dimensionProvider(): GameDimensions {
     if (!gameDimensions) {
 
-        let body: HTMLBodyElement;
-
-        if (node) {
-            body = node as HTMLBodyElement;
-        } else {
-            body = document.getElementById("body") as HTMLBodyElement;
-        }
+        const body = document.getElementById("body") as HTMLBodyElement;
 
         if (!body) {
             throw new Error("No body element found.");

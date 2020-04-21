@@ -7,8 +7,8 @@
 import BaseParticle from "../Base/BaseParticle";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
-import { GameSize } from "../Models/Gamesize";
-import DimensionProvider from "../Providers/DimensionProvider";
+import { GameSize } from "../Models/GameSize";
+import dimensionProvider from "../Providers/DimensionProvider";
 import { Frame, GameObjectType } from "../Types/Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
@@ -21,7 +21,7 @@ import { fallsWithin, getLocation } from "../Utility/Location";
 
 const {
     averagePixelSize
-} = DimensionProvider();
+} = dimensionProvider();
 
 const topOffset = averagePixelSize / 2 * -1;
 const bottomOffset = averagePixelSize / 2;
@@ -48,10 +48,15 @@ export default class Particle extends BaseParticle {
     private dimensions: GameSize;
 
     /**
-     * Construct the particle.
+     * Construct the object.
+     * @param {GameLocation} startLocation. Initial location of the particle.
+     * @param {Frame} frame. Frame for the particle.
+     * @param {number} angle. Angle the particle will travel.
+     * @param {number} speed. Speed at which the particle will travel.
+     * @param {number} acceleration. Acceleration applies each update of the state.
      */
-    constructor(frame: Frame, angle: number, speed: number, acceleration: number, location: GameLocation) {
-        super(location);
+    constructor(startLocation: GameLocation, frame: Frame, angle: number, speed: number, acceleration: number) {
+        super(startLocation);
 
         this.currentFrame = cloneObject(frame);
         this.angle = angle;
@@ -78,7 +83,7 @@ export default class Particle extends BaseParticle {
             gameFieldTop,
             fullWidth,
             fullHeight,
-        } = DimensionProvider();
+        } = dimensionProvider();
 
         return fallsWithin(this.location, gameFieldTop, fullHeight, 0, fullWidth);
     }

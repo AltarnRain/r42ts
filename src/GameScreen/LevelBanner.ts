@@ -8,8 +8,8 @@ import Characters from "../Assets/Characters";
 import Numbers from "../Assets/Numbers";
 import CGAColors from "../Constants/CGAColors";
 import GameLocation from "../Models/GameLocation";
-import CtxProvider from "../Providers/CtxProvider";
-import DimensionProvider from "../Providers/DimensionProvider";
+import ctxProvider from "../Providers/CtxProvider";
+import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame } from "../Types/Types";
 import { convertVariableFramesColor, getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
@@ -23,9 +23,9 @@ import { cloneObject } from "../Utility/Lib";
 const {
     fullHeight,
     maxPixelSize
-} = DimensionProvider();
+} = dimensionProvider();
 
-const ctx = CtxProvider();
+const ctx = ctxProvider();
 
 const greenCharacters = cloneObject(Characters);
 convertVariableFramesColor(greenCharacters, CGAColors.lightGreen);

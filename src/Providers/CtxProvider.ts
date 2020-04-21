@@ -11,7 +11,11 @@
 
 let cachedCtx: CanvasRenderingContext2D;
 
-export default function CtxProvider(): CanvasRenderingContext2D {
+/**
+ * ctxProvider.
+ * @returns {CanvasRenderingContext2D}. Returns a 2d canvar renderign context.
+ */
+export default function ctxProvider(): CanvasRenderingContext2D {
     if (!cachedCtx) {
         const canvas = document.getElementById("canvas") as HTMLCanvasElement;
         cachedCtx = canvas.getContext("2d") as CanvasRenderingContext2D;

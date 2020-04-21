@@ -14,6 +14,12 @@ import PlayerState from "../Definition/PlayerState";
  * Responsibility:  Handles the player's state.
  */
 
+/**
+ * playerReducer
+ * @param {PlayerState} state. The current state.
+ * @param {ActionPayload<any>} action. The desired action with optional paylood.
+ * @returns {PlayerState}. New state.
+ */
 export default function playerReducer(state: PlayerState = initState(), action: ActionPayload<any>): PlayerState {
     return produce(state, (draft) => {
         switch (action.type) {
@@ -35,6 +41,7 @@ export default function playerReducer(state: PlayerState = initState(), action: 
 
 /**
  * Initialize the base player state.
+ * @returns {PlayerState}
  */
 function initState(): PlayerState {
     return {

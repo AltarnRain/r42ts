@@ -7,7 +7,7 @@
 import DebuggingState from "./DebuggingState";
 import GameState from "./GameState";
 import KeyboardState from "./KeyboardState";
-import LevelState from "./LevelState";
+import EnemyLevelState from "./EnemyLevelState";
 import PlayerState from "./PlayerState";
 
 /**
@@ -17,9 +17,9 @@ import PlayerState from "./PlayerState";
 
 export default interface ApplicationState {
     /**
-     * The level state. Only the current level.
+     * The a level state with enemies. Only the current level.
      */
-    levelState: LevelState;
+    enemyLevelState: EnemyLevelState;
 
     /**
      * State of the player.

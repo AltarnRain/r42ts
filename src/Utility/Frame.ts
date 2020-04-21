@@ -6,10 +6,10 @@
 
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
-import { GameSize } from "../Models/Gamesize";
+import { GameSize } from "../Models/GameSize";
 import { Frame, Frames } from "../Types/Types";
 import { getRandomArrayElement } from "./Array";
-import HexToCGAConverter from "./HexToCGAConverter";
+import hexToCGAConverter from "./HexToCGAConverter";
 
 /**
  * Module:          Frame
@@ -53,7 +53,7 @@ export function convertFrameColor(frame: Frame) {
     frame.forEach((row, rowIndex) => {
         row.forEach((cellColor, cellIndex) => {
             if (cellColor !== "0") {
-                frame[rowIndex][cellIndex] = HexToCGAConverter(cellColor);
+                frame[rowIndex][cellIndex] = hexToCGAConverter(cellColor);
             }
         });
     });

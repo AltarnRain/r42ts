@@ -4,6 +4,11 @@
  * See LICENSE.MD.
  */
 
+/**
+ * Module:          PlayerFormationPart
+ * Responsibility:  A particle that travels a distance and then stops being drawn.
+ */
+
 import GameLocation from "../Models/GameLocation";
 import speedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
@@ -12,11 +17,6 @@ import { convertFrameColor } from "../Utility/Frame";
 import { calculateAngle } from "../Utility/Geometry";
 import { cloneObject } from "../Utility/Lib";
 import { calculateDistance, getLocation } from "../Utility/Location";
-
-/**
- * Module:          DestinationParticle
- * Responsibility:  A particle that travels a distance and then stops being drawn.
- */
 
 export default class PlayerFormationPart {
 
@@ -42,7 +42,11 @@ export default class PlayerFormationPart {
     private currentFrame: Frame;
 
     /**
-     * Construct the distance particle.
+     * Construct the object.
+     * @param {GameLocation} sourceLocation. Location where the part begins.
+     * @param {GameLocation} targetLocation. Location where the part is heading.
+     * @param {Frame} frame. Frame to render for this part.
+     * @param {number} speed. Speed at which the part travels.
      */
     constructor(sourceLocation: GameLocation, targetLocation: GameLocation, frame: Frame, speed: number) {
 

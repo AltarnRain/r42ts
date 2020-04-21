@@ -9,27 +9,27 @@ import { drawBackground } from "../GameScreen/StaticRenders";
 import GameLoop from "../Main/GameLoop";
 import { appState, dispatch } from "../State/Store";
 import { TickFunction } from "../Types/Types";
-import { BaseEnemyObject } from "./BaseEnemyObject";
+import { BaseEnemy } from "./BaseEnemy";
 
 /**
  * Module:          BaseLevel
  * Responsibility:  Base class for all levels.
  */
 
-abstract class BaseLevel {
+export default abstract class BaseLevel {
 
     /**
-     * Array of subscriptions
+     * Array of subscriptions registered in the GameLoop. Disposed when the level is disposed.
      */
     private subscriptions: Array<() => void> = [];
 
     /**
-     * Array of enemies.
+     * Array of enemies. These are the enemies that will appear in the Level.
      */
-    protected enemies: BaseEnemyObject[] = [];
+    protected enemies: BaseEnemy[] = [];
 
     /**
-     * Subscription that removes the level banner from the game loop when called.
+     * Subscription that removes the level banner from the game loop when called. Defined in the 'start' method.
      */
     protected levelBannerSub!: () => void;
 
@@ -39,13 +39,14 @@ abstract class BaseLevel {
     protected stateManager: TickFunction;
 
     /**
-     * Function passed from the outside the internally checks if the level is won.
+     * Function passed from the outside that checks if a level is won.
      */
     private monitorLevelWon: () => boolean;
 
     /**
      * Constructs the base level
      * @param {TickFunction} stateManager. A function that will handle the state for the level.
+     * @param {() => boolean} monitorLevelWon. A function that checks fort he win condition of a level.
      */
     constructor(stateManager: TickFunction, monitorLevelWon: () => boolean) {
         this.stateManager = stateManager;
@@ -57,12 +58,16 @@ abstract class BaseLevel {
      */
     public start(): void {
         const { gameState } = appState();
+
+        // Register the background draw function so it runs in the game loop.
         this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
+
+        // Draw the level banned to show which round we're at.
         this.levelBannerSub = GameLoop.registerBackgroundDrawing(() => drawLevelBanner(gameState.level));
     }
 
     /**
-     * Register subscriptions
+     * Register subscriptions.
      * @param {function} f.
      */
     protected registerSubscription(f: () => void) {
@@ -75,11 +80,18 @@ abstract class BaseLevel {
     protected begin(): void {
         // A phaser is rewarded at the beginning of a level.
         dispatch("addPhaser");
+
+        // Register the stateManager so it can act on state changes in the level.
         this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));
         window.setTimeout(() => {
+
+            // Remove the level banner after one second.
             this.levelBannerSub();
-            // dispatch<boolean>("showingLevelBanner", false);
-            dispatch<BaseEnemyObject[]>("setEnemies", this.enemies);
+
+            // Add the enemies to the global state. The registered stateManager will take it from here.
+            dispatch<BaseEnemy[]>("setEnemies", this.enemies);
+
+            // Add a function to the GameLoop that will check if a level has been won.
             this.registerSubscription(GameLoop.registerUpdateState(() => this.monitorLevelWonRun()));
         }, 1000);
     }
@@ -88,15 +100,23 @@ abstract class BaseLevel {
      * Disposes subscriptions
      */
     public dispose(): void {
+        // The subscription array contains functions that remove themselves
+        // from the GameLoop. Call all of them to remove them from the GameLoop.
         this.subscriptions.forEach((s) => s());
     }
 
+    /**
+     * This method uses the passed in monotorLeveLWon function to check if we can procede to the next level.
+     */
     private  monitorLevelWonRun(): void {
+
+        // Use the provided function to check if the level has been completed.
         if (this.monitorLevelWon()) {
+            // Add a phaser because that's a level won reward.
             dispatch("addPhaser");
+
+            // Move to the next level.
             dispatch("nextLevel");
         }
     }
 }
-
-export default BaseLevel;

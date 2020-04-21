@@ -7,7 +7,7 @@
 import GameLocation from "../Models/GameLocation";
 import { PlayerFrame } from "../Player/PlayerFrames";
 import { getFrameDimensions } from "../Utility/Frame";
-import DimensionProvider from "./DimensionProvider";
+import dimensionProvider from "./DimensionProvider";
 
 /**
  * Module:          PlayerSpawnLocationProvider
@@ -18,7 +18,7 @@ const {
     averagePixelSize,
     fullWidth,
     gameFieldHeight
-} = DimensionProvider();
+} = dimensionProvider();
 
 const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
 

@@ -12,12 +12,12 @@
 export interface GameDimensions {
 
     /**
-     * The game field width
+     * The entire with of the game.
      */
     fullWidth: number;
 
     /**
-     * The game field height
+     * The game entire height of the game.
      */
     fullHeight: number;
 
@@ -27,12 +27,12 @@ export interface GameDimensions {
     gameFieldHeight: number;
 
     /**
-     * The number of pixels from the screen's top where the game is positioned.
+     * The number of pixels from the screen's top where the game field is positioned.
      */
     gameFieldTop: number;
 
     /**
-     * The game field height
+     * Height of the status bar.
      */
     statusBarHeight: number;
 

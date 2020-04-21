@@ -4,22 +4,22 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemyObject } from "../../Base/BaseEnemyObject";
+import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseParticle from "../../Base/BaseParticle";
 import GameLocation from "../../Models/GameLocation";
 import ExplosionCenter from "../../Particles/ExplosionCenter";
 
 /**
- * Module:          LevelState
+ * Module:          EnemyLevelState
  * Responsibility:  Holds the entire state of the game.
  */
 
-export default interface LevelState {
+export default interface EnemyLevelState {
 
     /**
      * Array of current game objects on screen.
      */
-    enemies: BaseEnemyObject[];
+    enemies: BaseEnemy[];
 
     /**
      * Particles travelling on the screen.
@@ -41,5 +41,8 @@ export default interface LevelState {
      */
     totalNumberOfEnemies: number;
 
+    /**
+     * Phaser frames.
+     */
     phaserFrames: GameLocation[];
 }

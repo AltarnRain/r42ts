@@ -6,7 +6,7 @@
 
 /**
  * Module:          2pxBullet
- * Responsibility:  Define a bullet 2 pixels wide.
+ * Responsibility:  Define a bullet 2 pixels wide. Variant color allows it to be any color.
  */
 
 import { Frame } from "../Types/Types";

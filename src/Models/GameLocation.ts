@@ -6,7 +6,7 @@
 
 /**
  * Module:          GameLocation
- * Responsibility:  Defines a location on the screen
+ * Responsibility:  Defines a location on the screen.
  */
 
 export default interface GameLocation {

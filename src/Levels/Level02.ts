@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemyObject } from "../Base/BaseEnemyObject";
+import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
@@ -20,6 +20,10 @@ import { appState } from "../State/Store";
  * Sets up level 02.
  */
 export default class Level02 extends BaseLevel {
+
+    /**
+     * Start Level 02
+     */
     public start(): void {
         super.start();
         this.enemies = robotSpawnLocationsAndColor.map((lc) => new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(3, 5), canFire));
@@ -29,11 +33,11 @@ export default class Level02 extends BaseLevel {
 
 /**
  * Level 02 robot canFire. Only the right most robot fires bullets.
- * @param {BaseEnemyObject} self. Reference to a robot object. Called from within the RobotEnemy to determine
+ * @param {BaseEnemy} self. Reference to a robot object. Called from within the RobotEnemy to determine
  * if the robot can fire bullets or not.
  */
-function canFire(self: BaseEnemyObject): boolean {
-    const { levelState } = appState();
+function canFire(self: BaseEnemy): boolean {
+    const { enemyLevelState: levelState } = appState();
     const lastEnemy = levelState.enemies[levelState.enemies.length - 1];
 
     if (lastEnemy !== undefined) {

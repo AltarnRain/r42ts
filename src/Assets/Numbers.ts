@@ -8,7 +8,7 @@ import { Frames } from "../Types/Types";
 
 /**
  * Module:          Numbers
- * Responsibility:  Numbers 0 to 9.
+ * Responsibility:  Numbers 0 to 9. All colors are variant and can be set with single function call.
  */
 
 const Numbers: Frames = {

@@ -38,7 +38,7 @@ export function getNextY(angle: number, speed: number, current: number): number 
 /**
  * getAngle.
  * @param {KeyboardState} state. Current keyboard dstate
- * @returns {number}. The angle. -1 indicated the ship is not moving.
+ * @returns {number}. The angle. -1 indicates no movement.
  */
 export function getAngle(state: KeyboardState): number {
     let angle = -1;
@@ -67,6 +67,7 @@ export function getAngle(state: KeyboardState): number {
  * Returns true if two hitboxes overlap.
  * @param {GameRectangle} hitbox1.
  * @param {GameRectangle} hitbox2.
+ * @returns {boolean}. True if overlap.
  */
 export function overlaps(hitbox1: GameRectangle, hitbox2: GameRectangle): boolean {
 

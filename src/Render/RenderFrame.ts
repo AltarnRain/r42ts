@@ -10,22 +10,22 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import CtxProvider from "../Providers/CtxProvider";
-import DimensionProvider from "../Providers/DimensionProvider";
+import ctxProvider from "../Providers/CtxProvider";
+import dimensionProvider from "../Providers/DimensionProvider";
 import { Frame } from "../Types/Types";
 
 const {
     maxPixelSize,
     averagePixelSize,
-} = DimensionProvider();
+} = dimensionProvider();
 
 /**
- * Renders a single frame to the canvas
+ * Renders a single frame to the canvas.
  * @param {GameLocation} location. The location where to render the frame.
  * @param {Frame} frame. A 2d string array.
  */
 export default function renderFrame(location: GameLocation, frame: Frame): void {
-    const ctx = CtxProvider();
+    const ctx = ctxProvider();
 
     for (let rowIndex = 0; rowIndex < frame.length; rowIndex++) {
 

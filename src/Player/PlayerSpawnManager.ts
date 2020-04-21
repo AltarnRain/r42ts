@@ -4,10 +4,10 @@
  * See LICENSE.MD.
  */
 
-import { movePlayer } from "../Handlers/PlayerMovementHandler";
+import { movePlayer } from "../Handlers/MovePlayer";
 import GameLoop from "../Main/GameLoop";
 import GameLocation from "../Models/GameLocation";
-import DimensionProvider from "../Providers/DimensionProvider";
+import dimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types/Types";
 import { convertFramesColors } from "../Utility/Frame";
@@ -18,13 +18,13 @@ import { PlayerFormationFrames } from "./PlayerFrames";
 import PlayerShip from "./PlayerShip";
 
 /**
- * Module:          PlayerFormation
- * Responsibility:  Handles the player formation.
+ * Module:          PlayerSpawnManager
+ * Responsibility:  Handles player respawning.
  */
 
 const {
     averagePixelSize,
-} = DimensionProvider();
+} = dimensionProvider();
 
 const nozzleLeftOffset = averagePixelSize * 2;
 const rightWingLeftOffset = averagePixelSize * 4;
@@ -59,6 +59,30 @@ let rightWingEndLocation: GameLocation;
 let formationSpeed: "slow" | "fast";
 
 let formationInProgress = false;
+
+/**
+ * playerSpawnManager. Once register in the GameLoop this function will check
+ * the state if the player can and show respawn.
+ */
+export default function playerSpawnManager(): void {
+    const { playerState, enemyLevelState: levelState } = appState();
+
+    if (playerState.ship === undefined && formationInProgress === false) {
+        if (levelState.enemies.length > 0) { // Enemies in the level
+            if (levelState.particles.length === 0) { // wait till there's no particles.
+                setupFormation(playerState.playerLocation, "slow", "sideways"); // Start the slow formation where the player has control.
+            }
+        } else {
+            // No enemies, fast formation
+            setupFormation(playerState.playerLocation, "fast", "immobile");
+        }
+    }
+
+    if (formationInProgress) {
+        updateState();
+        GameLoop.registerDraw(draw);
+    }
+}
 
 /**
  * Set the particle locations in the module
@@ -98,6 +122,8 @@ function createParticles(): void {
 /**
  * Forms the player quickly. Does not allow movement.
  * @param {() => void)} formationDoneCallback. Called when the formation animation has completed.
+ * @param {"fast" | "slow"} speed. Speed of the player formation.
+ * @param {MoveLimits} limit. Movement limit impaired on the player while the ship is forming.
  */
 function setupFormation(targetLocation: GameLocation, speed: "fast" | "slow", limit: MoveLimits ): void {
     formationSpeed = speed;
@@ -113,26 +139,6 @@ function setupFormation(targetLocation: GameLocation, speed: "fast" | "slow", li
 
     dispatch<MoveLimits>("setPlayerMovementLimit", limit);
     formationInProgress = true;
-}
-
-export default function PlayerSpawnManager(tick?: number): void {
-    const { playerState, levelState } = appState();
-
-    if (playerState.ship === undefined && formationInProgress === false) {
-        if (levelState.enemies.length > 0) { // Enemies in the level
-            if (levelState.particles.length === 0) { // wait till there's no particles.
-                setupFormation(playerState.playerLocation, "slow", "sideways"); // Start the slow formation where the player has control.
-            }
-        } else {
-            // No enemies, fast formation
-            setupFormation(playerState.playerLocation, "fast", "immobile");
-        }
-    }
-
-    if (formationInProgress) {
-        updateState();
-        GameLoop.registerDraw(draw);
-    }
 }
 
 /**

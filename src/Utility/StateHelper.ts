@@ -17,7 +17,7 @@ import { appState } from "../State/Store";
  * @returns {BaseGameObject[]}. An array of objects that can be hit by the player or hit the player.
  */
 export function getHittableObjects(): BaseGameObject[] {
-    const { levelState } = appState();
+    const { enemyLevelState: levelState } = appState();
     return [
         ...levelState.enemies,
         ...levelState.particles,

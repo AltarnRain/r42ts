@@ -23,6 +23,9 @@ import { getRandomArrayElement } from "../Utility/Array";
  */
 export default class Level01 extends BaseLevel {
 
+    /**
+     * Start Level 01.
+     */
     public start(): void {
         super.start();
 

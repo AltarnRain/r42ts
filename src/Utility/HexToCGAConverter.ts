@@ -6,12 +6,12 @@
 
 /**
  * Module:          HexToCGAConverter.
- * Responsibility:  Convert raster (hex) color to a CGA color
+ * Responsibility:  Convert hex color to a CGA color
  */
 
 import CGAColors from "../Constants/CGAColors";
 
-const HexToCGAConverter = (hex: string): string => {
+export default function hexToCGAConverter(hex: string): string {
     switch (hex) {
         case "0":
             return CGAColors.black;
@@ -48,6 +48,4 @@ const HexToCGAConverter = (hex: string): string => {
         default:
             return "";
     }
-};
-
-export default HexToCGAConverter;
+}

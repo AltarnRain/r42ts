@@ -12,8 +12,8 @@
 import Numbers from "../Assets/Numbers";
 import CGAColors from "../Constants/CGAColors";
 import { PlayerFrame } from "../Player/PlayerFrames";
-import CtxProvider from "../Providers/CtxProvider";
-import DimensionProvider from "../Providers/DimensionProvider";
+import ctxProvider from "../Providers/CtxProvider";
+import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState, appStore } from "../State/Store";
 import { Frame } from "../Types/Types";
@@ -21,13 +21,13 @@ import { convertFrameColor, convertVariableFramesColor, getFrameByIndex, getFram
 import { cloneObject } from "../Utility/Lib";
 import { padLeft } from "../Utility/String";
 
-const ctx = CtxProvider();
+const ctx = ctxProvider();
 
 const {
     fullWidth,
     statusBarHeight,
     minPixelSize
-} = DimensionProvider();
+} = dimensionProvider();
 
 const numberFrames = cloneObject(Numbers);
 convertVariableFramesColor(numberFrames, CGAColors.yellow);

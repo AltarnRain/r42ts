@@ -21,10 +21,6 @@ import { dispatch } from "../State/Store";
  * Sets up level 00. Play ground level.
  */
 export default class Level00 extends BaseLevel {
-
-    /**
-     *
-     */
     constructor(stateManager: any, levelWon: () => boolean) {
         super(stateManager, levelWon);
     }

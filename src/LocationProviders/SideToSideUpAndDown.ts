@@ -4,22 +4,22 @@
  * See LICENSE.MD.
  */
 
-import BaseLocationProvider from "../Base/BaseLocationProvider";
-import GameLocation from "../Models/GameLocation";
-import DimensionProvider from "../Providers/DimensionProvider";
-import { getLocation } from "../Utility/Location";
-
 /**
  * Module:          SideToSideUpAndDown
  * Responsibility:  Location provider for enemies that move from left to right and up then down.
  */
+
+import BaseLocationProvider from "../Base/BaseLocationProvider";
+import GameLocation from "../Models/GameLocation";
+import dimensionProvider from "../Providers/DimensionProvider";
+import { getLocation } from "../Utility/Location";
 
 const {
     gameFieldTop,
     fullWidth,
     maxPixelSize,
     fullHeight
-} = DimensionProvider();
+} = dimensionProvider();
 
 export default class SideToSideUpAndDown extends BaseLocationProvider {
     public getLocation(location: GameLocation, width: number, height: number): GameLocation {

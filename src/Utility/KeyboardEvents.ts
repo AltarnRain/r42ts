@@ -1,5 +1,19 @@
+/**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
+/**
+ * Module:          KeyboardEVents
+ * Responsibility:  handle keyboard events.
+ */
+
 import { appState, dispatch } from "../State/Store";
 
+/**
+ * Valid game keys.
+ */
 type GameKeys =
     "ArrowUp" |
     "ArrowDown" |
@@ -10,6 +24,9 @@ type GameKeys =
     "F2" |
     "Space";
 
+/**
+ * Array of valid game keys.
+ */
 export const allGameKeys: GameKeys[] = [
     "ArrowDown",
     "ArrowLeft",

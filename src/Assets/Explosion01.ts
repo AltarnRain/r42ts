@@ -6,8 +6,7 @@
  */
 
 /**
- * Module:          Explosion asset.
- * Responsibility:  Contain the assets of an explosion.
+ * Module:          Explosion01.
  */
 
 import Explosion from "../Models/Explosion";
