@@ -83,7 +83,7 @@ export default class PlayerShip {
      * Updates the player's state. Means movement.
      */
     public updateState(): void {
-        movePlayer(5.9);
+        movePlayer(10);
     }
 
     /**

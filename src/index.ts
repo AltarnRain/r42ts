@@ -69,39 +69,6 @@ window.onload = () => {
     }
 };
 
-function calcFPS(opts: any) {
-    const requestFrame = window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame;
-
-    if (!requestFrame) {
-        return true
-            ;
-    }
-    // Check if "true" is returned;
-    // pick default FPS, show error, etc...
-    function checker(): void {
-        if (index--) {
-            requestFrame(checker);
-        } else {
-            // var result = 3*Math.round(count*1000/3/(performance.now()-start));
-            const result = count * 1000 / (performance.now() - start);
-            if (typeof opts.callback === "function") {
-                opts.callback(result);
-            }
-
-            // tslint:disable-next-line: no-console
-            console.log("Calculated: " + result + " frames per second");
-        }
-    }
-    if (!opts) {
-        opts = {};
-    }
-
-    const count = opts.count || 60;
-    let index = count;
-    const start = performance.now();
-    checker();
-}
 
 /**
  * Uses the player formation part to draw a block on the screen

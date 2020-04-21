@@ -16,7 +16,7 @@ import { Frame } from "../Types/Types";
 
 const {
     maxPixelSize,
-    minPixelSize
+    averagePixelSize,
 } = DimensionProvider();
 
 /**
@@ -35,8 +35,8 @@ export default function renderFrame(location: GameLocation, frame: Frame): void 
             const color = columns[columnIndex];
 
             // We use the minimum pixel size to determine the position.
-            const x = location.left + columnIndex * minPixelSize;
-            const y = location.top + rowIndex * minPixelSize;
+            const x = location.left + columnIndex * averagePixelSize;
+            const y = location.top + rowIndex * averagePixelSize;
 
             if (color !== "0") {
                 ctx.fillStyle = color;

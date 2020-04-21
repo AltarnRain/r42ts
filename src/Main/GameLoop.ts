@@ -36,28 +36,12 @@ let backgroundDrawFunctions: Array<() => void> = [];
  */
 let callOnce: Array<() => void> = [];
 
-/**
- * Frequency at which the state is updated. This is NOT the same as FPS
- */
-const stateUpdateFrequency = 10;
-
-/**
- * handle for the state timeout.
- */
-let stateHandle: number;
-
 export namespace GameLoop {
     /**
      * Start game loop
      */
     export function Start(): void {
-
-        stateHandle = window.setInterval(() => {
-            //  Use Date.now to pass tick into the state update
-            updateStateFunctions.forEach((f) => f(Date.now()));
-        }, stateUpdateFrequency);
-
-        drawhandle = window.requestAnimationFrame(runDraw);
+        drawhandle = window.requestAnimationFrame(run);
     }
 
     /**
@@ -67,10 +51,6 @@ export namespace GameLoop {
 
         if (drawhandle !== undefined) {
             window.cancelAnimationFrame(drawhandle);
-        }
-
-        if (stateHandle !== undefined) {
-            window.clearTimeout(stateHandle);
         }
 
         updateStateFunctions = [];
@@ -118,9 +98,9 @@ export namespace GameLoop {
      * Runner function. Calls all functions that subscribed to the game loop.
      * @param {number} tick. Current animation tick.
      */
-    function runDraw(): void {
-        drawhandle = window.requestAnimationFrame(runDraw);
-
+    function run(tick: number): void {
+        drawhandle = window.requestAnimationFrame(run);
+        updateStateFunctions.forEach((f) => f(tick));
         backgroundDrawFunctions.forEach((f) => f());
         callOnce.forEach((f) => f());
         callOnce = [];
