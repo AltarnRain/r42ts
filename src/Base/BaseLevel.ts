@@ -59,8 +59,6 @@ abstract class BaseLevel {
         const { gameState } = appState();
         this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
         this.levelBannerSub = GameLoop.registerBackgroundDrawing(() => drawLevelBanner(gameState.level));
-
-        dispatch<boolean>("showingLevelBanner", true);
     }
 
     /**
@@ -75,10 +73,12 @@ abstract class BaseLevel {
      * Begin this level. Call from start.
      */
     protected begin(): void {
+        // A phaser is rewarded at the beginning of a level.
+        dispatch("addPhaser");
         this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));
         window.setTimeout(() => {
             this.levelBannerSub();
-            dispatch<boolean>("showingLevelBanner", false);
+            // dispatch<boolean>("showingLevelBanner", false);
             dispatch<BaseEnemyObject[]>("setEnemies", this.enemies);
             this.registerSubscription(GameLoop.registerUpdateState(() => this.monitorLevelWonRun()));
         }, 1000);
@@ -93,6 +93,7 @@ abstract class BaseLevel {
 
     private  monitorLevelWonRun(): void {
         if (this.monitorLevelWon()) {
+            dispatch("addPhaser");
             dispatch("nextLevel");
         }
     }

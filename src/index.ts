@@ -11,7 +11,7 @@
 
 import { drawBackground } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
-import subscribeToLevelChange from "./Levels/LevelManager";
+import subscribeToStoreChanges from "./Levels/SubscribeToStore";
 import GameLoop from "./Main/GameLoop";
 import playerRunner from "./Main/PlayerRunner";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
@@ -32,7 +32,13 @@ window.onload = () => {
 
         switch (window.location.search.replace("?", "")) {
             case "playground": {
-                subscribeToLevelChange();
+
+                let level = 0;
+                if (window.location.hash && window.location.hash.indexOf("level") > -1) {
+                    level = parseInt(window.location.hash.split("=")[1], 10);
+                }
+
+                subscribeToStoreChanges();
                 registerListeners();
 
                 GameLoop.registerBackgroundDrawing(drawStatusBar);
@@ -40,12 +46,21 @@ window.onload = () => {
                 GameLoop.registerUpdateState(playerSpawnManager);
                 GameLoop.registerUpdateState(playerRunner);
                 dispatch<boolean>("playerImmortal", true);
-                // GameLoop.registerUpdateState(calcFPS);
 
-                dispatch<number>("setLives", 10);
-                dispatch<number>("setPhasers", 300);
-                dispatch<number>("setLevel", 2);
+                dispatch<number>("setLives", 2);
+                dispatch<number>("setLevel", level);
                 GameLoop.Start();
+
+                (window as any).r42 = {
+                    setLevel: (n: number) => dispatch<number>("setLevel", n),
+                    nextLevel: () => dispatch("nextLevel"),
+                    godMode: () => dispatch("playerImmortal"),
+                    normalMode: () => dispatch("playerMortal"),
+                    setPhasers: (n: number) => dispatch<number>("setPhasers", n),
+                    setLives: (n: number) => dispatch<number>("setLives", n),
+                    increaseScore: (n: number) => dispatch<number>("increaseScore", n),
+                };
+
                 break;
             }
             default:

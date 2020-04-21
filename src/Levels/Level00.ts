@@ -13,12 +13,12 @@ import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { dispatch } from "../State/Store";
 
 /**
- * Module:          Level 01
- * Responsibility:  Define the first level.
+ * Module:          Level 00
+ * Responsibility:  Define the playground level.
  */
 
 /**
- * Sets up level 01.
+ * Sets up level 00. Play ground level.
  */
 export default class Level00 extends BaseLevel {
 

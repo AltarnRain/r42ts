@@ -38,13 +38,12 @@ setFrameColor(lifeFrame, CGAColors.yellow);
 // Score constants
 const scoreStartPosition = 4 * minPixelSize;
 const scoreSpacing = 2 * minPixelSize;
-const scoreBackgroundWidth = 46 * minPixelSize;
+const scoreBackgroundWidth = 42 * minPixelSize;
 
 // Phaser constants.
 const phaserStartPosition = scoreBackgroundWidth;
 const phaserSpacing = minPixelSize * 2;
-const phaserDrawLimit = 10;
-const phaserBackgroundWidth = (phaserSpacing + minPixelSize * 2) * (phaserDrawLimit - 1);
+const phaserBackgroundWidth = minPixelSize * 54;
 
 const phaserFrame: Frame = [
     ["E", "0"],
@@ -57,11 +56,10 @@ const phaserFrame: Frame = [
 convertFrameColor(phaserFrame);
 
 // Lives constants.
-const livesDrawLimit = 7;
 const livesSpacing = 2 * minPixelSize;
 const livesStartPostion = scoreBackgroundWidth + phaserBackgroundWidth;
 const liveFrameWidth = getFrameDimensions(lifeFrame, minPixelSize).width;
-const livesBackgroundWidth = liveFrameWidth * livesDrawLimit + (livesSpacing * (livesDrawLimit - 1));
+const livesBackgroundWidth = minPixelSize * 54;
 
 // Level number constants.
 const levelStartPosition = scoreBackgroundWidth + phaserBackgroundWidth + livesBackgroundWidth;
@@ -113,18 +111,18 @@ function drawPhasers(): void {
     for (let i = 0; i < gameState.phasers; i++) {
         const actualSpacing = i === 0 ? 0 : phaserSpacing;
         const left = phaserStartPosition + i * minPixelSize + i * actualSpacing;
-        if (i <= phaserDrawLimit) {
+
+        if (left <= phaserStartPosition + phaserBackgroundWidth) {
             renderFrame({
                 left,
                 top: 0
             }, phaserFrame);
         }
-
     }
 }
 
 /**
- * Draws the player lives.
+ * Draws the player lives. These are drawn from right.
  */
 function drawLives(): void {
     const { gameState } = appState();
@@ -132,12 +130,12 @@ function drawLives(): void {
     ctx.fillStyle = CGAColors.red;
     ctx.fillRect(livesStartPostion, 0, livesBackgroundWidth, statusBarHeight);
 
-    let left = livesStartPostion;
+    let left = livesStartPostion + livesBackgroundWidth - liveFrameWidth;
 
-    for (let lives = 1; lives <= livesDrawLimit; lives++) {
-        if (lives <= gameState.lives) {
+    for (let lives = 1; lives <= gameState.lives; lives++) {
+        if (left >= livesStartPostion) {
             renderFrame({ left, top: minPixelSize }, lifeFrame);
-            left += livesSpacing + liveFrameWidth;
+            left -= livesSpacing + liveFrameWidth;
         }
     }
 }
