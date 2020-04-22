@@ -35,6 +35,24 @@ export function setRandomFrameColors(frames: Frames, colors: string[]): void {
 }
 
 /**
+ * Set the colors of a frame that uses changing colors.
+ * @param {Frame} frame. A frame.
+ * @param {string[]} colors. Colors to set by index.
+ */
+export function convertChangingFrameColors(frame: Frame, colors: string[]): void {
+    for (let r = 0; r < frame.length; r++) {
+        const row = frame[r];
+        for (let c = 0; c < row.length; c++) {
+            if (row[c] !== "0") {
+                const colorIndex = parseInt(row[c], 10);
+                const color = colors[colorIndex - 1];
+                row[c] = color;
+            }
+        }
+    }
+}
+
+/**
  * Updates a frame to actual CGA colors.
  * @param {Frames} frames. All frames.
  */

@@ -5,13 +5,15 @@
  */
 
 import BaseLevel from "../Base/BaseLevel";
-import RobotEnemy from "../Enemies/Robot/RobotEnemy";
-import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
-import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
-import GameLocation from "../Models/GameLocation";
+import CGAColors from "../Constants/CGAColors";
+import orbFrames from "../Enemies/Orb/OrbFrames";
+import GameLoop from "../Main/GameLoop";
 import PlayerShip from "../Player/PlayerShip";
-import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
+import renderFrame from "../Render/RenderFrame";
 import { dispatch } from "../State/Store";
+import { Frames } from "../Types/Types";
+import { convertChangingFrameColors } from "../Utility/Frame";
+import { cloneObject } from "../Utility/Lib";
 
 /**
  * Module:          Level 00
@@ -28,19 +30,44 @@ export default class Level00 extends BaseLevel {
 
     public start(): void {
         super.start();
+
         dispatch<PlayerShip>("setPlayer", new PlayerShip());
+
         this.enemies = [];
-        this.enemies = robotSpawnLocationsAndColor.map((lc) =>
-            new RobotEnemy(lc.location,
-                150,
-                lc.color,
-                new VanishRightAppearLeft(1.5, 0),
-                robotCanFire));
-        dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
+
+        const frames: Frames = [];
+
+        const colors: string[][] = [
+            [CGAColors.lightGreen, CGAColors.lightBlue],
+            [CGAColors.brown, CGAColors.lightGreen],
+            [CGAColors.lightBlue, CGAColors.white],
+            [CGAColors.white, CGAColors.brown],
+        ];
+
+        for (let index = 0; index < colors.length; index++) {
+            const element = orbFrames.frames[0];
+            const cf = cloneObject(element);
+            convertChangingFrameColors(cf, colors[index]);
+            frames.push(cf);
+        }
+
+        // this.enemies = robotSpawnLocationsAndColor.map((lc) =>
+        //     new RobotEnemy(lc.location,
+        //         150,
+        //         lc.color,
+        //         new VanishRightAppearLeft(1.5, 0),
+        //         robotCanFire));
+        // dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
+
+        GameLoop.registerBackgroundDrawing(() => {
+            let left = 500;
+
+            frames.forEach((f) => {
+                renderFrame({left, top: 500}, f);
+                left += 50;
+            });
+        });
+
         this.begin();
     }
-}
-
-function robotCanFire(): boolean {
-    return false;
 }
