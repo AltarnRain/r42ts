@@ -11,6 +11,8 @@
 
 import { OffsetFrames } from "../../Models/OffsetFrames";
 
+let offsetCount = 0;
+
 export const RobotFrames: OffsetFrames = {
     frames: [
         [
@@ -112,39 +114,39 @@ export const RobotFrames: OffsetFrames = {
     ],
     offSets: [
         {
-            top: 0,
+            top: offsetCount,
             left: 0,
         },
         {
-            top: 0,
+            top: offsetCount,
             left: 0,
         },
         {
-            top: 0,
+            top: offsetCount,
             left: 0,
         },
         {
-            top: 0,
+            top: offsetCount,
             left: 0,
         },
         {
-            top: 0,
+            top: offsetCount,
             left: 0,
         },
         {
-            top: 0,
+            top: offsetCount,
             left: 0,
         },
         {
-            top: 0,
+            top: ++offsetCount,
             left: 0,
         },
         {
-            top: 0,
+            top: ++offsetCount,
             left: 0
         },
         {
-            top: 0,
+            top: ++offsetCount,
             left: 0
         }
     ]

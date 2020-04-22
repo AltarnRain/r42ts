@@ -34,7 +34,7 @@ export default class Level00 extends BaseLevel {
             new RobotEnemy(lc.location,
                 150,
                 lc.color,
-                new VanishRightAppearLeft(0, 0),
+                new VanishRightAppearLeft(1.5, 0),
                 robotCanFire));
         dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
         this.begin();
