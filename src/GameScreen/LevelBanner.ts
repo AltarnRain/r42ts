@@ -13,8 +13,8 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame } from "../Types/Types";
 import { convertVariableFramesColor, getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
-import { cloneObject } from "../Utility/Lib";
 import getCharacter from "../Utility/getCharacter";
+import { cloneObject } from "../Utility/Lib";
 
 /**
  * Module:          LevelBanner
