@@ -23,11 +23,14 @@ export default function dimensionProvider(): GameDimensions {
 
         const body = document.getElementById("body") as HTMLBodyElement;
 
+        let rect: DOMRect;
         if (!body) {
-            throw new Error("No body element found.");
+            // Not a nice solution, but the dimensionProvider is called from within unit tests and I do not want
+            // to add elements.
+            rect = { height : 1024 } as DOMRect;
+        } else {
+            rect = body.getBoundingClientRect();
         }
-
-        const rect = body.getBoundingClientRect();
 
         // r42 uses a 4:3 resolution.
         const height = rect.height;

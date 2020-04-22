@@ -13,33 +13,33 @@ import CGAColors from "../Constants/CGAColors";
 import { Frame as FrameType, Frames } from "../Types/Types";
 import * as Frame from "../Utility/Frame";
 
-const frames: Frames = {
-    F0: [["a"]],
-    F1: [["b"]],
-};
+const frames: Frames = [
+    [["a"]],
+    [["b"]],
+];
 
 test("convertRandomFrameColors", () => {
     // Arrange
-    const variableFrame: Frames = {
-        F0: [["V"]]
-    };
+    const variableFrame: Frames = [
+        [["V"]]
+    ];
 
     // Act
     Frame.setRandomFrameColors(variableFrame, ["test"]);
 
     // Assert
-    expect(variableFrame.F0[0][0]).toBe("test");
+    expect(variableFrame[0][0][0]).toBe("test");
 });
 
 test("converFramesColor", () => {
     // Arrange
-    const f: Frames = { F0: [["E"]] };
+    const f: Frames = [[["E"]]];
 
     // Act
     Frame.convertFramesColors(f);
 
     // Assert
-    expect(f.F0[0][0]).toBe(CGAColors.yellow);
+    expect(f[0][0][0]).toBe(CGAColors.yellow);
 });
 
 test("convertFrameColor", () => {
@@ -55,15 +55,15 @@ test("convertFrameColor", () => {
 
 test("convertVariableFramesColor", () => {
     // Arrange
-    const f: Frames = {
-        F0: [["V"]]
-    };
+    const f: Frames = [
+        [["V"]]
+    ];
 
     // Act
     Frame.convertVariableFramesColor(f, CGAColors.green);
 
     // Assert
-    expect(f.F0[0][0]).toBe(CGAColors.green);
+    expect(f[0][0][0]).toBe(CGAColors.green);
 });
 
 test("convertVariableFrameColor", () => {
@@ -79,15 +79,15 @@ test("convertVariableFrameColor", () => {
 
 test("setFramesColor", () => {
     // Arrange
-    const f: Frames = {
-        F0: [["NotAColor"]]
-    };
+    const f: Frames = [
+        [["NotAColor"]]
+    ];
 
     // Act
     Frame.setFramesColor(f, CGAColors.lightRed);
 
     // Assert
-    expect(f.F0[0][0]).toBe(CGAColors.lightRed);
+    expect(f[0][0][0]).toBe(CGAColors.lightRed);
 });
 
 test("setFrameColor", () => {
@@ -120,7 +120,7 @@ test("getFrameDimensions", () => {
 test("getFrameCenter", () => {
 
     // Act
-    const result = Frame.getFrameCenter({ top: 0, left: 0 }, frames.F0, 5);
+    const result = Frame.getFrameCenter({ top: 0, left: 0 }, frames[0], 5);
 
     // Assert
     expect(result).toBeDefined();
@@ -130,9 +130,9 @@ test("getFrameCenter", () => {
 
 test("getRandomFramesKeyIndex single key", () => {
 
-    const f: Frames = {
-        F: [[]],
-    };
+    const f: Frames = [
+        [[]],
+    ];
 
     // Act
     const index = Frame.getRandomFrameKeyIndex(f);

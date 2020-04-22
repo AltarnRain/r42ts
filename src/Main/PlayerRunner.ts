@@ -34,7 +34,7 @@ function updateState(): void {
 
     // Fire new bullet.
     if (playerState.ship !== undefined && keyboardState.fire && playerState.playerBullet === undefined) {
-        dispatch<PlayerBullet>("setBullet", new PlayerBullet(playerState.ship.getNozzleLocation(), PlayerBulletFrame.F0, 270, 42));
+        dispatch<PlayerBullet>("setBullet", new PlayerBullet(playerState.ship.getNozzleLocation(), PlayerBulletFrame[0], 270, 42));
     }
 
     // Self destruct and firing a phaser are handled in the EnemeyLevelRunner. That's the only time either can be used.

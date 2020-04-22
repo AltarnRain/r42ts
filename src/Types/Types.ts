@@ -14,7 +14,7 @@ import Dictionary from "../Models/Dictionary";
 /**
  * Defines frames. Frames are objects with key values that start with F{N}. Where N is the frame number.
  */
-export type Frames = Dictionary<Frame>;
+export type Frames = Frame[];
 
 /**
  * A single frame.

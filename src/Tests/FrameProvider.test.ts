@@ -13,11 +13,11 @@ import "jest";
 import FrameProvider from "../Providers/FrameProvider";
 import { Frames } from "../Types/Types";
 
-const Frames: Frames = {
-    F0: [["a"]],
-    F1: [["b"]],
-    F2: [["c"]],
-};
+const Frames: Frames = [
+    [["a"]],
+    [["b"]],
+    [["c"]],
+];
 
 test("Test if the provided frames go back and forth", () => {
     // Arrange

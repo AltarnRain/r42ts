@@ -11,10 +11,10 @@
 
 import { Frames } from "../Types/Types";
 
-const PlayerBulletFrame: Frames = {
-    F0: [
+const PlayerBulletFrame: Frames = [
+    [
         ["E", "E"]
     ]
-};
+];
 
 export default PlayerBulletFrame;

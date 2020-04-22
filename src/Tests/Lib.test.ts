@@ -14,48 +14,48 @@ import { Frames } from "../Types/Types";
 import * as Lib from "../Utility/Lib";
 
 test("clone frames", () => {
-    const original: Frames = {
-        F0: [
+    const original: Frames = [
+        [
             ["a"],
             ["x"],
         ],
-        F1: [
+        [
             ["1", "3"],
             ["2", "4"],
         ]
-    };
+    ];
 
     // Act
     const clonedFrames = Lib.cloneObject(original);
 
     // Assert
 
-    expect(clonedFrames.F0).toBeDefined();
-    expect(clonedFrames.F1).toBeDefined();
-    expect(clonedFrames.F0[0].length).toBe(1);
-    expect(clonedFrames.F1[0].length).toBe(2);
+    expect(clonedFrames[0]).toBeDefined();
+    expect(clonedFrames[1]).toBeDefined();
+    expect(clonedFrames[0][0].length).toBe(1);
+    expect(clonedFrames[1][0].length).toBe(2);
 
-    expect(original.F0[0][0]).toBe("a");
-    expect(original.F0[1][0]).toBe("x");
-    expect(original.F1[0][0]).toBe("1");
-    expect(original.F1[1][0]).toBe("2");
+    expect(original[0][0][0]).toBe("a");
+    expect(original[0][1][0]).toBe("x");
+    expect(original[1][0][0]).toBe("1");
+    expect(original[1][1][0]).toBe("2");
 });
 
 test("cloneObject", () => {
-    const original: Frames = {
-        F0: [
+    const original: Frames = [
+        [
             ["V"],
             ["V"],
         ],
-        F1: [
+        [
             ["V", "V"],
             ["V", "V"],
         ]
-    };
+    ];
 
     const clonedFrames = Lib.cloneObject(original);
 
-    const f0 = clonedFrames.F0[0].length;
+    const f0 = clonedFrames[0][0].length;
 
     expect(f0).toBe(1);
 });

@@ -14,6 +14,7 @@ import renderFrame from "../Render/RenderFrame";
 import { Frame } from "../Types/Types";
 import { convertVariableFramesColor, getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
+import getCharacter from "../Utility/getCharacter";
 
 /**
  * Module:          LevelBanner
@@ -34,16 +35,16 @@ const greenNumbers = cloneObject(Numbers);
 convertVariableFramesColor(greenNumbers, CGAColors.lightGreen);
 
 const roundCharacters = [
-    greenCharacters.R,
-    greenCharacters.O,
-    greenCharacters.U,
-    greenCharacters.N,
-    greenCharacters.D,
+    getCharacter(greenCharacters, "R"),
+    getCharacter(greenCharacters, "O"),
+    getCharacter(greenCharacters, "U"),
+    getCharacter(greenCharacters, "N"),
+    getCharacter(greenCharacters, "D"),
 ];
 
 const {
     width
-} = getFrameDimensions(Characters.R, maxPixelSize);
+} = getFrameDimensions(roundCharacters[0], maxPixelSize);
 
 const top = fullHeight * 0.25;
 const left = maxPixelSize * 22;

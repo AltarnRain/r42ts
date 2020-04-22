@@ -22,7 +22,7 @@ const {
 } = dimensionProvider();
 
 const robotSpawnLocationsAndColor: Array<{ location: GameLocation, color: string }> = [];
-const { width } = getFrameDimensions(RobotFrames.frames.F0, averagePixelSize);
+const { width } = getFrameDimensions(RobotFrames.frames[0], averagePixelSize);
 
 const top = gameFieldTop + averagePixelSize * 20;
 const left = averagePixelSize * 15;

@@ -26,30 +26,4 @@ describe("geometry tests", () => {
         expect(a3).toBe(360);
         expect(a4).toBe(90);
     });
-
-    test("calculateVector when the dy is 0 and the source is to its right", () => {
-        const sourceLocation: GameLocation = {
-            top: 0,
-            left: 0,
-        };
-
-        // Act
-        const angle1 = Geometry.calculateAngle(sourceLocation, { top: 0, left: 10 });
-
-        // Assert
-        expect(angle1).toBe(-0);
-    });
-
-    test("calculateVector when the dx is 0, it should still return an angle", () => {
-        const sourceLocation: GameLocation = {
-            top: 0,
-            left: 1,
-        };
-
-        // Act
-        const angle1 = Geometry.calculateAngle(sourceLocation, { top: 100, left: 1 });
-
-        // Assert
-        expect(angle1).not.toBe(-90);
-    });
 });

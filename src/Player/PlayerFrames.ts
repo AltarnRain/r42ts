@@ -17,15 +17,15 @@ export const PlayerFrame: Frame = [
     ["B", "F", "0", "0", "F", "B"],
 ];
 
-export const PlayerFormationFrames: Frames = {
-    F0: [["B", "B"]],  // nozzle tip
-    F1: [["F", "F"]],  // nozle bottom
-    F2: [              // left wing
+export const PlayerFormationFrames: Frames = [
+    [["B", "B"]],  // nozzle tip
+    [["F", "F"]],  // nozle bottom
+    [              // left wing
         ["A", "B"],
         ["B", "F"],
     ],
-    F3: [              // right wing
+    [              // right wing
         ["B", "A"],
         ["F", "B"]
     ],
-};
+];

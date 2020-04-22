@@ -63,7 +63,7 @@ const livesBackgroundWidth = minPixelSize * 54;
 
 // Level number constants.
 const levelStartPosition = scoreBackgroundWidth + phaserBackgroundWidth + livesBackgroundWidth;
-const numberFrameWidth = getFrameDimensions(numberFrames.F0, minPixelSize).width;
+const numberFrameWidth = getFrameDimensions(numberFrames[0], minPixelSize).width;
 const leftNumberLeft = fullWidth - (numberFrameWidth * 2.5);
 const rightNumberLeft = leftNumberLeft + numberFrameWidth + minPixelSize;
 const levelBackgroundWidth = fullWidth - levelStartPosition;

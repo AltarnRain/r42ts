@@ -9,9 +9,9 @@ import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
 import GameLocation from "../Models/GameLocation";
+import PlayerShip from "../Player/PlayerShip";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { dispatch } from "../State/Store";
-import PlayerShip from "../Player/PlayerShip";
 
 /**
  * Module:          Level 00

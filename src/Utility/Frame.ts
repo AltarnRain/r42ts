@@ -22,16 +22,16 @@ import hexToCGAConverter from "./HexToCGAConverter";
  * @param {string[]} colors. Array containing colors.
  */
 export function setRandomFrameColors(frames: Frames, colors: string[]): void {
-    Object.keys(frames).forEach((key) => {
+    for (const frame of frames) {
         const color = getRandomArrayElement(colors);
-        frames[key].forEach((row, rowIndex) => {
+        frame.forEach((row, rowIndex) => {
             row.forEach((cell, cellIndex) => {
                 if (cell === "V") {
-                    frames[key][rowIndex][cellIndex] = color;
+                    frame[rowIndex][cellIndex] = color;
                 }
             });
         });
-    });
+    }
 }
 
 /**
@@ -39,10 +39,9 @@ export function setRandomFrameColors(frames: Frames, colors: string[]): void {
  * @param {Frames} frames. All frames.
  */
 export function convertFramesColors(frames: Frames): void {
-    Object.keys(frames).forEach((key) => {
-        const frame = frames[key];
+    for (const frame of frames) {
         convertFrameColor(frame);
-    });
+    }
 }
 
 /**
@@ -64,10 +63,9 @@ export function convertFrameColor(frame: Frame) {
  * @param {Frames} frames. All frames.
  */
 export function convertVariableFramesColor(frames: Frames, color: string): void {
-    Object.keys(frames).forEach((key) => {
-        const frame = frames[key];
+    for (const frame of frames) {
         convertVariableFrameColor(frame, color);
-    });
+    }
 }
 
 /**
@@ -90,10 +88,9 @@ export function convertVariableFrameColor(frame: Frame, color: string) {
  * @param {Frames} frames. All frames.
  */
 export function setFramesColor(frames: Frames, color: string): void {
-    Object.keys(frames).forEach((key) => {
-        const frame = frames[key];
+    for (const frame of frames) {
         setFrameColor(frame, color);
-    });
+    }
 }
 
 /**
@@ -155,7 +152,7 @@ export function getRandomFrameKeyIndex(frames: Frames): number {
  * @returns {Frame | undefined}. Returns the frame if one was found for the passed index, otherwise returns undefined.
  */
 export function getFrameByIndex(frames: Frames, index: number): Frame {
-    const frame = frames["F" + index];
+    const frame = frames[index];
 
     if (!frame) {
         throw new Error("No frame found");
