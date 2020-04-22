@@ -43,7 +43,7 @@ window.onload = () => {
 
                 GameLoop.registerBackgroundDrawing(drawStatusBar);
                 GameLoop.registerBackgroundDrawing(drawBackground);
-                GameLoop.registerUpdateState(playerSpawnManager);
+                // GameLoop.registerUpdateState(playerSpawnManager);
                 GameLoop.registerUpdateState(playerRunner);
                 dispatch<boolean>("playerImmortal", true);
 

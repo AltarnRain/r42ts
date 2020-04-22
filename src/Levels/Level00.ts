@@ -11,6 +11,7 @@ import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
 import GameLocation from "../Models/GameLocation";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { dispatch } from "../State/Store";
+import PlayerShip from "../Player/PlayerShip";
 
 /**
  * Module:          Level 00
@@ -27,8 +28,14 @@ export default class Level00 extends BaseLevel {
 
     public start(): void {
         super.start();
+        dispatch<PlayerShip>("setPlayer", new PlayerShip());
         this.enemies = [];
-        // this.enemies = robotSpawnLocationsAndColor.map((lc) => new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(2, 0) , robotCanFire));
+        this.enemies = robotSpawnLocationsAndColor.map((lc) =>
+            new RobotEnemy(lc.location,
+                150,
+                lc.color,
+                new VanishRightAppearLeft(0, 0),
+                robotCanFire));
         dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
         this.begin();
     }
