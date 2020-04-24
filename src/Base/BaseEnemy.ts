@@ -55,7 +55,7 @@ export abstract class BaseEnemy extends BaseDestructable {
     /**
      * Offets for each frame.
      */
-    private offSets: GameLocation[];
+    protected offSets: GameLocation[];
 
     /**
      * Explosion for the enemy.
@@ -75,7 +75,7 @@ export abstract class BaseEnemy extends BaseDestructable {
     /**
      * Provides location. Can be used to alter the movement behaviour of enemies.
      */
-    private locationProvider: BaseLocationProvider;
+    protected locationProvider: BaseLocationProvider;
 
     /**
      * Construct the enemy.
@@ -101,7 +101,6 @@ export abstract class BaseEnemy extends BaseDestructable {
         this.explosion = cloneObject(explosion);
 
         this.actualLocation = { ...this.location };
-
         this.frameTickHandler = new TickHandler(frameChangeTime, () => this.onFrameChange());
 
         this.offSets = offsetFrames.offSets.map((o) => {
@@ -145,8 +144,8 @@ export abstract class BaseEnemy extends BaseDestructable {
     /**
      * Called by a TickHandler when the next frame is up.
      */
-    private onFrameChange(): void {
-        this.currentFrame = this.frameProvider.getNextFrame();
+    protected onFrameChange(): void {
+        this.currentFrame = this.frameProvider.getBackAndForthNextFrame();
     }
 
     /**

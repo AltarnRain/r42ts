@@ -13,74 +13,8 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
 
 let offsetCount = 0;
 
-export const RobotFrames: OffsetFrames = {
+export const robotFrames: OffsetFrames = {
     frames: [
-        [
-            ["0", "V", "V", "V", "0"],
-            ["V", "V", "V", "V", "V"],
-            ["V", "0", "V", "0", "V"],
-            ["V", "V", "V", "V", "V"],
-            ["V", "0", "0", "0", "V"],
-            ["V", "V", "V", "V", "V"],
-            ["0", "V", "0", "V", "0"],
-            ["0", "V", "0", "V", "0"],
-            ["V", "V", "0", "V", "V"],
-        ],
-        [
-            ["0", "V", "V", "V", "0"],
-            ["V", "V", "V", "V", "V"],
-            ["V", "0", "V", "0", "V"],
-            ["V", "V", "V", "V", "V"],
-            ["V", "0", "0", "0", "V"],
-            ["V", "V", "V", "V", "V"],
-            ["0", "V", "0", "V", "0"],
-            ["0", "V", "0", "V", "0"],
-            ["V", "V", "0", "V", "V"],
-        ],
-        [
-            ["0", "V", "V", "V", "0"],
-            ["V", "V", "V", "V", "V"],
-            ["V", "0", "V", "0", "V"],
-            ["V", "V", "V", "V", "V"],
-            ["V", "0", "0", "0", "V"],
-            ["V", "V", "V", "V", "V"],
-            ["0", "V", "0", "V", "0"],
-            ["0", "V", "0", "V", "0"],
-            ["V", "V", "0", "V", "V"],
-        ],
-        [
-            ["0", "V", "V", "V", "0"],
-            ["V", "V", "V", "V", "V"],
-            ["V", "0", "V", "0", "V"],
-            ["V", "V", "V", "V", "V"],
-            ["V", "0", "0", "0", "V"],
-            ["V", "V", "V", "V", "V"],
-            ["0", "V", "0", "V", "0"],
-            ["0", "V", "0", "V", "0"],
-            ["V", "V", "0", "V", "V"],
-        ],
-        [
-            ["0", "V", "V", "V", "0"],
-            ["V", "V", "V", "V", "V"],
-            ["V", "0", "V", "0", "V"],
-            ["V", "V", "V", "V", "V"],
-            ["V", "0", "0", "0", "V"],
-            ["V", "V", "V", "V", "V"],
-            ["0", "V", "0", "V", "0"],
-            ["0", "V", "0", "V", "0"],
-            ["V", "V", "0", "V", "V"],
-        ],
-        [
-            ["0", "V", "V", "V", "0"],
-            ["V", "V", "V", "V", "V"],
-            ["V", "0", "V", "0", "V"],
-            ["V", "V", "V", "V", "V"],
-            ["V", "0", "0", "0", "V"],
-            ["V", "V", "V", "V", "V"],
-            ["0", "V", "0", "V", "0"],
-            ["0", "V", "0", "V", "0"],
-            ["V", "V", "0", "V", "V"],
-        ],
         [
             ["0", "V", "V", "V", "0"],
             ["V", "V", "V", "V", "V"],
@@ -152,4 +86,15 @@ export const RobotFrames: OffsetFrames = {
     ]
 };
 
-export default RobotFrames;
+// Add frame 0 an additional 7 times to make the animation look good.
+robotFrames.frames = [
+    robotFrames.frames[0],
+    robotFrames.frames[0],
+    robotFrames.frames[0],
+    robotFrames.frames[0],
+    robotFrames.frames[0],
+    robotFrames.frames[0],
+    ...robotFrames.frames,
+];
+
+export default robotFrames;

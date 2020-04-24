@@ -48,25 +48,16 @@ export default class FrameProvider {
      * Gets the name frame from an enemy.
      * @returns {Frame}. A frame
      */
-    public getFrame(): Frame {
+    public getCurrentFrame(): Frame {
         const returnValue = getFrameByIndex(this.frames, this.frameIndex);
         return returnValue;
     }
 
     /**
-     * Returns the current frame and sets the nes one.
+     * Returns the current frame and sets the next one. Goes back and forth between frames.
      * @returns {Frame}. A frame.
      */
-    public getNextFrame(): Frame {
-        this.setNextFrameIndex();
-        const frame = this.getFrame();
-        return frame;
-    }
-
-    /**
-     * Sets the next frame index.
-     */
-    private setNextFrameIndex(): void {
+    public getBackAndForthNextFrame(): Frame {
         this.frameIndex += this.add;
 
         if (this.frameIndex > this.maxIndex) {
@@ -76,6 +67,21 @@ export default class FrameProvider {
         if ((this.frameIndex === this.maxIndex) || this.frameIndex === 0) {
             this.add *= -1;
         }
+
+        return  this.getCurrentFrame();
+    }
+
+    /**
+     * Returns the next frame using clockwise rotation.
+     */
+    public getNextClockWiseFrame(): Frame {
+        this.frameIndex += 1;
+
+        if (this.frameIndex > this.maxIndex) {
+            this.frameIndex = 0;
+        }
+
+        return this.getCurrentFrame();
     }
 
     /**

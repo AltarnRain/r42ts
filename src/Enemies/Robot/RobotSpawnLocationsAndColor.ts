@@ -14,7 +14,7 @@ import GameLocation from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { getRandomArrayElement } from "../../Utility/Array";
 import { getFrameDimensions } from "../../Utility/Frame";
-import RobotFrames from "./RobotFrames";
+import robotFrames from "./RobotFrames";
 
 const {
     averagePixelSize,
@@ -22,7 +22,7 @@ const {
 } = dimensionProvider();
 
 const robotSpawnLocationsAndColor: Array<{ location: GameLocation, color: string }> = [];
-const { width } = getFrameDimensions(RobotFrames.frames[0], averagePixelSize);
+const { width } = getFrameDimensions(robotFrames.frames[0], averagePixelSize);
 
 const top = gameFieldTop + averagePixelSize * 20;
 const left = averagePixelSize * 15;

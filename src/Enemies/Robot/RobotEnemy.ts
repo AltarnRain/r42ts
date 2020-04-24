@@ -21,7 +21,7 @@ import FrameProvider from "../../Providers/FrameProvider";
 import { Frame } from "../../Types/Types";
 import { convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
-import RobotFrames from "./RobotFrames";
+import robotFrames from "./RobotFrames";
 
 const {
     averagePixelSize
@@ -40,14 +40,14 @@ export default class RobotEnemy extends BaseEnemy {
     private bulletTick: number = 0;
 
     constructor(location: GameLocation, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, canFire: (self: BaseEnemy) => boolean) {
-        super(location, frameChangeTime, RobotFrames, Explosion02, locationProvider, canFire);
+        super(location, frameChangeTime, robotFrames, Explosion02, locationProvider, canFire);
 
         convertVariableFrameColor(this.explosion.explosionCenterFrame, color);
         convertVariableFrameColor(this.explosion.particleFrames[0], color);
         convertVariableFramesColor(this.offSetFrames.frames, color);
 
         this.frameProvider = new FrameProvider(this.offSetFrames.frames, 0);
-        this.currentFrame = this.frameProvider.getFrame();
+        this.currentFrame = this.frameProvider.getCurrentFrame();
         this.location = this.getOffsetLocation();
 
         this.bulletFrame = cloneObject(twoPXBullet);

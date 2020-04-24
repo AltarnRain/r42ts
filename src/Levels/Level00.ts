@@ -5,15 +5,14 @@
  */
 
 import BaseLevel from "../Base/BaseLevel";
-import CGAColors from "../Constants/CGAColors";
-import orbFrames from "../Enemies/Orb/OrbFrames";
-import GameLoop from "../Main/GameLoop";
+import OrbEnemy from "../Enemies/Orb/OrbEnemy";
+import Immobile from "../LocationProviders/Immobile";
 import PlayerShip from "../Player/PlayerShip";
-import renderFrame from "../Render/RenderFrame";
-import { dispatch } from "../State/Store";
-import { Frames } from "../Types/Types";
-import { convertChangingFrameColors } from "../Utility/Frame";
-import { cloneObject } from "../Utility/Lib";
+import { dispatch, appState } from "../State/Store";
+import GameLoop from "../Main/GameLoop";
+import { drawBackground } from "../GameScreen/StaticRenders";
+import { BaseEnemy } from "../Base/BaseEnemy";
+import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 
 /**
  * Module:          Level 00
@@ -29,45 +28,20 @@ export default class Level00 extends BaseLevel {
     }
 
     public start(): void {
-        super.start();
+        // Register the background draw function so it runs in the game loop.
+        this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
 
         dispatch<PlayerShip>("setPlayer", new PlayerShip());
 
-        this.enemies = [];
+        this.enemies  = orbSpawnLocations.map((sl) => new OrbEnemy(sl, 500, new Immobile(), doesNotFire);)
 
-        const frames: Frames = [];
-
-        const colors: string[][] = [
-            [CGAColors.lightGreen, CGAColors.lightBlue],
-            [CGAColors.brown, CGAColors.lightGreen],
-            [CGAColors.lightBlue, CGAColors.white],
-            [CGAColors.white, CGAColors.brown],
-        ];
-
-        for (let index = 0; index < colors.length; index++) {
-            const element = orbFrames.frames[0];
-            const cf = cloneObject(element);
-            convertChangingFrameColors(cf, colors[index]);
-            frames.push(cf);
-        }
-
-        // this.enemies = robotSpawnLocationsAndColor.map((lc) =>
-        //     new RobotEnemy(lc.location,
-        //         150,
-        //         lc.color,
-        //         new VanishRightAppearLeft(1.5, 0),
-        //         robotCanFire));
-        // dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
-
-        GameLoop.registerBackgroundDrawing(() => {
-            let left = 500;
-
-            frames.forEach((f) => {
-                renderFrame({left, top: 500}, f);
-                left += 50;
-            });
-        });
-
-        this.begin();
+        // Add the enemies to the global state. The registered stateManager will take it from here.
+        dispatch<BaseEnemy[]>("setEnemies", this.enemies);
+        // Register the stateManager so it can act on state changes in the level.
+        this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));
     }
+}
+
+function doesNotFire(): boolean {
+    return false;
 }

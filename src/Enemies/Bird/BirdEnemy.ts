@@ -39,7 +39,7 @@ export default class BirdEnemy extends BaseEnemy {
         this.colorTickHandler = new TickHandler(40, () => this.onColorChange());
 
         this.frameProvider = new FrameProvider(this.offSetFrames.frames, getRandomFrameKeyIndex(this.offSetFrames.frames));
-        this.currentFrame = this.frameProvider.getFrame();
+        this.currentFrame = this.frameProvider.getCurrentFrame();
 
         convertVariableFrameColor(this.explosion.explosionCenterFrame, CGAColors.white);
         convertVariableFrameColor(this.explosion.particleFrames[0], CGAColors.white);
