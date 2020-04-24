@@ -26,7 +26,7 @@ const top = gameFieldTop + averagePixelSize * 40;
 const left = averagePixelSize * 15;
 const spacing = averagePixelSize;
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 22; i++) {
     const actualSpacing = i === 0 ? 0 : spacing * i;
     const actualLeft = left + i * width + spacing;
 
