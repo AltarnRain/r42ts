@@ -15,8 +15,8 @@ import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import GameLocation from "../../Models/GameLocation";
+import CircleFrameProvider from "../../Providers/CircleFrameProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
-import FrameProvider from "../../Providers/FrameProvider";
 import { Frame } from "../../Types/Types";
 import { convertChangingFrameColors } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
@@ -29,14 +29,16 @@ const colors: string[][] = [
     [CGAColors.white, CGAColors.brown],
 ];
 
-const {
-    averagePixelSize,
-} = dimensionProvider();
-
 export default class OrbEnemy extends BaseEnemy {
 
+    /**
+     * Handles the color change ticks.
+     */
     private colorTickHandler: TickHandler;
 
+    /**
+     * Tracks the current color index.
+     */
     private currentColorIndex = 0;
 
     /**
@@ -46,7 +48,7 @@ export default class OrbEnemy extends BaseEnemy {
         super(startLocation, frameChangeTime, orbFrames, Explosion02, locationProvider, canFire);
 
         // The frame probider is required by base objects. It won't do anything in this enemy since it has just one frame.
-        this.frameProvider = new FrameProvider(this.offSetFrames.frames, 0);
+        this.frameProvider = new CircleFrameProvider(this.offSetFrames.frames, 0);
 
         // We only have one frame in this enemy but its color DOES change. Set the currentFrame to the only available one
         // and sets its color to the first color set so we get a a good render when the enemy first appears.
@@ -101,12 +103,5 @@ export default class OrbEnemy extends BaseEnemy {
      */
     protected getBulletParticle(tick: number): undefined {
         return undefined;
-    }
-
-    /**
-     * The orb rotates clockwise. Override standard back and forth frame drawing.
-     */
-    protected onFrameChange(): void {
-        this.currentFrame = this.frameProvider.getNextClockWiseFrame();
     }
 }

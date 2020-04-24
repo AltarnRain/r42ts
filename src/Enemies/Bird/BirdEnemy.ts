@@ -16,9 +16,10 @@ import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import GameLocation from "../../Models/GameLocation";
 import Particle from "../../Particles/Particle";
-import FrameProvider from "../../Providers/FrameProvider";
+import BackAndForthFrameProvider from "../../Providers/BackAndForthFrameProvider";
+import dimensionProvider from "../../Providers/DimensionProvider";
 import { Frame } from "../../Types/Types";
-import { convertVariableFrameColor, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
+import { convertVariableFrameColor, getMaximumFrameDimensions, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
 import { BirdFrames } from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
@@ -38,7 +39,7 @@ export default class BirdEnemy extends BaseEnemy {
 
         this.colorTickHandler = new TickHandler(40, () => this.onColorChange());
 
-        this.frameProvider = new FrameProvider(this.offSetFrames.frames, getRandomFrameKeyIndex(this.offSetFrames.frames));
+        this.frameProvider = new BackAndForthFrameProvider(this.offSetFrames.frames, getRandomFrameKeyIndex(this.offSetFrames.frames));
         this.currentFrame = this.frameProvider.getCurrentFrame();
 
         convertVariableFrameColor(this.explosion.explosionCenterFrame, CGAColors.white);

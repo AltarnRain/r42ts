@@ -138,6 +138,18 @@ export function getFrameDimensions(frame: Frame, pixelSize: number): GameSize {
     };
 }
 
+export function getMaximumFrameDimensions(frames: Frames, pixelSize: number): GameSize {
+    const allFrameDimensions = frames.map((f) => getFrameDimensions(f, pixelSize));
+
+    const allWidths = allFrameDimensions.map((af) => af.width);
+    const allHeights = allFrameDimensions.map((af) => af.width);
+
+    return {
+        width: Math.max(...allWidths),
+        height: Math.max(...allHeights),
+    };
+}
+
 /**
  * Calculates a GameLocation object where the center of a frame resides.
  * @param {number} location.

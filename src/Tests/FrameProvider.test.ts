@@ -10,7 +10,7 @@
  */
 
 import "jest";
-import FrameProvider from "../Providers/FrameProvider";
+import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import { Frames } from "../Types/Types";
 
 const Frames: Frames = [
@@ -21,16 +21,16 @@ const Frames: Frames = [
 
 test("Test if the provided frames go back and forth", () => {
     // Arrange
-    const fp = new FrameProvider(Frames, 0);
+    const fp = new BackAndForthFrameProvider(Frames, 0);
 
     // Act
     const a1 = fp.getCurrentFrame();
-    const b1 = fp.getBackAndForthNextFrame();
-    const c1 = fp.getBackAndForthNextFrame();
-    const b2 = fp.getBackAndForthNextFrame();
-    const a2 = fp.getBackAndForthNextFrame();
-    const b3 = fp.getBackAndForthNextFrame();
-    const c3 = fp.getBackAndForthNextFrame();
+    const b1 = fp.getNextFrame();
+    const c1 = fp.getNextFrame();
+    const b2 = fp.getNextFrame();
+    const a2 = fp.getNextFrame();
+    const b3 = fp.getNextFrame();
+    const c3 = fp.getNextFrame();
 
     // Assert
     expect(a1[0][0]).toBe("a");

@@ -4,15 +4,15 @@
  * See LICENSE.MD.
  */
 
-import BaseLevel from "../Base/BaseLevel";
-import OrbEnemy from "../Enemies/Orb/OrbEnemy";
-import Immobile from "../LocationProviders/Immobile";
-import PlayerShip from "../Player/PlayerShip";
-import { dispatch, appState } from "../State/Store";
-import GameLoop from "../Main/GameLoop";
-import { drawBackground } from "../GameScreen/StaticRenders";
 import { BaseEnemy } from "../Base/BaseEnemy";
+import BaseLevel from "../Base/BaseLevel";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
+import OrbEnemy from "../Enemies/Orb/OrbEnemy";
+import { drawBackground } from "../GameScreen/StaticRenders";
+import Immobile from "../LocationProviders/Immobile";
+import GameLoop from "../Main/GameLoop";
+import PlayerShip from "../Player/PlayerShip";
+import { dispatch } from "../State/Store";
 
 /**
  * Module:          Level 00
@@ -33,7 +33,7 @@ export default class Level00 extends BaseLevel {
 
         dispatch<PlayerShip>("setPlayer", new PlayerShip());
 
-        this.enemies  = orbSpawnLocations.map((sl) => new OrbEnemy(sl, 500, new Immobile(), doesNotFire);)
+        this.enemies  = orbSpawnLocations.map((sl) => new OrbEnemy(sl, 500, new Immobile(), doesNotFire));
 
         // Add the enemies to the global state. The registered stateManager will take it from here.
         dispatch<BaseEnemy[]>("setEnemies", this.enemies);

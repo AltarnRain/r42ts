@@ -17,7 +17,7 @@ import CGAColors from "../../Constants/CGAColors";
 import GameLocation from "../../Models/GameLocation";
 import Particle from "../../Particles/Particle";
 import dimensionProvider from "../../Providers/DimensionProvider";
-import FrameProvider from "../../Providers/FrameProvider";
+import BackAndForthFrameProvider from "../../Providers/BackAndForthFrameProvider";
 import { Frame } from "../../Types/Types";
 import { convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
@@ -46,7 +46,7 @@ export default class RobotEnemy extends BaseEnemy {
         convertVariableFrameColor(this.explosion.particleFrames[0], color);
         convertVariableFramesColor(this.offSetFrames.frames, color);
 
-        this.frameProvider = new FrameProvider(this.offSetFrames.frames, 0);
+        this.frameProvider = new BackAndForthFrameProvider(this.offSetFrames.frames, 0);
         this.currentFrame = this.frameProvider.getCurrentFrame();
         this.location = this.getOffsetLocation();
 

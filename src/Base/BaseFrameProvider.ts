@@ -1,18 +1,18 @@
 /**
- * @preserve Copyright 2010-2020 Onno Invernizzi.
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
  * This source code is subject to terms and conditions.
  * See LICENSE.MD.
- */
-
-/**
- * Module:          FrameProvider
- * Responsibility:  Provide frames for animations.
  */
 
 import { Frame, Frames } from "../Types/Types";
 import { getFrameByIndex } from "../Utility/Frame";
 
-export default class FrameProvider {
+/**
+ * Module:          IFrameProvider
+ * Responsibility:  Contract for a FrameProvider
+ */
+
+export default abstract class  BaseFrameProvider {
     /**
      * Animation frames.
      */
@@ -21,17 +21,17 @@ export default class FrameProvider {
     /**
      * The current frame for an animated enemy.
      */
-    private frameIndex: number = 0;
+    protected frameIndex: number = 0;
 
     /**
      * Added to the current frame index.
      */
-    private add = 1;
+    protected add = 1;
 
     /**
      * Maximum index for the provided frames.
      */
-    private maxIndex: number;
+    protected maxIndex: number;
 
     /**
      * Initializes the EnemyBase class
@@ -53,36 +53,7 @@ export default class FrameProvider {
         return returnValue;
     }
 
-    /**
-     * Returns the current frame and sets the next one. Goes back and forth between frames.
-     * @returns {Frame}. A frame.
-     */
-    public getBackAndForthNextFrame(): Frame {
-        this.frameIndex += this.add;
-
-        if (this.frameIndex > this.maxIndex) {
-            this.frameIndex = this.maxIndex;
-        }
-
-        if ((this.frameIndex === this.maxIndex) || this.frameIndex === 0) {
-            this.add *= -1;
-        }
-
-        return  this.getCurrentFrame();
-    }
-
-    /**
-     * Returns the next frame using clockwise rotation.
-     */
-    public getNextClockWiseFrame(): Frame {
-        this.frameIndex += 1;
-
-        if (this.frameIndex > this.maxIndex) {
-            this.frameIndex = 0;
-        }
-
-        return this.getCurrentFrame();
-    }
+    public abstract getNextFrame(): Frame;
 
     /**
      * Returns the current frame index.

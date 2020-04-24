@@ -19,13 +19,13 @@ import { GameSize } from "../Models/GameSize";
 import { OffsetFrames } from "../Models/OffsetFrames";
 import Particle from "../Particles/Particle";
 import dimensionProvider from "../Providers/DimensionProvider";
-import FrameProvider from "../Providers/FrameProvider";
 import { appState } from "../State/Store";
 import { GameObjectType } from "../Types/Types";
-import { getFrameCenter, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
+import { getFrameCenter, getFrameDimensions, getFrameHitbox, getMaximumFrameDimensions } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { getOffsetLocation } from "../Utility/Location";
 import { BaseDestructableObject as BaseDestructable } from "./BaseDestructableObject";
+import BaseFrameProvider from "./BaseFrameProvider";
 import BaseLocationProvider from "./BaseLocationProvider";
 
 const {
@@ -40,7 +40,7 @@ export abstract class BaseEnemy extends BaseDestructable {
     /**
      * The frame provider. Must be set in an inheriting class.
      */
-    protected frameProvider!: FrameProvider;
+    protected frameProvider!: BaseFrameProvider;
 
     /**
      * Frame tick handler. Handles changes in the frames.
@@ -78,6 +78,11 @@ export abstract class BaseEnemy extends BaseDestructable {
     protected locationProvider: BaseLocationProvider;
 
     /**
+     * Maximum enemy dimensions.
+     */
+    private maxDimensions: GameSize;
+
+    /**
      * Construct the enemy.
      * @param {GameLocation} startLocation. Start location of the enemy.
      * @param {number} frameChangeTime. Time in ms between frames.
@@ -112,6 +117,8 @@ export abstract class BaseEnemy extends BaseDestructable {
 
         // Bind canFire to the current instance.
         this.canFire = canFire;
+
+        this.maxDimensions = getMaximumFrameDimensions(offsetFrames.frames, averagePixelSize);
     }
 
     /**
@@ -120,14 +127,6 @@ export abstract class BaseEnemy extends BaseDestructable {
      */
     public getExplosion(): Explosion {
         return this.explosion;
-    }
-
-    /**
-     * Returns the with and height of the current frame.
-     * @returns {GameSize}.
-     */
-    protected getCurrentFrameDimensions(): GameSize {
-        return getFrameDimensions(this.currentFrame, maxPixelSize);
     }
 
     /**
@@ -145,7 +144,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      * Called by a TickHandler when the next frame is up.
      */
     protected onFrameChange(): void {
-        this.currentFrame = this.frameProvider.getBackAndForthNextFrame();
+        this.currentFrame = this.frameProvider.getNextFrame();
     }
 
     /**
@@ -154,8 +153,9 @@ export abstract class BaseEnemy extends BaseDestructable {
      */
     public updateState(tick: number) {
         this.frameTickHandler.tick(tick);
-        const { width, height } = getFrameDimensions(this.currentFrame, averagePixelSize);
-        this.actualLocation = this.locationProvider.getLocation(this.actualLocation, width, height);
+
+        // Use the maximum widths of the enemies frames to prevent the enemy from getting stick on the sides.
+        this.actualLocation = this.locationProvider.getLocation(this.actualLocation, this.maxDimensions.width, this.maxDimensions.height);
         this.location = this.getOffsetLocation();
     }
 
