@@ -33,11 +33,9 @@ export function diagonalAtPlayerAngleProvider(enemy: BaseEnemy): number | undefi
 
     const playerHitbox = playerShip.getHitbox();
 
-    if (enemyCenter.left < playerHitbox.left  ) {
+    if (enemyCenter.left < playerHitbox.left) {
         return angles.rightdown;
-    } else if (enemyCenter.left > playerHitbox.right) {
+    } else {
         return angles.leftdown;
     }
-
-    return undefined;
 }

@@ -18,12 +18,19 @@ import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 import GameLoop from "../Main/GameLoop";
 import BulletParticle from "../Particles/BulletParticle";
 import PlayerShip from "../Player/PlayerShip";
+import dimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
+import { calculateAngle } from "../Utility/Geometry";
+import { angles } from "../Constants/Angles";
 
 /**
  * Module:          Level 00
  * Responsibility:  Define the playground level.
  */
+
+const {
+    averagePixelSize,
+} = dimensionProvider();
 
 /**
  * Sets up level 00. Play ground level.
@@ -41,9 +48,9 @@ export default class Level00 extends BaseLevel {
         // dispatch<GameLocation>("setPlayerLocation", { left: 0, top: 0 });
 
         this.enemies = orbSpawnLocations.map((startLocation) => {
-            const bulletProvider = new BulletProvider(100, twoPXBullet, CGAColors.magenta, 10, -1, 2, orbFireBehaviour, diagonalAtPlayerAngleProvider);
-            const locationProvider = new MoveDownAppearUp(80, 0.2, 90);
-            return new OrbEnemy(startLocation, 300, locationProvider, bulletProvider );
+            const bulletProvider = new BulletProvider(100, twoPXBullet, CGAColors.magenta, 10, -1, 2, orbFireCheck, diagonalAtPlayerAngleProvider);
+            const locationProvider = new MoveDownAppearUp(80, 0, 90);
+            return new OrbEnemy(startLocation, 300, locationProvider, bulletProvider);
         });
 
         // Add the enemies to the global state. The registered stateManager will take it from here.
@@ -53,11 +60,13 @@ export default class Level00 extends BaseLevel {
     }
 }
 
-function doesNotFire(): boolean {
-    return false;
-}
-
-function orbFireBehaviour(self: BaseEnemy): boolean {
+/**
+ * Defines the orb fire behaviour.
+ * Orbs fire a salvo of 5 bullets, aimed at the player. They never fire until all their
+ * bullets are offscreen.
+ * @param {BaseEnemy} enemy.
+ */
+function orbFireCheck(enemy: BaseEnemy): boolean {
     const {
         enemyLevelState,
         playerState,
@@ -69,27 +78,34 @@ function orbFireBehaviour(self: BaseEnemy): boolean {
         return false;
     }
 
-    // Orbs fire a salvo of 5 bullets, aimed at the player. They never fire until all their
-    // bullets are offscreen.
-    // Check the state if there's any bullets, if there are, we don't do anything.
-    const enemyBullets = enemyLevelState.particles.filter((p) => isEnemyPullet(p)).map((p) => p as BulletParticle);
+    let canFire = false;
+
+    // Save cast. The typeguard ensures only BulletParticles are returned but TypeScript isn't
+    // clever enough (yet) to understand this.
+    const enemyBullets = enemyLevelState.particles.filter((p) => isEnemyPullet(p)) as BulletParticle[];
 
     if (enemyBullets.length === 0) {
         // No bullets, can always fire.
-        return true;
+        canFire = true;
     } else if (enemyBullets.length < 5) {
         if (enemyLevelState.enemies.length >= 5) {
             // if there's 5 enemies or more, an enemy is limited to a single bullet.
-            return enemyBullets.filter((p) => p.isOwner(self)).length === 0;
+            canFire = enemyBullets.filter((p) => p.isOwner(enemy)).length === 0;
         } else if (enemyLevelState.enemies.length < 5) {
             // if there's 5 enemies or more, an enemy is limited to a single bullet.
-            return enemyBullets.filter((p) => p.isOwner(self)).length < Math.ceil(5 / enemyLevelState.enemies.length);
+            canFire = enemyBullets.filter((p) => p.isOwner(enemy)).length < Math.ceil(5 / enemyLevelState.enemies.length);
         } else {
-            return false;
+            canFire = false;
         }
     } else {
+        // Enemy shouldn't fire, so, we can return it.
         return false;
     }
+
+    if (canFire) {
+    }
+
+    return false;
 }
 
 function isEnemyPullet(particle: BaseParticle): particle is BulletParticle {
