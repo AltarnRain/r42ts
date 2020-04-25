@@ -10,6 +10,7 @@
  */
 
 import Dictionary from "../Models/Dictionary";
+import { BaseEnemy } from "../Base/BaseEnemy";
 
 /**
  * Defines frames. Frames are objects with key values that start with F{N}. Where N is the frame number.
@@ -40,3 +41,5 @@ export type MoveLimits = "immobile" | "sideways" | "forceup" | "none";
  * Defines the phases of the player formation.
  */
 export type PlayerFormationPhases = "begin" | "inprogress" | undefined;
+
+export type AngleProviderFunction = (enemy: BaseEnemy) => number;

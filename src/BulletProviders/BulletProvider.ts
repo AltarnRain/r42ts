@@ -26,9 +26,9 @@ export default class BulletProvider {
     private shouldFire: (self: BaseEnemy) => boolean;
     private angle: number;
     private speed: number;
-    leftOffset: number;
-    topOffset: number;
-    bulletColor: string;
+    private leftOffset: number;
+    private topOffset: number;
+    private bulletColor: string;
 
     constructor(
         minTimeBetweenShots: number,
@@ -48,7 +48,6 @@ export default class BulletProvider {
         this.leftOffset = leftOffset * averagePixelSize;
         this.topOffset = topOffset * averagePixelSize;
         this.bulletColor = bulletColor;
-
     }
 
     private bulletTick: number = 0;

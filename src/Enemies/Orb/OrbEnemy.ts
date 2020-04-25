@@ -14,15 +14,12 @@ import { twoPXBullet } from "../../Assets/twoPXBullet";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import BulletProvider from "../../BulletProviders/BulletProvider";
-import { angles } from "../../Constants/Angles";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import GameLocation from "../../Models/GameLocation";
-import Particle from "../../Particles/Particle";
 import CircleFrameProvider from "../../Providers/CircleFrameProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { Frame } from "../../Types/Types";
-import { getRandomArrayElement } from "../../Utility/Array";
 import { convertChangingFrameColors, convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
 import orbFrames from "./OrbFrames";
@@ -56,11 +53,6 @@ export default class OrbEnemy extends BaseEnemy {
     private bulletFrame: Frame;
 
     /**
-     * Keeps track of the bullet
-     */
-    private bulletTick: number = 0;
-
-    /**
      * Construct the enemy.
      */
     constructor(startLocation: GameLocation, frameChangeTime: number, locationProvider: BaseLocationProvider, bulletProvider: BulletProvider) {
@@ -80,7 +72,6 @@ export default class OrbEnemy extends BaseEnemy {
 
         this.bulletFrame = cloneObject(twoPXBullet);
         convertVariableFrameColor(this.bulletFrame, CGAColors.lightRed);
-
     }
 
     /**
@@ -123,25 +114,5 @@ export default class OrbEnemy extends BaseEnemy {
      */
     public getPoints(): number {
         return 200;
-    }
-
-    /**
-     * TODO: This enemy fires on any difficulty.
-     * @param {number} tick. Current tick.s
-     */
-    protected getBulletParticle(tick: number): Particle | undefined {
-
-        if (tick - this.bulletTick > 200) {
-            const location = { ...this.getCenterLocation() };
-            location.top = location.top + averagePixelSize * 4;
-            location.left = location.left - averagePixelSize;
-
-            const angle = getRandomArrayElement([angles.leftdown, angles.rightdown]);
-
-            const bullet = new Particle(location, this.bulletFrame, angle, 3, 1);
-
-            this.bulletTick = tick;
-            return bullet;
-        }
     }
 }

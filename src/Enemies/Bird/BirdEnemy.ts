@@ -12,14 +12,14 @@
 import Explosion01 from "../../Assets/Explosion01";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
+import BulletProvider from "../../BulletProviders/BulletProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import GameLocation from "../../Models/GameLocation";
 import Particle from "../../Particles/Particle";
 import BackAndForthFrameProvider from "../../Providers/BackAndForthFrameProvider";
-import dimensionProvider from "../../Providers/DimensionProvider";
 import { Frame } from "../../Types/Types";
-import { convertVariableFrameColor, getMaximumFrameDimensions, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
+import { convertVariableFrameColor, getRandomFrameKeyIndex, setRandomFrameColors } from "../../Utility/Frame";
 import { BirdFrames } from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];

@@ -20,7 +20,7 @@ import { GameSize } from "../Models/GameSize";
 import { OffsetFrames } from "../Models/OffsetFrames";
 import Particle from "../Particles/Particle";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { GameObjectType } from "../Types/Types";
+import { AngleProviderFunction, GameObjectType } from "../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getMaximumFrameDimensions } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 import { getOffsetLocation } from "../Utility/Location";
@@ -85,7 +85,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @param {OffsetFrames} offsetFrames. Frames with offsets.
      * @param {Explosion} explosion. Explosion asset. Aka. BOOM animation.
      * @param {BaseLocationProvider} locationProvider. Handles the locations of the enemy. Can be used to inject movement behaviour.
-     * @param {BulletProvider} bulletProvider. A function that checks if the enemy can fire a bullet. Injected from the outside.
+     * @param {BulletProvider} bulletProvider. A class that checks if the enemy can fire a bullet. When undefined the enemy does not fire.
      */
     constructor(
         startLocation: GameLocation,

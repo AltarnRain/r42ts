@@ -12,6 +12,7 @@ import GameLocation from "../Models/GameLocation";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { dispatch } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
+import BulletProvider from "../BulletProviders/BulletProvider";
 
 /**
  * Module:          Level 01

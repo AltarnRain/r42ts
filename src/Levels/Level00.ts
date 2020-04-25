@@ -90,6 +90,11 @@ function orbFireBehaviour(self: BaseEnemy): boolean {
         }
     }
 
+    if (fire) {
+        const enemyCenter = self.getCenterLocation();
+        const playerHitbox = playerShip.getHitbox();
+    }
+
     return fire;
 }
 
