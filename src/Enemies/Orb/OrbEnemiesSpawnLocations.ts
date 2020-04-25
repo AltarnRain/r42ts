@@ -22,9 +22,9 @@ const {
 const orbSpawnLocations: GameLocation[] = [];
 const { width } = getFrameDimensions(orbFrames.frames[0], averagePixelSize);
 
-const top = gameFieldTop + averagePixelSize * 40;
-const left = averagePixelSize * 15;
-const spacing = averagePixelSize;
+const top = gameFieldTop + averagePixelSize * 26;
+const left = averagePixelSize * 10;
+const spacing = averagePixelSize * 2;
 
 for (let i = 0; i < 22; i++) {
     const actualSpacing = i === 0 ? 0 : spacing * i;

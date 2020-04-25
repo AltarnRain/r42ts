@@ -13,6 +13,7 @@ import Immobile from "../LocationProviders/Immobile";
 import GameLoop from "../Main/GameLoop";
 import PlayerShip from "../Player/PlayerShip";
 import { dispatch } from "../State/Store";
+import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 
 /**
  * Module:          Level 00
@@ -33,7 +34,7 @@ export default class Level00 extends BaseLevel {
 
         dispatch<PlayerShip>("setPlayer", new PlayerShip());
 
-        this.enemies  = orbSpawnLocations.map((sl) => new OrbEnemy(sl, 500, new Immobile(), doesNotFire));
+        this.enemies  = orbSpawnLocations.map((sl) => new OrbEnemy(sl, 500, new MoveDownAppearUp(80, 0.3, 90), doesNotFire));
 
         // Add the enemies to the global state. The registered stateManager will take it from here.
         dispatch<BaseEnemy[]>("setEnemies", this.enemies);

@@ -18,7 +18,7 @@ import GameLocation from "../../Models/GameLocation";
 import CircleFrameProvider from "../../Providers/CircleFrameProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { Frame } from "../../Types/Types";
-import { convertChangingFrameColors } from "../../Utility/Frame";
+import { convertChangingFrameColors, convertFramesColors } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
 import orbFrames from "./OrbFrames";
 
