@@ -20,7 +20,7 @@ import BulletParticle from "../Particles/BulletParticle";
 import PlayerShip from "../Player/PlayerShip";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
-import { calculateAngle } from "../Utility/Geometry";
+import { calculateAngle, calculateAngleDifference } from "../Utility/Geometry";
 import { angles } from "../Constants/Angles";
 
 /**
@@ -103,6 +103,16 @@ function orbFireCheck(enemy: BaseEnemy): boolean {
     }
 
     if (canFire) {
+        const enemiesWithBestAngle = enemyLevelState.enemies.map((e) => {
+            const enemyAngleToPlayer = calculateAngle(e.getCenterLocation(), playerState.playerLocation);
+            const idealAngle = diagonalAtPlayerAngleProvider(enemy);
+
+            if (enemyAngleToPlayer !== undefined && idealAngle !== undefined) {
+                const angleDifference = calculateAngleDifference(enemyAngleToPlayer, idealAngle);
+                return { enemy: e, angleDifference };
+            }
+        });
+
     }
 
     return false;

@@ -123,7 +123,7 @@ export function calculateAngle(start: GameLocation, end: GameLocation): number |
  * @returns {number}. The difference, in degrees, between the angles
  * Source: https://stackoverflow.com/questions/1878907/the-smallest-difference-between-2-angles
  */
-export function calculateDegreeDifference(angle1: number, angle2: number): number {
+export function calculateAngleDifference(angle1: number, angle2: number): number {
     const absoluteAngleDifference = Math.abs(angle1 - angle2);
     const angleDifference = (absoluteAngleDifference + 180) % 360 - 180;
     return Math.abs(angleDifference);

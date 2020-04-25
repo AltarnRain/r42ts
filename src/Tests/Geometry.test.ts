@@ -27,8 +27,8 @@ describe("geometry tests", () => {
     });
 
     test("calculate angle difference", () => {
-        const result1 = Geometry.calculateDegreeDifference(100, 80);
-        const result2 = Geometry.calculateDegreeDifference(10, 350);
+        const result1 = Geometry.calculateAngleDifference(100, 80);
+        const result2 = Geometry.calculateAngleDifference(10, 350);
 
         expect(result1).toBe(20);
         expect(result2).toBe(20);
