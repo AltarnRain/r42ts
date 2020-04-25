@@ -111,6 +111,9 @@ function orbFireCheck(enemy: BaseEnemy): boolean {
                 const angleDifference = calculateAngleDifference(enemyAngleToPlayer, idealAngle);
                 return { enemy: e, angleDifference };
             }
+
+            // TODO: Sort the enemies with the best angle and  check if this
+            // enemy is part of them.
         });
 
     }
