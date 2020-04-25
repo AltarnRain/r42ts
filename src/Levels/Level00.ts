@@ -33,7 +33,7 @@ export default class Level00 extends BaseLevel {
 
         dispatch<PlayerShip>("setPlayer", new PlayerShip());
 
-        this.enemies  = orbSpawnLocations.map((sl) => new OrbEnemy(sl, 500, new MoveDownAppearUp(80, 0.3, 90), doesNotFire));
+        this.enemies  = orbSpawnLocations.map((sl) => new OrbEnemy(sl, 5000000000000000000000000000000, new MoveDownAppearUp(80, 0, 90), alwaysfires));
 
         // Add the enemies to the global state. The registered stateManager will take it from here.
         dispatch<BaseEnemy[]>("setEnemies", this.enemies);
@@ -44,4 +44,8 @@ export default class Level00 extends BaseLevel {
 
 function doesNotFire(): boolean {
     return false;
+}
+
+function alwaysfires(): boolean {
+    return true;
 }

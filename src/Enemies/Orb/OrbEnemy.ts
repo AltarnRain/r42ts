@@ -10,6 +10,7 @@
  */
 
 import Explosion02 from "../../Assets/Explosion02";
+import { twoPXBullet } from "../../Assets/twoPXBullet";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
@@ -18,9 +19,12 @@ import GameLocation from "../../Models/GameLocation";
 import CircleFrameProvider from "../../Providers/CircleFrameProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { Frame } from "../../Types/Types";
-import { convertChangingFrameColors, convertFramesColors, convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
+import { convertChangingFrameColors, convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
 import orbFrames from "./OrbFrames";
+import Particle from "../../Particles/Particle";
+import { getRandomArrayElement } from "../../Utility/Array";
+import { angles } from "../../Constants/Angles";
 
 const colors: string[][] = [
     [CGAColors.lightGreen, CGAColors.lightBlue],
@@ -28,6 +32,10 @@ const colors: string[][] = [
     [CGAColors.lightBlue, CGAColors.white],
     [CGAColors.white, CGAColors.brown],
 ];
+
+const {
+    averagePixelSize,
+} = dimensionProvider();
 
 export default class OrbEnemy extends BaseEnemy {
 
@@ -40,6 +48,12 @@ export default class OrbEnemy extends BaseEnemy {
      * Tracks the current color index.
      */
     private currentColorIndex = 0;
+
+    /**
+     * Orb enemy's bullet frame.
+     */
+    private bulletFrame: Frame;
+    private bulletTick: number = 0;
 
     /**
      * Construct the enemy.
@@ -58,6 +72,10 @@ export default class OrbEnemy extends BaseEnemy {
         convertVariableFrameColor(this.explosion.explosionCenterFrame, CGAColors.magenta);
         convertVariableFramesColor(this.explosion.particleFrames, CGAColors.magenta);
         this.colorTickHandler = new TickHandler(100, () => this.onColorChange());
+
+        this.bulletFrame = cloneObject(twoPXBullet);
+        convertVariableFrameColor(this.bulletFrame, CGAColors.lightRed);
+
     }
 
     /**
@@ -106,7 +124,20 @@ export default class OrbEnemy extends BaseEnemy {
      * TODO: This enemy fires on any difficulty.
      * @param {number} tick. Current tick.s
      */
-    protected getBulletParticle(tick: number): undefined {
-        return undefined;
+    protected getBulletParticle(tick: number): Particle | undefined {
+
+        if (tick - this.bulletTick > 200) {
+            const location = { ...this.getCenterLocation() };
+            location.top = location.top + averagePixelSize * 4;
+            location.left = location.left - averagePixelSize;
+
+            const angle = getRandomArrayElement([angles.leftdown, angles.rightdown,]);
+
+            const bullet = new Particle(location, this.bulletFrame, angle, 3, 1);
+
+            this.bulletTick = tick;
+            return bullet;
+
+        }
     }
 }
