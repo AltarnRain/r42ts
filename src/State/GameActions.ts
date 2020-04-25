@@ -21,6 +21,7 @@ type GameActions =
     // Level
     "resetLevelState" |
     "setEnemies" |
+    "addParticle" |
     "addParticles" |
     "removeEnemy" |
     "addExplosionCenter" |

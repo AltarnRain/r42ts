@@ -31,7 +31,7 @@ export default class Level02 extends BaseLevel {
     public start(): void {
         super.start();
         this.enemies = robotSpawnLocationsAndColor.map((lc) => {
-            const bulletProvider = new BulletProvider(200, twoPXBullet, CGAColors.lightRed, angles.down, 3, shouldFire);
+            const bulletProvider = new BulletProvider(200, twoPXBullet, CGAColors.lightRed, angles.down, 3, 4, 0, shouldFire);
             return new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(3, 5), bulletProvider);
         });
         this.begin();

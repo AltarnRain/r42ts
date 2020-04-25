@@ -38,8 +38,8 @@ export function enemyLevelReducer(state: EnemyLevelState = initState(), action: 
             case "removeExplosionCenter":
                 draft.explosionCenters = draft.explosionCenters.filter((e) => e !== action.payload);
                 break;
-            case "addParticles":
-                draft.particles.push(...action.payload);
+            case "addParticle":
+                draft.particles.push(action.payload);
                 break;
             case "removeParticle":
                 draft.particles = draft.particles.filter((p) => p !== action.payload);

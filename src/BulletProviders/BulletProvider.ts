@@ -5,12 +5,10 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
-import GameLocation from "../Models/GameLocation";
-import Particle from "../Particles/Particle";
+import BulletParticle from "../Particles/BulletParticle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { appState } from "../State/Store";
 import { Frame } from "../Types/Types";
-import { convertVariableFrameColor } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
 
 /**
@@ -28,6 +26,9 @@ export default class BulletProvider {
     private shouldFire: (self: BaseEnemy) => boolean;
     private angle: number;
     private speed: number;
+    leftOffset: number;
+    topOffset: number;
+    bulletColor: string;
 
     constructor(
         minTimeBetweenShots: number,
@@ -35,6 +36,8 @@ export default class BulletProvider {
         bulletColor: string,
         angle: number,
         speed: number,
+        leftOffset: number,
+        topOffset: number,
         shouldfire: (self: BaseEnemy) => boolean) {
         this.minTimeBetweenShots = minTimeBetweenShots;
 
@@ -42,13 +45,15 @@ export default class BulletProvider {
         this.shouldFire = shouldfire;
         this.angle = angle;
         this.speed = speed;
+        this.leftOffset = leftOffset * averagePixelSize;
+        this.topOffset = topOffset * averagePixelSize;
+        this.bulletColor = bulletColor;
 
-        convertVariableFrameColor(this.bulletFrame, bulletColor);
     }
 
     private bulletTick: number = 0;
 
-    public getBullet(tick: number, self: BaseEnemy): Particle | undefined {
+    public getBullet(tick: number, self: BaseEnemy): BulletParticle | undefined {
 
         const {
             playerState
@@ -63,11 +68,13 @@ export default class BulletProvider {
         if (tick - this.bulletTick > this.minTimeBetweenShots) {
             this.bulletTick = tick;
 
+            // shouldFire is passed into the BulletProvider but we have
+            // situations where we need to check if a particular enemy can fire.
             if (this.shouldFire(self)) {
                 const location = { ...self.getCenterLocation() };
-                location.top = location.top + averagePixelSize * 4;
-                location.left = location.left - averagePixelSize;
-                const bullet = new Particle(location, this.bulletFrame, this.angle, this.speed, 1);
+                location.top = location.top +  this.topOffset;
+                location.left = location.left + this.leftOffset;
+                const bullet = new BulletParticle(self, this.bulletColor, location, this.bulletFrame, this.angle, this.speed);
                 return bullet;
             }
         }

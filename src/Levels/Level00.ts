@@ -16,7 +16,10 @@ import { drawBackground } from "../GameScreen/StaticRenders";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 import GameLoop from "../Main/GameLoop";
 import PlayerShip from "../Player/PlayerShip";
-import { dispatch } from "../State/Store";
+import { appState, dispatch } from "../State/Store";
+import Particle from "../Particles/Particle";
+import BulletParticle from "../Particles/BulletParticle";
+import BaseParticle from "../Base/BaseParticle";
 
 /**
  * Module:          Level 00
@@ -37,9 +40,9 @@ export default class Level00 extends BaseLevel {
 
         dispatch<PlayerShip>("setPlayer", new PlayerShip());
 
-        const bp = new BulletProvider(200, twoPXBullet, CGAColors.magenta, angles.rightdown, 3, alwaysfires);
+        const bp = new BulletProvider(-1, twoPXBullet, CGAColors.magenta, angles.rightdown, 10, 0, 4, orbFireBehaviour);
 
-        this.enemies  = orbSpawnLocations.map((sl) => new OrbEnemy(sl, 5000000000000000000000000000000, new MoveDownAppearUp(80, 0, 90), bp));
+        this.enemies = orbSpawnLocations.map((sl) => new OrbEnemy(sl, 5000000000000000000000000000000, new MoveDownAppearUp(80, 0, 90), bp));
 
         // Add the enemies to the global state. The registered stateManager will take it from here.
         dispatch<BaseEnemy[]>("setEnemies", this.enemies);
@@ -52,6 +55,44 @@ function doesNotFire(): boolean {
     return false;
 }
 
-function alwaysfires(): boolean {
-    return true;
+function orbFireBehaviour(self: BaseEnemy): boolean {
+    const {
+        enemyLevelState,
+        playerState,
+    } = appState();
+
+    const playerShip = playerState.ship;
+
+    if (playerShip === undefined) {
+        throw new Error("This method should never be called when the player is dead. Enemies do not fire unless the player ship is on screen");
+    }
+
+    let fire = false;
+
+    // Orbs fire a salvo of 5 bullets, aimed at the player. They never fire until all their
+    // bullets are offscreen.
+    // Check the state if there's any bullets, if there are, we don't do anything.
+    const enemyBullets = enemyLevelState.particles.filter((p) => p.getObjectType() === "enemybullet");
+
+    if (enemyBullets.length < 5) {
+        if (enemyBullets.length === 0) {
+            fire = true;
+        } else {
+            fire = enemyLevelState.particles.some((p) => {
+                if (isEnemyPullet(p)) {
+                    // This enemy has fired, don't let it fire again so the
+                    // next enemy can take a shot.
+                    return !p.isOwner(self);
+                } else {
+                    return false;
+                }
+            });
+        }
+    }
+
+    return fire;
+}
+
+function isEnemyPullet(particle: BaseParticle): particle is BulletParticle {
+    return particle && particle.getObjectType() === "enemybullet";
 }
