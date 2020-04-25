@@ -67,10 +67,8 @@ export default class BulletProvider {
         if (tick - this.bulletTick > this.minTimeBetweenShots) {
             this.bulletTick = tick;
 
-            // shouldFire is passed into the BulletProvider but we have
-            // situations where we need to check if a particular enemy can fire.
             if (this.fireCheck(self)) {
-                const location = { ...self.getCenterLocation() };
+                    const location = { ...self.getCenterLocation() };
                 location.top = location.top +  this.topOffset;
                 location.left = location.left + this.leftOffset;
 

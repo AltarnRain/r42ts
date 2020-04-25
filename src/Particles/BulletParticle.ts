@@ -5,6 +5,7 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
+import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import GameLocation from "../Models/GameLocation";
 import { Frame, GameObjectType } from "../Types/Types";
 import { convertVariableFrameColor } from "../Utility/Frame";
@@ -31,7 +32,8 @@ export default class BulletParticle extends Particle {
      * @returns {boolean}. True if the passed enemy is the owner of the bullet.
      */
     public isOwner(enemy: BaseEnemy): boolean {
-        return enemy === this.owner;
+        const result = enemy === this.owner;
+        return result;
     }
 
     public getObjectType(): GameObjectType {

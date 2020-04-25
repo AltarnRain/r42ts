@@ -31,11 +31,11 @@ const colors: string[][] = [
     [CGAColors.white, CGAColors.brown],
 ];
 
-const {
-    averagePixelSize,
-} = dimensionProvider();
-
 export default class OrbEnemy extends BaseEnemy {
+
+    private static counter = 0;
+
+    public mycount = 0;
 
     /**
      * Handles the color change ticks.
@@ -72,6 +72,9 @@ export default class OrbEnemy extends BaseEnemy {
 
         this.bulletFrame = cloneObject(twoPXBullet);
         convertVariableFrameColor(this.bulletFrame, CGAColors.lightRed);
+
+        this.mycount = OrbEnemy.counter;
+        OrbEnemy.counter++;
     }
 
     /**

@@ -10,7 +10,34 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
+import { angles } from "../Constants/Angles";
+import { appState } from "../State/Store";
 
-export function diagonalAtPlayerAngleProvider(self: BaseEnemy): number | undefined {
-    return -1;
+/**
+ * Returns an angle of down/left or down/right but only if the passed enemy has a 'change' of hitting the
+ * player. If it can't hit the player the angle will be undefined.
+ * @param {BaseEnemy} self. An enemy.
+ */
+export function diagonalAtPlayerAngleProvider(enemy: BaseEnemy): number | undefined {
+
+    const {
+        playerState
+    } = appState();
+
+    const enemyCenter = enemy.getCenterLocation();
+    const playerShip = playerState.ship;
+
+    if (playerShip === undefined) {
+        return undefined;
+    }
+
+    const playerHitbox = playerShip.getHitbox();
+
+    if (enemyCenter.left < playerHitbox.left  ) {
+        return angles.rightdown;
+    } else if (enemyCenter.left > playerHitbox.right) {
+        return angles.leftdown;
+    }
+
+    return undefined;
 }
