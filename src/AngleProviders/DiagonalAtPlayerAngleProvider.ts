@@ -11,6 +11,6 @@
 
 import { BaseEnemy } from "../Base/BaseEnemy";
 
-export function diagonalAtPlayerAngleProvider(self: BaseEnemy): number {
+export function diagonalAtPlayerAngleProvider(self: BaseEnemy): number | undefined {
     return -1;
 }

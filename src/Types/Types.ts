@@ -44,7 +44,7 @@ export type PlayerFormationPhases = "begin" | "inprogress" | undefined;
 /**
  * Function definition of an angle provider function.
  */
-export type AngleProviderFunction = (enemy: BaseEnemy) => number;
+export type AngleProviderFunction = (enemy: BaseEnemy) => number | undefined;
 
 /**
  * Function definition of a FireCheckFunction.

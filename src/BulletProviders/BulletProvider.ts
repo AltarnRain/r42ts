@@ -23,7 +23,7 @@ const {
 export default class BulletProvider {
     private minTimeBetweenShots: number;
     private bulletFrame: Frame;
-    private shouldFire: FireCheckFunction;
+    private fireCheck: FireCheckFunction;
     private speed: number;
     private leftOffset: number;
     private topOffset: number;
@@ -42,7 +42,7 @@ export default class BulletProvider {
         this.minTimeBetweenShots = minTimeBetweenShots;
 
         this.bulletFrame = cloneObject(bulletFrame);
-        this.shouldFire = shouldfire;
+        this.fireCheck = shouldfire;
         this.speed = speed;
         this.leftOffset = leftOffset * averagePixelSize;
         this.topOffset = topOffset * averagePixelSize;
@@ -69,15 +69,17 @@ export default class BulletProvider {
 
             // shouldFire is passed into the BulletProvider but we have
             // situations where we need to check if a particular enemy can fire.
-            if (this.shouldFire(self)) {
+            if (this.fireCheck(self)) {
                 const location = { ...self.getCenterLocation() };
                 location.top = location.top +  this.topOffset;
                 location.left = location.left + this.leftOffset;
 
                 const angle = this.angleProvider(self);
 
-                const bullet = new BulletParticle(self, this.bulletColor, location, this.bulletFrame, angle, this.speed);
-                return bullet;
+                if (angle !== undefined) {
+                    const bullet = new BulletParticle(self, this.bulletColor, location, this.bulletFrame, angle, this.speed);
+                    return bullet;
+                }
             }
         }
 
