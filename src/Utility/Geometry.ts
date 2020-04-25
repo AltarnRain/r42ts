@@ -4,10 +4,10 @@
  * See LICENSE.MD.
  */
 
+import { angles } from "../Constants/Angles";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import KeyboardState from "../State/Definition/KeyboardState";
-import { angles } from "../Constants/Angles";
 
 /**
  * Module:          Geometry
@@ -114,4 +114,17 @@ export function calculateAngle(start: GameLocation, end: GameLocation): number |
     }
 
     return Math.atan2(dy, dx) * 180 / Math.PI;
+}
+
+/**
+ * Calculates the difference between two angles.
+ * @param {number} angle1. Angle 1 in degrees.
+ * @param {number} angle2. Angle 2 in degrees.
+ * @returns {number}. The difference, in degrees, between the angles
+ * Source: https://stackoverflow.com/questions/1878907/the-smallest-difference-between-2-angles
+ */
+export function calculateDegreeDifference(angle1: number, angle2: number): number {
+    const absoluteAngleDifference = Math.abs(angle1 - angle2);
+    const angleDifference = (absoluteAngleDifference + 180) % 360 - 180;
+    return Math.abs(angleDifference);
 }

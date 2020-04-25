@@ -9,7 +9,6 @@
  * Responsibility:  Tests Geometry functions
  */
 
-import GameLocation from "../Models/GameLocation";
 import * as Geometry from "../Utility/Geometry";
 
 describe("geometry tests", () => {
@@ -25,5 +24,13 @@ describe("geometry tests", () => {
         expect(a2).toBe(270);
         expect(a3).toBe(360);
         expect(a4).toBe(90);
+    });
+
+    test("calculate angle difference", () => {
+        const result1 = Geometry.calculateDegreeDifference(100, 80);
+        const result2 = Geometry.calculateDegreeDifference(10, 350);
+
+        expect(result1).toBe(20);
+        expect(result2).toBe(20);
     });
 });
