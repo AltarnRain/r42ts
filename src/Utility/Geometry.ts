@@ -7,6 +7,7 @@
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import KeyboardState from "../State/Definition/KeyboardState";
+import { angles } from "../Constants/Angles";
 
 /**
  * Module:          Geometry
@@ -43,21 +44,21 @@ export function getNextY(angle: number, speed: number, current: number): number 
 export function getAngle(state: KeyboardState): number {
     let angle = -1;
     if (state.up && state.left) {
-        angle = 225;
+        angle = angles.leftup;
     } else if (state.up && state.right) {
-        angle = 315;
+        angle = angles.rightup;
     } else if (state.down && state.left) {
-        angle = 135;
+        angle = angles.leftdown;
     } else if (state.down && state.right) {
-        angle = 45;
+        angle = angles.rightdown;
     } else if (state.left) {
-        angle = 180;
+        angle = angles.left;
     } else if (state.right) {
-        angle = 0;
+        angle = angles.right;
     } else if (state.up) {
-        angle = 270;
+        angle = angles.up;
     } else if (state.down) {
-        angle = 90;
+        angle = angles.down;
     }
 
     return angle;
