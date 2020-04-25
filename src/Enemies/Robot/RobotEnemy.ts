@@ -13,11 +13,11 @@ import Explosion02 from "../../Assets/Explosion02";
 import { twoPXBullet } from "../../Assets/twoPXBullet";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
+import BulletProvider from "../../BulletProviders/BulletProvider";
 import CGAColors from "../../Constants/CGAColors";
 import GameLocation from "../../Models/GameLocation";
-import Particle from "../../Particles/Particle";
-import dimensionProvider from "../../Providers/DimensionProvider";
 import BackAndForthFrameProvider from "../../Providers/BackAndForthFrameProvider";
+import dimensionProvider from "../../Providers/DimensionProvider";
 import { Frame } from "../../Types/Types";
 import { convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
@@ -34,13 +34,8 @@ export default class RobotEnemy extends BaseEnemy {
      */
     private bulletFrame: Frame;
 
-    /**
-     * Tick since the last bullet fire.
-     */
-    private bulletTick: number = 0;
-
-    constructor(location: GameLocation, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, canFire: (self: BaseEnemy) => boolean) {
-        super(location, frameChangeTime, robotFrames, Explosion02, locationProvider, canFire);
+    constructor(location: GameLocation, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, bulletProvider: BulletProvider) {
+        super(location, frameChangeTime, robotFrames, Explosion02, locationProvider, bulletProvider);
 
         convertVariableFrameColor(this.explosion.explosionCenterFrame, color);
         convertVariableFrameColor(this.explosion.particleFrames[0], color);
@@ -60,28 +55,5 @@ export default class RobotEnemy extends BaseEnemy {
      */
     public getPoints(): number {
         return 100;
-    }
-
-    /**
-     * Returns the bullet frame.
-     * @returns {boolean}.
-     */
-    protected getBulletParticle(tick: number): Particle | undefined {
-
-        // 200 tick timeout between bullets.
-        if (tick - this.bulletTick > 200) {
-            this.bulletTick = tick;
-            // 50% change to fire.
-            const rnd = Math.floor(Math.random() * 2);
-            if (rnd === 1) {
-                const location = { ...this.getCenterLocation() };
-                location.top = location.top + averagePixelSize * 4;
-                location.left = location.left - averagePixelSize;
-                const bullet = new Particle(location,  this.bulletFrame, 90, 3, 1);
-                return bullet;
-            }
-        }
-
-        return undefined;
     }
 }

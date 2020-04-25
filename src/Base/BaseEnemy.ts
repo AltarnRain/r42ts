@@ -11,6 +11,7 @@
  *                  for most enemies in the game leaving specifics to derived classes.
  */
 
+import BulletProvider from "../BulletProviders/BulletProvider";
 import TickHandler from "../Handlers/TickHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
@@ -19,7 +20,6 @@ import { GameSize } from "../Models/GameSize";
 import { OffsetFrames } from "../Models/OffsetFrames";
 import Particle from "../Particles/Particle";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { appState } from "../State/Store";
 import { GameObjectType } from "../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getMaximumFrameDimensions } from "../Utility/Frame";
 import { cloneObject } from "../Utility/Lib";
@@ -68,11 +68,6 @@ export abstract class BaseEnemy extends BaseDestructable {
     protected offSetFrames: OffsetFrames;
 
     /**
-     * When true this enemy will fire bullets. Passed in from the constructor.
-     */
-    private canFire?: (sef: BaseEnemy) => boolean;
-
-    /**
      * Provides location. Can be used to alter the movement behaviour of enemies.
      */
     protected locationProvider: BaseLocationProvider;
@@ -81,6 +76,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      * Maximum enemy dimensions.
      */
     private maxDimensions: GameSize;
+    private bulletProvider: BulletProvider | undefined;
 
     /**
      * Construct the enemy.
@@ -89,7 +85,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @param {OffsetFrames} offsetFrames. Frames with offsets.
      * @param {Explosion} explosion. Explosion asset. Aka. BOOM animation.
      * @param {BaseLocationProvider} locationProvider. Handles the locations of the enemy. Can be used to inject movement behaviour.
-     * @param {function} canFire. A function that checks if the enemy can fire a bullet. Injected from the outside.
+     * @param {BulletProvider} bulletProvider. A function that checks if the enemy can fire a bullet. Injected from the outside.
      */
     constructor(
         startLocation: GameLocation,
@@ -97,7 +93,7 @@ export abstract class BaseEnemy extends BaseDestructable {
         offsetFrames: OffsetFrames,
         explosion: Explosion,
         locationProvider: BaseLocationProvider,
-        canFire?: (self: BaseEnemy) => boolean) {
+        bulletProvider?: BulletProvider) {
         super(startLocation);
 
         this.locationProvider = locationProvider;
@@ -115,8 +111,7 @@ export abstract class BaseEnemy extends BaseDestructable {
             };
         });
 
-        // Bind canFire to the current instance.
-        this.canFire = canFire;
+        this.bulletProvider = bulletProvider;
 
         this.maxDimensions = getMaximumFrameDimensions(offsetFrames.frames, averagePixelSize);
     }
@@ -134,11 +129,6 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @returns {number}. Point worth of the enemy.
      */
     public abstract getPoints(): number;
-
-    /**
-     * Returns the bullet frame.
-     */
-    protected abstract getBulletParticle(tick: number): Particle | undefined;
 
     /**
      * Called by a TickHandler when the next frame is up.
@@ -217,24 +207,6 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @returns {Particle | undefined}. When the enemy fired a bullet a particle object is return, otherwise undefined.
      */
     public getBullet(tick: number): Particle | undefined {
-        const { playerState } = appState();
-
-        // Enemies never fire bullets when the player is dead.
-        if (playerState.ship === undefined) {
-            return undefined;
-        }
-
-        if (this.canFire === undefined) {
-            return undefined;
-        } else {
-            // This may seem like a weird function call but keep in mind canFire is passed into the
-            // object from the outside and typed to accept a base enemy object. I
-            // do NOT want 'this' magic within canFire so I opted to use a parameter.
-            if (this.canFire(this)) {
-                return this.getBulletParticle(tick);
-            } else {
-                return undefined;
-            }
-        }
+        return this.bulletProvider?.getBullet(tick, this);
     }
 }

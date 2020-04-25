@@ -13,18 +13,19 @@ import Explosion02 from "../../Assets/Explosion02";
 import { twoPXBullet } from "../../Assets/twoPXBullet";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
+import BulletProvider from "../../BulletProviders/BulletProvider";
+import { angles } from "../../Constants/Angles";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import GameLocation from "../../Models/GameLocation";
+import Particle from "../../Particles/Particle";
 import CircleFrameProvider from "../../Providers/CircleFrameProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { Frame } from "../../Types/Types";
+import { getRandomArrayElement } from "../../Utility/Array";
 import { convertChangingFrameColors, convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
 import orbFrames from "./OrbFrames";
-import Particle from "../../Particles/Particle";
-import { getRandomArrayElement } from "../../Utility/Array";
-import { angles } from "../../Constants/Angles";
 
 const colors: string[][] = [
     [CGAColors.lightGreen, CGAColors.lightBlue],
@@ -53,13 +54,17 @@ export default class OrbEnemy extends BaseEnemy {
      * Orb enemy's bullet frame.
      */
     private bulletFrame: Frame;
+
+    /**
+     * Keeps track of the bullet
+     */
     private bulletTick: number = 0;
 
     /**
      * Construct the enemy.
      */
-    constructor(startLocation: GameLocation, frameChangeTime: number, locationProvider: BaseLocationProvider, canFire: () => boolean) {
-        super(startLocation, frameChangeTime, orbFrames, Explosion02, locationProvider, canFire);
+    constructor(startLocation: GameLocation, frameChangeTime: number, locationProvider: BaseLocationProvider, bulletProvider: BulletProvider) {
+        super(startLocation, frameChangeTime, orbFrames, Explosion02, locationProvider, bulletProvider);
 
         // The frame probider is required by base objects. It won't do anything in this enemy since it has just one frame.
         this.frameProvider = new CircleFrameProvider(this.offSetFrames.frames, 0);
@@ -131,13 +136,12 @@ export default class OrbEnemy extends BaseEnemy {
             location.top = location.top + averagePixelSize * 4;
             location.left = location.left - averagePixelSize;
 
-            const angle = getRandomArrayElement([angles.leftdown, angles.rightdown,]);
+            const angle = getRandomArrayElement([angles.leftdown, angles.rightdown]);
 
             const bullet = new Particle(location, this.bulletFrame, angle, 3, 1);
 
             this.bulletTick = tick;
             return bullet;
-
         }
     }
 }

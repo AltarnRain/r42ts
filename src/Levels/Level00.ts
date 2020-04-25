@@ -4,8 +4,12 @@
  * See LICENSE.MD.
  */
 
+import { twoPXBullet } from "../Assets/twoPXBullet";
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
+import BulletProvider from "../BulletProviders/BulletProvider";
+import { angles } from "../Constants/Angles";
+import CGAColors from "../Constants/CGAColors";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import { drawBackground } from "../GameScreen/StaticRenders";
@@ -33,7 +37,9 @@ export default class Level00 extends BaseLevel {
 
         dispatch<PlayerShip>("setPlayer", new PlayerShip());
 
-        this.enemies  = orbSpawnLocations.map((sl) => new OrbEnemy(sl, 5000000000000000000000000000000, new MoveDownAppearUp(80, 0, 90), alwaysfires));
+        const bp = new BulletProvider(200, twoPXBullet, CGAColors.magenta, angles.rightdown, 3, alwaysfires);
+
+        this.enemies  = orbSpawnLocations.map((sl) => new OrbEnemy(sl, 5000000000000000000000000000000, new MoveDownAppearUp(80, 0, 90), bp));
 
         // Add the enemies to the global state. The registered stateManager will take it from here.
         dispatch<BaseEnemy[]>("setEnemies", this.enemies);

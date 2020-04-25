@@ -4,8 +4,12 @@
  * See LICENSE.MD.
  */
 
+import { twoPXBullet } from "../Assets/twoPXBullet";
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
+import BulletProvider from "../BulletProviders/BulletProvider";
+import { angles } from "../Constants/Angles";
+import CGAColors from "../Constants/CGAColors";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
@@ -26,7 +30,10 @@ export default class Level02 extends BaseLevel {
      */
     public start(): void {
         super.start();
-        this.enemies = robotSpawnLocationsAndColor.map((lc) => new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(3, 5), canFire));
+        this.enemies = robotSpawnLocationsAndColor.map((lc) => {
+            const bulletProvider = new BulletProvider(200, twoPXBullet, CGAColors.lightRed, angles.down, 3, shouldFire);
+            return new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(3, 5), bulletProvider);
+        });
         this.begin();
     }
 }
@@ -36,13 +43,14 @@ export default class Level02 extends BaseLevel {
  * @param {BaseEnemy} self. Reference to a robot object. Called from within the RobotEnemy to determine
  * if the robot can fire bullets or not.
  */
-function canFire(self: BaseEnemy): boolean {
+function shouldFire(self: BaseEnemy): boolean {
     const { enemyLevelState: levelState } = appState();
     const lastEnemy = levelState.enemies[levelState.enemies.length - 1];
 
     if (lastEnemy !== undefined) {
         if (lastEnemy === self) {
-            return true;
+            const rnd = Math.ceil(Math.random() * 2);
+            return true && rnd === 1;
         }
     }
 
