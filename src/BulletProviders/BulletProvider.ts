@@ -9,7 +9,7 @@ import BulletParticle from "../Particles/BulletParticle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { appState } from "../State/Store";
 import { Frame, AngleProviderFunction, FireCheckFunction } from "../Types/Types";
-import { cloneObject } from "../Utility/Lib";
+import { cloneObject, calculateTimeSpeedIncrease } from "../Utility/Lib";
 
 /**
  * Module:          StraightDownBulletProvider
@@ -21,7 +21,6 @@ const {
 } = dimensionProvider();
 
 export default class BulletProvider {
-    private minTimeBetweenShots: number;
     private bulletFrame: Frame;
     private fireCheck: FireCheckFunction;
     private speed: number;
@@ -29,6 +28,9 @@ export default class BulletProvider {
     private topOffset: number;
     private bulletColor: string;
     private angleProvider: AngleProviderFunction;
+    private bulletTick: number = 0;
+    private baseTime: number;
+    private time: number;
 
     constructor(
         minTimeBetweenShots: number,
@@ -39,7 +41,9 @@ export default class BulletProvider {
         topOffset: number,
         shouldfire: (self: BaseEnemy) => boolean,
         angleProvider: AngleProviderFunction) {
-        this.minTimeBetweenShots = minTimeBetweenShots;
+
+        this.time = minTimeBetweenShots;
+        this.baseTime = minTimeBetweenShots;
 
         this.bulletFrame = cloneObject(bulletFrame);
         this.fireCheck = shouldfire;
@@ -50,7 +54,13 @@ export default class BulletProvider {
         this.angleProvider = angleProvider;
     }
 
-    private bulletTick: number = 0;
+    /**
+     * Lowers the delay between shots fired.
+     * @param {number} factor. A factor.
+     */
+    public increateSpeed(factor: number): void {
+        this.time = calculateTimeSpeedIncrease(this.baseTime, factor);
+    }
 
     public getBullet(tick: number, self: BaseEnemy): BulletParticle | undefined {
 
@@ -64,12 +74,12 @@ export default class BulletProvider {
         }
 
         // 200 tick timeout between bullets.
-        if (tick - this.bulletTick > this.minTimeBetweenShots) {
+        if (tick - this.bulletTick > this.time) {
             this.bulletTick = tick;
 
             if (this.fireCheck(self)) {
-                    const location = { ...self.getCenterLocation() };
-                location.top = location.top +  this.topOffset;
+                const location = { ...self.getCenterLocation() };
+                location.top = location.top + this.topOffset;
                 location.left = location.left + this.leftOffset;
 
                 const angle = this.angleProvider(self);

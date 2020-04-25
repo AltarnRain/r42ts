@@ -4,6 +4,8 @@
  * See LICENSE.MD.
  */
 
+import { calculateTimeSpeedIncrease } from "../Utility/Lib";
+
 /**
  * Module:          TickHandler
  * Responsibility:  Handles a game tick.
@@ -59,6 +61,6 @@ export default class TickHandler {
      * @param {number} factor. 1 = no change. > 1 means faster.
      */
     public increaseSpeed(factor: number): void {
-        this.time = this.baseTime *  1 / factor;
+        this.time = calculateTimeSpeedIncrease(this.baseTime, factor);
     }
 }

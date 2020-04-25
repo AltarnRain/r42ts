@@ -11,11 +11,11 @@ import BaseLevel from "../Base/BaseLevel";
 import BaseParticle from "../Base/BaseParticle";
 import BulletProvider from "../BulletProviders/BulletProvider";
 import CGAColors from "../Constants/CGAColors";
+import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 import GameLoop from "../Main/GameLoop";
-import GameLocation from "../Models/GameLocation";
 import BulletParticle from "../Particles/BulletParticle";
 import PlayerShip from "../Player/PlayerShip";
 import { appState, dispatch } from "../State/Store";
@@ -38,24 +38,13 @@ export default class Level00 extends BaseLevel {
         this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
 
         dispatch<PlayerShip>("setPlayer", new PlayerShip());
-        dispatch<GameLocation>("setPlayerLocation", { left: 0, top: 0 });
+        // dispatch<GameLocation>("setPlayerLocation", { left: 0, top: 0 });
 
-        const bp = new BulletProvider(-1, twoPXBullet, CGAColors.magenta, 10, -1, 2, orbFireBehaviour, diagonalAtPlayerAngleProvider);
-
-        // this.enemies = orbSpawnLocations.map((sl) => {
-        //     return new OrbEnemy(sl, 5000000000000000000000000000000, new MoveDownAppearUp(80, 0, 90), bp);
-        // });
-
-        let leftStart = 600;
-
-        this.enemies = [
-            new OrbEnemy({ left: leftStart += 50, top: 400 }, 5000000000000000000000000000000, new MoveDownAppearUp(80, 0, 90), bp),
-            new OrbEnemy({ left: leftStart += 50, top: 400 }, 5000000000000000000000000000000, new MoveDownAppearUp(80, 0, 90), bp),
-            new OrbEnemy({ left: leftStart += 50, top: 400 }, 5000000000000000000000000000000, new MoveDownAppearUp(80, 0, 90), bp),
-            new OrbEnemy({ left: leftStart += 50, top: 400 }, 5000000000000000000000000000000, new MoveDownAppearUp(80, 0, 90), bp),
-            new OrbEnemy({ left: leftStart += 50, top: 400 }, 5000000000000000000000000000000, new MoveDownAppearUp(80, 0, 90), bp),
-            new OrbEnemy({ left: leftStart += 50, top: 400 }, 5000000000000000000000000000000, new MoveDownAppearUp(80, 0, 90), bp),
-        ];
+        this.enemies = orbSpawnLocations.map((startLocation) => {
+            const bulletProvider = new BulletProvider(100, twoPXBullet, CGAColors.magenta, 10, -1, 2, orbFireBehaviour, diagonalAtPlayerAngleProvider);
+            const locationProvider = new MoveDownAppearUp(80, 0.2, 90);
+            return new OrbEnemy(startLocation, 300, locationProvider, bulletProvider );
+        });
 
         // Add the enemies to the global state. The registered stateManager will take it from here.
         dispatch<BaseEnemy[]>("setEnemies", this.enemies);
@@ -80,20 +69,26 @@ function orbFireBehaviour(self: BaseEnemy): boolean {
         return false;
     }
 
-    const orb = self as OrbEnemy;
-
-    console.log(orb.mycount);
-
     // Orbs fire a salvo of 5 bullets, aimed at the player. They never fire until all their
     // bullets are offscreen.
     // Check the state if there's any bullets, if there are, we don't do anything.
     const enemyBullets = enemyLevelState.particles.filter((p) => isEnemyPullet(p)).map((p) => p as BulletParticle);
 
-    // if (enemyBullets.length < 5) {
     if (enemyBullets.length === 0) {
+        // No bullets, can always fire.
         return true;
+    } else if (enemyBullets.length < 5) {
+        if (enemyLevelState.enemies.length >= 5) {
+            // if there's 5 enemies or more, an enemy is limited to a single bullet.
+            return enemyBullets.filter((p) => p.isOwner(self)).length === 0;
+        } else if (enemyLevelState.enemies.length < 5) {
+            // if there's 5 enemies or more, an enemy is limited to a single bullet.
+            return enemyBullets.filter((p) => p.isOwner(self)).length < Math.ceil(5 / enemyLevelState.enemies.length);
+        } else {
+            return false;
+        }
     } else {
-        return enemyBullets.some((p) => p.isOwner(self)) === false;
+        return false;
     }
 }
 

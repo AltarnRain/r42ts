@@ -169,6 +169,7 @@ export abstract class BaseEnemy extends BaseDestructable {
     public increaseSpeed(value: number): void {
         this.locationProvider.increaseSpeed(value);
         this.frameTickHandler.increaseSpeed(value);
+        this.bulletProvider?.increateSpeed(value);
     }
 
     /**
