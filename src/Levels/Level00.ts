@@ -4,22 +4,21 @@
  * See LICENSE.MD.
  */
 
+import { diagonalAtPlayerAngleProvider } from "../AngleProviders/DiagonalAtPlayerAngleProvider";
 import { twoPXBullet } from "../Assets/twoPXBullet";
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
+import BaseParticle from "../Base/BaseParticle";
 import BulletProvider from "../BulletProviders/BulletProvider";
-import { angles } from "../Constants/Angles";
 import CGAColors from "../Constants/CGAColors";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 import GameLoop from "../Main/GameLoop";
+import BulletParticle from "../Particles/BulletParticle";
 import PlayerShip from "../Player/PlayerShip";
 import { appState, dispatch } from "../State/Store";
-import Particle from "../Particles/Particle";
-import BulletParticle from "../Particles/BulletParticle";
-import BaseParticle from "../Base/BaseParticle";
 
 /**
  * Module:          Level 00
@@ -40,7 +39,7 @@ export default class Level00 extends BaseLevel {
 
         dispatch<PlayerShip>("setPlayer", new PlayerShip());
 
-        const bp = new BulletProvider(-1, twoPXBullet, CGAColors.magenta, angles.rightdown, 10, 0, 4, orbFireBehaviour);
+        const bp = new BulletProvider(-1, twoPXBullet, CGAColors.magenta, 10, 0, 4, orbFireBehaviour, diagonalAtPlayerAngleProvider);
 
         this.enemies = orbSpawnLocations.map((sl) => new OrbEnemy(sl, 5000000000000000000000000000000, new MoveDownAppearUp(80, 0, 90), bp));
 

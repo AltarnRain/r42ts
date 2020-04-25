@@ -8,7 +8,7 @@ import { BaseEnemy } from "../Base/BaseEnemy";
 import BulletParticle from "../Particles/BulletParticle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { appState } from "../State/Store";
-import { Frame } from "../Types/Types";
+import { Frame, AngleProviderFunction, FireCheckFunction } from "../Types/Types";
 import { cloneObject } from "../Utility/Lib";
 
 /**
@@ -23,31 +23,31 @@ const {
 export default class BulletProvider {
     private minTimeBetweenShots: number;
     private bulletFrame: Frame;
-    private shouldFire: (self: BaseEnemy) => boolean;
-    private angle: number;
+    private shouldFire: FireCheckFunction;
     private speed: number;
     private leftOffset: number;
     private topOffset: number;
     private bulletColor: string;
+    private angleProvider: AngleProviderFunction;
 
     constructor(
         minTimeBetweenShots: number,
         bulletFrame: Frame,
         bulletColor: string,
-        angle: number,
         speed: number,
         leftOffset: number,
         topOffset: number,
-        shouldfire: (self: BaseEnemy) => boolean) {
+        shouldfire: (self: BaseEnemy) => boolean,
+        angleProvider: AngleProviderFunction) {
         this.minTimeBetweenShots = minTimeBetweenShots;
 
         this.bulletFrame = cloneObject(bulletFrame);
         this.shouldFire = shouldfire;
-        this.angle = angle;
         this.speed = speed;
         this.leftOffset = leftOffset * averagePixelSize;
         this.topOffset = topOffset * averagePixelSize;
         this.bulletColor = bulletColor;
+        this.angleProvider = angleProvider;
     }
 
     private bulletTick: number = 0;
@@ -73,7 +73,10 @@ export default class BulletProvider {
                 const location = { ...self.getCenterLocation() };
                 location.top = location.top +  this.topOffset;
                 location.left = location.left + this.leftOffset;
-                const bullet = new BulletParticle(self, this.bulletColor, location, this.bulletFrame, this.angle, this.speed);
+
+                const angle = this.angleProvider(self);
+
+                const bullet = new BulletParticle(self, this.bulletColor, location, this.bulletFrame, angle, this.speed);
                 return bullet;
             }
         }

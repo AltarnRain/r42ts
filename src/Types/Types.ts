@@ -9,7 +9,6 @@
  * Responsibility:  Define Types
  */
 
-import Dictionary from "../Models/Dictionary";
 import { BaseEnemy } from "../Base/BaseEnemy";
 
 /**
@@ -42,4 +41,12 @@ export type MoveLimits = "immobile" | "sideways" | "forceup" | "none";
  */
 export type PlayerFormationPhases = "begin" | "inprogress" | undefined;
 
+/**
+ * Function definition of an angle provider function.
+ */
 export type AngleProviderFunction = (enemy: BaseEnemy) => number;
+
+/**
+ * Function definition of a FireCheckFunction.
+ */
+export type FireCheckFunction = (enemy: BaseEnemy) => boolean;
