@@ -18,7 +18,7 @@ import GameLocation from "../../Models/GameLocation";
 import CircleFrameProvider from "../../Providers/CircleFrameProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { Frame } from "../../Types/Types";
-import { convertChangingFrameColors, convertFramesColors } from "../../Utility/Frame";
+import { convertChangingFrameColors, convertFramesColors, convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
 import orbFrames from "./OrbFrames";
 
@@ -53,9 +53,10 @@ export default class OrbEnemy extends BaseEnemy {
         // We only have one frame in this enemy but its color DOES change. Set the currentFrame to the only available one
         // and sets its color to the first color set so we get a a good render when the enemy first appears.
         this.currentFrame = cloneObject(orbFrames.frames[0]);
-        this.setFrameColor(this.currentFrame);
+        this.setCurrentFrameColor(this.currentFrame);
 
-        // Very important for this enemey. It'll handle the color transition of the single frame.
+        convertVariableFrameColor(this.explosion.explosionCenterFrame, CGAColors.magenta);
+        convertVariableFramesColor(this.explosion.particleFrames, CGAColors.magenta);
         this.colorTickHandler = new TickHandler(100, () => this.onColorChange());
     }
 
@@ -70,13 +71,17 @@ export default class OrbEnemy extends BaseEnemy {
             this.currentColorIndex = 0;
         }
 
-        this.setFrameColor(coloredFrame);
+        this.setCurrentFrameColor(coloredFrame);
     }
 
-    private setFrameColor(coloredFrame: Frame) {
-        const randomColors = colors[this.currentColorIndex];
-        convertChangingFrameColors(coloredFrame, randomColors);
-        this.currentFrame = coloredFrame;
+    /**
+     * Sets the current frame and its color.
+     * @param {Frame} frame. A frame.
+     */
+    private setCurrentFrameColor(frame: Frame) {
+        const newColor = colors[this.currentColorIndex];
+        convertChangingFrameColors(frame, newColor);
+        this.currentFrame = frame;
     }
 
     /**
@@ -94,7 +99,7 @@ export default class OrbEnemy extends BaseEnemy {
      * @returns {number}. The points.
      */
     public getPoints(): number {
-        return 0;
+        return 200;
     }
 
     /**

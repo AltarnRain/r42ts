@@ -9,11 +9,10 @@ import BaseLevel from "../Base/BaseLevel";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import { drawBackground } from "../GameScreen/StaticRenders";
-import Immobile from "../LocationProviders/Immobile";
+import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 import GameLoop from "../Main/GameLoop";
 import PlayerShip from "../Player/PlayerShip";
 import { dispatch } from "../State/Store";
-import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 
 /**
  * Module:          Level 00
