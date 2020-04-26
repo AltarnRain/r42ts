@@ -96,7 +96,7 @@ export abstract class BaseEnemy extends BaseDestructable {
         getExplosion: ExplosionProviderFunction,
         locationProvider: BaseLocationProvider,
         frameProvider: BaseFrameProvider,
-        angleProvider?: FireAngleProviderFunction) {
+        fireAngleProvider?: FireAngleProviderFunction) {
         super(left, top);
 
         this.locationProvider = locationProvider;
@@ -115,7 +115,7 @@ export abstract class BaseEnemy extends BaseDestructable {
         });
 
         this.maxDimensions = getMaximumFrameDimensions(offSetFrames.frames, averagePixelSize);
-        this.angleProvider = angleProvider;
+        this.angleProvider = fireAngleProvider;
         this.frameProvider = frameProvider;
 
         this.frameProvider.setFrames(offSetFrames.frames);

@@ -16,7 +16,7 @@ import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import Particle from "../../Particles/Particle";
-import { Frame } from "../../Types/Types";
+import { Frame, FireAngleProviderFunction } from "../../Types/Types";
 import { getRandomArrayElement } from "../../Utility/Array";
 import { convertVariableFrameColor } from "../../Utility/Frame";
 import getBirdFrames from "./BirdFrames";
@@ -33,8 +33,8 @@ export default class BirdEnemy extends BaseEnemy {
     /**
      * Creates the object.
      */
-    constructor(left: number, top: number, frameChangetime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider) {
-        super(left, top, frameChangetime, getBirdFrames, Explosion01, locationProvider, frameProvider);
+    constructor(left: number, top: number, frameChangetime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, fireAngleProvider?: FireAngleProviderFunction) {
+        super(left, top, frameChangetime, getBirdFrames, Explosion01, locationProvider, frameProvider, fireAngleProvider);
 
         this.colorTickHandler = new TickHandler(40, () => this.onColorChange());
 

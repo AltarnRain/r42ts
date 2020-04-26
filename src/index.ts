@@ -4,21 +4,19 @@
  * See LICENSE.MD.
  */
 
-/**
- * Module:          Index
- * Responsibility:  Entry point for the game
- */
-
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import subscribeToStoreChanges from "./Levels/SubscribeToStore";
 import GameLoop from "./Main/GameLoop";
 import playerRunner from "./Main/PlayerRunner";
-import PlayerFormationPart from "./Player/PlayerFormationPart";
+import playerSpawnManager from "./Player/PlayerSpawnManager";
 import dimensionProvider from "./Providers/DimensionProvider";
-import renderFrame from "./Render/RenderFrame";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
-import playerSpawnManager from "./Player/PlayerSpawnManager";
+
+/**
+ * Module:          Index
+ * Responsibility:  Entry point for the game
+ */
 
 window.onload = () => {
 
@@ -31,10 +29,11 @@ window.onload = () => {
         switch (window.location.search.replace("?", "")) {
             case "playground": {
 
-                let level = 0;
+                let level = 1;
                 if (window.location.hash && window.location.hash.indexOf("level") > -1) {
                     level = parseInt(window.location.hash.split("=")[1], 10);
                 }
+                level = 1;
 
                 subscribeToStoreChanges();
                 registerListeners();
@@ -42,11 +41,12 @@ window.onload = () => {
                 GameLoop.registerBackgroundDrawing(drawStatusBar);
                 GameLoop.registerUpdateState(playerRunner);
                 GameLoop.registerUpdateState(playerSpawnManager);
-                dispatch<boolean>("playerImmortal", true);
+                // dispatch<boolean>("playerImmortal", true);
 
                 dispatch<number>("setLives", 2);
+                dispatch<number>("setLives", 20);
                 dispatch<number>("setLevel", level);
-                dispatch<number>("setPhasers", 1);
+                dispatch<number>("setPhasers", 100);
                 GameLoop.Start();
 
                 (window as any).r42 = {
