@@ -4,13 +4,13 @@
  * See LICENSE.MD.
  */
 
+import BulletRunner from "../BulletProviders/BulletRunner";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import GameLoop from "../Main/GameLoop";
 import { appState, dispatch } from "../State/Store";
 import { TickFunction } from "../Types/Types";
 import { BaseEnemy } from "./BaseEnemy";
-import BulletRunner from "../BulletProviders/BulletRunner";
 
 /**
  * Module:          BaseLevel

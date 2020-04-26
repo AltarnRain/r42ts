@@ -92,7 +92,7 @@ export default class BulletRunner {
             // this state is constantly updated by the dispatches done below.
             // Fire check functions check the state and make the final call if the ship
             // can fire or not.
-            if (this.fireCheck(candidate.ship, appState().enemyLevelState)) {
+            if (this.fireCheck(candidate.ship)) {
                 const hitbox = candidate.ship.getHitbox();
                 const enemyFireAngle = candidate.angle;
 

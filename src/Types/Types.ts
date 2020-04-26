@@ -46,18 +46,35 @@ export type PlayerFormationPhases = "begin" | "inprogress" | undefined;
 
 /**
  * Function definition of an angle provider function.
+ * An angle provider function is NOT a pure function. It may pull in state
+ * To determine the best angle. For example, enemies mostly limited to diagonal angles
+ * Begin firing straight down once a certain amount of enemies are left.
  */
 export type AngleProviderFunction = (left: number, top: number) => number | undefined;
 
 /**
  * Function definition of a FireCheckFunction.
+ * A fire check function accepts the current enemy being checked if it can be fired.
+ * Fire check functions are NOT pure. They CAN pull in state and do additional checks.
  */
-export type FireCheckFunction = (enemy: BaseEnemy, levelState: EnemyLevelState) => boolean;
+export type FireCheckFunction = (enemy: BaseEnemy) => boolean;
 
+/**
+ * Always provides a fresh explosion object.
+ */
 export type ExplosionProviderFunction = () => Explosion;
 
+/**
+ * Always provides a fresh frame.
+ */
 export type FramesProviderFunction = () => Frames;
 
+/**
+ * Always provides a fresh OffsetFrame object.
+ */
 export type OffsetFramesProviderFunction = () => OffsetFrames;
 
+/**
+ * Always profirs a fres frame.
+ */
 export type FrameProviderFunction = () => Frame;

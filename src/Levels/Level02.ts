@@ -47,12 +47,12 @@ export default class Level02 extends BaseLevel {
  * @param {BaseEnemy} self. Reference to a robot object. Called from within the RobotEnemy to determine
  * if the robot can fire bullets or not.
  */
-function shouldFire(self: BaseEnemy): boolean {
-    const { enemyLevelState: levelState } = appState();
-    const lastEnemy = levelState.enemies[levelState.enemies.length - 1];
+function shouldFire(enemy: BaseEnemy): boolean {
+    const { enemyLevelState } = appState();
+    const lastEnemy = enemyLevelState.enemies[enemyLevelState.enemies.length - 1];
 
     if (lastEnemy !== undefined) {
-        if (lastEnemy.ship === self) {
+        if (lastEnemy.ship === enemy) {
             const rnd = Math.ceil(Math.random() * 20);
             return rnd === 1;
         }
