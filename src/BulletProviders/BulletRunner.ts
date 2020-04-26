@@ -11,7 +11,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
 import { FireCheckFunction, Frame } from "../Types/Types";
 import { calculateAngle, calculateAngleDifference } from "../Utility/Geometry";
-import { calculateTimeSpeedIncrease, cloneObject } from "../Utility/Lib";
+import { cloneObject } from "../Utility/Lib";
 
 /**
  * Module:          StraightDownBulletProvider
@@ -41,7 +41,6 @@ export default class BulletRunner {
     }
 
     public getBullets(tick: number): void {
-
         const {
             playerState,
             enemyLevelState
@@ -52,14 +51,17 @@ export default class BulletRunner {
             return;
         }
 
-        const fireInterval = enemyLevelState.fireInterval;
+        // To determine which enemies have the best change of hitting
+        // the player we calculate difference between the angle at which the
+        // enemy will fire vs the angle towards the player.
         const candidates: Array<{ ship: BaseEnemy, angleDifference: number, angle: number }> = [];
+
         for (const enemy of enemyLevelState.enemies) {
             const ship = enemy.ship;
             const lastShotTick = enemy.lastFireTick;
 
             // Check if this enemy's shot timeout has passed.
-            if (tick - lastShotTick > fireInterval) {
+            if (tick - lastShotTick > enemyLevelState.fireInterval) {
 
                 const enemyFireAngle = ship.getFireAngle();
                 const angleToPlayer = calculateAngle(ship.getCenterLocation(), playerState.playerLocation);
@@ -70,35 +72,41 @@ export default class BulletRunner {
                     candidates.push({ ship, angleDifference, angle: enemyFireAngle });
                 }
             }
+        }
 
-            candidates.sort((e1, e2) => {
-                if (e1.angleDifference < e2.angleDifference) {
-                    return -1;
-                } else {
-                    return 1;
-                }
-            });
+        // Sort the candidates. Those with the lowest angle difference will come out on top.
+        candidates.sort((e1, e2) => {
+            if (e1.angleDifference < e2.angleDifference) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
 
-            // The candiates are sorted so the enemeies with the best odds of hitting the player
-            // are at the top. Now we'll use the firecheck function to get an array of enemies that
-            // can actually fire.
-            for (const candidate of candidates) {
-                if (this.fireCheck(candidate.ship, enemyLevelState)) {
-                    const hitbox = candidate.ship.getHitbox();
-                    const enemyFireAngle = candidate.angle;
+        // The candiates are sorted so the enemeies with the best odds of hitting the player
+        // are at the top. Now we'll use the firecheck function to get an array of enemies that
+        // can actually fire.
+        for (const candidate of candidates) {
 
-                    const left = hitbox.left + (hitbox.right - hitbox.left) - averagePixelSize / 2;
+            // Always call a fire check function with the last version of the enemyLevelState
+            // this state is constantly updated by the dispatches done below.
+            // Fire check functions check the state and make the final call if the ship
+            // can fire or not.
+            if (this.fireCheck(candidate.ship, appState().enemyLevelState)) {
+                const hitbox = candidate.ship.getHitbox();
+                const enemyFireAngle = candidate.angle;
 
-                    const nozzleLocation: GameLocation = {
-                        left,
-                        top: hitbox.bottom + averagePixelSize,
-                    };
+                const left = hitbox.left + (hitbox.right - hitbox.left) - averagePixelSize / 2;
 
-                    const bullet = new BulletParticle(candidate.ship, this.bulletColor, nozzleLocation, this.bulletFrame, enemyFireAngle, this.speed);
+                const nozzleLocation: GameLocation = {
+                    left,
+                    top: hitbox.bottom + averagePixelSize,
+                };
 
-                    dispatch<BulletParticle>("addParticle", bullet);
-                    dispatch<{ ship: BaseEnemy, tick: number }>("setEnemyFireTick", { ship: candidate.ship, tick });
-                }
+                const bullet = new BulletParticle(candidate.ship, this.bulletColor, nozzleLocation, this.bulletFrame, enemyFireAngle, this.speed);
+
+                dispatch<BulletParticle>("addParticle", bullet);
+                dispatch<{ ship: BaseEnemy, tick: number }>("setEnemyFireTick", { ship: candidate.ship, tick });
             }
         }
     }

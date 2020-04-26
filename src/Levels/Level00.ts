@@ -66,33 +66,23 @@ export default class Level00 extends BaseLevel {
  * @param {BaseEnemy} enemy.
  */
 function orbFireCheck(enemy: BaseEnemy, levelState: EnemyLevelState): boolean {
-    const {
-        enemyLevelState,
-        playerState,
-    } = appState();
-
-    const playerShip = playerState.ship;
-
-    if (playerShip === undefined) {
-        return false;
-    }
 
     let canFire = false;
 
     // Save cast. The typeguard ensures only BulletParticles are returned but TypeScript isn't
     // clever enough (yet) to understand this.
-    const enemyBullets = enemyLevelState.particles.filter((p) => isEnemyBullet(p)) as BulletParticle[];
+    const enemyBullets = levelState.particles.filter((p) => isEnemyBullet(p)) as BulletParticle[];
 
     if (enemyBullets.length === 0) {
         // No bullets, can always fire.
         return true;
     } else if (enemyBullets.length < 5) {
-        if (enemyLevelState.enemies.length >= 5) {
+        if (levelState.enemies.length >= 5) {
             // if there's 5 enemies or more, an enemy is limited to a single bullet.
             canFire = enemyBullets.filter((p) => p.isOwner(enemy)).length === 0;
-        } else if (enemyLevelState.enemies.length < 5) {
+        } else if (levelState.enemies.length < 5) {
             // if there's 5 enemies or more, an enemy is limited to a single bullet.
-            canFire = enemyBullets.filter((p) => p.isOwner(enemy)).length < Math.ceil(5 / enemyLevelState.enemies.length);
+            canFire = enemyBullets.filter((p) => p.isOwner(enemy)).length < Math.ceil(5 / levelState.enemies.length);
         } else {
             canFire = false;
         }

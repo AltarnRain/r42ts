@@ -10,6 +10,11 @@ import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
 import { appState } from "../State/Store";
+import BulletRunner from "../BulletProviders/BulletRunner";
+import { twoPXBullet } from "../Assets/twoPXBullet";
+import CGAColors from "../Constants/CGAColors";
+import { downAngleProvider } from "../AngleProviders/DownAngleProvider";
+import GameLoop from "../Main/GameLoop";
 
 /**
  * Module:          Level 02
@@ -28,10 +33,13 @@ export default class Level02 extends BaseLevel {
         super.start();
 
         const enemies = robotSpawnLocationsAndColor.map((lc) => {
-            // const bulletProvider = new BulletProvider(200, twoPXBullet, CGAColors.lightRed, 3, 4, 0, shouldFire, downAngleProvider);
-            return new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(3, 5));
+
+            return new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(3, 5), downAngleProvider);
         });
-        this.begin(enemies);
+
+        const bulletProvider = new BulletRunner(twoPXBullet, CGAColors.lightRed, 5, shouldFire);
+        this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletProvider.getBullets(tick)));
+        this.begin(enemies, 200);
     }
 }
 
@@ -46,8 +54,8 @@ function shouldFire(self: BaseEnemy): boolean {
 
     if (lastEnemy !== undefined) {
         if (lastEnemy.ship === self) {
-            const rnd = Math.ceil(Math.random() * 2);
-            return true && rnd === 1;
+            const rnd = Math.ceil(Math.random() * 20);
+            return rnd === 1;
         }
     }
 
