@@ -62,13 +62,13 @@ function updateState(tick: number) {
 
     // Update object states.
     enemyLevelState.enemies.forEach((e) => {
-        e.updateState(tick);
+        e.ship.updateState(tick);
     });
 
     // SelfDestruct
     if (playerIsAlive(playerState.ship) && keyboardState.selfDestruct) {
         for (const enemy of enemyLevelState.enemies) {
-            queueExplosionRender(enemy.getCenterLocation(), enemy.getExplosion());
+            queueExplosionRender(enemy.ship.getCenterLocation(), enemy.ship.getExplosion());
         }
 
         queueExplosionRender(playerState.playerLocation, playerState.ship.getExplosion());
@@ -143,7 +143,7 @@ function draw(): void {
     const { enemyLevelState } = appState();
 
     // Draw all the game objects
-    enemyLevelState.enemies.forEach((e) => e.draw());
+    enemyLevelState.enemies.forEach((e) => e.ship.draw());
     enemyLevelState.particles.forEach((p) => p.draw());
     enemyLevelState.explosionCenters.forEach((ec) => ec.draw());
     enemyLevelState.phaserFrames.forEach((pf) => renderFrame(pf, phaserFrame));
@@ -160,18 +160,18 @@ function draw(): void {
  * handles the destruction of an enemy.
  * @param {BaseEnemy} enemy.
  */
-function handleEnemyDestruction(enemy: BaseEnemy): void {
+function handleEnemyDestruction(ship: BaseEnemy): void {
     const { enemyLevelState } = appState();
     enemyLevelState.enemies.forEach((e) => {
-        if (e !== enemy) {
-            e.increaseSpeed(enemyLevelState.totalNumberOfEnemies / (enemyLevelState.enemies.length - 1));
+        if (e.ship !== ship) {
+            e.ship.increaseSpeed(enemyLevelState.totalNumberOfEnemies / (enemyLevelState.enemies.length - 1));
         } else {
-            dispatch<BaseEnemy>("removeEnemy", e);
+            dispatch<BaseEnemy>("removeEnemy", e.ship);
         }
     });
 
-    queueExplosionRender(enemy.getLocation(), enemy.getExplosion());
-    dispatch<number>("increaseScore", enemy.getPoints());
+    queueExplosionRender(ship.getLocation(), ship.getExplosion());
+    dispatch<number>("increaseScore", ship.getPoints());
 }
 
 /**
@@ -183,7 +183,7 @@ function handlePhaser(player: PlayerShip): void {
 
     const randomEnemy = getRandomArrayElement(enemyLevelState.enemies);
     const playerNozzleLocation = player.getNozzleLocation();
-    const randomEnemyCenter = randomEnemy.getCenterLocation();
+    const randomEnemyCenter = randomEnemy.ship.getCenterLocation();
 
     // Remove one phaser.
     dispatch("removePhaser");
@@ -198,7 +198,7 @@ function handlePhaser(player: PlayerShip): void {
         dispatch("pauseOff");
 
         // Deal the with the enemy that got hit.
-        handleEnemyDestruction(randomEnemy);
+        handleEnemyDestruction(randomEnemy.ship);
         dispatch("clearPhaserFrames");
     }, 100);
 }
@@ -235,7 +235,7 @@ function queueExplosionRender(location: GameLocation, explosion: Explosion): voi
  * @param {number} value.
  */
 export function increaseEnemySpeed(value: number): void {
-    appState().enemyLevelState.enemiesFireInterval.forEach((e) => e.enemy.increaseSpeed(value));
+    appState().enemyLevelState.enemies.forEach((e) => e.ship.increaseSpeed(value));
 }
 
 /**
@@ -297,7 +297,7 @@ function DEBUGGING_drawPhaser(): void {
     const { debuggingState: debugging, playerState: player, enemyLevelState } = appState();
     if (debugging.renderPhaser && playerIsAlive(player.ship) && enemyLevelState.enemies.length > 0) {
         const enemy = enemyLevelState.enemies[0];
-        getPhaserLocations(player.ship.getNozzleLocation(), enemy.getCenterLocation(), averagePixelSize);
+        getPhaserLocations(player.ship.getNozzleLocation(), enemy.ship.getCenterLocation(), averagePixelSize);
     }
 }
 

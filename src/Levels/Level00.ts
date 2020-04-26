@@ -18,9 +18,8 @@ import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 import GameLoop from "../Main/GameLoop";
 import BulletParticle from "../Particles/BulletParticle";
 import PlayerShip from "../Player/PlayerShip";
-import dimensionProvider from "../Providers/DimensionProvider";
-import { appState, dispatch } from "../State/Store";
 import EnemyLevelState from "../State/Definition/EnemyLevelState";
+import { appState, dispatch } from "../State/Store";
 
 /**
  * Module:          Level 00
@@ -49,7 +48,8 @@ export default class Level00 extends BaseLevel {
         });
 
         // Add the enemies to the global state. The registered stateManager will take it from here.
-        dispatch<{enemies: BaseEnemy[], fireInterval: number}>("setEnemies", { enemies, fireInterval: 10 });
+        dispatch<number>("setFireInterval", 200);
+        dispatch<BaseEnemy[]>("setEnemies", enemies);
 
         const bulletRunner = new BulletRunner(twoPXBullet, CGAColors.magenta, 10, orbFireCheck);
 

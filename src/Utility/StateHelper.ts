@@ -17,8 +17,9 @@ import EnemyLevelState from "../State/Definition/EnemyLevelState";
  * @returns {BaseGameObject[]}. An array of objects that can be hit by the player or hit the player.
  */
 export function getHittableObjects(levelState: EnemyLevelState): BaseGameObject[] {
+    const ships = levelState.enemies.map((e) => e.ship);
     return [
-        ...levelState.enemies,
+        ...ships,
         ...levelState.particles,
         ...levelState.explosionCenters
     ].filter((o) => o !== undefined);

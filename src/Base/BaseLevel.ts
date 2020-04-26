@@ -7,7 +7,6 @@
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import GameLoop from "../Main/GameLoop";
-import EnemyFireIntervalState from "../State/Definition/EnemyFireIntervalState";
 import { appState, dispatch } from "../State/Store";
 import { TickFunction } from "../Types/Types";
 import { BaseEnemy } from "./BaseEnemy";
@@ -85,7 +84,7 @@ export default abstract class BaseLevel {
             this.levelBannerSub();
 
             // Add the enemies to the global state. The registered stateManager will take it from here.
-            dispatch<{ enemies: BaseEnemy[], fireInterval?: number }>("setEnemies", { enemies, fireInterval });
+            dispatch<BaseEnemy[]>("setEnemies", enemies);
 
             // Add a function to the GameLoop that will check if a level has been won.
             this.registerSubscription(GameLoop.registerUpdateState(() => this.monitorLevelWonRun()));

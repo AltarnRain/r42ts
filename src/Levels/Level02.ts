@@ -45,7 +45,7 @@ function shouldFire(self: BaseEnemy): boolean {
     const lastEnemy = levelState.enemies[levelState.enemies.length - 1];
 
     if (lastEnemy !== undefined) {
-        if (lastEnemy === self) {
+        if (lastEnemy.ship === self) {
             const rnd = Math.ceil(Math.random() * 2);
             return true && rnd === 1;
         }

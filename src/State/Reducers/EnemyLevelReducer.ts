@@ -13,6 +13,7 @@ import produce from "immer";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import ActionPayload from "../ActionPayLoad";
 import EnemyLevelState from "../Definition/EnemyLevelState";
+import enemeyLevelRunner from "../../Main/EnemeyLevelRunner";
 
 /**
  * enemyLevelReducer
@@ -25,8 +26,7 @@ export function enemyLevelReducer(state: EnemyLevelState = initState(), action: 
     return produce(state, (draft) => {
         switch (action.type) {
             case "removeEnemy":
-                draft.enemies = draft.enemies.filter((e) => e !== action.payload);
-                draft.enemiesFireInterval = draft.enemiesFireInterval.filter((e) => e.enemy !== action.payload);
+                draft.enemies = draft.enemies.filter((e) => e.ship !== action.payload);
                 break;
             case "pauseOn":
                 draft.pause = true;
@@ -53,15 +53,13 @@ export function enemyLevelReducer(state: EnemyLevelState = initState(), action: 
                 draft = initState();
                 break;
             case "setEnemies":
-                draft.enemies = action.payload.enemies;
-                draft.totalNumberOfEnemies = action.payload.enemies.length;
-
-                draft.enemiesFireInterval = action.payload.enemies.map((e: BaseEnemy) => {
+                draft.enemies = action.payload.enemies.map((e: BaseEnemy) => {
                     return {
-                        enemy: e, fireInterval: action.payload.fireInterval
+                        ship: e,
+                        lastFireTick: 0,
                     };
                 });
-
+                draft.totalNumberOfEnemies = action.payload.length;
                 break;
             case "setPhaserFrames":
                 draft.phaserFrames = action.payload;
@@ -69,6 +67,15 @@ export function enemyLevelReducer(state: EnemyLevelState = initState(), action: 
             case "clearPhaserFrames":
                 draft.phaserFrames = [];
                 break;
+            case "setFireInterval":
+                draft.fireInterval = action.payload;
+                break;
+            case "setEnemyFireTick":
+                const enemy = draft.enemies.find((e) => e.ship === action.payload.ship);
+                if (enemy !== undefined) {
+                    const enemyIndex = draft.enemies.indexOf(enemy);
+                    draft.enemies[enemyIndex].lastFireTick = action.payload.tick;
+                }
         }
     });
 }
@@ -76,11 +83,11 @@ export function enemyLevelReducer(state: EnemyLevelState = initState(), action: 
 function initState(): EnemyLevelState {
     return {
         enemies: [],
-        enemiesFireInterval: [],
         pause: false,
         explosionCenters: [],
         particles: [],
         totalNumberOfEnemies: 0,
         phaserFrames: [],
+        fireInterval: 0,
     };
 }

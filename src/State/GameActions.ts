@@ -29,6 +29,8 @@ type GameActions =
     "removeParticle" |
     "setPhaserFrames" |
     "clearPhaserFrames" |
+    "setFireInterval" |
+    "setEnemyFireTick" |
 
     // Player
     "setPlayer" |
