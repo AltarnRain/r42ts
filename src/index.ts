@@ -18,6 +18,7 @@ import dimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
+import playerSpawnManager from "./Player/PlayerSpawnManager";
 
 window.onload = () => {
 
@@ -40,6 +41,7 @@ window.onload = () => {
 
                 GameLoop.registerBackgroundDrawing(drawStatusBar);
                 GameLoop.registerUpdateState(playerRunner);
+                GameLoop.registerUpdateState(playerSpawnManager);
                 dispatch<boolean>("playerImmortal", true);
 
                 dispatch<number>("setLives", 2);

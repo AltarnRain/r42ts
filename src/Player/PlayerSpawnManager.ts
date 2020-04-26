@@ -43,24 +43,6 @@ let rightWingPart: PlayerFormationPart;
 
 let allMovingParts: PlayerFormationPart[] = [];
 
-let nozzleTipLeftStartLocation: number;
-let nozzleTipTopStartLocation: number;
-let nozzleBottomLeftStartLocation: number;
-let nozzleBottomTopStartLocation: number;
-let leftWingLeftStartLocation: number;
-let leftWingTopStartLocation: number;
-let rightWingLeftStartLocation: number;
-let rightWingTopStartLocation: number;
-
-let nozzleTipLeftEndLocation: number;
-let nozzleTipTopEndLocation: number;
-let nozzleBottomLeftEndLocation: number;
-let nozzleBottomTopEndLocation: number;
-let leftWingLeftEndLocation: number;
-let leftWingTopEndLocation: number;
-let rightWingLeftEndLocation: number;
-let rightWingTopEndLocation: number;
-
 let formationSpeed: "slow" | "fast";
 
 let formationInProgress = false;
@@ -90,10 +72,16 @@ export default function playerSpawnManager(): void {
 }
 
 /**
- * Set the particle locations in the module
- * @param {GameLocation} targetLocation.
+ * Creates the player formation particles.
  */
-function setPartLocations(left: number, top: number): void {
+function createParticles(): void {
+
+    const {
+        playerState
+    } = appState();
+
+    const left = playerState.playerLeftLocation;
+    const top = playerState.playerTopLocation;
 
     const nozzleOrigin = { left: left + nozzleLeftOffset, top: top + averagePixelSize };
     const leftWingOrigin = { left, top: top + wingsTopOffset };
@@ -104,39 +92,22 @@ function setPartLocations(left: number, top: number): void {
     const leftWing = getLocation(leftWingOrigin.left, leftWingOrigin.top, leftWingOutAngle, particleTravelDistance);
     const rightWing = getLocation(rightWingOrigin.left, rightWingOrigin.top, rightWingOutAngle, particleTravelDistance);
 
-    nozzleTipLeftStartLocation = nozzleTip.left;
-    nozzleTipTopStartLocation = nozzleTip.top;
+    // nozzleTipLeftEndLocation = nozzleTip.left + averagePixelSize * 2;
+    // nozzleTipTopEndLocation = nozzleTip.top;
 
-    nozzleBottomLeftStartLocation = nozzleBottom.left;
-    nozzleBottomTopStartLocation = nozzleBottom.top;
+    // nozzleBottomLeftEndLocation = nozzleBottom.left + averagePixelSize;
+    // nozzleBottomTopEndLocation = nozzleBottom.top + averagePixelSize;
 
-    leftWingLeftStartLocation = leftWing.left;
-    leftWingTopStartLocation = leftWing.top;
+    // leftWingLeftEndLocation = leftWing.left;
+    // leftWingTopEndLocation = leftWing.top + averagePixelSize * 1;
 
-    rightWingLeftStartLocation = rightWing.left;
-    rightWingTopStartLocation = rightWing.top;
+    // rightWingLeftEndLocation = rightWing.left + averagePixelSize * 4;
+    // rightWingTopEndLocation = rightWing.top + averagePixelSize * 1;
 
-    nozzleTipLeftEndLocation = nozzleTip.left + averagePixelSize * 2;
-    nozzleTipTopEndLocation = nozzleTip.top;
-
-    nozzleBottomLeftEndLocation = nozzleBottom.left + averagePixelSize;
-    nozzleBottomTopEndLocation = nozzleBottom.top + averagePixelSize;
-
-    leftWingLeftEndLocation = leftWing.left;
-    leftWingTopEndLocation = leftWing.top + averagePixelSize * 1;
-
-    rightWingLeftEndLocation = rightWing.left + averagePixelSize * 4;
-    rightWingTopEndLocation = rightWing.top + averagePixelSize * 1;
-}
-
-/**
- * Creates the player formation particles.
- */
-function createParticles(): void {
-    nozzleTopPart = new PlayerFormationPart(nozzleTipLeftStartLocation, nozzleTipTopStartLocation, nozzleTipLeftEndLocation, nozzleTipTopEndLocation, getFrameReturner(playerFormationFrames[0]), 0);
-    nozzleBottomPart = new PlayerFormationPart(nozzleBottomLeftStartLocation, nozzleBottomTopStartLocation, nozzleBottomLeftEndLocation, nozzleBottomTopEndLocation, getFrameReturner(playerFormationFrames[1]), 0);
-    leftWingPart = new PlayerFormationPart(leftWingLeftStartLocation, leftWingTopStartLocation, leftWingLeftEndLocation, leftWingTopEndLocation, getFrameReturner(playerFormationFrames[2]), 0);
-    rightWingPart = new PlayerFormationPart(rightWingLeftStartLocation, rightWingTopStartLocation, rightWingLeftEndLocation, rightWingTopEndLocation, getFrameReturner(playerFormationFrames[3]), 0);
+    nozzleTopPart = new PlayerFormationPart(nozzleTip.left, nozzleTip.top,  getFrameReturner(playerFormationFrames[0]), 0);
+    nozzleBottomPart = new PlayerFormationPart(nozzleBottom.left, nozzleBottom.left,  getFrameReturner(playerFormationFrames[1]), 0);
+    leftWingPart = new PlayerFormationPart(leftWing.left, leftWing.top,  getFrameReturner(playerFormationFrames[2]), 0);
+    rightWingPart = new PlayerFormationPart(rightWing.left, rightWing.top ,  getFrameReturner(playerFormationFrames[3]), 0);
 
     allMovingParts = [nozzleTopPart, nozzleBottomPart, leftWingPart, rightWingPart].filter((p) => p !== undefined);
 }
@@ -151,7 +122,6 @@ function setupFormation(targetLeftLocation: number, targetTopLocation: number, s
     formationSpeed = speed;
     dispatch<number>("setPlayerLeftLocation", targetLeftLocation);
     dispatch<number>("setPlayerTopLocation", targetTopLocation);
-    setPartLocations(targetLeftLocation, targetTopLocation);
     createParticles();
 
     if (speed === "fast") {
@@ -168,7 +138,7 @@ function setupFormation(targetLeftLocation: number, targetTopLocation: number, s
  * Main function that draws the player formation.
  */
 function updateState(): void {
-    const { playerState, keyboardState } = appState();
+    const { keyboardState } = appState();
 
     if (keyboardState.space === false && formationSpeed === "slow" && allMovingParts.some((p) => p.traveling())) {
         allMovingParts.forEach((p) => {
@@ -176,12 +146,6 @@ function updateState(): void {
         });
 
         movePlayer(5);
-        setPartLocations(playerState.playerLeftLocation, playerState.playerTopLocation);
-
-        nozzleTopPart?.setUpdatedTargetLocation(nozzleTipLeftEndLocation, nozzleTipTopEndLocation);
-        nozzleBottomPart?.setUpdatedTargetLocation(nozzleBottomLeftEndLocation, nozzleBottomLeftEndLocation);
-        leftWingPart?.setUpdatedTargetLocation(leftWingLeftEndLocation, leftWingTopEndLocation);
-        rightWingPart?.setUpdatedTargetLocation(rightWingLeftEndLocation, rightWingTopEndLocation);
     } else if (formationSpeed === "fast") {
         allMovingParts.forEach((p) => {
             p.updateState();

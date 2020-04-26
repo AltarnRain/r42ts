@@ -37,6 +37,5 @@ export function getPlayerFrame(): Frame {
 
 export function getPlayerFormationFrames(): Frames {
     const f = JSON.parse(JSON.stringify(playerFormationFrames));
-    convertFramesColors(f);
     return f;
 }

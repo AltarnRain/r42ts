@@ -40,7 +40,7 @@ export default class Level00 extends BaseLevel {
         // Register the background draw function so it runs in the game loop.
         this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
 
-        dispatch<PlayerShip>("setPlayer", new PlayerShip());
+        // dispatch<PlayerShip>("setPlayer", new PlayerShip());
         // dispatch<GameLocation>("setPlayerLocation", { left: 0, top: 0 });
 
         const enemies = orbSpawnLocations.map((startLocation) => {
