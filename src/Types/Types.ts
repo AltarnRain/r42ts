@@ -11,6 +11,7 @@
 
 import { BaseEnemy } from "../Base/BaseEnemy";
 import GameLocation from "../Models/GameLocation";
+import EnemyLevelState from "../State/Definition/EnemyLevelState";
 
 /**
  * Defines frames. Frames are objects with key values that start with F{N}. Where N is the frame number.
@@ -50,4 +51,4 @@ export type AngleProviderFunction = (location: GameLocation) => number | undefin
 /**
  * Function definition of a FireCheckFunction.
  */
-export type FireCheckFunction = (enemy: BaseEnemy) => boolean;
+export type FireCheckFunction = (enemy: BaseEnemy, levelState: EnemyLevelState) => boolean;

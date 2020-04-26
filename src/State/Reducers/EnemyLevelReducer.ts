@@ -10,6 +10,7 @@
  */
 
 import produce from "immer";
+import { BaseEnemy } from "../../Base/BaseEnemy";
 import ActionPayload from "../ActionPayLoad";
 import EnemyLevelState from "../Definition/EnemyLevelState";
 
@@ -25,6 +26,7 @@ export function enemyLevelReducer(state: EnemyLevelState = initState(), action: 
         switch (action.type) {
             case "removeEnemy":
                 draft.enemies = draft.enemies.filter((e) => e !== action.payload);
+                draft.enemiesFireInterval = draft.enemiesFireInterval.filter((e) => e.enemy !== action.payload);
                 break;
             case "pauseOn":
                 draft.pause = true;
@@ -51,8 +53,15 @@ export function enemyLevelReducer(state: EnemyLevelState = initState(), action: 
                 draft = initState();
                 break;
             case "setEnemies":
-                draft.enemies = action.payload;
-                draft.totalNumberOfEnemies = action.payload.length;
+                draft.enemies = action.payload.enemies;
+                draft.totalNumberOfEnemies = action.payload.enemies.length;
+
+                draft.enemiesFireInterval = action.payload.enemies.map((e: BaseEnemy) => {
+                    return {
+                        enemy: e, fireInterval: action.payload.fireInterval
+                    };
+                });
+
                 break;
             case "setPhaserFrames":
                 draft.phaserFrames = action.payload;
@@ -67,6 +76,7 @@ export function enemyLevelReducer(state: EnemyLevelState = initState(), action: 
 function initState(): EnemyLevelState {
     return {
         enemies: [],
+        enemiesFireInterval: [],
         pause: false,
         explosionCenters: [],
         particles: [],

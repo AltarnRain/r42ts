@@ -26,30 +26,17 @@ export default class BulletRunner {
     private bulletFrame: Frame;
     private fireCheck: FireCheckFunction;
     private speed: number;
-    private leftOffset: number;
-    private topOffset: number;
     private bulletColor: string;
-    private bulletTick: number = 0;
-    private baseTime: number;
-    private time: number;
 
     constructor(
-        minTimeBetweenShots: number,
         bulletFrame: Frame,
         bulletColor: string,
         speed: number,
-        leftOffset: number,
-        topOffset: number,
-        shouldfire: (self: BaseEnemy) => boolean) {
-
-        this.time = minTimeBetweenShots;
-        this.baseTime = minTimeBetweenShots;
+        shouldfire: FireCheckFunction) {
 
         this.bulletFrame = cloneObject(bulletFrame);
         this.fireCheck = shouldfire;
         this.speed = speed;
-        this.leftOffset = leftOffset * averagePixelSize;
-        this.topOffset = topOffset * averagePixelSize;
         this.bulletColor = bulletColor;
     }
 
@@ -67,15 +54,22 @@ export default class BulletRunner {
 
         const candidates: Array<{ enemy: BaseEnemy, angleDifference: number, angle: number }> = [];
         for (const enemy of enemyLevelState.enemies) {
-            const enemyFireAngle = enemy.getFireAngle();
-            const angleToPlayer = calculateAngle(enemy.getCenterLocation(), playerState.playerLocation);
 
-            if (enemyFireAngle !== undefined && angleToPlayer !== undefined) {
-                const angleDifference = calculateAngleDifference(enemyFireAngle, angleToPlayer);
+            // if (enemyFireTime !== undefined) {
+            //     // Check if this enemy's shot timeout has passed.
+            //     if (tick - enemyFireTime.lastShotTick > this.time) {
+            //         enemyFireTime.lastShotTick = tick;
+                    const enemyFireAngle = enemy.getFireAngle();
+                    const angleToPlayer = calculateAngle(enemy.getCenterLocation(), playerState.playerLocation);
 
-                candidates.push({ enemy, angleDifference, angle: enemyFireAngle });
-            }
-        }
+                    if (enemyFireAngle !== undefined && angleToPlayer !== undefined) {
+                        const angleDifference = calculateAngleDifference(enemyFireAngle, angleToPlayer);
+
+                        candidates.push({ enemy, angleDifference, angle: enemyFireAngle });
+                    }
+                }
+        //     }
+        // }
 
         candidates.sort((e1, e2) => {
             if (e1.angleDifference < e2.angleDifference) {
@@ -89,7 +83,7 @@ export default class BulletRunner {
         // are at the top. Now we'll use the firecheck function to get an array of enemies that
         // can actually fire.
         for (const candidate of candidates) {
-            if (this.fireCheck(candidate.enemy)) {
+            if (this.fireCheck(candidate.enemy, enemyLevelState)) {
                 const hitbox = candidate.enemy.getHitbox();
                 const enemyFireAngle = candidate.angle;
 
@@ -106,4 +100,5 @@ export default class BulletRunner {
             }
         }
     }
+
 }

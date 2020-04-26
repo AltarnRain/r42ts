@@ -20,6 +20,7 @@ import BulletParticle from "../Particles/BulletParticle";
 import PlayerShip from "../Player/PlayerShip";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
+import EnemyLevelState from "../State/Definition/EnemyLevelState";
 
 /**
  * Module:          Level 00
@@ -42,15 +43,16 @@ export default class Level00 extends BaseLevel {
         dispatch<PlayerShip>("setPlayer", new PlayerShip());
         // dispatch<GameLocation>("setPlayerLocation", { left: 0, top: 0 });
 
-        const bulletRunner = new BulletRunner(100, twoPXBullet, CGAColors.magenta, 10, -1, 2, orbFireCheck);
-
-        this.enemies = orbSpawnLocations.map((startLocation) => {
+        const enemies = orbSpawnLocations.map((startLocation) => {
             const locationProvider = new MoveDownAppearUp(80, 0, 90);
             return new OrbEnemy(startLocation, 300, locationProvider, diagonalAtPlayerAngleProvider);
         });
 
         // Add the enemies to the global state. The registered stateManager will take it from here.
-        dispatch<BaseEnemy[]>("setEnemies", this.enemies);
+        dispatch<{enemies: BaseEnemy[], fireInterval: number}>("setEnemies", { enemies, fireInterval: 10 });
+
+        const bulletRunner = new BulletRunner(twoPXBullet, CGAColors.magenta, 10, orbFireCheck);
+
         // Register the stateManager so it can act on state changes in the level.
         this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));
         this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletRunner.getBullets(tick)));
@@ -63,7 +65,7 @@ export default class Level00 extends BaseLevel {
  * bullets are offscreen.
  * @param {BaseEnemy} enemy.
  */
-function orbFireCheck(enemy: BaseEnemy): boolean {
+function orbFireCheck(enemy: BaseEnemy, levelState: EnemyLevelState): boolean {
     const {
         enemyLevelState,
         playerState,

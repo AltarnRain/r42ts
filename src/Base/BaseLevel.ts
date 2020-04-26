@@ -7,6 +7,7 @@
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import GameLoop from "../Main/GameLoop";
+import EnemyFireIntervalState from "../State/Definition/EnemyFireIntervalState";
 import { appState, dispatch } from "../State/Store";
 import { TickFunction } from "../Types/Types";
 import { BaseEnemy } from "./BaseEnemy";
@@ -22,11 +23,6 @@ export default abstract class BaseLevel {
      * Array of subscriptions registered in the GameLoop. Disposed when the level is disposed.
      */
     private subscriptions: Array<() => void> = [];
-
-    /**
-     * Array of enemies. These are the enemies that will appear in the Level.
-     */
-    protected enemies: BaseEnemy[] = [];
 
     /**
      * Subscription that removes the level banner from the game loop when called. Defined in the 'start' method.
@@ -77,7 +73,7 @@ export default abstract class BaseLevel {
     /**
      * Begin this level. Call from start.
      */
-    protected begin(): void {
+    protected begin(enemies: BaseEnemy[], fireInterval?: number): void {
         // A phaser is rewarded at the beginning of a level.
         dispatch("addPhaser");
 
@@ -89,7 +85,7 @@ export default abstract class BaseLevel {
             this.levelBannerSub();
 
             // Add the enemies to the global state. The registered stateManager will take it from here.
-            dispatch<BaseEnemy[]>("setEnemies", this.enemies);
+            dispatch<{ enemies: BaseEnemy[], fireInterval?: number }>("setEnemies", { enemies, fireInterval });
 
             // Add a function to the GameLoop that will check if a level has been won.
             this.registerSubscription(GameLoop.registerUpdateState(() => this.monitorLevelWonRun()));

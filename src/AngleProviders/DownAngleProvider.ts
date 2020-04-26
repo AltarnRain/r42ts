@@ -9,13 +9,13 @@
  * Responsibility:  Always returns 'down' as the angle
  */
 
-import { BaseEnemy } from "../Base/BaseEnemy";
 import { angles } from "../Constants/Angles";
+import GameLocation from "../Models/GameLocation";
 
 /**
  * Returns down.
  * @param {BaseEnemy} enemy. Any enemy.
  */
-export function downAngleProvider(enemy: BaseEnemy): number {
+export function downAngleProvider(location: GameLocation): number {
     return angles.down;
 }

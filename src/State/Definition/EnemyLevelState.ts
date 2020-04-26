@@ -8,6 +8,7 @@ import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseParticle from "../../Base/BaseParticle";
 import GameLocation from "../../Models/GameLocation";
 import ExplosionCenter from "../../Particles/ExplosionCenter";
+import EnemyFireIntervalState from "./EnemyFireIntervalState";
 
 /**
  * Module:          EnemyLevelState
@@ -20,6 +21,11 @@ export default interface EnemyLevelState {
      * Array of current game objects on screen.
      */
     enemies: BaseEnemy[];
+
+    /**
+     * Enemies with their fire interval.
+     */
+    enemiesFireInterval: EnemyFireIntervalState[];
 
     /**
      * Particles travelling on the screen.

@@ -5,7 +5,7 @@
  */
 
 import BaseGameObject from "../Base/BaseGameObject";
-import { appState } from "../State/Store";
+import EnemyLevelState from "../State/Definition/EnemyLevelState";
 
 /**
  * Module:          StateHelper
@@ -16,8 +16,7 @@ import { appState } from "../State/Store";
  * Returns all gameobject that can kill the player with their hitboxes.
  * @returns {BaseGameObject[]}. An array of objects that can be hit by the player or hit the player.
  */
-export function getHittableObjects(): BaseGameObject[] {
-    const { enemyLevelState: levelState } = appState();
+export function getHittableObjects(levelState: EnemyLevelState): BaseGameObject[] {
     return [
         ...levelState.enemies,
         ...levelState.particles,
