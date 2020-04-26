@@ -13,7 +13,6 @@ import produce from "immer";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import ActionPayload from "../ActionPayLoad";
 import EnemyLevelState from "../Definition/EnemyLevelState";
-import enemeyLevelRunner from "../../Main/EnemeyLevelRunner";
 
 /**
  * enemyLevelReducer
@@ -53,7 +52,7 @@ export function enemyLevelReducer(state: EnemyLevelState = initState(), action: 
                 draft = initState();
                 break;
             case "setEnemies":
-                draft.enemies = action.payload.enemies.map((e: BaseEnemy) => {
+                draft.enemies = action.payload.map((e: BaseEnemy) => {
                     return {
                         ship: e,
                         lastFireTick: 0,
