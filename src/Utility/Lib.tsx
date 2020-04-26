@@ -10,16 +10,6 @@
  */
 
 /**
- * Creates a clone for the provides Frames.
- * @param {Frames} frames. Frames to clone.
- * @returns {Frames}. A clone of the provided frames.
- */
-export function cloneObject<T>(obj: T): T {
-    // Create a clone using JSON.
-    return JSON.parse(JSON.stringify(obj)) as T;
-}
-
-/**
  * Picks a random number within a range.
  * @param {number} max. Maximum value.
  * @param {number} min. Minimum value.
