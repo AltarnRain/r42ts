@@ -9,7 +9,7 @@ import GameLoop from "../Main/GameLoop";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types/Types";
-import { convertFramesColors, getFrameReturner } from "../Utility/Frame";
+import { getFrameReturner } from "../Utility/Frame";
 import { getLocation } from "../Utility/Location";
 import PlayerFormationPart from "./PlayerFormationPart";
 import { getPlayerFormationFrames } from "./PlayerFrames";
@@ -23,10 +23,6 @@ import PlayerShip from "./PlayerShip";
 const {
     averagePixelSize,
 } = dimensionProvider();
-
-const nozzleLeftOffset = averagePixelSize * 2;
-const rightWingLeftOffset = averagePixelSize * 4;
-const wingsTopOffset = averagePixelSize;
 
 const particleTravelDistance = averagePixelSize * 60;
 const nozzleDistance = particleTravelDistance + averagePixelSize;
@@ -83,31 +79,42 @@ function createParticles(): void {
     const left = playerState.playerLeftLocation;
     const top = playerState.playerTopLocation;
 
-    const nozzleOrigin = { left: left + nozzleLeftOffset, top: top + averagePixelSize };
-    const leftWingOrigin = { left, top: top + wingsTopOffset };
-    const rightWingOrigin = { top: top + wingsTopOffset, left: left + rightWingLeftOffset };
+    const nozzleTip = getLocation(left, top, nozzleOutAngle, nozzleDistance);
+    const nozzleBottom = getLocation(left, top, nozzleOutAngle, particleTravelDistance);
+    const leftWing = getLocation(left, top, leftWingOutAngle, particleTravelDistance);
+    const rightWing = getLocation(left, top, rightWingOutAngle, particleTravelDistance);
 
-    const nozzleTip = getLocation(nozzleOrigin.left, nozzleOrigin.top, nozzleOutAngle, nozzleDistance);
-    const nozzleBottom = getLocation(nozzleOrigin.left, nozzleOrigin.top, nozzleOutAngle, particleTravelDistance);
-    const leftWing = getLocation(leftWingOrigin.left, leftWingOrigin.top, leftWingOutAngle, particleTravelDistance);
-    const rightWing = getLocation(rightWingOrigin.left, rightWingOrigin.top, rightWingOutAngle, particleTravelDistance);
+    nozzleTopPart = new PlayerFormationPart(
+        nozzleTip.left,
+        nozzleTip.top,
+        getFrameReturner(playerFormationFrames[0]),
+        0,
+        averagePixelSize * 2,
+        0);
 
-    // nozzleTipLeftEndLocation = nozzleTip.left + averagePixelSize * 2;
-    // nozzleTipTopEndLocation = nozzleTip.top;
+    nozzleBottomPart = new PlayerFormationPart(
+        nozzleBottom.left,
+        nozzleBottom.top,
+        getFrameReturner(playerFormationFrames[1]),
+        0,
+        averagePixelSize * 2,
+        averagePixelSize);
 
-    // nozzleBottomLeftEndLocation = nozzleBottom.left + averagePixelSize;
-    // nozzleBottomTopEndLocation = nozzleBottom.top + averagePixelSize;
+    leftWingPart = new PlayerFormationPart(
+        leftWing.left,
+        leftWing.top,
+        getFrameReturner(playerFormationFrames[2]),
+        0,
+        0,
+        averagePixelSize);
 
-    // leftWingLeftEndLocation = leftWing.left;
-    // leftWingTopEndLocation = leftWing.top + averagePixelSize * 1;
-
-    // rightWingLeftEndLocation = rightWing.left + averagePixelSize * 4;
-    // rightWingTopEndLocation = rightWing.top + averagePixelSize * 1;
-
-    nozzleTopPart = new PlayerFormationPart(nozzleTip.left, nozzleTip.top,  getFrameReturner(playerFormationFrames[0]), 0);
-    nozzleBottomPart = new PlayerFormationPart(nozzleBottom.left, nozzleBottom.left,  getFrameReturner(playerFormationFrames[1]), 0);
-    leftWingPart = new PlayerFormationPart(leftWing.left, leftWing.top,  getFrameReturner(playerFormationFrames[2]), 0);
-    rightWingPart = new PlayerFormationPart(rightWing.left, rightWing.top ,  getFrameReturner(playerFormationFrames[3]), 0);
+    rightWingPart = new PlayerFormationPart(
+        rightWing.left,
+        rightWing.top,
+        getFrameReturner(playerFormationFrames[3]),
+        0,
+        averagePixelSize * 4,
+        averagePixelSize);
 
     allMovingParts = [nozzleTopPart, nozzleBottomPart, leftWingPart, rightWingPart].filter((p) => p !== undefined);
 }
@@ -125,9 +132,9 @@ function setupFormation(targetLeftLocation: number, targetTopLocation: number, s
     createParticles();
 
     if (speed === "fast") {
-        allMovingParts.forEach((p) => p.setSpeed(17));
+        allMovingParts.forEach((p) => p.setSpeed(30));
     } else {
-        allMovingParts.forEach((p) => p.setSpeed(6));
+        allMovingParts.forEach((p) => p.setSpeed(10));
     }
 
     dispatch<MoveLimits>("setPlayerMovementLimit", limit);

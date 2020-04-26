@@ -11,11 +11,11 @@
 
 import speedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
+import { appState } from "../State/Store";
 import { Frame, FrameProviderFunction } from "../Types/Types";
 import { convertFrameColor } from "../Utility/Frame";
 import { calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
-import { appState } from "../State/Store";
 
 export default class PlayerFormationPart {
 
@@ -38,19 +38,31 @@ export default class PlayerFormationPart {
     private currentFrameClone: Frame;
 
     /**
+     * Offset to add to the left.
+     */
+    private leftOffset: number;
+
+    /**
+     * Offset to add to the top.
+     */
+    private topOffset: number;
+
+    /**
      * Construct the object.
      * @param {GameLocation} sourceLocation. Location where the part begins.
      * @param {GameLocation} targetLocation. Location where the part is heading.
      * @param {Frame} frame. Frame to render for this part.
      * @param {number} speed. Speed at which the part travels.
      */
-    constructor(left: number, top: number, getFrame: FrameProviderFunction, speed: number) {
+    constructor(left: number, top: number, getFrame: FrameProviderFunction, speed: number, leftOffset: number, topOffset: number) {
 
         this.currentFrameClone = getFrame();
         convertFrameColor(this.currentFrameClone);
 
-        this.currentLeftLocation = left;
-        this.currentTopLocation = top;
+        this.currentLeftLocation = left + leftOffset;
+        this.currentTopLocation = top + topOffset;
+        this.leftOffset = leftOffset;
+        this.topOffset = topOffset;
 
         this.speed = speed;
     }
@@ -64,14 +76,14 @@ export default class PlayerFormationPart {
             playerState
         } = appState();
 
-        const targetLeftLocation = playerState.playerLeftLocation;
-        const targetTopLocation = playerState.playerTopLocation;
+        const targetLeftLocation = playerState.playerLeftLocation + this.leftOffset;
+        const targetTopLocation = playerState.playerTopLocation + this.topOffset;
 
         const angle = calculateAngle(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
         const distance = calculateDistance(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
 
         if (distance > 10) {
-            const nextLocation = getLocation(this.currentLeftLocation, this.currentTopLocation, angle, speedProvider(this.speed) > distance ? distance : this.speed);
+            const nextLocation = getLocation(this.currentLeftLocation, this.currentTopLocation, angle, this.speed);
             this.currentLeftLocation = nextLocation.left;
             this.currentTopLocation = nextLocation.top;
         } else {
@@ -96,8 +108,8 @@ export default class PlayerFormationPart {
             playerState
         } = appState();
 
-        const targetLeftLocation = playerState.playerLeftLocation;
-        const targetTopLocation = playerState.playerTopLocation;
+        const targetLeftLocation = playerState.playerLeftLocation + this.leftOffset;
+        const targetTopLocation = playerState.playerTopLocation + this.topOffset;
 
         const distance = calculateDistance(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
         return distance > 5;
