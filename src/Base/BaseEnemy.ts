@@ -44,10 +44,13 @@ export abstract class BaseEnemy extends BaseDestructable {
     private frameTickHandler: TickHandler;
 
     /**
-     * The real location the enemy has, without offsets.
+     * The real left position the enemy has, without offsets.
      */
     protected actualLeft: number;
 
+    /**
+     * The real top position the enemy has, without offsets.
+     */
     protected actualTop: number;
 
     /**
@@ -80,8 +83,8 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @param {number} left. Left coordinate.
      * @param {number} top. Top coordinate.
      * @param {number} frameChangeTime. Time in ms between frames.
-     * @param {OffsetFrames} offsetFrames. Frames with offsets.
-     * @param {Explosion} explosion. Explosion asset. Aka. BOOM animation.
+     * @param {OffsetFramesProviderFunction} getOffsetFrames. A function that returns an offsets frame object.
+     * @param {ExplosionProviderFunction} getExplosion. A function that returns an explosion object.
      * @param {BaseLocationProvider} locationProvider. Handles the locations of the enemy. Can be used to inject movement behaviour.
      * @param {BulletRunner} bulletProvider. A class that checks if the enemy can fire a bullet. When undefined the enemy does not fire.
      */
@@ -90,7 +93,7 @@ export abstract class BaseEnemy extends BaseDestructable {
         top: number,
         frameChangeTime: number,
         getOffsetFrames: OffsetFramesProviderFunction,
-        explosion: ExplosionProviderFunction,
+        getExplosion: ExplosionProviderFunction,
         locationProvider: BaseLocationProvider,
         frameProvider: BaseFrameProvider,
         angleProvider?: AngleProviderFunction) {
@@ -98,7 +101,7 @@ export abstract class BaseEnemy extends BaseDestructable {
 
         this.locationProvider = locationProvider;
 
-        this.explosion = explosion();
+        this.explosion = getExplosion();
         this.actualLeft = left;
         this.actualTop = top;
         this.frameTickHandler = new TickHandler(frameChangeTime, () => this.onFrameChange());
