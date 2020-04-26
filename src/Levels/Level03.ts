@@ -29,7 +29,7 @@ export class Level03 extends BaseLevel {
         super.start();
         const enemies = orbSpawnLocations.map((startLocation) => {
             const frameProvider = new CircleFrameProvider(0);
-            const locationProvider = new MoveDownAppearUp(80, 0, 90);
+            const locationProvider = new MoveDownAppearUp(80, 0.3, 90);
             return new OrbEnemy(startLocation.left, startLocation.top, 300, locationProvider, frameProvider, diagonalAtPlayerAngleProvider);
         });
 

@@ -106,11 +106,10 @@ export default abstract class BaseLevel {
      * Disposes subscriptions
      */
     public dispose(): void {
+        dispatch("resetLevelState");
         // The subscription array contains functions that remove themselves
         // from the GameLoop. Call all of them to remove them from the GameLoop.
         this.subscriptions.forEach((s) => s());
-        dispatch("setEnemies", []);
-        dispatch("resetLevelState");
     }
 
     /**
