@@ -9,8 +9,8 @@
  * Responsibility:  Returns down/left or down/right aimed at the player
  */
 
-import { BaseEnemy } from "../Base/BaseEnemy";
 import { angles } from "../Constants/Angles";
+import GameLocation from "../Models/GameLocation";
 import { appState } from "../State/Store";
 
 /**
@@ -18,13 +18,12 @@ import { appState } from "../State/Store";
  * player. If it can't hit the player the angle will be undefined.
  * @param {BaseEnemy} self. An enemy.
  */
-export function diagonalAtPlayerAngleProvider(enemy: BaseEnemy): number | undefined {
+export function diagonalAtPlayerAngleProvider(location: GameLocation): number | undefined {
 
     const {
         playerState
     } = appState();
 
-    const enemyCenter = enemy.getCenterLocation();
     const playerShip = playerState.ship;
 
     if (playerShip === undefined) {
@@ -33,7 +32,7 @@ export function diagonalAtPlayerAngleProvider(enemy: BaseEnemy): number | undefi
 
     const playerHitbox = playerShip.getHitbox();
 
-    if (enemyCenter.left < playerHitbox.left) {
+    if (location.left < playerHitbox.left) {
         return angles.rightdown;
     } else {
         return angles.leftdown;

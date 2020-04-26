@@ -13,13 +13,13 @@ import Explosion02 from "../../Assets/Explosion02";
 import { twoPXBullet } from "../../Assets/twoPXBullet";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
-import BulletProvider from "../../BulletProviders/BulletProvider";
+import BulletRunner from "../../BulletProviders/BulletRunner";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import GameLocation from "../../Models/GameLocation";
 import CircleFrameProvider from "../../Providers/CircleFrameProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
-import { Frame } from "../../Types/Types";
+import { Frame, AngleProviderFunction } from "../../Types/Types";
 import { convertChangingFrameColors, convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
 import orbFrames from "./OrbFrames";
@@ -55,8 +55,8 @@ export default class OrbEnemy extends BaseEnemy {
     /**
      * Construct the enemy.
      */
-    constructor(startLocation: GameLocation, frameChangeTime: number, locationProvider: BaseLocationProvider, bulletProvider: BulletProvider) {
-        super(startLocation, frameChangeTime, orbFrames, Explosion02, locationProvider, bulletProvider);
+    constructor(startLocation: GameLocation, frameChangeTime: number, locationProvider: BaseLocationProvider, angleProvider?: AngleProviderFunction) {
+        super(startLocation, frameChangeTime, orbFrames, Explosion02, locationProvider, angleProvider);
 
         // The frame probider is required by base objects. It won't do anything in this enemy since it has just one frame.
         this.frameProvider = new CircleFrameProvider(this.offSetFrames.frames, 0);

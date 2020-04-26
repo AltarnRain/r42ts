@@ -4,13 +4,8 @@
  * See LICENSE.MD.
  */
 
-import { downAngleProvider } from "../AngleProviders/DownAngleProvider";
-import { twoPXBullet } from "../Assets/twoPXBullet";
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
-import BulletProvider from "../BulletProviders/BulletProvider";
-import { angles } from "../Constants/Angles";
-import CGAColors from "../Constants/CGAColors";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
@@ -33,8 +28,8 @@ export default class Level02 extends BaseLevel {
         super.start();
 
         this.enemies = robotSpawnLocationsAndColor.map((lc) => {
-            const bulletProvider = new BulletProvider(200, twoPXBullet, CGAColors.lightRed, 3, 4, 0, shouldFire, downAngleProvider);
-            return new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(3, 5), bulletProvider);
+            // const bulletProvider = new BulletProvider(200, twoPXBullet, CGAColors.lightRed, 3, 4, 0, shouldFire, downAngleProvider);
+            return new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(3, 5));
         });
         this.begin();
     }

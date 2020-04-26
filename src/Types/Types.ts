@@ -10,6 +10,7 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
+import GameLocation from "../Models/GameLocation";
 
 /**
  * Defines frames. Frames are objects with key values that start with F{N}. Where N is the frame number.
@@ -44,7 +45,7 @@ export type PlayerFormationPhases = "begin" | "inprogress" | undefined;
 /**
  * Function definition of an angle provider function.
  */
-export type AngleProviderFunction = (enemy: BaseEnemy) => number | undefined;
+export type AngleProviderFunction = (location: GameLocation) => number | undefined;
 
 /**
  * Function definition of a FireCheckFunction.

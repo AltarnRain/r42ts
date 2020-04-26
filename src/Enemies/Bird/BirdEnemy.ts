@@ -12,7 +12,7 @@
 import Explosion01 from "../../Assets/Explosion01";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
-import BulletProvider from "../../BulletProviders/BulletProvider";
+import BulletRunner from "../../BulletProviders/BulletRunner";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import GameLocation from "../../Models/GameLocation";

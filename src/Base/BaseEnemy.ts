@@ -11,7 +11,7 @@
  *                  for most enemies in the game leaving specifics to derived classes.
  */
 
-import BulletProvider from "../BulletProviders/BulletProvider";
+import BulletRunner from "../BulletProviders/BulletRunner";
 import TickHandler from "../Handlers/TickHandler";
 import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
@@ -76,7 +76,11 @@ export abstract class BaseEnemy extends BaseDestructable {
      * Maximum enemy dimensions.
      */
     private maxDimensions: GameSize;
-    private bulletProvider: BulletProvider | undefined;
+
+    /**
+     * Helps the enemy determine which angle it will use to fire a bullet.
+     */
+    private angleProvider?: AngleProviderFunction;
 
     /**
      * Construct the enemy.
@@ -85,7 +89,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @param {OffsetFrames} offsetFrames. Frames with offsets.
      * @param {Explosion} explosion. Explosion asset. Aka. BOOM animation.
      * @param {BaseLocationProvider} locationProvider. Handles the locations of the enemy. Can be used to inject movement behaviour.
-     * @param {BulletProvider} bulletProvider. A class that checks if the enemy can fire a bullet. When undefined the enemy does not fire.
+     * @param {BulletRunner} bulletProvider. A class that checks if the enemy can fire a bullet. When undefined the enemy does not fire.
      */
     constructor(
         startLocation: GameLocation,
@@ -93,7 +97,7 @@ export abstract class BaseEnemy extends BaseDestructable {
         offsetFrames: OffsetFrames,
         explosion: Explosion,
         locationProvider: BaseLocationProvider,
-        bulletProvider?: BulletProvider) {
+        angleProvider?: AngleProviderFunction) {
         super(startLocation);
 
         this.locationProvider = locationProvider;
@@ -111,9 +115,9 @@ export abstract class BaseEnemy extends BaseDestructable {
             };
         });
 
-        this.bulletProvider = bulletProvider;
-
         this.maxDimensions = getMaximumFrameDimensions(offsetFrames.frames, averagePixelSize);
+
+        this.angleProvider = angleProvider;
     }
 
     /**
@@ -169,7 +173,6 @@ export abstract class BaseEnemy extends BaseDestructable {
     public increaseSpeed(value: number): void {
         this.locationProvider.increaseSpeed(value);
         this.frameTickHandler.increaseSpeed(value);
-        this.bulletProvider?.increateSpeed(value);
     }
 
     /**
@@ -203,11 +206,12 @@ export abstract class BaseEnemy extends BaseDestructable {
         return getFrameHitbox(this.location, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
     }
 
-    /**
-     * Returns a particle if the enemy fired a bullet.
-     * @returns {Particle | undefined}. When the enemy fired a bullet a particle object is return, otherwise undefined.
-     */
-    public getBullet(tick: number): Particle | undefined {
-        return this.bulletProvider?.getBullet(tick, this);
+    public getFireAngle(): number | undefined {
+        if (this.angleProvider === undefined) {
+            return undefined;
+        }
+
+        const angle = this.angleProvider(this.getCenterLocation());
+        return angle;
     }
 }

@@ -108,7 +108,7 @@ export default abstract class BaseLevel {
     /**
      * This method uses the passed in monotorLeveLWon function to check if we can procede to the next level.
      */
-    private  monitorLevelWonRun(): void {
+    private monitorLevelWonRun(): void {
 
         // Use the provided function to check if the level has been completed.
         if (this.monitorLevelWon()) {

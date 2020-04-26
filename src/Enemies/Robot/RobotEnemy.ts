@@ -13,12 +13,12 @@ import Explosion02 from "../../Assets/Explosion02";
 import { twoPXBullet } from "../../Assets/twoPXBullet";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
-import BulletProvider from "../../BulletProviders/BulletProvider";
+import BulletRunner from "../../BulletProviders/BulletRunner";
 import CGAColors from "../../Constants/CGAColors";
 import GameLocation from "../../Models/GameLocation";
 import BackAndForthFrameProvider from "../../Providers/BackAndForthFrameProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
-import { Frame } from "../../Types/Types";
+import { Frame, AngleProviderFunction } from "../../Types/Types";
 import { convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
 import robotFrames from "./RobotFrames";
@@ -34,8 +34,8 @@ export default class RobotEnemy extends BaseEnemy {
      */
     private bulletFrame: Frame;
 
-    constructor(location: GameLocation, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, bulletProvider: BulletProvider) {
-        super(location, frameChangeTime, robotFrames, Explosion02, locationProvider, bulletProvider);
+    constructor(location: GameLocation, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, angleProvider?: AngleProviderFunction) {
+        super(location, frameChangeTime, robotFrames, Explosion02, locationProvider,  angleProvider);
 
         convertVariableFrameColor(this.explosion.explosionCenterFrame, color);
         convertVariableFrameColor(this.explosion.particleFrames[0], color);

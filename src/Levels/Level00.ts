@@ -9,7 +9,7 @@ import { twoPXBullet } from "../Assets/twoPXBullet";
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
 import BaseParticle from "../Base/BaseParticle";
-import BulletProvider from "../BulletProviders/BulletProvider";
+import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
@@ -20,22 +20,17 @@ import BulletParticle from "../Particles/BulletParticle";
 import PlayerShip from "../Player/PlayerShip";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
-import { calculateAngle, calculateAngleDifference } from "../Utility/Geometry";
-import { angles } from "../Constants/Angles";
 
 /**
  * Module:          Level 00
  * Responsibility:  Define the playground level.
  */
 
-const {
-    averagePixelSize,
-} = dimensionProvider();
-
 /**
  * Sets up level 00. Play ground level.
  */
 export default class Level00 extends BaseLevel {
+
     constructor(stateManager: any, levelWon: () => boolean) {
         super(stateManager, levelWon);
     }
@@ -47,16 +42,18 @@ export default class Level00 extends BaseLevel {
         dispatch<PlayerShip>("setPlayer", new PlayerShip());
         // dispatch<GameLocation>("setPlayerLocation", { left: 0, top: 0 });
 
+        const bulletRunner = new BulletRunner(100, twoPXBullet, CGAColors.magenta, 10, -1, 2, orbFireCheck);
+
         this.enemies = orbSpawnLocations.map((startLocation) => {
-            const bulletProvider = new BulletProvider(100, twoPXBullet, CGAColors.magenta, 10, -1, 2, orbFireCheck, diagonalAtPlayerAngleProvider);
             const locationProvider = new MoveDownAppearUp(80, 0, 90);
-            return new OrbEnemy(startLocation, 300, locationProvider, bulletProvider);
+            return new OrbEnemy(startLocation, 300, locationProvider, diagonalAtPlayerAngleProvider);
         });
 
         // Add the enemies to the global state. The registered stateManager will take it from here.
         dispatch<BaseEnemy[]>("setEnemies", this.enemies);
         // Register the stateManager so it can act on state changes in the level.
         this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));
+        this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletRunner.getBullets(tick)));
     }
 }
 
@@ -82,11 +79,11 @@ function orbFireCheck(enemy: BaseEnemy): boolean {
 
     // Save cast. The typeguard ensures only BulletParticles are returned but TypeScript isn't
     // clever enough (yet) to understand this.
-    const enemyBullets = enemyLevelState.particles.filter((p) => isEnemyPullet(p)) as BulletParticle[];
+    const enemyBullets = enemyLevelState.particles.filter((p) => isEnemyBullet(p)) as BulletParticle[];
 
     if (enemyBullets.length === 0) {
         // No bullets, can always fire.
-        canFire = true;
+        return true;
     } else if (enemyBullets.length < 5) {
         if (enemyLevelState.enemies.length >= 5) {
             // if there's 5 enemies or more, an enemy is limited to a single bullet.
@@ -102,25 +99,9 @@ function orbFireCheck(enemy: BaseEnemy): boolean {
         return false;
     }
 
-    if (canFire) {
-        const enemiesWithBestAngle = enemyLevelState.enemies.map((e) => {
-            const enemyAngleToPlayer = calculateAngle(e.getCenterLocation(), playerState.playerLocation);
-            const idealAngle = diagonalAtPlayerAngleProvider(enemy);
-
-            if (enemyAngleToPlayer !== undefined && idealAngle !== undefined) {
-                const angleDifference = calculateAngleDifference(enemyAngleToPlayer, idealAngle);
-                return { enemy: e, angleDifference };
-            }
-
-            // TODO: Sort the enemies with the best angle and  check if this
-            // enemy is part of them.
-        });
-
-    }
-
-    return false;
+    return canFire;
 }
 
-function isEnemyPullet(particle: BaseParticle): particle is BulletParticle {
+function isEnemyBullet(particle: BaseParticle): particle is BulletParticle {
     return particle && particle.getObjectType() === "enemybullet";
 }

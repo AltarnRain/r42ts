@@ -31,7 +31,7 @@ export function levelFactory(level: number): BaseLevel {
         case 2:
             return new Level02(enemeyLevelRunner, clearedEnemies);
         default:
-            return new Level00(enemeyLevelRunner, never);
+            return new Level01(enemeyLevelRunner, never);
     }
 }
 
