@@ -13,7 +13,6 @@ import CGAColors from "../Constants/CGAColors";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
-import GameLoop from "../Main/GameLoop";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import { appState } from "../State/Store";
 
@@ -39,8 +38,7 @@ export default class Level02 extends BaseLevel {
         });
 
         const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, 5, shouldFire);
-        this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletProvider.getBullets(tick)));
-        this.begin(enemies, 200);
+        this.begin(enemies, 200, bulletProvider);
     }
 }
 

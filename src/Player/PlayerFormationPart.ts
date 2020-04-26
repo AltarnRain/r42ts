@@ -17,6 +17,8 @@ import { convertFrameColor } from "../Utility/Frame";
 import { calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
 
+const minimumDistance = speedProvider(20);
+
 export default class PlayerFormationPart {
 
     /**
@@ -24,6 +26,9 @@ export default class PlayerFormationPart {
      */
     private currentLeftLocation: number;
 
+    /**
+     * Current top location
+     */
     private currentTopLocation: number;
 
     /**
@@ -82,7 +87,7 @@ export default class PlayerFormationPart {
         const angle = calculateAngle(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
         const distance = calculateDistance(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
 
-        if (distance > 10) {
+        if (distance > minimumDistance) {
             const nextLocation = getLocation(this.currentLeftLocation, this.currentTopLocation, angle, this.speed);
             this.currentLeftLocation = nextLocation.left;
             this.currentTopLocation = nextLocation.top;
@@ -112,7 +117,7 @@ export default class PlayerFormationPart {
         const targetTopLocation = playerState.playerTopLocation + this.topOffset;
 
         const distance = calculateDistance(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
-        return distance > 5;
+        return distance > minimumDistance;
     }
 
     /**

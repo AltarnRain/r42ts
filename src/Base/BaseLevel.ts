@@ -10,6 +10,7 @@ import GameLoop from "../Main/GameLoop";
 import { appState, dispatch } from "../State/Store";
 import { TickFunction } from "../Types/Types";
 import { BaseEnemy } from "./BaseEnemy";
+import BulletRunner from "../BulletProviders/BulletRunner";
 
 /**
  * Module:          BaseLevel
@@ -72,16 +73,26 @@ export default abstract class BaseLevel {
     /**
      * Begin this level. Call from start.
      */
-    protected begin(enemies: BaseEnemy[], fireInterval?: number): void {
+    protected begin(enemies: BaseEnemy[], fireInterval?: number, bulletRunner?: BulletRunner): void {
         // A phaser is rewarded at the beginning of a level.
         dispatch("addPhaser");
 
         // Register the stateManager so it can act on state changes in the level.
         this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));
+
+        if (bulletRunner !== undefined) {
+            this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletRunner.getBullets(tick)));
+        }
+
         window.setTimeout(() => {
 
             // Remove the level banner after one second.
             this.levelBannerSub();
+
+            // Set the fire interval of enemies in the current state
+            if (fireInterval !== undefined) {
+                dispatch("setFireInterval", fireInterval);
+            }
 
             // Add the enemies to the global state. The registered stateManager will take it from here.
             dispatch<BaseEnemy[]>("setEnemies", enemies);
@@ -98,6 +109,8 @@ export default abstract class BaseLevel {
         // The subscription array contains functions that remove themselves
         // from the GameLoop. Call all of them to remove them from the GameLoop.
         this.subscriptions.forEach((s) => s());
+        dispatch("setEnemies", []);
+        dispatch("resetLevelState");
     }
 
     /**

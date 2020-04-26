@@ -44,7 +44,7 @@ const {
  * Runner function that can be registered in the GameLoop.
  * @param {number} tick. The current tick.
  */
-export default function enemeyLevelRunner(tick: number): void {
+export default function enemyLevelRunner(tick: number): void {
     updateState(tick);
     GameLoop.registerDraw(draw);
 }

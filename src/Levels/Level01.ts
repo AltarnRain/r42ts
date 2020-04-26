@@ -10,8 +10,6 @@ import getBirdFrames from "../Enemies/Bird/BirdFrames";
 import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
 import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
-import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
-import { dispatch } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 

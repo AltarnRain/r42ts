@@ -10,11 +10,12 @@
  */
 
 import BaseLevel from "../Base/BaseLevel";
-import enemeyLevelRunner from "../Main/EnemeyLevelRunner";
+import enemyLevelRunner from "../Main/EnemyLevelRunner";
 import { appState } from "../State/Store";
 import Level00 from "./Level00";
 import Level01 from "./Level01";
 import Level02 from "./Level02";
+import { Level03 } from "./Level03";
 
 /**
  * LevelFactory. Provides level objects
@@ -25,13 +26,15 @@ export function levelFactory(level: number): BaseLevel {
     switch (level) {
         case 0:
             // Test level
-            return new Level00(enemeyLevelRunner, never);
+            return new Level00(enemyLevelRunner, never);
         case 1:
-            return new Level01(enemeyLevelRunner, clearedEnemies);
+            return new Level01(enemyLevelRunner, clearedEnemies);
         case 2:
-            return new Level02(enemeyLevelRunner, clearedEnemies);
+            return new Level02(enemyLevelRunner, clearedEnemies);
+        case 3:
+            return new Level03(enemyLevelRunner, clearedEnemies);
         default:
-            return new Level01(enemeyLevelRunner, never);
+            return new Level01(enemyLevelRunner, never);
     }
 }
 
