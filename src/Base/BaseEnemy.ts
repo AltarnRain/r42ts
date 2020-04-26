@@ -17,7 +17,7 @@ import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import { OffsetFrames } from "../Models/OffsetFrames";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { AngleProviderFunction, ExplosionProviderFunction, GameObjectType, OffsetFramesProviderFunction } from "../Types/Types";
+import { FireAngleProviderFunction, ExplosionProviderFunction, GameObjectType, OffsetFramesProviderFunction } from "../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getMaximumFrameDimensions } from "../Utility/Frame";
 import { getOffsetLocation } from "../Utility/Location";
 import { BaseDestructableObject as BaseDestructable } from "./BaseDestructableObject";
@@ -76,7 +76,7 @@ export abstract class BaseEnemy extends BaseDestructable {
     /**
      * Helps the enemy determine which angle it will use to fire a bullet.
      */
-    private angleProvider?: AngleProviderFunction;
+    private angleProvider?: FireAngleProviderFunction;
 
     /**
      * Construct the enemy.
@@ -96,7 +96,7 @@ export abstract class BaseEnemy extends BaseDestructable {
         getExplosion: ExplosionProviderFunction,
         locationProvider: BaseLocationProvider,
         frameProvider: BaseFrameProvider,
-        angleProvider?: AngleProviderFunction) {
+        angleProvider?: FireAngleProviderFunction) {
         super(left, top);
 
         this.locationProvider = locationProvider;
@@ -148,9 +148,9 @@ export abstract class BaseEnemy extends BaseDestructable {
         this.frameTickHandler.tick(tick);
 
         // Use the maximum widths of the enemies frames to prevent the enemy from getting stick on the sides.
-        const actualLocation = this.locationProvider.getLocation(this.actualLeft, this.actualLeft, this.maxDimensions.width, this.maxDimensions.height);
+        const actualLocation = this.locationProvider.getLocation(this.actualLeft, this.actualTop, this.maxDimensions.width, this.maxDimensions.height);
         this.actualLeft = actualLocation.left;
-        this.top = actualLocation.top;
+        this.actualTop = actualLocation.top;
 
         const offsetLocation = this.getOffsetLocation();
         this.left = offsetLocation.left;

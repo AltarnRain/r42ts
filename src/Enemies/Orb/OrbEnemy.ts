@@ -16,7 +16,7 @@ import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
-import { AngleProviderFunction, Frame } from "../../Types/Types";
+import { FireAngleProviderFunction, Frame } from "../../Types/Types";
 import { convertChangingFrameColors, convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import getOrbFrames from "./OrbFrames";
 
@@ -46,7 +46,7 @@ export default class OrbEnemy extends BaseEnemy {
     /**
      * Construct the enemy.
      */
-    constructor(left: number, top: number, frameChangeTime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: AngleProviderFunction) {
+    constructor(left: number, top: number, frameChangeTime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: FireAngleProviderFunction) {
         super(left, top, frameChangeTime, getOrbFrames, getExplosion02, locationProvider, frameProvider, angleProvider);
 
         // We only have one frame in this enemy but its color DOES change. Set the currentFrame to the only available one

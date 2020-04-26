@@ -14,7 +14,7 @@ import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
-import { AngleProviderFunction } from "../../Types/Types";
+import { FireAngleProviderFunction } from "../../Types/Types";
 import { convertVariableFrameColor, setFrameColor } from "../../Utility/Frame";
 import getRobotFrames from "./RobotFrames";
 
@@ -26,7 +26,7 @@ export default class RobotEnemy extends BaseEnemy {
 
     private color: string;
 
-    constructor(left: number, top: number, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: AngleProviderFunction) {
+    constructor(left: number, top: number, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: FireAngleProviderFunction) {
         super(left, top, frameChangeTime, getRobotFrames, getExplosion02, locationProvider, frameProvider, angleProvider);
 
         convertVariableFrameColor(this.explosion.explosionCenterFrame, color);

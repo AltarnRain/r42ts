@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { orbEnemyAngleProvider } from "../AngleProviders/OrbEnemyAngleProvider";
+import { orbEnemyAngleProvider } from "../FireAngleProviders/OrbEnemyAngleProvider";
 import getTwoPixelBullet from "../Assets/twoPXBullet";
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
