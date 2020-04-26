@@ -10,7 +10,7 @@
  *                  That uses the player location or needs to change it.
  */
 
-import { PlayerFrame } from "../Player/PlayerFrames";
+import { getPlayerFrame } from "../Player/PlayerFrames";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
 import { getFrameDimensions } from "../Utility/Frame";
@@ -24,7 +24,7 @@ const {
     fullWidth,
 } = dimensionProvider();
 
-const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
+const shipDimensions = getFrameDimensions(getPlayerFrame(), averagePixelSize);
 const maxBottom = fullHeight - shipDimensions.height - averagePixelSize / 2;
 const maxRight = fullWidth - shipDimensions.width;
 

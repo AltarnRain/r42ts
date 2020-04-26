@@ -14,7 +14,6 @@ import subscribeToStoreChanges from "./Levels/SubscribeToStore";
 import GameLoop from "./Main/GameLoop";
 import playerRunner from "./Main/PlayerRunner";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
-import { PlayerFormationFrames } from "./Player/PlayerFrames";
 import dimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 import { dispatch } from "./State/Store";
@@ -64,24 +63,3 @@ window.onload = () => {
         }
     }
 };
-
-/**
- * Uses the player formation part to draw a block on the screen
- * 4 other blocks should converge on this block and stop moving when they overlap.
- */
-function testAngleCalculation(): void {
-    const target = { top: 500, left: 700 };
-    const p1 = new PlayerFormationPart({ top: 500, left: 100 }, target, PlayerFormationFrames[0], 1);
-    const p2 = new PlayerFormationPart({ top: 500, left: 1300 }, target, PlayerFormationFrames[0], 1);
-    const p3 = new PlayerFormationPart({ top: 100, left: 700 }, target, PlayerFormationFrames[0], 1);
-    const p4 = new PlayerFormationPart({ top: 800, left: 700 }, target, PlayerFormationFrames[0], 1);
-    GameLoop.registerUpdateState(p1.updateState);
-    GameLoop.registerUpdateState(p1.draw);
-    GameLoop.registerUpdateState(p2.updateState);
-    GameLoop.registerUpdateState(p2.draw);
-    GameLoop.registerUpdateState(p3.updateState);
-    GameLoop.registerUpdateState(p3.draw);
-    GameLoop.registerUpdateState(p4.updateState);
-    GameLoop.registerUpdateState(p4.draw);
-    GameLoop.registerUpdateState((tick) => renderFrame(target, PlayerFormationFrames[0]));
-}

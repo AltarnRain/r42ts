@@ -4,6 +4,7 @@
  * See LICENSE.MD.
  */
 
+import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
@@ -207,4 +208,56 @@ export function getFrameHitbox(location: GameLocation, width: number, height: nu
         right: location.left + width,
         bottom: location.top + height + bottomOffset,
     };
+}
+
+/**
+ * Uses spreads to create a new Frame.
+ * @param {Frame} frame. The frame.
+ * @returns {Frame}. A copy of the original frame.
+ */
+export function copyFrame(frame: Frame): Frame {
+    const newFrame: Frame = [];
+
+    for (const row of frame) {
+        const newRow = [...row];
+        newFrame.push(newRow);
+    }
+
+    return newFrame;
+}
+
+/**
+ * Uses spreads to create new Frames.
+ * @param {Frames} frames. Frames to copy.
+ * @return {Frames}. Fresh copy of the Frames.
+ */
+export function copyFrames(frames: Frames): Frames {
+    const newFrames: Frames = [];
+
+    for (const frame of frames) {
+        const newFrame = copyFrame(frame);
+        newFrames.push(newFrame);
+    }
+
+    return newFrames;
+}
+
+export function getFrameReturner(frame: Frame): () => Frame {
+    const frameCopy = copyFrame(frame);
+
+    return () => frameCopy;
+}
+
+export function copyExplosion(explosion: Explosion): Explosion {
+    const newExplosion = {...explosion};
+    newExplosion.particleFrames = copyFrames(explosion.particleFrames);
+    newExplosion.explosionCenterFrame = copyFrame(explosion.explosionCenterFrame);
+
+    return explosion;
+}
+
+export function getExplosionReturner(explosion: Explosion): () => Explosion {
+    const newExplosion = copyExplosion(explosion);
+
+    return () => newExplosion;
 }

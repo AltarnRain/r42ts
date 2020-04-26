@@ -24,6 +24,6 @@ export default class CircleFrameProvider extends BaseFrameProvider {
             this.frameIndex = 0;
         }
 
-        return this.getCurrentFrameClone();
+        return this.getCurrentFrameCopy();
     }
 }

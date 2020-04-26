@@ -17,10 +17,9 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
 import { Frame, GameObjectType } from "../Types/Types";
-import { convertFrameColor, convertFramesColors, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
-import { cloneObject } from "../Utility/Lib";
-import PlayerExplosion from "./PlayerExplosion";
-import { PlayerFrame } from "./PlayerFrames";
+import { convertFrameColor, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
+import getPlayerExplosion from "./PlayerExplosion";
+import { getPlayerFrame } from "./PlayerFrames";
 
 const {
     minPixelSize,
@@ -28,7 +27,7 @@ const {
 
 } = dimensionProvider();
 
-const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
+const shipDimensions = getFrameDimensions(getPlayerFrame(), averagePixelSize);
 
 export default class PlayerShip {
 
@@ -46,10 +45,10 @@ export default class PlayerShip {
      * Construct the class.
      */
     constructor() {
-        this.frameClone = cloneObject(PlayerFrame);
+        this.frameClone = getPlayerFrame();
         convertFrameColor(this.frameClone);
 
-        this.explosionClone = cloneObject(PlayerExplosion);
+        this.explosionClone = getPlayerExplosion();
         convertFrameColor(this.explosionClone.explosionCenterFrame);
 
         this.explosionClone.particleFrames.forEach((p) => convertFrameColor(p));

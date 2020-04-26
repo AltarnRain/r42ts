@@ -48,4 +48,6 @@ orbFrames.frames = [
     orbFrames.frames[0],
 ];
 
-export default orbFrames;
+export default function getOrbFrames(): OffsetFrames {
+    return JSON.parse(JSON.stringify(orbFrames));
+}

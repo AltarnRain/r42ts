@@ -12,10 +12,9 @@
 import GameLocation from "../Models/GameLocation";
 import speedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
-import { Frame } from "../Types/Types";
+import { Frame, FrameProviderFunction } from "../Types/Types";
 import { convertFrameColor } from "../Utility/Frame";
 import { calculateAngle } from "../Utility/Geometry";
-import { cloneObject } from "../Utility/Lib";
 import { calculateDistance, getLocation } from "../Utility/Location";
 
 export default class PlayerFormationPart {
@@ -48,9 +47,9 @@ export default class PlayerFormationPart {
      * @param {Frame} frame. Frame to render for this part.
      * @param {number} speed. Speed at which the part travels.
      */
-    constructor(sourceLocation: GameLocation, targetLocation: GameLocation, frame: Frame, speed: number) {
+    constructor(sourceLocation: GameLocation, targetLocation: GameLocation, getFrame: FrameProviderFunction, speed: number) {
 
-        this.currentFrameClone = cloneObject(frame);
+        this.currentFrameClone = getFrame();
         convertFrameColor(this.currentFrameClone);
 
         this.currentLocation = { ...sourceLocation };

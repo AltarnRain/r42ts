@@ -13,7 +13,7 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
 
 let offsetCount = 0;
 
-export const robotFrames: OffsetFrames = {
+const robotFrames: OffsetFrames = {
     frames: [
         [
             ["0", "V", "V", "V", "0"],
@@ -97,4 +97,6 @@ robotFrames.frames = [
     ...robotFrames.frames,
 ];
 
-export default robotFrames;
+export default function getRobotFrames(): OffsetFrames {
+    return JSON.parse(JSON.stringify(robotFrames));
+}

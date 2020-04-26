@@ -9,16 +9,15 @@
  * Responsibility:  Drawn at the top of the screen for score, phasers, lives and level.
  */
 
-import Numbers from "../Assets/Numbers";
+import getNumbers from "../Assets/Numbers";
 import CGAColors from "../Constants/CGAColors";
-import { PlayerFrame } from "../Player/PlayerFrames";
+import { getPlayerFrame } from "../Player/PlayerFrames";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import { appState, appStore } from "../State/Store";
+import { appState } from "../State/Store";
 import { Frame } from "../Types/Types";
-import { convertFrameColor, convertVariableFramesColor, getFrameByIndex, getFrameDimensions, setFrameColor } from "../Utility/Frame";
-import { cloneObject } from "../Utility/Lib";
+import { convertFrameColor, getFrameByIndex, getFrameDimensions, setFrameColor } from "../Utility/Frame";
 import { padLeft } from "../Utility/String";
 
 const ctx = ctxProvider();
@@ -29,10 +28,9 @@ const {
     minPixelSize
 } = dimensionProvider();
 
-const numberFramesClone = cloneObject(Numbers);
-convertVariableFramesColor(numberFramesClone, CGAColors.yellow);
+const numberFramesClone = getNumbers(CGAColors.yellow);
 
-const lifeFrameClone = cloneObject(PlayerFrame);
+const lifeFrameClone = getPlayerFrame();
 setFrameColor(lifeFrameClone, CGAColors.yellow);
 
 // Score constants

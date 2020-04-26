@@ -24,7 +24,7 @@ test("Test if the provided frames go back and forth", () => {
     const fp = new BackAndForthFrameProvider(0);
     fp.setFrames(Frames);
     // Act
-    const a1 = fp.getCurrentFrameClone();
+    const a1 = fp.getCurrentFrameCopy();
     const b1 = fp.getNextFrameClone();
     const c1 = fp.getNextFrameClone();
     const b2 = fp.getNextFrameClone();

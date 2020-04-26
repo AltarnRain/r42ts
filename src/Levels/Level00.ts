@@ -5,7 +5,7 @@
  */
 
 import { diagonalAtPlayerAngleProvider } from "../AngleProviders/DiagonalAtPlayerAngleProvider";
-import { twoPXBullet } from "../Assets/twoPXBullet";
+import getTwoPixelBullet from "../Assets/twoPXBullet";
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
 import BaseParticle from "../Base/BaseParticle";
@@ -18,9 +18,9 @@ import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 import GameLoop from "../Main/GameLoop";
 import BulletParticle from "../Particles/BulletParticle";
 import PlayerShip from "../Player/PlayerShip";
-import EnemyLevelState from "../State/Definition/EnemyLevelState";
-import { appState, dispatch } from "../State/Store";
 import CircleFrameProvider from "../Providers/CircleFrameProvider";
+import EnemyLevelState from "../State/Definition/EnemyLevelState";
+import { dispatch } from "../State/Store";
 
 /**
  * Module:          Level 00
@@ -55,7 +55,7 @@ export default class Level00 extends BaseLevel {
         dispatch<number>("setFireInterval", 200);
         dispatch<BaseEnemy[]>("setEnemies", enemies as BaseEnemy[]);
 
-        const bulletRunner = new BulletRunner(twoPXBullet, CGAColors.magenta, 10, orbFireCheck);
+        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, 10, orbFireCheck);
 
         // Register the stateManager so it can act on state changes in the level.
         this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));

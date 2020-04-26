@@ -34,4 +34,6 @@ const Explosion01: Explosion = {
     useSpeed: true,
 };
 
-export default Explosion01;
+export default function getExplosion01(): Explosion {
+    return JSON.parse(JSON.stringify(Explosion01)) as Explosion;
+}

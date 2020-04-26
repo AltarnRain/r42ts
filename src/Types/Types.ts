@@ -10,7 +10,9 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
+import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
+import { OffsetFrames } from "../Models/OffsetFrames";
 import EnemyLevelState from "../State/Definition/EnemyLevelState";
 
 /**
@@ -52,3 +54,11 @@ export type AngleProviderFunction = (location: GameLocation) => number | undefin
  * Function definition of a FireCheckFunction.
  */
 export type FireCheckFunction = (enemy: BaseEnemy, levelState: EnemyLevelState) => boolean;
+
+export type ExplosionProviderFunction = () => Explosion;
+
+export type FramesProviderFunction = () => Frames;
+
+export type OffsetFramesProviderFunction = () => OffsetFrames;
+
+export type FrameProviderFunction = () => Frame;

@@ -4,17 +4,16 @@
  * See LICENSE.MD.
  */
 
-import Characters from "../Assets/Characters";
-import Numbers from "../Assets/Numbers";
+import getCharacters from "../Assets/Characters";
+import getNumbers from "../Assets/Numbers";
 import CGAColors from "../Constants/CGAColors";
 import GameLocation from "../Models/GameLocation";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame } from "../Types/Types";
-import { convertVariableFramesColor, getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
+import { getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
 import getCharacter from "../Utility/getCharacter";
-import { cloneObject } from "../Utility/Lib";
 
 /**
  * Module:          LevelBanner
@@ -28,11 +27,8 @@ const {
 
 const ctx = ctxProvider();
 
-const greenCharactersClone = cloneObject(Characters);
-convertVariableFramesColor(greenCharactersClone, CGAColors.lightGreen);
-
-const greenNumbersClone = cloneObject(Numbers);
-convertVariableFramesColor(greenNumbersClone, CGAColors.lightGreen);
+const greenCharactersClone = getCharacters(CGAColors.lightGreen);
+const greenNumbersClone = getNumbers(CGAColors.lightGreen);
 
 const roundCharacters = [
     getCharacter(greenCharactersClone, "R"),

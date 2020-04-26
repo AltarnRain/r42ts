@@ -12,7 +12,7 @@
 
 import Explosion from "../Models/Explosion";
 
-const PlayerExplosion: Explosion = {
+const playerExplosion: Explosion = {
     explosionCenterFrame: [
         ["0", "0", "2", "2", "0", "0"],
         ["4", "E", "0", "0", "E", "4"],
@@ -67,4 +67,6 @@ const PlayerExplosion: Explosion = {
     speed: 0, // not used.
 };
 
-export default PlayerExplosion;
+export default function getPlayerExplosion(): Explosion {
+    return JSON.parse(JSON.stringify(playerExplosion));
+}

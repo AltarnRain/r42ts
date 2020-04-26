@@ -11,10 +11,9 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types/Types";
 import { convertFramesColors } from "../Utility/Frame";
-import { cloneObject } from "../Utility/Lib";
 import { getLocation } from "../Utility/Location";
 import PlayerFormationPart from "./PlayerFormationPart";
-import { PlayerFormationFrames } from "./PlayerFrames";
+import { getPlayerFormationFrames } from "./PlayerFrames";
 import PlayerShip from "./PlayerShip";
 
 /**
@@ -36,8 +35,7 @@ const nozzleOutAngle = 270;
 const leftWingOutAngle = 200;
 const rightWingOutAngle = 340;
 
-const partFramesClone = cloneObject(PlayerFormationFrames);
-convertFramesColors(partFramesClone);
+const playerFormationFrames = getPlayerFormationFrames();
 
 let nozzleTopPart: PlayerFormationPart;
 let nozzleBottomPart: PlayerFormationPart;
@@ -111,10 +109,10 @@ function setPartLocations(targetLocation: GameLocation): void {
  * Creates the player formation particles.
  */
 function createParticles(): void {
-    nozzleTopPart = new PlayerFormationPart(nozzleTipStartLocation, nozzleTipEndLocation, PlayerFormationFrames[0], 0);
-    nozzleBottomPart = new PlayerFormationPart(nozzleBottomStartLocation, nozzleBottomEndLocation, PlayerFormationFrames[1], 0);
-    leftWingPart = new PlayerFormationPart(leftWingStartLocation, leftWingEndLocation, PlayerFormationFrames[2], 0);
-    rightWingPart = new PlayerFormationPart(rightWingStartLocation, rightWingEndLocation, PlayerFormationFrames[3], 0);
+    nozzleTopPart = new PlayerFormationPart(nozzleTipStartLocation, nozzleTipEndLocation, () => playerFormationFrames[0], 0);
+    nozzleBottomPart = new PlayerFormationPart(nozzleBottomStartLocation, nozzleBottomEndLocation, () => playerFormationFrames[1], 0);
+    leftWingPart = new PlayerFormationPart(leftWingStartLocation, leftWingEndLocation, () => playerFormationFrames[2], 0);
+    rightWingPart = new PlayerFormationPart(rightWingStartLocation, rightWingEndLocation, () => playerFormationFrames[3], 0);
 
     allMovingParts = [nozzleTopPart, nozzleBottomPart, leftWingPart, rightWingPart].filter((p) => p !== undefined);
 }

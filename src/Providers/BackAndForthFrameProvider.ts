@@ -29,6 +29,6 @@ export default class BackAndForthFrameProvider extends IFrameProvider {
             this.add *= -1;
         }
 
-        return  this.getCurrentFrameClone();
+        return  this.getCurrentFrameCopy();
     }
 }

@@ -5,6 +5,7 @@
  */
 
 import { Frames } from "../Types/Types";
+import { convertVariableFramesColor } from "../Utility/Frame";
 
 /**
  * Module:          Numbers
@@ -87,4 +88,8 @@ const Numbers: Frames = [
     ],
 ];
 
-export default Numbers;
+export default function getNumbers(color: string): Frames {
+    const numbers = JSON.parse(JSON.stringify(Numbers)) as Frames;
+    convertVariableFramesColor(numbers, color);
+    return numbers;
+}

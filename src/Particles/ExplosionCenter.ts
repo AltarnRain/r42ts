@@ -9,9 +9,8 @@ import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { Frame, GameObjectType } from "../Types/Types";
+import { FrameProviderFunction, GameObjectType } from "../Types/Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
-import { cloneObject } from "../Utility/Lib";
 
 /**
  * Module:          Explosion Center
@@ -50,13 +49,13 @@ export default class ExplosionCenter extends BaseGameObject {
      * @param {GameLocation} location. Location where the explosion will appear.
      * @param {number} burnTime. Time in ticks how long the explosion center should remain visible.
      */
-    constructor(location: GameLocation, frame: Frame,  burnTime: number) {
+    constructor(location: GameLocation, getExplosionCenterFrame: FrameProviderFunction,  burnTime: number) {
         super(location);
 
-        this.currentFrameClone = cloneObject(frame);
+        this.currentFrameClone = getExplosionCenterFrame();
         this.burnTime = burnTime;
 
-        this.dimensions = getFrameDimensions(frame, averagePixelSize);
+        this.dimensions = getFrameDimensions(this.currentFrameClone, averagePixelSize);
     }
 
     /**

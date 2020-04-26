@@ -19,9 +19,8 @@ import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import { OffsetFrames } from "../Models/OffsetFrames";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { AngleProviderFunction, GameObjectType } from "../Types/Types";
+import { AngleProviderFunction, ExplosionProviderFunction, GameObjectType, OffsetFramesProviderFunction } from "../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getMaximumFrameDimensions } from "../Utility/Frame";
-import { cloneObject } from "../Utility/Lib";
 import { getOffsetLocation } from "../Utility/Location";
 import { BaseDestructableObject as BaseDestructable } from "./BaseDestructableObject";
 import BaseFrameProvider from "./BaseFrameProvider";
@@ -59,12 +58,7 @@ export abstract class BaseEnemy extends BaseDestructable {
     /**
      * Explosion for the enemy.
      */
-    protected explosionClone: Explosion;
-
-    /**
-     * Frames with offsets.
-     */
-    protected offSetFramesClone: OffsetFrames;
+    protected explosion: Explosion;
 
     /**
      * Provides location. Can be used to alter the movement behaviour of enemies.
@@ -93,8 +87,8 @@ export abstract class BaseEnemy extends BaseDestructable {
     constructor(
         startLocation: GameLocation,
         frameChangeTime: number,
-        offsetFrames: OffsetFrames,
-        explosion: Explosion,
+        getOffsetFrames: OffsetFramesProviderFunction,
+        explosion: ExplosionProviderFunction,
         locationProvider: BaseLocationProvider,
         frameProvider: BaseFrameProvider,
         angleProvider?: AngleProviderFunction) {
@@ -102,23 +96,23 @@ export abstract class BaseEnemy extends BaseDestructable {
 
         this.locationProvider = locationProvider;
 
-        this.offSetFramesClone = cloneObject(offsetFrames);
-        this.explosionClone = cloneObject(explosion);
+        this.explosion = explosion();
         this.actualLocation = { ...this.location };
         this.frameTickHandler = new TickHandler(frameChangeTime, () => this.onFrameChange());
 
-        this.offSets = this.offSetFramesClone.offSets.map((o) => {
+        const offSetFrames = getOffsetFrames();
+        this.offSets = offSetFrames.offSets.map((o) => {
             return {
                 left: o.left * averagePixelSize,
                 top: o.top * averagePixelSize,
             };
         });
 
-        this.maxDimensions = getMaximumFrameDimensions(offsetFrames.frames, averagePixelSize);
+        this.maxDimensions = getMaximumFrameDimensions(offSetFrames.frames, averagePixelSize);
         this.angleProvider = angleProvider;
         this.frameProvider = frameProvider;
 
-        this.frameProvider.setFrames(offsetFrames.frames);
+        this.frameProvider.setFrames(offSetFrames.frames);
     }
 
     /**
@@ -126,7 +120,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @returns {Explosion}. An explosion asset.
      */
     public getExplosion(): Explosion {
-        return this.explosionClone;
+        return this.explosion;
     }
 
     /**

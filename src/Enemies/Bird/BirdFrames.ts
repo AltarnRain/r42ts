@@ -11,7 +11,7 @@
 
 import { OffsetFrames } from "../../Models/OffsetFrames";
 
-export const BirdFrames: OffsetFrames = {
+const BirdFrames: OffsetFrames = {
     frames: [
         [
             ["0", "V", "0", "V", "0"],
@@ -52,3 +52,7 @@ export const BirdFrames: OffsetFrames = {
         }
     ]
 };
+
+export default function getBirdFrames(): OffsetFrames {
+    return JSON.parse(JSON.stringify(BirdFrames));
+}

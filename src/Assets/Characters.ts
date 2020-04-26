@@ -14,6 +14,7 @@
  */
 
 import { Frame, Frames } from "../Types/Types";
+import { convertVariableFramesColor } from "../Utility/Frame";
 
 const Characters: Frames = [
     [
@@ -207,4 +208,8 @@ const Characters: Frames = [
     ],
 ];
 
-export default Characters;
+export default function getCharacters(color: string): Frames {
+    const chars =  JSON.parse(JSON.stringify(Characters));
+    convertVariableFramesColor(chars, color);
+    return chars;
+}

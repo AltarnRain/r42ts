@@ -10,7 +10,17 @@
  */
 
 import { Frame } from "../Types/Types";
+import { convertVariableFrameColor } from "../Utility/Frame";
 
-export const twoPXBullet: Frame = [
+const twoPXBullet: Frame = [
     ["V", "V"],
 ];
+
+export default function getTwoPixelBullet(color?: string): Frame {
+    const bullet = JSON.parse(JSON.stringify(twoPXBullet));
+    if (color !== undefined) {
+        convertVariableFrameColor(bullet, color);
+    }
+
+    return bullet;
+}

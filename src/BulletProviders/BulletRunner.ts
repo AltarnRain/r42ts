@@ -9,9 +9,9 @@ import GameLocation from "../Models/GameLocation";
 import BulletParticle from "../Particles/BulletParticle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
-import { FireCheckFunction, Frame } from "../Types/Types";
+import { FireCheckFunction, Frame, FrameProviderFunction } from "../Types/Types";
 import { calculateAngle, calculateAngleDifference } from "../Utility/Geometry";
-import { cloneObject } from "../Utility/Lib";
+import { getFrameReturner } from "../Utility/Frame";
 
 /**
  * Module:          StraightDownBulletProvider
@@ -29,15 +29,15 @@ export default class BulletRunner {
     private bulletColor: string;
 
     constructor(
-        bulletFrame: Frame,
+        getBulletFrame: FrameProviderFunction,
         bulletColor: string,
         speed: number,
         shouldfire: FireCheckFunction) {
 
-        this.bulletFrameClone = cloneObject(bulletFrame);
         this.fireCheck = shouldfire;
         this.speed = speed;
         this.bulletColor = bulletColor;
+        this.bulletFrameClone = getBulletFrame();
     }
 
     public getBullets(tick: number): void {
@@ -103,7 +103,7 @@ export default class BulletRunner {
                     top: hitbox.bottom + averagePixelSize,
                 };
 
-                const bullet = new BulletParticle(candidate.ship, this.bulletColor, nozzleLocation, this.bulletFrameClone, enemyFireAngle, this.speed);
+                const bullet = new BulletParticle(candidate.ship, this.bulletColor, nozzleLocation, getFrameReturner(this.bulletFrameClone), enemyFireAngle, this.speed);
 
                 dispatch<BulletParticle>("addParticle", bullet);
                 dispatch<{ ship: BaseEnemy, tick: number }>("setEnemyFireTick", { ship: candidate.ship, tick });

@@ -12,7 +12,7 @@
 import GameLocation from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { getFrameDimensions } from "../../Utility/Frame";
-import orbFrames from "./OrbFrames";
+import getOrbFrames from "./OrbFrames";
 
 const {
     averagePixelSize,
@@ -20,7 +20,7 @@ const {
 } = dimensionProvider();
 
 const orbSpawnLocations: GameLocation[] = [];
-const { width } = getFrameDimensions(orbFrames.frames[0], averagePixelSize);
+const { width } = getFrameDimensions(getOrbFrames().frames[0], averagePixelSize);
 
 const top = gameFieldTop + averagePixelSize * 26;
 const left = averagePixelSize * 10;

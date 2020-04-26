@@ -9,20 +9,17 @@
  * Responsibility:  Handles the Robot enemeny first seen in level 2.
  */
 
-import Explosion02 from "../../Assets/Explosion02";
-import { twoPXBullet } from "../../Assets/twoPXBullet";
+import { getExplosion02 } from "../../Assets/Explosion02";
+import getTwoPixelBullet from "../../Assets/twoPXBullet";
 import { BaseEnemy } from "../../Base/BaseEnemy";
+import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
-import BulletRunner from "../../BulletProviders/BulletRunner";
 import CGAColors from "../../Constants/CGAColors";
 import GameLocation from "../../Models/GameLocation";
-import BackAndForthFrameProvider from "../../Providers/BackAndForthFrameProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
-import { Frame, AngleProviderFunction } from "../../Types/Types";
-import { convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
-import { cloneObject } from "../../Utility/Lib";
-import robotFrames from "./RobotFrames";
-import BaseFrameProvider from "../../Base/BaseFrameProvider";
+import { AngleProviderFunction, Frame } from "../../Types/Types";
+import { convertVariableFrameColor } from "../../Utility/Frame";
+import getRobotFrames from "./RobotFrames";
 
 const {
     averagePixelSize
@@ -36,14 +33,12 @@ export default class RobotEnemy extends BaseEnemy {
     private bulletFrame: Frame;
 
     constructor(location: GameLocation, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: AngleProviderFunction) {
-        super(location, frameChangeTime, robotFrames, Explosion02, locationProvider, frameProvider, angleProvider);
+        super(location, frameChangeTime, getRobotFrames, getExplosion02, locationProvider, frameProvider, angleProvider);
 
-        convertVariableFrameColor(this.explosionClone.explosionCenterFrame, color);
-        convertVariableFrameColor(this.explosionClone.particleFrames[0], color);
-        convertVariableFramesColor(this.offSetFramesClone.frames, color);
+        convertVariableFrameColor(this.explosion.explosionCenterFrame, color);
+        convertVariableFrameColor(this.explosion.particleFrames[0], color);
 
-        this.bulletFrame = cloneObject(twoPXBullet);
-        convertVariableFrameColor(this.bulletFrame, CGAColors.lightRed);
+        this.bulletFrame = getTwoPixelBullet(CGAColors.lightRed);
 
         this.onFrameChange();
         this.location = this.getOffsetLocation();

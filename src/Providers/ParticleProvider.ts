@@ -9,10 +9,10 @@
  * Responsibility:  Provide an array of particle objects for an Explosion
  */
 
-import Explosion from "../Models/Explosion";
 import GameLocation from "../Models/GameLocation";
 import Particle from "../Particles/Particle";
-import { cloneObject } from "../Utility/Lib";
+import { ExplosionProviderFunction } from "../Types/Types";
+import { getFrameReturner } from "../Utility/Frame";
 
 /**
  * particleProvider. Provides particle objects based on an Explosion asset.
@@ -20,10 +20,10 @@ import { cloneObject } from "../Utility/Lib";
  * @param {Explosion} explosion. Explosion asset used to generate particle objects.
  * @returns {Particle[]}. Resulting particles.
  */
-export default function particleProvider(startLocation: GameLocation, explosion: Explosion): Particle[] {
+export default function particleProvider(startLocation: GameLocation, explosion: ExplosionProviderFunction): Particle[] {
 
-    const expClone = cloneObject(explosion);
-    const locClone = cloneObject(startLocation);
+    const expClone = explosion();
+    const locClone = {...startLocation };
 
     const particles: Particle[] = [];
     for (let i = 0; i < expClone.particleFrameIndexes.length; i++) {
@@ -34,7 +34,7 @@ export default function particleProvider(startLocation: GameLocation, explosion:
         const angle = expClone.angles[i];
         const speed = expClone.useSpeed ? expClone.speed : expClone.speeds[i];
 
-        const p = new Particle(locClone, particleFrame, angle, speed, expClone.acceleration);
+        const p = new Particle(locClone, getFrameReturner(particleFrame), angle, speed, expClone.acceleration);
         particles.push(p);
     }
 

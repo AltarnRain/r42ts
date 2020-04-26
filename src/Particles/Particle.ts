@@ -9,9 +9,8 @@ import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { Frame, GameObjectType } from "../Types/Types";
+import { Frame, FrameProviderFunction } from "../Types/Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
-import { cloneObject } from "../Utility/Lib";
 import { fallsWithin, getLocation } from "../Utility/Location";
 
 /**
@@ -55,15 +54,15 @@ export default class Particle extends BaseParticle {
      * @param {number} speed. Speed at which the particle will travel.
      * @param {number} acceleration. Acceleration applies each update of the state.
      */
-    constructor(startLocation: GameLocation, frame: Frame, angle: number, speed: number, acceleration: number) {
+    constructor(startLocation: GameLocation, getFrame: FrameProviderFunction, angle: number, speed: number, acceleration: number) {
         super(startLocation);
 
-        this.currentFrameClone = cloneObject(frame);
+        this.currentFrameClone = getFrame();
         this.angle = angle;
         this.speed = speed;
         this.acceleration = acceleration;
 
-        this.dimensions = getFrameDimensions(frame, averagePixelSize);
+        this.dimensions = getFrameDimensions(this.currentFrameClone, averagePixelSize);
     }
 
     /**

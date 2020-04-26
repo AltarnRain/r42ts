@@ -9,19 +9,17 @@
  * Responsibility:  Define behaviour of the orb enemy.
  */
 
-import Explosion02 from "../../Assets/Explosion02";
-import { twoPXBullet } from "../../Assets/twoPXBullet";
+import { getExplosion02 } from "../../Assets/Explosion02";
+import getTwoPixelBullet from "../../Assets/twoPXBullet";
 import { BaseEnemy } from "../../Base/BaseEnemy";
+import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import GameLocation from "../../Models/GameLocation";
-import CircleFrameProvider from "../../Providers/CircleFrameProvider";
 import { AngleProviderFunction, Frame } from "../../Types/Types";
 import { convertChangingFrameColors, convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
-import { cloneObject } from "../../Utility/Lib";
-import orbFrames from "./OrbFrames";
-import BaseFrameProvider from "../../Base/BaseFrameProvider";
+import getOrbFrames from "./OrbFrames";
 
 const colors: string[][] = [
     [CGAColors.lightGreen, CGAColors.lightBlue],
@@ -50,16 +48,16 @@ export default class OrbEnemy extends BaseEnemy {
      * Construct the enemy.
      */
     constructor(startLocation: GameLocation, frameChangeTime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: AngleProviderFunction) {
-        super(startLocation, frameChangeTime, orbFrames, Explosion02, locationProvider, frameProvider, angleProvider);
+        super(startLocation, frameChangeTime, getOrbFrames, getExplosion02, locationProvider, frameProvider, angleProvider);
 
         // We only have one frame in this enemy but its color DOES change. Set the currentFrame to the only available one
         // and sets its color to the first color set so we get a a good render when the enemy first appears.
         this.updateCurrentFrameAndColor();
 
-        convertVariableFrameColor(this.explosionClone.explosionCenterFrame, CGAColors.magenta);
-        convertVariableFramesColor(this.explosionClone.particleFrames, CGAColors.magenta);
+        convertVariableFrameColor(this.explosion.explosionCenterFrame, CGAColors.magenta);
+        convertVariableFramesColor(this.explosion.particleFrames, CGAColors.magenta);
 
-        this.bulletFrameClone = cloneObject(twoPXBullet);
+        this.bulletFrameClone = getTwoPixelBullet(CGAColors.lightRed);
         convertVariableFrameColor(this.bulletFrameClone, CGAColors.lightRed);
 
         this.colorTickHandler = new TickHandler(100, () => this.onColorChange());
@@ -83,7 +81,7 @@ export default class OrbEnemy extends BaseEnemy {
      */
     private updateCurrentFrameAndColor() {
         const newColor = colors[this.currentColorIndex];
-        const frame = cloneObject(this.offSetFramesClone.frames[0]);
+        const frame = this.frameProvider.getCurrentFrameCopy();
 
         if (newColor === undefined) {
             throw new Error("Color cannot be undefined.");

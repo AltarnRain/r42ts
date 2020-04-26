@@ -5,7 +5,7 @@
  */
 
 import GameLocation from "../Models/GameLocation";
-import { PlayerFrame } from "../Player/PlayerFrames";
+import { getPlayerFrame } from "../Player/PlayerFrames";
 import { getFrameDimensions } from "../Utility/Frame";
 import dimensionProvider from "./DimensionProvider";
 
@@ -20,7 +20,7 @@ const {
     gameFieldHeight
 } = dimensionProvider();
 
-const shipDimensions = getFrameDimensions(PlayerFrame, averagePixelSize);
+const shipDimensions = getFrameDimensions(getPlayerFrame(), averagePixelSize);
 
 const shipSpawnLocation = {
     top: gameFieldHeight * 0.99,

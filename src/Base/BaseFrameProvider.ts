@@ -5,8 +5,7 @@
  */
 
 import { Frame, Frames } from "../Types/Types";
-import { getFrameByIndex } from "../Utility/Frame";
-import { cloneObject } from "../Utility/Lib";
+import { copyFrame as copyFrame, copyFrames, getFrameByIndex } from "../Utility/Frame";
 
 /**
  * Module:          IFrameProvider
@@ -45,21 +44,21 @@ export default abstract class BaseFrameProvider {
     }
 
     public setFrames(frames: Frames): void {
-        this.framesClone = cloneObject(frames);
+        this.framesClone = copyFrames(frames);
     }
 
     /**
      * Gets the current frame.
      * @returns {Frame}. A frame
      */
-    public getCurrentFrameClone(): Frame {
+    public getCurrentFrameCopy(): Frame {
 
         if (this.framesClone === undefined) {
             throw new Error("Set the frames.");
         }
 
         const returnValue = getFrameByIndex(this.framesClone, this.frameIndex);
-        return cloneObject(returnValue);
+        return copyFrame(returnValue);
     }
 
     public abstract getNextFrameClone(): Frame;

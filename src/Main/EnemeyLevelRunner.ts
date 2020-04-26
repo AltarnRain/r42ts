@@ -27,6 +27,7 @@ import renderFrame from "../Render/RenderFrame";
 import { appState, dispatch } from "../State/Store";
 import { Frame } from "../Types/Types";
 import { getRandomArrayElement } from "../Utility/Array";
+import { getExplosionReturner, getFrameReturner } from "../Utility/Frame";
 import { overlaps } from "../Utility/Geometry";
 import { getHittableObjects } from "../Utility/StateHelper";
 import GameLoop from "./GameLoop";
@@ -223,8 +224,8 @@ function handlePlayerDeath(player: PlayerShip): void {
  * @param {Particle[]} targetParticleArray. The array where the particles will be pushed into. Helps keep track of particles belonging to the player or an enemy.
  */
 function queueExplosionRender(location: GameLocation, explosion: Explosion): void {
-    const center = new ExplosionCenter(location, explosion.explosionCenterFrame, explosion.explosionCenterDelay);
-    const newParticles = particleProvider(location, explosion);
+    const center = new ExplosionCenter(location, getFrameReturner(explosion.explosionCenterFrame), explosion.explosionCenterDelay);
+    const newParticles = particleProvider(location, getExplosionReturner(explosion));
 
     dispatch<ExplosionCenter>("addExplosionCenter", center);
     dispatch<Particle[]>("addParticles", newParticles);

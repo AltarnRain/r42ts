@@ -11,17 +11,16 @@
 
 import Explosion01 from "../../Assets/Explosion01";
 import { BaseEnemy } from "../../Base/BaseEnemy";
+import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import GameLocation from "../../Models/GameLocation";
 import Particle from "../../Particles/Particle";
-import BackAndForthFrameProvider from "../../Providers/BackAndForthFrameProvider";
 import { Frame } from "../../Types/Types";
 import { getRandomArrayElement } from "../../Utility/Array";
-import { convertVariableFrameColor, getRandomFrameKeyIndex } from "../../Utility/Frame";
-import { BirdFrames } from "./BirdFrames";
-import BaseFrameProvider from "../../Base/BaseFrameProvider";
+import { convertVariableFrameColor } from "../../Utility/Frame";
+import getBirdFrames from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 
@@ -36,13 +35,13 @@ export default class BirdEnemy extends BaseEnemy {
      * Creates the object.
      */
     constructor(location: GameLocation, frameChangetime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider) {
-        super(location, frameChangetime, BirdFrames, Explosion01, locationProvider, frameProvider);
+        super(location, frameChangetime, getBirdFrames, Explosion01, locationProvider, frameProvider);
 
         this.colorTickHandler = new TickHandler(40, () => this.onColorChange());
 
-        convertVariableFrameColor(this.explosionClone.explosionCenterFrame, CGAColors.white);
-        convertVariableFrameColor(this.explosionClone.particleFrames[0], CGAColors.white);
-        convertVariableFrameColor(this.explosionClone.particleFrames[1], CGAColors.white);
+        convertVariableFrameColor(this.explosion.explosionCenterFrame, CGAColors.white);
+        convertVariableFrameColor(this.explosion.particleFrames[0], CGAColors.white);
+        convertVariableFrameColor(this.explosion.particleFrames[1], CGAColors.white);
 
         this.onFrameChange();
         this.location = this.getOffsetLocation();
@@ -87,7 +86,7 @@ export default class BirdEnemy extends BaseEnemy {
      * Called by a TickHandler when the bird should change color.
      */
     private onColorChange(): void {
-        const currentFrameClone = this.frameProvider.getCurrentFrameClone();
+        const currentFrameClone = this.frameProvider.getCurrentFrameCopy();
         convertVariableFrameColor(currentFrameClone, getRandomArrayElement(colors));
 
         this.currentFrameClone = currentFrameClone;
