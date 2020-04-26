@@ -151,8 +151,9 @@ export function getMaximumFrameDimensions(frames: Frames, pixelSize: number): Ga
 }
 
 /**
- * Calculates a GameLocation object where the center of a frame resides.
- * @param {number} location.
+ * Calculates a location object where the center of a frame resides.
+ * @param {number} left. Left coordinate.
+ * @param {number} top. Top coordinate.
  * @param {frame} frame.
  */
 export function getFrameCenter(left: number, top: number, frame: Frame, pixelSize: number): { left: number, top: number } {

@@ -77,7 +77,8 @@ export abstract class BaseEnemy extends BaseDestructable {
 
     /**
      * Construct the enemy.
-     * @param {GameLocation} startLocation. Start location of the enemy.
+     * @param {number} left. Left coordinate.
+     * @param {number} top. Top coordinate.
      * @param {number} frameChangeTime. Time in ms between frames.
      * @param {OffsetFrames} offsetFrames. Frames with offsets.
      * @param {Explosion} explosion. Explosion asset. Aka. BOOM animation.
@@ -155,7 +156,7 @@ export abstract class BaseEnemy extends BaseDestructable {
 
     /**
      * Calculates the offsetLocation
-     * @returns {GameLocation}. GameLocation offset to let the frames render over one another.
+     * @returns {Location}. Location offset to let the frames render over one another.
      */
     protected getOffsetLocation(): { left: number, top: number } {
         const frameOffsets = this.offSets[this.frameProvider.getCurrentIndex()];
@@ -184,7 +185,7 @@ export abstract class BaseEnemy extends BaseDestructable {
 
     /**
      * Returns the center location of the object.
-     * @returns {GameLocation}. GameLocation located at the center of the object.
+     * @returns {Location}. Location located at the center of the object.
      */
     public getCenterLocation(): { left: number, top: number } {
         return getFrameCenter(this.left, this.top, this.currentFrameClone, averagePixelSize);

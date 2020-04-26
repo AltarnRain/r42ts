@@ -21,7 +21,8 @@ const {
 
 /**
  * Renders a single frame to the canvas.
- * @param {GameLocation} location. The location where to render the frame.
+ * @param {left} left. Left coordinate.
+ * @param {top} top. Top coordinate.
  * @param {Frame} frame. A 2d string array.
  */
 export default function renderFrame(left: number, top: number, frame: Frame): void {

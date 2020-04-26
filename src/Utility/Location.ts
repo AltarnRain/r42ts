@@ -6,7 +6,7 @@
 
 /**
  * Module:          Location utilities
- * Responsibility:  Offer utility functions for GameLocations
+ * Responsibility:  Offer utility functions for stuff that needs to know where it is.
  */
 
 import speedProvider from "../Providers/SpeedProvider";
@@ -74,13 +74,13 @@ export function getLocation(left: number, top: number, angle: number | undefined
 }
 
 /**
- * Offsets a location using the given offsers and return a new GameLocation object.
+ * Offsets a location using the given offsers and return a new location.
  * @param {number} left. Left coordinate.
  * @param {number} top. Top coordinate.
  * @param {number} leftOffset. Left offset in real pixels.
  * @param {number} topOffset. Top offset in real pixels.
  * @param {number} pixelSize. Pixel size used to calculate the actual location.
- * @returns {GameLocation}. A new game location offset to animation overlap.
+ * @returns {location}. A new location offset to animation overlap.
  */
 export function getOffsetLocation(left: number, top: number, leftOffset: number, topOffset: number): { left: number, top: number}  {
     return {

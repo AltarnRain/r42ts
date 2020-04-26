@@ -15,13 +15,14 @@ import { getFrameReturner } from "../Utility/Frame";
 
 /**
  * particleProvider. Provides particle objects based on an Explosion asset.
- * @param {GameLocation} startLocation. Initial location of the particles.
- * @param {Explosion} explosion. Explosion asset used to generate particle objects.
+ * @param {number} left. Left coordinate.
+ * @param {number} top. Top coordinate.
+ * @param {ExplosionProviderFunction} getExplosion. Explosion asset used to generate particle objects.
  * @returns {Particle[]}. Resulting particles.
  */
-export default function particleProvider(left: number, top: number, explosion: ExplosionProviderFunction): Particle[] {
+export default function particleProvider(left: number, top: number, getExplosion: ExplosionProviderFunction): Particle[] {
 
-    const expClone = explosion();
+    const expClone = getExplosion();
 
     const particles: Particle[] = [];
     for (let i = 0; i < expClone.particleFrameIndexes.length; i++) {

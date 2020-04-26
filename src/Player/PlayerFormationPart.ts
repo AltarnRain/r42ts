@@ -54,10 +54,12 @@ export default class PlayerFormationPart {
 
     /**
      * Construct the object.
-     * @param {GameLocation} sourceLocation. Location where the part begins.
-     * @param {GameLocation} targetLocation. Location where the part is heading.
-     * @param {Frame} frame. Frame to render for this part.
+     * @param {number} left. Left coordinate.
+     * @param {number} top. Top coordinate
+     * @param {FrameProviderFunction} getFrame. Frame to render for this part.
      * @param {number} speed. Speed at which the part travels.
+     * @param {number} leftOffset. Number of pixels to add to the initial left position and the target left position.
+     * @param {number} topOffset. Number of pixels to add to the initial top position and the target top position.
      */
     constructor(left: number, top: number, getFrame: FrameProviderFunction, speed: number, leftOffset: number, topOffset: number) {
 

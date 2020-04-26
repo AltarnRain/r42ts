@@ -39,7 +39,8 @@ export default abstract class BaseLocationProvider {
 
     /**
      * Returns a location. Implement specific movement behaviours in a diriving class.
-     * @param {GameLocation} location. Location to base the next location on.
+     * @param {number} left. Left coordinate.
+     * @param {number} top. Top coordinate.
      * @param {number} width. Width of the object.
      * @param {number} height. Height of the object.
      */

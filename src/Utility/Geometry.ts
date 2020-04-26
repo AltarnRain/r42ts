@@ -99,9 +99,11 @@ export function reverseDegreeAngle(angle: number): number {
 
 /**
  * Calculates the angle from the source location to the target location.
- * @param {GameLocation} start. Begin point of the vector.
- * @param {GameLocation} end. End point of the factor.
- * @returns {number}. The angle to towards the target in degrees.
+ * @param {number} startLeft. Left begin point.
+ * @param {number} startTop. Top begin point.
+ * @param {number} endLeft. Left end point.
+ * @param {number} endTop. Top end pint.
+ * @returns {number | undefined}. The angle to towards the target in degrees.
  */
 export function calculateAngle(startLeft: number, startTop: number, endLeft: number, endTop: number): number | undefined {
     const dx =  endLeft - startLeft;

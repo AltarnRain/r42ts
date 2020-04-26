@@ -94,7 +94,7 @@ export default class PlayerShip {
 
     /**
      * Returns the top/left of the nozzle.
-     * @returns { GameLocation}. Returns the location of the ship's nozzlel
+     * @returns {Location}. Returns the location of the ship's nozzlel
      */
     public getNozzleLocation(): { left: number, top: number } {
         const { playerState } = appState();

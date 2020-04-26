@@ -17,8 +17,9 @@ export default class PlayerBullet extends Particle {
 
     /**
      * Construct the object.
-     * @param {GameLocation} startLocation. Initial location of the player bullet.
-     * @param {Frame} frame. Bullet frame.
+     * @param {number} left. Left coordinate.
+     * @param {number} top. Top coordinate.
+     * @param {FrameProviderFunction} getFrame. function that returns a frame..
      * @param {number} angle. Bullet angle.
      * @param {number} speed. Speed of the bullet.
      * @param {number} acceleration. Acceleration of the bullet.

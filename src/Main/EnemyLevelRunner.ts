@@ -223,8 +223,9 @@ function handlePlayerDeath(player: PlayerShip): void {
 
 /**
  * Queue an explosion center and the explosion particles.
+ * @param {number} left. Left coordinate.
+ * @param {number} top. Top coordinate.
  * @param {Explosion} explosion. An explosion asset.
- * @param {GameLocation} location. The center location where the explosion occurs.
  * @param {Particle[]} targetParticleArray. The array where the particles will be pushed into. Helps keep track of particles belonging to the player or an enemy.
  */
 function queueExplosionRender(left: number, top: number, explosion: Explosion): void {

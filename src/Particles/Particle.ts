@@ -47,8 +47,9 @@ export default class Particle extends BaseParticle {
 
     /**
      * Construct the object.
-     * @param {GameLocation} startLocation. Initial location of the particle.
-     * @param {Frame} frame. Frame for the particle.
+     * @param {number} left. Left coordinate.
+     * @param {number} top. Top coordinate.
+     * @param {FrameProviderFunction} getFrame. Frame for the particle.
      * @param {number} angle. Angle the particle will travel.
      * @param {number} speed. Speed at which the particle will travel.
      * @param {number} acceleration. Acceleration applies each update of the state.

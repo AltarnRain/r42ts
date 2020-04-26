@@ -53,7 +53,7 @@ export default abstract class BaseGameObject {
 
     /**
      * Get the game location for colision detection.
-     * @returns {GameLocation}. The location of the object.
+     * @returns {Location}. The location of the object.
      */
     public getLocation(): { left: number, top: number} {
         return { left: this.left, top: this.top };

@@ -44,8 +44,9 @@ export default class ExplosionCenter extends BaseGameObject {
 
     /**
      * Construct the Explosion center object.
-     * @param {Frame} frame. Explosion frame.
-     * @param {GameLocation} location. Location where the explosion will appear.
+     * @param {number} left. Left coordinate.
+     * @param {number} top. Top coordinate.
+     * @param {FrameProviderFunction} getExplosionCenterFrame. function that returns an explision frame.
      * @param {number} burnTime. Time in ticks how long the explosion center should remain visible.
      */
     constructor(left: number, top: number, getExplosionCenterFrame: FrameProviderFunction,  burnTime: number) {
