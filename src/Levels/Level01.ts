@@ -13,13 +13,12 @@ import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import getBirdFrames from "../Enemies/Bird/BirdFrames";
 import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
 import { isEnemyBullet } from "../Guard";
-import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
+import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
 import BulletParticle from "../Particles/BulletParticle";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import { appState } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
-import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
 
 /**
  * Module:          Level 01

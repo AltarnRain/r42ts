@@ -34,6 +34,7 @@ export default function debuggingReducer(state: DebuggingState = initState(), ac
                 break;
             case "renderPhaserOff":
                 draft.renderPhaser = false;
+                break;
             case "hitboxesOn":
                 draft.drawHitboxes = true;
                 break;
