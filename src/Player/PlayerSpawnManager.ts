@@ -150,7 +150,7 @@ function createParticles(): void {
 function setupFormation(targetLeftLocation: number, targetTopLocation: number, speed: "fast" | "slow", limit: MoveLimits): void {
     formationSpeed = speed;
     dispatch<number>("setPlayerLeftLocation", targetLeftLocation);
-    dispatch<number>("setPlayerTopLocation", targetLeftLocation);
+    dispatch<number>("setPlayerTopLocation", targetTopLocation);
     setPartLocations(targetLeftLocation, targetTopLocation);
     createParticles();
 

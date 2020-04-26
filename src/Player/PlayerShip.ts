@@ -23,7 +23,6 @@ import { getPlayerFrame } from "./PlayerFrames";
 const {
     minPixelSize,
     averagePixelSize,
-
 } = dimensionProvider();
 
 const shipDimensions = getFrameDimensions(getPlayerFrame(), averagePixelSize);
@@ -74,7 +73,7 @@ export default class PlayerShip {
      */
     public draw(): void {
         const { playerState } = appState();
-        renderFrame(playerState.playerLeftLocation, playerState.playerLeftLocation, this.frameClone);
+        renderFrame(playerState.playerLeftLocation, playerState.playerTopLocation, this.frameClone);
     }
 
     /**
