@@ -36,8 +36,8 @@ const nozzleOutAngle = 270;
 const leftWingOutAngle = 200;
 const rightWingOutAngle = 340;
 
-const partFrames = cloneObject(PlayerFormationFrames);
-convertFramesColors(partFrames);
+const partFramesClone = cloneObject(PlayerFormationFrames);
+convertFramesColors(partFramesClone);
 
 let nozzleTopPart: PlayerFormationPart;
 let nozzleBottomPart: PlayerFormationPart;

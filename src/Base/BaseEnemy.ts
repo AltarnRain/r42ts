@@ -18,7 +18,6 @@ import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import { OffsetFrames } from "../Models/OffsetFrames";
-import Particle from "../Particles/Particle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { AngleProviderFunction, GameObjectType } from "../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getMaximumFrameDimensions } from "../Utility/Frame";
@@ -40,7 +39,7 @@ export abstract class BaseEnemy extends BaseDestructable {
     /**
      * The frame provider. Must be set in an inheriting class.
      */
-    protected frameProvider!: BaseFrameProvider;
+    protected frameProvider: BaseFrameProvider;
 
     /**
      * Frame tick handler. Handles changes in the frames.
@@ -60,12 +59,12 @@ export abstract class BaseEnemy extends BaseDestructable {
     /**
      * Explosion for the enemy.
      */
-    protected explosion: Explosion;
+    protected explosionClone: Explosion;
 
     /**
      * Frames with offsets.
      */
-    protected offSetFrames: OffsetFrames;
+    protected offSetFramesClone: OffsetFrames;
 
     /**
      * Provides location. Can be used to alter the movement behaviour of enemies.
@@ -97,18 +96,18 @@ export abstract class BaseEnemy extends BaseDestructable {
         offsetFrames: OffsetFrames,
         explosion: Explosion,
         locationProvider: BaseLocationProvider,
+        frameProvider: BaseFrameProvider,
         angleProvider?: AngleProviderFunction) {
         super(startLocation);
 
         this.locationProvider = locationProvider;
 
-        this.offSetFrames = cloneObject(offsetFrames);
-        this.explosion = cloneObject(explosion);
-
+        this.offSetFramesClone = cloneObject(offsetFrames);
+        this.explosionClone = cloneObject(explosion);
         this.actualLocation = { ...this.location };
         this.frameTickHandler = new TickHandler(frameChangeTime, () => this.onFrameChange());
 
-        this.offSets = offsetFrames.offSets.map((o) => {
+        this.offSets = this.offSetFramesClone.offSets.map((o) => {
             return {
                 left: o.left * averagePixelSize,
                 top: o.top * averagePixelSize,
@@ -116,8 +115,10 @@ export abstract class BaseEnemy extends BaseDestructable {
         });
 
         this.maxDimensions = getMaximumFrameDimensions(offsetFrames.frames, averagePixelSize);
-
         this.angleProvider = angleProvider;
+        this.frameProvider = frameProvider;
+
+        this.frameProvider.setFrames(offsetFrames.frames);
     }
 
     /**
@@ -125,7 +126,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @returns {Explosion}. An explosion asset.
      */
     public getExplosion(): Explosion {
-        return this.explosion;
+        return this.explosionClone;
     }
 
     /**
@@ -137,9 +138,7 @@ export abstract class BaseEnemy extends BaseDestructable {
     /**
      * Called by a TickHandler when the next frame is up.
      */
-    protected onFrameChange(): void {
-        this.currentFrame = this.frameProvider.getNextFrame();
-    }
+    protected abstract onFrameChange(): void;
 
     /**
      * Base implementation of a state update.
@@ -187,7 +186,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @returns {GameLocation}. GameLocation located at the center of the object.
      */
     public getCenterLocation(): GameLocation {
-        return getFrameCenter(this.location, this.currentFrame, averagePixelSize);
+        return getFrameCenter(this.location, this.currentFrameClone, averagePixelSize);
     }
 
     /**
@@ -202,7 +201,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @returns {GameRectangle}. Bird's hitbox.
      */
     public getHitbox(): GameRectangle {
-        const dimensions = getFrameDimensions(this.currentFrame, averagePixelSize);
+        const dimensions = getFrameDimensions(this.currentFrameClone, averagePixelSize);
         return getFrameHitbox(this.location, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
     }
 

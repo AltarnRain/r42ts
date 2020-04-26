@@ -29,4 +29,6 @@ const CGAColors = {             // Color hex code. Used to set the color of asse
     // Varies                   // V. Special color that flags a pixel as varies in color.
 };
 
+export const validColors = Object.keys(CGAColors).map((key) => (CGAColors as any)[key]);
+
 export default CGAColors;

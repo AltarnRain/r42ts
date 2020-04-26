@@ -12,6 +12,9 @@ import GameLocation from "../Models/GameLocation";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { dispatch } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
+import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
+import { BirdFrames } from "../Enemies/Bird/BirdFrames";
+import { getRandomFrameKeyIndex } from "../Utility/Frame";
 
 /**
  * Module:          Level 01
@@ -31,8 +34,9 @@ export default class Level01 extends BaseLevel {
 
         const enemies = birdSpawnLocations.map((l) => {
             const randomAngle = getRandomArrayElement([2, 358, 178, 182]);
+            const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(BirdFrames.frames));
             const locationProvider = new SideToSideUpAndDown(3, randomAngle);
-            return new BirdEnemy(l, 100, locationProvider);
+            return new BirdEnemy(l, 100,  locationProvider, frameProvider);
         });
 
         dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());

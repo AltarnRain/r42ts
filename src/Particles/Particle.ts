@@ -58,7 +58,7 @@ export default class Particle extends BaseParticle {
     constructor(startLocation: GameLocation, frame: Frame, angle: number, speed: number, acceleration: number) {
         super(startLocation);
 
-        this.currentFrame = cloneObject(frame);
+        this.currentFrameClone = cloneObject(frame);
         this.angle = angle;
         this.speed = speed;
         this.acceleration = acceleration;

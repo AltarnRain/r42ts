@@ -35,24 +35,24 @@ export default class PlayerShip {
     /**
      * Reference to the player's ships frame.
      */
-    private frame: Frame;
+    private frameClone: Frame;
 
     /**
      * Player explosion.
      */
-    private explosion: Explosion;
+    private explosionClone: Explosion;
 
     /**
      * Construct the class.
      */
     constructor() {
-        this.frame = cloneObject(PlayerFrame);
-        convertFrameColor(this.frame);
+        this.frameClone = cloneObject(PlayerFrame);
+        convertFrameColor(this.frameClone);
 
-        this.explosion = cloneObject(PlayerExplosion);
-        convertFrameColor(this.explosion.explosionCenterFrame);
+        this.explosionClone = cloneObject(PlayerExplosion);
+        convertFrameColor(this.explosionClone.explosionCenterFrame);
 
-        this.explosion.particleFrames.forEach((p) => convertFrameColor(p));
+        this.explosionClone.particleFrames.forEach((p) => convertFrameColor(p));
     }
 
     /**
@@ -60,7 +60,7 @@ export default class PlayerShip {
      * @returns {Explosion}. Player explosion.
      */
     public getExplosion(): Explosion {
-        return this.explosion;
+        return this.explosionClone;
     }
 
     /**
@@ -76,7 +76,7 @@ export default class PlayerShip {
      */
     public draw(): void {
         const { playerState } = appState();
-        renderFrame(playerState.playerLocation, this.frame);
+        renderFrame(playerState.playerLocation, this.frameClone);
     }
 
     /**

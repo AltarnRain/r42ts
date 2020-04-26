@@ -23,7 +23,7 @@ export default class BulletParticle extends Particle {
         super(startLocation, frame, angle, speed, 1);
 
         this.owner = owner;
-        convertVariableFrameColor(this.currentFrame, color);
+        convertVariableFrameColor(this.currentFrameClone, color);
     }
 
     /**

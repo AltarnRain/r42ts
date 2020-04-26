@@ -13,16 +13,15 @@ import Explosion02 from "../../Assets/Explosion02";
 import { twoPXBullet } from "../../Assets/twoPXBullet";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
-import BulletRunner from "../../BulletProviders/BulletRunner";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import GameLocation from "../../Models/GameLocation";
 import CircleFrameProvider from "../../Providers/CircleFrameProvider";
-import dimensionProvider from "../../Providers/DimensionProvider";
-import { Frame, AngleProviderFunction } from "../../Types/Types";
+import { AngleProviderFunction, Frame } from "../../Types/Types";
 import { convertChangingFrameColors, convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
 import orbFrames from "./OrbFrames";
+import BaseFrameProvider from "../../Base/BaseFrameProvider";
 
 const colors: string[][] = [
     [CGAColors.lightGreen, CGAColors.lightBlue],
@@ -32,11 +31,6 @@ const colors: string[][] = [
 ];
 
 export default class OrbEnemy extends BaseEnemy {
-
-    private static counter = 0;
-
-    public mycount = 0;
-
     /**
      * Handles the color change ticks.
      */
@@ -50,55 +44,67 @@ export default class OrbEnemy extends BaseEnemy {
     /**
      * Orb enemy's bullet frame.
      */
-    private bulletFrame: Frame;
+    private bulletFrameClone: Frame;
 
     /**
      * Construct the enemy.
      */
-    constructor(startLocation: GameLocation, frameChangeTime: number, locationProvider: BaseLocationProvider, angleProvider?: AngleProviderFunction) {
-        super(startLocation, frameChangeTime, orbFrames, Explosion02, locationProvider, angleProvider);
-
-        // The frame probider is required by base objects. It won't do anything in this enemy since it has just one frame.
-        this.frameProvider = new CircleFrameProvider(this.offSetFrames.frames, 0);
+    constructor(startLocation: GameLocation, frameChangeTime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: AngleProviderFunction) {
+        super(startLocation, frameChangeTime, orbFrames, Explosion02, locationProvider, frameProvider, angleProvider);
 
         // We only have one frame in this enemy but its color DOES change. Set the currentFrame to the only available one
         // and sets its color to the first color set so we get a a good render when the enemy first appears.
-        this.currentFrame = cloneObject(orbFrames.frames[0]);
-        this.setCurrentFrameColor(this.currentFrame);
+        this.updateCurrentFrameAndColor();
 
-        convertVariableFrameColor(this.explosion.explosionCenterFrame, CGAColors.magenta);
-        convertVariableFramesColor(this.explosion.particleFrames, CGAColors.magenta);
+        convertVariableFrameColor(this.explosionClone.explosionCenterFrame, CGAColors.magenta);
+        convertVariableFramesColor(this.explosionClone.particleFrames, CGAColors.magenta);
+
+        this.bulletFrameClone = cloneObject(twoPXBullet);
+        convertVariableFrameColor(this.bulletFrameClone, CGAColors.lightRed);
+
         this.colorTickHandler = new TickHandler(100, () => this.onColorChange());
-
-        this.bulletFrame = cloneObject(twoPXBullet);
-        convertVariableFrameColor(this.bulletFrame, CGAColors.lightRed);
-
-        this.mycount = OrbEnemy.counter;
-        OrbEnemy.counter++;
     }
 
     /**
      * Called by a TickHandler when the bird should change color.
      */
     private onColorChange(): void {
-        const coloredFrame = cloneObject(this.offSetFrames.frames[0]);
-
         this.currentColorIndex++;
         if (this.currentColorIndex >= colors.length) {
             this.currentColorIndex = 0;
         }
 
-        this.setCurrentFrameColor(coloredFrame);
+        this.updateCurrentFrameAndColor();
     }
 
     /**
      * Sets the current frame and its color.
      * @param {Frame} frame. A frame.
      */
-    private setCurrentFrameColor(frame: Frame) {
+    private updateCurrentFrameAndColor() {
         const newColor = colors[this.currentColorIndex];
+        const frame = cloneObject(this.offSetFramesClone.frames[0]);
+
+        if (newColor === undefined) {
+            throw new Error("Color cannot be undefined.");
+        }
+
         convertChangingFrameColors(frame, newColor);
-        this.currentFrame = frame;
+        this.currentFrameClone = frame;
+    }
+
+    /**
+     * Changes the frame of the OrbEnemy. Also ensures the new frame is given colors.
+     */
+    protected onFrameChange(): void {
+        const newFrame = this.frameProvider.getNextFrameClone();
+        const currentColors = colors[this.currentColorIndex];
+
+        // Apply currnet colors when the frame changes.
+        // The color will be updated when the color tich handler fires.
+        convertChangingFrameColors(newFrame, currentColors);
+
+        this.currentFrameClone = newFrame;
     }
 
     /**

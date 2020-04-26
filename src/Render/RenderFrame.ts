@@ -9,6 +9,7 @@
  * Responsibility:  Renders a single frame to the canvas
  */
 
+import { validColors } from "../Constants/CGAColors";
 import GameLocation from "../Models/GameLocation";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
@@ -39,6 +40,13 @@ export default function renderFrame(location: GameLocation, frame: Frame): void 
             const y = location.top + rowIndex * averagePixelSize;
 
             if (color !== "0") {
+
+                // DEBUGGING.
+                if (validColors.indexOf(color) === -1) {
+                    // tslint:disable-next-line: no-console
+                    console.error("Provided color is not a valid CGA color");
+                }
+
                 ctx.fillStyle = color;
                 // But we use the max pixel size to draw a pixel. This ensures the pixels overlap slightly.
                 // Otherwise, you'll see bits and pieces of the back ground.

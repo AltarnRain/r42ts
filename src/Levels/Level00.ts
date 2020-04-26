@@ -20,6 +20,7 @@ import BulletParticle from "../Particles/BulletParticle";
 import PlayerShip from "../Player/PlayerShip";
 import EnemyLevelState from "../State/Definition/EnemyLevelState";
 import { appState, dispatch } from "../State/Store";
+import CircleFrameProvider from "../Providers/CircleFrameProvider";
 
 /**
  * Module:          Level 00
@@ -42,14 +43,17 @@ export default class Level00 extends BaseLevel {
         dispatch<PlayerShip>("setPlayer", new PlayerShip());
         // dispatch<GameLocation>("setPlayerLocation", { left: 0, top: 0 });
 
-        const enemies = orbSpawnLocations.map((startLocation) => {
-            const locationProvider = new MoveDownAppearUp(80, 0, 90);
-            return new OrbEnemy(startLocation, 300, locationProvider, diagonalAtPlayerAngleProvider);
-        });
+        const enemies = orbSpawnLocations.map((startLocation, index) => {
+            if (index === 0) {
+                const frameProvider = new CircleFrameProvider(0);
+                const locationProvider = new MoveDownAppearUp(80, 0, 90);
+                return new OrbEnemy(startLocation, 300, locationProvider, frameProvider,  diagonalAtPlayerAngleProvider);
+            }
+        }).filter((e) => e !== undefined);
 
         // Add the enemies to the global state. The registered stateManager will take it from here.
         dispatch<number>("setFireInterval", 200);
-        dispatch<BaseEnemy[]>("setEnemies", enemies);
+        dispatch<BaseEnemy[]>("setEnemies", enemies as BaseEnemy[]);
 
         const bulletRunner = new BulletRunner(twoPXBullet, CGAColors.magenta, 10, orbFireCheck);
 

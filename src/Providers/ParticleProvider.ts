@@ -22,19 +22,19 @@ import { cloneObject } from "../Utility/Lib";
  */
 export default function particleProvider(startLocation: GameLocation, explosion: Explosion): Particle[] {
 
-    const exp = cloneObject(explosion);
-    const loc = cloneObject(startLocation);
+    const expClone = cloneObject(explosion);
+    const locClone = cloneObject(startLocation);
 
     const particles: Particle[] = [];
-    for (let i = 0; i < exp.particleFrameIndexes.length; i++) {
+    for (let i = 0; i < expClone.particleFrameIndexes.length; i++) {
         // Create an array with every particle frame.
-        const particleFrameIndex = exp.particleFrameIndexes[i];
-        const particleFrame = exp.particleFrames[particleFrameIndex];
+        const particleFrameIndex = expClone.particleFrameIndexes[i];
+        const particleFrame = expClone.particleFrames[particleFrameIndex];
 
-        const angle = exp.angles[i];
-        const speed = exp.useSpeed ? exp.speed : exp.speeds[i];
+        const angle = expClone.angles[i];
+        const speed = expClone.useSpeed ? expClone.speed : expClone.speeds[i];
 
-        const p = new Particle(loc, particleFrame, angle, speed, exp.acceleration);
+        const p = new Particle(locClone, particleFrame, angle, speed, expClone.acceleration);
         particles.push(p);
     }
 

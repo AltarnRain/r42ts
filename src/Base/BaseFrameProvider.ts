@@ -6,17 +6,18 @@
 
 import { Frame, Frames } from "../Types/Types";
 import { getFrameByIndex } from "../Utility/Frame";
+import { cloneObject } from "../Utility/Lib";
 
 /**
  * Module:          IFrameProvider
  * Responsibility:  Contract for a FrameProvider
  */
 
-export default abstract class  BaseFrameProvider {
+export default abstract class BaseFrameProvider {
     /**
      * Animation frames.
      */
-    private frames: Frames;
+    private framesClone?: Frames;
 
     /**
      * The current frame for an animated enemy.
@@ -38,22 +39,30 @@ export default abstract class  BaseFrameProvider {
      * @param {Frames} frames. Frames.
      * @param {number} startFrameIndex. The first frame to return.
      */
-    constructor(frames: Frames, startFrameIndex: number) {
-        this.frames = frames;
+    constructor(startFrameIndex: number) {
         this.frameIndex = startFrameIndex;
         this.maxIndex = Object.keys(frames).length - 1;
     }
 
-    /**
-     * Gets the name frame from an enemy.
-     * @returns {Frame}. A frame
-     */
-    public getCurrentFrame(): Frame {
-        const returnValue = getFrameByIndex(this.frames, this.frameIndex);
-        return returnValue;
+    public setFrames(frames: Frames): void {
+        this.framesClone = cloneObject(frames);
     }
 
-    public abstract getNextFrame(): Frame;
+    /**
+     * Gets the current frame.
+     * @returns {Frame}. A frame
+     */
+    public getCurrentFrameClone(): Frame {
+
+        if (this.framesClone === undefined) {
+            throw new Error("Set the frames.");
+        }
+
+        const returnValue = getFrameByIndex(this.framesClone, this.frameIndex);
+        return cloneObject(returnValue);
+    }
+
+    public abstract getNextFrameClone(): Frame;
 
     /**
      * Returns the current frame index.

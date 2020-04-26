@@ -23,7 +23,7 @@ export default abstract class BaseGameObject {
     /**
      * Current frame of the object
      */
-    protected currentFrame!: Frame;
+    protected currentFrameClone!: Frame;
 
     /**
      * Construct the object.
@@ -37,7 +37,7 @@ export default abstract class BaseGameObject {
      * Animate the object
      */
     public draw(): void {
-        renderFrame(this.location, this.currentFrame);
+        renderFrame(this.location, this.currentFrameClone);
     }
 
     /**

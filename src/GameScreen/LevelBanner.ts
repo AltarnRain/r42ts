@@ -28,18 +28,18 @@ const {
 
 const ctx = ctxProvider();
 
-const greenCharacters = cloneObject(Characters);
-convertVariableFramesColor(greenCharacters, CGAColors.lightGreen);
+const greenCharactersClone = cloneObject(Characters);
+convertVariableFramesColor(greenCharactersClone, CGAColors.lightGreen);
 
-const greenNumbers = cloneObject(Numbers);
-convertVariableFramesColor(greenNumbers, CGAColors.lightGreen);
+const greenNumbersClone = cloneObject(Numbers);
+convertVariableFramesColor(greenNumbersClone, CGAColors.lightGreen);
 
 const roundCharacters = [
-    getCharacter(greenCharacters, "R"),
-    getCharacter(greenCharacters, "O"),
-    getCharacter(greenCharacters, "U"),
-    getCharacter(greenCharacters, "N"),
-    getCharacter(greenCharacters, "D"),
+    getCharacter(greenCharactersClone, "R"),
+    getCharacter(greenCharactersClone, "O"),
+    getCharacter(greenCharactersClone, "U"),
+    getCharacter(greenCharactersClone, "N"),
+    getCharacter(greenCharactersClone, "D"),
 ];
 
 const {
@@ -100,12 +100,12 @@ export function drawLevelBanner(level: number): void {
         leftNumber = stringLevel[0];
         rightNumber = stringLevel[1];
 
-        leftNumberFrame = getFrameByIndex(greenNumbers, parseInt(leftNumber, 10));
-        rightNumberFrame = getFrameByIndex(greenNumbers, parseInt(rightNumber, 10));
+        leftNumberFrame = getFrameByIndex(greenNumbersClone, parseInt(leftNumber, 10));
+        rightNumberFrame = getFrameByIndex(greenNumbersClone, parseInt(rightNumber, 10));
 
     } else {
         rightNumber = stringLevel;
-        rightNumberFrame = getFrameByIndex(greenNumbers, parseInt(rightNumber, 10));
+        rightNumberFrame = getFrameByIndex(greenNumbersClone, parseInt(rightNumber, 10));
     }
 
     // Render the left number if it's available.

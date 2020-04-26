@@ -22,6 +22,7 @@ import { Frame, AngleProviderFunction } from "../../Types/Types";
 import { convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import { cloneObject } from "../../Utility/Lib";
 import robotFrames from "./RobotFrames";
+import BaseFrameProvider from "../../Base/BaseFrameProvider";
 
 const {
     averagePixelSize
@@ -34,19 +35,25 @@ export default class RobotEnemy extends BaseEnemy {
      */
     private bulletFrame: Frame;
 
-    constructor(location: GameLocation, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, angleProvider?: AngleProviderFunction) {
-        super(location, frameChangeTime, robotFrames, Explosion02, locationProvider,  angleProvider);
+    constructor(location: GameLocation, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: AngleProviderFunction) {
+        super(location, frameChangeTime, robotFrames, Explosion02, locationProvider, frameProvider, angleProvider);
 
-        convertVariableFrameColor(this.explosion.explosionCenterFrame, color);
-        convertVariableFrameColor(this.explosion.particleFrames[0], color);
-        convertVariableFramesColor(this.offSetFrames.frames, color);
-
-        this.frameProvider = new BackAndForthFrameProvider(this.offSetFrames.frames, 0);
-        this.currentFrame = this.frameProvider.getCurrentFrame();
-        this.location = this.getOffsetLocation();
+        convertVariableFrameColor(this.explosionClone.explosionCenterFrame, color);
+        convertVariableFrameColor(this.explosionClone.particleFrames[0], color);
+        convertVariableFramesColor(this.offSetFramesClone.frames, color);
 
         this.bulletFrame = cloneObject(twoPXBullet);
         convertVariableFrameColor(this.bulletFrame, CGAColors.lightRed);
+
+        this.onFrameChange();
+        this.location = this.getOffsetLocation();
+    }
+
+    /**
+     * Called when a frame change is required. The robot frames are all colored at initialisation so we can keep this simple.
+     */
+    protected onFrameChange(): void {
+        this.currentFrameClone = this.frameProvider.getNextFrameClone();
     }
 
     /**

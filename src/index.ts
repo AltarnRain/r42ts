@@ -9,14 +9,12 @@
  * Responsibility:  Entry point for the game
  */
 
-import { drawBackground } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import subscribeToStoreChanges from "./Levels/SubscribeToStore";
 import GameLoop from "./Main/GameLoop";
 import playerRunner from "./Main/PlayerRunner";
 import PlayerFormationPart from "./Player/PlayerFormationPart";
 import { PlayerFormationFrames } from "./Player/PlayerFrames";
-import playerSpawnManager from "./Player/PlayerSpawnManager";
 import dimensionProvider from "./Providers/DimensionProvider";
 import renderFrame from "./Render/RenderFrame";
 import { dispatch } from "./State/Store";

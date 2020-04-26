@@ -15,6 +15,7 @@ import { twoPXBullet } from "../Assets/twoPXBullet";
 import CGAColors from "../Constants/CGAColors";
 import { downAngleProvider } from "../AngleProviders/DownAngleProvider";
 import GameLoop from "../Main/GameLoop";
+import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 
 /**
  * Module:          Level 02
@@ -33,8 +34,8 @@ export default class Level02 extends BaseLevel {
         super.start();
 
         const enemies = robotSpawnLocationsAndColor.map((lc) => {
-
-            return new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(3, 5), downAngleProvider);
+            const frameProvider = new BackAndForthFrameProvider(0);
+            return new RobotEnemy(lc.location, 150, lc.color, new VanishRightAppearLeft(3, 5), frameProvider, downAngleProvider);
         });
 
         const bulletProvider = new BulletRunner(twoPXBullet, CGAColors.lightRed, 5, shouldFire);

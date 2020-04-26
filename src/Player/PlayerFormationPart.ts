@@ -39,7 +39,7 @@ export default class PlayerFormationPart {
     /**
      * The current frame.
      */
-    private currentFrame: Frame;
+    private currentFrameClone: Frame;
 
     /**
      * Construct the object.
@@ -50,8 +50,8 @@ export default class PlayerFormationPart {
      */
     constructor(sourceLocation: GameLocation, targetLocation: GameLocation, frame: Frame, speed: number) {
 
-        this.currentFrame = cloneObject(frame);
-        convertFrameColor(this.currentFrame);
+        this.currentFrameClone = cloneObject(frame);
+        convertFrameColor(this.currentFrameClone);
 
         this.currentLocation = { ...sourceLocation };
         this.targetLocation = { ...targetLocation };
@@ -76,7 +76,7 @@ export default class PlayerFormationPart {
      * Draw the particle.
      */
     public draw(): void {
-        renderFrame(this.currentLocation, this.currentFrame);
+        renderFrame(this.currentLocation, this.currentFrameClone);
     }
 
     /**
