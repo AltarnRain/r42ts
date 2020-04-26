@@ -46,6 +46,7 @@ window.onload = () => {
 
                 dispatch<number>("setLives", 2);
                 dispatch<number>("setLevel", level);
+                dispatch<number>("setPhasers", 1);
                 GameLoop.Start();
 
                 (window as any).r42 = {

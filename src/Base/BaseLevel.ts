@@ -74,9 +74,6 @@ export default abstract class BaseLevel {
      * Begin this level. Call from start.
      */
     protected begin(enemies: BaseEnemy[], fireInterval?: number, bulletRunner?: BulletRunner): void {
-        // A phaser is rewarded at the beginning of a level.
-        dispatch("addPhaser");
-
         // Register the stateManager so it can act on state changes in the level.
         this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));
 
