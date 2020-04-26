@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { diagonalAtPlayerAngleProvider } from "../AngleProviders/DiagonalAtPlayerAngleProvider";
+import { orbEnemyAngleProvider } from "../AngleProviders/OrbEnemyAngleProvider";
 import getTwoPixelBullet from "../Assets/twoPXBullet";
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
@@ -30,7 +30,7 @@ export class Level03 extends BaseLevel {
         const enemies = orbSpawnLocations.map((startLocation) => {
             const frameProvider = new CircleFrameProvider(0);
             const locationProvider = new MoveDownAppearUp(80, 0.3, 90);
-            return new OrbEnemy(startLocation.left, startLocation.top, 300, locationProvider, frameProvider, diagonalAtPlayerAngleProvider);
+            return new OrbEnemy(startLocation.left, startLocation.top, 300, locationProvider, frameProvider, orbEnemyAngleProvider);
         });
 
         const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, 10, orbFireCheck);

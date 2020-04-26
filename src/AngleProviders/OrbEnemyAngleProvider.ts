@@ -10,6 +10,7 @@
  */
 
 import { angles } from "../Constants/Angles";
+import EnemyLevelState from "../State/Definition/EnemyLevelState";
 import { appState } from "../State/Store";
 
 /**
@@ -17,10 +18,11 @@ import { appState } from "../State/Store";
  * player. If it can't hit the player the angle will be undefined.
  * @param {BaseEnemy} self. An enemy.
  */
-export function diagonalAtPlayerAngleProvider(left: number, top: number): number | undefined {
+export function orbEnemyAngleProvider(left: number, top: number): number | undefined {
 
     const {
-        playerState
+        playerState,
+        enemyLevelState,
     } = appState();
 
     const playerShip = playerState.ship;
@@ -30,6 +32,14 @@ export function diagonalAtPlayerAngleProvider(left: number, top: number): number
     }
 
     const playerHitbox = playerShip.getHitbox();
+
+    // If the number of enemies is less than 5 there's a 1 in 5 change the enemy will fire down.
+    if (enemyLevelState.enemies.length < 5) {
+        const rnd = Math.ceil(Math.random() * 5) === 1;
+        if (rnd) {
+            return angles.down;
+        }
+    }
 
     if (left < playerHitbox.left) {
         return angles.rightdown;
