@@ -8,6 +8,7 @@
         "trailing-comma": false,
         "prefer-for-of": false,
         "member-ordering": false,
-        "no-namespace": false
+        "no-namespace": false,
+        "no-switch-case-fall-through": true
     }
 }

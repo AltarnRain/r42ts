@@ -38,7 +38,7 @@ export function gameStateReducer(state: GameState = initState(), action: ActionP
                 draft.phasers = action.payload;
                 break;
             case "addPhaser":
-                draft.phasers++;
+                draft.phasers += 1;
                 break;
             case "removePhaser":
                 draft.phasers--;
@@ -55,6 +55,7 @@ export function gameStateReducer(state: GameState = initState(), action: ActionP
                 } else {
                     draft.level++;
                 }
+                break;
             case "addLifeAndPhaser":
                 draft.lives++;
                 draft.phasers++;
@@ -72,7 +73,7 @@ function initState(): GameState {
         level: 0,
         lives: 2,
         score: 0,
-        phasers: 0, // Start with 0 phasers. One is rewarded each level so level 1 gives the player one phaser.
+        phasers: 20, // Start with 0 phasers. One is rewarded each level so level 1 gives the player one phaser.
         showingLevelBanner: false
     };
 }

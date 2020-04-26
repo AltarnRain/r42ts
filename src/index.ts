@@ -41,12 +41,11 @@ window.onload = () => {
                 GameLoop.registerBackgroundDrawing(drawStatusBar);
                 GameLoop.registerUpdateState(playerRunner);
                 GameLoop.registerUpdateState(playerSpawnManager);
-                // dispatch<boolean>("playerImmortal", true);
+                dispatch<boolean>("playerImmortal", true);
 
                 dispatch<number>("setLives", 2);
-                dispatch<number>("setLives", 20);
                 dispatch<number>("setLevel", level);
-                dispatch<number>("setPhasers", 100);
+                dispatch<number>("setPhasers", 20);
                 GameLoop.Start();
 
                 (window as any).r42 = {
@@ -57,6 +56,7 @@ window.onload = () => {
                     setPhasers: (n: number) => dispatch<number>("setPhasers", n),
                     setLives: (n: number) => dispatch<number>("setLives", n),
                     increaseScore: (n: number) => dispatch<number>("increaseScore", n),
+                    addPhaser: () => dispatch("addPhaser"),
                 };
 
                 break;
