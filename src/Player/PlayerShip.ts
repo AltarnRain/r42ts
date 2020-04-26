@@ -11,7 +11,6 @@
 
 import { movePlayer } from "../Handlers/MovePlayer";
 import Explosion from "../Models/Explosion";
-import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
@@ -75,7 +74,7 @@ export default class PlayerShip {
      */
     public draw(): void {
         const { playerState } = appState();
-        renderFrame(playerState.playerLocation, this.frameClone);
+        renderFrame(playerState.playerLeftLocation, playerState.playerLeftLocation, this.frameClone);
     }
 
     /**
@@ -91,18 +90,18 @@ export default class PlayerShip {
      */
     public getHitbox(): GameRectangle {
         const { playerState } = appState();
-        return getFrameHitbox(playerState.playerLocation, shipDimensions.width, shipDimensions.height, 0, averagePixelSize);
+        return getFrameHitbox(playerState.playerLeftLocation, playerState.playerTopLocation, shipDimensions.width, shipDimensions.height, 0, averagePixelSize);
     }
 
     /**
      * Returns the top/left of the nozzle.
      * @returns { GameLocation}. Returns the location of the ship's nozzlel
      */
-    public getNozzleLocation(): GameLocation {
+    public getNozzleLocation(): { left: number, top: number } {
         const { playerState } = appState();
         return {
-            left: playerState.playerLocation.left + minPixelSize * 2,
-            top: playerState.playerLocation.top - minPixelSize * 1,
+            left: playerState.playerLeftLocation + minPixelSize * 2,
+            top: playerState.playerTopLocation - minPixelSize * 1,
         };
     }
 }

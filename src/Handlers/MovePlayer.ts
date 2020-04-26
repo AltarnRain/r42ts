@@ -59,10 +59,11 @@ export function movePlayer(speed: number): void {
     }
 
     const angle = getAngle(localKeyboardState);
-    if (angle !== -1 && playerState.playerLocation) {
-        const newLocation = getLocation(playerState.playerLocation, angle, speed);
-        if (fallsWithin(newLocation, gameFieldTop, maxBottom, 0, maxRight)) {
-            dispatch("setPlayerLocation", newLocation);
+    if (angle !== -1) {
+        const newLocation = getLocation(playerState.playerLeftLocation, playerState.playerTopLocation, angle, speed);
+        if (fallsWithin(newLocation.left, newLocation.top, gameFieldTop, maxBottom, 0, maxRight)) {
+            dispatch("setPlayerLeftLocation", newLocation.left);
+            dispatch("setPlayerTopLocation", newLocation.top);
         }
     }
 }

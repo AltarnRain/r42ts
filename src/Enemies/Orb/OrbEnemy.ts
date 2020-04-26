@@ -16,7 +16,6 @@ import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
-import GameLocation from "../../Models/GameLocation";
 import { AngleProviderFunction, Frame } from "../../Types/Types";
 import { convertChangingFrameColors, convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import getOrbFrames from "./OrbFrames";
@@ -47,8 +46,8 @@ export default class OrbEnemy extends BaseEnemy {
     /**
      * Construct the enemy.
      */
-    constructor(startLocation: GameLocation, frameChangeTime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: AngleProviderFunction) {
-        super(startLocation, frameChangeTime, getOrbFrames, getExplosion02, locationProvider, frameProvider, angleProvider);
+    constructor(left: number, top: number, frameChangeTime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: AngleProviderFunction) {
+        super(left, top, frameChangeTime, getOrbFrames, getExplosion02, locationProvider, frameProvider, angleProvider);
 
         // We only have one frame in this enemy but its color DOES change. Set the currentFrame to the only available one
         // and sets its color to the first color set so we get a a good render when the enemy first appears.

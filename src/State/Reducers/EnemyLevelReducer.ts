@@ -60,11 +60,11 @@ export function enemyLevelReducer(state: EnemyLevelState = initState(), action: 
                 });
                 draft.totalNumberOfEnemies = action.payload.length;
                 break;
-            case "setPhaserFrames":
-                draft.phaserFrames = action.payload;
+            case "setPhaserLocations":
+                draft.phaserLocations = action.payload;
                 break;
-            case "clearPhaserFrames":
-                draft.phaserFrames = [];
+            case "clearPhaserLocations":
+                draft.phaserLocations = [];
                 break;
             case "setFireInterval":
                 draft.fireInterval = action.payload;
@@ -86,7 +86,7 @@ function initState(): EnemyLevelState {
         explosionCenters: [],
         particles: [],
         totalNumberOfEnemies: 0,
-        phaserFrames: [],
+        phaserLocations: [],
         fireInterval: 0,
     };
 }

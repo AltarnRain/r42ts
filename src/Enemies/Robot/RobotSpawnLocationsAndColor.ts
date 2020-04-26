@@ -10,7 +10,6 @@
  */
 
 import CGAColors from "../../Constants/CGAColors";
-import GameLocation from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { getRandomArrayElement } from "../../Utility/Array";
 import { getFrameDimensions } from "../../Utility/Frame";
@@ -21,7 +20,7 @@ const {
     gameFieldTop
 } = dimensionProvider();
 
-const robotSpawnLocationsAndColor: Array<{ location: GameLocation, color: string }> = [];
+const robotSpawnLocationsAndColor: Array<{ left: number, top: number, color: string }> = [];
 const { width } = getFrameDimensions(getRobotFrames().frames[0], averagePixelSize);
 
 const top = gameFieldTop + averagePixelSize * 20;
@@ -45,10 +44,8 @@ for (let i = 0; i < 14; i++) {
     const color = getRandomArrayElement(colors);
 
     const value = {
-        location: {
-            left: actualLeft + actualSpacing,
-            top,
-        },
+        left: actualLeft + actualSpacing,
+        top,
         color,
     };
 

@@ -5,7 +5,6 @@
  */
 
 import BaseLocationProvider from "../Base/BaseLocationProvider";
-import GameLocation from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { getLocation } from "../Utility/Location";
 
@@ -37,13 +36,13 @@ export default class MoveDownAppearUp extends BaseLocationProvider {
     /**
      * Returns the given location.
      */
-    public getLocation(location: GameLocation, width: number, height: number): GameLocation {
+    public getLocation(left: number, top: number, width: number, height: number): { left: number, top: number } {
         const bottomLimit = this.bottomLimit - height;
 
-        if (location.top > bottomLimit) {
-            location.top = gameFieldTop + height;
+        if (top > bottomLimit) {
+            top = gameFieldTop + height;
         }
 
-        return getLocation(location, this.angle, this.speed);
+        return getLocation(left, top, this.angle, this.speed);
     }
 }

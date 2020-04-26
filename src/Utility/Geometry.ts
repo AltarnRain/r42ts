@@ -5,7 +5,6 @@
  */
 
 import { angles } from "../Constants/Angles";
-import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import KeyboardState from "../State/Definition/KeyboardState";
 
@@ -104,9 +103,9 @@ export function reverseDegreeAngle(angle: number): number {
  * @param {GameLocation} end. End point of the factor.
  * @returns {number}. The angle to towards the target in degrees.
  */
-export function calculateAngle(start: GameLocation, end: GameLocation): number | undefined {
-    const dx =  end.left - start.left;
-    const dy =  end.top - start.top;
+export function calculateAngle(startLeft: number, startTop: number, endLeft: number, endTop: number): number | undefined {
+    const dx =  endLeft - startLeft;
+    const dy =  endTop - startTop;
 
     // Singularity.
     if (dx === 0 && dy === 0) {

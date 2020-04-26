@@ -15,7 +15,6 @@ import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
-import GameLocation from "../../Models/GameLocation";
 import Particle from "../../Particles/Particle";
 import { Frame } from "../../Types/Types";
 import { getRandomArrayElement } from "../../Utility/Array";
@@ -34,17 +33,14 @@ export default class BirdEnemy extends BaseEnemy {
     /**
      * Creates the object.
      */
-    constructor(location: GameLocation, frameChangetime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider) {
-        super(location, frameChangetime, getBirdFrames, Explosion01, locationProvider, frameProvider);
+    constructor(left: number, top: number, frameChangetime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider) {
+        super(left, top, frameChangetime, getBirdFrames, Explosion01, locationProvider, frameProvider);
 
         this.colorTickHandler = new TickHandler(40, () => this.onColorChange());
 
         convertVariableFrameColor(this.explosion.explosionCenterFrame, CGAColors.white);
         convertVariableFrameColor(this.explosion.particleFrames[0], CGAColors.white);
         convertVariableFrameColor(this.explosion.particleFrames[1], CGAColors.white);
-
-        this.onFrameChange();
-        this.location = this.getOffsetLocation();
     }
 
     /**

@@ -9,58 +9,63 @@
  * Responsibility:  Offer utility functions for GameLocations
  */
 
-import GameLocation from "../Models/GameLocation";
 import speedProvider from "../Providers/SpeedProvider";
 import { getNextX, getNextY } from "./Geometry";
 
 /**
  * Calculate distance in pixels.
- * @param {GameLocation} location1. Location 1
- * @param {GameLocation} location2. Location 2
+ * @param {number} left1. 1st left coordinate.
+ * @param {number} top1. 1st top coordinate.
+ * @param {number} left2. 2nd left coordinate.
+ * @param {number} top2. 2nd right coordinate.
  * @returns {number}. Distance in actual pixels.
  */
-export function calculateDistance(location1: GameLocation, location2: GameLocation): number {
+export function calculateDistance(left1: number, top1: number, left2: number, top2: number): number {
 
-    const xd = location1.left - location2.left;
-    const yd = location1.top - location2.top;
+    const xd = left1 - left2;
+    const yd = top1 - top2;
 
     return Math.sqrt(Math.pow(xd, 2) + Math.pow(yd, 2));
 }
 
 /**
  * Checks if a location falls within an area.
- * @param {GameLocation} location.
- * @param {number} top. Top of the area.
- * @param {number} bottom. Bottom of the area.
- * @param {number} left. Left of the area.
- * @param {number} right. Right of the area.
+ * @param {number} left. Left coordinate
+ * @param {number} top. Top coordinate.
+ * @param {number} outerTop. Top of the area.
+ * @param {number} outerBottom. Bottom of the area.
+ * @param {number} outerLeft. Left of the area.
+ * @param {number} outerRight. Right of the area.
  */
-export function fallsWithin(location: GameLocation, top: number, bottom: number, left: number, right: number): boolean {
+export function fallsWithin(left: number, top: number, outerTop: number, outerBottom: number, outerLeft: number, outerRight: number): boolean {
 
-    const yBounds = location.top > top && location.top < bottom;
-    const xBounds = location.left > left && location.left < right;
+    const yBounds = top > outerTop && top < outerBottom;
+    const xBounds = left > outerLeft && left < outerRight;
 
     return xBounds && yBounds;
 }
 
 /**
  * Calculates a location.
- * @param {number} angle. The angle of the object.
+ * @param {number} left. Left coordinate.
+ * @param {number} top. Top coordinate.
+ * @param {number | undefined} angle. The angle of the object.
  * @param {number} speed. The speed the of the object
- * @param {number} right. The right outer bounds where the object can travel
- * @param {number} left. The current left coordinate of the object.
- * @returns {Location}. The location of the object. If angle is undefined the original location is returns as a new object.
+ * @returns {{left: number, top: number}}. The location of the object. If angle is undefined the original location is returns as a new object.
  */
-export function getLocation(location: GameLocation, angle: number | undefined, speed: number): GameLocation {
+export function getLocation(left: number, top: number, angle: number | undefined, speed: number): { left: number, top: number } {
 
     if (angle === undefined) {
-        return { ...location };
+        return {
+            left,
+            top,
+        };
     }
 
     const relativeSpeed = speedProvider(speed);
 
-    const nextLeft = getNextX(angle, relativeSpeed, location.left);
-    const nextTop = getNextY(angle, relativeSpeed, location.top);
+    const nextLeft = getNextX(angle, relativeSpeed, left);
+    const nextTop = getNextY(angle, relativeSpeed, top);
 
     return {
         left: nextLeft,
@@ -70,14 +75,16 @@ export function getLocation(location: GameLocation, angle: number | undefined, s
 
 /**
  * Offsets a location using the given offsers and return a new GameLocation object.
- * @param {GameLocation} location. Original location.
- * @param {GameLocation} offset. Location usable for rendering.
+ * @param {number} left. Left coordinate.
+ * @param {number} top. Top coordinate.
+ * @param {number} leftOffset. Left offset in real pixels.
+ * @param {number} topOffset. Top offset in real pixels.
  * @param {number} pixelSize. Pixel size used to calculate the actual location.
  * @returns {GameLocation}. A new game location offset to animation overlap.
  */
-export function getOffsetLocation(location: GameLocation, leftOffset: number, topOffset: number): GameLocation {
+export function getOffsetLocation(left: number, top: number, leftOffset: number, topOffset: number): { left: number, top: number}  {
     return {
-        left: location.left + leftOffset,
-        top: location.top + topOffset,
+        left: left + leftOffset,
+        top: top + topOffset,
     };
 }

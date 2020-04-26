@@ -13,7 +13,6 @@ import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseParticle from "../Base/BaseParticle";
 import CGAColors from "../Constants/CGAColors";
 import Explosion from "../Models/Explosion";
-import GameLocation from "../Models/GameLocation";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import Particle from "../Particles/Particle";
 import getPhaserLocations from "../Player/GetPhaserLocations";
@@ -69,10 +68,11 @@ function updateState(tick: number) {
     // SelfDestruct
     if (playerIsAlive(playerState.ship) && keyboardState.selfDestruct) {
         for (const enemy of enemyLevelState.enemies) {
-            queueExplosionRender(enemy.ship.getCenterLocation(), enemy.ship.getExplosion());
+            const center = enemy.ship.getCenterLocation();
+            queueExplosionRender(center.left, center.top, enemy.ship.getExplosion());
         }
 
-        queueExplosionRender(playerState.playerLocation, playerState.ship.getExplosion());
+        queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.ship.getExplosion());
 
         dispatch<PlayerShip>("setPlayer", undefined);
         dispatch<BaseEnemy[]>("setEnemies", []);
@@ -84,7 +84,7 @@ function updateState(tick: number) {
     if (playerIsAlive(playerState.ship) &&
         keyboardState.phraser &&
         enemyLevelState.enemies.length > 0 &&
-        gameState.phasers > 0 && enemyLevelState.phaserFrames.length === 0) {
+        gameState.phasers > 0 && enemyLevelState.phaserLocations.length === 0) {
         handlePhaser(playerState.ship);
     }
 
@@ -147,7 +147,7 @@ function draw(): void {
     enemyLevelState.enemies.forEach((e) => e.ship.draw());
     enemyLevelState.particles.forEach((p) => p.draw());
     enemyLevelState.explosionCenters.forEach((ec) => ec.draw());
-    enemyLevelState.phaserFrames.forEach((pf) => renderFrame(pf, phaserFrame));
+    enemyLevelState.phaserLocations.forEach((pf) => renderFrame(pf.left, pf.top, phaserFrame));
 
     DEBUGGING_drawPhaser();
 
@@ -171,7 +171,8 @@ function handleEnemyDestruction(ship: BaseEnemy): void {
         }
     });
 
-    queueExplosionRender(ship.getLocation(), ship.getExplosion());
+    const location = ship.getLocation();
+    queueExplosionRender(location.left, location.top, ship.getExplosion());
     dispatch<number>("increaseScore", ship.getPoints());
 }
 
@@ -188,8 +189,8 @@ function handlePhaser(player: PlayerShip): void {
 
     // Remove one phaser.
     dispatch("removePhaser");
-    const frames = getPhaserLocations(playerNozzleLocation, randomEnemyCenter, maxPixelSize);
-    dispatch<GameLocation[]>("setPhaserFrames", frames);
+    const phaserLocations = getPhaserLocations(playerNozzleLocation.left, playerNozzleLocation.top, randomEnemyCenter.left, randomEnemyCenter.top, maxPixelSize);
+    dispatch<Array<{left: number, top: number}>>("setPhaserLocations", phaserLocations);
 
     // Pause the game for a very brief period. This is what the original game did
     // when you fired a phasor shot.
@@ -200,7 +201,7 @@ function handlePhaser(player: PlayerShip): void {
 
         // Deal the with the enemy that got hit.
         handleEnemyDestruction(randomEnemy.ship);
-        dispatch("clearPhaserFrames");
+        dispatch("clearPhaserLocations");
     }, 100);
 }
 
@@ -211,10 +212,13 @@ function handlePhaser(player: PlayerShip): void {
 function handlePlayerDeath(player: PlayerShip): void {
     const { playerState } = appState();
 
-    queueExplosionRender(playerState.playerLocation, player.getExplosion());
+    queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, player.getExplosion());
     dispatch<PlayerShip>("setPlayer", undefined);
     dispatch("removeLife");
-    dispatch<GameLocation>("setPlayerLocation", getShipSpawnLocation());
+
+    const spawnLocation = getShipSpawnLocation();
+    dispatch<number>("setPlayerLeftLocation", spawnLocation.left);
+    dispatch<number>("setPlayerTopLocation", spawnLocation.top);
 }
 
 /**
@@ -223,9 +227,9 @@ function handlePlayerDeath(player: PlayerShip): void {
  * @param {GameLocation} location. The center location where the explosion occurs.
  * @param {Particle[]} targetParticleArray. The array where the particles will be pushed into. Helps keep track of particles belonging to the player or an enemy.
  */
-function queueExplosionRender(location: GameLocation, explosion: Explosion): void {
-    const center = new ExplosionCenter(location, getFrameReturner(explosion.explosionCenterFrame), explosion.explosionCenterDelay);
-    const newParticles = particleProvider(location, getExplosionReturner(explosion));
+function queueExplosionRender(left: number, top: number, explosion: Explosion): void {
+    const center = new ExplosionCenter(left, top, getFrameReturner(explosion.explosionCenterFrame), explosion.explosionCenterDelay);
+    const newParticles = particleProvider(left, top, getExplosionReturner(explosion));
 
     dispatch<ExplosionCenter>("addExplosionCenter", center);
     dispatch<Particle[]>("addParticles", newParticles);
@@ -298,7 +302,7 @@ function DEBUGGING_drawPhaser(): void {
     const { debuggingState: debugging, playerState: player, enemyLevelState } = appState();
     if (debugging.renderPhaser && playerIsAlive(player.ship) && enemyLevelState.enemies.length > 0) {
         const enemy = enemyLevelState.enemies[0];
-        getPhaserLocations(player.ship.getNozzleLocation(), enemy.ship.getCenterLocation(), averagePixelSize);
+        getPhaserLocations(player.ship.getNozzleLocation().left, player.ship.getNozzleLocation().top, enemy.ship.getCenterLocation().left, enemy.ship.getCenterLocation().top, averagePixelSize);
     }
 }
 

@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import GameLocation from "../Models/GameLocation";
 import Particle from "../Particles/Particle";
 import { Frame, FrameProviderFunction, GameObjectType } from "../Types/Types";
 import { convertFrameColor } from "../Utility/Frame";
@@ -24,8 +23,8 @@ export default class PlayerBullet extends Particle {
      * @param {number} speed. Speed of the bullet.
      * @param {number} acceleration. Acceleration of the bullet.
      */
-    constructor(startLocation: GameLocation, getFrame: FrameProviderFunction, angle: number, speed: number) {
-        super(startLocation, getFrame, angle, speed, 1);
+    constructor(left: number, top: number, getFrame: FrameProviderFunction, angle: number, speed: number) {
+        super(left, top, getFrame, angle, speed, 1);
 
         convertFrameColor(this.currentFrameClone);
     }

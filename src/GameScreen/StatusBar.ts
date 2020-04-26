@@ -94,7 +94,7 @@ function drawScore(): void {
         const actualSpacing = cnt === 0 ? 0 : scoreSpacing;
         let left = cnt * (getFrameDimensions(frame, minPixelSize).width + actualSpacing);
         left = scoreStartPosition + left;
-        renderFrame({ left, top: 0 }, frame);
+        renderFrame(left, 0, frame);
         cnt++;
     }
 
@@ -111,10 +111,7 @@ function drawPhasers(): void {
         const left = phaserStartPosition + i * minPixelSize + i * actualSpacing;
 
         if (left <= phaserStartPosition + phaserBackgroundWidth) {
-            renderFrame({
-                left,
-                top: 0
-            }, phaserFrame);
+            renderFrame(left, 0, phaserFrame);
         }
     }
 }
@@ -132,7 +129,7 @@ function drawLives(): void {
 
     for (let lives = 1; lives <= gameState.lives; lives++) {
         if (left >= livesStartPostion) {
-            renderFrame({ left, top: minPixelSize }, lifeFrameClone);
+            renderFrame(left, minPixelSize, lifeFrameClone);
             left -= livesSpacing + liveFrameWidth;
         }
     }
@@ -152,9 +149,6 @@ function drawLevel(): void {
     const rightFrame = getFrameByIndex(numberFramesClone, rightNumber);
     const leftFrame = getFrameByIndex(numberFramesClone, leftNumber);
 
-    renderFrame({
-        left: leftNumberLeft, top: 0
-    }, leftFrame);
-
-    renderFrame({ left: rightNumberLeft, top: 0 }, rightFrame);
+    renderFrame(leftNumberLeft, 0, leftFrame);
+    renderFrame(rightNumberLeft, 0, rightFrame);
 }

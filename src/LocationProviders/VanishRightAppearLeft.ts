@@ -10,7 +10,6 @@
  */
 
 import BaseLocationProvider from "../Base/BaseLocationProvider";
-import GameLocation from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { getLocation } from "../Utility/Location";
 
@@ -20,16 +19,16 @@ const {
 } = dimensionProvider();
 
 export default class VanishRightAppearLeft extends BaseLocationProvider {
-    public getLocation(location: GameLocation, width: number, height: number): GameLocation {
+    public getLocation(left: number, top: number, width: number, height: number): { left: number, top: number} {
 
-        if (location.left + width > fullWidth) {
-            location.left = 0;
+        if (left + width > fullWidth) {
+            left = 0;
         }
 
-        if (location.top > fullWidth * 0.5) {
-            location.top = gameFieldTop + height;
+        if (top > fullWidth * 0.5) {
+            top = gameFieldTop + height;
         }
 
-        return getLocation(location, this.angle, this.speed);
+        return getLocation(left, top, this.angle, this.speed);
     }
 }

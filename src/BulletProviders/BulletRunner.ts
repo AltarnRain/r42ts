@@ -5,13 +5,12 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
-import GameLocation from "../Models/GameLocation";
 import BulletParticle from "../Particles/BulletParticle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
 import { FireCheckFunction, Frame, FrameProviderFunction } from "../Types/Types";
-import { calculateAngle, calculateAngleDifference } from "../Utility/Geometry";
 import { getFrameReturner } from "../Utility/Frame";
+import { calculateAngle, calculateAngleDifference } from "../Utility/Geometry";
 
 /**
  * Module:          StraightDownBulletProvider
@@ -64,7 +63,8 @@ export default class BulletRunner {
             if (tick - lastShotTick > enemyLevelState.fireInterval) {
 
                 const enemyFireAngle = ship.getFireAngle();
-                const angleToPlayer = calculateAngle(ship.getCenterLocation(), playerState.playerLocation);
+                const center = ship.getCenterLocation();
+                const angleToPlayer = calculateAngle(center.left, center.top, playerState.playerLeftLocation, playerState.playerTopLocation);
 
                 if (enemyFireAngle !== undefined && angleToPlayer !== undefined) {
                     const angleDifference = calculateAngleDifference(enemyFireAngle, angleToPlayer);
@@ -97,13 +97,9 @@ export default class BulletRunner {
                 const enemyFireAngle = candidate.angle;
 
                 const left = hitbox.left + (hitbox.right - hitbox.left) - averagePixelSize / 2;
+                const top = hitbox.bottom + averagePixelSize;
 
-                const nozzleLocation: GameLocation = {
-                    left,
-                    top: hitbox.bottom + averagePixelSize,
-                };
-
-                const bullet = new BulletParticle(candidate.ship, this.bulletColor, nozzleLocation, getFrameReturner(this.bulletFrameClone), enemyFireAngle, this.speed);
+                const bullet = new BulletParticle(left, top, candidate.ship, this.bulletColor, getFrameReturner(this.bulletFrameClone), enemyFireAngle, this.speed);
 
                 dispatch<BulletParticle>("addParticle", bullet);
                 dispatch<{ ship: BaseEnemy, tick: number }>("setEnemyFireTick", { ship: candidate.ship, tick });

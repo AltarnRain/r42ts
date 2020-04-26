@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import GameLocation from "../Models/GameLocation";
 import { getPlayerFrame } from "../Player/PlayerFrames";
 import { getFrameDimensions } from "../Utility/Frame";
 import dimensionProvider from "./DimensionProvider";
@@ -22,14 +21,15 @@ const {
 
 const shipDimensions = getFrameDimensions(getPlayerFrame(), averagePixelSize);
 
-const shipSpawnLocation = {
-    top: gameFieldHeight * 0.99,
-    left: (fullWidth / 2) - shipDimensions.width,
-};
+const topSpawnPosition = gameFieldHeight * 0.99;
+const leftSpawnPosition = (fullWidth / 2) - shipDimensions.width;
 
 /**
  * Gets the ship's spawn location, center screen.
  */
-export default function getShipSpawnLocation(): GameLocation {
-    return {...shipSpawnLocation};
+export default function getShipSpawnLocation(): { left: number, top: number } {
+    return {
+        left: leftSpawnPosition,
+        top: topSpawnPosition,
+    };
 }

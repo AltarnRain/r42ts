@@ -32,8 +32,11 @@ export default function playerReducer(state: PlayerState = initState(), action: 
             case "setPlayerMovementLimit":
                 draft.moveLimit = action.payload;
                 break;
-            case "setPlayerLocation":
-                draft.playerLocation = { ...action.payload };
+            case "setPlayerLeftLocation":
+                draft.playerLeftLocation = action.payload;
+                break;
+            case "setPlayerTopLocation":
+                draft.playerTopLocation = action.payload.top;
                 break;
         }
     });
@@ -44,10 +47,13 @@ export default function playerReducer(state: PlayerState = initState(), action: 
  * @returns {PlayerState}
  */
 function initState(): PlayerState {
+
+    const spanwLocation = getShipSpawnLocation();
     return {
         ship: undefined,
         playerBullet: undefined,
         moveLimit: "none",
-        playerLocation: getShipSpawnLocation(),
+        playerLeftLocation: spanwLocation.left,
+        playerTopLocation: spanwLocation.top,
     };
 }

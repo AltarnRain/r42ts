@@ -9,18 +9,11 @@
  * Responsibility:  Test the location utility functions
  */
 
-import GameLocation from "../Models/GameLocation";
 import * as Location from "../Utility/Location";
 
 test("fallsWithin", () => {
-    // Arrange
-    const location: GameLocation = {
-        left: 100,
-        top: 100,
-    };
-
     // Act
-    const within = Location.fallsWithin(location, 0, 150, 0, 200);
+    const within = Location.fallsWithin(100, 100, 0, 150, 0, 200);
 
     // Assert
     expect(within).toBe(true);
@@ -28,21 +21,7 @@ test("fallsWithin", () => {
 
 test("calculateDistance", () => {
 
-    const distance = Location.calculateDistance({left: 0, top: 0}, {left: 1, top: 0});
+    const distance = Location.calculateDistance( 0, 0, 1, 0);
 
     expect(distance).toBeGreaterThan(0);
-});
-
-test("", () => {
-    // Arrange
-    const location: GameLocation = {
-        left: 0,
-        top: 0,
-    };
-
-    // Act
-    const newLocation = Location.getLocation(location, 45, 5);
-
-    // Assert
-    expect(newLocation === location).toBe(false);
 });

@@ -120,7 +120,7 @@ test("getFrameDimensions", () => {
 test("getFrameCenter", () => {
 
     // Act
-    const result = Frame.getFrameCenter({ top: 0, left: 0 }, frames[0], 5);
+    const result = Frame.getFrameCenter(0, 0, frames[0], 5);
 
     // Assert
     expect(result).toBeDefined();
@@ -166,10 +166,8 @@ test("getFrameByIndex", () => {
 test("getFrameHitbox", () => {
     // Act
     const result = Frame.getFrameHitbox(
-        {
-            left: 0,
-            top: 0,
-        },
+        0,
+        0,
         50,
         100,
         10,

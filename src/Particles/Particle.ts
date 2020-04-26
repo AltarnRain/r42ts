@@ -5,7 +5,6 @@
  */
 
 import BaseParticle from "../Base/BaseParticle";
-import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
@@ -54,8 +53,8 @@ export default class Particle extends BaseParticle {
      * @param {number} speed. Speed at which the particle will travel.
      * @param {number} acceleration. Acceleration applies each update of the state.
      */
-    constructor(startLocation: GameLocation, getFrame: FrameProviderFunction, angle: number, speed: number, acceleration: number) {
-        super(startLocation);
+    constructor(left: number, top: number, getFrame: FrameProviderFunction, angle: number, speed: number, acceleration: number) {
+        super(left, top);
 
         this.currentFrameClone = getFrame();
         this.angle = angle;
@@ -69,7 +68,9 @@ export default class Particle extends BaseParticle {
      * Updates the state of the particle.
      */
     public updateState(): void {
-        this.location = getLocation(this.location, this.angle, this.speed);
+        const location = getLocation(this.left, this.top, this.angle, this.speed);
+        this.left = location.left;
+        this.top = location.top;
         this.speed *= this.acceleration;
     }
 
@@ -84,7 +85,7 @@ export default class Particle extends BaseParticle {
             fullHeight,
         } = dimensionProvider();
 
-        return fallsWithin(this.location, gameFieldTop, fullHeight, 0, fullWidth);
+        return fallsWithin(this.left, this.top, gameFieldTop, fullHeight, 0, fullWidth);
     }
 
     /**
@@ -92,6 +93,6 @@ export default class Particle extends BaseParticle {
      * @returns {GameRectangle}. The hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(this.location, this.dimensions.width, this.dimensions.height, topOffset, bottomOffset);
+        return getFrameHitbox(this.left, this.top, this.dimensions.width, this.dimensions.height, topOffset, bottomOffset);
     }
 }

@@ -10,7 +10,6 @@
  */
 
 import { Frames } from "../Types/Types";
-import GameLocation from "./GameLocation";
 
 export interface OffsetFrames {
     /**
@@ -21,5 +20,5 @@ export interface OffsetFrames {
     /**
      * Offsets user to render the object on screen.
      */
-    offSets: GameLocation[];
+    offSets: Array<{left: number, top: number}>;
 }

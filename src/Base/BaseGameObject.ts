@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
@@ -16,9 +15,14 @@ import { Frame, GameObjectType } from "../Types/Types";
 
 export default abstract class BaseGameObject {
     /**
-     * Game object location.
+     * Game object left location.
      */
-    protected location: GameLocation;
+    protected left: number;
+
+    /**
+     * Game object top location.
+     */
+    protected top: number;
 
     /**
      * Current frame of the object
@@ -29,15 +33,16 @@ export default abstract class BaseGameObject {
      * Construct the object.
      * @param {Location?} location. A location. Optional. Some objects determine their own location.
      */
-    constructor(location: GameLocation) {
-        this.location = { ...location };
+    constructor(left: number, top: number) {
+        this.left = left;
+        this.top = top;
     }
 
     /**
      * Animate the object
      */
     public draw(): void {
-        renderFrame(this.location, this.currentFrameClone);
+        renderFrame(this.left, this.top, this.currentFrameClone);
     }
 
     /**
@@ -50,8 +55,8 @@ export default abstract class BaseGameObject {
      * Get the game location for colision detection.
      * @returns {GameLocation}. The location of the object.
      */
-    public getLocation(): GameLocation {
-        return this.location;
+    public getLocation(): { left: number, top: number} {
+        return { left: this.left, top: this.top };
     }
 
     /**

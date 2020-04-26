@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import GameLocation from "../Models/GameLocation";
 import { calculateAngle as calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
 
@@ -13,19 +12,23 @@ import { calculateDistance, getLocation } from "../Utility/Location";
  * Responsibility:  Calculate the game locations to draw a phaser beam.
  */
 
-export default function getPhaserLocations(source: GameLocation, target: GameLocation, pixelSize: number): GameLocation[] {
+export default function getPhaserLocations(sourceLeft: number, sourceTop: number, targetLeft: number, targetTop: number, pixelSize: number): Array<{left: number, top: number}> {
 
     // offset left by one game pixel to ensure the phaser appears at the nozzle of the ship.
-    let offsetSourceLocation = { ...source, left: source.left };
-    const angle = calculateAngle(offsetSourceLocation, target);
-    let distance = calculateDistance(source, target);
+    const angle = calculateAngle(sourceLeft, sourceTop, targetLeft, targetTop);
+    let distance = calculateDistance(sourceLeft, sourceTop, targetLeft, targetTop);
 
-    const returnValue: GameLocation[] = [];
+    let left = sourceLeft;
+    let top = sourceTop;
+
+    const returnValue: Array<{left: number, top: number}> = [];
 
     while (distance >= 0) {
-        returnValue.push(getLocation(offsetSourceLocation, angle, pixelSize));
+        returnValue.push(getLocation(left, top, angle, pixelSize));
         distance -= pixelSize;
-        offsetSourceLocation = getLocation(offsetSourceLocation, angle, pixelSize);
+        const nextLocation = getLocation(left, top, angle, pixelSize);
+        left = nextLocation.left;
+        top = nextLocation.top;
     }
 
     return returnValue;

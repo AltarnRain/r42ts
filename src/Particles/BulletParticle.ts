@@ -5,7 +5,6 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
-import GameLocation from "../Models/GameLocation";
 import { FrameProviderFunction, GameObjectType } from "../Types/Types";
 import { convertVariableFrameColor } from "../Utility/Frame";
 import Particle from "./Particle";
@@ -18,8 +17,8 @@ import Particle from "./Particle";
 export default class BulletParticle extends Particle {
     private owner: BaseEnemy;
 
-    constructor(owner: BaseEnemy, color: string, startLocation: GameLocation, getFrame: FrameProviderFunction, angle: number, speed: number) {
-        super(startLocation, getFrame, angle, speed, 1);
+    constructor(left: number, top: number, owner: BaseEnemy, color: string, getFrame: FrameProviderFunction, angle: number, speed: number) {
+        super(left, top, getFrame, angle, speed, 1);
 
         this.owner = owner;
         convertVariableFrameColor(this.currentFrameClone, color);

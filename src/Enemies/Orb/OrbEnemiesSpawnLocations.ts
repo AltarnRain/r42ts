@@ -9,7 +9,6 @@
  * Responsibility:  Returns the robot spawn locations.
  */
 
-import GameLocation from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { getFrameDimensions } from "../../Utility/Frame";
 import getOrbFrames from "./OrbFrames";
@@ -19,7 +18,7 @@ const {
     gameFieldTop
 } = dimensionProvider();
 
-const orbSpawnLocations: GameLocation[] = [];
+const orbSpawnLocations: Array<{ left: number, top: number }> = [];
 const { width } = getFrameDimensions(getOrbFrames().frames[0], averagePixelSize);
 
 const top = gameFieldTop + averagePixelSize * 26;

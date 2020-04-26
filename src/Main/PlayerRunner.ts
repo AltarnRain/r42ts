@@ -7,8 +7,8 @@
 import PlayerBullet from "../Player/PlayerBullet";
 import PlayerBulletFrame from "../Player/PlayerBulletFrame";
 import { appState, dispatch } from "../State/Store";
-import GameLoop from "./GameLoop";
 import { getFrameReturner } from "../Utility/Frame";
+import GameLoop from "./GameLoop";
 
 /**
  * Module:          PlayerRunner
@@ -35,7 +35,9 @@ function updateState(): void {
 
     // Fire new bullet.
     if (playerState.ship !== undefined && keyboardState.fire && playerState.playerBullet === undefined) {
-        dispatch<PlayerBullet>("setBullet", new PlayerBullet(playerState.ship.getNozzleLocation(), getFrameReturner(PlayerBulletFrame[0]), 270, 42));
+        const nozzleLocation = playerState.ship.getNozzleLocation();
+
+        dispatch<PlayerBullet>("setBullet", new PlayerBullet(nozzleLocation.left, nozzleLocation.top, getFrameReturner(PlayerBulletFrame[0]), 270, 42));
     }
 
     // Self destruct and firing a phaser are handled in the EnemeyLevelRunner. That's the only time either can be used.

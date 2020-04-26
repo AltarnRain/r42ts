@@ -11,7 +11,6 @@
 
 import { BaseEnemy } from "../Base/BaseEnemy";
 import Explosion from "../Models/Explosion";
-import GameLocation from "../Models/GameLocation";
 import { OffsetFrames } from "../Models/OffsetFrames";
 import EnemyLevelState from "../State/Definition/EnemyLevelState";
 
@@ -48,7 +47,7 @@ export type PlayerFormationPhases = "begin" | "inprogress" | undefined;
 /**
  * Function definition of an angle provider function.
  */
-export type AngleProviderFunction = (location: GameLocation) => number | undefined;
+export type AngleProviderFunction = (left: number, top: number) => number | undefined;
 
 /**
  * Function definition of a FireCheckFunction.

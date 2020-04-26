@@ -10,12 +10,11 @@
  */
 
 import { angles } from "../Constants/Angles";
-import GameLocation from "../Models/GameLocation";
 
 /**
  * Returns down.
  * @param {BaseEnemy} enemy. Any enemy.
  */
-export function downAngleProvider(location: GameLocation): number {
+export function downAngleProvider(top: number, left: number): number {
     return angles.down;
 }

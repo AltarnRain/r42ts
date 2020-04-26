@@ -7,7 +7,6 @@
 import getCharacters from "../Assets/Characters";
 import getNumbers from "../Assets/Numbers";
 import CGAColors from "../Constants/CGAColors";
-import GameLocation from "../Models/GameLocation";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
@@ -70,14 +69,10 @@ export function drawLevelBanner(level: number): void {
     for (let i = 0; i < 5; i++) {
         const spacing = i === 0 ? 0 : charSpacing * i;
         const charLeft = left + barwidth + charSpacing * 2 + spacing + width * i;
-        const location: GameLocation = {
-            left: charLeft,
-            top,
-        };
 
         levelNumberStartPos = charLeft;
 
-        renderFrame(location, roundCharacters[i]);
+        renderFrame(charLeft, top, roundCharacters[i]);
     }
 
     levelNumberStartPos += width + charSpacing;
@@ -106,15 +101,9 @@ export function drawLevelBanner(level: number): void {
 
     // Render the left number if it's available.
     if (leftNumber && leftNumberFrame) {
-        renderFrame({
-            left: levelNumberStartPos,
-            top,
-        }, leftNumberFrame);
+        renderFrame(levelNumberStartPos, top, leftNumberFrame);
     }
 
     // Always render the right number.
-    renderFrame({
-        left: rightNumberPosition,
-        top,
-    }, rightNumberFrame);
+    renderFrame(rightNumberPosition, top, rightNumberFrame);
 }

@@ -9,7 +9,6 @@
  * Responsibility:  A particle that travels a distance and then stops being drawn.
  */
 
-import GameLocation from "../Models/GameLocation";
 import speedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, FrameProviderFunction } from "../Types/Types";
@@ -22,12 +21,16 @@ export default class PlayerFormationPart {
     /**
      * Current particle location
      */
-    private currentLocation: GameLocation;
+    private currentLeftLocation: number;
+
+    private currentTopLocation: number;
 
     /**
      * Target location. Can be set from the outside if the location where the particle should be heading changes.
      */
-    private targetLocation: GameLocation;
+    private targetLeftLocation: number;
+
+    private targetTopLocation: number;
 
     /**
      * Particle speed.
@@ -47,13 +50,16 @@ export default class PlayerFormationPart {
      * @param {Frame} frame. Frame to render for this part.
      * @param {number} speed. Speed at which the part travels.
      */
-    constructor(sourceLocation: GameLocation, targetLocation: GameLocation, getFrame: FrameProviderFunction, speed: number) {
+    constructor(sourceLeftLocation: number, sourceTopLocation: number, targetLeftLocation: number, targetTopLocation: number, getFrame: FrameProviderFunction, speed: number) {
 
         this.currentFrameClone = getFrame();
         convertFrameColor(this.currentFrameClone);
 
-        this.currentLocation = { ...sourceLocation };
-        this.targetLocation = { ...targetLocation };
+        this.currentLeftLocation = sourceLeftLocation;
+        this.currentTopLocation = sourceTopLocation;
+        this.targetLeftLocation = targetLeftLocation;
+        this.targetTopLocation = targetTopLocation;
+
         this.speed = speed;
     }
 
@@ -61,13 +67,16 @@ export default class PlayerFormationPart {
      * Update the state of the object.
      */
     public updateState(): void {
-        const angle = calculateAngle(this.currentLocation, this.targetLocation);
-        const distance = calculateDistance(this.currentLocation, this.targetLocation);
+        const angle = calculateAngle(this.currentLeftLocation, this.currentTopLocation , this.targetTopLocation, this.targetLeftLocation);
+        const distance = calculateDistance(this.currentLeftLocation, this.currentTopLocation, this.targetLeftLocation, this.targetTopLocation);
 
         if (distance > 10) {
-            this.currentLocation = getLocation(this.currentLocation, angle, speedProvider(this.speed) > distance ? distance : this.speed);
+            const nextLocation = getLocation(this.currentLeftLocation, this.currentTopLocation, angle, speedProvider(this.speed) > distance ? distance : this.speed);
+            this.currentLeftLocation = nextLocation.left;
+            this.currentTopLocation = nextLocation.top;
         } else {
-            this.currentLocation = {...this.targetLocation};
+            this.currentLeftLocation = this.targetLeftLocation;
+            this.currentTopLocation = this.targetTopLocation;
         }
     }
 
@@ -75,15 +84,16 @@ export default class PlayerFormationPart {
      * Draw the particle.
      */
     public draw(): void {
-        renderFrame(this.currentLocation, this.currentFrameClone);
+        renderFrame(this.currentLeftLocation, this.currentTopLocation, this.currentFrameClone);
     }
 
     /**
      * Set the target location form the outside.
      * @param {GameLocation} targetLocation. The target location.
      */
-    public setUpdatedTargetLocation(targetLocation: GameLocation): void {
-        this.targetLocation = { ...targetLocation };
+    public setUpdatedTargetLocation(left: number, top: number): void {
+        this.targetLeftLocation = left;
+        this.targetTopLocation = top;
     }
 
     /**
@@ -91,7 +101,7 @@ export default class PlayerFormationPart {
      * @returns {boolean}. True if the particle is still traveling.
      */
     public traveling(): boolean {
-        const distance = calculateDistance(this.currentLocation, this.targetLocation);
+        const distance = calculateDistance(this.currentLeftLocation, this.currentTopLocation, this.targetLeftLocation, this.targetTopLocation);
         return distance > 5;
     }
 

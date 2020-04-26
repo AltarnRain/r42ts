@@ -11,10 +11,8 @@
  *                  for most enemies in the game leaving specifics to derived classes.
  */
 
-import BulletRunner from "../BulletProviders/BulletRunner";
 import TickHandler from "../Handlers/TickHandler";
 import Explosion from "../Models/Explosion";
-import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import { OffsetFrames } from "../Models/OffsetFrames";
@@ -48,12 +46,14 @@ export abstract class BaseEnemy extends BaseDestructable {
     /**
      * The real location the enemy has, without offsets.
      */
-    protected actualLocation: GameLocation;
+    protected actualLeft: number;
+
+    protected actualTop: number;
 
     /**
      * Offets for each frame.
      */
-    protected offSets: GameLocation[];
+    protected offSets: Array<{ left: number, top: number }>;
 
     /**
      * Explosion for the enemy.
@@ -85,19 +85,21 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @param {BulletRunner} bulletProvider. A class that checks if the enemy can fire a bullet. When undefined the enemy does not fire.
      */
     constructor(
-        startLocation: GameLocation,
+        left: number,
+        top: number,
         frameChangeTime: number,
         getOffsetFrames: OffsetFramesProviderFunction,
         explosion: ExplosionProviderFunction,
         locationProvider: BaseLocationProvider,
         frameProvider: BaseFrameProvider,
         angleProvider?: AngleProviderFunction) {
-        super(startLocation);
+        super(left, top);
 
         this.locationProvider = locationProvider;
 
         this.explosion = explosion();
-        this.actualLocation = { ...this.location };
+        this.actualLeft = left;
+        this.actualTop = top;
         this.frameTickHandler = new TickHandler(frameChangeTime, () => this.onFrameChange());
 
         const offSetFrames = getOffsetFrames();
@@ -142,20 +144,25 @@ export abstract class BaseEnemy extends BaseDestructable {
         this.frameTickHandler.tick(tick);
 
         // Use the maximum widths of the enemies frames to prevent the enemy from getting stick on the sides.
-        this.actualLocation = this.locationProvider.getLocation(this.actualLocation, this.maxDimensions.width, this.maxDimensions.height);
-        this.location = this.getOffsetLocation();
+        const actualLocation = this.locationProvider.getLocation(this.actualLeft, this.actualLeft, this.maxDimensions.width, this.maxDimensions.height);
+        this.actualLeft = actualLocation.left;
+        this.top = actualLocation.top;
+
+        const offsetLocation = this.getOffsetLocation();
+        this.left = offsetLocation.left;
+        this.top = offsetLocation.top;
     }
 
     /**
      * Calculates the offsetLocation
      * @returns {GameLocation}. GameLocation offset to let the frames render over one another.
      */
-    protected getOffsetLocation(): GameLocation {
+    protected getOffsetLocation(): { left: number, top: number } {
         const frameOffsets = this.offSets[this.frameProvider.getCurrentIndex()];
         if (frameOffsets !== undefined) {
-            return getOffsetLocation(this.actualLocation, frameOffsets.left, frameOffsets.top);
+            return getOffsetLocation(this.actualLeft, this.actualTop, frameOffsets.left, frameOffsets.top);
         } else {
-            return this.actualLocation;
+            return { left: this.actualLeft, top: this.actualTop };
         }
     }
 
@@ -179,8 +186,8 @@ export abstract class BaseEnemy extends BaseDestructable {
      * Returns the center location of the object.
      * @returns {GameLocation}. GameLocation located at the center of the object.
      */
-    public getCenterLocation(): GameLocation {
-        return getFrameCenter(this.location, this.currentFrameClone, averagePixelSize);
+    public getCenterLocation(): { left: number, top: number } {
+        return getFrameCenter(this.left, this.top, this.currentFrameClone, averagePixelSize);
     }
 
     /**
@@ -196,7 +203,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      */
     public getHitbox(): GameRectangle {
         const dimensions = getFrameDimensions(this.currentFrameClone, averagePixelSize);
-        return getFrameHitbox(this.location, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
+        return getFrameHitbox(this.left, this.top, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
     }
 
     public getFireAngle(): number | undefined {
@@ -204,7 +211,8 @@ export abstract class BaseEnemy extends BaseDestructable {
             return undefined;
         }
 
-        const angle = this.angleProvider(this.getCenterLocation());
+        const center = this.getCenterLocation();
+        const angle = this.angleProvider(center.left, center.top);
         return angle;
     }
 }

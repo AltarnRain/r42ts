@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import GameLocation from "../../Models/GameLocation";
 import PlayerBullet from "../../Player/PlayerBullet";
 import PlayerShip from "../../Player/PlayerShip";
 import { MoveLimits } from "../../Types/Types";
@@ -31,7 +30,12 @@ export default interface PlayerState {
     moveLimit: MoveLimits;
 
     /**
-     * Location of the player
+     * Left location of the player
      */
-    playerLocation: GameLocation;
+    playerLeftLocation: number;
+
+    /**
+     * Top location of the player
+     */
+    playerTopLocation: number;
 }

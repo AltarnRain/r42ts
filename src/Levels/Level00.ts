@@ -46,7 +46,7 @@ export default class Level00 extends BaseLevel {
         const enemies = orbSpawnLocations.map((startLocation) => {
             const frameProvider = new CircleFrameProvider(0);
             const locationProvider = new MoveDownAppearUp(80, 0, 90);
-            return new OrbEnemy(startLocation, 300, locationProvider, frameProvider, diagonalAtPlayerAngleProvider);
+            return new OrbEnemy(startLocation.left, startLocation.top, 300, locationProvider, frameProvider, diagonalAtPlayerAngleProvider);
         }).filter((e) => e !== undefined);
 
         // Add the enemies to the global state. The registered stateManager will take it from here.

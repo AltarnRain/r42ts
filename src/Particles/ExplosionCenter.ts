@@ -5,7 +5,6 @@
  */
 
 import BaseGameObject from "../Base/BaseGameObject";
-import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
@@ -49,8 +48,8 @@ export default class ExplosionCenter extends BaseGameObject {
      * @param {GameLocation} location. Location where the explosion will appear.
      * @param {number} burnTime. Time in ticks how long the explosion center should remain visible.
      */
-    constructor(location: GameLocation, getExplosionCenterFrame: FrameProviderFunction,  burnTime: number) {
-        super(location);
+    constructor(left: number, top: number, getExplosionCenterFrame: FrameProviderFunction,  burnTime: number) {
+        super(left, top);
 
         this.currentFrameClone = getExplosionCenterFrame();
         this.burnTime = burnTime;
@@ -93,6 +92,6 @@ export default class ExplosionCenter extends BaseGameObject {
      * @returns {GameRectangle}. The hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(this.location, this.dimensions.width, this.dimensions.height, 0, 0);
+        return getFrameHitbox(this.left, this.top, this.dimensions.width, this.dimensions.height, 0, 0);
     }
 }

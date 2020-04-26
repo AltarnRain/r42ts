@@ -10,7 +10,6 @@
  */
 
 import { validColors } from "../Constants/CGAColors";
-import GameLocation from "../Models/GameLocation";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { Frame } from "../Types/Types";
@@ -25,7 +24,7 @@ const {
  * @param {GameLocation} location. The location where to render the frame.
  * @param {Frame} frame. A 2d string array.
  */
-export default function renderFrame(location: GameLocation, frame: Frame): void {
+export default function renderFrame(left: number, top: number, frame: Frame): void {
     const ctx = ctxProvider();
 
     for (let rowIndex = 0; rowIndex < frame.length; rowIndex++) {
@@ -36,8 +35,8 @@ export default function renderFrame(location: GameLocation, frame: Frame): void 
             const color = columns[columnIndex];
 
             // We use the minimum pixel size to determine the position.
-            const x = location.left + columnIndex * averagePixelSize;
-            const y = location.top + rowIndex * averagePixelSize;
+            const x = left + columnIndex * averagePixelSize;
+            const y = top + rowIndex * averagePixelSize;
 
             if (color !== "0") {
 

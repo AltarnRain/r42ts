@@ -5,7 +5,6 @@
  */
 
 import Explosion from "../Models/Explosion";
-import GameLocation from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import { Frame, Frames } from "../Types/Types";
@@ -156,12 +155,12 @@ export function getMaximumFrameDimensions(frames: Frames, pixelSize: number): Ga
  * @param {number} location.
  * @param {frame} frame.
  */
-export function getFrameCenter(location: GameLocation, frame: Frame, pixelSize: number): GameLocation {
+export function getFrameCenter(left: number, top: number, frame: Frame, pixelSize: number): { left: number, top: number } {
     const dimensions = getFrameDimensions(frame, pixelSize);
 
     return {
-        left: location.left + dimensions.width / 2,
-        top: location.top + dimensions.height / 2,
+        left: left + dimensions.width / 2,
+        top: top + dimensions.height / 2,
     };
 }
 
@@ -194,19 +193,20 @@ export function getFrameByIndex(frames: Frames, index: number): Frame {
 
 /**
  * getFrameHitbox
- * @param {GameLocation} location. A Location.
+ * @param {number} Left. Left coordinate.
+ * @param {number} top. Top coordinate.
  * @param {Frame} frame. A frame
  * @param {number} pixelSize.
  * @param {number} topOffset.
  * @param {number} bottomOffset.
  * @returns {GameRectangle}. The frame's hitbox.
  */
-export function getFrameHitbox(location: GameLocation, width: number, height: number, topOffset: number, bottomOffset: number): GameRectangle {
+export function getFrameHitbox(left: number, top: number, width: number, height: number, topOffset: number, bottomOffset: number): GameRectangle {
     return {
-        top: location.top + topOffset,
-        left: location.left,
-        right: location.left + width,
-        bottom: location.top + height + bottomOffset,
+        top: top + topOffset,
+        left,
+        right: left + width,
+        bottom: top + height + bottomOffset,
     };
 }
 

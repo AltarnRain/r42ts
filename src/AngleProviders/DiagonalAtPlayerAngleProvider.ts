@@ -10,7 +10,6 @@
  */
 
 import { angles } from "../Constants/Angles";
-import GameLocation from "../Models/GameLocation";
 import { appState } from "../State/Store";
 
 /**
@@ -18,7 +17,7 @@ import { appState } from "../State/Store";
  * player. If it can't hit the player the angle will be undefined.
  * @param {BaseEnemy} self. An enemy.
  */
-export function diagonalAtPlayerAngleProvider(location: GameLocation): number | undefined {
+export function diagonalAtPlayerAngleProvider(left: number, top: number): number | undefined {
 
     const {
         playerState
@@ -32,7 +31,7 @@ export function diagonalAtPlayerAngleProvider(location: GameLocation): number | 
 
     const playerHitbox = playerShip.getHitbox();
 
-    if (location.left < playerHitbox.left) {
+    if (left < playerHitbox.left) {
         return angles.rightdown;
     } else {
         return angles.leftdown;

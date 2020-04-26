@@ -27,8 +27,8 @@ type GameActions =
     "addExplosionCenter" |
     "removeExplosionCenter" |
     "removeParticle" |
-    "setPhaserFrames" |
-    "clearPhaserFrames" |
+    "setPhaserLocations" |
+    "clearPhaserLocations" |
     "setFireInterval" |
     "setEnemyFireTick" |
 
@@ -36,7 +36,8 @@ type GameActions =
     "setPlayer" |
     "setBullet" |
     "setPlayerMovementLimit" |
-    "setPlayerLocation" |
+    "setPlayerLeftLocation" |
+    "setPlayerTopLocation" |
 
     // GameState
     "setLives" |
