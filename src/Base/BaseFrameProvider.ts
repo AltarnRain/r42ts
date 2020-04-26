@@ -40,11 +40,12 @@ export default abstract class BaseFrameProvider {
      */
     constructor(startFrameIndex: number) {
         this.frameIndex = startFrameIndex;
-        this.maxIndex = Object.keys(frames).length - 1;
+        this.maxIndex = -1;
     }
 
     public setFrames(frames: Frames): void {
         this.framesClone = copyFrames(frames);
+        this.maxIndex = frames.length - 1;
     }
 
     /**

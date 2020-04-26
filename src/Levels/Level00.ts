@@ -43,12 +43,10 @@ export default class Level00 extends BaseLevel {
         dispatch<PlayerShip>("setPlayer", new PlayerShip());
         // dispatch<GameLocation>("setPlayerLocation", { left: 0, top: 0 });
 
-        const enemies = orbSpawnLocations.map((startLocation, index) => {
-            if (index === 0) {
-                const frameProvider = new CircleFrameProvider(0);
-                const locationProvider = new MoveDownAppearUp(80, 0, 90);
-                return new OrbEnemy(startLocation, 300, locationProvider, frameProvider,  diagonalAtPlayerAngleProvider);
-            }
+        const enemies = orbSpawnLocations.map((startLocation) => {
+            const frameProvider = new CircleFrameProvider(0);
+            const locationProvider = new MoveDownAppearUp(80, 0, 90);
+            return new OrbEnemy(startLocation, 300, locationProvider, frameProvider, diagonalAtPlayerAngleProvider);
         }).filter((e) => e !== undefined);
 
         // Add the enemies to the global state. The registered stateManager will take it from here.

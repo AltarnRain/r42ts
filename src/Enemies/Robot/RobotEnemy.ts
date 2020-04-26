@@ -18,7 +18,7 @@ import CGAColors from "../../Constants/CGAColors";
 import GameLocation from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { AngleProviderFunction, Frame } from "../../Types/Types";
-import { convertVariableFrameColor } from "../../Utility/Frame";
+import { convertVariableFrameColor, convertFrameColor, setFrameColor } from "../../Utility/Frame";
 import getRobotFrames from "./RobotFrames";
 
 const {
@@ -27,10 +27,7 @@ const {
 
 export default class RobotEnemy extends BaseEnemy {
 
-    /**
-     * The bullet frame of the robot.
-     */
-    private bulletFrame: Frame;
+    private color: string;
 
     constructor(location: GameLocation, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: AngleProviderFunction) {
         super(location, frameChangeTime, getRobotFrames, getExplosion02, locationProvider, frameProvider, angleProvider);
@@ -38,7 +35,7 @@ export default class RobotEnemy extends BaseEnemy {
         convertVariableFrameColor(this.explosion.explosionCenterFrame, color);
         convertVariableFrameColor(this.explosion.particleFrames[0], color);
 
-        this.bulletFrame = getTwoPixelBullet(CGAColors.lightRed);
+        this.color = color;
 
         this.onFrameChange();
         this.location = this.getOffsetLocation();
@@ -48,7 +45,9 @@ export default class RobotEnemy extends BaseEnemy {
      * Called when a frame change is required. The robot frames are all colored at initialisation so we can keep this simple.
      */
     protected onFrameChange(): void {
-        this.currentFrameClone = this.frameProvider.getNextFrameClone();
+        const nextFrame = this.frameProvider.getNextFrameClone();
+        setFrameColor(nextFrame, this.color);
+        this.currentFrameClone = nextFrame;
     }
 
     /**
