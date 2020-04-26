@@ -11,7 +11,7 @@ import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
-import { downAngleProvider as downFireAngleProvider } from "../FireAngleProviders/DownAngleProvider";
+import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
 import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import { appState } from "../State/Store";

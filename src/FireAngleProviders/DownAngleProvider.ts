@@ -15,6 +15,6 @@ import { angles } from "../Constants/Angles";
  * Returns down.
  * @param {BaseEnemy} enemy. Any enemy.
  */
-export function downAngleProvider(top: number, left: number): number {
+export default function DownFireAngleProvider(top: number, left: number): number {
     return angles.down;
 }

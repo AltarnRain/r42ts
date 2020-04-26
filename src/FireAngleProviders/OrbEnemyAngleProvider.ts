@@ -18,7 +18,7 @@ import { appState } from "../State/Store";
  * player. If it can't hit the player the angle will be undefined.
  * @param {BaseEnemy} self. An enemy.
  */
-export function orbEnemyAngleProvider(left: number, top: number): number | undefined {
+export default function orbEnemyAngleProvider(left: number, top: number): number | undefined {
 
     const {
         playerState,

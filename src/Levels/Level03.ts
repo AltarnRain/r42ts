@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import { orbEnemyAngleProvider } from "../FireAngleProviders/OrbEnemyAngleProvider";
 import getTwoPixelBullet from "../Assets/twoPXBullet";
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
@@ -12,11 +11,11 @@ import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
+import orbEnemyAngleProvider from "../FireAngleProviders/OrbEnemyAngleProvider";
 import { isEnemyBullet } from "../Guard";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 import BulletParticle from "../Particles/BulletParticle";
 import CircleFrameProvider from "../Providers/CircleFrameProvider";
-import EnemyLevelState from "../State/Definition/EnemyLevelState";
 import { appState } from "../State/Store";
 
 /**
