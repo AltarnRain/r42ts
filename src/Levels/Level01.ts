@@ -6,6 +6,7 @@
 
 import BaseLevel from "../Base/BaseLevel";
 import { BirdFrameTime } from "../Constants/EnemyFrameTime";
+import { BirdMovementSpeed as birdMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import getBirdFrames from "../Enemies/Bird/BirdFrames";
 import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
@@ -13,6 +14,7 @@ import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
+import { BirdRandomAngles as birdRandomAngles } from "../Constants/RandomAngles";
 
 /**
  * Module:          Level 01
@@ -31,9 +33,15 @@ export default class Level01 extends BaseLevel {
         super.start();
 
         const enemies = birdSpawnLocations.map((location) => {
-            const randomAngle = getRandomArrayElement([2, 358, 178, 182]);
+
+            // This may deviate from te original game but I do not care. Each birds will
+            // begin to move in a random direction determined by the function below
+            const randomMovementAngle = getRandomArrayElement(birdRandomAngles);
+
+            // In level 01 if the a bird hits a side it will move in the other direction.
             const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(getBirdFrames().frames));
-            const locationProvider = new SideToSideUpAndDown(3, randomAngle);
+
+            const locationProvider = new SideToSideUpAndDown(birdMovementSpeed, randomMovementAngle);
             return new BirdEnemy(location.left, location.top, BirdFrameTime, locationProvider, frameProvider);
         });
 
