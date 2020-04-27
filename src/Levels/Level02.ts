@@ -9,7 +9,7 @@ import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
 import { RobotBulletSpeed } from "../Constants/EnemyBulletSpeed";
 import { RobotFrameTime } from "../Constants/EnemyFrameTime";
-import { RobotMovementSpeed } from "../Constants/EnemyMovementSpeeds";
+import { robotMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import { robotFireFrequence } from "../Constants/FireFrequences";
 import { robotAngle as robotAngle } from "../Constants/MovementAngles";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
@@ -38,7 +38,7 @@ export default class Level02 extends BaseLevel {
 
         const enemies = robotSpawnLocationsAndColor.map((lc) => {
             const frameProvider = new BackAndForthFrameProvider(0);
-            const LocationProvider = new VanishRightAppearLeft(RobotMovementSpeed, robotAngle);
+            const LocationProvider = new VanishRightAppearLeft(robotMovementSpeed, robotAngle);
 
             return new RobotEnemy(lc.left, lc.top, RobotFrameTime, lc.color, LocationProvider, frameProvider, downFireAngleProvider);
         });

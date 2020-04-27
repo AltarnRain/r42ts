@@ -9,7 +9,7 @@ import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
 import { OrbBulletSpeed } from "../Constants/EnemyBulletSpeed";
 import { OrbFrameTime } from "../Constants/EnemyFrameTime";
-import { OrbMovementSpeed } from "../Constants/EnemyMovementSpeeds";
+import { orbMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import { orbFireFrequence } from "../Constants/FireFrequences";
 import { orbAngle } from "../Constants/MovementAngles";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
@@ -31,7 +31,7 @@ export class Level03 extends BaseLevel {
         super.start();
         const enemies = orbSpawnLocations.map((startLocation) => {
             const frameProvider = new CircleFrameProvider(0);
-            const locationProvider = new MoveDownAppearUp(80, OrbMovementSpeed, orbAngle);
+            const locationProvider = new MoveDownAppearUp(80, orbMovementSpeed, orbAngle);
             return new OrbEnemy(startLocation.left, startLocation.top, OrbFrameTime, locationProvider, frameProvider, orbEnemyAngleProvider);
         });
 

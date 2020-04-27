@@ -9,8 +9,8 @@
  * Responsibility:  Define constants at which speed an enemy moves.
  */
 
-export const BirdMovementSpeed = 3;
+export const birdMovementSpeed = 3;
 
-export const RobotMovementSpeed = 3;
+export const robotMovementSpeed = 3;
 
-export const OrbMovementSpeed = 0.3;
+export const orbMovementSpeed = 0.3;
