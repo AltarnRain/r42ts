@@ -36,7 +36,7 @@ export default class BirdEnemy extends BaseEnemy {
     constructor(left: number, top: number, frameChangetime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, fireAngleProvider?: FireAngleProviderFunction) {
         super(left, top, frameChangetime, getBirdFrames, Explosion01, locationProvider, frameProvider, fireAngleProvider);
 
-        this.colorTickHandler = new TickHandler(1   40, () => this.onColorChange());
+        this.colorTickHandler = new TickHandler(40, () => this.onColorChange());
 
         Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.white);
         Mutators.Frame.setColor(this.explosion.particleFrames[0], CGAColors.white);

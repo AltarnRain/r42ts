@@ -33,7 +33,7 @@ export default function subscribeToStoreChanges(): void {
         const { gameState } = appState();
 
         // Handle level change acting on a change in level.
-        if (levelNumber !== gameState.level) {
+        if (gameState.level !== undefined && levelNumber !== gameState.level) {
             levelNumber = gameState.level;
 
             if (currentLevel) {

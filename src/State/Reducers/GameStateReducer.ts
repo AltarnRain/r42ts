@@ -44,7 +44,9 @@ export function gameStateReducer(state: GameState = initState(), action: ActionP
                 draft.phasers--;
                 break;
             case "addLevel":
-                draft.level++;
+                if (draft.level) {
+                    draft.level++;
+                }
                 break;
             case "setLevel":
                 draft.level = action.payload;
@@ -52,7 +54,7 @@ export function gameStateReducer(state: GameState = initState(), action: ActionP
             case "nextLevel":
                 if (draft.level === 42) {
                     draft.level = 1;
-                } else {
+                } else if (draft.level !== undefined) {
                     draft.level++;
                 }
                 break;
@@ -70,7 +72,7 @@ export function gameStateReducer(state: GameState = initState(), action: ActionP
  */
 function initState(): GameState {
     return {
-        level: 1,
+        level: undefined,
         lives: 2,
         score: 0,
         phasers: 20, // Start with 0 phasers. One is rewarded each level so level 1 gives the player one phaser.

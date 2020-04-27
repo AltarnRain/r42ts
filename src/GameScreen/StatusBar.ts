@@ -142,7 +142,10 @@ function drawLevel(): void {
     ctx.fillStyle = CGAColors.red;
     ctx.fillRect(levelStartPosition, 0, levelBackgroundWidth, statusBarHeight);
 
-    const paddedLevelString = padLeft(gameState.level.toString(), 2, "0");
+    let paddedLevelString = "0";
+    if (gameState.level !== undefined) {
+        paddedLevelString = padLeft(gameState.level.toString(), 2, "0");
+    }
 
     const rightNumber = parseInt(paddedLevelString[1], 10);
     const leftNumber = parseInt(paddedLevelString[0], 10);

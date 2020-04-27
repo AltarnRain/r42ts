@@ -59,7 +59,12 @@ export default abstract class BaseLevel {
         this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
 
         // Draw the level banned to show which round we're at.
-        this.levelBannerSub = GameLoop.registerBackgroundDrawing(() => drawLevelBanner(gameState.level));
+        let level = 0;
+        if (gameState.level !== undefined) {
+            level = gameState.level;
+        }
+
+        this.levelBannerSub = GameLoop.registerBackgroundDrawing(() => drawLevelBanner(level));
     }
 
     /**

@@ -29,11 +29,10 @@ window.onload = () => {
         switch (window.location.search.replace("?", "")) {
             case "playground": {
 
-                let level = 1;
+                let level = 0;
                 if (window.location.hash && window.location.hash.indexOf("level") > -1) {
                     level = parseInt(window.location.hash.split("=")[1], 10);
                 }
-
 
                 subscribeToStoreChanges();
                 registerListeners();
