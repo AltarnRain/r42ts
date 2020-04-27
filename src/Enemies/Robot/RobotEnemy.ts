@@ -9,11 +9,11 @@
  * Responsibility:  Handles the Robot enemeny first seen in level 2.
  */
 
-import { getExplosion02 } from "../../Assets/Explosion02";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
+import { getExplosion02 } from "../../SharedFrames/Explosion02";
 import { FireAngleProviderFunction } from "../../Types/Types";
 import { convertVariableFrameColor, setFrameColor } from "../../Utility/Frame";
 import getRobotFrames from "./RobotFrames";

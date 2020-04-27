@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import getTwoPixelBullet from "../Assets/twoPXBullet";
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
 import BulletRunner from "../BulletProviders/BulletRunner";
@@ -14,6 +13,7 @@ import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAnd
 import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
 import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
+import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { appState } from "../State/Store";
 
 /**

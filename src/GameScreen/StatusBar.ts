@@ -9,12 +9,12 @@
  * Responsibility:  Drawn at the top of the screen for score, phasers, lives and level.
  */
 
-import getNumbers from "../Assets/Numbers";
 import CGAColors from "../Constants/CGAColors";
 import { getPlayerFrame } from "../Player/PlayerFrames";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
+import getNumbers from "../SharedFrames/Numbers";
 import { appState } from "../State/Store";
 import { Frame } from "../Types/Types";
 import { convertFrameColor, getFrameByIndex, getFrameDimensions, setFrameColor } from "../Utility/Frame";

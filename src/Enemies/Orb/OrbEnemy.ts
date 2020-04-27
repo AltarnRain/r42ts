@@ -9,13 +9,13 @@
  * Responsibility:  Define behaviour of the orb enemy.
  */
 
-import { getExplosion02 } from "../../Assets/Explosion02";
-import getTwoPixelBullet from "../../Assets/twoPXBullet";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
+import { getExplosion02 } from "../../SharedFrames/Explosion02";
+import getTwoPixelBullet from "../../SharedFrames/twoPXBullet";
 import { FireAngleProviderFunction, Frame } from "../../Types/Types";
 import { convertChangingFrameColors, convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
 import getOrbFrames from "./OrbFrames";

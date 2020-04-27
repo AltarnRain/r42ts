@@ -9,13 +9,13 @@
  * Responsibility:  Defines the behaviour of the bird enemy first seen in level 1.
  */
 
-import Explosion01 from "../../Assets/Explosion01";
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import Particle from "../../Particles/Particle";
+import Explosion01 from "../../SharedFrames/Explosion01";
 import { FireAngleProviderFunction, Frame } from "../../Types/Types";
 import { getRandomArrayElement } from "../../Utility/Array";
 import { convertVariableFrameColor } from "../../Utility/Frame";

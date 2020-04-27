@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
-import getCharacters from "../Assets/Characters";
-import getNumbers from "../Assets/Numbers";
 import CGAColors from "../Constants/CGAColors";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
+import getCharacters from "../SharedFrames/Characters";
+import getNumbers from "../SharedFrames/Numbers";
 import { Frame } from "../Types/Types";
 import { getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
 import getCharacter from "../Utility/getCharacter";

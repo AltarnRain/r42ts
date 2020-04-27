@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import getTwoPixelBullet from "../Assets/twoPXBullet";
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
 import BulletRunner from "../BulletProviders/BulletRunner";
@@ -16,6 +15,7 @@ import { isEnemyBullet } from "../Guard";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 import BulletParticle from "../Particles/BulletParticle";
 import CircleFrameProvider from "../Providers/CircleFrameProvider";
+import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { appState } from "../State/Store";
 
 /**
