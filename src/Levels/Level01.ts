@@ -19,6 +19,7 @@ import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { appState } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
+import { BirdFrameTime } from "../Constants/EnemyFrameTime";
 
 /**
  * Module:          Level 01
@@ -40,7 +41,7 @@ export default class Level01 extends BaseLevel {
             const randomAngle = getRandomArrayElement([2, 358, 178, 182]);
             const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(getBirdFrames().frames));
             const locationProvider = new SideToSideUpAndDown(3, randomAngle);
-            return new BirdEnemy(location.left, location.top, 100, locationProvider, frameProvider);
+            return new BirdEnemy(location.left, location.top, BirdFrameTime, locationProvider, frameProvider);
         });
 
         const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, 10, orbFireCheck);

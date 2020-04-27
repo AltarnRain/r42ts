@@ -22,7 +22,7 @@ const orbSpawnLocations: Array<{ left: number, top: number }> = [];
 const { width } = getFrameDimensions(getOrbFrames().frames[0], averagePixelSize);
 
 const top = gameFieldTop + averagePixelSize * 26;
-const left = averagePixelSize * 10;
+const left = averagePixelSize * 8;
 const spacing = averagePixelSize * 2;
 
 for (let i = 0; i < 22; i++) {

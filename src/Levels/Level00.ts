@@ -20,6 +20,10 @@ import enemyLevelRunner from "../Main/EnemyLevelRunner";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
 import { ImmoboleFrameProvider } from "../Providers/Immobile";
+import getOrbFrames from "../Enemies/Orb/OrbFrames";
+import OrbEnemy from "../Enemies/Orb/OrbEnemy";
+import CircleFrameProvider from "../Providers/CircleFrameProvider";
+import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 
 /**
  * Module:          Level 00
@@ -41,8 +45,9 @@ export default class Level00 extends BaseLevel {
         // Register the background draw function so it runs in the game loop.
         this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
 
-        this.robotFrameAnimationTest();
+        // this.robotFrameAnimationTest();
 
+        this.orbEnemyAnimationTest();
         const player = new PlayerShip();
         dispatch("setPlayer", player);
 
@@ -64,6 +69,19 @@ export default class Level00 extends BaseLevel {
                 const LocationProvider = new VanishRightAppearLeft(0, 0);
                 return new RobotEnemy(lc.left, lc.top, 150, lc.color, LocationProvider, frameProvider, downFireAngleProvider);
             }
+        }).filter((x) => x !== undefined);
+        dispatch("setEnemies", enemies);
+    }
+
+    private orbEnemyAnimationTest() {
+        // const orbFrames = getOrbFrames();
+        const enemies = orbSpawnLocations.map((lc) => {
+            // if (index < 1) {
+                // const frameProvider = new ImmoboleFrameProvider(index);
+                const frameProvider  = new CircleFrameProvider(0);
+                const LocationProvider = new VanishRightAppearLeft(0, 0);
+                return new OrbEnemy(lc.left, lc.top, 200, LocationProvider, frameProvider, downFireAngleProvider);
+            // }
         }).filter((x) => x !== undefined);
         dispatch("setEnemies", enemies);
     }

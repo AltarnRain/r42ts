@@ -17,6 +17,7 @@ import BulletParticle from "../Particles/BulletParticle";
 import CircleFrameProvider from "../Providers/CircleFrameProvider";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { appState } from "../State/Store";
+import { OrbFrameTime } from "../Constants/EnemyFrameTime";
 
 /**
  * Module:          Level03
@@ -30,7 +31,7 @@ export class Level03 extends BaseLevel {
         const enemies = orbSpawnLocations.map((startLocation) => {
             const frameProvider = new CircleFrameProvider(0);
             const locationProvider = new MoveDownAppearUp(80, 0.3, 90);
-            return new OrbEnemy(startLocation.left, startLocation.top, 300, locationProvider, frameProvider, orbEnemyAngleProvider);
+            return new OrbEnemy(startLocation.left, startLocation.top, OrbFrameTime, locationProvider, frameProvider, orbEnemyAngleProvider);
         });
 
         const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, 5, orbFireCheck);

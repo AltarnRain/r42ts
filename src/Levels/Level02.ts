@@ -15,6 +15,7 @@ import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { appState } from "../State/Store";
+import { RobotFrameTime } from "../Constants/EnemyFrameTime";
 
 /**
  * Module:          Level 02
@@ -36,7 +37,7 @@ export default class Level02 extends BaseLevel {
             const frameProvider = new BackAndForthFrameProvider(0);
             const LocationProvider = new VanishRightAppearLeft(0, 5);
 
-            return new RobotEnemy(lc.left, lc.top, 150, lc.color, LocationProvider, frameProvider, downFireAngleProvider);
+            return new RobotEnemy(lc.left, lc.top, RobotFrameTime, lc.color, LocationProvider, frameProvider, downFireAngleProvider);
         });
 
         const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, 5, shouldFire);

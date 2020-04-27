@@ -12,42 +12,75 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
  */
 
 export default function getOrbFrames(): OffsetFrames {
+
+    const orbMainFrame = [
+        ["0", "V0", "V0", "0"],
+        ["V0", "V1", "V1", "V0"],
+        ["V0", "V1", "V1", "V0"],
+        ["0", "V0", "V0", "0"],
+    ];
+
     const orbFrames: OffsetFrames = {
-        frames: [
-            [
-                ["0", "V0", "V0", "0"],
-                ["V0", "V1", "V1", "V0"],
-                ["V0", "V1", "V1", "V0"],
-                ["0", "V0", "V0", "0"],
-            ]
-        ],
+        frames: [],
         offSets: [
-            { // left
+            // Move up
+            {
                 left: 0,
                 top: 0,
             },
-            { // top
-                left: 1,
-                top: -1,
+            {
+                left: 0,
+                top: -2,
             },
-            { // right
+            {
+                left: 0,
+                top: -4,
+            },
+            {
+                left: 0,
+                top: -6,
+            },
+            // Move right
+            {
                 left: 2,
+                top: -6,
+            },
+            {
+                left: 4,
+                top: -6,
+            },
+            {
+                left: 6,
+                top: -6,
+            },
+            // Move down
+            {
+                left: 6,
+                top: -4,
+            },
+            {
+                left: 6,
+                top: -2,
+            },
+            {
+                left: 6,
                 top: 0,
             },
-            { // bottom
-                left: 1,
-                top: 1,
+            // Move left
+            {
+                left: 4,
+                top: 0,
             },
+            {
+                left: 2,
+                top: 0,
+            }
         ],
     };
 
-    // Duplicate the first frame 3 times for a total of 4.
-    orbFrames.frames = [
-        ...orbFrames.frames,
-        orbFrames.frames[0],
-        orbFrames.frames[0],
-        orbFrames.frames[0],
-    ];
+    orbFrames.offSets.forEach(() => {
+        orbFrames.frames.push(orbMainFrame);
+    });
 
     return orbFrames;
 }
