@@ -70,7 +70,7 @@ export function gameStateReducer(state: GameState = initState(), action: ActionP
  */
 function initState(): GameState {
     return {
-        level: 0,
+        level: 1,
         lives: 2,
         score: 0,
         phasers: 20, // Start with 0 phasers. One is rewarded each level so level 1 gives the player one phaser.
