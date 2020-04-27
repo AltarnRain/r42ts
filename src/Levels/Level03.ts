@@ -7,7 +7,7 @@
 import BaseLevel from "../Base/BaseLevel";
 import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
-import { OrbBulletSpeed } from "../Constants/EnemyBulletSpeed";
+import { OrbBulletSpeed as orbBulletSpeed } from "../Constants/EnemyBulletSpeed";
 import { OrbFrameTime } from "../Constants/EnemyFrameTime";
 import { orbMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import { orbFireFrequence } from "../Constants/FireFrequences";
@@ -35,7 +35,7 @@ export class Level03 extends BaseLevel {
             return new OrbEnemy(startLocation.left, startLocation.top, OrbFrameTime, locationProvider, frameProvider, orbEnemyAngleProvider);
         });
 
-        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, OrbBulletSpeed, orbFireCheck);
+        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, orbBulletSpeed, orbFireCheck);
         this.begin(enemies, orbFireFrequence, bulletRunner);
     }
 }

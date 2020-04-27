@@ -7,6 +7,7 @@
 import Particle from "../Particles/Particle";
 import { FrameProviderFunction, GameObjectType } from "../Types/Types";
 import Mutators from "../Utility/FrameMutators";
+import CGAColors from "../Constants/CGAColors";
 
 /**
  * Module:          Player bullet
@@ -27,7 +28,7 @@ export default class PlayerBullet extends Particle {
     constructor(left: number, top: number, getFrame: FrameProviderFunction, angle: number, speed: number) {
         super(left, top, getFrame, angle, speed, 1);
 
-        Mutators.Frame.convertHexToCGA(this.currentFrame);
+        Mutators.Frame.setColor(this.currentFrame, CGAColors.yellow);
     }
 
     public getObjectType(): GameObjectType {

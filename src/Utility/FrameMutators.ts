@@ -75,7 +75,7 @@ namespace Mutators {
                             useColor = colors[0];
                         }
 
-                        if (useColor === undefined) {
+                        if (useColor === undefined || useColor === "") {
                             throw Error("Color shoud not be undefined");
                         }
 
