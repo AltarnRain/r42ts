@@ -51,7 +51,7 @@ export default class OrbEnemy extends BaseEnemy {
 
         // We only have one frame in this enemy but its color DOES change. Set the currentFrame to the only available one
         // and sets its color to the first color set so we get a a good render when the enemy first appears.
-        this.updateCurrentFrameAndColor();
+        this.updateCurrentFrameAndColor(this.frameProvider.getCurrentFrame());
 
         Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.magenta);
         Mutators.Frames.setColor(this.explosion.particleFrames, CGAColors.magenta);
@@ -59,7 +59,7 @@ export default class OrbEnemy extends BaseEnemy {
         this.bulletFrame = getTwoPixelBullet(CGAColors.lightRed);
         Mutators.Frame.setColor(this.bulletFrame, CGAColors.lightRed);
 
-        this.colorTickHandler = new TickHandler(100, () => this.onColorChange());
+        this.colorTickHandler = new TickHandler(50, () => this.onColorChange());
     }
 
     /**
@@ -71,22 +71,20 @@ export default class OrbEnemy extends BaseEnemy {
             this.currentColorIndex = 0;
         }
 
-        this.updateCurrentFrameAndColor();
+        this.updateCurrentFrameAndColor(this.frameProvider.getCurrentFrame());
     }
 
     /**
      * Sets the current frame and its color.
      * @param {Frame} frame. A frame.
      */
-    private updateCurrentFrameAndColor() {
-        const newColor = colors[this.currentColorIndex];
-        const frame = this.frameProvider.getCurrentFrame();
-
-        if (newColor === undefined) {
+    private updateCurrentFrameAndColor(frame: Frame): void {
+        const currentColor = colors[this.currentColorIndex];
+        if (currentColor === undefined) {
             throw new Error("Color cannot be undefined.");
         }
 
-        Mutators.Frame.setColor(frame, ...newColor);
+        Mutators.Frame.setColor(frame, ...currentColor);
         this.currentFrame = frame;
     }
 
@@ -94,14 +92,8 @@ export default class OrbEnemy extends BaseEnemy {
      * Changes the frame of the OrbEnemy. Also ensures the new frame is given colors.
      */
     protected onFrameChange(): void {
-        const newFrame = this.frameProvider.getNextFrame();
-        const currentColors = colors[this.currentColorIndex];
-
-        // Apply currnet colors when the frame changes.
-        // The color will be updated when the color tich handler fires.
-        Mutators.Frame.setColor(newFrame, ...currentColors);
-
-        this.currentFrame = newFrame;
+        const frame = this.frameProvider.getNextFrame();
+        this.updateCurrentFrameAndColor(frame);
     }
 
     /**
