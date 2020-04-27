@@ -4,13 +4,13 @@
  * See LICENSE.MD.
  */
 
+import BaseFrameProvider from "../Base/BaseFrameProvider";
+import { Frame } from "../Types/Types";
+
 /**
  * Module:          FrameProvider
  * Responsibility:  Provide frames for animations.
  */
-
-import BaseFrameProvider from "../Base/BaseFrameProvider";
-import { Frame } from "../Types/Types";
 
 export default class CircleFrameProvider extends BaseFrameProvider {
 

@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
+import { Frame, Frames } from "../Types/Types";
+
 /**
  * Module:          getCharacter
  * Responsibility:  Return a character
  */
-
-import { Frame, Frames } from "../Types/Types";
 
 export default function getCharacter(frames: Frames, character: string): Frame {
     const upperCaseCharacter = character.toUpperCase();

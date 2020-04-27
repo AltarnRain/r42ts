@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
+import { appState, dispatch } from "../State/Store";
+
 /**
  * Module:          KeyboardEVents
  * Responsibility:  handle keyboard events.
  */
-
-import { appState, dispatch } from "../State/Store";
 
 /**
  * Valid game keys.

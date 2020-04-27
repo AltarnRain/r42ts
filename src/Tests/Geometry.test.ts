@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
+import * as Geometry from "../Utility/Geometry";
+
 /**
  * Module:          Geometry.test
  * Responsibility:  Tests Geometry functions
  */
-
-import * as Geometry from "../Utility/Geometry";
 
 describe("geometry tests", () => {
     test("reverseDegreeAngle", () => {

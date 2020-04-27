@@ -4,13 +4,13 @@
  * See LICENSE.MD.
  */
 
+import Explosion from "../Models/Explosion";
+import BaseGameObject from "./BaseGameObject";
+
 /**
  * Module:          BaseDestructableObject
  * Responsibility:  Base class for everything that goes boom!
  */
-
-import Explosion from "../Models/Explosion";
-import BaseGameObject from "./BaseGameObject";
 
 export abstract class BaseDestructableObject extends BaseGameObject {
 

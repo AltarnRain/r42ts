@@ -4,14 +4,13 @@
  * See LICENSE.MD.
  */
 
+import { Frame as FrameType, Frames } from "../Types/Types";
+import * as Frame from "../Utility/Frame";
+
 /**
  * Module:          Frames.test
  * Responsibility:  Test the Frame utility class.
  */
-
-import CGAColors from "../Constants/CGAColors";
-import { Frame as FrameType, Frames } from "../Types/Types";
-import * as Frame from "../Utility/Frame";
 
 const frames: Frames = [
     [["a"]],

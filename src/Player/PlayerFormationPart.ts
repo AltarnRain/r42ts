@@ -4,11 +4,6 @@
  * See LICENSE.MD.
  */
 
-/**
- * Module:          PlayerFormationPart
- * Responsibility:  A particle that travels a distance and then stops being drawn.
- */
-
 import speedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
@@ -16,6 +11,11 @@ import { Frame, FrameProviderFunction } from "../Types/Types";
 import Mutators from "../Utility/FrameMutators";
 import { calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
+
+/**
+ * Module:          PlayerFormationPart
+ * Responsibility:  A particle that travels a distance and then stops being drawn.
+ */
 
 const minimumDistance = speedProvider(20);
 

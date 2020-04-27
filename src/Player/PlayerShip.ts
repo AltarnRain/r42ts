@@ -4,11 +4,6 @@
  * See LICENSE.MD.
  */
 
-/**
- * Module:          Player
- * Responsibility:  Player ship
- */
-
 import { movePlayer } from "../Handlers/MovePlayer";
 import Explosion from "../Models/Explosion";
 import { GameRectangle } from "../Models/GameRectangle";
@@ -21,6 +16,10 @@ import Mutators from "../Utility/FrameMutators";
 import getPlayerExplosion from "./PlayerExplosion";
 import { getPlayerFrame } from "./PlayerFrames";
 
+/**
+ * Module:          Player
+ * Responsibility:  Player ship
+ */
 const {
     minPixelSize,
     averagePixelSize,

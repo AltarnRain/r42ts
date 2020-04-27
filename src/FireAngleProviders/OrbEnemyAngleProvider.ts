@@ -10,7 +10,6 @@
  */
 
 import { angles } from "../Constants/Angles";
-import EnemyLevelState from "../State/Definition/EnemyLevelState";
 import { appState } from "../State/Store";
 
 /**

@@ -4,13 +4,13 @@
  * See LICENSE.MD.
  */
 
+import "jest";
+import TickHandler from "../Handlers/TickHandler";
+
 /**
  * Module:          TickHandler tests
  * Responsibility:  Test the tick handler.
  */
-
-import "jest";
-import TickHandler from "../Handlers/TickHandler";
 
 test("Test if the tick handler does not fire an event when the tick count is to low.", () => {
 

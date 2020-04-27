@@ -3,17 +3,16 @@
  * This source code is subject to terms and conditions.
  * See LICENSE.MD.
  */
-
-/**
- * Module:          RenderFrame
- * Responsibility:  Renders a single frame to the canvas
- */
-
+ 
 import { validColors } from "../Constants/CGAColors";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { Frame } from "../Types/Types";
 
+/**
+ * Module:          RenderFrame
+ * Responsibility:  Renders a single frame to the canvas
+ */
 const {
     maxPixelSize,
     averagePixelSize,

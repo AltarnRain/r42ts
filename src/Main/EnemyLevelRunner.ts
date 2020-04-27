@@ -4,11 +4,6 @@
  * See LICENSE.MD.
  */
 
-/**
- * Module:          EnemyLevelRunner
- * Responsibility:  Handles all state reactions and action for levels that contain enemies.
- */
-
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseParticle from "../Base/BaseParticle";
 import CGAColors from "../Constants/CGAColors";
@@ -30,6 +25,11 @@ import { getExplosionReturner, getFrameReturner } from "../Utility/Frame";
 import { overlaps } from "../Utility/Geometry";
 import { getHittableObjects } from "../Utility/StateHelper";
 import GameLoop from "./GameLoop";
+
+/**
+ * Module:          EnemyLevelRunner
+ * Responsibility:  Handles all state reactions and action for levels that contain enemies.
+ */
 
 const phaserFrame: Frame = [
     [CGAColors.yellow, CGAColors.yellow]

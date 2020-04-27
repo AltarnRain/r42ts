@@ -5,7 +5,7 @@
  */
 
 import Particle from "../Particles/Particle";
-import { Frame, FrameProviderFunction, GameObjectType } from "../Types/Types";
+import { FrameProviderFunction, GameObjectType } from "../Types/Types";
 import Mutators from "../Utility/FrameMutators";
 
 /**

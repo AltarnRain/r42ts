@@ -4,22 +4,20 @@
  * See LICENSE.MD.
  */
 
-/**
- * Module:          OrbEnemy
- * Responsibility:  Define behaviour of the orb enemy.
- */
-
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import { getExplosion02 } from "../../SharedFrames/Explosion02";
-import getTwoPixelBullet from "../../SharedFrames/twoPXBullet";
 import { FireAngleProviderFunction, Frame } from "../../Types/Types";
 import Mutators from "../../Utility/FrameMutators";
 import getOrbFrames from "./OrbFrames";
 
+/**
+ * Module:          OrbEnemy
+ * Responsibility:  Define behaviour of the orb enemy.
+ */
 const colors: string[][] = [
     [CGAColors.lightGreen, CGAColors.lightBlue],
     [CGAColors.brown, CGAColors.lightGreen],

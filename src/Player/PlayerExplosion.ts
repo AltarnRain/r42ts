@@ -5,12 +5,12 @@
  * See LICENSE.MD.
  */
 
+import Explosion from "../Models/Explosion";
+
 /**
  * Module:          PlayerExplosion
  * Responsibility:  Explosion effect only for the player
  */
-
-import Explosion from "../Models/Explosion";
 
 export default function getPlayerExplosion(): Explosion {
 

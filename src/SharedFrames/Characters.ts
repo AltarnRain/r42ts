@@ -4,6 +4,9 @@
  * See LICENSE.MD.
  */
 
+import { Frames } from "../Types/Types";
+import Mutators from "../Utility/FrameMutators";
+
 /**
  * Module:          Characters
  * Responsibility:  Define character frames. A to Z with some other characters
@@ -12,9 +15,6 @@
  *                  Their colors are "V". Meaning "Variant" so they
  *                  can be set with a single function call.
  */
-
-import { Frame, Frames } from "../Types/Types";
-import Mutators from "../Utility/FrameMutators";
 
 export default function getCharacters(color: string): Frames {
     const Characters: Frames = [

@@ -4,13 +4,6 @@
  * See LICENSE.MD.
  */
 
-/**
- * Module:          BaseEnemy
- * Responsibility:  Base class for all enemies.
- *                  This class provides contacts and default methods that will work
- *                  for most enemies in the game leaving specifics to derived classes.
- */
-
 import TickHandler from "../Handlers/TickHandler";
 import Explosion from "../Models/Explosion";
 import { GameRectangle } from "../Models/GameRectangle";
@@ -22,6 +15,13 @@ import { getOffsetLocation } from "../Utility/Location";
 import { BaseDestructableObject as BaseDestructable } from "./BaseDestructableObject";
 import BaseFrameProvider from "./BaseFrameProvider";
 import BaseLocationProvider from "./BaseLocationProvider";
+
+/**
+ * Module:          BaseEnemy
+ * Responsibility:  Base class for all enemies.
+ *                  This class provides contacts and default methods that will work
+ *                  for most enemies in the game leaving specifics to derived classes.
+ */
 
 const {
     averagePixelSize,

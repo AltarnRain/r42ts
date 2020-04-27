@@ -4,11 +4,11 @@
  * See LICENSE.MD.
  */
 
+import Explosion from "../Models/Explosion";
+
 /**
  * Module:          Explosion02
  */
-
-import Explosion from "../Models/Explosion";
 
 export function getExplosion02(): Explosion {
     const Explosion02: Explosion = {

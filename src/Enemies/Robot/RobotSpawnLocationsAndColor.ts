@@ -4,16 +4,16 @@
  * See LICENSE.MD.
  */
 
-/**
- * Module:          RobotSpawnLocations
- * Responsibility:  Returns the robot spawn locations.
- */
-
 import CGAColors from "../../Constants/CGAColors";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { getRandomArrayElement } from "../../Utility/Array";
 import { getFrameDimensions } from "../../Utility/Frame";
 import getRobotFrames from "./RobotFrames";
+
+/**
+ * Module:          RobotSpawnLocations
+ * Responsibility:  Returns the robot spawn locations.
+ */
 
 const {
     averagePixelSize,

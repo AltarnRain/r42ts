@@ -5,11 +5,12 @@
  * See LICENSE.MD.
  */
 
+import Explosion from "../Models/Explosion";
+
 /**
  * Module:          Explosion01.
  */
 
-import Explosion from "../Models/Explosion";
 export default function getExplosion01(): Explosion {
     const Explosion01: Explosion = {
         explosionCenterFrame: [

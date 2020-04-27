@@ -4,14 +4,14 @@
  * See LICENSE.MD.
  */
 
+import "jest";
+import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
+import { Frames } from "../Types/Types";
+
 /**
  * Module:          FrameProvider.tests
  * Responsibility:  Test the frame provider.
  */
-
-import "jest";
-import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
-import { Frames } from "../Types/Types";
 
 const Frames: Frames = [
     [["a"]],

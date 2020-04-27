@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
+import * as array from "../Utility/Array";
+
 /**
  * Module:          Array.test
  * Responsibility:  Tests the array utility functions
  */
-
-import * as array from "../Utility/Array";
 
 test("getRandomArrayElement", () => {
     const arr = ["a"];

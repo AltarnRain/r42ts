@@ -1,3 +1,14 @@
+/**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
+/**
+ * Module:          Angles
+ * Responsibility:  Define the simple angles
+ */
+
 export const angles = {
     left: 180,
     right: 0,

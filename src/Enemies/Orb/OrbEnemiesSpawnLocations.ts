@@ -4,14 +4,14 @@
  * See LICENSE.MD.
  */
 
+import dimensionProvider from "../../Providers/DimensionProvider";
+import { getFrameDimensions } from "../../Utility/Frame";
+import getOrbFrames from "./OrbFrames";
+
 /**
  * Module:          RobotSpawnLocations
  * Responsibility:  Returns the robot spawn locations.
  */
-
-import dimensionProvider from "../../Providers/DimensionProvider";
-import { getFrameDimensions } from "../../Utility/Frame";
-import getOrbFrames from "./OrbFrames";
 
 const {
     averagePixelSize,

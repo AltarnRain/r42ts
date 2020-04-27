@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
+import { TickFunction } from "../Types/Types";
+
 /**
  * Module:          GameLoop
  * Responsibility:  Handles all functions that should be called within the GameLoop.
  */
-
-import { TickFunction } from "../Types/Types";
 
 /**
  * A handle for the main loop.

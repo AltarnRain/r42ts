@@ -3,13 +3,13 @@
  * This source code is subject to terms and conditions.
  * See LICENSE.MD.
  */
+ 
+import { Frames } from "../Types/Types";
 
 /**
  * Module:          OffsetFrames
  * Responsibility:  Model for frames that require offsets to be drawn correctly.
  */
-
-import { Frames } from "../Types/Types";
 
 export interface OffsetFrames {
     /**

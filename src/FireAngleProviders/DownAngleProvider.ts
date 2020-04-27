@@ -4,17 +4,17 @@
  * See LICENSE.MD.
  */
 
+import { angles } from "../Constants/Angles";
+
 /**
  * Module:          DownAngleProvider
  * Responsibility:  Always returns 'down' as the angle
  */
 
-import { angles } from "../Constants/Angles";
-
 /**
  * Returns down.
  * @param {BaseEnemy} enemy. Any enemy.
  */
-export default function DownFireAngleProvider(top: number, left: number): number {
+export default function downFireAngleProvider(top: number, left: number): number {
     return angles.down;
 }

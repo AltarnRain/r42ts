@@ -3,14 +3,14 @@
  * This source code is subject to terms and conditions.
  * See LICENSE.MD.
  */
+ 
+import speedProvider from "../Providers/SpeedProvider";
+import { getNextX, getNextY } from "./Geometry";
 
 /**
  * Module:          Location utilities
  * Responsibility:  Offer utility functions for stuff that needs to know where it is.
  */
-
-import speedProvider from "../Providers/SpeedProvider";
-import { getNextX, getNextY } from "./Geometry";
 
 /**
  * Calculate distance in pixels.

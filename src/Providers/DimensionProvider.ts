@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
+import { GameDimensions } from "../Models/GameDimensions";
+
 /**
  * Module:          Dimension Provider
  * Responsibility:  Provide dimensions for game objects. Not a part of the State because the entire game uses it.
  */
-
-import { GameDimensions } from "../Models/GameDimensions";
 
 let gameDimensions: GameDimensions;
 

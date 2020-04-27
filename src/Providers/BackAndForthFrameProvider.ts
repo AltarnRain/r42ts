@@ -4,13 +4,13 @@
  * See LICENSE.MD.
  */
 
+import IFrameProvider from "../Base/BaseFrameProvider";
+import { Frame } from "../Types/Types";
+
 /**
  * Module:          FrameProvider
  * Responsibility:  Provide frames for animations.
  */
-
-import IFrameProvider from "../Base/BaseFrameProvider";
-import { Frame } from "../Types/Types";
 
 export default class BackAndForthFrameProvider extends IFrameProvider {
 

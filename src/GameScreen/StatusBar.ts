@@ -4,11 +4,6 @@
  * See LICENSE.MD.
  */
 
-/**
- * Module:          StatusBar
- * Responsibility:  Drawn at the top of the screen for score, phasers, lives and level.
- */
-
 import CGAColors from "../Constants/CGAColors";
 import { getPlayerFrame } from "../Player/PlayerFrames";
 import ctxProvider from "../Providers/CtxProvider";
@@ -20,6 +15,11 @@ import { Frame } from "../Types/Types";
 import { getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
 import Mutators from "../Utility/FrameMutators";
 import { padLeft } from "../Utility/String";
+
+/**
+ * Module:          StatusBar
+ * Responsibility:  Drawn at the top of the screen for score, phasers, lives and level.
+ */
 
 const ctx = ctxProvider();
 

@@ -4,11 +4,6 @@
  * See LICENSE.MD.
  */
 
-/**
- * Module:          Bird enemy
- * Responsibility:  Defines the behaviour of the bird enemy first seen in level 1.
- */
-
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
@@ -20,6 +15,11 @@ import { FireAngleProviderFunction, Frame } from "../../Types/Types";
 import { getRandomArrayElement } from "../../Utility/Array";
 import Mutators from "../../Utility/FrameMutators";
 import getBirdFrames from "./BirdFrames";
+
+/**
+ * Module:          Bird enemy
+ * Responsibility:  Defines the behaviour of the bird enemy first seen in level 1.
+ */
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 

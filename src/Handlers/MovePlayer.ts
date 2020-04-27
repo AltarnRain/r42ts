@@ -4,18 +4,18 @@
  * See LICENSE.MD.
  */
 
-/**
- * Module:          MovePlayer
- * Responsibility:  Handles changes to the player location due to movement. Also provides a single source of truth for any class or module
- *                  That uses the player location or needs to change it.
- */
-
 import { getPlayerFrame } from "../Player/PlayerFrames";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { appState, dispatch } from "../State/Store";
 import { getFrameDimensions } from "../Utility/Frame";
 import { getAngle } from "../Utility/Geometry";
 import { fallsWithin, getLocation } from "../Utility/Location";
+
+/**
+ * Module:          MovePlayer
+ * Responsibility:  Handles changes to the player location due to movement. Also provides a single source of truth for any class or module
+ *                  That uses the player location or needs to change it.
+ */
 
 const {
     gameFieldTop,

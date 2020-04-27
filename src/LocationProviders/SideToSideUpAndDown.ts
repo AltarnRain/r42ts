@@ -4,14 +4,14 @@
  * See LICENSE.MD.
  */
 
+import BaseLocationProvider from "../Base/BaseLocationProvider";
+import dimensionProvider from "../Providers/DimensionProvider";
+import { getLocation } from "../Utility/Location";
+
 /**
  * Module:          SideToSideUpAndDown
  * Responsibility:  Location provider for enemies that move from left to right and up then down.
  */
-
-import BaseLocationProvider from "../Base/BaseLocationProvider";
-import dimensionProvider from "../Providers/DimensionProvider";
-import { getLocation } from "../Utility/Location";
 
 const {
     gameFieldTop,

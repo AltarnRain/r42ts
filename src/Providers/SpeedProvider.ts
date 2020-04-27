@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
+import dimensionProvider from "./DimensionProvider";
+
 /**
  * Module:          speedProvider
  * Responsibility:  Calculate the relative speed based on the screensize.
  */
-
-import dimensionProvider from "./DimensionProvider";
 
 const {
     fullWidth

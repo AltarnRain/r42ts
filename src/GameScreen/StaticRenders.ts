@@ -5,14 +5,14 @@
  * See LICENSE.MD.
  */
 
+import CGAColors from "../Constants/CGAColors";
+import ctxProvider from "../Providers/CtxProvider";
+import dimensionProvider from "../Providers/DimensionProvider";
+
 /**
  * Module:          StaticRenders
  * Responsibility:  Starts the game
  */
-
-import CGAColors from "../Constants/CGAColors";
-import ctxProvider from "../Providers/CtxProvider";
-import dimensionProvider from "../Providers/DimensionProvider";
 
 const {
     gameFieldTop,

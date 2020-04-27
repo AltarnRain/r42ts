@@ -1,3 +1,9 @@
+/**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
 import { combineReducers, createStore, ReducersMapObject, Store } from "redux";
 import ActionPayload from "./ActionPayLoad";
 import ApplicationState from "./Definition/ApplicationState";
@@ -8,6 +14,11 @@ import { enemyLevelReducer } from "./Reducers/EnemyLevelReducer";
 import { gameStateReducer } from "./Reducers/GameStateReducer";
 import { keyboardStateReducer } from "./Reducers/KeyboardStateReducer";
 import playerReducer from "./Reducers/PlayerReducer";
+
+/**
+ * Module:          Store
+ * Responsibility:  Handles the redux store
+ */
 
 /**
  * All reducer that build the application state.

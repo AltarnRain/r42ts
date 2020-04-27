@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
+import { OffsetFrames } from "../../Models/OffsetFrames";
+
 /**
  * Module:          RobotFrames
  * Responsibility:  Define the frames of the RobotEnemy
  */
-
-import { OffsetFrames } from "../../Models/OffsetFrames";
 
 export default function getRobotFrames(): OffsetFrames {
 

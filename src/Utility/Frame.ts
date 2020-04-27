@@ -8,8 +8,6 @@ import Explosion from "../Models/Explosion";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import { Frame, Frames } from "../Types/Types";
-import { getRandomArrayElement } from "./Array";
-import hexToCGAConverter from "./HexToCGAConverter";
 
 /**
  * Module:          Frame

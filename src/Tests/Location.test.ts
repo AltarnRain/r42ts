@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
+import * as Location from "../Utility/Location";
+
 /**
  * Module:          Location.tests
  * Responsibility:  Test the location utility functions
  */
-
-import * as Location from "../Utility/Location";
 
 test("fallsWithin", () => {
     // Act

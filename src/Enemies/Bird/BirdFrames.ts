@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
+import { OffsetFrames } from "../../Models/OffsetFrames";
+
 /**
  * Module:          Bird enemy
  * Responsibility:  Define animation frames for the bird enemy.
  */
-
-import { OffsetFrames } from "../../Models/OffsetFrames";
 
 export default function getBirdFrames(): OffsetFrames {
     const birdFrames: OffsetFrames = {
