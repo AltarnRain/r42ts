@@ -33,7 +33,7 @@ export class Level03 extends BaseLevel {
             return new OrbEnemy(startLocation.left, startLocation.top, 300, locationProvider, frameProvider, orbEnemyAngleProvider);
         });
 
-        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, 10, orbFireCheck);
+        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, 5, orbFireCheck);
         this.begin(enemies, 200, bulletRunner);
     }
 }

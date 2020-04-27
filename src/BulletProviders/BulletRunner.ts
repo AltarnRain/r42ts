@@ -22,9 +22,24 @@ const {
 } = dimensionProvider();
 
 export default class BulletRunner {
+    /**
+     * The bullet frame that will be fired.
+     */
     private bulletFrame: Frame;
+
+    /**
+     * The fire check function. This function has the final say in whether an enemy will fire or not.
+     */
     private fireCheck: FireCheckFunction;
+
+    /**
+     * Speed of the bullets shot by the enemy.
+     */
     private speed: number;
+
+    /**
+     * The color of the bullet fired.
+     */
     private bulletColor: string;
 
     constructor(
@@ -96,7 +111,7 @@ export default class BulletRunner {
                 const hitbox = candidate.ship.getHitbox();
                 const enemyFireAngle = candidate.angle;
 
-                const left = hitbox.left + (hitbox.right - hitbox.left) - averagePixelSize / 2;
+                const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - averagePixelSize;
                 const top = hitbox.bottom + averagePixelSize;
 
                 const bullet = new BulletParticle(left, top, candidate.ship, this.bulletColor, getFrameReturner(this.bulletFrame), enemyFireAngle, this.speed);
