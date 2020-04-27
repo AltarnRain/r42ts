@@ -19,6 +19,7 @@ import { enemyLevelReducer } from "../State/Reducers/EnemyLevelReducer";
 import enemyLevelRunner from "../Main/EnemyLevelRunner";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
+import { ImmoboleFrameProvider } from "../Providers/Immobile";
 
 /**
  * Module:          Level 00
@@ -58,7 +59,8 @@ export default class Level00 extends BaseLevel {
         const robotFrames = getRobotFrames();
         const enemies = robotSpawnLocationsAndColor.map((lc, index) => {
             if (index < robotFrames.frames.length) {
-                const frameProvider = new BackAndForthFrameProvider(index);
+                // const frameProvider = new ImmoboleFrameProvider(index);
+                const frameProvider  = new BackAndForthFrameProvider(index);
                 const LocationProvider = new VanishRightAppearLeft(0, 0);
                 return new RobotEnemy(lc.left, lc.top, 150, lc.color, LocationProvider, frameProvider, downFireAngleProvider);
             }
