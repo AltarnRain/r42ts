@@ -52,10 +52,10 @@ export default class ExplosionCenter extends BaseGameObject {
     constructor(left: number, top: number, getExplosionCenterFrame: FrameProviderFunction,  burnTime: number) {
         super(left, top);
 
-        this.currentFrameClone = getExplosionCenterFrame();
+        this.currentFrame = getExplosionCenterFrame();
         this.burnTime = burnTime;
 
-        this.dimensions = getFrameDimensions(this.currentFrameClone, averagePixelSize);
+        this.dimensions = getFrameDimensions(this.currentFrame, averagePixelSize);
     }
 
     /**

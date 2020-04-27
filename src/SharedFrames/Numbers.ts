@@ -5,7 +5,7 @@
  */
 
 import { Frames } from "../Types/Types";
-import FrameMutators from "../Utility/FrameMutators";
+import Mutators from "../Utility/FrameMutators";
 
 /**
  * Module:          Numbers
@@ -89,6 +89,6 @@ export default function getNumbers(color: string): Frames {
         ],
     ];
 
-    FrameMutators.convertVariableFramesColor(numbers, color);
+    Mutators.Frames.setColor(numbers, color);
     return numbers;
 }

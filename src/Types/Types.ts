@@ -12,7 +12,6 @@
 import { BaseEnemy } from "../Base/BaseEnemy";
 import Explosion from "../Models/Explosion";
 import { OffsetFrames } from "../Models/OffsetFrames";
-import EnemyLevelState from "../State/Definition/EnemyLevelState";
 
 /**
  * Defines frames. Frames are objects with key values that start with F{N}. Where N is the frame number.

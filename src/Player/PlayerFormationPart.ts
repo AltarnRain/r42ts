@@ -13,7 +13,7 @@ import speedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
 import { Frame, FrameProviderFunction } from "../Types/Types";
-import FrameMutators from "../Utility/FrameMutators";
+import Mutators from "../Utility/FrameMutators";
 import { calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
 
@@ -40,7 +40,7 @@ export default class PlayerFormationPart {
     /**
      * The current frame.
      */
-    private currentFrameClone: Frame;
+    private currentFrame: Frame;
 
     /**
      * Offset to add to the left.
@@ -63,8 +63,8 @@ export default class PlayerFormationPart {
      */
     constructor(left: number, top: number, getFrame: FrameProviderFunction, speed: number, leftOffset: number, topOffset: number) {
 
-        this.currentFrameClone = getFrame();
-        FrameMutators.convertFrameColor(this.currentFrameClone);
+        this.currentFrame = getFrame();
+        Mutators.Frame.convertHexToCGA(this.currentFrame);
 
         this.currentLeftLocation = left + leftOffset;
         this.currentTopLocation = top + topOffset;
@@ -103,7 +103,7 @@ export default class PlayerFormationPart {
      * Draw the particle.
      */
     public draw(): void {
-        renderFrame(this.currentLeftLocation, this.currentTopLocation, this.currentFrameClone);
+        renderFrame(this.currentLeftLocation, this.currentTopLocation, this.currentFrame);
     }
 
     /**

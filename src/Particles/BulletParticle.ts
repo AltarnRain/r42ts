@@ -6,7 +6,7 @@
 
 import { BaseEnemy } from "../Base/BaseEnemy";
 import { FrameProviderFunction, GameObjectType } from "../Types/Types";
-import FrameMutators from "../Utility/FrameMutators";
+import Mutators from "../Utility/FrameMutators";
 import Particle from "./Particle";
 
 /**
@@ -21,7 +21,7 @@ export default class BulletParticle extends Particle {
         super(left, top, getFrame, angle, speed, 1);
 
         this.owner = owner;
-        FrameMutators.convertVariableFrameColor(this.currentFrameClone, color);
+        Mutators.Frame.setColor(this.currentFrame, color);
     }
 
     /**

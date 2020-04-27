@@ -57,12 +57,12 @@ export default class Particle extends BaseParticle {
     constructor(left: number, top: number, getFrame: FrameProviderFunction, angle: number, speed: number, acceleration: number) {
         super(left, top);
 
-        this.currentFrameClone = getFrame();
+        this.currentFrame = getFrame();
         this.angle = angle;
         this.speed = speed;
         this.acceleration = acceleration;
 
-        this.dimensions = getFrameDimensions(this.currentFrameClone, averagePixelSize);
+        this.dimensions = getFrameDimensions(this.currentFrame, averagePixelSize);
     }
 
     /**

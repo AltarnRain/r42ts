@@ -15,7 +15,7 @@ import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { getExplosion02 } from "../../SharedFrames/Explosion02";
 import { FireAngleProviderFunction } from "../../Types/Types";
-import FrameMutators from "../../Utility/FrameMutators";
+import Mutators from "../../Utility/FrameMutators";
 import getRobotFrames from "./RobotFrames";
 
 const {
@@ -29,8 +29,8 @@ export default class RobotEnemy extends BaseEnemy {
     constructor(left: number, top: number, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: FireAngleProviderFunction) {
         super(left, top, frameChangeTime, getRobotFrames, getExplosion02, locationProvider, frameProvider, angleProvider);
 
-        FrameMutators.convertVariableFrameColor(this.explosion.explosionCenterFrame, color);
-        FrameMutators.convertVariableFrameColor(this.explosion.particleFrames[0], color);
+        Mutators.Frame.setColor(this.explosion.explosionCenterFrame, color);
+        Mutators.Frame.setColor(this.explosion.particleFrames[0], color);
 
         this.color = color;
     }
@@ -40,8 +40,8 @@ export default class RobotEnemy extends BaseEnemy {
      */
     protected onFrameChange(): void {
         const nextFrame = this.frameProvider.getNextFrameClone();
-        FrameMutators.setFrameColor(nextFrame, this.color);
-        this.currentFrameClone = nextFrame;
+        Mutators.Frame.setColor(nextFrame, this.color);
+        this.currentFrame = nextFrame;
     }
 
     /**

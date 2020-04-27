@@ -190,7 +190,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @returns {Location}. Location located at the center of the object.
      */
     public getCenterLocation(): { left: number, top: number } {
-        return getFrameCenter(this.left, this.top, this.currentFrameClone, averagePixelSize);
+        return getFrameCenter(this.left, this.top, this.currentFrame, averagePixelSize);
     }
 
     /**
@@ -205,7 +205,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @returns {GameRectangle}. Bird's hitbox.
      */
     public getHitbox(): GameRectangle {
-        const dimensions = getFrameDimensions(this.currentFrameClone, averagePixelSize);
+        const dimensions = getFrameDimensions(this.currentFrame, averagePixelSize);
         return getFrameHitbox(this.left, this.top, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
     }
 

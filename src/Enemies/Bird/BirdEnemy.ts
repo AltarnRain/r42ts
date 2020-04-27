@@ -18,7 +18,7 @@ import Particle from "../../Particles/Particle";
 import Explosion01 from "../../SharedFrames/Explosion01";
 import { FireAngleProviderFunction, Frame } from "../../Types/Types";
 import { getRandomArrayElement } from "../../Utility/Array";
-import FrameMutators from "../../Utility/FrameMutators";
+import Mutators from "../../Utility/FrameMutators";
 import getBirdFrames from "./BirdFrames";
 
 const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
@@ -38,9 +38,9 @@ export default class BirdEnemy extends BaseEnemy {
 
         this.colorTickHandler = new TickHandler(40, () => this.onColorChange());
 
-        FrameMutators.convertVariableFrameColor(this.explosion.explosionCenterFrame, CGAColors.white);
-        FrameMutators.convertVariableFrameColor(this.explosion.particleFrames[0], CGAColors.white);
-        FrameMutators.convertVariableFrameColor(this.explosion.particleFrames[1], CGAColors.white);
+        Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.white);
+        Mutators.Frame.setColor(this.explosion.particleFrames[0], CGAColors.white);
+        Mutators.Frame.setColor(this.explosion.particleFrames[1], CGAColors.white);
     }
 
     /**
@@ -91,8 +91,8 @@ export default class BirdEnemy extends BaseEnemy {
      * @param {Frame} frame. Frame to set the color on.
      */
     private setCurrentFrameColor(frame: Frame) {
-        FrameMutators.convertVariableFrameColor(frame, getRandomArrayElement(colors));
-        this.currentFrameClone = frame;
+        Mutators.Frame.setColor(frame, getRandomArrayElement(colors));
+        this.currentFrame = frame;
     }
 
     /**

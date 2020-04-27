@@ -17,7 +17,7 @@ import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
 import { Frame, GameObjectType } from "../Types/Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
-import FrameMutators from "../Utility/FrameMutators";
+import Mutators from "../Utility/FrameMutators";
 import getPlayerExplosion from "./PlayerExplosion";
 import { getPlayerFrame } from "./PlayerFrames";
 
@@ -33,7 +33,7 @@ export default class PlayerShip {
     /**
      * Reference to the player's ships frame.
      */
-    private frameClone: Frame;
+    private frame: Frame;
 
     /**
      * Player explosion.
@@ -44,13 +44,13 @@ export default class PlayerShip {
      * Construct the class.
      */
     constructor() {
-        this.frameClone = getPlayerFrame();
-        FrameMutators.convertFrameColor(this.frameClone);
+        this.frame = getPlayerFrame();
+        Mutators.Frame.convertHexToCGA(this.frame);
 
         this.explosionClone = getPlayerExplosion();
-        FrameMutators.convertFrameColor(this.explosionClone.explosionCenterFrame);
+        Mutators.Frame.convertHexToCGA(this.explosionClone.explosionCenterFrame);
 
-        this.explosionClone.particleFrames.forEach((p) => FrameMutators.convertFrameColor(p));
+        this.explosionClone.particleFrames.forEach((p) => Mutators.Frame.convertHexToCGA(p));
     }
 
     /**
@@ -74,7 +74,7 @@ export default class PlayerShip {
      */
     public draw(): void {
         const { playerState } = appState();
-        renderFrame(playerState.playerLeftLocation, playerState.playerTopLocation, this.frameClone);
+        renderFrame(playerState.playerLeftLocation, playerState.playerTopLocation, this.frame);
     }
 
     /**

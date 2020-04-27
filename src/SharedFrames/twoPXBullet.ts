@@ -10,7 +10,7 @@
  */
 
 import { Frame } from "../Types/Types";
-import FrameMutators from "../Utility/FrameMutators";
+import Mutators from "../Utility/FrameMutators";
 
 export default function getTwoPixelBullet(color?: string): Frame {
     const twoPixelBullet: Frame = [
@@ -18,7 +18,7 @@ export default function getTwoPixelBullet(color?: string): Frame {
     ];
 
     if (color !== undefined) {
-        FrameMutators.convertVariableFrameColor(twoPixelBullet, color);
+        Mutators.Frame.setColor(twoPixelBullet, color);
     }
 
     return twoPixelBullet;

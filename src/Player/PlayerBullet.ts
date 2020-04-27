@@ -6,7 +6,7 @@
 
 import Particle from "../Particles/Particle";
 import { Frame, FrameProviderFunction, GameObjectType } from "../Types/Types";
-import FrameMutators from "../Utility/FrameMutators";
+import Mutators from "../Utility/FrameMutators";
 
 /**
  * Module:          Player bullet
@@ -27,7 +27,7 @@ export default class PlayerBullet extends Particle {
     constructor(left: number, top: number, getFrame: FrameProviderFunction, angle: number, speed: number) {
         super(left, top, getFrame, angle, speed, 1);
 
-        FrameMutators.convertFrameColor(this.currentFrameClone);
+        Mutators.Frame.convertHexToCGA(this.currentFrame);
     }
 
     public getObjectType(): GameObjectType {
