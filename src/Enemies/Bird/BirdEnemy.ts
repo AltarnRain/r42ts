@@ -82,7 +82,7 @@ export default class BirdEnemy extends BaseEnemy {
      * Called by a TickHandler when the bird should change color.
      */
     private onColorChange(): void {
-        const currentFrame = this.frameProvider.getCurrentFrameCopy();
+        const currentFrame = this.frameProvider.getCurrentFrame();
         this.setCurrentFrameColor(currentFrame);
     }
 
@@ -99,7 +99,7 @@ export default class BirdEnemy extends BaseEnemy {
      * Changes the frame of the OrbEnemy. Also ensures the new frame is given colors.
      */
     protected onFrameChange(): void {
-        const nextFrame = this.frameProvider.getNextFrameClone();
+        const nextFrame = this.frameProvider.getNextFrame();
         this.setCurrentFrameColor(nextFrame);
     }
 }

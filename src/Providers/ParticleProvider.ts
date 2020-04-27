@@ -22,18 +22,18 @@ import { getFrameReturner } from "../Utility/Frame";
  */
 export default function particleProvider(left: number, top: number, getExplosion: ExplosionProviderFunction): Particle[] {
 
-    const expClone = getExplosion();
+    const explosion = getExplosion();
 
     const particles: Particle[] = [];
-    for (let i = 0; i < expClone.particleFrameIndexes.length; i++) {
+    for (let i = 0; i < explosion.particleFrameIndexes.length; i++) {
         // Create an array with every particle frame.
-        const particleFrameIndex = expClone.particleFrameIndexes[i];
-        const particleFrame = expClone.particleFrames[particleFrameIndex];
+        const particleFrameIndex = explosion.particleFrameIndexes[i];
+        const particleFrame = explosion.particleFrames[particleFrameIndex];
 
-        const angle = expClone.angles[i];
-        const speed = expClone.useSpeed ? expClone.speed : expClone.speeds[i];
+        const angle = explosion.angles[i];
+        const speed = explosion.useSpeed ? explosion.speed : explosion.speeds[i];
 
-        const p = new Particle(left, top, getFrameReturner(particleFrame), angle, speed, expClone.acceleration);
+        const p = new Particle(left, top, getFrameReturner(particleFrame), angle, speed, explosion.acceleration);
         particles.push(p);
     }
 

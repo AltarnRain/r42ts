@@ -17,13 +17,13 @@ export default class CircleFrameProvider extends BaseFrameProvider {
     /**
      * Returns the next frame using clockwise rotation.
      */
-    public getNextFrameClone(): Frame {
+    public getNextFrame(): Frame {
         this.frameIndex += 1;
 
         if (this.frameIndex > this.maxIndex) {
             this.frameIndex = 0;
         }
 
-        return this.getCurrentFrameCopy();
+        return this.getCurrentFrame();
     }
 }

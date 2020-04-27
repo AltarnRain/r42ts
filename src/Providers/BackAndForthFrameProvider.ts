@@ -18,7 +18,7 @@ export default class BackAndForthFrameProvider extends IFrameProvider {
      * Returns the current frame and sets the next one. Goes back and forth between frames.
      * @returns {Frame}. A frame.
      */
-    public getNextFrameClone(): Frame {
+    public getNextFrame(): Frame {
         this.frameIndex += this.add;
 
         if (this.frameIndex > this.maxIndex) {
@@ -29,6 +29,6 @@ export default class BackAndForthFrameProvider extends IFrameProvider {
             this.add *= -1;
         }
 
-        return  this.getCurrentFrameCopy();
+        return  this.getCurrentFrame();
     }
 }

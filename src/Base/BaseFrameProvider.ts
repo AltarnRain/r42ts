@@ -16,7 +16,7 @@ export default abstract class BaseFrameProvider {
     /**
      * Animation frames.
      */
-    private framesClone?: Frames;
+    private frames?: Frames;
 
     /**
      * The current frame for an animated enemy.
@@ -44,7 +44,7 @@ export default abstract class BaseFrameProvider {
     }
 
     public setFrames(frames: Frames): void {
-        this.framesClone = copyFrames(frames);
+        this.frames = copyFrames(frames);
         this.maxIndex = frames.length - 1;
     }
 
@@ -52,17 +52,17 @@ export default abstract class BaseFrameProvider {
      * Gets the current frame.
      * @returns {Frame}. A frame
      */
-    public getCurrentFrameCopy(): Frame {
+    public getCurrentFrame(): Frame {
 
-        if (this.framesClone === undefined) {
+        if (this.frames === undefined) {
             throw new Error("Set the frames.");
         }
 
-        const returnValue = getFrameByIndex(this.framesClone, this.frameIndex);
+        const returnValue = getFrameByIndex(this.frames, this.frameIndex);
         return copyFrame(returnValue);
     }
 
-    public abstract getNextFrameClone(): Frame;
+    public abstract getNextFrame(): Frame;
 
     /**
      * Returns the current frame index.

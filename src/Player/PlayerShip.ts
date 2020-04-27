@@ -38,7 +38,7 @@ export default class PlayerShip {
     /**
      * Player explosion.
      */
-    private explosionClone: Explosion;
+    private explosion: Explosion;
 
     /**
      * Construct the class.
@@ -47,10 +47,10 @@ export default class PlayerShip {
         this.frame = getPlayerFrame();
         Mutators.Frame.convertHexToCGA(this.frame);
 
-        this.explosionClone = getPlayerExplosion();
-        Mutators.Frame.convertHexToCGA(this.explosionClone.explosionCenterFrame);
+        this.explosion = getPlayerExplosion();
+        Mutators.Frame.convertHexToCGA(this.explosion.explosionCenterFrame);
 
-        this.explosionClone.particleFrames.forEach((p) => Mutators.Frame.convertHexToCGA(p));
+        this.explosion.particleFrames.forEach((p) => Mutators.Frame.convertHexToCGA(p));
     }
 
     /**
@@ -58,7 +58,7 @@ export default class PlayerShip {
      * @returns {Explosion}. Player explosion.
      */
     public getExplosion(): Explosion {
-        return this.explosionClone;
+        return this.explosion;
     }
 
     /**

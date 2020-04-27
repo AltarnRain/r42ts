@@ -41,7 +41,7 @@ export default class OrbEnemy extends BaseEnemy {
     /**
      * Orb enemy's bullet frame.
      */
-    private bulletFrameClone: Frame;
+    private bulletFrame: Frame;
 
     /**
      * Construct the enemy.
@@ -56,8 +56,8 @@ export default class OrbEnemy extends BaseEnemy {
         Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.magenta);
         Mutators.Frames.setColor(this.explosion.particleFrames, CGAColors.magenta);
 
-        this.bulletFrameClone = getTwoPixelBullet(CGAColors.lightRed);
-        Mutators.Frame.setColor(this.bulletFrameClone, CGAColors.lightRed);
+        this.bulletFrame = getTwoPixelBullet(CGAColors.lightRed);
+        Mutators.Frame.setColor(this.bulletFrame, CGAColors.lightRed);
 
         this.colorTickHandler = new TickHandler(100, () => this.onColorChange());
     }
@@ -80,7 +80,7 @@ export default class OrbEnemy extends BaseEnemy {
      */
     private updateCurrentFrameAndColor() {
         const newColor = colors[this.currentColorIndex];
-        const frame = this.frameProvider.getCurrentFrameCopy();
+        const frame = this.frameProvider.getCurrentFrame();
 
         if (newColor === undefined) {
             throw new Error("Color cannot be undefined.");
@@ -94,7 +94,7 @@ export default class OrbEnemy extends BaseEnemy {
      * Changes the frame of the OrbEnemy. Also ensures the new frame is given colors.
      */
     protected onFrameChange(): void {
-        const newFrame = this.frameProvider.getNextFrameClone();
+        const newFrame = this.frameProvider.getNextFrame();
         const currentColors = colors[this.currentColorIndex];
 
         // Apply currnet colors when the frame changes.

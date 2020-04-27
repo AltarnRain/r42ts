@@ -26,15 +26,15 @@ const {
 
 const ctx = ctxProvider();
 
-const greenCharactersClone = getCharacters(CGAColors.lightGreen);
-const greenNumbersClone = getNumbers(CGAColors.lightGreen);
+const greenCharacters = getCharacters(CGAColors.lightGreen);
+const greenNumbers = getNumbers(CGAColors.lightGreen);
 
 const roundCharacters = [
-    getCharacter(greenCharactersClone, "R"),
-    getCharacter(greenCharactersClone, "O"),
-    getCharacter(greenCharactersClone, "U"),
-    getCharacter(greenCharactersClone, "N"),
-    getCharacter(greenCharactersClone, "D"),
+    getCharacter(greenCharacters, "R"),
+    getCharacter(greenCharacters, "O"),
+    getCharacter(greenCharacters, "U"),
+    getCharacter(greenCharacters, "N"),
+    getCharacter(greenCharacters, "D"),
 ];
 
 const {
@@ -91,12 +91,12 @@ export function drawLevelBanner(level: number): void {
         leftNumber = stringLevel[0];
         rightNumber = stringLevel[1];
 
-        leftNumberFrame = getFrameByIndex(greenNumbersClone, parseInt(leftNumber, 10));
-        rightNumberFrame = getFrameByIndex(greenNumbersClone, parseInt(rightNumber, 10));
+        leftNumberFrame = getFrameByIndex(greenNumbers, parseInt(leftNumber, 10));
+        rightNumberFrame = getFrameByIndex(greenNumbers, parseInt(rightNumber, 10));
 
     } else {
         rightNumber = stringLevel;
-        rightNumberFrame = getFrameByIndex(greenNumbersClone, parseInt(rightNumber, 10));
+        rightNumberFrame = getFrameByIndex(greenNumbers, parseInt(rightNumber, 10));
     }
 
     // Render the left number if it's available.

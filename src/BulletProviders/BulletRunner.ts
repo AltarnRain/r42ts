@@ -22,7 +22,7 @@ const {
 } = dimensionProvider();
 
 export default class BulletRunner {
-    private bulletFrameClone: Frame;
+    private bulletFrame: Frame;
     private fireCheck: FireCheckFunction;
     private speed: number;
     private bulletColor: string;
@@ -36,7 +36,7 @@ export default class BulletRunner {
         this.fireCheck = shouldfire;
         this.speed = speed;
         this.bulletColor = bulletColor;
-        this.bulletFrameClone = getBulletFrame();
+        this.bulletFrame = getBulletFrame();
     }
 
     public getBullets(tick: number): void {
@@ -99,7 +99,7 @@ export default class BulletRunner {
                 const left = hitbox.left + (hitbox.right - hitbox.left) - averagePixelSize / 2;
                 const top = hitbox.bottom + averagePixelSize;
 
-                const bullet = new BulletParticle(left, top, candidate.ship, this.bulletColor, getFrameReturner(this.bulletFrameClone), enemyFireAngle, this.speed);
+                const bullet = new BulletParticle(left, top, candidate.ship, this.bulletColor, getFrameReturner(this.bulletFrame), enemyFireAngle, this.speed);
 
                 dispatch<BulletParticle>("addParticle", bullet);
                 dispatch<{ ship: BaseEnemy, tick: number }>("setEnemyFireTick", { ship: candidate.ship, tick });

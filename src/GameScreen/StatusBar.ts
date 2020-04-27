@@ -29,10 +29,10 @@ const {
     minPixelSize
 } = dimensionProvider();
 
-const numberFramesClone = getNumbers(CGAColors.yellow);
+const numberFrames = getNumbers(CGAColors.yellow);
 
-const lifeFrameClone = getPlayerFrame();
-Mutators.Frame.setColor(lifeFrameClone, CGAColors.yellow);
+const lifeFrame = getPlayerFrame();
+Mutators.Frame.setColor(lifeFrame, CGAColors.yellow);
 
 // Score constants
 const scoreStartPosition = 4 * minPixelSize;
@@ -57,12 +57,12 @@ Mutators.Frame.convertHexToCGA(phaserFrame);
 // Lives constants.
 const livesSpacing = 2 * minPixelSize;
 const livesStartPostion = scoreBackgroundWidth + phaserBackgroundWidth;
-const liveFrameWidth = getFrameDimensions(lifeFrameClone, minPixelSize).width;
+const liveFrameWidth = getFrameDimensions(lifeFrame, minPixelSize).width;
 const livesBackgroundWidth = minPixelSize * 54;
 
 // Level number constants.
 const levelStartPosition = scoreBackgroundWidth + phaserBackgroundWidth + livesBackgroundWidth;
-const numberFrameWidth = getFrameDimensions(numberFramesClone[0], minPixelSize).width;
+const numberFrameWidth = getFrameDimensions(numberFrames[0], minPixelSize).width;
 const leftNumberLeft = fullWidth - (numberFrameWidth * 2.5);
 const rightNumberLeft = leftNumberLeft + numberFrameWidth + minPixelSize;
 const levelBackgroundWidth = fullWidth - levelStartPosition;
@@ -90,7 +90,7 @@ function drawScore(): void {
 
     let cnt = 0;
     for (const n of scoreString) {
-        const frame = getFrameByIndex(numberFramesClone, parseInt(n, 10));
+        const frame = getFrameByIndex(numberFrames, parseInt(n, 10));
 
         const actualSpacing = cnt === 0 ? 0 : scoreSpacing;
         let left = cnt * (getFrameDimensions(frame, minPixelSize).width + actualSpacing);
@@ -130,7 +130,7 @@ function drawLives(): void {
 
     for (let lives = 1; lives <= gameState.lives; lives++) {
         if (left >= livesStartPostion) {
-            renderFrame(left, minPixelSize, lifeFrameClone);
+            renderFrame(left, minPixelSize, lifeFrame);
             left -= livesSpacing + liveFrameWidth;
         }
     }
@@ -147,8 +147,8 @@ function drawLevel(): void {
     const rightNumber = parseInt(paddedLevelString[1], 10);
     const leftNumber = parseInt(paddedLevelString[0], 10);
 
-    const rightFrame = getFrameByIndex(numberFramesClone, rightNumber);
-    const leftFrame = getFrameByIndex(numberFramesClone, leftNumber);
+    const rightFrame = getFrameByIndex(numberFrames, rightNumber);
+    const leftFrame = getFrameByIndex(numberFrames, leftNumber);
 
     renderFrame(leftNumberLeft, 0, leftFrame);
     renderFrame(rightNumberLeft, 0, rightFrame);

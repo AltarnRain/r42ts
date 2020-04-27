@@ -39,7 +39,7 @@ export default class RobotEnemy extends BaseEnemy {
      * Called when a frame change is required. The robot frames are all colored at initialisation so we can keep this simple.
      */
     protected onFrameChange(): void {
-        const nextFrame = this.frameProvider.getNextFrameClone();
+        const nextFrame = this.frameProvider.getNextFrame();
         Mutators.Frame.setColor(nextFrame, this.color);
         this.currentFrame = nextFrame;
     }
