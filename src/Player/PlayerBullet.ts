@@ -4,10 +4,10 @@
  * See LICENSE.MD.
  */
 
+import CGAColors from "../Constants/CGAColors";
 import Particle from "../Particles/Particle";
 import { FrameProviderFunction, GameObjectType } from "../Types/Types";
 import Mutators from "../Utility/FrameMutators";
-import CGAColors from "../Constants/CGAColors";
 
 /**
  * Module:          Player bullet
