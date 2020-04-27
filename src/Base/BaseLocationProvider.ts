@@ -44,7 +44,7 @@ export default abstract class BaseLocationProvider {
      * @param {number} width. Width of the object.
      * @param {number} height. Height of the object.
      */
-    public abstract getLocation(left: number, top: number, width: number, height: number): { left: number, top: number};
+    public abstract getLocation(actualLeft: number, actualTop: number, width: number, height: number): { left: number, top: number};
 
     /**
      * increases the speed by the provided factor.
