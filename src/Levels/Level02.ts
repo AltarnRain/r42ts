@@ -10,6 +10,7 @@ import CGAColors from "../Constants/CGAColors";
 import { RobotBulletSpeed } from "../Constants/EnemyBulletSpeed";
 import { RobotFrameTime } from "../Constants/EnemyFrameTime";
 import { RobotMovementSpeed } from "../Constants/EnemyMovementSpeeds";
+import { robotFireFrequence } from "../Constants/FireFrequences";
 import { robotAngle as robotAngle } from "../Constants/MovementAngles";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
@@ -43,6 +44,6 @@ export default class Level02 extends BaseLevel {
         });
 
         const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, RobotBulletSpeed, robotLevel02FireCheck);
-        this.begin(enemies, 200, bulletProvider);
+        this.begin(enemies, robotFireFrequence, bulletProvider);
     }
 }
