@@ -5,25 +5,20 @@
  */
 
 import BaseLevel from "../Base/BaseLevel";
-import { drawBackground } from "../GameScreen/StaticRenders";
-import GameLoop from "../Main/GameLoop";
-import PlayerShip from "../Player/PlayerShip";
-import { dispatch } from "../State/Store";
-import getRobotFrames from "../Enemies/Robot/RobotFrames";
+import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
+import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
-import CGAColors from "../Constants/CGAColors";
-import Immobile from "../LocationProviders/Immobile";
-import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
-import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
-import { enemyLevelReducer } from "../State/Reducers/EnemyLevelReducer";
-import enemyLevelRunner from "../Main/EnemyLevelRunner";
+import getRobotFrames from "../Enemies/Robot/RobotFrames";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
-import { ImmoboleFrameProvider } from "../Providers/Immobile";
-import getOrbFrames from "../Enemies/Orb/OrbFrames";
-import OrbEnemy from "../Enemies/Orb/OrbEnemy";
+import { drawBackground } from "../GameScreen/StaticRenders";
+import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
+import enemyLevelRunner from "../Main/EnemyLevelRunner";
+import GameLoop from "../Main/GameLoop";
+import PlayerShip from "../Player/PlayerShip";
+import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import CircleFrameProvider from "../Providers/CircleFrameProvider";
-import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
+import { dispatch } from "../State/Store";
 
 /**
  * Module:          Level 00

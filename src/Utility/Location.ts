@@ -3,7 +3,7 @@
  * This source code is subject to terms and conditions.
  * See LICENSE.MD.
  */
- 
+
 import speedProvider from "../Providers/SpeedProvider";
 import { getNextX, getNextY } from "./Geometry";
 
@@ -82,7 +82,7 @@ export function getLocation(left: number, top: number, angle: number | undefined
  * @param {number} pixelSize. Pixel size used to calculate the actual location.
  * @returns {location}. A new location offset to animation overlap.
  */
-export function getOffsetLocation(left: number, top: number, leftOffset: number, topOffset: number): { left: number, top: number}  {
+export function getOffsetLocation(left: number, top: number, leftOffset: number, topOffset: number): { left: number, top: number } {
     return {
         left: left + leftOffset,
         top: top + topOffset,

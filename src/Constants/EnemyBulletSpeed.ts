@@ -11,4 +11,4 @@
 
 export const RobotBulletSpeed = 5;
 
-export const OrbBulletSpeed = 5; 
+export const OrbBulletSpeed = 5;

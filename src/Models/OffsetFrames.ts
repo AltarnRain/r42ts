@@ -3,7 +3,7 @@
  * This source code is subject to terms and conditions.
  * See LICENSE.MD.
  */
- 
+
 import { Frames } from "../Types/Types";
 
 /**
@@ -20,5 +20,5 @@ export interface OffsetFrames {
     /**
      * Offsets user to render the object on screen.
      */
-    offSets: Array<{left: number, top: number}>;
+    offSets: Array<{ left: number, top: number }>;
 }

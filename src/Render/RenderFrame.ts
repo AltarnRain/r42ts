@@ -3,7 +3,7 @@
  * This source code is subject to terms and conditions.
  * See LICENSE.MD.
  */
- 
+
 import { validColors } from "../Constants/CGAColors";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";

@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
 import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
@@ -13,10 +12,10 @@ import { RobotFrameTime } from "../Constants/EnemyFrameTime";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
+import robotLevel02FireCheck from "../FireChecks/RobotFireCheck";
 import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import { appState } from "../State/Store";
 
 /**
  * Module:          Level 02
@@ -41,26 +40,7 @@ export default class Level02 extends BaseLevel {
             return new RobotEnemy(lc.left, lc.top, RobotFrameTime, lc.color, LocationProvider, frameProvider, downFireAngleProvider);
         });
 
-        const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, RobotBulletSpeed, shouldFire);
+        const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, RobotBulletSpeed, robotLevel02FireCheck);
         this.begin(enemies, 200, bulletProvider);
     }
-}
-
-/**
- * Level 02 robot canFire. Only the right most robot fires bullets.
- * @param {BaseEnemy} self. Reference to a robot object. Called from within the RobotEnemy to determine
- * if the robot can fire bullets or not.
- */
-function shouldFire(enemy: BaseEnemy): boolean {
-    const { enemyLevelState } = appState();
-    const lastEnemy = enemyLevelState.enemies[enemyLevelState.enemies.length - 1];
-
-    if (lastEnemy !== undefined) {
-        if (lastEnemy.ship === enemy) {
-            const rnd = Math.ceil(Math.random() * 20);
-            return rnd === 1;
-        }
-    }
-
-    return false;
 }
