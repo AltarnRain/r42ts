@@ -44,7 +44,7 @@ export default function renderFrame(left: number, top: number, frame: Frame): vo
                 // DEBUGGING.
                 if (validColors.indexOf(color) === -1) {
                     // tslint:disable-next-line: no-console
-                    console.error("Provided color is not a valid CGA color");
+                    throw new Error("Provided color is not a valid CGA color");
                 }
 
                 ctx.fillStyle = color;

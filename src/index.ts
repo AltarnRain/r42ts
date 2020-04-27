@@ -33,7 +33,6 @@ window.onload = () => {
                 if (window.location.hash && window.location.hash.indexOf("level") > -1) {
                     level = parseInt(window.location.hash.split("=")[1], 10);
                 }
-                level = 1;
 
                 subscribeToStoreChanges();
                 registerListeners();

@@ -4,21 +4,21 @@
  * See LICENSE.MD.
  */
 
+import { OffsetFrames } from "../../Models/OffsetFrames";
+
 /**
  * Module:          OrbFrames
  * Responsibility:  Define the frames for the orb enemy
  */
 
-import { OffsetFrames } from "../../Models/OffsetFrames";
-
 export default function getOrbFrames(): OffsetFrames {
     const orbFrames: OffsetFrames = {
         frames: [
             [
-                ["0", "1", "1", "0"],
-                ["1", "2", "2", "1"],
-                ["1", "2", "2", "1"],
-                ["0", "1", "1", "0"],
+                ["0", "V0", "V0", "0"],
+                ["V0", "V1", "V1", "V0"],
+                ["V0", "V1", "V1", "V0"],
+                ["0", "V0", "V0", "0"],
             ]
         ],
         offSets: [

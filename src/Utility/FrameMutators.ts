@@ -70,6 +70,9 @@ namespace Mutators {
                             } else {
                                 useColor = colors[parseInt(colorIndex, 10)];
                             }
+                        } else {
+                            // Not a V, set the color.
+                            useColor = colors[0];
                         }
 
                         frame[rowIndex][cellIndex] = useColor;
