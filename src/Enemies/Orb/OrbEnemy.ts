@@ -39,11 +39,6 @@ export default class OrbEnemy extends BaseEnemy {
     private currentColorIndex = 0;
 
     /**
-     * Orb enemy's bullet frame.
-     */
-    private bulletFrame: Frame;
-
-    /**
      * Construct the enemy.
      */
     constructor(left: number, top: number, frameChangeTime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: FireAngleProviderFunction) {
@@ -55,9 +50,6 @@ export default class OrbEnemy extends BaseEnemy {
 
         Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.magenta);
         Mutators.Frames.setColor(this.explosion.particleFrames, CGAColors.magenta);
-
-        this.bulletFrame = getTwoPixelBullet(CGAColors.lightRed);
-        Mutators.Frame.setColor(this.bulletFrame, CGAColors.lightRed);
 
         this.colorTickHandler = new TickHandler(50, () => this.onColorChange());
     }
