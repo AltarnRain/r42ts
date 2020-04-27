@@ -118,8 +118,6 @@ export abstract class BaseEnemy extends BaseDestructable {
         this.frameProvider = frameProvider;
 
         this.frameProvider.setFrames(offSetFrames.frames);
-
-        this.onFrameChange();
     }
 
     /**

@@ -73,11 +73,11 @@ export default function getRobotFrames(): OffsetFrames {
                 left: 0,
             },
             {
-                top: ++offsetCount,
+                top: offsetCount += 1,
                 left: 0,
             },
             {
-                top: ++offsetCount,
+                top: offsetCount += 2,
                 left: 0
             },
             {

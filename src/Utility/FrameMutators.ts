@@ -75,6 +75,10 @@ namespace Mutators {
                             useColor = colors[0];
                         }
 
+                        if (useColor === undefined) {
+                            throw Error("Color shoud not be undefined");
+                        }
+
                         frame[rowIndex][cellIndex] = useColor;
                     }
                 });
