@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frame as FrameType, Frames as FramesType} from "../Types/Types";
+import { Frame as FrameType, Frames as FramesType } from "../Types/Types";
 import hexToCGAConverter from "./HexToCGAConverter";
 
 /**
@@ -20,9 +20,9 @@ namespace Mutators {
          * Sets a cell's color to the passed color. Doesn't matter if they're variable (V).
          * @param {Frames} frames. All frames.
          */
-        export function setColor(frames: FramesType, color: string): void {
+        export function setColor(frames: FramesType, ...colors: string[]): void {
             for (const frame of frames) {
-                Frame.setColor(frame, color);
+                Frame.setColor(frame, ...colors);
             }
         }
 
@@ -57,11 +57,22 @@ namespace Mutators {
          * @param {Frame} frame. A frame
          * @param {string} color. A color
          */
-        export function setColor(frame: FrameType, color: string) {
+        export function setColor(frame: FrameType, ...colors: string[]) {
             frame.forEach((row, rowIndex) => {
                 row.forEach((cellColor, cellIndex) => {
                     if (cellColor !== "0") {
-                        frame[rowIndex][cellIndex] = color;
+                        let useColor = "";
+                        if (cellColor.indexOf("V") !== -1) {
+                            const colorIndex = cellColor.replace("V", "");
+                            if (colorIndex === "") {
+                                // if the V cell has no index, just pick the first color.
+                                useColor = colors[0];
+                            } else {
+                                useColor = colors[parseInt(colorIndex, 10)];
+                            }
+                        }
+
+                        frame[rowIndex][cellIndex] = useColor;
                     }
                 });
             });

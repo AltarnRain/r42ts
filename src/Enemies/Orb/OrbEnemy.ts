@@ -86,7 +86,7 @@ export default class OrbEnemy extends BaseEnemy {
             throw new Error("Color cannot be undefined.");
         }
 
-        Mutators.Frame.setColor(frame, newColor);
+        Mutators.Frame.setColor(frame, ...newColor);
         this.currentFrame = frame;
     }
 
@@ -99,7 +99,7 @@ export default class OrbEnemy extends BaseEnemy {
 
         // Apply currnet colors when the frame changes.
         // The color will be updated when the color tich handler fires.
-        Mutators.Frame.setColor(newFrame, currentColors);
+        Mutators.Frame.setColor(newFrame, ...currentColors);
 
         this.currentFrame = newFrame;
     }
