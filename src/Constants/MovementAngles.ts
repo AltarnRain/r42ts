@@ -9,4 +9,8 @@
  * Responsibility:  Define constants for random angles used by enemies.
  */
 
-export const BirdRandomAngles = [2, 358, 178, 182];
+export const birdRandomAngles = [2, 358, 178, 182];
+
+export const robotAngle = 5;
+
+export const orbAngle = 90;

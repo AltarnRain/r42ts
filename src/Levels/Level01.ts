@@ -7,6 +7,7 @@
 import BaseLevel from "../Base/BaseLevel";
 import { BirdFrameTime } from "../Constants/EnemyFrameTime";
 import { BirdMovementSpeed as birdMovementSpeed } from "../Constants/EnemyMovementSpeeds";
+import { birdRandomAngles as birdRandomAngles } from "../Constants/MovementAngles";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import getBirdFrames from "../Enemies/Bird/BirdFrames";
 import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
@@ -14,7 +15,6 @@ import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
-import { BirdRandomAngles as birdRandomAngles } from "../Constants/RandomAngles";
 
 /**
  * Module:          Level 01
@@ -45,6 +45,6 @@ export default class Level01 extends BaseLevel {
             return new BirdEnemy(location.left, location.top, BirdFrameTime, locationProvider, frameProvider);
         });
 
-        this.begin(enemies, 200);
+        this.begin(enemies);
     }
 }
