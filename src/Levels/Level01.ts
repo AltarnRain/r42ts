@@ -44,9 +44,7 @@ export default class Level01 extends BaseLevel {
             return new BirdEnemy(location.left, location.top, BirdFrameTime, locationProvider, frameProvider);
         });
 
-        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, 10, orbFireCheck);
-
-        this.begin(enemies, 200, bulletRunner);
+        this.begin(enemies, 200);
     }
 }
 

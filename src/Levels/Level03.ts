@@ -8,6 +8,8 @@ import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
 import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
+import { OrbBulletSpeed } from "../Constants/EnemyBulletSpeed";
+import { OrbFrameTime } from "../Constants/EnemyFrameTime";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import orbEnemyAngleProvider from "../FireAngleProviders/OrbEnemyAngleProvider";
@@ -17,7 +19,6 @@ import BulletParticle from "../Particles/BulletParticle";
 import CircleFrameProvider from "../Providers/CircleFrameProvider";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { appState } from "../State/Store";
-import { OrbFrameTime } from "../Constants/EnemyFrameTime";
 
 /**
  * Module:          Level03
@@ -34,7 +35,7 @@ export class Level03 extends BaseLevel {
             return new OrbEnemy(startLocation.left, startLocation.top, OrbFrameTime, locationProvider, frameProvider, orbEnemyAngleProvider);
         });
 
-        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, 5, orbFireCheck);
+        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, OrbBulletSpeed, orbFireCheck);
         this.begin(enemies, 200, bulletRunner);
     }
 }

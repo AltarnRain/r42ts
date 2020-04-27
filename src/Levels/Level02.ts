@@ -8,6 +8,8 @@ import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
 import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
+import { RobotBulletSpeed } from "../Constants/EnemyBulletSpeed";
+import { RobotFrameTime } from "../Constants/EnemyFrameTime";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
@@ -15,7 +17,6 @@ import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { appState } from "../State/Store";
-import { RobotFrameTime } from "../Constants/EnemyFrameTime";
 
 /**
  * Module:          Level 02
@@ -40,7 +41,7 @@ export default class Level02 extends BaseLevel {
             return new RobotEnemy(lc.left, lc.top, RobotFrameTime, lc.color, LocationProvider, frameProvider, downFireAngleProvider);
         });
 
-        const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, 5, shouldFire);
+        const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, RobotBulletSpeed, shouldFire);
         this.begin(enemies, 200, bulletProvider);
     }
 }
