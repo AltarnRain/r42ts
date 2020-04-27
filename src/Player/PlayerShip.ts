@@ -16,7 +16,8 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
 import { Frame, GameObjectType } from "../Types/Types";
-import { convertFrameColor, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
+import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
+import FrameMutators from "../Utility/FrameMutators";
 import getPlayerExplosion from "./PlayerExplosion";
 import { getPlayerFrame } from "./PlayerFrames";
 
@@ -44,12 +45,12 @@ export default class PlayerShip {
      */
     constructor() {
         this.frameClone = getPlayerFrame();
-        convertFrameColor(this.frameClone);
+        FrameMutators.convertFrameColor(this.frameClone);
 
         this.explosionClone = getPlayerExplosion();
-        convertFrameColor(this.explosionClone.explosionCenterFrame);
+        FrameMutators.convertFrameColor(this.explosionClone.explosionCenterFrame);
 
-        this.explosionClone.particleFrames.forEach((p) => convertFrameColor(p));
+        this.explosionClone.particleFrames.forEach((p) => FrameMutators.convertFrameColor(p));
     }
 
     /**

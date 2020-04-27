@@ -14,7 +14,7 @@
  */
 
 import { Frame, Frames } from "../Types/Types";
-import { convertVariableFramesColor } from "../Utility/Frame";
+import FrameMutators from "../Utility/FrameMutators";
 
 export default function getCharacters(color: string): Frames {
     const Characters: Frames = [
@@ -209,6 +209,6 @@ export default function getCharacters(color: string): Frames {
         ],
     ];
 
-    convertVariableFramesColor(Characters, color);
+    FrameMutators.convertVariableFramesColor(Characters, color);
     return Characters;
 }

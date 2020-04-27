@@ -17,7 +17,8 @@ import renderFrame from "../Render/RenderFrame";
 import getNumbers from "../SharedFrames/Numbers";
 import { appState } from "../State/Store";
 import { Frame } from "../Types/Types";
-import { convertFrameColor, getFrameByIndex, getFrameDimensions, setFrameColor } from "../Utility/Frame";
+import { getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
+import FrameMutators from "../Utility/FrameMutators";
 import { padLeft } from "../Utility/String";
 
 const ctx = ctxProvider();
@@ -31,7 +32,7 @@ const {
 const numberFramesClone = getNumbers(CGAColors.yellow);
 
 const lifeFrameClone = getPlayerFrame();
-setFrameColor(lifeFrameClone, CGAColors.yellow);
+FrameMutators.setFrameColor(lifeFrameClone, CGAColors.yellow);
 
 // Score constants
 const scoreStartPosition = 4 * minPixelSize;
@@ -51,7 +52,7 @@ const phaserFrame: Frame = [
     ["0", "E"],
 ];
 
-convertFrameColor(phaserFrame);
+FrameMutators.convertFrameColor(phaserFrame);
 
 // Lives constants.
 const livesSpacing = 2 * minPixelSize;

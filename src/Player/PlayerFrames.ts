@@ -5,7 +5,6 @@
  */
 
 import { Frame, Frames } from "../Types/Types";
-import { convertFramesColors } from "../Utility/Frame";
 
 /**
  * Module:          PlayerFrames

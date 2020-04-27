@@ -13,7 +13,7 @@ import speedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
 import { Frame, FrameProviderFunction } from "../Types/Types";
-import { convertFrameColor } from "../Utility/Frame";
+import FrameMutators from "../Utility/FrameMutators";
 import { calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
 
@@ -64,7 +64,7 @@ export default class PlayerFormationPart {
     constructor(left: number, top: number, getFrame: FrameProviderFunction, speed: number, leftOffset: number, topOffset: number) {
 
         this.currentFrameClone = getFrame();
-        convertFrameColor(this.currentFrameClone);
+        FrameMutators.convertFrameColor(this.currentFrameClone);
 
         this.currentLeftLocation = left + leftOffset;
         this.currentTopLocation = top + topOffset;

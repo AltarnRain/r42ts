@@ -17,7 +17,7 @@ import TickHandler from "../../Handlers/TickHandler";
 import { getExplosion02 } from "../../SharedFrames/Explosion02";
 import getTwoPixelBullet from "../../SharedFrames/twoPXBullet";
 import { FireAngleProviderFunction, Frame } from "../../Types/Types";
-import { convertChangingFrameColors, convertVariableFrameColor, convertVariableFramesColor } from "../../Utility/Frame";
+import FrameMutators from "../../Utility/FrameMutators";
 import getOrbFrames from "./OrbFrames";
 
 const colors: string[][] = [
@@ -53,11 +53,11 @@ export default class OrbEnemy extends BaseEnemy {
         // and sets its color to the first color set so we get a a good render when the enemy first appears.
         this.updateCurrentFrameAndColor();
 
-        convertVariableFrameColor(this.explosion.explosionCenterFrame, CGAColors.magenta);
-        convertVariableFramesColor(this.explosion.particleFrames, CGAColors.magenta);
+        FrameMutators.convertVariableFrameColor(this.explosion.explosionCenterFrame, CGAColors.magenta);
+        FrameMutators.convertVariableFramesColor(this.explosion.particleFrames, CGAColors.magenta);
 
         this.bulletFrameClone = getTwoPixelBullet(CGAColors.lightRed);
-        convertVariableFrameColor(this.bulletFrameClone, CGAColors.lightRed);
+        FrameMutators.convertVariableFrameColor(this.bulletFrameClone, CGAColors.lightRed);
 
         this.colorTickHandler = new TickHandler(100, () => this.onColorChange());
     }
@@ -86,7 +86,7 @@ export default class OrbEnemy extends BaseEnemy {
             throw new Error("Color cannot be undefined.");
         }
 
-        convertChangingFrameColors(frame, newColor);
+        FrameMutators.convertChangingFrameColors(frame, newColor);
         this.currentFrameClone = frame;
     }
 
@@ -99,7 +99,7 @@ export default class OrbEnemy extends BaseEnemy {
 
         // Apply currnet colors when the frame changes.
         // The color will be updated when the color tich handler fires.
-        convertChangingFrameColors(newFrame, currentColors);
+        FrameMutators.convertChangingFrameColors(newFrame, currentColors);
 
         this.currentFrameClone = newFrame;
     }
