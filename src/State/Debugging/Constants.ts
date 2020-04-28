@@ -1,10 +1,7 @@
 namespace Constants {
-    export const playerImmortal = "playerImmortal";
-    export const playerMortal = "playerMortal";
-    export const renderPhaserOn = "renderPhaserOn";
-    export const renderPhaserOff = "renderPhaserOff";
-    export const hitboxesOn = "hitboxesOn";
-    export const hitboxesOff = "hitboxesOff";
+    export const playerMortality = "playerMortality";
+    export const renderPhaser = "renderPhaser";
+    export const hitboxes = "hitboxes";
 }
 
 export default Constants;

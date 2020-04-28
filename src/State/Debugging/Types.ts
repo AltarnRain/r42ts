@@ -1,34 +1,22 @@
 import Constants from "./Constants";
 
 export interface PlayerImmortal {
-    type: typeof Constants.playerImmortal;
+    type: typeof Constants.playerMortality;
+    payload: "mortal" | "immortal";
 }
 
-export interface PlayerMortal {
-    type: typeof Constants.playerMortal;
+export interface RenderPhaser {
+    type: typeof Constants.renderPhaser;
+    render: boolean;
 }
 
-export interface RenderPhaserOn {
-    type: typeof Constants.renderPhaserOn;
-}
-
-export interface RenderPhaserOff {
-    type: typeof Constants.renderPhaserOff;
-}
-
-export interface HitboxesOn {
-    type: typeof Constants.hitboxesOn;
-}
-
-export interface HitboxesOff {
-    type: typeof Constants.hitboxesOff;
+export interface Hitboxes {
+    type: typeof Constants.hitboxes;
+    show: boolean;
 }
 
 export type DebuggingTypes =
     PlayerImmortal |
-    PlayerMortal |
-    RenderPhaserOn |
-    RenderPhaserOff |
-    HitboxesOn |
-    HitboxesOff
+    RenderPhaser |
+    Hitboxes
     ;

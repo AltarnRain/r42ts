@@ -23,23 +23,15 @@ import { DebuggingTypes } from "./Types";
 export default function debuggingReducer(state: DebuggingState = initState(), action: DebuggingTypes): DebuggingState {
     return produce(state, (draft) => {
         switch (action.type) {
-            case Constants.playerImmortal:
-                draft.playerIsImmortal = true;
+            case Constants.playerMortality:
+                draft.playerIsImmortal = action.payload === "immortal";
                 break;
-            case Constants.playerMortal:
-                draft.playerIsImmortal = false;
+            case Constants.renderPhaser:
+                draft.renderPhaser = action.render;
                 break;
-            case Constants.renderPhaserOn:
-                draft.renderPhaser = true;
+            case Constants.hitboxes:
+                draft.drawHitboxes = action.show;
                 break;
-            case Constants.renderPhaserOff:
-                draft.renderPhaser = false;
-                break;
-            case Constants.hitboxesOn:
-                draft.drawHitboxes = true;
-                break;
-            case Constants.hitboxesOff:
-                draft.drawHitboxes = false;
         }
     });
 }

@@ -1,38 +1,23 @@
-import { PlayerImmortal, PlayerMortal, RenderPhaserOn, RenderPhaserOff, HitboxesOn, HitboxesOff } from "./Types";
 import Constants from "./Constants";
+import { Hitboxes, PlayerImmortal as PlayerMortality, RenderPhaser } from "./Types";
 
-export function playerImmortal(): PlayerImmortal {
+export function playerMortality(mortality: "mortal" | "immortal"): PlayerMortality {
     return {
-        type: Constants.playerImmortal,
+        type: Constants.playerMortality,
+        payload: mortality,
     };
 }
 
-export function playerMortal(): PlayerMortal {
+export function renderPhaserOn(render: boolean): RenderPhaser {
     return {
-        type: Constants.playerMortal,
+        type: Constants.renderPhaser,
+        render
     };
 }
 
-export function renderPhaserOn(): RenderPhaserOn {
+export function hitboxesOn(show: boolean): Hitboxes {
     return {
-        type: Constants.renderPhaserOn,
-    };
-}
-
-export function renderPhaserOff(): RenderPhaserOff {
-    return {
-        type: Constants.renderPhaserOff
-    };
-}
-
-export function hitboxesOn(): HitboxesOn {
-    return {
-        type: Constants.hitboxesOn,
-    };
-}
-
-export function hitboxesOff(): HitboxesOff {
-    return {
-        type: Constants.hitboxesOff,
+        type: Constants.hitboxes,
+        show
     };
 }

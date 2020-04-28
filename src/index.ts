@@ -10,7 +10,7 @@ import GameLoop from "./Main/GameLoop";
 import playerRunner from "./Main/PlayerRunner";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
 import dimensionProvider from "./Providers/DimensionProvider";
-import { playerImmortal, playerMortal } from "./State/Debugging/Actions";
+import { playerMortality } from "./State/Debugging/Actions";
 import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers } from "./State/Game/Actions";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
@@ -42,7 +42,7 @@ window.onload = () => {
                 GameLoop.registerBackgroundDrawing(drawStatusBar);
                 GameLoop.registerUpdateState(playerRunner);
                 GameLoop.registerUpdateState(playerSpawnManager);
-                dispatch(playerImmortal());
+                dispatch(playerMortality("immortal"));
 
                 dispatch(setLives(2));
                 dispatch(setLevel(level));
@@ -52,8 +52,8 @@ window.onload = () => {
                 (window as any).r42 = {
                     setLevel: (n: number) => dispatch(setLevel(n)),
                     nextLevel: () => dispatch(nextLevel()),
-                    godMode: () => dispatch(playerImmortal()),
-                    normalMode: () => dispatch(playerMortal()),
+                    godMode: () => dispatch(playerMortality("immortal")),
+                    normalMode: () => dispatch(playerMortality("mortal")),
                     setPhasers: (n: number) => dispatch(setPhasers(n)),
                     setLives: (n: number) => dispatch(setLives(n)),
                     increaseScore: (n: number) => dispatch(increaseScore(n)),
