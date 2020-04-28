@@ -49,7 +49,7 @@ export default class OrbEnemy extends BaseEnemy {
         Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.magenta);
         Mutators.Frames.setColor(this.explosion.particleFrames, CGAColors.magenta);
 
-        this.colorTickHandler = new TickHandler(50, () => this.onColorChange());
+        this.colorTickHandler = new TickHandler(100, () => this.onColorChange());
 
         this.onFrameChange();
     }

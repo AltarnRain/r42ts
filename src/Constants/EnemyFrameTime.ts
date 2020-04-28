@@ -13,4 +13,4 @@ export const BirdFrameTime = 100;
 
 export const RobotFrameTime = 200;
 
-export const OrbFrameTime = 300;
+export const OrbFrameTime = 200;
