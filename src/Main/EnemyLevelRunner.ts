@@ -5,27 +5,27 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
-import BaseParticle from "../Base/BaseParticle";
 import CGAColors from "../Constants/CGAColors";
 import Explosion from "../Models/Explosion";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import Particle from "../Particles/Particle";
 import getPhaserLocations from "../Player/GetPhaserLocations";
-import PlayerBullet from "../Player/PlayerBullet";
 import PlayerShip from "../Player/PlayerShip";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import particleProvider from "../Providers/ParticleProvider";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
-import { appState, dispatch, dispatch2 } from "../State/Store";
+import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, removeExplosionCenter, removeParticle, setEnemies, setPhaserLocations } from "../State/EnemyLevel/Actions";
+import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
+import { setBullet, setPlayer, setPlayerLeftLocation, setPlayerTopLocation } from "../State/Player/Actions";
+import { appState, dispatch } from "../State/Store";
 import { Frame } from "../Types/Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getExplosionReturner, getFrameReturner } from "../Utility/Frame";
 import { overlaps } from "../Utility/Geometry";
 import { getHittableObjects } from "../Utility/StateHelper";
 import GameLoop from "./GameLoop";
-import { addExplosionCenter, addParticles, clearPhaserLocations, setPhaserLocations, setEnemies, removeParticle, removeExplosionCenter, removeEnemy } from "../State/Definition/EnemyLevel/Actions";
 
 /**
  * Module:          EnemyLevelRunner
@@ -75,8 +75,8 @@ function updateState(tick: number) {
 
         queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.ship.getExplosion());
 
-        dispatch<PlayerShip>("setPlayer", undefined);
-        dispatch2(setEnemies([]));
+        dispatch(setPlayer(undefined));
+        dispatch(setEnemies([]));
     }
 
     // Hit a random enemy with a phasor.
@@ -94,7 +94,7 @@ function updateState(tick: number) {
         if (p.traveling()) {
             p.updateState(tick);
         } else {
-            dispatch2(removeParticle(p));
+            dispatch(removeParticle(p));
         }
     });
 
@@ -103,7 +103,7 @@ function updateState(tick: number) {
         if (ec.burning()) {
             ec.updateState(tick);
         } else {
-            dispatch2(removeExplosionCenter(ec));
+            dispatch(removeExplosionCenter(ec));
         }
     });
 
@@ -128,7 +128,7 @@ function updateState(tick: number) {
             // Check if the player hit something.
             if (playerState.playerBullet !== undefined && isEnemy(hittableObject)) {
                 if (overlaps(playerState.playerBullet.getHitbox(), hittableObjectHitbox)) {
-                    dispatch<PlayerBullet>("setBullet", undefined);
+                    dispatch(setBullet(undefined));
                     handleEnemyDestruction(hittableObject);
                 }
             }
@@ -167,13 +167,13 @@ function handleEnemyDestruction(ship: BaseEnemy): void {
         if (e.ship !== ship) {
             e.ship.increaseSpeed(enemyLevelState.totalNumberOfEnemies / (enemyLevelState.enemies.length - 1));
         } else {
-            dispatch2(removeEnemy(e.ship));
+            dispatch(removeEnemy(e.ship));
         }
     });
 
     const location = ship.getLocation();
     queueExplosionRender(location.left, location.top, ship.getExplosion());
-    dispatch<number>("increaseScore", ship.getPoints());
+    dispatch(increaseScore(ship.getPoints()));
 }
 
 /**
@@ -188,20 +188,20 @@ function handlePhaser(player: PlayerShip): void {
     const randomEnemyCenter = randomEnemy.ship.getCenterLocation();
 
     // Remove one phaser.
-    dispatch("removePhaser");
+    dispatch(removePhaser());
     const phaserLocations = getPhaserLocations(playerNozzleLocation.left, playerNozzleLocation.top, randomEnemyCenter.left, randomEnemyCenter.top, maxPixelSize);
-    dispatch2(setPhaserLocations(phaserLocations));
+    dispatch(setPhaserLocations(phaserLocations));
 
     // Pause the game for a very brief period. This is what the original game did
     // when you fired a phasor shot.
-    dispatch("pauseOn");
+    dispatch(setPause(true));
     window.setTimeout(() => {
         // Unpause the game to let rendering continue.
-        dispatch("pauseOff");
+        dispatch(setPause(false));
 
         // Deal the with the enemy that got hit.
         handleEnemyDestruction(randomEnemy.ship);
-        dispatch2(clearPhaserLocations());
+        dispatch(clearPhaserLocations());
     }, 100);
 }
 
@@ -213,12 +213,12 @@ function handlePlayerDeath(player: PlayerShip): void {
     const { playerState } = appState();
 
     queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, player.getExplosion());
-    dispatch<PlayerShip>("setPlayer", undefined);
-    dispatch("removeLife");
+    dispatch(setPlayer(undefined));
+    dispatch(removeLife());
 
     const spawnLocation = getShipSpawnLocation();
-    dispatch<number>("setPlayerLeftLocation", spawnLocation.left);
-    dispatch<number>("setPlayerTopLocation", spawnLocation.top);
+    dispatch(setPlayerLeftLocation(spawnLocation.left));
+    dispatch(setPlayerTopLocation(spawnLocation.top));
 }
 
 /**
@@ -232,8 +232,8 @@ function queueExplosionRender(left: number, top: number, explosion: Explosion): 
     const center = new ExplosionCenter(left, top, getFrameReturner(explosion.explosionCenterFrame), explosion.explosionCenterDelay);
     const newParticles = particleProvider(left, top, getExplosionReturner(explosion));
 
-    dispatch2(addExplosionCenter(center));
-    dispatch2(addParticles(newParticles));
+    dispatch(addExplosionCenter(center));
+    dispatch(addParticles(newParticles));
 }
 
 /**

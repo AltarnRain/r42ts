@@ -4,9 +4,9 @@
  * See LICENSE.MD.
  */
 
-import BaseParticle from "../../../Base/BaseParticle";
-import { GameLocation } from "../../../Models/GameLocation";
-import ExplosionCenter from "../../../Particles/ExplosionCenter";
+import BaseParticle from "../../Base/BaseParticle";
+import { GameLocation } from "../../Models/GameLocation";
+import ExplosionCenter from "../../Particles/ExplosionCenter";
 import { Enemy } from "./Enemy";
 
 /**

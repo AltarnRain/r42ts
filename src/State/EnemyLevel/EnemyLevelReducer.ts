@@ -10,7 +10,7 @@
  */
 
 import produce from "immer";
-import { BaseEnemy } from "../../../Base/BaseEnemy";
+import { BaseEnemy } from "../../Base/BaseEnemy";
 import Constants from "./Constants";
 import EnemyLevelState from "./EnemyLevelState";
 import { EnemyLevelTypes } from "./Types";

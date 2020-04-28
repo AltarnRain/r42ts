@@ -11,6 +11,7 @@
  */
 
 import BaseLevel from "../Base/BaseLevel";
+import { addLifeAndPhaser } from "../State/Game/Actions";
 import { appState, appStore, dispatch } from "../State/Store";
 import { levelFactory } from "./LevelFactory";
 
@@ -52,7 +53,7 @@ export default function subscribeToStoreChanges(): void {
             // Each 7500 points the player is given an extra life and phaser. This
             // can be done in a single dispatch.
             currentScore = gameState.score;
-            dispatch("addLifeAndPhaser");
+            dispatch(addLifeAndPhaser());
         }
     });
 }

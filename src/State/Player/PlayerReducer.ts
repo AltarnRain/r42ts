@@ -6,8 +6,9 @@
 
 import produce from "immer";
 import getShipSpawnLocation from "../../Providers/PlayerSpawnLocationProvider";
-import ActionPayload from "../ActionPayLoad";
-import PlayerState from "../Definition/PlayerState";
+import Constants from "./Constants";
+import PlayerState from "./PlayerState";
+import { PlayerStateTypes } from "./Types";
 
 /**
  * Module:          playerReducer
@@ -20,22 +21,22 @@ import PlayerState from "../Definition/PlayerState";
  * @param {ActionPayload<any>} action. The desired action with optional paylood.
  * @returns {PlayerState}. New state.
  */
-export default function playerReducer(state: PlayerState = initState(), action: ActionPayload<any>): PlayerState {
+export default function playerReducer(state: PlayerState = initState(), action: PlayerStateTypes): PlayerState {
     return produce(state, (draft) => {
         switch (action.type) {
-            case "setPlayer":
+            case Constants.setPlayer:
                 draft.ship = action.payload;
                 break;
-            case "setBullet":
+            case Constants.setBullet:
                 draft.playerBullet = action.payload;
                 break;
-            case "setPlayerMovementLimit":
+            case Constants.setPlayerMovementLimit:
                 draft.moveLimit = action.payload;
                 break;
-            case "setPlayerLeftLocation":
+            case Constants.setPlayerLeftLocation:
                 draft.playerLeftLocation = action.payload;
                 break;
-            case "setPlayerTopLocation":
+            case Constants.setPlayerTopLocation:
                 draft.playerTopLocation = action.payload;
                 break;
         }

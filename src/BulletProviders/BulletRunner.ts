@@ -7,11 +7,11 @@
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BulletParticle from "../Particles/BulletParticle";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { appState, dispatch, dispatch2 } from "../State/Store";
+import { addParticle, setEnemyFireTick } from "../State/EnemyLevel/Actions";
+import { appState, dispatch } from "../State/Store";
 import { FireCheckFunction, Frame, FrameProviderFunction } from "../Types/Types";
 import { getFrameReturner } from "../Utility/Frame";
 import { calculateAngle, calculateAngleDifference } from "../Utility/Geometry";
-import { addParticle, setEnemyFireTick } from "../State/Definition/EnemyLevel/Actions";
 
 /**
  * Module:          StraightDownBulletProvider
@@ -117,8 +117,8 @@ export default class BulletRunner {
 
                 const bullet = new BulletParticle(left, top, candidate.ship, this.bulletColor, getFrameReturner(this.bulletFrame), enemyFireAngle, this.speed);
 
-                dispatch2(addParticle(bullet));
-                dispatch2(setEnemyFireTick(candidate.ship, tick));
+                dispatch(addParticle(bullet));
+                dispatch(setEnemyFireTick(candidate.ship, tick));
             }
         }
     }

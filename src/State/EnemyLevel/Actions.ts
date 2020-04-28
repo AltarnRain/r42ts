@@ -1,10 +1,10 @@
-import { BaseEnemy } from "../../../Base/BaseEnemy";
-import BaseParticle from "../../../Base/BaseParticle";
-import { GameLocation } from "../../../Models/GameLocation";
-import ExplosionCenter from "../../../Particles/ExplosionCenter";
+import { BaseEnemy } from "../../Base/BaseEnemy";
+import BaseParticle from "../../Base/BaseParticle";
+import { GameLocation } from "../../Models/GameLocation";
+import ExplosionCenter from "../../Particles/ExplosionCenter";
 import Constants from "./Constants";
 import { AddExplosionCenter, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, RemoveExplosionCenter, ResetLevelState, SetEnemies, SetEnemyFireTick, SetFireInterval, SetPhaserLocations, RemoveParticle } from "./Types";
-import PlayerShip from "../../../Player/PlayerShip";
+import PlayerShip from "../../Player/PlayerShip";
 
 export function resetLevelState(): ResetLevelState {
     return {

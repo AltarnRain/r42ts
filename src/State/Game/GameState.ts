@@ -31,7 +31,7 @@ export default interface GameState {
     phasers: number;
 
     /**
-     * The level banner is currently on screen.
+     * True then the game is paused.
      */
-    showingLevelBanner: false;
+    pause: boolean;
 }

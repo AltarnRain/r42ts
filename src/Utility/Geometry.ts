@@ -6,7 +6,7 @@
 
 import { angles } from "../Constants/Angles";
 import { GameRectangle } from "../Models/GameRectangle";
-import KeyboardState from "../State/Definition/KeyboardState";
+import KeyboardState from "../State/Keyboard/KeyboardState";
 
 /**
  * Module:          Geometry

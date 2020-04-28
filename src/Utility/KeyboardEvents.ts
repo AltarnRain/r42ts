@@ -4,6 +4,8 @@
  * See LICENSE.MD.
  */
 
+import { isValidGameKey } from "../Guard";
+import { keyDown, keyUp } from "../State/Keyboard/Actions";
 import { appState, dispatch } from "../State/Store";
 
 /**
@@ -14,7 +16,7 @@ import { appState, dispatch } from "../State/Store";
 /**
  * Valid game keys.
  */
-type GameKeys =
+export type GameKeys =
     "ArrowUp" |
     "ArrowDown" |
     "ArrowLeft" |
@@ -45,12 +47,12 @@ export const allGameKeys: GameKeys[] = [
 function onKeyDown(event: KeyboardEvent): void {
 
     const { gameState } = appState();
-    if (gameState.showingLevelBanner === false && allGameKeys.find((k) => k === event.code)) {
+    if (isValidGameKey(event.code)) {
         // Only dispatch if the key is a game control key.
         event.stopPropagation();
         event.preventDefault();
 
-        dispatch<string>("keydown", event.code);
+        dispatch(keyDown(event.code));
     }
 }
 
@@ -60,12 +62,12 @@ function onKeyDown(event: KeyboardEvent): void {
  */
 function onKeyUp(event: KeyboardEvent): void {
 
-    if (allGameKeys.find((k) => k === event.code)) {
+    if (isValidGameKey(event.code)) {
         // Only dispatch if the key is a game control key.
         event.stopPropagation();
         event.preventDefault();
 
-        dispatch<string>("keyup", event.code);
+        dispatch(keyUp(event.code));
     }
 }
 

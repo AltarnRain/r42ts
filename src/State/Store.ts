@@ -5,14 +5,12 @@
  */
 
 import { Action, combineReducers, createStore, Store } from "redux";
-import ActionPayload from "./ActionPayLoad";
-import ApplicationState from "./Definition/ApplicationState";
-import enemyLevelReducer from "./Definition/EnemyLevel/EnemyLevelReducer";
-import GameActions from "./GameActions";
-import debuggingReducer from "./Reducers/DebuggingReducer";
-import gameStateReducer from "./Reducers/GameStateReducer";
-import keyboardStateReducer from "./Reducers/KeyboardStateReducer";
-import playerReducer from "./Reducers/PlayerReducer";
+import ApplicationState from "./ApplicationState";
+import debuggingReducer from "./Debugging/DebuggingReducer";
+import enemyLevelReducer from "./EnemyLevel/EnemyLevelReducer";
+import gameStateReducer from "./Game/GameStateReducer";
+import keyboardStateReducer from "./Keyboard/KeyboardStateReducer";
+import playerReducer from "./Player/PlayerReducer";
 
 /**
  * Module:          Store
@@ -51,15 +49,6 @@ export function appState(): ApplicationState {
     return appStore().getState();
 }
 
-/**
- * Typed dispatch function. Use the generic to add payload type checking.
- * @param {GameActions} type. Predefinted game actions.
- * @param {T} payload. An optional payload.
- */
-export function dispatch<T>(type: GameActions, payload?: T): void {
-    store.dispatch({ type, payload });
-}
-
-export function dispatch2(action: any): void {
+export function dispatch(action: Action): void {
     store.dispatch(action);
 }

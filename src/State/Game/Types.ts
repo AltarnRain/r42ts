@@ -1,0 +1,68 @@
+import Constants from "./Constants";
+
+export interface IncreaseScore {
+    type: typeof Constants.increaseScore;
+    payload: number;
+}
+
+export interface SetLives {
+    type: typeof Constants.setLives;
+    payload: number;
+}
+
+export interface AddLife {
+    type: typeof Constants.addLife;
+}
+
+export interface RemoveLife {
+    type: typeof Constants.removeLife;
+}
+
+export interface SetPhasers {
+    type: typeof Constants.setPhasers;
+    payload: number;
+}
+
+export interface AddPhaser {
+    type: typeof Constants.addPhaser;
+}
+
+export interface RemovePhaser {
+    type: typeof Constants.removePhaser;
+}
+
+export interface AddLevel {
+    type: typeof Constants.addLevel;
+}
+
+export interface SetLevel {
+    type: typeof Constants.setLevel;
+    payload: number;
+}
+
+export interface NextLevel {
+    type: typeof Constants.nextLevel;
+}
+
+export interface AddLifeAndPhaser {
+    type: typeof Constants.addLifeAndPhaser;
+}
+
+export interface SetPause {
+    type: typeof Constants.setPause;
+    payload: boolean;
+}
+export type GameStateTypes =
+    IncreaseScore |
+    SetLives |
+    AddLife |
+    RemoveLife |
+    SetPhasers |
+    AddPhaser |
+    RemovePhaser |
+    AddLevel |
+    SetLevel |
+    NextLevel |
+    AddLifeAndPhaser |
+    SetPause
+    ;

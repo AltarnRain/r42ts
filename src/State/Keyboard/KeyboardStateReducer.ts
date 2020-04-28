@@ -10,8 +10,9 @@
  */
 
 import produce from "immer";
-import ActionPayload from "../ActionPayLoad";
-import KeyboardState from "../Definition/KeyboardState";
+import Constants from "./Constants";
+import KeyboardState from "./KeyboardState";
+import { KeyboardTypes } from "./Types";
 
 /**
  * keyboardStateReducer
@@ -19,42 +20,42 @@ import KeyboardState from "../Definition/KeyboardState";
  * @param {ActionPayload<any>} action. The desired action with optional paylood.
  * @returns {KeyboardState}. New state.
  */
-export default function keyboardStateReducer(state: KeyboardState = initState(), action: ActionPayload<string>): KeyboardState {
+export default function keyboardStateReducer(state: KeyboardState = initState(), action: KeyboardTypes): KeyboardState {
 
     return produce(state, (draft) => {
 
         let keyDown = false;
-        if (action.type === "keydown") {
+        if (action.type === Constants.keydown) {
             keyDown = true;
-        } else if (action.type === "keyup") {
+        } else if (action.type === Constants.keyup) {
             keyDown = false;
         }
 
         switch (action.payload) {
             case undefined:
                 break;
-            case "ArrowUp":
+            case Constants.arrowUp:
                 draft.up = keyDown;
                 break;
-            case "ArrowDown":
+            case Constants.arrowDown:
                 draft.down = keyDown;
                 break;
-            case "ArrowLeft":
+            case Constants.arrowLeft:
                 draft.left = keyDown;
                 break;
-            case "ArrowRight":
+            case Constants.arrowRight:
                 draft.right = keyDown;
                 break;
-            case "Backspace":
+            case Constants.backspace:
                 draft.selfDestruct = keyDown;
                 break;
-            case "F1":
+            case Constants.f1:
                 draft.fire = keyDown;
                 break;
-            case "F2":
+            case Constants.f2:
                 draft.phraser = keyDown;
                 break;
-            case "Space":
+            case Constants.space:
                 draft.space = keyDown;
                 break;
         }

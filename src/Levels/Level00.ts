@@ -4,6 +4,7 @@
  * See LICENSE.MD.
  */
 
+import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
@@ -18,9 +19,9 @@ import GameLoop from "../Main/GameLoop";
 import PlayerShip from "../Player/PlayerShip";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import CircleFrameProvider from "../Providers/CircleFrameProvider";
-import { dispatch, dispatch2 } from "../State/Store";
-import { setEnemies } from "../State/Definition/EnemyLevel/Actions";
-import { BaseEnemy } from "../Base/BaseEnemy";
+import { setEnemies } from "../State/EnemyLevel/Actions";
+import { setPlayer } from "../State/Player/Actions";
+import { dispatch } from "../State/Store";
 
 /**
  * Module:          Level 00
@@ -45,8 +46,7 @@ export default class Level00 extends BaseLevel {
         // this.robotFrameAnimationTest();
 
         this.orbEnemyAnimationTest();
-        const player = new PlayerShip();
-        dispatch("setPlayer", player);
+        dispatch(setPlayer(new PlayerShip()));
 
         GameLoop.registerUpdateState(enemyLevelRunner);
 
@@ -68,7 +68,7 @@ export default class Level00 extends BaseLevel {
             }
         }).filter((x) => x !== undefined);
 
-        dispatch2(setEnemies(enemies as BaseEnemy[]));
+        dispatch(setEnemies(enemies as BaseEnemy[]));
     }
 
     private orbEnemyAnimationTest() {
@@ -81,6 +81,6 @@ export default class Level00 extends BaseLevel {
                 return new OrbEnemy(lc.left, lc.top, 200, LocationProvider, frameProvider, downFireAngleProvider);
             // }
         }).filter((x) => x !== undefined);
-        dispatch2(setEnemies(enemies));
+        dispatch(setEnemies(enemies));
     }
 }

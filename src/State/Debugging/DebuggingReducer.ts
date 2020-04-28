@@ -5,9 +5,9 @@
  */
 
 import produce from "immer";
-import ActionPayload from "../ActionPayLoad";
-import DebuggingState from "../Definition/DebuggingState";
-import GameActions from "../GameActions";
+import Constants from "./Constants";
+import DebuggingState from "./DebuggingState";
+import { DebuggingTypes } from "./Types";
 
 /**
  * Module:          debuggingReducer
@@ -20,25 +20,25 @@ import GameActions from "../GameActions";
  * @param {ActionPayload<any>} action. The desired action with optional paylood.
  * @returns {DebuggingState}. New state.
  */
-export default function debuggingReducer(state: DebuggingState = initState(), action: ActionPayload<any>): DebuggingState {
+export default function debuggingReducer(state: DebuggingState = initState(), action: DebuggingTypes): DebuggingState {
     return produce(state, (draft) => {
         switch (action.type) {
-            case "playerImmortal":
+            case Constants.playerImmortal:
                 draft.playerIsImmortal = true;
                 break;
-            case "playerMortal":
+            case Constants.playerMortal:
                 draft.playerIsImmortal = false;
                 break;
-            case "renderPhaserOn":
+            case Constants.renderPhaserOn:
                 draft.renderPhaser = true;
                 break;
-            case "renderPhaserOff":
+            case Constants.renderPhaserOff:
                 draft.renderPhaser = false;
                 break;
-            case "hitboxesOn":
+            case Constants.hitboxesOn:
                 draft.drawHitboxes = true;
                 break;
-            case "hitboxesOff":
+            case Constants.hitboxesOff:
                 draft.drawHitboxes = false;
         }
     });

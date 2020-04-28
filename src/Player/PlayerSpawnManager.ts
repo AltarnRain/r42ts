@@ -7,6 +7,7 @@
 import { movePlayer } from "../Handlers/MovePlayer";
 import GameLoop from "../Main/GameLoop";
 import dimensionProvider from "../Providers/DimensionProvider";
+import { setPlayer, setPlayerLeftLocation, setPlayerMovementLimit, setPlayerTopLocation } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types/Types";
 import { getFrameReturner } from "../Utility/Frame";
@@ -127,8 +128,8 @@ function createParticles(): void {
  */
 function setupFormation(targetLeftLocation: number, targetTopLocation: number, speed: "fast" | "slow", limit: MoveLimits): void {
     formationSpeed = speed;
-    dispatch<number>("setPlayerLeftLocation", targetLeftLocation);
-    dispatch<number>("setPlayerTopLocation", targetTopLocation);
+    dispatch(setPlayerLeftLocation(targetLeftLocation));
+    dispatch(setPlayerTopLocation(targetTopLocation));
     createParticles();
 
     if (speed === "fast") {
@@ -137,7 +138,7 @@ function setupFormation(targetLeftLocation: number, targetTopLocation: number, s
         allMovingParts.forEach((p) => p.setSpeed(10));
     }
 
-    dispatch<MoveLimits>("setPlayerMovementLimit", limit);
+    dispatch(setPlayerMovementLimit(limit));
     formationInProgress = true;
 }
 
@@ -160,8 +161,8 @@ function updateState(): void {
     }
 
     if (allMovingParts.every((p) => p.traveling() === false)) {
-        dispatch<MoveLimits>("setPlayerMovementLimit", "none");
-        dispatch<PlayerShip>("setPlayer", new PlayerShip());
+        dispatch(setPlayerMovementLimit ("none"));
+        dispatch(setPlayer(new PlayerShip()));
         allMovingParts = [];
         formationInProgress = false;
     }

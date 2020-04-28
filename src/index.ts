@@ -10,6 +10,8 @@ import GameLoop from "./Main/GameLoop";
 import playerRunner from "./Main/PlayerRunner";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
 import dimensionProvider from "./Providers/DimensionProvider";
+import { playerImmortal, playerMortal } from "./State/Debugging/Actions";
+import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers } from "./State/Game/Actions";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
 
@@ -40,22 +42,22 @@ window.onload = () => {
                 GameLoop.registerBackgroundDrawing(drawStatusBar);
                 GameLoop.registerUpdateState(playerRunner);
                 GameLoop.registerUpdateState(playerSpawnManager);
-                dispatch<boolean>("playerImmortal", true);
+                dispatch(playerImmortal());
 
-                dispatch<number>("setLives", 2);
-                dispatch<number>("setLevel", level);
-                dispatch<number>("setPhasers", 20);
+                dispatch(setLives(2));
+                dispatch(setLevel(level));
+                dispatch(setPhasers(20));
                 GameLoop.Start();
 
                 (window as any).r42 = {
-                    setLevel: (n: number) => dispatch<number>("setLevel", n),
-                    nextLevel: () => dispatch("nextLevel"),
-                    godMode: () => dispatch("playerImmortal"),
-                    normalMode: () => dispatch("playerMortal"),
-                    setPhasers: (n: number) => dispatch<number>("setPhasers", n),
-                    setLives: (n: number) => dispatch<number>("setLives", n),
-                    increaseScore: (n: number) => dispatch<number>("increaseScore", n),
-                    addPhaser: () => dispatch("addPhaser"),
+                    setLevel: (n: number) => dispatch(setLevel(n)),
+                    nextLevel: () => dispatch(nextLevel()),
+                    godMode: () => dispatch(playerImmortal()),
+                    normalMode: () => dispatch(playerMortal()),
+                    setPhasers: (n: number) => dispatch(setPhasers(n)),
+                    setLives: (n: number) => dispatch(setLives(n)),
+                    increaseScore: (n: number) => dispatch(increaseScore(n)),
+                    addPhaser: () => dispatch(addPhaser()),
                 };
 
                 break;

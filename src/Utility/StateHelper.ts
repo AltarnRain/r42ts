@@ -5,7 +5,7 @@
  */
 
 import BaseGameObject from "../Base/BaseGameObject";
-import EnemyLevelState from "../State/Definition/EnemyLevel/EnemyLevelState";
+import EnemyLevelState from "../State/EnemyLevel/EnemyLevelState";
 
 /**
  * Module:          StateHelper

@@ -4,11 +4,11 @@
  * See LICENSE.MD.
  */
 
-import DebuggingState from "./DebuggingState";
+import DebuggingState from "./Debugging/DebuggingState";
 import EnemyLevelState from "./EnemyLevel/EnemyLevelState";
-import GameState from "./GameState";
-import KeyboardState from "./KeyboardState";
-import PlayerState from "./PlayerState";
+import GameState from "./Game/GameState";
+import KeyboardState from "./Keyboard/KeyboardState";
+import PlayerState from "./Player/PlayerState";
 
 /**
  * Module:          ApplicationState
