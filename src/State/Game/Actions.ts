@@ -1,3 +1,14 @@
+/**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
+/**
+ * Module:          Actions
+ * Responsibility:  Action creator functions for the GameState
+ */
+
 import Constants from "./Constants";
 import { AddLevel, AddLife, AddLifeAndPhaser, AddPhaser, IncreaseScore, NextLevel, RemoveLife, RemovePhaser, SetLevel, SetLives, SetPause, SetPhasers } from "./Types";
 

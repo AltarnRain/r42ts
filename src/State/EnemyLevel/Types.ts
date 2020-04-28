@@ -1,3 +1,14 @@
+/**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
+/**
+ * Module:          Types
+ * Responsibility:  Action types for the EnemyLevel state
+ */
+
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseParticle from "../../Base/BaseParticle";
 import { GameLocation } from "../../Models/GameLocation";

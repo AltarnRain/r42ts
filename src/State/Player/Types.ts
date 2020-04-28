@@ -1,3 +1,14 @@
+/**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
+/**
+ * Module:          Types
+ * Responsibility:  Type definitions for action creator functions return type.
+ */
+
 import PlayerBullet from "../../Player/PlayerBullet";
 import PlayerShip from "../../Player/PlayerShip";
 import { MoveLimits } from "../../Types/Types";

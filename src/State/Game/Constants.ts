@@ -1,3 +1,14 @@
+/**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
+/**
+ * Module:          Constants
+ * Responsibility:  Constants used by the GameState reducer and by the Action creator functions
+ */
+
 namespace Constants {
     export const setLives = "setLives";
     export const addLife = "addLife";
