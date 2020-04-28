@@ -16,7 +16,7 @@ export interface Enemy {
      * The ship of the enemy.
      */
     ship: BaseEnemy;
-    
+
     /**
      * Last tick when the enemy fired a bullet.
      */

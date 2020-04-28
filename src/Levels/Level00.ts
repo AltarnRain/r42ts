@@ -6,6 +6,7 @@
 
 import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
+import { angles } from "../Constants/Angles";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
@@ -13,6 +14,7 @@ import getRobotFrames from "../Enemies/Robot/RobotFrames";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
 import { drawBackground } from "../GameScreen/StaticRenders";
+import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
 import enemyLevelRunner from "../Main/EnemyLevelRunner";
 import GameLoop from "../Main/GameLoop";
@@ -22,8 +24,6 @@ import CircleFrameProvider from "../Providers/CircleFrameProvider";
 import { setEnemies } from "../State/EnemyLevel/Actions";
 import { setPlayer } from "../State/Player/Actions";
 import { dispatch } from "../State/Store";
-import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
-import { angles } from "../Constants/Angles";
 
 /**
  * Module:          Level 00

@@ -6,16 +6,16 @@
 
 import TickHandler from "../Handlers/TickHandler";
 import Explosion from "../Models/Explosion";
+import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { ExplosionProviderFunction, FireAngleProviderFunction, GameObjectType, OffsetFramesProviderFunction, Angle } from "../Types/Types";
+import { Angle, ExplosionProviderFunction, FireAngleProviderFunction, GameObjectType, OffsetFramesProviderFunction } from "../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getMaximumFrameDimensions } from "../Utility/Frame";
 import { getOffsetLocation } from "../Utility/Location";
 import { BaseDestructableObject as BaseDestructable } from "./BaseDestructableObject";
 import BaseFrameProvider from "./BaseFrameProvider";
 import BaseLocationProvider from "./BaseLocationProvider";
-import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          BaseEnemy

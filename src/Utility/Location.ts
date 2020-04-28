@@ -4,9 +4,9 @@
  * See LICENSE.MD.
  */
 
+import { GameLocation } from "../Models/GameLocation";
 import speedProvider from "../Providers/SpeedProvider";
 import { getNextX, getNextY } from "./Geometry";
-import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          Location utilities

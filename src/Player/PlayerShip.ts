@@ -6,6 +6,7 @@
 
 import { movePlayer } from "../Handlers/MovePlayer";
 import Explosion from "../Models/Explosion";
+import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
@@ -15,7 +16,6 @@ import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import Mutators from "../Utility/FrameMutators";
 import getPlayerExplosion from "./PlayerExplosion";
 import { getPlayerFrame } from "./PlayerFrames";
-import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          Player

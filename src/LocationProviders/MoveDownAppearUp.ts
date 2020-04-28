@@ -5,9 +5,9 @@
  */
 
 import BaseLocationProvider from "../Base/BaseLocationProvider";
+import { GameLocation } from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { getLocation } from "../Utility/Location";
-import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          MoveDownAppearUp

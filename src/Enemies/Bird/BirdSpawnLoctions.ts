@@ -4,8 +4,8 @@
  * See LICENSE.MD.
  */
 
-import dimensionProvider from "../../Providers/DimensionProvider";
 import { GameLocation } from "../../Models/GameLocation";
+import dimensionProvider from "../../Providers/DimensionProvider";
 
 /**
  * Module:          BirdSpawnLocations

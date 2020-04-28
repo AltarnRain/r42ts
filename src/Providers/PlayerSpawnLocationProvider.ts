@@ -4,10 +4,10 @@
  * See LICENSE.MD.
  */
 
+import { GameLocation } from "../Models/GameLocation";
 import { getPlayerFrame } from "../Player/PlayerFrames";
 import { getFrameDimensions } from "../Utility/Frame";
 import dimensionProvider from "./DimensionProvider";
-import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          PlayerSpawnLocationProvider
