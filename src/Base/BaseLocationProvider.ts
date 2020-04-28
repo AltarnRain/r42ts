@@ -4,6 +4,8 @@
  * See LICENSE.MD.
  */
 
+import { GameLocation } from "../Models/GameLocation";
+
 /**
  * Module:          BaseLocationProvider
  * Responsibility:  Base for all location providers.
@@ -44,7 +46,7 @@ export default abstract class BaseLocationProvider {
      * @param {number} width. Width of the object.
      * @param {number} height. Height of the object.
      */
-    public abstract getLocation(actualLeft: number, actualTop: number, width: number, height: number): { left: number, top: number};
+    public abstract getLocation(actualLeft: number, actualTop: number, width: number, height: number): GameLocation;
 
     /**
      * increases the speed by the provided factor.

@@ -77,3 +77,8 @@ export type OffsetFramesProviderFunction = () => OffsetFrames;
  * Always profirs a fres frame.
  */
 export type FrameProviderFunction = () => Frame;
+
+/**
+ * An angle. An angle can be a number or undefined.
+ */
+export type Angle = number | undefined;

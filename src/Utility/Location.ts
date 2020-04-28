@@ -6,6 +6,7 @@
 
 import speedProvider from "../Providers/SpeedProvider";
 import { getNextX, getNextY } from "./Geometry";
+import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          Location utilities
@@ -53,7 +54,7 @@ export function fallsWithin(left: number, top: number, outerTop: number, outerBo
  * @param {number} speed. The speed the of the object
  * @returns {{left: number, top: number}}. The location of the object. If angle is undefined the original location is returns as a new object.
  */
-export function getLocation(left: number, top: number, angle: number | undefined, speed: number): { left: number, top: number } {
+export function getLocation(left: number, top: number, angle: number | undefined, speed: number): GameLocation {
 
     if (angle === undefined) {
         return {
@@ -82,7 +83,7 @@ export function getLocation(left: number, top: number, angle: number | undefined
  * @param {number} pixelSize. Pixel size used to calculate the actual location.
  * @returns {location}. A new location offset to animation overlap.
  */
-export function getOffsetLocation(left: number, top: number, leftOffset: number, topOffset: number): { left: number, top: number } {
+export function getOffsetLocation(left: number, top: number, leftOffset: number, topOffset: number): GameLocation {
     return {
         left: left + leftOffset,
         top: top + topOffset,

@@ -4,6 +4,7 @@
  * See LICENSE.MD.
  */
 
+import { GameLocation } from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { getFrameDimensions } from "../../Utility/Frame";
 import getOrbFrames from "./OrbFrames";
@@ -18,7 +19,7 @@ const {
     gameFieldTop
 } = dimensionProvider();
 
-const orbSpawnLocations: Array<{ left: number, top: number }> = [];
+const orbSpawnLocations: GameLocation[] = [];
 const { width } = getFrameDimensions(getOrbFrames().frames[0], averagePixelSize);
 
 const top = gameFieldTop + averagePixelSize * 26;

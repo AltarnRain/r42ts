@@ -15,6 +15,7 @@ import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import Mutators from "../Utility/FrameMutators";
 import getPlayerExplosion from "./PlayerExplosion";
 import { getPlayerFrame } from "./PlayerFrames";
+import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          Player
@@ -96,7 +97,7 @@ export default class PlayerShip {
      * Returns the top/left of the nozzle.
      * @returns {Location}. Returns the location of the ship's nozzlel
      */
-    public getNozzleLocation(): { left: number, top: number } {
+    public getNozzleLocation(): GameLocation {
         const { playerState } = appState();
         return {
             left: playerState.playerLeftLocation + minPixelSize * 2,

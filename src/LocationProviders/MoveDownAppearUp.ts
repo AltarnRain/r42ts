@@ -7,10 +7,12 @@
 import BaseLocationProvider from "../Base/BaseLocationProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { getLocation } from "../Utility/Location";
+import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          MoveDownAppearUp
  * Responsibility:  A location provider where the enemy moves down to a certain point and then reappears at the top of the screen.
+ *                  Enemies will bounce from up to down a few times just like the original game.
  */
 
 const {
@@ -36,7 +38,7 @@ export default class MoveDownAppearUp extends BaseLocationProvider {
     /**
      * Returns the given location.
      */
-    public getLocation(left: number, top: number, width: number, height: number): { left: number, top: number } {
+    public getLocation(left: number, top: number, width: number, height: number): GameLocation {
         const bottomLimit = this.bottomLimit - height;
 
         if (top > bottomLimit) {

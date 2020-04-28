@@ -7,6 +7,7 @@
 import { GameRectangle } from "../Models/GameRectangle";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types/Types";
+import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          BaseGameObject
@@ -55,7 +56,7 @@ export default abstract class BaseGameObject {
      * Get the game location for colision detection.
      * @returns {Location}. The location of the object.
      */
-    public getLocation(): { left: number, top: number} {
+    public getLocation(): GameLocation {
         return { left: this.left, top: this.top };
     }
 

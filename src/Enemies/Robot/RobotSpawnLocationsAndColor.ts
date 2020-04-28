@@ -5,6 +5,7 @@
  */
 
 import CGAColors from "../../Constants/CGAColors";
+import { GameLocation } from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { getRandomArrayElement } from "../../Utility/Array";
 import { getFrameDimensions } from "../../Utility/Frame";
@@ -15,12 +16,19 @@ import getRobotFrames from "./RobotFrames";
  * Responsibility:  Returns the robot spawn locations.
  */
 
+interface GameLocationAndcolor extends GameLocation {
+    /**
+     * color for the robot.
+     */
+    color: string;
+}
+
 const {
     averagePixelSize,
     gameFieldTop
 } = dimensionProvider();
 
-const robotSpawnLocationsAndColor: Array<{ left: number, top: number, color: string }> = [];
+const robotSpawnLocationsAndColor: GameLocationAndcolor[] = [];
 const { width } = getFrameDimensions(getRobotFrames().frames[0], averagePixelSize);
 
 const top = gameFieldTop + averagePixelSize * 20;

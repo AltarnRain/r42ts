@@ -8,6 +8,7 @@ import Explosion from "../Models/Explosion";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import { Frame, Frames } from "../Types/Types";
+import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          Frame
@@ -44,7 +45,7 @@ export function getMaximumFrameDimensions(frames: Frames, pixelSize: number): Ga
  * @param {number} top. Top coordinate.
  * @param {frame} frame.
  */
-export function getFrameCenter(left: number, top: number, frame: Frame, pixelSize: number): { left: number, top: number } {
+export function getFrameCenter(left: number, top: number, frame: Frame, pixelSize: number): GameLocation {
     const dimensions = getFrameDimensions(frame, pixelSize);
 
     return {

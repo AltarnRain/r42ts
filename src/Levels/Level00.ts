@@ -22,6 +22,8 @@ import CircleFrameProvider from "../Providers/CircleFrameProvider";
 import { setEnemies } from "../State/EnemyLevel/Actions";
 import { setPlayer } from "../State/Player/Actions";
 import { dispatch } from "../State/Store";
+import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
+import { angles } from "../Constants/Angles";
 
 /**
  * Module:          Level 00
@@ -77,8 +79,8 @@ export default class Level00 extends BaseLevel {
             // if (index < 1) {
                 // const frameProvider = new ImmoboleFrameProvider(index);
                 const frameProvider  = new CircleFrameProvider(0);
-                const LocationProvider = new VanishRightAppearLeft(0, 0);
-                return new OrbEnemy(lc.left, lc.top, 200, LocationProvider, frameProvider, downFireAngleProvider);
+                const locationProvider = new MoveDownAppearUp(80, 1, angles.down);
+                return new OrbEnemy(lc.left, lc.top, 200, locationProvider, frameProvider, downFireAngleProvider);
             // }
         }).filter((x) => x !== undefined);
         dispatch(setEnemies(enemies));

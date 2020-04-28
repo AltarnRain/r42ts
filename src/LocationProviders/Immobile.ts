@@ -5,6 +5,7 @@
  */
 
 import BaseLocationProvider from "../Base/BaseLocationProvider";
+import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          Immobile
@@ -23,7 +24,7 @@ export default class Immobile extends BaseLocationProvider {
     /**
      * Returns the given location.
      */
-    public getLocation(left: number, top: number, width: number, height: number): { left: number, top: number } {
+    public getLocation(left: number, top: number, width: number, height: number): GameLocation {
         return { left, top };
     }
 }

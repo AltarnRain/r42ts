@@ -7,6 +7,7 @@
 import { getPlayerFrame } from "../Player/PlayerFrames";
 import { getFrameDimensions } from "../Utility/Frame";
 import dimensionProvider from "./DimensionProvider";
+import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          PlayerSpawnLocationProvider
@@ -27,7 +28,7 @@ const topSpawnPosition = gameFieldHeight;
 /**
  * Gets the ship's spawn location, center screen.
  */
-export default function getShipSpawnLocation(): { left: number, top: number } {
+export default function getShipSpawnLocation(): GameLocation {
     return {
         left: leftSpawnPosition,
         top: topSpawnPosition,

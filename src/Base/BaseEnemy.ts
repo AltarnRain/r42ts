@@ -9,12 +9,13 @@ import Explosion from "../Models/Explosion";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { ExplosionProviderFunction, FireAngleProviderFunction, GameObjectType, OffsetFramesProviderFunction } from "../Types/Types";
+import { ExplosionProviderFunction, FireAngleProviderFunction, GameObjectType, OffsetFramesProviderFunction, Angle } from "../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getMaximumFrameDimensions } from "../Utility/Frame";
 import { getOffsetLocation } from "../Utility/Location";
 import { BaseDestructableObject as BaseDestructable } from "./BaseDestructableObject";
 import BaseFrameProvider from "./BaseFrameProvider";
 import BaseLocationProvider from "./BaseLocationProvider";
+import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          BaseEnemy
@@ -55,7 +56,7 @@ export abstract class BaseEnemy extends BaseDestructable {
     /**
      * Offets for each frame.
      */
-    protected offSets: Array<{ left: number, top: number }>;
+    protected offSets: GameLocation[];
 
     /**
      * Explosion for the enemy.
@@ -160,7 +161,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      * Calculates the offsetLocation
      * @returns {Location}. Location offset to let the frames render over one another.
      */
-    protected getOffsetLocation(): { left: number, top: number } {
+    protected getOffsetLocation(): GameLocation {
         const frameOffsets = this.offSets[this.frameProvider.getCurrentIndex()];
         if (frameOffsets !== undefined) {
             return getOffsetLocation(this.actualLeft, this.actualTop, frameOffsets.left, frameOffsets.top);
@@ -189,7 +190,7 @@ export abstract class BaseEnemy extends BaseDestructable {
      * Returns the center location of the object.
      * @returns {Location}. Location located at the center of the object.
      */
-    public getCenterLocation(): { left: number, top: number } {
+    public getCenterLocation(): GameLocation {
         return getFrameCenter(this.left, this.top, this.currentFrame, averagePixelSize);
     }
 
@@ -209,7 +210,11 @@ export abstract class BaseEnemy extends BaseDestructable {
         return getFrameHitbox(this.left, this.top, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
     }
 
-    public getFireAngle(): number | undefined {
+    /**
+     * Returns the fire angle of the orb enemy.
+     * @returns {Angle}. An angle.
+     */
+    public getFireAngle(): Angle {
         if (this.angleProvider === undefined) {
             return undefined;
         }

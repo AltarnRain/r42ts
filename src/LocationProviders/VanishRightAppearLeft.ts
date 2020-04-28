@@ -7,6 +7,7 @@
 import BaseLocationProvider from "../Base/BaseLocationProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { getLocation } from "../Utility/Location";
+import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          Left to right, then left.
@@ -19,7 +20,7 @@ const {
 } = dimensionProvider();
 
 export default class VanishRightAppearLeft extends BaseLocationProvider {
-    public getLocation(left: number, top: number, width: number, height: number): { left: number, top: number} {
+    public getLocation(left: number, top: number, width: number, height: number): GameLocation {
 
         if (left + width > fullWidth) {
             left = 0;

@@ -7,6 +7,7 @@
 import BaseLocationProvider from "../Base/BaseLocationProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { getLocation } from "../Utility/Location";
+import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          SideToSideUpAndDown
@@ -21,7 +22,7 @@ const {
 } = dimensionProvider();
 
 export default class SideToSideUpAndDown extends BaseLocationProvider {
-    public getLocation(left: number, top: number, width: number, height: number): { left: number, top: number} {
+    public getLocation(left: number, top: number, width: number, height: number): GameLocation {
         const leftLimit = maxPixelSize * 2;
         const rightLimit = fullWidth - width - maxPixelSize * 2;
 

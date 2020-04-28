@@ -5,6 +5,7 @@
  */
 
 import dimensionProvider from "../../Providers/DimensionProvider";
+import { GameLocation } from "../../Models/GameLocation";
 
 /**
  * Module:          BirdSpawnLocations
@@ -14,7 +15,7 @@ import dimensionProvider from "../../Providers/DimensionProvider";
 const firstAndThirdRowLeftStart = 20;
 const secondRowLeftStart = 30;
 const spacing = 20;
-const birdSpawnLocations: Array<{ left: number, top: number}> = [];
+const birdSpawnLocations: GameLocation[] = [];
 
 const {
     averagePixelSize,
