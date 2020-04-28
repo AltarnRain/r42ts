@@ -96,6 +96,10 @@ export default class OrbEnemy extends BaseEnemy {
         super.updateState(tick);
 
         this.colorTickHandler.tick(tick);
+
+        const location = this.locationProvider.getLocation(this.left, this.top, this.maxDimensions.width, this.maxDimensions.height);
+        this.left = location.left;
+        this.top = location.top;
     }
 
     /**
