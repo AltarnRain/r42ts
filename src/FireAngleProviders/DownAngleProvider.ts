@@ -4,6 +4,7 @@
  * See LICENSE.MD.
  */
 
+import { BaseEnemy } from "../Base/BaseEnemy";
 import { angles } from "../Constants/Angles";
 
 /**
@@ -15,6 +16,6 @@ import { angles } from "../Constants/Angles";
  * Returns down.
  * @param {BaseEnemy} enemy. Any enemy.
  */
-export default function downFireAngleProvider(top: number, left: number): number {
+export default function downFireAngleProvider(enemy: BaseEnemy, top: number, left: number): number {
     return angles.down;
 }

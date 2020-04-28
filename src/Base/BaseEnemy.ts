@@ -220,7 +220,7 @@ export abstract class BaseEnemy extends BaseDestructable {
         }
 
         const center = this.getCenterLocation();
-        const angle = this.angleProvider(center.left, center.top);
+        const angle = this.angleProvider(this, center.left, center.top);
         return angle;
     }
 }

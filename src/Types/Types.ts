@@ -49,7 +49,7 @@ export type PlayerFormationPhases = "begin" | "inprogress" | undefined;
  * To determine the best angle. For example, enemies mostly limited to diagonal angles
  * Begin firing straight down once a certain amount of enemies are left.
  */
-export type FireAngleProviderFunction = (left: number, top: number) => number | undefined;
+export type FireAngleProviderFunction = (enemy: BaseEnemy, left: number, top: number) => number | undefined;
 
 /**
  * Function definition of a FireCheckFunction.
