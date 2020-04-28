@@ -5,7 +5,7 @@
  */
 
 import DebuggingState from "./DebuggingState";
-import EnemyLevelState from "./EnemyLevelState";
+import EnemyLevelState from "./EnemyLevel/EnemyLevelState";
 import GameState from "./GameState";
 import KeyboardState from "./KeyboardState";
 import PlayerState from "./PlayerState";

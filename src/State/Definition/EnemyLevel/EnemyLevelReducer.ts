@@ -10,9 +10,10 @@
  */
 
 import produce from "immer";
-import { BaseEnemy } from "../../Base/BaseEnemy";
-import ActionPayload from "../ActionPayLoad";
-import EnemyLevelState from "../Definition/EnemyLevelState";
+import { BaseEnemy } from "../../../Base/BaseEnemy";
+import Constants from "./Constants";
+import EnemyLevelState from "./EnemyLevelState";
+import { EnemyLevelTypes } from "./Types";
 
 /**
  * enemyLevelReducer
@@ -20,38 +21,32 @@ import EnemyLevelState from "../Definition/EnemyLevelState";
  * @param {ActionPayload<any>} action. The desired action with optional paylood.
  * @returns {EnemyLevelState}. New state.
  */
-export default function enemyLevelReducer(state: EnemyLevelState = initState(), action: ActionPayload<any>): EnemyLevelState {
+export default function enemyLevelReducer(state: EnemyLevelState = initState(), action: EnemyLevelTypes): EnemyLevelState {
 
     const newState = produce(state, (draft) => {
         switch (action.type) {
-            case "removeEnemy":
+            case Constants.removeEnemy:
                 draft.enemies = draft.enemies.filter((e) => e.ship !== action.payload);
                 break;
-            case "pauseOn":
-                draft.pause = true;
-                break;
-            case "pauseOff":
-                draft.pause = false;
-                break;
-            case "addExplosionCenter":
+            case Constants.addExplosionCenter:
                 draft.explosionCenters.push(action.payload);
                 break;
-            case "removeExplosionCenter":
+            case Constants.removeExplosionCenter:
                 draft.explosionCenters = draft.explosionCenters.filter((e) => e !== action.payload);
                 break;
-            case "addParticle":
+            case Constants.addParticle:
                 draft.particles.push(action.payload);
                 break;
-            case "addParticles":
+            case Constants.addParticles:
                 draft.particles.push(...action.payload);
                 break;
-            case "removeParticle":
+            case Constants.removeParticle:
                 draft.particles = draft.particles.filter((p) => p !== action.payload);
                 break;
-            case "resetLevelState":
+            case Constants.resetLevelState:
                 draft = initState();
                 break;
-            case "setEnemies":
+            case Constants.setEnemies:
                 draft.enemies = action.payload.map((e: BaseEnemy) => {
                     return {
                         ship: e,
@@ -60,16 +55,16 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
                 });
                 draft.totalNumberOfEnemies = action.payload.length;
                 break;
-            case "setPhaserLocations":
+            case Constants.setPhaserLocations:
                 draft.phaserLocations = action.payload;
                 break;
-            case "clearPhaserLocations":
+            case Constants.clearPhaserLocations:
                 draft.phaserLocations = [];
                 break;
-            case "setFireInterval":
+            case Constants.setFireInterval:
                 draft.fireInterval = action.payload;
                 break;
-            case "setEnemyFireTick":
+            case Constants.setEnemyFireTick:
                 const enemy = draft.enemies.find((e) => e.ship === action.payload.ship);
                 if (enemy !== undefined) {
                     const enemyIndex = draft.enemies.indexOf(enemy);

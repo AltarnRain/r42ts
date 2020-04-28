@@ -4,9 +4,10 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemy } from "../../Base/BaseEnemy";
-import BaseParticle from "../../Base/BaseParticle";
-import ExplosionCenter from "../../Particles/ExplosionCenter";
+import BaseParticle from "../../../Base/BaseParticle";
+import { GameLocation } from "../../../Models/GameLocation";
+import ExplosionCenter from "../../../Particles/ExplosionCenter";
+import { Enemy } from "./Enemy";
 
 /**
  * Module:          EnemyLevelState
@@ -18,7 +19,7 @@ export default interface EnemyLevelState {
     /**
      * Array of current game objects on screen.
      */
-    enemies: Array<{ ship: BaseEnemy, lastFireTick: number }>;
+    enemies: Enemy[];
 
     /**
      * Particles travelling on the screen.
@@ -43,7 +44,7 @@ export default interface EnemyLevelState {
     /**
      * Phaser locations.
      */
-    phaserLocations: Array<{ left: number, top: number }>;
+    phaserLocations: GameLocation[];
 
     /**
      * Fire interval

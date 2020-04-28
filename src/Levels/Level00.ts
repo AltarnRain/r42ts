@@ -18,7 +18,9 @@ import GameLoop from "../Main/GameLoop";
 import PlayerShip from "../Player/PlayerShip";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import CircleFrameProvider from "../Providers/CircleFrameProvider";
-import { dispatch } from "../State/Store";
+import { dispatch, dispatch2 } from "../State/Store";
+import { setEnemies } from "../State/Definition/EnemyLevel/Actions";
+import { BaseEnemy } from "../Base/BaseEnemy";
 
 /**
  * Module:          Level 00
@@ -65,7 +67,8 @@ export default class Level00 extends BaseLevel {
                 return new RobotEnemy(lc.left, lc.top, 150, lc.color, LocationProvider, frameProvider, downFireAngleProvider);
             }
         }).filter((x) => x !== undefined);
-        dispatch("setEnemies", enemies);
+
+        dispatch2(setEnemies(enemies as BaseEnemy[]));
     }
 
     private orbEnemyAnimationTest() {
@@ -78,6 +81,6 @@ export default class Level00 extends BaseLevel {
                 return new OrbEnemy(lc.left, lc.top, 200, LocationProvider, frameProvider, downFireAngleProvider);
             // }
         }).filter((x) => x !== undefined);
-        dispatch("setEnemies", enemies);
+        dispatch2(setEnemies(enemies));
     }
 }

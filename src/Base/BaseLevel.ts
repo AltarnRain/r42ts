@@ -8,7 +8,8 @@ import BulletRunner from "../BulletProviders/BulletRunner";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import GameLoop from "../Main/GameLoop";
-import { appState, dispatch } from "../State/Store";
+import { resetLevelState, setEnemies, setFireInterval } from "../State/Definition/EnemyLevel/Actions";
+import { appState, dispatch, dispatch2 } from "../State/Store";
 import { TickFunction } from "../Types/Types";
 import { BaseEnemy } from "./BaseEnemy";
 
@@ -93,11 +94,11 @@ export default abstract class BaseLevel {
 
             // Set the fire interval of enemies in the current state
             if (fireInterval !== undefined) {
-                dispatch("setFireInterval", fireInterval);
+                dispatch2(setFireInterval(fireInterval));
             }
 
             // Add the enemies to the global state. The registered stateManager will take it from here.
-            dispatch<BaseEnemy[]>("setEnemies", enemies);
+            dispatch2(setEnemies(enemies));
 
             // Add a function to the GameLoop that will check if a level has been won.
             this.registerSubscription(GameLoop.registerUpdateState(() => this.monitorLevelWonRun()));
@@ -108,7 +109,7 @@ export default abstract class BaseLevel {
      * Disposes subscriptions
      */
     public dispose(): void {
-        dispatch("resetLevelState");
+        dispatch2(resetLevelState());
         // The subscription array contains functions that remove themselves
         // from the GameLoop. Call all of them to remove them from the GameLoop.
         this.subscriptions.forEach((s) => s());

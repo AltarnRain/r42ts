@@ -18,20 +18,6 @@ type GameActions =
     "hitboxesOn" |
     "hitboxesOff" |
 
-    // Level
-    "resetLevelState" |
-    "setEnemies" |
-    "addParticle" |
-    "addParticles" |
-    "removeEnemy" |
-    "addExplosionCenter" |
-    "removeExplosionCenter" |
-    "removeParticle" |
-    "setPhaserLocations" |
-    "clearPhaserLocations" |
-    "setFireInterval" |
-    "setEnemyFireTick" |
-
     // Player
     "setPlayer" |
     "setBullet" |
