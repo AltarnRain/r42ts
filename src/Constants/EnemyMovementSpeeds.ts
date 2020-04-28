@@ -11,6 +11,6 @@
 
 export const birdMovementSpeed = 3;
 
-export const robotMovementSpeed = 3;
+export const robotMovementSpeed = 1.5;
 
 export const orbMovementSpeed = 0.1;
