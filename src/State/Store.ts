@@ -10,9 +10,9 @@ import ApplicationState from "./Definition/ApplicationState";
 import EnemyLevelState from "./Definition/EnemyLevelState";
 import GameActions from "./GameActions";
 import debuggingReducer from "./Reducers/DebuggingReducer";
-import { enemyLevelReducer } from "./Reducers/EnemyLevelReducer";
-import { gameStateReducer } from "./Reducers/GameStateReducer";
-import { keyboardStateReducer } from "./Reducers/KeyboardStateReducer";
+import enemyLevelReducer from "./Reducers/EnemyLevelReducer";
+import gameStateReducer from "./Reducers/GameStateReducer";
+import keyboardStateReducer from "./Reducers/KeyboardStateReducer";
 import playerReducer from "./Reducers/PlayerReducer";
 
 /**
@@ -33,9 +33,13 @@ const reducers: ReducersMapObject<ApplicationState, ActionPayload<any>> = {
 
 const allReducers = combineReducers(reducers);
 
-const store = createStore<ApplicationState, ActionPayload<any>, EnemyLevelState, EnemyLevelState>(
-    allReducers,
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__());
+const store = createReduxStore();
+
+export function createReduxStore(): Store<ApplicationState, ActionPayload<any>> {
+    return createStore<ApplicationState, ActionPayload<any>, EnemyLevelState, EnemyLevelState>(
+        allReducers,
+        (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__());
+}
 
 /**
  * Returns the store
@@ -59,5 +63,5 @@ export function appState(): ApplicationState {
  * @param {T} payload. An optional payload.
  */
 export function dispatch<T>(type: GameActions, payload?: T): void {
-    store.dispatch({type, payload });
+    store.dispatch({ type, payload });
 }

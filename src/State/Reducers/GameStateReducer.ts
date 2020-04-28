@@ -19,7 +19,7 @@ import GameState from "../Definition/GameState";
  * @param {ActionPayload<any>} action. The desired action with optional paylood.
  * @returns {GameState}. New state.
  */
-export function gameStateReducer(state: GameState = initState(), action: ActionPayload<any>): GameState {
+export default function gameStateReducer(state: GameState = initState(), action: ActionPayload<any>): GameState {
     return produce(state, (draft) => {
         switch (action.type) {
             case "increaseScore":

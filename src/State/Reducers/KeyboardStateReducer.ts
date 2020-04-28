@@ -19,7 +19,7 @@ import KeyboardState from "../Definition/KeyboardState";
  * @param {ActionPayload<any>} action. The desired action with optional paylood.
  * @returns {KeyboardState}. New state.
  */
-export function keyboardStateReducer(state: KeyboardState = initState(), action: ActionPayload<string>): KeyboardState {
+export default function keyboardStateReducer(state: KeyboardState = initState(), action: ActionPayload<string>): KeyboardState {
 
     return produce(state, (draft) => {
 

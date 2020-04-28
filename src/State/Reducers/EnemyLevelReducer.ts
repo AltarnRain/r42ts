@@ -20,9 +20,9 @@ import EnemyLevelState from "../Definition/EnemyLevelState";
  * @param {ActionPayload<any>} action. The desired action with optional paylood.
  * @returns {EnemyLevelState}. New state.
  */
-export function enemyLevelReducer(state: EnemyLevelState = initState(), action: ActionPayload<any>): EnemyLevelState {
+export default function enemyLevelReducer(state: EnemyLevelState = initState(), action: ActionPayload<any>): EnemyLevelState {
 
-    return produce(state, (draft) => {
+    const newState = produce(state, (draft) => {
         switch (action.type) {
             case "removeEnemy":
                 draft.enemies = draft.enemies.filter((e) => e.ship !== action.payload);
@@ -77,9 +77,11 @@ export function enemyLevelReducer(state: EnemyLevelState = initState(), action: 
                 }
         }
     });
+
+    return newState;
 }
 
-function initState(): EnemyLevelState {
+export function initState(): EnemyLevelState {
     return {
         enemies: [],
         pause: false,
