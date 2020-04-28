@@ -98,10 +98,9 @@ function updateState(tick: number) {
     });
 
     // Update explosion center state and remove if they're done burning.
-    enemyLevelState.explosionCenters.filter((ec) => {
+    enemyLevelState.explosionCenters.forEach((ec) => {
         if (ec.burning()) {
             ec.updateState(tick);
-            return true;
         } else {
             dispatch<ExplosionCenter>("removeExplosionCenter", ec);
         }
