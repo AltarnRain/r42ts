@@ -71,7 +71,7 @@ export abstract class BaseEnemy extends BaseDestructable {
     /**
      * Maximum enemy dimensions.
      */
-    private maxDimensions: GameSize;
+    protected maxDimensions: GameSize;
 
     /**
      * Helps the enemy determine which angle it will use to fire a bullet.
