@@ -6,7 +6,7 @@
 
 import { getPlayerFrame } from "../Player/PlayerFrames";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { setPlayerLeftLocation, setPlayerTopLocation } from "../State/Player/Actions";
+import { setPlayerLocation } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { getFrameDimensions } from "../Utility/Frame";
 import { getAngle } from "../Utility/Geometry";
@@ -63,8 +63,7 @@ export function movePlayer(speed: number): void {
     if (angle !== -1) {
         const newLocation = getLocation(playerState.playerLeftLocation, playerState.playerTopLocation, angle, speed);
         if (fallsWithin(newLocation.left, newLocation.top, gameFieldTop, maxBottom, 0, maxRight)) {
-            dispatch(setPlayerLeftLocation(newLocation.left));
-            dispatch(setPlayerTopLocation(newLocation.top));
+            dispatch(setPlayerLocation(newLocation.left, newLocation.top));
         }
     }
 }

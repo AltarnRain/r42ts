@@ -2,7 +2,7 @@ import PlayerBullet from "../../Player/PlayerBullet";
 import PlayerShip from "../../Player/PlayerShip";
 import { MoveLimits } from "../../Types/Types";
 import Constants from "./Constants";
-import { SetBullet, SetPlayer, SetPlayerMovementLimit, SetPlayerLeftLocation, SetPlayerTopLocation } from "./Types";
+import { SetBullet, SetPlayer, SetPlayerLocation, SetPlayerMovementLimit } from "./Types";
 
 export function setPlayer(ship: PlayerShip | undefined): SetPlayer {
     return {
@@ -25,16 +25,10 @@ export function setPlayerMovementLimit(moveLimit: MoveLimits): SetPlayerMovement
     };
 }
 
-export function setPlayerLeftLocation(left: number): SetPlayerLeftLocation {
+export function setPlayerLocation(left: number, top: number): SetPlayerLocation {
     return {
-        type: Constants.setPlayerLeftLocation,
-        payload: left,
-    };
-}
-
-export function setPlayerTopLocation(top: number): SetPlayerTopLocation {
-    return {
-        type: Constants.setPlayerTopLocation,
-        payload: top,
+        type: Constants.setPlayerLocation,
+        left,
+        top
     };
 }

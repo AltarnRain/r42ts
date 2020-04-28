@@ -7,7 +7,7 @@
 import { movePlayer } from "../Handlers/MovePlayer";
 import GameLoop from "../Main/GameLoop";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { setPlayer, setPlayerLeftLocation, setPlayerMovementLimit, setPlayerTopLocation } from "../State/Player/Actions";
+import { setPlayer, setPlayerLocation, setPlayerMovementLimit } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types/Types";
 import { getFrameReturner } from "../Utility/Frame";
@@ -128,8 +128,7 @@ function createParticles(): void {
  */
 function setupFormation(targetLeftLocation: number, targetTopLocation: number, speed: "fast" | "slow", limit: MoveLimits): void {
     formationSpeed = speed;
-    dispatch(setPlayerLeftLocation(targetLeftLocation));
-    dispatch(setPlayerTopLocation(targetTopLocation));
+    dispatch(setPlayerLocation(targetLeftLocation, targetTopLocation));
     createParticles();
 
     if (speed === "fast") {

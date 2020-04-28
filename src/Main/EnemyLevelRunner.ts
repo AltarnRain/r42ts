@@ -18,7 +18,7 @@ import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
 import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, removeExplosionCenter, removeParticle, setEnemies, setPhaserLocations } from "../State/EnemyLevel/Actions";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
-import { setBullet, setPlayer, setPlayerLeftLocation, setPlayerTopLocation } from "../State/Player/Actions";
+import { setBullet, setPlayer, setPlayerLocation } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { Frame } from "../Types/Types";
 import { getRandomArrayElement } from "../Utility/Array";
@@ -217,8 +217,7 @@ function handlePlayerDeath(player: PlayerShip): void {
     dispatch(removeLife());
 
     const spawnLocation = getShipSpawnLocation();
-    dispatch(setPlayerLeftLocation(spawnLocation.left));
-    dispatch(setPlayerTopLocation(spawnLocation.top));
+    dispatch(setPlayerLocation(spawnLocation.left, spawnLocation.top));
 }
 
 /**

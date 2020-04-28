@@ -1,7 +1,7 @@
 import PlayerBullet from "../../Player/PlayerBullet";
 import PlayerShip from "../../Player/PlayerShip";
-import Constants from "./Constants";
 import { MoveLimits } from "../../Types/Types";
+import Constants from "./Constants";
 
 export interface SetPlayer {
     type: typeof Constants.setPlayer;
@@ -18,20 +18,15 @@ export interface SetPlayerMovementLimit {
     payload: MoveLimits;
 }
 
-export interface SetPlayerLeftLocation {
-    type: typeof Constants.setPlayerLeftLocation;
-    payload: number;
+export interface SetPlayerLocation {
+    type: typeof Constants.setPlayerLocation;
+    left: number;
+    top: number;
 }
 
-export interface SetPlayerTopLocation {
-    type: typeof Constants.setPlayerTopLocation;
-    payload: number;
-}
-
-export type PlayerStateTypes = 
+export type PlayerStateTypes =
     SetPlayer |
     SetBullet |
     SetPlayerMovementLimit |
-    SetPlayerLeftLocation |
-    SetPlayerTopLocation
+    SetPlayerLocation
     ;

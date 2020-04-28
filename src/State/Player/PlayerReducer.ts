@@ -33,11 +33,10 @@ export default function playerReducer(state: PlayerState = initState(), action: 
             case Constants.setPlayerMovementLimit:
                 draft.moveLimit = action.payload;
                 break;
-            case Constants.setPlayerLeftLocation:
-                draft.playerLeftLocation = action.payload;
                 break;
-            case Constants.setPlayerTopLocation:
-                draft.playerTopLocation = action.payload;
+            case Constants.setPlayerLocation:
+                draft.playerLeftLocation = action.left;
+                draft.playerTopLocation = action.top;
                 break;
         }
     });
