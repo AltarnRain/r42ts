@@ -45,9 +45,9 @@ export default class Level00 extends BaseLevel {
         // Register the background draw function so it runs in the game loop.
         this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
 
-        // this.robotFrameAnimationTest();
+        this.robotFrameAnimationTest();
 
-        this.orbEnemyAnimationTest();
+        // this.orbEnemyAnimationTest();
         dispatch(setPlayer(new PlayerShip()));
 
         GameLoop.registerUpdateState(enemyLevelRunner);
@@ -63,8 +63,7 @@ export default class Level00 extends BaseLevel {
         const robotFrames = getRobotFrames();
         const enemies = robotSpawnLocationsAndColor.map((lc, index) => {
             if (index < robotFrames.frames.length) {
-                // const frameProvider = new ImmoboleFrameProvider(index);
-                const frameProvider  = new BackAndForthFrameProvider(index);
+                const frameProvider = new BackAndForthFrameProvider(index);
                 const LocationProvider = new VanishRightAppearLeft(0, 0);
                 return new RobotEnemy(lc.left, lc.top, 150, lc.color, LocationProvider, frameProvider, downFireAngleProvider);
             }
@@ -74,14 +73,10 @@ export default class Level00 extends BaseLevel {
     }
 
     private orbEnemyAnimationTest() {
-        // const orbFrames = getOrbFrames();
         const enemies = orbSpawnLocations.map((lc) => {
-            // if (index < 1) {
-                // const frameProvider = new ImmoboleFrameProvider(index);
-                const frameProvider  = new CircleFrameProvider(0);
-                const locationProvider = new MoveDownAppearUp(80, 1, angles.down);
-                return new OrbEnemy(lc.left, lc.top, 200, locationProvider, frameProvider, downFireAngleProvider);
-            // }
+            const frameProvider = new CircleFrameProvider(0);
+            const locationProvider = new MoveDownAppearUp(40, 0.3, angles.down);
+            return new OrbEnemy(lc.left, lc.top, 200, locationProvider, frameProvider, downFireAngleProvider);
         }).filter((x) => x !== undefined);
         dispatch(setEnemies(enemies));
     }

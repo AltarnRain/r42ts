@@ -44,10 +44,6 @@ export default class MoveDownAppearUp extends BaseLocationProvider {
             top = gameFieldTop + height;
         }
 
-        if (top < gameFieldTop) {
-            top = this.bottomLimit;
-        }
-
         return getLocation(left, top, this.angle, this.speed);
     }
 }
