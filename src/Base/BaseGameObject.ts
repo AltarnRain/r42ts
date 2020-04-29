@@ -17,16 +17,6 @@ import ILocationProvider from "./ILocationProvider";
 
 export default abstract class BaseGameObject {
     /**
-     * Game object left location.
-     */
-    protected left: number;
-
-    /**
-     * Game object top location.
-     */
-    protected top: number;
-
-    /**
      * Current frame of the object
      */
     protected currentFrame!: Frame;
@@ -42,21 +32,14 @@ export default abstract class BaseGameObject {
      */
     constructor(locationProvider: ILocationProvider) {
         this.locationProvider = locationProvider;
-
-        const {
-            left,
-            top,
-        } = this.locationProvider.getCurrentLocation();
-
-        this.left = left;
-        this.top = top;
     }
 
     /**
      * Animate the object
      */
     public draw(): void {
-        renderFrame(this.left, this.top, this.currentFrame);
+        const { left, top } = this.locationProvider.getCurrentLocation();
+        renderFrame(left, top, this.currentFrame);
     }
 
     /**
@@ -72,7 +55,7 @@ export default abstract class BaseGameObject {
      * @returns {Location}. The location of the object.
      */
     public getLocation(): GameLocation {
-        return { left: this.left, top: this.top };
+        return this.locationProvider.getCurrentLocation();
     }
 
     /**
