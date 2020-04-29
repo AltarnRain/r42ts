@@ -34,7 +34,7 @@ export default function particleProvider(left: number, top: number, getExplosion
         const angle = explosion.angles[i];
         const speed = explosion.useSpeed ? explosion.speed : explosion.speeds[i];
 
-        const locationProvider = new Accelerating(left, top, angle, speed, explosion.acceleration);
+        const locationProvider = new Accelerating(left, top, speed, angle, explosion.acceleration);
         const p = new Particle(locationProvider, getFrameReturner(particleFrame));
         particles.push(p);
     }
