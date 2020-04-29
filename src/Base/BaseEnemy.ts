@@ -120,6 +120,17 @@ export abstract class BaseEnemy extends BaseGameObject {
     protected abstract onFrameChange(): void;
 
     /**
+     * Returns the enemies offsets locations.
+     */
+    public getLocation(): GameLocation {
+        // Overrides BaseEnemy
+        return {
+            left: this.offsetLeft,
+            top: this.offsetTop
+        };
+    }
+
+    /**
      * Base implementation of a state update.
      * @param {number} tick
      */

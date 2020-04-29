@@ -12,6 +12,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import { FrameProviderFunction, GameObjectType } from "../Types/Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { fallsWithin } from "../Utility/Location";
+import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          Particle
@@ -79,5 +80,12 @@ export default class Particle extends BaseGameObject {
      */
     public getObjectType(): GameObjectType {
         return "particle";
+    }
+
+    /**
+     * Returns the particle location.
+     */
+    public getLocation(): GameLocation {
+        return this.locationProvider.getCurrentLocation();
     }
 }

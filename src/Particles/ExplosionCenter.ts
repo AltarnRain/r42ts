@@ -6,6 +6,7 @@
 
 import BaseGameObject from "../Base/BaseGameObject";
 import ILocationProvider from "../Base/ILocationProvider";
+import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
@@ -96,5 +97,9 @@ export default class ExplosionCenter extends BaseGameObject {
     public getHitbox(): GameRectangle {
         const { left, top} = this.locationProvider.getCurrentLocation();
         return getFrameHitbox(left, top, this.dimensions.width, this.dimensions.height, 0, 0);
+    }
+
+    public getLocation(): GameLocation {
+        return this.locationProvider.getCurrentLocation();
     }
 }

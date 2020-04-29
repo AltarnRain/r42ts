@@ -38,7 +38,7 @@ export default abstract class BaseGameObject {
      * Animate the object
      */
     public draw(): void {
-        const { left, top } = this.locationProvider.getCurrentLocation();
+        const { left, top } = this.getLocation();
         renderFrame(left, top, this.currentFrame);
     }
 
@@ -54,9 +54,7 @@ export default abstract class BaseGameObject {
      * Get the game location for colision detection.
      * @returns {Location}. The location of the object.
      */
-    public getLocation(): GameLocation {
-        return this.locationProvider.getCurrentLocation();
-    }
+    public abstract getLocation(): GameLocation;
 
     /**
      * Returns the object type.
