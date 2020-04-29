@@ -8,7 +8,7 @@ import BaseLevel from "../Base/BaseLevel";
 import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
 import { RobotBulletSpeed } from "../Constants/EnemyBulletSpeed";
-import { RobotFrameTime } from "../Constants/EnemyFrameTime";
+import { robotFrameTime } from "../Constants/EnemyFrameTime";
 import { robotMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import { robotFireFrequence } from "../Constants/FireFrequences";
 import { robotAngle as robotAngle } from "../Constants/MovementAngles";
@@ -49,7 +49,7 @@ export default class Level02 extends BaseLevel {
             const { width, height } = getMaximumFrameDimensions(getRobotFrames().frames, averagePixelSize);
             const locationProvider = new VanishRightAppearLeft(lc.left, lc.top, robotMovementSpeed, robotAngle, width, height);
 
-            return new RobotEnemy(lc.color, RobotFrameTime, locationProvider, frameProvider, getExplosion02, getRobotFrames, downFireAngleProvider);
+            return new RobotEnemy(lc.color, robotFrameTime, locationProvider, frameProvider, getExplosion02, getRobotFrames, downFireAngleProvider);
         });
 
         const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, RobotBulletSpeed, robotLevel02FireCheck);

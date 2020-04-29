@@ -99,6 +99,9 @@ export default class ExplosionCenter extends BaseGameObject {
         return getFrameHitbox(left, top, this.dimensions.width, this.dimensions.height, 0, 0);
     }
 
+    /**
+     * Get the explosion location.
+     */
     public getLocation(): GameLocation {
         return this.locationProvider.getCurrentLocation();
     }

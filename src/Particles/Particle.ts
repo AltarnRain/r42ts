@@ -6,13 +6,13 @@
 
 import BaseGameObject from "../Base/BaseGameObject";
 import ILocationProvider from "../Base/ILocationProvider";
+import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { FrameProviderFunction, GameObjectType } from "../Types/Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { fallsWithin } from "../Utility/Location";
-import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          Particle

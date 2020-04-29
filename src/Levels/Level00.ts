@@ -4,31 +4,28 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemy } from "../Base/BaseEnemy";
 import BaseLevel from "../Base/BaseLevel";
-import { angles } from "../Constants/Angles";
-import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
-import OrbEnemy from "../Enemies/Orb/OrbEnemy";
-import RobotEnemy from "../Enemies/Robot/RobotEnemy";
-import getRobotFrames from "../Enemies/Robot/RobotFrames";
-import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
-import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
-import { drawBackground } from "../GameScreen/StaticRenders";
-import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
-import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
-import enemyLevelRunner from "../Main/EnemyLevelRunner";
-import GameLoop from "../Main/GameLoop";
-import PlayerShip from "../Player/PlayerShip";
+import { birdMovementSpeed } from "../Constants/EnemyMovementSpeeds";
+import { birdRandomAngles } from "../Constants/MovementAngles";
+import BirdEnemy from "../Enemies/Bird/BirdEnemy";
+import getBirdFrames from "../Enemies/Bird/BirdFrames";
+import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
+import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
-import CircleFrameProvider from "../Providers/CircleFrameProvider";
-import { setEnemies } from "../State/EnemyLevel/Actions";
-import { setPlayer } from "../State/Player/Actions";
-import { dispatch } from "../State/Store";
+import dimensionProvider from "../Providers/DimensionProvider";
+import getExplosion01 from "../SharedFrames/Explosion01";
+import { getRandomArrayElement } from "../Utility/Array";
+import { getMaximumFrameDimensions, getRandomFrameKeyIndex } from "../Utility/Frame";
+import { birdFrameTime } from "../Constants/EnemyFrameTime";
 
 /**
  * Module:          Level 00
  * Responsibility:  Define the playground level.
  */
+
+const {
+    averagePixelSize,
+} = dimensionProvider();
 
 /**
  * Sets up level 00. Play ground level.
@@ -40,19 +37,27 @@ export default class Level00 extends BaseLevel {
     }
 
     public start(): void {
-        // super.start();
+        super.start();
 
-        // Register the background draw function so it runs in the game loop.
-        this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
+        const enemies = birdSpawnLocations.map((location, index) => {
 
-        // this.robotFrameAnimationTest();
+            if (index === 0) {
+                // This may deviate from te original game but I do not care. Each birds will
+                // begin to move in a random direction determined by the function below
+                const randomMovementAngle = getRandomArrayElement(birdRandomAngles);
 
-        // this.orbEnemyAnimationTest();
-        dispatch(setPlayer(new PlayerShip()));
+                // In level 01 if the a bird hits a side it will move in the other direction.
+                const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(getBirdFrames().frames));
 
-        GameLoop.registerUpdateState(enemyLevelRunner);
+                const { width, height } = getMaximumFrameDimensions(getBirdFrames().frames, averagePixelSize);
+                const locationProvider = new SideToSideUpAndDown(location.left, location.top, birdMovementSpeed, randomMovementAngle, width, height);
+                return new BirdEnemy(birdFrameTime, locationProvider, frameProvider, getExplosion01, getBirdFrames);
+            }
+        });
 
-        // this.begin([], 0);
+        const e = enemies[0] as BirdEnemy;
+
+        this.begin([e]);
     }
 
     /**

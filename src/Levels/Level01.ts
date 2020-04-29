@@ -5,7 +5,7 @@
  */
 
 import BaseLevel from "../Base/BaseLevel";
-import { BirdFrameTime as birdFrameTime } from "../Constants/EnemyFrameTime";
+import { birdFrameTime } from "../Constants/EnemyFrameTime";
 import { birdMovementSpeed as birdMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import { birdRandomAngles as birdRandomAngles } from "../Constants/MovementAngles";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";

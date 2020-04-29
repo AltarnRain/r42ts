@@ -62,7 +62,15 @@ export abstract class BaseEnemy extends BaseGameObject {
      * Helps the enemy determine which angle it will use to fire a bullet.
      */
     private angleProvider?: FireAngleProviderFunction;
+
+    /**
+     * Left position offset for animation.
+     */
     private offsetLeft: number;
+
+    /**
+     * Top position offset for animation.
+     */
     private offsetTop: number;
 
     /**
@@ -135,6 +143,8 @@ export abstract class BaseEnemy extends BaseGameObject {
      * @param {number} tick
      */
     public updateState(tick: number) {
+        super.updateState(tick);
+
         this.frameTickHandler.tick(tick);
 
         const offsetLocation = this.getOffsetLocation();

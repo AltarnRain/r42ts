@@ -9,8 +9,8 @@
  * Responsibility:  Constants how many milliseconds should be between frame changes.
  */
 
-export const BirdFrameTime = 100;
+export const birdFrameTime = 100;
 
-export const RobotFrameTime = 200;
+export const robotFrameTime = 200;
 
-export const OrbFrameTime = 200;
+export const orbFrameTime = 200;
