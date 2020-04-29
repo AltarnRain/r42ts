@@ -15,6 +15,7 @@ import { robotAngle as robotAngle } from "../Constants/MovementAngles";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import getRobotFrames from "../Enemies/Robot/RobotFrames";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
+import robotsToFire from "../Enemies/Robot/RobotsToFire";
 import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
 import robotLevel02FireCheck from "../FireChecks/RobotFireCheck";
 import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
@@ -52,7 +53,7 @@ export default class Level02 extends BaseLevel {
             return new RobotEnemy(lc.color, robotFrameTime, locationProvider, frameProvider, getExplosion02, getRobotFrames, downFireAngleProvider);
         });
 
-        const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, RobotBulletSpeed, robotLevel02FireCheck);
+        const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, RobotBulletSpeed,  robotsToFire, robotLevel02FireCheck);
         this.begin(enemies, robotFireFrequence, bulletProvider);
     }
 }

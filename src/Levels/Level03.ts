@@ -15,6 +15,7 @@ import { orbAngle } from "../Constants/MovementAngles";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import getOrbFrames from "../Enemies/Orb/OrbFrames";
+import orbsToFire from "../Enemies/Orb/OrbsToFire";
 import orbEnemyAngleProvider from "../FireAngleProviders/OrbEnemyAngleProvider";
 import orbFireCheck from "../FireChecks/OrbFireCheck";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
@@ -45,7 +46,7 @@ export class Level03 extends BaseLevel {
             return new OrbEnemy( orbFrameTime, locationProvider, frameProvider, getExplosion02, getOrbFrames, orbEnemyAngleProvider);
         });
 
-        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, orbBulletSpeed, orbFireCheck);
+        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, orbBulletSpeed, orbsToFire, orbFireCheck);
         this.begin(enemies, orbFireFrequence, bulletRunner);
     }
 }

@@ -10,7 +10,7 @@ import BulletParticle from "../Particles/BulletParticle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { addParticle, setEnemyFireTick } from "../State/EnemyLevel/Actions";
 import { appState, dispatch } from "../State/Store";
-import { FireCheckFunction, Frame, FrameProviderFunction } from "../Types/Types";
+import { FireCheckFunction, Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types/Types";
 import { getFrameReturner } from "../Utility/Frame";
 import { calculateAngle, calculateAngleDifference } from "../Utility/Geometry";
 
@@ -43,17 +43,20 @@ export default class BulletRunner {
      * The color of the bullet fired.
      */
     private bulletColor: string;
+    private shipsToFire: ShipsToFireFunction;
 
     constructor(
         getBulletFrame: FrameProviderFunction,
         bulletColor: string,
         speed: number,
-        shouldfire: FireCheckFunction) {
+        shipsToFire: ShipsToFireFunction,
+        fireCheck: FireCheckFunction) {
 
-        this.fireCheck = shouldfire;
         this.speed = speed;
         this.bulletColor = bulletColor;
         this.bulletFrame = getBulletFrame();
+        this.fireCheck = fireCheck;
+        this.shipsToFire = shipsToFire;
     }
 
     public getBullets(tick: number): void {
@@ -67,60 +70,42 @@ export default class BulletRunner {
             return;
         }
 
-        // To determine which enemies have the best change of hitting
-        // the player we calculate difference between the angle at which the
-        // enemy will fire vs the angle towards the player.
-        const candidates: Array<{ ship: BaseEnemy, angleDifference: number, angle: number }> = [];
-
+        const enemiesWhoMayFire: BaseEnemy[] = [];
         for (const enemy of enemyLevelState.enemies) {
             const ship = enemy.ship;
             const lastShotTick = enemy.lastFireTick;
 
             // Check if this enemy's shot timeout has passed.
             if (tick - lastShotTick > enemyLevelState.fireInterval) {
-
-                const enemyFireAngle = ship.getFireAngle();
-                const center = ship.getCenterLocation();
-                const angleToPlayer = calculateAngle(center.left, center.top, playerState.playerLeftLocation, playerState.playerTopLocation);
-
-                if (enemyFireAngle !== undefined && angleToPlayer !== undefined) {
-                    const angleDifference = calculateAngleDifference(enemyFireAngle, angleToPlayer);
-
-                    candidates.push({ ship, angleDifference, angle: enemyFireAngle });
-                }
+                enemiesWhoMayFire.push(enemy.ship);
             }
         }
 
-        // Sort the candidates. Those with the lowest angle difference will come out on top.
-        candidates.sort((e1, e2) => {
-            if (e1.angleDifference < e2.angleDifference) {
-                return -1;
-            } else {
-                return 1;
-            }
-        });
+        const ships = this.shipsToFire(enemiesWhoMayFire);
 
         // The candiates are sorted so the enemeies with the best odds of hitting the player
         // are at the top. Now we'll use the firecheck function to get an array of enemies that
         // can actually fire.
-        for (const candidate of candidates) {
+        for (const ship of ships) {
 
             // Always call a fire check function with the last version of the enemyLevelState
             // this state is constantly updated by the dispatches done below.
             // Fire check functions check the state and make the final call if the ship
             // can fire or not.
-            if (this.fireCheck(candidate.ship)) {
-                const hitbox = candidate.ship.getHitbox();
-                const enemyFireAngle = candidate.angle;
+            if (this.fireCheck(ship)) {
+                const hitbox = ship.getHitbox();
+                const enemyFireAngle = ship.getFireAngle();
+                if (enemyFireAngle !== undefined) {
 
-                const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - averagePixelSize;
-                const top = hitbox.bottom + averagePixelSize;
+                    const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - averagePixelSize;
+                    const top = hitbox.bottom + averagePixelSize;
 
-                const locationProvider = new Accelerating(left, top, this.speed, enemyFireAngle, 1);
-                const bullet = new BulletParticle(locationProvider, candidate.ship, this.bulletColor, getFrameReturner(this.bulletFrame));
+                    const locationProvider = new Accelerating(left, top, this.speed, enemyFireAngle, 1);
+                    const bullet = new BulletParticle(locationProvider, ship, this.bulletColor, getFrameReturner(this.bulletFrame));
 
-                dispatch(addParticle(bullet));
-                dispatch(setEnemyFireTick(candidate.ship, tick));
+                    dispatch(addParticle(bullet));
+                    dispatch(setEnemyFireTick(ship, tick));
+                }
             }
         }
     }

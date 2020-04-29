@@ -82,3 +82,8 @@ export type FrameProviderFunction = () => Frame;
  * An angle. An angle can be a number or undefined.
  */
 export type Angle = number | undefined;
+
+/**
+ * A function that provides an array of enemies that can fire.
+ */
+export type ShipsToFireFunction = (enemies: BaseEnemy[]) => BaseEnemy[];
