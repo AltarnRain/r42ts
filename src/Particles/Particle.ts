@@ -59,7 +59,9 @@ export default class Particle extends BaseGameObject {
             fullHeight,
         } = dimensionProvider();
 
-        return fallsWithin(this.left, this.top, gameFieldTop, fullHeight, 0, fullWidth);
+        const { left, top} = this.locationProvider.getCurrentLocation();
+
+        return fallsWithin(left, top, gameFieldTop, fullHeight, 0, fullWidth);
     }
 
     /**
@@ -67,7 +69,8 @@ export default class Particle extends BaseGameObject {
      * @returns {GameRectangle}. The hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(this.left, this.top, this.dimensions.width, this.dimensions.height, topOffset, bottomOffset);
+        const { left, top} = this.locationProvider.getCurrentLocation();
+        return getFrameHitbox(left, top, this.dimensions.width, this.dimensions.height, topOffset, bottomOffset);
     }
 
     /**

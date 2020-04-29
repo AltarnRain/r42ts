@@ -94,6 +94,7 @@ export default class ExplosionCenter extends BaseGameObject {
      * @returns {GameRectangle}. The hitbox.
      */
     public getHitbox(): GameRectangle {
-        return getFrameHitbox(this.left, this.top, this.dimensions.width, this.dimensions.height, 0, 0);
+        const { left, top} = this.locationProvider.getCurrentLocation();
+        return getFrameHitbox(left, top, this.dimensions.width, this.dimensions.height, 0, 0);
     }
 }

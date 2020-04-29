@@ -62,6 +62,8 @@ export abstract class BaseEnemy extends BaseGameObject {
      * Helps the enemy determine which angle it will use to fire a bullet.
      */
     private angleProvider?: FireAngleProviderFunction;
+    private offsetLeft: number;
+    private offsetTop: number;
 
     /**
      * Construct the enemy.
@@ -92,6 +94,10 @@ export abstract class BaseEnemy extends BaseGameObject {
         this.angleProvider = fireAngleProvider;
         this.frameProvider = frameProvider;
         this.frameProvider.setFrames(offSetFrames.frames);
+
+        const { left, top } = this.getOffsetLocation();
+        this.offsetLeft = left;
+        this.offsetTop = top;
     }
 
     /**
@@ -120,12 +126,9 @@ export abstract class BaseEnemy extends BaseGameObject {
     public updateState(tick: number) {
         this.frameTickHandler.tick(tick);
 
-        // Use the maximum widths of the enemies frames to prevent the enemy from getting stick on the sides.
-        const actualLocation = this.locationProvider.getCurrentLocation();
-
         const offsetLocation = this.getOffsetLocation();
-        this.left = offsetLocation.left;
-        this.top = offsetLocation.top;
+        this.offsetLeft = offsetLocation.left;
+        this.offsetTop = offsetLocation.top;
     }
 
     /**
@@ -159,7 +162,8 @@ export abstract class BaseEnemy extends BaseGameObject {
      * @returns {Location}. Location located at the center of the object.
      */
     public getCenterLocation(): GameLocation {
-        return getFrameCenter(this.left, this.top, this.currentFrame, averagePixelSize);
+        const { left, top } = this.locationProvider.getCurrentLocation();
+        return getFrameCenter(left, top, this.currentFrame, averagePixelSize);
     }
 
     /**
@@ -175,8 +179,8 @@ export abstract class BaseEnemy extends BaseGameObject {
      */
     public getHitbox(): GameRectangle {
         const dimensions = getFrameDimensions(this.frameProvider.getCurrentFrame(), averagePixelSize);
-
-        return getFrameHitbox(this.left, this.top, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
+        const { left, top } = this.locationProvider.getCurrentLocation();
+        return getFrameHitbox(left, top, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
     }
 
     /**
