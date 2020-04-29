@@ -160,7 +160,13 @@ function updateState(): void {
     }
 
     if (allMovingParts.every((p) => p.traveling() === false)) {
-        dispatch(setPlayerMovementLimit ("none"));
+        // Only lift movement restrictions when the formation speed is slow.
+        // Levels place a 'immobile' movement restriction
+        // which is lifted when the level begins.
+        // 'slow' means the level is running.
+        if (formationSpeed === "slow") {
+            dispatch(setPlayerMovementLimit ("none"));
+        }
         dispatch(setPlayer(new PlayerShip()));
         allMovingParts = [];
         formationInProgress = false;

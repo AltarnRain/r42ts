@@ -13,6 +13,7 @@ import { addPhaser, nextLevel } from "../State/Game/Actions";
 import { appState, dispatch } from "../State/Store";
 import { TickFunction } from "../Types/Types";
 import { BaseEnemy } from "./BaseEnemy";
+import { setPlayerMovementLimit } from "../State/Player/Actions";
 
 /**
  * Module:          BaseLevel
@@ -56,6 +57,8 @@ export default abstract class BaseLevel {
      */
     public start(): void {
         const { gameState } = appState();
+
+        dispatch(setPlayerMovementLimit("immobile"));
 
         // Register the background draw function so it runs in the game loop.
         this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
@@ -103,6 +106,8 @@ export default abstract class BaseLevel {
 
             // Add a function to the GameLoop that will check if a level has been won.
             this.registerSubscription(GameLoop.registerUpdateState(() => this.monitorLevelWonRun()));
+
+            dispatch(setPlayerMovementLimit("none"));
         }, 1000);
     }
 

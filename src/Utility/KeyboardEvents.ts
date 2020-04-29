@@ -5,9 +5,9 @@
  */
 
 import { isValidGameKey } from "../Guard";
+import { setPause } from "../State/Game/Actions";
 import { keyDown, keyUp } from "../State/Keyboard/Actions";
 import { appState, dispatch } from "../State/Store";
-import { setPause } from "../State/Game/Actions";
 
 /**
  * Module:          KeyboardEVents
