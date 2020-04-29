@@ -10,10 +10,10 @@ import { drawBackground } from "../GameScreen/StaticRenders";
 import GameLoop from "../Main/GameLoop";
 import { resetLevelState, setEnemies, setFireInterval } from "../State/EnemyLevel/Actions";
 import { addPhaser, nextLevel } from "../State/Game/Actions";
+import { setPlayerMovementLimit } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { TickFunction } from "../Types/Types";
 import { BaseEnemy } from "./BaseEnemy";
-import { setPlayerMovementLimit } from "../State/Player/Actions";
 
 /**
  * Module:          BaseLevel
