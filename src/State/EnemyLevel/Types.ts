@@ -10,10 +10,10 @@
  */
 
 import { BaseEnemy } from "../../Base/BaseEnemy";
-import BaseParticle from "../../Base/BaseParticle";
 import { GameLocation } from "../../Models/GameLocation";
 import ExplosionCenter from "../../Particles/ExplosionCenter";
 import Constants from "./Constants";
+import Particle from "../../Particles/Particle";
 
 export interface ResetLevelState {
     type: typeof Constants.resetLevelState;
@@ -26,17 +26,17 @@ export interface SetEnemies {
 
 export interface AddParticle {
     type: typeof Constants.addParticle;
-    payload: BaseParticle;
+    payload: Particle;
 }
 
 export interface RemoveParticle {
     type: typeof Constants.removeParticle;
-    payload: BaseParticle;
+    payload: Particle;
 }
 
 export interface AddParticles {
     type: typeof Constants.addParticles;
-    payload: BaseParticle[];
+    payload: Particle[];
 }
 
 export interface RemoveEnemy {

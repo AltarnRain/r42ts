@@ -10,11 +10,11 @@
  */
 
 import { BaseEnemy } from "../../Base/BaseEnemy";
-import BaseParticle from "../../Base/BaseParticle";
 import { GameLocation } from "../../Models/GameLocation";
 import ExplosionCenter from "../../Particles/ExplosionCenter";
 import Constants from "./Constants";
 import { AddExplosionCenter, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, RemoveExplosionCenter, RemoveParticle, ResetLevelState, SetEnemies, SetEnemyFireTick, SetFireInterval, SetPhaserLocations } from "./Types";
+import Particle from "../../Particles/Particle";
 
 export function resetLevelState(): ResetLevelState {
     return {
@@ -29,21 +29,21 @@ export function setEnemies(enemies: BaseEnemy[]): SetEnemies {
     };
 }
 
-export function addParticle(particle: BaseParticle): AddParticle {
+export function addParticle(particle: Particle): AddParticle {
     return {
         type: Constants.addParticle,
         payload: particle,
     };
 }
 
-export function addParticles(particles: BaseParticle[]): AddParticles {
+export function addParticles(particles: Particle[]): AddParticles {
     return {
         type: Constants.addParticles,
         payload: particles,
     };
 }
 
-export function removeParticle(particle: BaseParticle): RemoveParticle {
+export function removeParticle(particle: Particle): RemoveParticle {
     return {
         type: Constants.removeParticle,
         payload: particle,

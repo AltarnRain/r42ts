@@ -4,8 +4,8 @@
  * See LICENSE.MD.
  */
 
-import BaseParticle from "./Base/BaseParticle";
 import BulletParticle from "./Particles/BulletParticle";
+import Particle from "./Particles/Particle";
 import { allGameKeys, GameKeys } from "./Utility/KeyboardEvents";
 
 /**
@@ -13,7 +13,7 @@ import { allGameKeys, GameKeys } from "./Utility/KeyboardEvents";
  * Responsibility:  TypeGuards
  */
 
-export function isEnemyBullet(particle: BaseParticle): particle is BulletParticle {
+export function isEnemyBullet(particle: Particle): particle is BulletParticle {
     return particle && particle.getObjectType() === "enemybullet";
 }
 

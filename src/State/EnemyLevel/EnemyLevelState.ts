@@ -4,9 +4,9 @@
  * See LICENSE.MD.
  */
 
-import BaseParticle from "../../Base/BaseParticle";
 import { GameLocation } from "../../Models/GameLocation";
 import ExplosionCenter from "../../Particles/ExplosionCenter";
+import Particle from "../../Particles/Particle";
 import { Enemy } from "./Enemy";
 
 /**
@@ -24,7 +24,7 @@ export default interface EnemyLevelState {
     /**
      * Particles travelling on the screen.
      */
-    particles: BaseParticle[];
+    particles: Particle[];
 
     /**
      * Explosion centers on the screen.

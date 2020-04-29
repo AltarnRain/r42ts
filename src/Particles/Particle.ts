@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
-import BaseParticle from "../Base/BaseParticle";
+import BaseGameObject from "../Base/BaseGameObject";
 import ILocationProvider from "../Base/ILocationProvider";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { FrameProviderFunction } from "../Types/Types";
+import { FrameProviderFunction, GameObjectType } from "../Types/Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { fallsWithin } from "../Utility/Location";
 
@@ -25,7 +25,7 @@ const {
 const topOffset = averagePixelSize / 2 * -1;
 const bottomOffset = averagePixelSize / 2;
 
-export default class Particle extends BaseParticle {
+export default class Particle extends BaseGameObject {
 
     /**
      * Dimensions of the particle.
@@ -68,5 +68,13 @@ export default class Particle extends BaseParticle {
      */
     public getHitbox(): GameRectangle {
         return getFrameHitbox(this.left, this.top, this.dimensions.width, this.dimensions.height, topOffset, bottomOffset);
+    }
+
+    /**
+     * Return the object type.
+     * @returns {GameObjectType}. Particle.
+     */
+    public getObjectType(): GameObjectType {
+        return "particle";
     }
 }
