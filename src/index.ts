@@ -10,7 +10,7 @@ import GameLoop from "./Main/GameLoop";
 import playerRunner from "./Main/PlayerRunner";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
 import dimensionProvider from "./Providers/DimensionProvider";
-import { playerMortality } from "./State/Debugging/Actions";
+import { playerMortality, hitboxesOn } from "./State/Debugging/Actions";
 import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers } from "./State/Game/Actions";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
@@ -44,9 +44,10 @@ window.onload = () => {
                 GameLoop.registerUpdateState(playerSpawnManager);
                 dispatch(playerMortality("immortal"));
 
+                dispatch(hitboxesOn(true));
                 dispatch(setLives(2));
                 dispatch(setLevel(level));
-                dispatch(setPhasers(20));
+                dispatch(setPhasers(1));
                 GameLoop.Start();
 
                 (window as any).r42 = {
@@ -58,6 +59,7 @@ window.onload = () => {
                     setLives: (n: number) => dispatch(setLives(n)),
                     increaseScore: (n: number) => dispatch(increaseScore(n)),
                     addPhaser: () => dispatch(addPhaser()),
+                    showHitboxes: (b: boolean) => dispatch(hitboxesOn(b)),
                 };
 
                 break;

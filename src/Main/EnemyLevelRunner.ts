@@ -274,8 +274,8 @@ function DEBUGGING_renderHitboxes() {
         ];
 
         // Add player if defined.
-        if (playerState) {
-            hittableObjects.push(playerState as any);
+        if (playerState.ship) {
+            hittableObjects.push(playerState.ship as any);
         }
 
         // Add bullet if defined.

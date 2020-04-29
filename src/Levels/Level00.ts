@@ -39,20 +39,20 @@ export default class Level00 extends BaseLevel {
     public start(): void {
         super.start();
 
-        const enemies = birdSpawnLocations.map((location) => {
-            // This may deviate from te original game but I do not care. Each birds will
-            // begin to move in a random direction determined by the function below
-            const randomMovementAngle = getRandomArrayElement(birdRandomAngles);
+        // const enemies = birdSpawnLocations.map((location) => {
+        //     // This may deviate from te original game but I do not care. Each birds will
+        //     // begin to move in a random direction determined by the function below
+        //     const randomMovementAngle = getRandomArrayElement(birdRandomAngles);
 
-            // In level 01 if the a bird hits a side it will move in the other direction.
-            const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(getBirdFrames().frames));
+        //     // In level 01 if the a bird hits a side it will move in the other direction.
+        //     const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(getBirdFrames().frames));
 
-            const { width, height } = getMaximumFrameDimensions(getBirdFrames().frames, averagePixelSize);
-            const locationProvider = new SideToSideUpAndDown(location.left, location.top, birdMovementSpeed, randomMovementAngle, width, height);
-            return new BirdEnemy(birdFrameTime, locationProvider, frameProvider, getExplosion01, getBirdFrames);
-        });
+        //     const { width, height } = getMaximumFrameDimensions(getBirdFrames().frames, averagePixelSize);
+        //     const locationProvider = new SideToSideUpAndDown(location.left, location.top, birdMovementSpeed, randomMovementAngle, width, height);
+        //     return new BirdEnemy(birdFrameTime, locationProvider, frameProvider, getExplosion01, getBirdFrames);
+        // });
 
-        this.begin(enemies);
+        this.begin([]);
     }
 
     /**

@@ -200,8 +200,7 @@ export abstract class BaseEnemy extends BaseGameObject {
      */
     public getHitbox(): GameRectangle {
         const dimensions = getFrameDimensions(this.frameProvider.getCurrentFrame(), averagePixelSize);
-        const { left, top } = this.locationProvider.getCurrentLocation();
-        return getFrameHitbox(left, top, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
+        return getFrameHitbox(this.offsetLeft, this.offsetTop, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
     }
 
     /**
