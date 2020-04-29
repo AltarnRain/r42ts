@@ -6,13 +6,11 @@
 
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
-import BaseLocationProvider from "../../Base/BaseLocationProvider";
+import ILocationProvider from "../../Base/ILocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
-import { getExplosion02 } from "../../SharedFrames/Explosion02";
-import { FireAngleProviderFunction, Frame } from "../../Types/Types";
+import { ExplosionProviderFunction, FireAngleProviderFunction, Frame, OffsetFramesProviderFunction } from "../../Types/Types";
 import Mutators from "../../Utility/FrameMutators";
-import getOrbFrames from "./OrbFrames";
 
 /**
  * Module:          OrbEnemy
@@ -39,8 +37,14 @@ export default class OrbEnemy extends BaseEnemy {
     /**
      * Construct the enemy.
      */
-    constructor(left: number, top: number, frameChangeTime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: FireAngleProviderFunction) {
-        super(left, top, frameChangeTime, getOrbFrames, getExplosion02, locationProvider, frameProvider, angleProvider);
+    constructor(
+        frameChangeTime: number,
+        locationProvider: ILocationProvider,
+        frameProvider: BaseFrameProvider,
+        getExplosion: ExplosionProviderFunction,
+        getFrames: OffsetFramesProviderFunction,
+        angleProvider?: FireAngleProviderFunction) {
+        super(frameChangeTime, getFrames, getExplosion, locationProvider, frameProvider, angleProvider);
 
         // We only have one frame in this enemy but its color DOES change. Set the currentFrame to the only available one
         // and sets its color to the first color set so we get a a good render when the enemy first appears.

@@ -5,6 +5,7 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
+import ILocationProvider from "../Base/ILocationProvider";
 import { FrameProviderFunction, GameObjectType } from "../Types/Types";
 import Mutators from "../Utility/FrameMutators";
 import Particle from "./Particle";
@@ -17,8 +18,8 @@ import Particle from "./Particle";
 export default class BulletParticle extends Particle {
     private owner: BaseEnemy;
 
-    constructor(left: number, top: number, owner: BaseEnemy, color: string, getFrame: FrameProviderFunction, angle: number, speed: number) {
-        super(left, top, getFrame, angle, speed, 1);
+    constructor(locationProvider: ILocationProvider, owner: BaseEnemy, color: string, getFrame: FrameProviderFunction) {
+        super(locationProvider, getFrame);
 
         this.owner = owner;
         Mutators.Frame.setColor(this.currentFrame, color);

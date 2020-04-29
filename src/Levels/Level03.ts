@@ -14,16 +14,24 @@ import { orbFireFrequence } from "../Constants/FireFrequences";
 import { orbAngle } from "../Constants/MovementAngles";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
+import getOrbFrames from "../Enemies/Orb/OrbFrames";
 import orbEnemyAngleProvider from "../FireAngleProviders/OrbEnemyAngleProvider";
 import orbFireCheck from "../FireChecks/OrbFireCheck";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 import CircleFrameProvider from "../Providers/CircleFrameProvider";
+import dimensionProvider from "../Providers/DimensionProvider";
+import { getExplosion02 } from "../SharedFrames/Explosion02";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
+import { getMaximumFrameDimensions } from "../Utility/Frame";
 
 /**
  * Module:          Level03
  * Responsibility:  Define level 03
  */
+
+const {
+    averagePixelSize
+} = dimensionProvider();
 
 export class Level03 extends BaseLevel {
 
@@ -31,8 +39,10 @@ export class Level03 extends BaseLevel {
         super.start();
         const enemies = orbSpawnLocations.map((startLocation) => {
             const frameProvider = new CircleFrameProvider(0);
-            const locationProvider = new MoveDownAppearUp(80, orbMovementSpeed, orbAngle);
-            return new OrbEnemy(startLocation.left, startLocation.top, OrbFrameTime, locationProvider, frameProvider, orbEnemyAngleProvider);
+
+            const { width, height } = getMaximumFrameDimensions(getOrbFrames().frames, averagePixelSize);
+            const locationProvider = new MoveDownAppearUp(80, startLocation.left, startLocation.top,  orbMovementSpeed, orbAngle, width, height );
+            return new OrbEnemy( OrbFrameTime, locationProvider, frameProvider, getExplosion02, getOrbFrames, orbEnemyAngleProvider);
         });
 
         const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, orbBulletSpeed, orbFireCheck);

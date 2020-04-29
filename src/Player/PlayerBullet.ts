@@ -4,6 +4,7 @@
  * See LICENSE.MD.
  */
 
+import ILocationProvider from "../Base/ILocationProvider";
 import CGAColors from "../Constants/CGAColors";
 import Particle from "../Particles/Particle";
 import { FrameProviderFunction, GameObjectType } from "../Types/Types";
@@ -25,8 +26,8 @@ export default class PlayerBullet extends Particle {
      * @param {number} speed. Speed of the bullet.
      * @param {number} acceleration. Acceleration of the bullet.
      */
-    constructor(left: number, top: number, getFrame: FrameProviderFunction, angle: number, speed: number) {
-        super(left, top, getFrame, angle, speed, 1);
+    constructor(locationProvider: ILocationProvider, getFrame: FrameProviderFunction) {
+        super(locationProvider, getFrame);
 
         Mutators.Frame.setColor(this.currentFrame, CGAColors.yellow);
     }

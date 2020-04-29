@@ -13,9 +13,9 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import { Angle, ExplosionProviderFunction, FireAngleProviderFunction, GameObjectType, OffsetFramesProviderFunction } from "../Types/Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getMaximumFrameDimensions } from "../Utility/Frame";
 import { getOffsetLocation } from "../Utility/Location";
-import { BaseDestructableObject as BaseDestructable } from "./BaseDestructableObject";
 import BaseFrameProvider from "./BaseFrameProvider";
-import BaseLocationProvider from "./BaseLocationProvider";
+import BaseGameObject from "./BaseGameObject";
+import ILocationProvider from "./ILocationProvider";
 
 /**
  * Module:          BaseEnemy
@@ -31,7 +31,7 @@ const {
 
 const negativeMaxPixelSize = maxPixelSize * -1;
 
-export abstract class BaseEnemy extends BaseDestructable {
+export abstract class BaseEnemy extends BaseGameObject {
 
     /**
      * The frame provider. Must be set in an inheriting class.
@@ -44,16 +44,6 @@ export abstract class BaseEnemy extends BaseDestructable {
     private frameTickHandler: TickHandler;
 
     /**
-     * The real left position the enemy has, without offsets.
-     */
-    protected actualLeft: number;
-
-    /**
-     * The real top position the enemy has, without offsets.
-     */
-    protected actualTop: number;
-
-    /**
      * Offets for each frame.
      */
     protected offSets: GameLocation[];
@@ -62,11 +52,6 @@ export abstract class BaseEnemy extends BaseDestructable {
      * Explosion for the enemy.
      */
     protected explosion: Explosion;
-
-    /**
-     * Provides location. Can be used to alter the movement behaviour of enemies.
-     */
-    protected locationProvider: BaseLocationProvider;
 
     /**
      * Maximum enemy dimensions.
@@ -80,30 +65,19 @@ export abstract class BaseEnemy extends BaseDestructable {
 
     /**
      * Construct the enemy.
-     * @param {number} left. Left coordinate.
-     * @param {number} top. Top coordinate.
-     * @param {number} frameChangeTime. Time in ms between frames.
-     * @param {OffsetFramesProviderFunction} getOffsetFrames. A function that returns an offsets frame object.
-     * @param {ExplosionProviderFunction} getExplosion. A function that returns an explosion object.
-     * @param {BaseLocationProvider} locationProvider. Handles the locations of the enemy. Can be used to inject movement behaviour.
-     * @param {BulletRunner} bulletProvider. A class that checks if the enemy can fire a bullet. When undefined the enemy does not fire.
      */
     constructor(
-        left: number,
-        top: number,
         frameChangeTime: number,
         getOffsetFrames: OffsetFramesProviderFunction,
         getExplosion: ExplosionProviderFunction,
-        locationProvider: BaseLocationProvider,
+        locationProvider: ILocationProvider,
         frameProvider: BaseFrameProvider,
         fireAngleProvider?: FireAngleProviderFunction) {
-        super(left, top);
+        super(locationProvider);
 
         this.locationProvider = locationProvider;
 
         this.explosion = getExplosion();
-        this.actualLeft = left;
-        this.actualTop = top;
         this.frameTickHandler = new TickHandler(frameChangeTime, () => this.onFrameChange());
 
         const offSetFrames = getOffsetFrames();
@@ -117,7 +91,6 @@ export abstract class BaseEnemy extends BaseDestructable {
         this.maxDimensions = getMaximumFrameDimensions(offSetFrames.frames, averagePixelSize);
         this.angleProvider = fireAngleProvider;
         this.frameProvider = frameProvider;
-
         this.frameProvider.setFrames(offSetFrames.frames);
     }
 
@@ -148,9 +121,7 @@ export abstract class BaseEnemy extends BaseDestructable {
         this.frameTickHandler.tick(tick);
 
         // Use the maximum widths of the enemies frames to prevent the enemy from getting stick on the sides.
-        const actualLocation = this.locationProvider.getLocation(this.actualLeft, this.actualTop, this.maxDimensions.width, this.maxDimensions.height);
-        this.actualLeft = actualLocation.left;
-        this.actualTop = actualLocation.top;
+        const actualLocation = this.locationProvider.getCurrentLocation();
 
         const offsetLocation = this.getOffsetLocation();
         this.left = offsetLocation.left;
@@ -163,11 +134,8 @@ export abstract class BaseEnemy extends BaseDestructable {
      */
     protected getOffsetLocation(): GameLocation {
         const frameOffsets = this.offSets[this.frameProvider.getCurrentIndex()];
-        if (frameOffsets !== undefined) {
-            return getOffsetLocation(this.actualLeft, this.actualTop, frameOffsets.left, frameOffsets.top);
-        } else {
-            return { left: this.actualLeft, top: this.actualTop };
-        }
+        const { left, top } = this.locationProvider.getCurrentLocation();
+        return getOffsetLocation(left, top, frameOffsets.left, frameOffsets.top);
     }
 
     /**
@@ -206,7 +174,8 @@ export abstract class BaseEnemy extends BaseDestructable {
      * @returns {GameRectangle}. Bird's hitbox.
      */
     public getHitbox(): GameRectangle {
-        const dimensions = getFrameDimensions(this.currentFrame, averagePixelSize);
+        const dimensions = getFrameDimensions(this.frameProvider.getCurrentFrame(), averagePixelSize);
+
         return getFrameHitbox(this.left, this.top, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
     }
 

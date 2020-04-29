@@ -5,13 +5,15 @@
  */
 
 import { GameLocation } from "../Models/GameLocation";
+import dimensionProvider from "../Providers/DimensionProvider";
+import { getLocation } from "../Utility/Location";
+import ILocationProvider from "./ILocationProvider";
 
-/**
- * Module:          BaseLocationProvider
- * Responsibility:  Base for all location providers.
- */
+const {
+    averagePixelSize
+} = dimensionProvider();
 
-export default abstract class BaseLocationProvider {
+export default abstract class BaseLocationProvider implements ILocationProvider {
 
     /**
      * Angle. Can change and be used to bounce enemies of the sides and bottom.
@@ -27,16 +29,24 @@ export default abstract class BaseLocationProvider {
      * Initial speed for the enemy.
      */
     protected baseSpeed: number;
+    protected width: number;
+    protected height: number;
+    protected left: number;
+    protected top: number;
 
     /**
      * Construct the class
      * @param {number} speed. Speed to start with.
      * @param {number} angle. Initial angle.
      */
-    constructor(speed: number, angle: number) {
+    constructor(left: number, top: number, speed: number, angle: number, width: number, height: number) {
+        this.left = left;
+        this.top = top;
         this.angle = angle;
         this.speed = speed;
         this.baseSpeed = speed;
+        this.width = width;
+        this.height = height;
     }
 
     /**
@@ -46,7 +56,15 @@ export default abstract class BaseLocationProvider {
      * @param {number} width. Width of the object.
      * @param {number} height. Height of the object.
      */
-    public abstract getLocation(actualLeft: number, actualTop: number, width: number, height: number): GameLocation;
+    public getCurrentLocation(): GameLocation {
+        return {left: this.left, top: this.top };
+    }
+
+    public updateState(tick: number): void {
+        const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
+        this.left = left;
+        this.top = top;
+    }
 
     /**
      * increases the speed by the provided factor.

@@ -6,6 +6,7 @@
 
 import { BaseEnemy } from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
+import Immobile from "../LocationProviders/Immobile";
 import Explosion from "../Models/Explosion";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import Particle from "../Particles/Particle";
@@ -228,7 +229,9 @@ function handlePlayerDeath(player: PlayerShip): void {
  * @param {Particle[]} targetParticleArray. The array where the particles will be pushed into. Helps keep track of particles belonging to the player or an enemy.
  */
 function queueExplosionRender(left: number, top: number, explosion: Explosion): void {
-    const center = new ExplosionCenter(left, top, getFrameReturner(explosion.explosionCenterFrame), explosion.explosionCenterDelay);
+
+    const immobile = new Immobile(left, top);
+    const center = new ExplosionCenter(immobile, getFrameReturner(explosion.explosionCenterFrame), explosion.explosionCenterDelay);
     const newParticles = particleProvider(left, top, getExplosionReturner(explosion));
 
     dispatch(addExplosionCenter(center));

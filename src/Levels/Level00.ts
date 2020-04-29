@@ -45,7 +45,7 @@ export default class Level00 extends BaseLevel {
         // Register the background draw function so it runs in the game loop.
         this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
 
-        this.robotFrameAnimationTest();
+        // this.robotFrameAnimationTest();
 
         // this.orbEnemyAnimationTest();
         dispatch(setPlayer(new PlayerShip()));
@@ -59,25 +59,25 @@ export default class Level00 extends BaseLevel {
      * Sets up a robot for every robot frame and player their animation without them moving.
      * They do a Wave :D
      */
-    private robotFrameAnimationTest() {
-        const robotFrames = getRobotFrames();
-        const enemies = robotSpawnLocationsAndColor.map((lc, index) => {
-            if (index < robotFrames.frames.length) {
-                const frameProvider = new BackAndForthFrameProvider(index);
-                const LocationProvider = new VanishRightAppearLeft(0, 0);
-                return new RobotEnemy(lc.left, lc.top, 150, lc.color, LocationProvider, frameProvider, downFireAngleProvider);
-            }
-        }).filter((x) => x !== undefined);
+    // private robotFrameAnimationTest() {
+    //     const robotFrames = getRobotFrames();
+    //     const enemies = robotSpawnLocationsAndColor.map((lc, index) => {
+    //         if (index < robotFrames.frames.length) {
+    //             const frameProvider = new BackAndForthFrameProvider(index);
+    //             const LocationProvider = new VanishRightAppearLeft(0, 0);
+    //             return new RobotEnemy(lc.left, lc.top, 150, lc.color, LocationProvider, frameProvider, downFireAngleProvider);
+    //         }
+    //     }).filter((x) => x !== undefined);
 
-        dispatch(setEnemies(enemies as BaseEnemy[]));
-    }
+    //     dispatch(setEnemies(enemies as BaseEnemy[]));
+    // }
 
-    private orbEnemyAnimationTest() {
-        const enemies = orbSpawnLocations.map((lc) => {
-            const frameProvider = new CircleFrameProvider(0);
-            const locationProvider = new MoveDownAppearUp(40, 0.3, angles.down);
-            return new OrbEnemy(lc.left, lc.top, 200, locationProvider, frameProvider, downFireAngleProvider);
-        }).filter((x) => x !== undefined);
-        dispatch(setEnemies(enemies));
-    }
+    // private orbEnemyAnimationTest() {
+    //     const enemies = orbSpawnLocations.map((lc) => {
+    //         const frameProvider = new CircleFrameProvider(0);
+    //         const locationProvider = new MoveDownAppearUp(40, 0.3, angles.down);
+    //         // return new OrbEnemy(lc.left, lc.top, 200, locationProvider, frameProvider, downFireAngleProvider);
+    //     }).filter((x) => x !== undefined);
+    //     dispatch(setEnemies(enemies));
+    // }
 }

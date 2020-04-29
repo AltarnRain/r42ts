@@ -5,7 +5,7 @@
  */
 
 import BaseLocationProvider from "../Base/BaseLocationProvider";
-import { GameLocation } from "../Models/GameLocation";
+import ILocationProvider from "../Base/ILocationProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { getLocation } from "../Utility/Location";
 
@@ -19,17 +19,21 @@ const {
     fullWidth,
 } = dimensionProvider();
 
-export default class VanishRightAppearLeft extends BaseLocationProvider {
-    public getLocation(left: number, top: number, width: number, height: number): GameLocation {
+export default class VanishRightAppearLeft extends BaseLocationProvider implements ILocationProvider {
 
-        if (left + width > fullWidth) {
-            left = 0;
+    public updateState(tick: number): void {
+        super.updateState(tick);
+
+        if (this.left + this.width > fullWidth) {
+            this.left = 0;
         }
 
-        if (top > fullWidth * 0.5) {
-            top = gameFieldTop + height;
+        if (this.top > fullWidth * 0.5) {
+            this.top = gameFieldTop + this.height;
         }
 
-        return getLocation(left, top, this.angle, this.speed);
+        const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
+        this.left = left;
+        this.top = top;
     }
 }

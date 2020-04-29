@@ -6,11 +6,9 @@
 
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
-import BaseLocationProvider from "../../Base/BaseLocationProvider";
-import { getExplosion02 } from "../../SharedFrames/Explosion02";
-import { FireAngleProviderFunction } from "../../Types/Types";
+import ILocationProvider from "../../Base/ILocationProvider";
+import { ExplosionProviderFunction, FireAngleProviderFunction, OffsetFramesProviderFunction } from "../../Types/Types";
 import Mutators from "../../Utility/FrameMutators";
-import getRobotFrames from "./RobotFrames";
 
 /**
  * Module:          RobotEnemey
@@ -21,8 +19,21 @@ export default class RobotEnemy extends BaseEnemy {
 
     private color: string;
 
-    constructor(left: number, top: number, frameChangeTime: number, color: string, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, angleProvider?: FireAngleProviderFunction) {
-        super(left, top, frameChangeTime, getRobotFrames, getExplosion02, locationProvider, frameProvider, angleProvider);
+    constructor(
+        color: string,
+        frameChangeTime: number,
+        locationProvider: ILocationProvider,
+        frameProvider: BaseFrameProvider,
+        getExplosion: ExplosionProviderFunction,
+        getFrames: OffsetFramesProviderFunction,
+        angleProvider?: FireAngleProviderFunction) {
+        super(
+            frameChangeTime,
+            getFrames,
+            getExplosion,
+            locationProvider,
+            frameProvider,
+            angleProvider);
 
         Mutators.Frame.setColor(this.explosion.explosionCenterFrame, color);
         Mutators.Frame.setColor(this.explosion.particleFrames[0], color);

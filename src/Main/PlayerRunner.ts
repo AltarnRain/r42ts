@@ -4,6 +4,8 @@
  * See LICENSE.MD.
  */
 
+import { angles } from "../Constants/Angles";
+import Accelerating from "../LocationProviders/Accelerating";
 import PlayerBullet from "../Player/PlayerBullet";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { setBullet } from "../State/Player/Actions";
@@ -26,7 +28,7 @@ export default function playerRunner(): void {
 function updateState(): void {
     const { playerState, keyboardState } = appState();
     playerState.ship?.updateState();
-    playerState.playerBullet?.updateState();
+    playerState.playerBullet?.updateState(0);
 
     // Remove objects no longer required.
     if (playerState.playerBullet?.traveling() === false) {
@@ -37,7 +39,8 @@ function updateState(): void {
     if (playerState.ship !== undefined && keyboardState.fire && playerState.playerBullet === undefined) {
         const nozzleLocation = playerState.ship.getNozzleLocation();
 
-        dispatch(setBullet(new PlayerBullet(nozzleLocation.left, nozzleLocation.top, getTwoPixelBullet, 270, 42)));
+        const locationProvider = new Accelerating(nozzleLocation.left, nozzleLocation.top, 42, angles.up, 1);
+        dispatch(setBullet(new PlayerBullet(locationProvider, getTwoPixelBullet)));
     }
 
     // Self destruct and firing a phaser are handled in the EnemeyLevelRunner. That's the only time either can be used.

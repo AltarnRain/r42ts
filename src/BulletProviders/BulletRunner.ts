@@ -5,6 +5,7 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
+import Accelerating from "../LocationProviders/Accelerating";
 import BulletParticle from "../Particles/BulletParticle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { addParticle, setEnemyFireTick } from "../State/EnemyLevel/Actions";
@@ -115,7 +116,8 @@ export default class BulletRunner {
                 const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - averagePixelSize;
                 const top = hitbox.bottom + averagePixelSize;
 
-                const bullet = new BulletParticle(left, top, candidate.ship, this.bulletColor, getFrameReturner(this.bulletFrame), enemyFireAngle, this.speed);
+                const locationProvider = new Accelerating(left, top, this.speed, enemyFireAngle, 1);
+                const bullet = new BulletParticle(locationProvider, candidate.ship, this.bulletColor, getFrameReturner(this.bulletFrame));
 
                 dispatch(addParticle(bullet));
                 dispatch(setEnemyFireTick(candidate.ship, tick));

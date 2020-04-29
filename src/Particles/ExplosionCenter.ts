@@ -5,6 +5,7 @@
  */
 
 import BaseGameObject from "../Base/BaseGameObject";
+import ILocationProvider from "../Base/ILocationProvider";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
@@ -49,8 +50,8 @@ export default class ExplosionCenter extends BaseGameObject {
      * @param {FrameProviderFunction} getExplosionCenterFrame. function that returns an explision frame.
      * @param {number} burnTime. Time in ticks how long the explosion center should remain visible.
      */
-    constructor(left: number, top: number, getExplosionCenterFrame: FrameProviderFunction,  burnTime: number) {
-        super(left, top);
+    constructor(locationProvider: ILocationProvider, getExplosionCenterFrame: FrameProviderFunction,  burnTime: number) {
+        super(locationProvider);
 
         this.currentFrame = getExplosionCenterFrame();
         this.burnTime = burnTime;

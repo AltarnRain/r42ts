@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import BaseLocationProvider from "../Base/BaseLocationProvider";
+import ILocationProvider from "../Base/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
 
 /**
@@ -12,19 +12,25 @@ import { GameLocation } from "../Models/GameLocation";
  * Responsibility:  A location provides that simply returns the location it was given.
  */
 
-export default class Immobile extends BaseLocationProvider {
+export default class Immobile implements ILocationProvider {
 
     /**
      * Constructs the immobile location provider.
      */
-    constructor() {
-        super(0, 0);
+    constructor(private left: number, private top: number) {
+    }
+    public updateState(tick: number): void {
+        // does nothing.
+    }
+
+    public increaseSpeed(factor: number): void {
+        // Does nothing.
     }
 
     /**
      * Returns the given location.
      */
-    public getLocation(left: number, top: number, width: number, height: number): GameLocation {
-        return { left, top };
+    public getCurrentLocation(): GameLocation {
+        return { left: this.left, top: this.top };
     }
 }

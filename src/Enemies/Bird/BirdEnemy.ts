@@ -6,15 +6,13 @@
 
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
-import BaseLocationProvider from "../../Base/BaseLocationProvider";
+import ILocationProvider from "../../Base/ILocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import Particle from "../../Particles/Particle";
-import Explosion01 from "../../SharedFrames/Explosion01";
-import { FireAngleProviderFunction, Frame } from "../../Types/Types";
+import { ExplosionProviderFunction, FireAngleProviderFunction, Frame, OffsetFramesProviderFunction } from "../../Types/Types";
 import { getRandomArrayElement } from "../../Utility/Array";
 import Mutators from "../../Utility/FrameMutators";
-import getBirdFrames from "./BirdFrames";
 
 /**
  * Module:          Bird enemy
@@ -33,8 +31,20 @@ export default class BirdEnemy extends BaseEnemy {
     /**
      * Creates the object.
      */
-    constructor(left: number, top: number, frameChangetime: number, locationProvider: BaseLocationProvider, frameProvider: BaseFrameProvider, fireAngleProvider?: FireAngleProviderFunction) {
-        super(left, top, frameChangetime, getBirdFrames, Explosion01, locationProvider, frameProvider, fireAngleProvider);
+    constructor(
+        frameChangeTime: number,
+        locationProvider: ILocationProvider,
+        frameProvider: BaseFrameProvider,
+        getExplosion: ExplosionProviderFunction,
+        getOffsetFrames: OffsetFramesProviderFunction,
+        angleProvider?: FireAngleProviderFunction) {
+        super(
+            frameChangeTime,
+            getOffsetFrames,
+            getExplosion,
+            locationProvider,
+            frameProvider,
+            angleProvider);
 
         this.colorTickHandler = new TickHandler(40, () => this.onColorChange());
 
