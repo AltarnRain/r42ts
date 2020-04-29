@@ -55,15 +55,15 @@ export default function getPlayerExplosion(): Explosion {
             0, 0 // two red blocks
         ],
         speeds: [
-            2, 3.5, 5, 6, 7, // Speeds for the first angles.
-            2, 3.5, 5, 6, // Speeds for the second row of angles.
-            2, 3.5, 5, 6, // Speeds for the third row of angles.
-            2, 3.5, 5, 6, // Speeds for the fourh row of angles.
-            2, 3.5, 5, 6, // Speeds for the fith fow of angles
-            3, 6, // Speeds for the fith fow of angles
-            3, 6, // Speeds for the fith fow of angles
+            3, 4.5, 7, 8, 10, // Speeds for the first angles.
+            3, 4.5, 7, 8, // Speeds for the second row of angles.
+            3, 4.5, 7, 8, // Speeds for the third row of angles.
+            3, 4.5, 7, 8, // Speeds for the fourh row of angles.
+            3, 4.5, 7, 8, // Speeds for the fith fow of angles
+            4.5, 8, // Speeds for the fith fow of angles
+            4.5, 8, // Speeds for the fith fow of angles
         ],
-        acceleration: 1.05,
+        acceleration: 1.1,
         explosionCenterDelay: 150,
         useSpeed: false,
         speed: 0, // not used.
