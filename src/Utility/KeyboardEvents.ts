@@ -7,6 +7,7 @@
 import { isValidGameKey } from "../Guard";
 import { keyDown, keyUp } from "../State/Keyboard/Actions";
 import { appState, dispatch } from "../State/Store";
+import { setPause } from "../State/Game/Actions";
 
 /**
  * Module:          KeyboardEVents
@@ -46,13 +47,25 @@ export const allGameKeys: GameKeys[] = [
  */
 function onKeyDown(event: KeyboardEvent): void {
 
-    const { gameState } = appState();
+    const {
+        playerState,
+        gameState
+    } = appState();
+
     if (isValidGameKey(event.code)) {
         // Only dispatch if the key is a game control key.
         event.stopPropagation();
         event.preventDefault();
 
-        dispatch(keyDown(event.code));
+        if (event.code === "Space" && playerState.ship !== undefined) {
+            if (gameState.pause) {
+                dispatch(setPause(false));
+            } else {
+                dispatch(setPause(true));
+            }
+        } else {
+            dispatch(keyDown(event.code));
+        }
     }
 }
 
@@ -61,7 +74,6 @@ function onKeyDown(event: KeyboardEvent): void {
  * @param {KeyboardEvent} event. A keyboard event.
  */
 function onKeyUp(event: KeyboardEvent): void {
-
     if (isValidGameKey(event.code)) {
         // Only dispatch if the key is a game control key.
         event.stopPropagation();
