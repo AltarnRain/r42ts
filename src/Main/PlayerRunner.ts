@@ -26,9 +26,17 @@ export default function playerRunner(): void {
  * Updates the player state.
  */
 function updateState(): void {
+    const {
+        gameState
+    } = appState();
+
+    if (gameState.pause) {
+        return;
+    }
+
     const { playerState, keyboardState } = appState();
     playerState.ship?.updateState();
-    playerState.playerBullet?.updateState(0);
+    playerState.playerBullet?.updateState();
 
     // Remove objects no longer required.
     if (playerState.playerBullet?.traveling() === false) {

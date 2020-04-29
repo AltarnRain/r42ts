@@ -32,11 +32,6 @@ export default interface EnemyLevelState {
     explosionCenters: ExplosionCenter[];
 
     /**
-     * Pause flag
-     */
-    pause: boolean;
-
-    /**
      * Counts the number of register enemies.
      */
     totalNumberOfEnemies: number;

@@ -58,7 +58,7 @@ export default function enemyLevelRunner(tick: number): void {
 function updateState(tick: number) {
     const { playerState, enemyLevelState, debuggingState, gameState, keyboardState } = appState();
 
-    if (enemyLevelState.pause) {
+    if (gameState.pause) {
         return;
     }
 

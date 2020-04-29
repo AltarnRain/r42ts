@@ -79,7 +79,6 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
 export function initState(): EnemyLevelState {
     return {
         enemies: [],
-        pause: false,
         explosionCenters: [],
         particles: [],
         totalNumberOfEnemies: 0,
