@@ -4,9 +4,9 @@
  * See LICENSE.MD.
  */
 
+import GameLoop from "./GameLoop";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import subscribeToStoreChanges from "./Levels/SubscribeToStore";
-import GameLoop from "./GameLoop";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
 import dimensionProvider from "./Providers/DimensionProvider";
 import playerRunner from "./Runners/PlayerRunner";

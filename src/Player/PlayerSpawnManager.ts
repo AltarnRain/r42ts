@@ -5,7 +5,7 @@
  */
 
 import GameLoop from "../GameLoop";
-import { movePlayer } from "../Handlers/MovePlayer";
+import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { setPlayer, setPlayerLocation, setPlayerMovementLimit } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
@@ -152,7 +152,7 @@ function updateState(): void {
             p.updateState();
         });
 
-        movePlayer(5);
+        movePlayerHandler(5);
     } else if (formationSpeed === "fast") {
         allMovingParts.forEach((p) => {
             p.updateState();

@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { movePlayer } from "../Handlers/MovePlayer";
+import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
 import Explosion from "../Models/Explosion";
 import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
@@ -81,7 +81,7 @@ export default class PlayerShip {
      * Updates the player's state. Means movement.
      */
     public updateState(): void {
-        movePlayer(10);
+        movePlayerHandler(10);
     }
 
     /**

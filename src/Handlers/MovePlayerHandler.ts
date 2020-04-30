@@ -33,7 +33,7 @@ const maxRight = fullWidth - shipDimensions.width;
  * Handles player movement.
  * @param {number} speed. Speed the ship can travel. Can vary depending on the level or if the player ship is forming.
  */
-export function movePlayer(speed: number): void {
+export function movePlayerHandler(speed: number): void {
     const { keyboardState, playerState } = appState();
 
     const localKeyboardState = { ...keyboardState };
