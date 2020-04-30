@@ -12,7 +12,7 @@ import { GameLocation } from "../Models/GameLocation";
  * Responsibility:  A location provides that simply returns the location it was given.
  */
 
-export default class Immobile implements ILocationProvider {
+export default class ImmobileLocationProvider implements ILocationProvider {
 
     /**
      * Constructs the immobile location provider.

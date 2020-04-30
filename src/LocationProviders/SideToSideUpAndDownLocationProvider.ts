@@ -10,26 +10,30 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import { getLocation } from "../Utility/Location";
 
 /**
- * Module:          Left to right, then left.
+ * Module:          SideToSideUpAndDown
  * Responsibility:  Location provider for enemies that move from left to right and up then down.
  */
 
 const {
     gameFieldTop,
     fullWidth,
+    maxPixelSize,
+    fullHeight
 } = dimensionProvider();
 
-export default class VanishRightAppearLeft extends BaseLocationProvider implements ILocationProvider {
+export default class SideToSideUpAndDownLocationProvider extends BaseLocationProvider implements ILocationProvider {
 
     public updateState(tick: number): void {
         super.updateState(tick);
+        const leftLimit = maxPixelSize * 2;
+        const rightLimit = fullWidth - this.width - maxPixelSize * 2;
 
-        if (this.left + this.width > fullWidth) {
-            this.left = 0;
+        if (this.left <= leftLimit || this.left >= rightLimit) {
+            this.angle = 180 - this.angle;
         }
 
-        if (this.top > fullWidth * 0.5) {
-            this.top = gameFieldTop + this.height;
+        if (this.top <= gameFieldTop || this.top >= fullHeight - this.height) {
+            this.angle *= -1;
         }
 
         const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);

@@ -9,9 +9,9 @@ import { birdFrameTime, orbFrameTime, robotFrameTime } from "../Constants/EnemyF
 import { orbMovementSpeed, robotMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
 import orbEnemyAngleProvider from "../FireAngleProviders/OrbEnemyAngleProvider";
-import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
-import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
-import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
+import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUpLocaionProvider";
+import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDownLocationProvider";
+import VanishRightAppearLeftLocationProvider from "../LocationProviders/VanishRightAppearLeftLocationProvider";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import CircleFrameProvider from "../Providers/CircleFrameProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
@@ -46,7 +46,7 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, speed: n
         case "robot": {
             const frameProvider = new BackAndForthFrameProvider(0);
             const { width, height } = getMaximumFrameDimensions(getRobotFrames().frames, averagePixelSize);
-            const locationProvider = new VanishRightAppearLeft(left, top, robotMovementSpeed, angle, width, height);
+            const locationProvider = new VanishRightAppearLeftLocationProvider(left, top, robotMovementSpeed, angle, width, height);
 
             if (color === undefined) {
                 throw new Error("Robot enemy requires a color");

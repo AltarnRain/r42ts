@@ -21,7 +21,7 @@ const {
     gameFieldTop,
 } = dimensionProvider();
 
-export default class MoveDownAppearUp extends BaseLocationProvider implements ILocationProvider {
+export default class MoveDownAppearUpLocationProvider extends BaseLocationProvider implements ILocationProvider {
     /**
      * The limit to how far the enemy will travel before its position is set to the top position.
      */

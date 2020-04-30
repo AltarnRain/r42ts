@@ -13,7 +13,7 @@ import { getLocation } from "../Utility/Location";
  * Responsibility:  A location provider for something that accelerates.
  */
 
-export default class Accelerating implements ILocationProvider {
+export default class AcceleratingLocationProvider implements ILocationProvider {
 
     /**
      * Acceleration factor.

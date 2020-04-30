@@ -9,7 +9,7 @@
  * Responsibility:  Provide an array of particle objects for an Explosion
  */
 
-import Accelerating from "../LocationProviders/Accelerating";
+import AcceleratingLocationProvider from "../LocationProviders/AcceleratingLocationProvider";
 import Particle from "../Particles/Particle";
 import { ExplosionProviderFunction } from "../Types";
 import { getFrameReturner } from "../Utility/Frame";
@@ -34,7 +34,7 @@ export default function particleProvider(left: number, top: number, getExplosion
         const angle = explosion.angles[i];
         const speed = explosion.useSpeed ? explosion.speed : explosion.speeds[i];
 
-        const locationProvider = new Accelerating(left, top, speed, angle, explosion.acceleration);
+        const locationProvider = new AcceleratingLocationProvider(left, top, speed, angle, explosion.acceleration);
         const p = new Particle(locationProvider, getFrameReturner(particleFrame));
         particles.push(p);
     }

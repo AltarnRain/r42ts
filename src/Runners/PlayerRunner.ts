@@ -8,7 +8,7 @@ import { angles } from "../Constants/Angles";
 import { playerBulletSpeed } from "../Constants/BulletSpeeds";
 import GameLoop from "../GameLoop";
 import Guard from "../Guard";
-import Accelerating from "../LocationProviders/Accelerating";
+import AcceleratingLocationProvider from "../LocationProviders/AcceleratingLocationProvider";
 import PlayerBullet from "../Player/PlayerBullet";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { setBullet } from "../State/Player/Actions";
@@ -49,7 +49,7 @@ function updateState(): void {
     if (Guard.isPlayerAlive(playerState.ship) && keyboardState.fire && playerState.playerBullet === undefined) {
         const nozzleLocation = playerState.ship.getNozzleLocation();
 
-        const locationProvider = new Accelerating(nozzleLocation.left, nozzleLocation.top, playerBulletSpeed, angles.up, 1);
+        const locationProvider = new AcceleratingLocationProvider(nozzleLocation.left, nozzleLocation.top, playerBulletSpeed, angles.up, 1);
         dispatch(setBullet(new PlayerBullet(locationProvider, getTwoPixelBullet)));
     }
 

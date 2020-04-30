@@ -8,7 +8,7 @@ import { BaseEnemy } from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import Guard from "../Guard";
-import Immobile from "../LocationProviders/Immobile";
+import ImmobileLocationProvider from "../LocationProviders/ImmobileLocationProvider";
 import Explosion from "../Models/Explosion";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import getPhaserLocations from "../Player/GetPhaserLocations";
@@ -238,7 +238,7 @@ function handlePlayerDeath(player: PlayerShip): void {
  */
 function queueExplosionRender(left: number, top: number, explosion: Explosion): void {
 
-    const immobile = new Immobile(left, top);
+    const immobile = new ImmobileLocationProvider(left, top);
     const center = new ExplosionCenter(immobile, getFrameReturner(explosion.explosionCenterFrame), explosion.explosionCenterDelay);
     const newParticles = particleProvider(left, top, getExplosionReturner(explosion));
 
