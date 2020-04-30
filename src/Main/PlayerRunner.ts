@@ -11,6 +11,7 @@ import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { setBullet } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import GameLoop from "./GameLoop";
+import Guard from "../Guard";
 
 /**
  * Module:          PlayerRunner
@@ -44,7 +45,7 @@ function updateState(): void {
     }
 
     // Fire new bullet.
-    if (playerState.ship !== undefined && keyboardState.fire && playerState.playerBullet === undefined) {
+    if (Guard.isPlayerAlive(playerState.ship) && keyboardState.fire && playerState.playerBullet === undefined) {
         const nozzleLocation = playerState.ship.getNozzleLocation();
 
         const locationProvider = new Accelerating(nozzleLocation.left, nozzleLocation.top, 42, angles.up, 1);

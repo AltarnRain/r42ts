@@ -39,45 +39,17 @@ export default class Level00 extends BaseLevel {
     public start(): void {
         super.start();
 
-        // const enemies = birdSpawnLocations.map((location) => {
-        //     // This may deviate from te original game but I do not care. Each birds will
-        //     // begin to move in a random direction determined by the function below
-        //     const randomMovementAngle = getRandomArrayElement(birdRandomAngles);
+        const b1 = this.getBird(500, 500, 0, 0);
+        const b2 = this.getBird(500, 500, 0, 0);
 
-        //     // In level 01 if the a bird hits a side it will move in the other direction.
-        //     const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(getBirdFrames().frames));
-
-        //     const { width, height } = getMaximumFrameDimensions(getBirdFrames().frames, averagePixelSize);
-        //     const locationProvider = new SideToSideUpAndDown(location.left, location.top, birdMovementSpeed, randomMovementAngle, width, height);
-        //     return new BirdEnemy(birdFrameTime, locationProvider, frameProvider, getExplosion01, getBirdFrames);
-        // });
-
-        this.begin([]);
+        this.begin([b1, b2]);
     }
 
-    /**
-     * Sets up a robot for every robot frame and player their animation without them moving.
-     * They do a Wave :D
-     */
-    // private robotFrameAnimationTest() {
-    //     const robotFrames = getRobotFrames();
-    //     const enemies = robotSpawnLocationsAndColor.map((lc, index) => {
-    //         if (index < robotFrames.frames.length) {
-    //             const frameProvider = new BackAndForthFrameProvider(index);
-    //             const LocationProvider = new VanishRightAppearLeft(0, 0);
-    //             return new RobotEnemy(lc.left, lc.top, 150, lc.color, LocationProvider, frameProvider, downFireAngleProvider);
-    //         }
-    //     }).filter((x) => x !== undefined);
-
-    //     dispatch(setEnemies(enemies as BaseEnemy[]));
-    // }
-
-    // private orbEnemyAnimationTest() {
-    //     const enemies = orbSpawnLocations.map((lc) => {
-    //         const frameProvider = new CircleFrameProvider(0);
-    //         const locationProvider = new MoveDownAppearUp(40, 0.3, angles.down);
-    //         // return new OrbEnemy(lc.left, lc.top, 200, locationProvider, frameProvider, downFireAngleProvider);
-    //     }).filter((x) => x !== undefined);
-    //     dispatch(setEnemies(enemies));
-    // }
+    private getBird(left: number, top: number, angle: number, speed: number): BirdEnemy {
+        // In level 01 if the a bird hits a side it will move in the other direction.
+        const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(getBirdFrames().frames));
+        const { width, height } = getMaximumFrameDimensions(getBirdFrames().frames, averagePixelSize);
+        const locationProvider = new SideToSideUpAndDown(left, top, speed, angle, width, height);
+        return new BirdEnemy(birdFrameTime, locationProvider, frameProvider, getExplosion01, getBirdFrames);
+    }
 }

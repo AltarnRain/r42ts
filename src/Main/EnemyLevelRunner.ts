@@ -27,6 +27,7 @@ import { getExplosionReturner, getFrameReturner } from "../Utility/Frame";
 import { overlaps } from "../Utility/Geometry";
 import { getHittableObjects } from "../Utility/StateHelper";
 import GameLoop from "./GameLoop";
+import Guard from "../Guard";
 
 /**
  * Module:          EnemyLevelRunner
@@ -68,7 +69,7 @@ function updateState(tick: number) {
     });
 
     // SelfDestruct
-    if (playerIsAlive(playerState.ship) && keyboardState.selfDestruct) {
+    if (Guard.isPlayerAlive(playerState.ship) && keyboardState.selfDestruct) {
         for (const enemy of enemyLevelState.enemies) {
             const center = enemy.ship.getCenterLocation();
             queueExplosionRender(center.left, center.top, enemy.ship.getExplosion());
@@ -83,7 +84,7 @@ function updateState(tick: number) {
     // Hit a random enemy with a phasor.
     // In order to fire a phaser there must be enemies, the player must have a phaser charge, a phaser cannot
     // currently being fired (=on screen) and the player must be alive.
-    if (playerIsAlive(playerState.ship) &&
+    if (Guard.isPlayerAlive(playerState.ship) &&
         keyboardState.phraser &&
         enemyLevelState.enemies.length > 0 &&
         gameState.phasers > 0 && enemyLevelState.phaserLocations.length === 0) {
@@ -118,7 +119,7 @@ function updateState(tick: number) {
             const hittableObjectHitbox = hittableObject.getHitbox();
 
             // Check if the player got hit.
-            if (playerIsAlive(playerState.ship) && debuggingState.playerIsImmortal === false) {
+            if (Guard.isPlayerAlive(playerState.ship) && debuggingState.playerIsImmortal === false) {
                 if (overlaps(playerState.ship.getHitbox(), hittableObjectHitbox)) {
 
                     // Player was hit. Render the explosion.
@@ -247,15 +248,6 @@ export function increaseEnemySpeed(value: number): void {
 }
 
 /**
- * TypeGuard that checks if the player is alive.
- * @param {PlayerShip | undefined}. A player object.
- * @returns {boolean}. Returns true if the player is alove.
- */
-function playerIsAlive(value: PlayerShip | undefined): value is PlayerShip {
-    return value !== undefined;
-}
-
-/**
  * TypeGuard for enemies
  */
 function isEnemy(value: any): value is BaseEnemy {
@@ -303,7 +295,7 @@ function DEBUGGING_renderHitboxes() {
  */
 function DEBUGGING_drawPhaser(): void {
     const { debuggingState: debugging, playerState: player, enemyLevelState } = appState();
-    if (debugging.renderPhaser && playerIsAlive(player.ship) && enemyLevelState.enemies.length > 0) {
+    if (debugging.renderPhaser && Guard.isPlayerAlive(player.ship) && enemyLevelState.enemies.length > 0) {
         const enemy = enemyLevelState.enemies[0];
         getPhaserLocations(player.ship.getNozzleLocation().left, player.ship.getNozzleLocation().top, enemy.ship.getCenterLocation().left, enemy.ship.getCenterLocation().top, averagePixelSize);
     }

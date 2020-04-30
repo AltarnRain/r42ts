@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { isValidGameKey } from "../Guard";
+import Guard from "../Guard";
 import { setPause } from "../State/Game/Actions";
 import { keyDown, keyUp } from "../State/Keyboard/Actions";
 import { appState, dispatch } from "../State/Store";
@@ -52,14 +52,14 @@ function onKeyDown(event: KeyboardEvent): void {
         gameState
     } = appState();
 
-    if (isValidGameKey(event.code)) {
+    if (Guard.isValidGameKey(event.code)) {
         // Only dispatch if the key is a game control key.
         event.stopPropagation();
         event.preventDefault();
 
         // If the space bar is hit and the player is alive the player pauses the game
         // otherwise, the space bar is used to pause formation.
-        if (event.code === "Space" && playerState.ship !== undefined) {
+        if (event.code === "Space" && Guard.isPlayerAlive(playerState.ship)) {
             if (gameState.pause) {
                 dispatch(setPause(false));
             } else {
@@ -76,7 +76,7 @@ function onKeyDown(event: KeyboardEvent): void {
  * @param {KeyboardEvent} event. A keyboard event.
  */
 function onKeyUp(event: KeyboardEvent): void {
-    if (isValidGameKey(event.code)) {
+    if (Guard.isValidGameKey(event.code)) {
         // Only dispatch if the key is a game control key.
         event.stopPropagation();
         event.preventDefault();

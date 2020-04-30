@@ -42,9 +42,9 @@ window.onload = () => {
                 GameLoop.registerBackgroundDrawing(drawStatusBar);
                 GameLoop.registerUpdateState(playerRunner);
                 GameLoop.registerUpdateState(playerSpawnManager);
-                dispatch(playerMortality("immortal"));
+                // dispatch(playerMortality("immortal"));
 
-                dispatch(hitboxesOn(true));
+                // dispatch(hitboxesOn(true));
                 dispatch(setLives(2));
                 dispatch(setLevel(level));
                 dispatch(setPhasers(1));

@@ -5,9 +5,9 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
-import { isEnemyBullet } from "../Guard";
 import BulletParticle from "../Particles/BulletParticle";
 import { appState } from "../State/Store";
+import Guard from "../Guard";
 
 /**
  * Module:          OrbFireCheck
@@ -29,7 +29,7 @@ export default function orbFireCheck(enemy: BaseEnemy): boolean {
 
     // Save cast. The typeguard ensures only BulletParticles are returned but TypeScript isn't
     // clever enough (yet) to understand this.
-    const enemyBullets = enemyLevelState.particles.filter((p) => isEnemyBullet(p)) as BulletParticle[];
+    const enemyBullets = enemyLevelState.particles.filter((p) => Guard.isEnemyBullet(p)) as BulletParticle[];
 
     if (enemyBullets.length === 0) {
         // No bullets, can always fire.
