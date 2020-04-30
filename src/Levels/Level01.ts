@@ -5,27 +5,16 @@
  */
 
 import BaseLevel from "../Base/BaseLevel";
-import { birdFrameTime } from "../Constants/EnemyFrameTime";
 import { birdMovementSpeed as birdMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import { birdRandomAngles as birdRandomAngles } from "../Constants/MovementAngles";
-import BirdEnemy from "../Enemies/Bird/BirdEnemy";
-import getBirdFrames from "../Enemies/Bird/BirdFrames";
 import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
-import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
-import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
-import dimensionProvider from "../Providers/DimensionProvider";
-import getExplosion01 from "../SharedFrames/Explosion01";
+import { enemyFactory } from "../Enemies/EnemyFactory";
 import { getRandomArrayElement } from "../Utility/Array";
-import { getMaximumFrameDimensions, getRandomFrameKeyIndex } from "../Utility/Frame";
 
 /**
  * Module:          Level 01
  * Responsibility:  Define the first level.
  */
-
-const {
-    averagePixelSize
-} = dimensionProvider();
 
 /**
  * Sets up level 01.
@@ -43,13 +32,7 @@ export default class Level01 extends BaseLevel {
             // This may deviate from te original game but I do not care. Each birds will
             // begin to move in a random direction determined by the function below
             const randomMovementAngle = getRandomArrayElement(birdRandomAngles);
-
-            // In level 01 if the a bird hits a side it will move in the other direction.
-            const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(getBirdFrames().frames));
-
-            const { width, height } = getMaximumFrameDimensions(getBirdFrames().frames, averagePixelSize);
-            const locationProvider = new SideToSideUpAndDown(location.left, location.top, birdMovementSpeed, randomMovementAngle, width, height);
-            return new BirdEnemy(birdFrameTime, locationProvider, frameProvider, getExplosion01, getBirdFrames);
+            return enemyFactory("bird", location.left, location.top, birdMovementSpeed, randomMovementAngle);
         });
 
         this.begin(enemies);

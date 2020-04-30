@@ -6,33 +6,22 @@
 
 import BaseLevel from "../Base/BaseLevel";
 import BulletRunner from "../BulletProviders/BulletRunner";
+import { robotBulletSpeed } from "../Constants/BulletSpeeds";
 import CGAColors from "../Constants/CGAColors";
-import { robotFrameTime } from "../Constants/EnemyFrameTime";
 import { robotMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import { robotFireFrequence } from "../Constants/FireFrequences";
 import { robotAngle as robotAngle } from "../Constants/MovementAngles";
-import RobotEnemy from "../Enemies/Robot/RobotEnemy";
-import getRobotFrames from "../Enemies/Robot/RobotFrames";
+import { enemyFactory } from "../Enemies/EnemyFactory";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import robotsToFire from "../Enemies/Robot/RobotsToFire";
-import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
 import robotLevel02FireCheck from "../FireChecks/RobotFireCheck";
-import VanishRightAppearLeft from "../LocationProviders/VanishRightAppearLeft";
-import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
-import dimensionProvider from "../Providers/DimensionProvider";
-import { getExplosion02 } from "../SharedFrames/Explosion02";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import { getMaximumFrameDimensions } from "../Utility/Frame";
-import { robotBulletSpeed } from "../Constants/BulletSpeeds";
 
 /**
  * Module:          Level 02
  * Responsibility:  Define the second level.
  */
 
-const {
-    averagePixelSize
-} = dimensionProvider();
 /**
  * Sets up level 02.
  */
@@ -45,12 +34,7 @@ export default class Level02 extends BaseLevel {
         super.start();
 
         const enemies = robotSpawnLocationsAndColor.map((lc) => {
-            const frameProvider = new BackAndForthFrameProvider(0);
-
-            const { width, height } = getMaximumFrameDimensions(getRobotFrames().frames, averagePixelSize);
-            const locationProvider = new VanishRightAppearLeft(lc.left, lc.top, robotMovementSpeed, robotAngle, width, height);
-
-            return new RobotEnemy(lc.color, robotFrameTime, locationProvider, frameProvider, getExplosion02, getRobotFrames, downFireAngleProvider);
+            return enemyFactory("robot", lc.left, lc.top, robotMovementSpeed, robotAngle, lc.color);
         });
 
         const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, robotBulletSpeed,  robotsToFire, robotLevel02FireCheck);
