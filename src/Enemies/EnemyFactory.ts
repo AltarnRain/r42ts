@@ -64,6 +64,6 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, speed: n
         }
 
         default:
-            throw new Error(`Unknown enemy ${enemy}`)
+            throw new Error(`Unknown enemy ${enemy}`);
     }
 }

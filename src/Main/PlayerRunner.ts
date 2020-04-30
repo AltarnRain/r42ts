@@ -5,6 +5,7 @@
  */
 
 import { angles } from "../Constants/Angles";
+import { playerBulletSpeed } from "../Constants/BulletSpeeds";
 import Guard from "../Guard";
 import Accelerating from "../LocationProviders/Accelerating";
 import PlayerBullet from "../Player/PlayerBullet";
@@ -12,7 +13,6 @@ import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { setBullet } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import GameLoop from "./GameLoop";
-import { playerBulletSpeed } from "../Constants/BulletSpeeds";
 
 /**
  * Module:          PlayerRunner
@@ -23,7 +23,6 @@ export default function playerRunner(): void {
     updateState();
     GameLoop.registerDraw(draw);
 }
-
 
 /**
  * Updates the player state.
