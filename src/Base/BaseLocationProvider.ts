@@ -5,13 +5,8 @@
  */
 
 import { GameLocation } from "../Models/GameLocation";
-import dimensionProvider from "../Providers/DimensionProvider";
 import { getLocation } from "../Utility/Location";
 import ILocationProvider from "./ILocationProvider";
-
-const {
-    averagePixelSize
-} = dimensionProvider();
 
 export default abstract class BaseLocationProvider implements ILocationProvider {
 

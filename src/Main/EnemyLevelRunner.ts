@@ -10,7 +10,6 @@ import Guard from "../Guard";
 import Immobile from "../LocationProviders/Immobile";
 import Explosion from "../Models/Explosion";
 import ExplosionCenter from "../Particles/ExplosionCenter";
-import Particle from "../Particles/Particle";
 import getPhaserLocations from "../Player/GetPhaserLocations";
 import PlayerShip from "../Player/PlayerShip";
 import ctxProvider from "../Providers/CtxProvider";

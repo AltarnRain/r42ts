@@ -12,7 +12,6 @@
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import { appState } from "../../State/Store";
 import { calculateAngle, calculateAngleDifference } from "../../Utility/Geometry";
-import OrbEnemy from "./OrbEnemy";
 
 /**
  * A function that selects the orbs that should fire.
