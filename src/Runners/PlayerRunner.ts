@@ -6,9 +6,9 @@
 
 import { angles } from "../Constants/Angles";
 import { playerBulletSpeed } from "../Constants/BulletSpeeds";
+import GameLoop from "../GameLoop";
 import Guard from "../Guard";
 import Accelerating from "../LocationProviders/Accelerating";
-import GameLoop from "../GameLoop";
 import PlayerBullet from "../Player/PlayerBullet";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { setBullet } from "../State/Player/Actions";

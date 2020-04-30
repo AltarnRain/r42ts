@@ -4,8 +4,8 @@
  * See LICENSE.MD.
  */
 
-import { movePlayer } from "../Handlers/MovePlayer";
 import GameLoop from "../GameLoop";
+import { movePlayer } from "../Handlers/MovePlayer";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { setPlayer, setPlayerLocation, setPlayerMovementLimit } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";

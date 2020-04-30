@@ -6,9 +6,9 @@
 
 import { BaseEnemy } from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
+import GameLoop from "../GameLoop";
 import Guard from "../Guard";
 import Immobile from "../LocationProviders/Immobile";
-import GameLoop from "../GameLoop";
 import Explosion from "../Models/Explosion";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import getPhaserLocations from "../Player/GetPhaserLocations";

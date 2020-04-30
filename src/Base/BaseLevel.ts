@@ -5,9 +5,9 @@
  */
 
 import BulletRunner from "../BulletProviders/BulletRunner";
+import GameLoop from "../GameLoop";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
-import GameLoop from "../GameLoop";
 import { resetLevelState, setEnemies, setFireInterval } from "../State/EnemyLevel/Actions";
 import { addPhaser, nextLevel } from "../State/Game/Actions";
 import { setPlayerMovementLimit } from "../State/Player/Actions";
