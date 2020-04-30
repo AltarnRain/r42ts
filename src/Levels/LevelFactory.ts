@@ -9,11 +9,9 @@
  * Responsibility:  Provide Level objects
  */
 
-
 import ILevel from "../Base/ILevel";
 import enemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { appState } from "../State/Store";
-import Level00 from "./Level00";
 import Level01 from "./Level01";
 import Level02 from "./Level02";
 import { Level03 } from "./Level03";
@@ -28,7 +26,8 @@ export function levelFactory(level: number): ILevel {
     switch (level) {
         case 0:
             // Test level
-            return new Level00(enemyLevelRunner, never);
+            return new WarpLevel();
+            // return new Level00(enemyLevelRunner, never);
         case 1:
             return new Level01(enemyLevelRunner, clearedEnemies);
         case 2:

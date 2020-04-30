@@ -7,7 +7,7 @@
     "target": "es6",
     "jsx": "react",
     "strict": true,
-    "noUnusedLocals": true,
+    // "noUnusedLocals": true,
   },
   "include": [
     "src"
