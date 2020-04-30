@@ -6,10 +6,10 @@
 
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import subscribeToStoreChanges from "./Levels/SubscribeToStore";
-import GameLoop from "./Main/GameLoop";
-import playerRunner from "./Main/PlayerRunner";
+import GameLoop from "./GameLoop";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
 import dimensionProvider from "./Providers/DimensionProvider";
+import playerRunner from "./Runners/PlayerRunner";
 import { hitboxesOn, playerMortality } from "./State/Debugging/Actions";
 import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers } from "./State/Game/Actions";
 import { dispatch } from "./State/Store";

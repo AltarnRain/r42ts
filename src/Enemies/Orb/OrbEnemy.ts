@@ -9,7 +9,7 @@ import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import ILocationProvider from "../../Base/ILocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
-import { ExplosionProviderFunction, FireAngleProviderFunction, Frame, OffsetFramesProviderFunction } from "../../Types/Types";
+import { ExplosionProviderFunction, FireAngleProviderFunction, Frame, OffsetFramesProviderFunction } from "../../Types";
 import Mutators from "../../Utility/FrameMutators";
 
 /**

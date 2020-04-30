@@ -11,7 +11,7 @@
 
 import Accelerating from "../LocationProviders/Accelerating";
 import Particle from "../Particles/Particle";
-import { ExplosionProviderFunction } from "../Types/Types";
+import { ExplosionProviderFunction } from "../Types";
 import { getFrameReturner } from "../Utility/Frame";
 
 /**

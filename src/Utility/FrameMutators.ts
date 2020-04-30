@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frame as FrameType, Frames as FramesType } from "../Types/Types";
+import { Frame as FrameType, Frames as FramesType } from "../Types";
 import hexToCGAConverter from "./HexToCGAConverter";
 
 /**

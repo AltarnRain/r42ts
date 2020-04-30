@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frames } from "../Types/Types";
+import { Frames } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
 /**

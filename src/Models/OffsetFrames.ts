@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frames } from "../Types/Types";
+import { Frames } from "../Types";
 import { GameLocation } from "./GameLocation";
 
 /**

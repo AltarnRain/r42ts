@@ -8,6 +8,7 @@ import { BaseEnemy } from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
 import Guard from "../Guard";
 import Immobile from "../LocationProviders/Immobile";
+import GameLoop from "../GameLoop";
 import Explosion from "../Models/Explosion";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import getPhaserLocations from "../Player/GetPhaserLocations";
@@ -21,12 +22,11 @@ import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, re
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
 import { setBullet, setPlayer, setPlayerLocation } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
-import { Frame } from "../Types/Types";
+import { Frame } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getExplosionReturner, getFrameReturner } from "../Utility/Frame";
 import { overlaps } from "../Utility/Geometry";
 import { getHittableObjects } from "../Utility/StateHelper";
-import GameLoop from "./GameLoop";
 
 /**
  * Module:          EnemyLevelRunner

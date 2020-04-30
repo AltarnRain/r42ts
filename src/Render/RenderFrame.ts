@@ -7,7 +7,7 @@
 import { validColors } from "../Constants/CGAColors";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { Frame } from "../Types/Types";
+import { Frame } from "../Types";
 
 /**
  * Module:          RenderFrame

@@ -6,7 +6,7 @@
 
 import "jest";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
-import { Frames } from "../Types/Types";
+import { Frames } from "../Types";
 
 /**
  * Module:          FrameProvider.tests

@@ -5,7 +5,7 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
-import { Frame, Frames } from "../Types/Types";
+import { Frame, Frames } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
 /**

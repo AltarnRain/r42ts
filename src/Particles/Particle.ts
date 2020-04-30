@@ -10,7 +10,7 @@ import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { FrameProviderFunction, GameObjectType } from "../Types/Types";
+import { FrameProviderFunction, GameObjectType } from "../Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { fallsWithin } from "../Utility/Location";
 

@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frame as FrameType, Frames } from "../Types/Types";
+import { Frame as FrameType, Frames } from "../Types";
 import * as Frame from "../Utility/Frame";
 
 /**

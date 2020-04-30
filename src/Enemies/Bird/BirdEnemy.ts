@@ -10,7 +10,7 @@ import ILocationProvider from "../../Base/ILocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import Particle from "../../Particles/Particle";
-import { ExplosionProviderFunction, FireAngleProviderFunction, Frame, OffsetFramesProviderFunction } from "../../Types/Types";
+import { ExplosionProviderFunction, FireAngleProviderFunction, Frame, OffsetFramesProviderFunction } from "../../Types";
 import { getRandomArrayElement } from "../../Utility/Array";
 import Mutators from "../../Utility/FrameMutators";
 

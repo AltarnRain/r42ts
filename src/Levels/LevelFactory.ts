@@ -10,7 +10,7 @@
  */
 
 import BaseLevel from "../Base/BaseLevel";
-import enemyLevelRunner from "../Main/EnemyLevelRunner";
+import enemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { appState } from "../State/Store";
 import Level00 from "./Level00";
 import Level01 from "./Level01";

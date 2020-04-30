@@ -6,7 +6,7 @@
 
 import PlayerBullet from "../../Player/PlayerBullet";
 import PlayerShip from "../../Player/PlayerShip";
-import { MoveLimits } from "../../Types/Types";
+import { MoveLimits } from "../../Types";
 
 /**
  * Module:          PlayerState

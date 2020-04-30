@@ -11,7 +11,7 @@ import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
-import { Frame, GameObjectType } from "../Types/Types";
+import { Frame, GameObjectType } from "../Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import Mutators from "../Utility/FrameMutators";
 import getPlayerExplosion from "./PlayerExplosion";

@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { TickFunction } from "../Types/Types";
+import { TickFunction } from "./Types";
 
 /**
  * Module:          GameLoop

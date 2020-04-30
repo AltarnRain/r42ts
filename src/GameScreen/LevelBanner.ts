@@ -10,7 +10,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import getCharacters from "../SharedFrames/Characters";
 import getNumbers from "../SharedFrames/Numbers";
-import { Frame } from "../Types/Types";
+import { Frame } from "../Types";
 import { getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
 import getCharacter from "../Utility/getCharacter";
 

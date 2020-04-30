@@ -7,7 +7,7 @@
 import ILocationProvider from "../Base/ILocationProvider";
 import CGAColors from "../Constants/CGAColors";
 import Particle from "../Particles/Particle";
-import { FrameProviderFunction, GameObjectType } from "../Types/Types";
+import { FrameProviderFunction, GameObjectType } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
 /**

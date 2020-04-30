@@ -10,7 +10,7 @@ import BulletParticle from "../Particles/BulletParticle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { addParticle, setEnemyFireTick } from "../State/EnemyLevel/Actions";
 import { appState, dispatch } from "../State/Store";
-import { FireCheckFunction, Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types/Types";
+import { FireCheckFunction, Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
 import { getFrameReturner } from "../Utility/Frame";
 
 /**

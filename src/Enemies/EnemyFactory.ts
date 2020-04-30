@@ -17,7 +17,7 @@ import CircleFrameProvider from "../Providers/CircleFrameProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import getExplosion01 from "../SharedFrames/Explosion01";
 import { getExplosion02 } from "../SharedFrames/Explosion02";
-import { Enemies } from "../Types/Types";
+import { Enemies } from "../Types";
 import { getMaximumFrameDimensions, getRandomFrameKeyIndex } from "../Utility/Frame";
 import BirdEnemy from "./Bird/BirdEnemy";
 import getBirdFrames from "./Bird/BirdFrames";

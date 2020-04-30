@@ -9,9 +9,9 @@
  * Responsibility:  Define Types
  */
 
-import { BaseEnemy } from "../Base/BaseEnemy";
-import Explosion from "../Models/Explosion";
-import { OffsetFrames } from "../Models/OffsetFrames";
+import { BaseEnemy } from "./Base/BaseEnemy";
+import Explosion from "./Models/Explosion";
+import { OffsetFrames } from "./Models/OffsetFrames";
 
 /**
  * Defines frames. Frames are objects with key values that start with F{N}. Where N is the frame number.

@@ -10,7 +10,7 @@ import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { Angle, ExplosionProviderFunction, FireAngleProviderFunction, GameObjectType, OffsetFramesProviderFunction } from "../Types/Types";
+import { Angle, ExplosionProviderFunction, FireAngleProviderFunction, GameObjectType, OffsetFramesProviderFunction } from "../Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox, getMaximumFrameDimensions } from "../Utility/Frame";
 import { getOffsetLocation } from "../Utility/Location";
 import BaseFrameProvider from "./BaseFrameProvider";

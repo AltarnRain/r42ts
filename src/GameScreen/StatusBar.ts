@@ -11,7 +11,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import getNumbers from "../SharedFrames/Numbers";
 import { appState } from "../State/Store";
-import { Frame } from "../Types/Types";
+import { Frame } from "../Types";
 import { getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
 import Mutators from "../Utility/FrameMutators";
 import { padLeft } from "../Utility/String";

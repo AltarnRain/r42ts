@@ -5,11 +5,11 @@
  */
 
 import { movePlayer } from "../Handlers/MovePlayer";
-import GameLoop from "../Main/GameLoop";
+import GameLoop from "../GameLoop";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { setPlayer, setPlayerLocation, setPlayerMovementLimit } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
-import { MoveLimits } from "../Types/Types";
+import { MoveLimits } from "../Types";
 import { getFrameReturner } from "../Utility/Frame";
 import { getLocation } from "../Utility/Location";
 import PlayerFormationPart from "./PlayerFormationPart";
