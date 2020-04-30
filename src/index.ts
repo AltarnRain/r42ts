@@ -10,7 +10,7 @@ import GameLoop from "./Main/GameLoop";
 import playerRunner from "./Main/PlayerRunner";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
 import dimensionProvider from "./Providers/DimensionProvider";
-import { playerMortality, hitboxesOn } from "./State/Debugging/Actions";
+import { hitboxesOn, playerMortality } from "./State/Debugging/Actions";
 import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers } from "./State/Game/Actions";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";

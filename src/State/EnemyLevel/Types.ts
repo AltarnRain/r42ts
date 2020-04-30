@@ -12,8 +12,8 @@
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import { GameLocation } from "../../Models/GameLocation";
 import ExplosionCenter from "../../Particles/ExplosionCenter";
-import Constants from "./Constants";
 import Particle from "../../Particles/Particle";
+import Constants from "./Constants";
 
 export interface ResetLevelState {
     type: typeof Constants.resetLevelState;

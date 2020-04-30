@@ -6,6 +6,7 @@
 
 import { BaseEnemy } from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
+import Guard from "../Guard";
 import Immobile from "../LocationProviders/Immobile";
 import Explosion from "../Models/Explosion";
 import ExplosionCenter from "../Particles/ExplosionCenter";
@@ -27,7 +28,6 @@ import { getExplosionReturner, getFrameReturner } from "../Utility/Frame";
 import { overlaps } from "../Utility/Geometry";
 import { getHittableObjects } from "../Utility/StateHelper";
 import GameLoop from "./GameLoop";
-import Guard from "../Guard";
 
 /**
  * Module:          EnemyLevelRunner
@@ -57,25 +57,22 @@ export default function enemyLevelRunner(tick: number): void {
  * @param {number} tick. Current tick.
  */
 function updateState(tick: number) {
-    const { playerState, enemyLevelState, debuggingState, gameState, keyboardState } = appState();
+    const { gameState, debuggingState } = appState();
 
     if (gameState.pause) {
         return;
     }
 
-    // Update object states.
-    enemyLevelState.enemies.forEach((e) => {
-        e.ship.updateState(tick);
-    });
-
     // SelfDestruct
-    if (Guard.isPlayerAlive(playerState.ship) && keyboardState.selfDestruct) {
+    const selfDestructPlayerState = appState().playerState;
+    if (Guard.isPlayerAlive(selfDestructPlayerState.ship) && appState().keyboardState.selfDestruct) {
+        const { enemyLevelState } = appState();
         for (const enemy of enemyLevelState.enemies) {
             const center = enemy.ship.getCenterLocation();
             queueExplosionRender(center.left, center.top, enemy.ship.getExplosion());
         }
 
-        queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.ship.getExplosion());
+        queueExplosionRender(selfDestructPlayerState.playerLeftLocation, selfDestructPlayerState.playerTopLocation, selfDestructPlayerState.ship.getExplosion());
 
         dispatch(setPlayer(undefined));
         dispatch(setEnemies([]));
@@ -84,15 +81,17 @@ function updateState(tick: number) {
     // Hit a random enemy with a phasor.
     // In order to fire a phaser there must be enemies, the player must have a phaser charge, a phaser cannot
     // currently being fired (=on screen) and the player must be alive.
-    if (Guard.isPlayerAlive(playerState.ship) &&
-        keyboardState.phraser &&
-        enemyLevelState.enemies.length > 0 &&
-        gameState.phasers > 0 && enemyLevelState.phaserLocations.length === 0) {
-        handlePhaser(playerState.ship);
+    const phaserCheckPlayerState = appState().playerState;
+    if (Guard.isPlayerAlive(phaserCheckPlayerState.ship) &&
+        appState().keyboardState.phraser &&
+        appState().enemyLevelState.enemies.length > 0 &&
+        gameState.phasers > 0 && appState().enemyLevelState.phaserLocations.length === 0) {
+        handlePhaser(phaserCheckPlayerState.ship);
     }
 
+    const currentParticleState = appState().enemyLevelState.particles;
     // Update state and remove particles that are done traveling.
-    enemyLevelState.particles.forEach((p) => {
+    currentParticleState.forEach((p) => {
         if (p.traveling()) {
             p.updateState(tick);
         } else {
@@ -100,8 +99,14 @@ function updateState(tick: number) {
         }
     });
 
+    // Update object states.
+    appState().enemyLevelState.enemies.forEach((e) => {
+        e.ship.updateState(tick);
+    });
+
     // Update explosion center state and remove if they're done burning.
-    enemyLevelState.explosionCenters.forEach((ec) => {
+    const currentExplosionCenterState = appState().enemyLevelState.explosionCenters;
+    currentExplosionCenterState.forEach((ec) => {
         if (ec.burning()) {
             ec.updateState(tick);
         } else {
@@ -110,26 +115,29 @@ function updateState(tick: number) {
     });
 
     // Hit detection.
-    const hittableObjects = getHittableObjects(enemyLevelState);
+    const hittableObjects = getHittableObjects(appState().enemyLevelState);
 
     // There's stuff that can get hit or hit something.
     if (hittableObjects.length > 0) {
         for (const hittableObject of hittableObjects) {
+            // In this loop the state is updated. We need to get the most
+            // recent one.
 
+            const hitdetectionPlayerState = appState().playerState;
             const hittableObjectHitbox = hittableObject.getHitbox();
 
             // Check if the player got hit.
-            if (Guard.isPlayerAlive(playerState.ship) && debuggingState.playerIsImmortal === false) {
-                if (overlaps(playerState.ship.getHitbox(), hittableObjectHitbox)) {
+            if (Guard.isPlayerAlive(hitdetectionPlayerState .ship) && debuggingState.playerIsImmortal === false) {
+                if (overlaps(hitdetectionPlayerState .ship.getHitbox(), hittableObjectHitbox)) {
 
                     // Player was hit. Render the explosion.
-                    handlePlayerDeath(playerState.ship);
+                    handlePlayerDeath(hitdetectionPlayerState.ship);
                 }
             }
 
             // Check if the player hit something.
-            if (playerState.playerBullet !== undefined && isEnemy(hittableObject)) {
-                if (overlaps(playerState.playerBullet.getHitbox(), hittableObjectHitbox)) {
+            if (hitdetectionPlayerState.playerBullet !== undefined && isEnemy(hittableObject)) {
+                if (overlaps(hitdetectionPlayerState.playerBullet.getHitbox(), hittableObjectHitbox)) {
                     dispatch(setBullet(undefined));
                     handleEnemyDestruction(hittableObject);
                 }

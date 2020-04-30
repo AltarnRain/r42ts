@@ -12,9 +12,9 @@
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import { GameLocation } from "../../Models/GameLocation";
 import ExplosionCenter from "../../Particles/ExplosionCenter";
+import Particle from "../../Particles/Particle";
 import Constants from "./Constants";
 import { AddExplosionCenter, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, RemoveExplosionCenter, RemoveParticle, ResetLevelState, SetEnemies, SetEnemyFireTick, SetFireInterval, SetPhaserLocations } from "./Types";
-import Particle from "../../Particles/Particle";
 
 export function resetLevelState(): ResetLevelState {
     return {

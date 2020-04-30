@@ -5,9 +5,9 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
+import Guard from "../Guard";
 import BulletParticle from "../Particles/BulletParticle";
 import { appState } from "../State/Store";
-import Guard from "../Guard";
 
 /**
  * Module:          OrbFireCheck

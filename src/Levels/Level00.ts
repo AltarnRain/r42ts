@@ -5,18 +5,14 @@
  */
 
 import BaseLevel from "../Base/BaseLevel";
-import { birdMovementSpeed } from "../Constants/EnemyMovementSpeeds";
-import { birdRandomAngles } from "../Constants/MovementAngles";
+import { birdFrameTime } from "../Constants/EnemyFrameTime";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import getBirdFrames from "../Enemies/Bird/BirdFrames";
-import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
 import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
 import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import getExplosion01 from "../SharedFrames/Explosion01";
-import { getRandomArrayElement } from "../Utility/Array";
 import { getMaximumFrameDimensions, getRandomFrameKeyIndex } from "../Utility/Frame";
-import { birdFrameTime } from "../Constants/EnemyFrameTime";
 
 /**
  * Module:          Level 00

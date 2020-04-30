@@ -9,8 +9,5 @@
  * Responsibility:  Warp level for the player to pass though.
  */
 
-
-
 export default class WarpLevel {
-    
 }

@@ -5,13 +5,13 @@
  */
 
 import { angles } from "../Constants/Angles";
+import Guard from "../Guard";
 import Accelerating from "../LocationProviders/Accelerating";
 import PlayerBullet from "../Player/PlayerBullet";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { setBullet } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import GameLoop from "./GameLoop";
-import Guard from "../Guard";
 
 /**
  * Module:          PlayerRunner
