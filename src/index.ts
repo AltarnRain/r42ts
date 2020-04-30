@@ -65,7 +65,23 @@ window.onload = () => {
                 break;
             }
             default:
-            // StartGame();
+                startGame();
         }
     }
 };
+
+function startGame(): void {
+    subscribeToStoreChanges();
+    registerListeners();
+
+    dispatch(setPhasers(1));
+    dispatch(setLives(2));
+
+    GameLoop.registerBackgroundDrawing(drawStatusBar);
+    GameLoop.registerUpdateState(playerRunner);
+    GameLoop.registerUpdateState(playerSpawnManager);
+    dispatch(playerMortality("mortal"));
+
+    dispatch(setLevel(1));
+    GameLoop.Start();
+}

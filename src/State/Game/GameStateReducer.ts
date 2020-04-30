@@ -79,7 +79,7 @@ function initState(): GameState {
         level: undefined,
         lives: 2,
         score: 0,
-        phasers: 0, // Start with 0 phasers. One is rewarded each level so level 1 gives the player one phaser.
+        phasers: 1,
         pause: false,
     };
 }
