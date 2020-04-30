@@ -7,7 +7,6 @@
 import BaseLevel from "../Base/BaseLevel";
 import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
-import { RobotBulletSpeed } from "../Constants/EnemyBulletSpeed";
 import { robotFrameTime } from "../Constants/EnemyFrameTime";
 import { robotMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import { robotFireFrequence } from "../Constants/FireFrequences";
@@ -24,6 +23,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import { getExplosion02 } from "../SharedFrames/Explosion02";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { getMaximumFrameDimensions } from "../Utility/Frame";
+import { robotBulletSpeed } from "../Constants/BulletSpeeds";
 
 /**
  * Module:          Level 02
@@ -53,7 +53,7 @@ export default class Level02 extends BaseLevel {
             return new RobotEnemy(lc.color, robotFrameTime, locationProvider, frameProvider, getExplosion02, getRobotFrames, downFireAngleProvider);
         });
 
-        const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, RobotBulletSpeed,  robotsToFire, robotLevel02FireCheck);
+        const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, robotBulletSpeed,  robotsToFire, robotLevel02FireCheck);
         this.begin(enemies, robotFireFrequence, bulletProvider);
     }
 }

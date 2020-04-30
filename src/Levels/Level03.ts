@@ -6,8 +6,8 @@
 
 import BaseLevel from "../Base/BaseLevel";
 import BulletRunner from "../BulletProviders/BulletRunner";
+import { orbBulletSpeed } from "../Constants/BulletSpeeds";
 import CGAColors from "../Constants/CGAColors";
-import { OrbBulletSpeed as orbBulletSpeed } from "../Constants/EnemyBulletSpeed";
 import { orbFrameTime } from "../Constants/EnemyFrameTime";
 import { orbMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import { orbFireFrequence } from "../Constants/FireFrequences";

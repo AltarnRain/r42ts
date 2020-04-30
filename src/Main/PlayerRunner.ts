@@ -12,6 +12,7 @@ import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { setBullet } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import GameLoop from "./GameLoop";
+import { playerBulletSpeed } from "../Constants/BulletSpeeds";
 
 /**
  * Module:          PlayerRunner
@@ -22,6 +23,7 @@ export default function playerRunner(): void {
     updateState();
     GameLoop.registerDraw(draw);
 }
+
 
 /**
  * Updates the player state.
@@ -48,7 +50,7 @@ function updateState(): void {
     if (Guard.isPlayerAlive(playerState.ship) && keyboardState.fire && playerState.playerBullet === undefined) {
         const nozzleLocation = playerState.ship.getNozzleLocation();
 
-        const locationProvider = new Accelerating(nozzleLocation.left, nozzleLocation.top, 42, angles.up, 1);
+        const locationProvider = new Accelerating(nozzleLocation.left, nozzleLocation.top, playerBulletSpeed, angles.up, 1);
         dispatch(setBullet(new PlayerBullet(locationProvider, getTwoPixelBullet)));
     }
 
