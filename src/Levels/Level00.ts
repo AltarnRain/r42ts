@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import BaseLevel from "../Base/BaseLevel";
+import BaseEnemyLevel from "../Base/BaseEnemyLevel";
 
 /**
  * Module:          Level 00
@@ -15,7 +15,7 @@ import BaseLevel from "../Base/BaseLevel";
 /**
  * Sets up level 00. Play ground level.
  */
-export default class Level00 extends BaseLevel {
+export default class Level00 extends BaseEnemyLevel {
 
     constructor(stateManager: any, levelWon: () => boolean) {
         super(stateManager, levelWon);

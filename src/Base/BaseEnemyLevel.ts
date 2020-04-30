@@ -14,13 +14,9 @@ import { setPlayerMovementLimit } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { TickFunction } from "../Types";
 import { BaseEnemy } from "./BaseEnemy";
+import ILevel from "./ILevel";
 
-/**
- * Module:          BaseLevel
- * Responsibility:  Base class for all levels.
- */
-
-export default abstract class BaseLevel {
+export default abstract class BaseEnemyLevel implements ILevel {
 
     /**
      * Array of subscriptions registered in the GameLoop. Disposed when the level is disposed.
@@ -63,7 +59,7 @@ export default abstract class BaseLevel {
         // Register the background draw function so it runs in the game loop.
         this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
 
-        // Draw the level banned to show which round we're at.
+        // Draw the level banner to show which round we're at.
         let level = 0;
         if (gameState.level !== undefined) {
             level = gameState.level;

@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import BaseLevel from "../Base/BaseLevel";
+import BaseEnemyLevel from "../Base/BaseEnemyLevel";
 import { birdMovementSpeed as birdMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import { birdRandomAngles as birdRandomAngles } from "../Constants/MovementAngles";
 import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
@@ -19,7 +19,7 @@ import { getRandomArrayElement } from "../Utility/Array";
 /**
  * Sets up level 01.
  */
-export default class Level01 extends BaseLevel {
+export default class Level01 extends BaseEnemyLevel {
 
     /**
      * Start Level 01.

@@ -10,7 +10,7 @@
  *                  that trigger a state action.
  */
 
-import BaseLevel from "../Base/BaseLevel";
+import ILevel from "../Base/ILevel";
 import { addLifeAndPhaser } from "../State/Game/Actions";
 import { appState, appStore, dispatch } from "../State/Store";
 import { levelFactory } from "./LevelFactory";
@@ -19,7 +19,7 @@ import { levelFactory } from "./LevelFactory";
 let levelNumber: number;
 
 // Current level object.
-let currentLevel: BaseLevel;
+let currentLevel: ILevel;
 
 // Used to track changes in score to award ships and phasers.
 let currentScore = 0;

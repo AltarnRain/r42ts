@@ -9,20 +9,22 @@
  * Responsibility:  Provide Level objects
  */
 
-import BaseLevel from "../Base/BaseLevel";
+
+import ILevel from "../Base/ILevel";
 import enemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { appState } from "../State/Store";
 import Level00 from "./Level00";
 import Level01 from "./Level01";
 import Level02 from "./Level02";
 import { Level03 } from "./Level03";
+import WarpLevel from "./WarpLevel";
 
 /**
  * LevelFactory. Provides level objects
  * @param {number} level. The desired level.
- * @returns {BaseLevel}. A level.
+ * @returns {BaseEnemyLevel}. A level.
  */
-export function levelFactory(level: number): BaseLevel {
+export function levelFactory(level: number): ILevel {
     switch (level) {
         case 0:
             // Test level
@@ -33,6 +35,8 @@ export function levelFactory(level: number): BaseLevel {
             return new Level02(enemyLevelRunner, clearedEnemies);
         case 3:
             return new Level03(enemyLevelRunner, clearedEnemies);
+        case 4:
+            return new WarpLevel();
         default:
             return new Level01(enemyLevelRunner, never);
     }

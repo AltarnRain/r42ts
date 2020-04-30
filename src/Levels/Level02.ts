@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import BaseLevel from "../Base/BaseLevel";
+import BaseEnemyLevel from "../Base/BaseEnemyLevel";
 import BulletRunner from "../BulletProviders/BulletRunner";
 import { robotBulletSpeed } from "../Constants/BulletSpeeds";
 import CGAColors from "../Constants/CGAColors";
@@ -25,7 +25,7 @@ import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 /**
  * Sets up level 02.
  */
-export default class Level02 extends BaseLevel {
+export default class Level02 extends BaseEnemyLevel {
 
     /**
      * Start Level 02

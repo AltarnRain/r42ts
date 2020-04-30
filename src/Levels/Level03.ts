@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import BaseLevel from "../Base/BaseLevel";
+import BaseEnemyLevel from "../Base/BaseEnemyLevel";
 import BulletRunner from "../BulletProviders/BulletRunner";
 import { orbBulletSpeed } from "../Constants/BulletSpeeds";
 import CGAColors from "../Constants/CGAColors";
@@ -22,7 +22,7 @@ import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
  * Responsibility:  Define level 03
  */
 
-export class Level03 extends BaseLevel {
+export class Level03 extends BaseEnemyLevel {
 
     public start(): void {
         super.start();

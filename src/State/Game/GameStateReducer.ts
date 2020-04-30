@@ -77,9 +77,9 @@ export default function gameStateReducer(state: GameState = initState(), action:
 function initState(): GameState {
     return {
         level: undefined,
-        lives: 2,
+        lives: 0,
         score: 0,
-        phasers: 1,
+        phasers: 0,
         pause: false,
     };
 }
