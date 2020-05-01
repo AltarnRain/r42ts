@@ -4,60 +4,48 @@
  * See LICENSE.MD.
  */
 
-import ILevel from "../Interfaces/ILevel";
 import CGAColors from "../Constants/CGAColors";
-import dimensionProvider from "../Providers/DimensionProvider";
-import ctxProvider from "../Providers/CtxProvider";
 import GameLoop from "../GameLoop";
-import { drawBackground } from "../GameScreen/StaticRenders";
+import { drawBackground, drawWarpBackground } from "../GameScreen/StaticRenders";
+import ILevel from "../Interfaces/ILevel";
+import ctxProvider from "../Providers/CtxProvider";
+import dimensionProvider from "../Providers/DimensionProvider";
 
 /**
  * Module:          WarpLevel
  * Responsibility:  Warp level for the player to pass though.
  */
 
-const backgroundColorCombos: string[][] = [
-    [CGAColors.white, CGAColors.brown],
+const backgroundColor: string[] = [
+    CGAColors.brown,
+    CGAColors.green,
+    CGAColors.magenta,
+    CGAColors.blue,
 ];
 
 const {
-    gameFieldTop,
     averagePixelSize,
-    fullWidth,
-    fullHeight
 } = dimensionProvider();
-
-const ctx = ctxProvider();
 
 export default class WarpLevel implements ILevel {
 
+    private gameLoopSubscriptions: Array<(tick?: number) => void> = [];
+
     public start(): void {
         // Register the background draw function so it runs in the game loop.
-        GameLoop.registerBackgroundDrawing(drawBackground);
-        GameLoop.registerBackgroundDrawing(this.drawWarp);
+        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(drawBackground));
+
+        // Determine which additional color next to white the warp background will have.
+        const colorIndex = Math.ceil(Math.random() * backgroundColor.length - 1);
+        const additionalColor = backgroundColor[colorIndex];
+        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, averagePixelSize)));
     }
 
-    private drawWarp() {
-        const top = gameFieldTop + averagePixelSize;
-        const bottom = fullHeight - averagePixelSize * 20;
-        const height = bottom - top;
-        let left = averagePixelSize;
-        let lineColorIndex = 0;
-
-        while (fullWidth - averagePixelSize > left) {
-            if (lineColorIndex === 0) {
-                lineColorIndex = 1;
-            } else if (lineColorIndex === 1) {
-                lineColorIndex = 0;
-            }
-
-            ctx.fillStyle = backgroundColorCombos[0][lineColorIndex];
-            ctx.fillRect(left, top, averagePixelSize, height);
-            left += averagePixelSize;
-        }
-    }
-
+    /**
+     * Dispose stuff.
+     */
     public dispose(): void {
-        // TODO
+        // Dispose all game loop subscriptions.
+        this.gameLoopSubscriptions.forEach((s) => s());
     }
 }

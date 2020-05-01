@@ -51,6 +51,35 @@ function drawGameFieldBorder(): void {
 }
 
 /**
+ * Draws the background of the warp level.
+ * @param {string} additionalColor. The additional color.
+ */
+export function drawWarpBackground(additionalColor: string, pixelSize: number): void {
+    const ctx = ctxProvider();
+    const top = gameFieldTop + pixelSize;
+    const bottom = fullHeight - pixelSize * 20;
+    const height = bottom - top;
+    let left = pixelSize;
+
+    // The first line in a warp level is always white.
+    // we'll use this flag to altername between white and a randonly picked color.
+    let drawWhite = true;
+
+    while (fullWidth - pixelSize > left) {
+        if (drawWhite) {
+            ctx.fillStyle = CGAColors.white;
+            drawWhite = false;
+        } else {
+            ctx.fillStyle = additionalColor;
+            drawWhite = true;
+        }
+
+        ctx.fillRect(left, top, pixelSize, height);
+        left += pixelSize;
+    }
+}
+
+/**
  * Debugggin function. Draws a grid in the screen for animation alignment.
  */
 export function DEBUGGING_drawGrid(): void {
