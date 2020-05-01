@@ -171,15 +171,17 @@ function handleParticles(tick: number): void {
  * Handle self destruct.
  */
 function handleSelfDestruct(): void {
-    const selfDestructPlayerState = appState().playerState;
-    if (Guard.isPlayerAlive(selfDestructPlayerState.ship) && appState().keyboardState.selfDestruct) {
+    const playerState = appState().playerState;
+
+    if (Guard.isPlayerAlive(playerState.ship) && appState().keyboardState.selfDestruct) {
         const { enemyLevelState } = appState();
         for (const enemy of enemyLevelState.enemies) {
             const center = enemy.ship.getCenterLocation();
             queueExplosionRender(center.left, center.top, enemy.ship.getExplosion());
         }
-        queueExplosionRender(selfDestructPlayerState.playerLeftLocation, selfDestructPlayerState.playerTopLocation, selfDestructPlayerState.ship.getExplosion());
-        dispatch(playerDied());
+
+        queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.ship.getExplosion());
+        handlePlayerDeath(playerState.ship);
         dispatch(setEnemies([]));
     }
 }
@@ -190,6 +192,7 @@ function handleSelfDestruct(): void {
  */
 function handleEnemyDestruction(ship: BaseEnemy): void {
     const { enemyLevelState } = appState();
+
     enemyLevelState.enemies.forEach((e) => {
         if (e.ship !== ship) {
             e.ship.increaseSpeed(enemyLevelState.totalNumberOfEnemies / (enemyLevelState.enemies.length - 1));
