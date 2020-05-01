@@ -8,14 +8,15 @@ import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types";
-import ILocationProvider from "./ILocationProvider";
+import { IHitbox } from "../Interfaces/IHitbox";
+import ILocationProvider from "../Interfaces/ILocationProvider";
 
 /**
  * Module:          BaseGameObject
  * Responsibility:  Base class for all game objects.
  */
 
-export default abstract class BaseGameObject {
+export default abstract class BaseGameObject implements IHitbox {
     /**
      * Current frame of the object
      */

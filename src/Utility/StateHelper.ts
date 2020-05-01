@@ -4,19 +4,14 @@
  * See LICENSE.MD.
  */
 
-import BaseGameObject from "../Base/BaseGameObject";
 import EnemyLevelState from "../State/EnemyLevel/EnemyLevelState";
-
-/**
- * Module:          StateHelper
- * Responsibility:  Providers quality of life functions that pull data from the state of combine's dispatches.
- */
+import { IHitbox } from "../Interfaces/IHitbox";
 
 /**
  * Returns all gameobject that can kill the player with their hitboxes.
  * @returns {BaseGameObject[]}. An array of objects that can be hit by the player or hit the player.
  */
-export function getHittableObjects(levelState: EnemyLevelState): BaseGameObject[] {
+export function getHittableObjects(levelState: EnemyLevelState): IHitbox[] {
     const ships = levelState.enemies.map((e) => e.ship);
     return [
         ...ships,

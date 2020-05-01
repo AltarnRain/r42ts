@@ -15,7 +15,7 @@ import { getFrameCenter, getFrameDimensions, getFrameHitbox, getMaximumFrameDime
 import { getOffsetLocation } from "../Utility/Location";
 import BaseFrameProvider from "./BaseFrameProvider";
 import BaseGameObject from "./BaseGameObject";
-import ILocationProvider from "./ILocationProvider";
+import ILocationProvider from "../Interfaces/ILocationProvider";
 
 /**
  * Module:          BaseEnemy

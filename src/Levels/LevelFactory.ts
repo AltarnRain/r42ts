@@ -9,7 +9,7 @@
  * Responsibility:  Provide Level objects
  */
 
-import ILevel from "../Base/ILevel";
+import ILevel from "../Interfaces/ILevel";
 import enemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { appState } from "../State/Store";
 import Level01 from "./Level01";

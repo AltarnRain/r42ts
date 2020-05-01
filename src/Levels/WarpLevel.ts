@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import ILevel from "../Base/ILevel";
+import ILevel from "../Interfaces/ILevel";
 import CGAColors from "../Constants/CGAColors";
 import dimensionProvider from "../Providers/DimensionProvider";
 import ctxProvider from "../Providers/CtxProvider";

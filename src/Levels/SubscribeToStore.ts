@@ -10,7 +10,7 @@
  *                  that trigger a state action.
  */
 
-import ILevel from "../Base/ILevel";
+import ILevel from "../Interfaces/ILevel";
 import { addLifeAndPhaser } from "../State/Game/Actions";
 import { appState, appStore, dispatch } from "../State/Store";
 import { levelFactory } from "./LevelFactory";

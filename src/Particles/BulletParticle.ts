@@ -5,7 +5,7 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
-import ILocationProvider from "../Base/ILocationProvider";
+import ILocationProvider from "../Interfaces/ILocationProvider";
 import { FrameProviderFunction, GameObjectType } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 import Particle from "./Particle";

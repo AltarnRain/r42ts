@@ -14,7 +14,7 @@ import { setPlayerMovementLimit } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { TickFunction } from "../Types";
 import { BaseEnemy } from "./BaseEnemy";
-import ILevel from "./ILevel";
+import ILevel from "../Interfaces/ILevel";
 
 export default abstract class BaseEnemyLevel implements ILevel {
 

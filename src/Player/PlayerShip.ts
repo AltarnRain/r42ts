@@ -14,6 +14,7 @@ import { appState } from "../State/Store";
 import { Frame, GameObjectType } from "../Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import Mutators from "../Utility/FrameMutators";
+import { IHitbox } from "../Interfaces/IHitbox";
 import getPlayerExplosion from "./PlayerExplosion";
 import { getPlayerFrame } from "./PlayerFrames";
 
@@ -28,7 +29,7 @@ const {
 
 const shipDimensions = getFrameDimensions(getPlayerFrame(), averagePixelSize);
 
-export default class PlayerShip {
+export default class PlayerShip implements IHitbox {
 
     /**
      * Reference to the player's ships frame.

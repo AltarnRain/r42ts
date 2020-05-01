@@ -5,7 +5,7 @@
  */
 
 import BaseGameObject from "../Base/BaseGameObject";
-import ILocationProvider from "../Base/ILocationProvider";
+import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";

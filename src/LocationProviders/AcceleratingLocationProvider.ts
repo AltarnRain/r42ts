@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import ILocationProvider from "../Base/ILocationProvider";
+import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
 import { getLocation } from "../Utility/Location";
 

@@ -5,7 +5,7 @@
  */
 
 import BaseLocationProvider from "../Base/BaseLocationProvider";
-import ILocationProvider from "../Base/ILocationProvider";
+import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { getLocation } from "../Utility/Location";
