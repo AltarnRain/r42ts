@@ -16,6 +16,7 @@ namespace Constants {
     export const setPlayerLocation = "setPlayerLeftLocation";
     export const removePlayerBullet = "removePlayerBullet";
     export const playerDied = "playedDier";
+    export const setPlayerPositionToSpawnPosition = "setPlayerPositionToSpawnPosition";
 }
 
 export default Constants;

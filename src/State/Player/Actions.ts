@@ -13,7 +13,7 @@ import PlayerBullet from "../../Player/PlayerBullet";
 import PlayerShip from "../../Player/PlayerShip";
 import { MoveLimits } from "../../Types";
 import Constants from "./Constants";
-import { SetBullet, SetPlayer, SetPlayerLocation, SetPlayerMovementLimit, RemovePlayerBullet, PlayerDied } from "./Types";
+import { PlayerDied, RemovePlayerBullet, SetBullet, SetPlayer, SetPlayerLocation, SetPlayerMovementLimit, SetPlayerPositionToSpawnPosition } from "./Types";
 
 export function setPlayer(ship: PlayerShip): SetPlayer {
     return {
@@ -53,5 +53,11 @@ export function setPlayerLocation(left: number, top: number): SetPlayerLocation 
         type: Constants.setPlayerLocation,
         left,
         top
+    };
+}
+
+export function  setPlayerPositionToSpawnPosition(): SetPlayerPositionToSpawnPosition {
+    return {
+        type: Constants.setPlayerPositionToSpawnPosition
     };
 }

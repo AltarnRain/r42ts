@@ -10,6 +10,8 @@ import { drawBackground, drawWarpBackground } from "../GameScreen/StaticRenders"
 import ILevel from "../Interfaces/ILevel";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
+import { dispatch } from "../State/Store";
+import { setPlayerLocation, setPlayerPositionToSpawnPosition } from "../State/Player/Actions";
 
 /**
  * Module:          WarpLevel
@@ -32,6 +34,9 @@ export default class WarpLevel implements ILevel {
     private gameLoopSubscriptions: Array<(tick?: number) => void> = [];
 
     public start(): void {
+
+        dispatch(setPlayerPositionToSpawnPosition());
+
         // Register the background draw function so it runs in the game loop.
         this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(drawBackground));
 

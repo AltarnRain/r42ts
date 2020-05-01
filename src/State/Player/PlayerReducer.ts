@@ -43,6 +43,11 @@ export default function playerReducer(state: PlayerState = initState(), action: 
             case Constants.playerDied:
                 draft.ship = undefined;
                 break;
+            case Constants.setPlayerPositionToSpawnPosition:
+                const spawnLocation = getShipSpawnLocation();
+                draft.playerLeftLocation = spawnLocation.left;
+                draft.playerTopLocation = spawnLocation.top;
+                break;
         }
     });
 }

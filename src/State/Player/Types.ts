@@ -43,11 +43,16 @@ export interface PlayerDied {
     type: typeof Constants.playerDied;
 }
 
+export interface SetPlayerPositionToSpawnPosition {
+    type: typeof Constants.setPlayerPositionToSpawnPosition;
+}
+
 export type PlayerStateTypes =
     SetPlayer |
     SetBullet |
     SetPlayerMovementLimit |
     SetPlayerLocation |
     RemovePlayerBullet |
-    PlayerDied
+    PlayerDied |
+    SetPlayerPositionToSpawnPosition
     ;
