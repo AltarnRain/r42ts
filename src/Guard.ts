@@ -8,6 +8,8 @@ import BulletParticle from "./Particles/BulletParticle";
 import Particle from "./Particles/Particle";
 import PlayerShip from "./Player/PlayerShip";
 import { allGameKeys, GameKeys } from "./Utility/KeyboardEvents";
+import { BaseEnemy } from "./Base/BaseEnemy";
+import PlayerBullet from "./Player/PlayerBullet";
 
 /**
  * Module:          Guard
@@ -30,6 +32,17 @@ namespace Guard {
      */
     export function isPlayerAlive(value: PlayerShip | undefined): value is PlayerShip {
         return value !== undefined;
+    }
+
+    /**
+     * TypeGuard for enemies
+     */
+    export function isEnemy(value: any): value is BaseEnemy {
+        return value && value.getObjectType() === "enemy";
+    }
+
+    export function isPlayerBulletActive(value: any): value is PlayerBullet {
+        return value;
     }
 }
 

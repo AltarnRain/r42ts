@@ -4,8 +4,8 @@
  * See LICENSE.MD.
  */
 
-import EnemyLevelState from "../State/EnemyLevel/EnemyLevelState";
 import { IHitbox } from "../Interfaces/IHitbox";
+import EnemyLevelState from "../State/EnemyLevel/EnemyLevelState";
 
 /**
  * Returns all gameobject that can kill the player with their hitboxes.
