@@ -20,7 +20,7 @@ import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
 import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, removeExplosionCenter, removeParticle, setEnemies, setPhaserLocations } from "../State/EnemyLevel/Actions";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
-import { setBullet, setPlayer, setPlayerLocation } from "../State/Player/Actions";
+import { playerDied, removePlayerBullet, setPlayerLocation } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { Frame } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
@@ -118,7 +118,7 @@ function handleHitDetection() {
             // Check if the player hit something.
             if (Guard.isPlayerBulletActive(hitdetectionPlayerState.playerBullet) && Guard.isEnemy(hittableObject)) {
                 if (overlaps(hitdetectionPlayerState.playerBullet.getHitbox(), hittableObjectHitbox)) {
-                    dispatch(setBullet(undefined));
+                    dispatch(removePlayerBullet());
                     handleEnemyDestruction(hittableObject);
                 }
             }
@@ -179,7 +179,7 @@ function handleSelfDestruct(): void {
             queueExplosionRender(center.left, center.top, enemy.ship.getExplosion());
         }
         queueExplosionRender(selfDestructPlayerState.playerLeftLocation, selfDestructPlayerState.playerTopLocation, selfDestructPlayerState.ship.getExplosion());
-        dispatch(setPlayer(undefined));
+        dispatch(playerDied());
         dispatch(setEnemies([]));
     }
 }
@@ -246,7 +246,7 @@ function handlePlayerDeath(player: PlayerShip): void {
     const { playerState } = appState();
 
     queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, player.getExplosion());
-    dispatch(setPlayer(undefined));
+    dispatch(playerDied());
     dispatch(removeLife());
 
     const spawnLocation = getShipSpawnLocation();

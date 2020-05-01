@@ -37,6 +37,12 @@ export default function playerReducer(state: PlayerState = initState(), action: 
                 draft.playerLeftLocation = action.left;
                 draft.playerTopLocation = action.top;
                 break;
+            case Constants.removePlayerBullet:
+                draft.playerBullet = undefined;
+                break;
+            case Constants.playerDied:
+                draft.ship = undefined;
+                break;
         }
     });
 }

@@ -11,7 +11,7 @@ import Guard from "../Guard";
 import AcceleratingLocationProvider from "../LocationProviders/AcceleratingLocationProvider";
 import PlayerBullet from "../Player/PlayerBullet";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import { setBullet } from "../State/Player/Actions";
+import { setBullet, removePlayerBullet } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 
 /**
@@ -42,7 +42,7 @@ function updateState(): void {
 
     // Remove objects no longer required.
     if (playerState.playerBullet?.traveling() === false) {
-        dispatch(setBullet(undefined));
+        dispatch(removePlayerBullet());
     }
 
     // Fire new bullet.

@@ -35,9 +35,19 @@ export interface SetPlayerLocation {
     top: number;
 }
 
+export interface RemovePlayerBullet {
+    type: typeof Constants.removePlayerBullet;
+}
+
+export interface PlayerDied {
+    type: typeof Constants.playerDied;
+}
+
 export type PlayerStateTypes =
     SetPlayer |
     SetBullet |
     SetPlayerMovementLimit |
-    SetPlayerLocation
+    SetPlayerLocation |
+    RemovePlayerBullet |
+    PlayerDied
     ;

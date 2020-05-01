@@ -13,19 +13,31 @@ import PlayerBullet from "../../Player/PlayerBullet";
 import PlayerShip from "../../Player/PlayerShip";
 import { MoveLimits } from "../../Types";
 import Constants from "./Constants";
-import { SetBullet, SetPlayer, SetPlayerLocation, SetPlayerMovementLimit } from "./Types";
+import { SetBullet, SetPlayer, SetPlayerLocation, SetPlayerMovementLimit, RemovePlayerBullet, PlayerDied } from "./Types";
 
-export function setPlayer(ship: PlayerShip | undefined): SetPlayer {
+export function setPlayer(ship: PlayerShip): SetPlayer {
     return {
         type: Constants.setPlayer,
         payload: ship,
     };
 }
 
-export function setBullet(bullet: PlayerBullet | undefined): SetBullet {
+export function setBullet(bullet: PlayerBullet): SetBullet {
     return {
         type: Constants.setBullet,
         payload: bullet,
+    };
+}
+
+export function removePlayerBullet(): RemovePlayerBullet {
+    return {
+        type: Constants.removePlayerBullet,
+    };
+}
+
+export function playerDied(): PlayerDied {
+    return {
+        type: Constants.playerDied
     };
 }
 
