@@ -16,14 +16,13 @@ import dimensionProvider from "./DimensionProvider";
 
 const {
     pixelSize,
-    gameFieldWidth,
-    gameFieldHeight
+    gameField
 } = dimensionProvider();
 
 const shipDimensions = getFrameDimensions(getPlayerFrame(), pixelSize);
 
-const leftSpawnPosition = (gameFieldWidth / 2) - shipDimensions.width  / 2;
-const topSpawnPosition = gameFieldHeight - pixelSize * 8;
+const leftSpawnPosition = (gameField.right / 2) - shipDimensions.width / 2;
+const topSpawnPosition = gameField.top - pixelSize * 8;
 
 /**
  * Gets the ship's spawn location, center screen.

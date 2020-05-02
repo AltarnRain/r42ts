@@ -15,7 +15,7 @@ import { getLocation } from "../Utility/Location";
  */
 
 const {
-    gameFieldTop,
+    gameField,
     pixelSize,
     fullGameHeight,
     fullGameWidth,
@@ -32,7 +32,7 @@ export default class SideToSideUpAndDownLocationProvider extends BaseLocationPro
             this.angle = 180 - this.angle;
         }
 
-        if (this.top <= gameFieldTop || this.top >= fullGameHeight - this.height) {
+        if (this.top <= gameField.top || this.top >= fullGameHeight - this.height) {
             this.angle *= -1;
         }
 

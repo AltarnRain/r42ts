@@ -43,23 +43,25 @@ export default function dimensionProvider(): GameDimensions {
         const fullGameHeight = pixelSize * 120;
         const fullGameWidth = pixelSize * 160;
 
-        const statusBarHeight = pixelSize * 6;
+        const statusBarBottom = pixelSize * 6;
 
         // Add one pixel to accomodate the border around the game field.
-        const gameFieldTop = statusBarHeight + pixelSize * 2;
+        const gameFieldTop = statusBarBottom + pixelSize * 2;
 
         const gameFieldHeight = fullGameHeight - pixelSize;
 
         gameDimensions = {
             fullGameWidth,
             fullGameHeight,
-            gameFieldTop,
-            gameFieldHeight,
-            statusBarHeight,
+            statusBarBottom,
             pixelSize,
             pixelSize2x: pixelSize * 2,
-            gameFieldLeft: pixelSize,
-            gameFieldWidth: fullGameWidth - pixelSize,
+            gameField: {
+                left: pixelSize,
+                top: statusBarBottom + pixelSize,
+                right: fullGameWidth - pixelSize,
+                bottom: fullGameHeight - pixelSize,
+            }
         };
     }
 

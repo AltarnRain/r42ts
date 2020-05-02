@@ -16,13 +16,13 @@ import getOrbFrames from "./OrbFrames";
 
 const {
     pixelSize,
-    gameFieldTop
+    gameField
 } = dimensionProvider();
 
 const orbSpawnLocations: GameLocation[] = [];
 const { width } = getFrameDimensions(getOrbFrames().frames[0], pixelSize);
 
-const top = gameFieldTop + pixelSize * 26;
+const top = gameField.top + pixelSize * 26;
 const left = pixelSize * 8;
 const spacing = pixelSize * 2;
 

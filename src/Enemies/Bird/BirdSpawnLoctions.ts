@@ -19,14 +19,14 @@ const birdSpawnLocations: GameLocation[] = [];
 
 const {
     pixelSize,
-    gameFieldTop,
+    gameField,
 } = dimensionProvider();
 
 // Top row birds.
 for (let i = 0; i < 7; i++) {
     birdSpawnLocations.push({
         left: (firstAndThirdRowLeftStart * pixelSize) + spacing * i * pixelSize,
-        top: gameFieldTop + pixelSize * 5,
+        top: gameField.top + pixelSize * 5,
     });
 }
 
@@ -34,7 +34,7 @@ for (let i = 0; i < 7; i++) {
 for (let i = 0; i < 6; i++) {
     birdSpawnLocations.push({
         left: (secondRowLeftStart * pixelSize) + spacing * i * pixelSize,
-        top: gameFieldTop + pixelSize * 15,
+        top: gameField.top + pixelSize * 15,
     });
 }
 
@@ -42,7 +42,7 @@ for (let i = 0; i < 6; i++) {
 for (let i = 0; i < 7; i++) {
     birdSpawnLocations.push({
         left: (firstAndThirdRowLeftStart * pixelSize) + spacing * i * pixelSize,
-        top: gameFieldTop + pixelSize * 25,
+        top: gameField.top + pixelSize * 25,
     });
 }
 

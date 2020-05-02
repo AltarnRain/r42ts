@@ -19,15 +19,11 @@ import { fallsWithin, getLocation } from "../Utility/Location";
  */
 
 const {
-    gameFieldTop,
     pixelSize,
-    fullGameHeight,
-    fullGameWidth,
+    gameField,
 } = dimensionProvider();
 
 const shipDimensions = getFrameDimensions(getPlayerFrame(), pixelSize);
-const maxBottom = fullGameHeight - shipDimensions.height - pixelSize / 2;
-const maxRight = fullGameHeight - shipDimensions.width;
 
 /**
  * Handles player movement.
@@ -62,7 +58,7 @@ export function movePlayerHandler(speed: number): void {
     const angle = getAngle(localKeyboardState);
     if (angle !== -1) {
         const newLocation = getLocation(playerState.playerLeftLocation, playerState.playerTopLocation, angle, speed);
-        if (fallsWithin(newLocation.left, newLocation.top, gameFieldTop, maxBottom, 0, maxRight)) {
+        if (fallsWithin(newLocation.left, newLocation.top, gameField.top, gameField.bottom, gameField.left, gameField.right)) {
             dispatch(setPlayerLocation(newLocation.left, newLocation.top));
         }
     }

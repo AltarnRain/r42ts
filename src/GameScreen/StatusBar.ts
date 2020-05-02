@@ -24,7 +24,7 @@ import { padLeft } from "../Utility/String";
 const ctx = ctxProvider();
 
 const {
-    statusBarHeight,
+    statusBarBottom,
     pixelSize,
     fullGameWidth
 } = dimensionProvider();
@@ -84,7 +84,7 @@ function drawScore(): void {
     const { gameState } = appState();
 
     ctx.fillStyle = CGAColors.red;
-    ctx.fillRect(0, 0, scoreBackgroundWidth, statusBarHeight);
+    ctx.fillRect(0, 0, scoreBackgroundWidth, statusBarBottom);
 
     const scoreString = padLeft(gameState.score.toString(), 6, "0");
 
@@ -105,7 +105,7 @@ function drawPhasers(): void {
     const { gameState } = appState();
 
     ctx.fillStyle = CGAColors.red;
-    ctx.fillRect(phaserStartPosition, 0, phaserBackgroundWidth, statusBarHeight);
+    ctx.fillRect(phaserStartPosition, 0, phaserBackgroundWidth, statusBarBottom);
 
     for (let i = 0; i < gameState.phasers; i++) {
         const actualSpacing = i === 0 ? 0 : phaserSpacing;
@@ -124,7 +124,7 @@ function drawLives(): void {
     const { gameState } = appState();
 
     ctx.fillStyle = CGAColors.red;
-    ctx.fillRect(livesStartPostion, 0, livesBackgroundWidth, statusBarHeight);
+    ctx.fillRect(livesStartPostion, 0, livesBackgroundWidth, statusBarBottom);
 
     let left = livesStartPostion + livesBackgroundWidth - liveFrameWidth;
 
@@ -140,7 +140,7 @@ function drawLevel(): void {
     const { gameState } = appState();
 
     ctx.fillStyle = CGAColors.red;
-    ctx.fillRect(levelStartPosition, 0, levelBackgroundWidth, statusBarHeight);
+    ctx.fillRect(levelStartPosition, 0, levelBackgroundWidth, statusBarBottom);
 
     let paddedLevelString = "0";
     if (gameState.level !== undefined) {

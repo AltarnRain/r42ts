@@ -12,10 +12,10 @@ import dimensionProvider from "./DimensionProvider";
  */
 
 const {
-    gameFieldWidth
+    gameField
 } = dimensionProvider();
 
 export default function speedProvider(speed: number): number {
     // 1793 is the size of the canvas when I was developing the game. All game speeds are based on this.
-    return speed * (gameFieldWidth / 1793);
+    return speed * (gameField.right / 1793);
 }

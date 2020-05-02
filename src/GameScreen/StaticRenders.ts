@@ -16,12 +16,11 @@ import dimensionProvider from "../Providers/DimensionProvider";
  */
 
 const {
-    gameFieldTop,
-    statusBarHeight,
     pixelSize,
-    gameFieldHeight,
-    gameFieldLeft,
-    gameFieldWidth,
+    gameField,
+    statusBarBottom,
+    fullGameWidth,
+    fullGameHeight
 } = dimensionProvider();
 
 export function drawBackground(): void {
@@ -35,7 +34,7 @@ export function drawBackground(): void {
 function clearGameFieldBackground(): void {
     const ctx = ctxProvider();
     ctx.fillStyle = CGAColors.black;
-    ctx.fillRect(gameFieldLeft, gameFieldTop, gameFieldWidth, gameFieldHeight);
+    ctx.fillRect(gameField.left, gameField.top, gameField.right, gameField.bottom);
 }
 
 /**
@@ -46,16 +45,16 @@ function drawGameFieldBorder(): void {
     ctx.fillStyle = CGAColors.blue;
 
     // Draw the top field border.
-    ctx.fillRect(0, gameFieldTop, gameFieldWidth, pixelSize );
+    ctx.fillRect(0, statusBarBottom, fullGameWidth, gameField.bottom);
 
     // Draw the right field border.
-    ctx.fillRect(gameFieldWidth, gameFieldTop, pixelSize, gameFieldHeight);
+    ctx.fillRect(gameField.right, statusBarBottom, pixelSize, gameField.bottom);
 
     // Draw the bottom field border.
-    ctx.fillRect(0, gameFieldHeight, gameFieldWidth, pixelSize);
+    ctx.fillRect(0, gameField.bottom, fullGameHeight, pixelSize);
 
     // Draw the left field border.
-    ctx.fillRect(0, gameFieldTop, pixelSize, gameFieldHeight);
+    ctx.fillRect(0, statusBarBottom, pixelSize, gameField.top);
 }
 
 /**

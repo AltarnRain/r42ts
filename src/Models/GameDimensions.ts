@@ -4,6 +4,8 @@
  * See LICENSE.MD.
  */
 
+import { GameRectangle } from "./GameRectangle";
+
 /**
  * Module:          GameDimensions
  * Responsibility:  Define the game dimension object.
@@ -24,7 +26,7 @@ export interface GameDimensions {
     /**
      * Height of the status bar.
      */
-    statusBarHeight: number;
+    statusBarBottom: number;
 
     /**
      * Maxiumum height of each pixel.
@@ -36,11 +38,5 @@ export interface GameDimensions {
      */
     pixelSize2x: number;
 
-    gameFieldWidth: number;
-
-    gameFieldHeight: number;
-
-    gameFieldTop: number;
-
-    gameFieldLeft: number;
+    gameField: GameRectangle;
 }

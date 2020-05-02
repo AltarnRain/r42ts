@@ -18,7 +18,7 @@ import { getLocation } from "../Utility/Location";
 
 const {
     pixelSize,
-    gameFieldTop,
+    gameField
 } = dimensionProvider();
 
 export default class MoveDownAppearUpLocationProvider extends BaseLocationProvider implements ILocationProvider {
@@ -42,7 +42,7 @@ export default class MoveDownAppearUpLocationProvider extends BaseLocationProvid
     public getCurrentLocation(): GameLocation {
 
         if (this.top + this.height > this.bottomLimit) {
-            this.top = gameFieldTop + this.height;
+            this.top = gameField.top + this.height;
         }
 
         return getLocation(this.left, this.top, this.angle, this.speed);
