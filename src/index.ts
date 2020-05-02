@@ -14,6 +14,7 @@ import { hitboxesOn, playerMortality } from "./State/Debugging/Actions";
 import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers } from "./State/Game/Actions";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
+import ctxProvider from "./Providers/CtxProvider";
 
 /**
  * Module:          Index
@@ -64,6 +65,16 @@ window.onload = () => {
 
                 break;
             }
+            case "canvas":
+                // canvas testing
+                const ctx = ctxProvider();
+
+                // Green.
+                ctx.fillStyle = "#00AA00";
+
+                (window as any).r42 = ctx;
+
+                break;
             default:
                 startGame();
         }

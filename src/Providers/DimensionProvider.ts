@@ -35,7 +35,7 @@ export default function dimensionProvider(): GameDimensions {
         // r42 uses a 4:3 resolution.
         const height = rect.height;
         const width = (height / 3) * 4;
-        const pixelSize = width / 160;
+        const pixelSize = Math.floor(width / 160);
 
         const scoreBoardHeight = pixelSize * 6;
 

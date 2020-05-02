@@ -33,9 +33,8 @@ export default function renderFrame(left: number, top: number, frame: Frame): vo
         for (let columnIndex = 0; columnIndex < columns.length; columnIndex++) {
             const color = columns[columnIndex];
 
-            // We use the minimum pixel size to determine the position.
-            const x = left + columnIndex * pixelSize;
-            const y = top + rowIndex * pixelSize;
+            const x = Math.round(left + columnIndex * pixelSize);
+            const y = Math.round(top + rowIndex * pixelSize);
 
             if (color !== "0") {
 
