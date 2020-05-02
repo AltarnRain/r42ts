@@ -57,7 +57,7 @@ function drawGameFieldBorder(): void {
 export function drawWarpBackground(additionalColor: string): void {
     const ctx = ctxProvider();
 
-    const top = gameFieldTop + pixelSize;
+    const top = gameFieldTop + pixelSize * 2;
     const bottom = fullHeight - pixelSize * 20;
     const height = bottom - top;
     let left = pixelSize;

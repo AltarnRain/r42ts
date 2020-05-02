@@ -12,6 +12,9 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import { setPlayerPositionToSpawnPosition, setPlayerMovementLimit } from "../State/Player/Actions";
 import { dispatch, appStore, appState } from "../State/Store";
 import Guard from "../Guard";
+import Mutators from "../Utility/FrameMutators";
+import { Frame } from "../Types";
+import renderFrame from "../Render/RenderFrame";
 
 /**
  * Module:          WarpLevel
@@ -33,8 +36,11 @@ export default class WarpLevel implements ILevel {
 
     private gameLoopSubscriptions: Array<(tick?: number) => void> = [];
 
+    /**
+     * Store the movement restriction to force up
+     */
     private storeSub = appStore().subscribe(() => {
-        const { playerState} = appState();
+        const { playerState } = appState();
 
         if (Guard.isPlayerAlive(playerState.ship) && playerState.moveLimit !== "none") {
             dispatch(setPlayerMovementLimit("none"));
@@ -52,6 +58,34 @@ export default class WarpLevel implements ILevel {
         const colorIndex = Math.ceil(Math.random() * backgroundColor.length - 1);
         const additionalColor = backgroundColor[colorIndex];
         this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor)));
+
+        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => this.drawWarpGate()));
+    }
+
+    private drawWarpGate(): void {
+        const f: Frame = [
+            []
+        ];
+
+        for (let i = 0; i < 16; i++) {
+            f[0].push("E");
+        }
+
+        Mutators.Frame.convertHexToCGA(f);
+
+        const {
+            fullWidth,
+            fullHeight,
+            gameFieldTop
+        } = dimensionProvider();
+        const left = fullWidth / 2 - (16 * pixelSize) / 2;
+
+        let top = fullHeight - pixelSize * 2;
+
+        while (top > gameFieldTop + pixelSize) {
+            renderFrame(left, top, f);
+            top -= pixelSize;
+        }
     }
 
     /**
