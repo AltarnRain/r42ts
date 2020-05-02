@@ -45,16 +45,16 @@ function drawGameFieldBorder(): void {
     ctx.fillStyle = CGAColors.blue;
 
     // Draw the top field border.
-    ctx.fillRect(0, statusBarBottom, fullGameWidth, gameField.bottom);
+    ctx.fillRect(0, statusBarBottom, fullGameWidth, pixelSize);
 
     // Draw the right field border.
     ctx.fillRect(gameField.right, statusBarBottom, pixelSize, gameField.bottom);
 
-    // Draw the bottom field border.
-    ctx.fillRect(0, gameField.bottom, fullGameHeight, pixelSize);
+    // // Draw the bottom field border.
+    ctx.fillRect(0, gameField.bottom, fullGameWidth, pixelSize);
 
-    // Draw the left field border.
-    ctx.fillRect(0, statusBarBottom, pixelSize, gameField.top);
+    // // Draw the left field border.
+    ctx.fillRect(0, statusBarBottom, pixelSize, gameField.bottom);
 }
 
 /**
