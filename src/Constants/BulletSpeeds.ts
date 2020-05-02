@@ -9,6 +9,6 @@
  * Responsibility:  Constants for  bullet speeds.
  */
 
-export const playerBulletSpeed = 5;
+export const playerBulletSpeed = 42;
 export const robotBulletSpeed = 13;
 export const orbBulletSpeed = 13;
