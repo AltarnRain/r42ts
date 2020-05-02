@@ -46,9 +46,9 @@ window.onload = () => {
                 dispatch(playerMortality("immortal"));
 
                 dispatch(hitboxesOn(true));
-                dispatch(setLives(2));
+                dispatch(setLives(20));
                 dispatch(setLevel(level));
-                dispatch(setPhasers(1));
+                dispatch(setPhasers(100));
                 GameLoop.Start();
 
                 (window as any).r42 = {

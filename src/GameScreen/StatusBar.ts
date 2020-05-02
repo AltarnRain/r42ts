@@ -37,13 +37,15 @@ Mutators.Frame.setColor(lifeFrame, CGAColors.yellow);
 // Score constants
 const scoreStartPosition = 4 * pixelSize;
 const scoreSpacing = 2 * pixelSize;
-const scoreBackgroundWidth = 42 * pixelSize;
+const scoreBackgroundWidth = 40 * pixelSize;
 
 // Phaser constants.
 const phaserStartPosition = scoreBackgroundWidth;
 const phaserSpacing = pixelSize * 2;
 const phaserBackgroundWidth = pixelSize * 54;
 
+// The phaser frame is only used in the status bar.
+// no point in moving it to anther file.
 const phaserFrame: Frame = [
     ["E", "0"],
     ["E", "0"],
