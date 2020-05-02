@@ -12,9 +12,10 @@ import ILevel from "../Interfaces/ILevel";
 import { resetLevelState, setEnemies, setFireInterval } from "../State/EnemyLevel/Actions";
 import { addPhaser, nextLevel } from "../State/Game/Actions";
 import { setPlayerMovementLimit } from "../State/Player/Actions";
-import { appState, dispatch } from "../State/Store";
+import { appState, dispatch, appStore } from "../State/Store";
 import { TickFunction } from "../Types";
 import { BaseEnemy } from "./BaseEnemy";
+import Guard from "../Guard";
 
 export default abstract class BaseEnemyLevel implements ILevel {
 
@@ -37,6 +38,18 @@ export default abstract class BaseEnemyLevel implements ILevel {
      * Function passed from the outside that checks if a level is won.
      */
     private monitorLevelWon: () => boolean;
+
+    /**
+     * Subscribe to the store and dispatch the level appropriate movement restriction to the player
+     * When the player is alive and their movement limit is not set to None.
+     */
+    private storeSub = appStore().subscribe(() => {
+        const { playerState } = appState();
+
+        if (Guard.isPlayerAlive(playerState.ship) && playerState.moveLimit !== "none") {
+            dispatch(setPlayerMovementLimit("none"));
+        }
+    });
 
     /**
      * Constructs the base level
@@ -115,6 +128,7 @@ export default abstract class BaseEnemyLevel implements ILevel {
         // The subscription array contains functions that remove themselves
         // from the GameLoop. Call all of them to remove them from the GameLoop.
         this.subscriptions.forEach((s) => s());
+        this.storeSub();
     }
 
     /**
