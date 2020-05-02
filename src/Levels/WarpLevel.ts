@@ -7,14 +7,15 @@
 import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import { drawBackground, drawWarpBackground } from "../GameScreen/StaticRenders";
-import ILevel from "../Interfaces/ILevel";
-import dimensionProvider from "../Providers/DimensionProvider";
-import { setPlayerPositionToSpawnPosition, setPlayerMovementLimit } from "../State/Player/Actions";
-import { dispatch, appStore, appState } from "../State/Store";
 import Guard from "../Guard";
-import Mutators from "../Utility/FrameMutators";
-import { Frame } from "../Types";
+import ILevel from "../Interfaces/ILevel";
+import { GameRectangle } from "../Models/GameRectangle";
+import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
+import { setPlayerMovementLimit, setPlayerPositionToSpawnPosition } from "../State/Player/Actions";
+import { appState, appStore, dispatch } from "../State/Store";
+import { Frame } from "../Types";
+import { randomNumberInRange } from "../Utility/Lib";
 
 /**
  * Module:          WarpLevel
@@ -30,7 +31,27 @@ const backgroundColor: string[] = [
 
 const {
     pixelSize,
+    fullWidth,
+    fullHeight,
+    gameFieldTop
 } = dimensionProvider();
+
+// The WarpGate frame is sixteen pixels wide.
+const warpGateFrame: Frame = [
+    [],
+    []
+];
+
+for (let i = 0; i < 16; i++) {
+    warpGateFrame[0].push("#000000");
+    warpGateFrame[1].push("#000000");
+}
+// This constants 'left' takes the width of the wrap gate corridor into consireration.
+// Always start a warp game using this left so we ensure the player is aligned perfectly.
+const warpGateInitialleft = fullWidth / 2 - (16 * pixelSize) / 2;
+const warpGateTopEndPosition = gameFieldTop + pixelSize;
+const warpGateTopStartPosition = fullHeight - pixelSize * 20;
+const doublePixel = pixelSize * 2;
 
 export default class WarpLevel implements ILevel {
 
@@ -59,33 +80,41 @@ export default class WarpLevel implements ILevel {
         const additionalColor = backgroundColor[colorIndex];
         this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor)));
 
-        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => this.drawWarpGate()));
+        const warpGateRecrds = this.calculateWarpGate(5);
+
+        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => {
+            warpGateRecrds.forEach((r) => renderFrame(r.left, r.top, warpGateFrame));
+        }));
     }
+    private calculateWarpGate(complexity: number): GameRectangle[] {
 
-    private drawWarpGate(): void {
-        const f: Frame = [
-            []
-        ];
+        let left = warpGateInitialleft;
+        let top = warpGateTopStartPosition;
 
-        for (let i = 0; i < 16; i++) {
-            f[0].push("E");
+        const safeZone: GameRectangle[] = [];
+
+        while (top > warpGateTopEndPosition) {
+            const rect: GameRectangle = {
+                left,
+                top,
+                right: left + pixelSize * 16,
+                bottom: top + pixelSize,
+            };
+
+            const a = randomNumberInRange(0, 1000);
+
+            if (a < 100) {
+                left -= doublePixel;
+            } else if (a > 900) {
+                left += doublePixel;
+            }
+
+            safeZone.push(rect);
+
+            top -= doublePixel;
         }
 
-        Mutators.Frame.convertHexToCGA(f);
-
-        const {
-            fullWidth,
-            fullHeight,
-            gameFieldTop
-        } = dimensionProvider();
-        const left = fullWidth / 2 - (16 * pixelSize) / 2;
-
-        let top = fullHeight - pixelSize * 2;
-
-        while (top > gameFieldTop + pixelSize) {
-            renderFrame(left, top, f);
-            top -= pixelSize;
-        }
+        return safeZone;
     }
 
     /**
