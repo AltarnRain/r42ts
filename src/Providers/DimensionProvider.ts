@@ -45,11 +45,6 @@ export default function dimensionProvider(): GameDimensions {
 
         const statusBarBottom = pixelSize * 6;
 
-        // Add one pixel to accomodate the border around the game field.
-        const gameFieldTop = statusBarBottom + pixelSize * 2;
-
-        const gameFieldHeight = fullGameHeight - pixelSize;
-
         gameDimensions = {
             fullGameWidth,
             fullGameHeight,
