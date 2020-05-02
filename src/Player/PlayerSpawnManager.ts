@@ -7,7 +7,7 @@
 import GameLoop from "../GameLoop";
 import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { setPlayer, setPlayerLocation, setPlayerMovementLimit } from "../State/Player/Actions";
+import { setPlayer, setPlayerLocation } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types";
 import { getFrameReturner } from "../Utility/Frame";
@@ -137,7 +137,6 @@ function setupFormation(targetLeftLocation: number, targetTopLocation: number, s
         allMovingParts.forEach((p) => p.setSpeed(10));
     }
 
-    dispatch(setPlayerMovementLimit(limit));
     formationInProgress = true;
 }
 
@@ -160,13 +159,6 @@ function updateState(): void {
     }
 
     if (allMovingParts.every((p) => p.traveling() === false)) {
-        // Only lift movement restrictions when the formation speed is slow.
-        // Levels place a 'immobile' movement restriction
-        // which is lifted when the level begins.
-        // 'slow' means the level is running.
-        if (formationSpeed === "slow") {
-            dispatch(setPlayerMovementLimit ("none"));
-        }
         dispatch(setPlayer(new PlayerShip()));
         allMovingParts = [];
         formationInProgress = false;

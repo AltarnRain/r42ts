@@ -62,11 +62,13 @@ export function drawWarpBackground(additionalColor: string): void {
     const height = bottom - top;
     let left = pixelSize;
 
+    const warpLevelWidth = fullWidth - pixelSize * 2;
+
     // The first line in a warp level is always white.
     // we'll use this flag to altername between white and a randonly picked color.
     let drawWhite = true;
 
-    while (fullWidth - pixelSize > left) {
+    while (warpLevelWidth > left) {
         if (drawWhite) {
             ctx.fillStyle = CGAColors.white;
             drawWhite = false;
