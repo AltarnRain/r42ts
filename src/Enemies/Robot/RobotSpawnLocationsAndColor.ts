@@ -25,13 +25,13 @@ interface GameLocationAndcolor extends GameLocation {
 
 const {
     pixelSize,
-    gameFieldTop
+    gameField
 } = dimensionProvider();
 
 const robotSpawnLocationsAndColor: GameLocationAndcolor[] = [];
 const { width } = getFrameDimensions(getRobotFrames().frames[0], pixelSize);
 
-const top = gameFieldTop + pixelSize * 20;
+const top = gameField.top + pixelSize * 20;
 const left = pixelSize * 15;
 const spacing = pixelSize * 3;
 

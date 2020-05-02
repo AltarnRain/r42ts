@@ -81,7 +81,7 @@ export default class WarpLevel implements ILevel {
         // Determine which additional color next to white the warp background will have.
         const colorIndex = Math.ceil(Math.random() * backgroundColor.length - 1);
         const additionalColor = backgroundColor[colorIndex];
-        // this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor)));
+        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor)));
 
         const warpGateRecrds = this.calculateWarpGate(5);
 

@@ -67,9 +67,9 @@ export function drawWarpBackground(additionalColor: string): void {
     // The first line in a warp level is always white.
     // we'll use this flag to altername between white and a randonly picked color.
     let drawWhite = true;
-    let left = WarpLevelConstants.leftStart;
+    let left = WarpLevelConstants.left;
 
-    while (WarpLevelConstants.width > left) {
+    while (WarpLevelConstants.right >= left) {
         if (drawWhite) {
             ctx.fillStyle = CGAColors.white;
             drawWhite = false;
