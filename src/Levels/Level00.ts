@@ -11,7 +11,6 @@ import BaseEnemyLevel from "../Base/BaseEnemyLevel";
  * Responsibility:  Define the playground level.
  */
 
-
 /**
  * Sets up level 00. Play ground level.
  */

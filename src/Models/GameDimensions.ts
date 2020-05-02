@@ -39,15 +39,5 @@ export interface GameDimensions {
     /**
      * Maxiumum height of each pixel.
      */
-    maxPixelSize: number;
-
-    /**
-     * The mimimum height of each pixel.
-     */
-    minPixelSize: number;
-
-    /**
-     * Average pixel size.
-     */
-    averagePixelSize: number;
+    pixelSize: number;
 }

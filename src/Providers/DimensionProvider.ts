@@ -35,11 +35,9 @@ export default function dimensionProvider(): GameDimensions {
         // r42 uses a 4:3 resolution.
         const height = rect.height;
         const width = (height / 3) * 4;
+        const pixelSize = width / 160;
 
-        const maxPixelSize = Math.ceil(width / 160);
-        const minPixelSize = Math.floor(width / 160);
-
-        const scoreBoardHeight = maxPixelSize * 6;
+        const scoreBoardHeight = pixelSize * 6;
 
         const gameFieldTop = scoreBoardHeight;
         const gameFieldHeight = height - gameFieldTop;
@@ -50,9 +48,7 @@ export default function dimensionProvider(): GameDimensions {
             gameFieldTop,
             gameFieldHeight,
             statusBarHeight: scoreBoardHeight,
-            maxPixelSize,
-            minPixelSize,
-            averagePixelSize: (maxPixelSize + minPixelSize) / 2,
+            pixelSize,
         };
     }
 

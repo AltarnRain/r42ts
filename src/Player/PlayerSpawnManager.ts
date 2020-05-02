@@ -22,11 +22,11 @@ import PlayerShip from "./PlayerShip";
  */
 
 const {
-    averagePixelSize,
+    pixelSize,
 } = dimensionProvider();
 
-const particleTravelDistance = averagePixelSize * 60;
-const nozzleDistance = particleTravelDistance + averagePixelSize;
+const particleTravelDistance = pixelSize * 60;
+const nozzleDistance = particleTravelDistance + pixelSize;
 const nozzleOutAngle = 270;
 const leftWingOutAngle = 200;
 const rightWingOutAngle = 340;
@@ -90,7 +90,7 @@ function createParticles(): void {
         nozzleTip.top,
         getFrameReturner(playerFormationFrames[0]),
         0,
-        averagePixelSize * 2,
+        pixelSize * 2,
         0);
 
     nozzleBottomPart = new PlayerFormationPart(
@@ -98,8 +98,8 @@ function createParticles(): void {
         nozzleBottom.top,
         getFrameReturner(playerFormationFrames[1]),
         0,
-        averagePixelSize * 2,
-        averagePixelSize);
+        pixelSize * 2,
+        pixelSize);
 
     leftWingPart = new PlayerFormationPart(
         leftWing.left,
@@ -107,15 +107,15 @@ function createParticles(): void {
         getFrameReturner(playerFormationFrames[2]),
         0,
         0,
-        averagePixelSize);
+        pixelSize);
 
     rightWingPart = new PlayerFormationPart(
         rightWing.left,
         rightWing.top,
         getFrameReturner(playerFormationFrames[3]),
         0,
-        averagePixelSize * 4,
-        averagePixelSize);
+        pixelSize * 4,
+        pixelSize);
 
     allMovingParts = [nozzleTopPart, nozzleBottomPart, leftWingPart, rightWingPart].filter((p) => p !== undefined);
 }

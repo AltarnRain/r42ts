@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
+import { BaseEnemy } from "./Base/BaseEnemy";
 import BulletParticle from "./Particles/BulletParticle";
 import Particle from "./Particles/Particle";
+import PlayerBullet from "./Player/PlayerBullet";
 import PlayerShip from "./Player/PlayerShip";
 import { allGameKeys, GameKeys } from "./Utility/KeyboardEvents";
-import { BaseEnemy } from "./Base/BaseEnemy";
-import PlayerBullet from "./Player/PlayerBullet";
 
 /**
  * Module:          Guard

@@ -18,7 +18,7 @@ const {
     gameFieldTop,
     fullWidth,
     statusBarHeight: scoreBoardHeight,
-    maxPixelSize,
+    pixelSize,
     fullHeight,
     gameFieldHeight,
 } = dimensionProvider();
@@ -44,7 +44,7 @@ function drawGameFieldBorder(): void {
     const ctx = ctxProvider();
     ctx.beginPath();
     ctx.rect(0, scoreBoardHeight, fullWidth, gameFieldHeight);
-    ctx.lineWidth = maxPixelSize;
+    ctx.lineWidth = pixelSize;
     ctx.strokeStyle = CGAColors.blue;
     ctx.stroke();
     ctx.closePath();
@@ -54,8 +54,9 @@ function drawGameFieldBorder(): void {
  * Draws the background of the warp level.
  * @param {string} additionalColor. The additional color.
  */
-export function drawWarpBackground(additionalColor: string, pixelSize: number): void {
+export function drawWarpBackground(additionalColor: string): void {
     const ctx = ctxProvider();
+
     const top = gameFieldTop + pixelSize;
     const bottom = fullHeight - pixelSize * 20;
     const height = bottom - top;

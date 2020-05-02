@@ -15,12 +15,12 @@ import dimensionProvider from "./DimensionProvider";
  */
 
 const {
-    averagePixelSize,
+    pixelSize,
     fullWidth,
     gameFieldHeight
 } = dimensionProvider();
 
-const shipDimensions = getFrameDimensions(getPlayerFrame(), averagePixelSize);
+const shipDimensions = getFrameDimensions(getPlayerFrame(), pixelSize);
 
 const leftSpawnPosition = (fullWidth / 2) - shipDimensions.width  / 2;
 const topSpawnPosition = gameFieldHeight;

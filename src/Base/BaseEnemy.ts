@@ -5,6 +5,7 @@
  */
 
 import TickHandler from "../Handlers/TickHandler";
+import ILocationProvider from "../Interfaces/ILocationProvider";
 import Explosion from "../Models/Explosion";
 import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
@@ -15,7 +16,6 @@ import { getFrameCenter, getFrameDimensions, getFrameHitbox, getMaximumFrameDime
 import { getOffsetLocation } from "../Utility/Location";
 import BaseFrameProvider from "./BaseFrameProvider";
 import BaseGameObject from "./BaseGameObject";
-import ILocationProvider from "../Interfaces/ILocationProvider";
 
 /**
  * Module:          BaseEnemy
@@ -25,11 +25,10 @@ import ILocationProvider from "../Interfaces/ILocationProvider";
  */
 
 const {
-    averagePixelSize,
-    maxPixelSize,
+    pixelSize,
 } = dimensionProvider();
 
-const negativeMaxPixelSize = maxPixelSize * -1;
+const negativepixelSize = pixelSize * -1;
 
 export abstract class BaseEnemy extends BaseGameObject {
 
@@ -93,12 +92,12 @@ export abstract class BaseEnemy extends BaseGameObject {
         const offSetFrames = getOffsetFrames();
         this.offSets = offSetFrames.offSets.map((o) => {
             return {
-                left: o.left * averagePixelSize,
-                top: o.top * averagePixelSize,
+                left: o.left * pixelSize,
+                top: o.top * pixelSize,
             };
         });
 
-        this.maxDimensions = getMaximumFrameDimensions(offSetFrames.frames, averagePixelSize);
+        this.maxDimensions = getMaximumFrameDimensions(offSetFrames.frames, pixelSize);
         this.angleProvider = fireAngleProvider;
         this.frameProvider = frameProvider;
         this.frameProvider.setFrames(offSetFrames.frames);
@@ -184,7 +183,7 @@ export abstract class BaseEnemy extends BaseGameObject {
      */
     public getCenterLocation(): GameLocation {
         const { left, top } = this.locationProvider.getCurrentLocation();
-        return getFrameCenter(left, top, this.currentFrame, averagePixelSize);
+        return getFrameCenter(left, top, this.currentFrame, pixelSize);
     }
 
     /**
@@ -199,8 +198,8 @@ export abstract class BaseEnemy extends BaseGameObject {
      * @returns {GameRectangle}. Bird's hitbox.
      */
     public getHitbox(): GameRectangle {
-        const dimensions = getFrameDimensions(this.frameProvider.getCurrentFrame(), averagePixelSize);
-        return getFrameHitbox(this.offsetLeft, this.offsetTop, dimensions.width, dimensions.height, negativeMaxPixelSize, 0);
+        const dimensions = getFrameDimensions(this.frameProvider.getCurrentFrame(), pixelSize);
+        return getFrameHitbox(this.offsetLeft, this.offsetTop, dimensions.width, dimensions.height, negativepixelSize, 0);
     }
 
     /**

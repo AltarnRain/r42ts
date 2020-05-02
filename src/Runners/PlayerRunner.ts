@@ -11,7 +11,7 @@ import Guard from "../Guard";
 import AcceleratingLocationProvider from "../LocationProviders/AcceleratingLocationProvider";
 import PlayerBullet from "../Player/PlayerBullet";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import { setBullet, removePlayerBullet } from "../State/Player/Actions";
+import { removePlayerBullet, setBullet } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 
 /**

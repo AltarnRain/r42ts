@@ -21,7 +21,7 @@ import getCharacter from "../Utility/getCharacter";
 
 const {
     fullHeight,
-    maxPixelSize
+    pixelSize
 } = dimensionProvider();
 
 const ctx = ctxProvider();
@@ -39,13 +39,13 @@ const roundCharacters = [
 
 const {
     width
-} = getFrameDimensions(roundCharacters[0], maxPixelSize);
+} = getFrameDimensions(roundCharacters[0], pixelSize);
 
 const top = fullHeight * 0.25;
-const left = maxPixelSize * 22;
-const barwidth = maxPixelSize * 30;
-const roundWidth = 76 * maxPixelSize;
-const charSpacing = maxPixelSize * 2;
+const left = pixelSize * 22;
+const barwidth = pixelSize * 30;
+const roundWidth = 76 * pixelSize;
+const charSpacing = pixelSize * 2;
 
 export function drawLevelBanner(level: number): void {
 
@@ -59,10 +59,10 @@ export function drawLevelBanner(level: number): void {
         }
 
         ctx.fillStyle = barcolor;
-        ctx.fillRect(left, bartop, barwidth, maxPixelSize);
-        ctx.fillRect(left + roundWidth, bartop, barwidth, maxPixelSize);
+        ctx.fillRect(left, bartop, barwidth, pixelSize);
+        ctx.fillRect(left + roundWidth, bartop, barwidth, pixelSize);
 
-        bartop += maxPixelSize * 2;
+        bartop += pixelSize * 2;
     }
 
     let levelNumberStartPos: number = 0;

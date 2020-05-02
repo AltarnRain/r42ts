@@ -17,7 +17,7 @@ import { getLocation } from "../Utility/Location";
  */
 
 const {
-    averagePixelSize,
+    pixelSize,
     gameFieldTop,
 } = dimensionProvider();
 
@@ -33,7 +33,7 @@ export default class MoveDownAppearUpLocationProvider extends BaseLocationProvid
     constructor(gamePixelsFromBottom: number, left: number, top: number, speed: number, angle: number, width: number, height: number) {
         super(left, top, speed, angle, width, height);
 
-        this.bottomLimit = gamePixelsFromBottom * averagePixelSize;
+        this.bottomLimit = gamePixelsFromBottom * pixelSize;
     }
 
     /**

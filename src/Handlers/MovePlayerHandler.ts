@@ -20,13 +20,13 @@ import { fallsWithin, getLocation } from "../Utility/Location";
 
 const {
     gameFieldTop,
-    averagePixelSize,
+    pixelSize,
     fullHeight,
     fullWidth,
 } = dimensionProvider();
 
-const shipDimensions = getFrameDimensions(getPlayerFrame(), averagePixelSize);
-const maxBottom = fullHeight - shipDimensions.height - averagePixelSize / 2;
+const shipDimensions = getFrameDimensions(getPlayerFrame(), pixelSize);
+const maxBottom = fullHeight - shipDimensions.height - pixelSize / 2;
 const maxRight = fullWidth - shipDimensions.width;
 
 /**

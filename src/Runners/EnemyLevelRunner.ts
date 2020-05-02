@@ -38,8 +38,7 @@ const phaserFrame: Frame = [
 ];
 
 const {
-    maxPixelSize,
-    averagePixelSize
+    pixelSize
 } = dimensionProvider();
 
 /**
@@ -224,7 +223,7 @@ function handlePhaser(): void {
 
         // Remove one phaser.
         dispatch(removePhaser());
-        const phaserLocations = getPhaserLocations(playerNozzleLocation.left, playerNozzleLocation.top, randomEnemyCenter.left, randomEnemyCenter.top, maxPixelSize);
+        const phaserLocations = getPhaserLocations(playerNozzleLocation.left, playerNozzleLocation.top, randomEnemyCenter.left, randomEnemyCenter.top, pixelSize);
         dispatch(setPhaserLocations(phaserLocations));
 
         // Pause the game for a very brief period. This is what the original game did
@@ -322,7 +321,7 @@ function DEBUGGING_drawPhaser(): void {
     const { debuggingState: debugging, playerState: player, enemyLevelState } = appState();
     if (debugging.renderPhaser && Guard.isPlayerAlive(player.ship) && enemyLevelState.enemies.length > 0) {
         const enemy = enemyLevelState.enemies[0];
-        getPhaserLocations(player.ship.getNozzleLocation().left, player.ship.getNozzleLocation().top, enemy.ship.getCenterLocation().left, enemy.ship.getCenterLocation().top, averagePixelSize);
+        getPhaserLocations(player.ship.getNozzleLocation().left, player.ship.getNozzleLocation().top, enemy.ship.getCenterLocation().left, enemy.ship.getCenterLocation().top, pixelSize);
     }
 }
 

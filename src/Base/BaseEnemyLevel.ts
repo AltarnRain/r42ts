@@ -8,13 +8,13 @@ import BulletRunner from "../BulletProviders/BulletRunner";
 import GameLoop from "../GameLoop";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
+import ILevel from "../Interfaces/ILevel";
 import { resetLevelState, setEnemies, setFireInterval } from "../State/EnemyLevel/Actions";
 import { addPhaser, nextLevel } from "../State/Game/Actions";
 import { setPlayerMovementLimit } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { TickFunction } from "../Types";
 import { BaseEnemy } from "./BaseEnemy";
-import ILevel from "../Interfaces/ILevel";
 
 export default abstract class BaseEnemyLevel implements ILevel {
 

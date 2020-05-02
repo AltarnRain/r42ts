@@ -24,16 +24,16 @@ interface GameLocationAndcolor extends GameLocation {
 }
 
 const {
-    averagePixelSize,
+    pixelSize,
     gameFieldTop
 } = dimensionProvider();
 
 const robotSpawnLocationsAndColor: GameLocationAndcolor[] = [];
-const { width } = getFrameDimensions(getRobotFrames().frames[0], averagePixelSize);
+const { width } = getFrameDimensions(getRobotFrames().frames[0], pixelSize);
 
-const top = gameFieldTop + averagePixelSize * 20;
-const left = averagePixelSize * 15;
-const spacing = averagePixelSize * 3;
+const top = gameFieldTop + pixelSize * 20;
+const left = pixelSize * 15;
+const spacing = pixelSize * 3;
 
 const colors = [
     CGAColors.lightBlue,

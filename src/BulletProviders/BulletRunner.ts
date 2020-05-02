@@ -19,7 +19,7 @@ import { getFrameReturner } from "../Utility/Frame";
  */
 
 const {
-    averagePixelSize
+    pixelSize
 } = dimensionProvider();
 
 export default class BulletRunner {
@@ -95,8 +95,8 @@ export default class BulletRunner {
                 const enemyFireAngle = ship.getFireAngle();
                 if (enemyFireAngle !== undefined) {
 
-                    const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - averagePixelSize;
-                    const top = hitbox.bottom + averagePixelSize;
+                    const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - pixelSize;
+                    const top = hitbox.bottom + pixelSize;
 
                     const locationProvider = new AcceleratingLocationProvider(left, top, this.speed, enemyFireAngle, 1);
                     const bullet = new BulletParticle(locationProvider, ship, this.bulletColor, getFrameReturner(this.bulletFrame));

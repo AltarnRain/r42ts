@@ -5,6 +5,7 @@
  */
 
 import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
+import { IHitbox } from "../Interfaces/IHitbox";
 import Explosion from "../Models/Explosion";
 import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
@@ -14,7 +15,6 @@ import { appState } from "../State/Store";
 import { Frame, GameObjectType } from "../Types";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import Mutators from "../Utility/FrameMutators";
-import { IHitbox } from "../Interfaces/IHitbox";
 import getPlayerExplosion from "./PlayerExplosion";
 import { getPlayerFrame } from "./PlayerFrames";
 
@@ -23,11 +23,10 @@ import { getPlayerFrame } from "./PlayerFrames";
  * Responsibility:  Player ship
  */
 const {
-    minPixelSize,
-    averagePixelSize,
+    pixelSize,
 } = dimensionProvider();
 
-const shipDimensions = getFrameDimensions(getPlayerFrame(), averagePixelSize);
+const shipDimensions = getFrameDimensions(getPlayerFrame(), pixelSize);
 
 export default class PlayerShip implements IHitbox {
 
@@ -91,7 +90,7 @@ export default class PlayerShip implements IHitbox {
      */
     public getHitbox(): GameRectangle {
         const { playerState } = appState();
-        return getFrameHitbox(playerState.playerLeftLocation, playerState.playerTopLocation, shipDimensions.width, shipDimensions.height, 0, averagePixelSize);
+        return getFrameHitbox(playerState.playerLeftLocation, playerState.playerTopLocation, shipDimensions.width, shipDimensions.height, 0, pixelSize);
     }
 
     /**
@@ -101,8 +100,8 @@ export default class PlayerShip implements IHitbox {
     public getNozzleLocation(): GameLocation {
         const { playerState } = appState();
         return {
-            left: playerState.playerLeftLocation + minPixelSize * 2,
-            top: playerState.playerTopLocation - minPixelSize * 1,
+            left: playerState.playerLeftLocation + pixelSize * 2,
+            top: playerState.playerTopLocation - pixelSize * 1,
         };
     }
 }

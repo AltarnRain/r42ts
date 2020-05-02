@@ -19,7 +19,7 @@ import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
  */
 
 const {
-    averagePixelSize,
+    pixelSize,
 } = dimensionProvider();
 
 export default class ExplosionCenter extends BaseGameObject {
@@ -57,7 +57,7 @@ export default class ExplosionCenter extends BaseGameObject {
         this.currentFrame = getExplosionCenterFrame();
         this.burnTime = burnTime;
 
-        this.dimensions = getFrameDimensions(this.currentFrame, averagePixelSize);
+        this.dimensions = getFrameDimensions(this.currentFrame, pixelSize);
     }
 
     /**

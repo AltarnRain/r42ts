@@ -4,8 +4,8 @@
  * See LICENSE.MD.
  */
 
-import ILocationProvider from "../Interfaces/ILocationProvider";
 import CGAColors from "../Constants/CGAColors";
+import ILocationProvider from "../Interfaces/ILocationProvider";
 import Particle from "../Particles/Particle";
 import { FrameProviderFunction, GameObjectType } from "../Types";
 import Mutators from "../Utility/FrameMutators";

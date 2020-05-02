@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
+import { IHitbox } from "../Interfaces/IHitbox";
+import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import renderFrame from "../Render/RenderFrame";
 import { Frame, GameObjectType } from "../Types";
-import { IHitbox } from "../Interfaces/IHitbox";
-import ILocationProvider from "../Interfaces/ILocationProvider";
 
 /**
  * Module:          BaseGameObject

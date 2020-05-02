@@ -18,31 +18,31 @@ const spacing = 20;
 const birdSpawnLocations: GameLocation[] = [];
 
 const {
-    averagePixelSize,
+    pixelSize,
     gameFieldTop,
 } = dimensionProvider();
 
 // Top row birds.
 for (let i = 0; i < 7; i++) {
     birdSpawnLocations.push({
-        left: (firstAndThirdRowLeftStart * averagePixelSize) + spacing * i * averagePixelSize,
-        top: gameFieldTop + averagePixelSize * 5,
+        left: (firstAndThirdRowLeftStart * pixelSize) + spacing * i * pixelSize,
+        top: gameFieldTop + pixelSize * 5,
     });
 }
 
 // Second row birds.
 for (let i = 0; i < 6; i++) {
     birdSpawnLocations.push({
-        left: (secondRowLeftStart * averagePixelSize) + spacing * i * averagePixelSize,
-        top: gameFieldTop + averagePixelSize * 15,
+        left: (secondRowLeftStart * pixelSize) + spacing * i * pixelSize,
+        top: gameFieldTop + pixelSize * 15,
     });
 }
 
 // Third row birds.
 for (let i = 0; i < 7; i++) {
     birdSpawnLocations.push({
-        left: (firstAndThirdRowLeftStart * averagePixelSize) + spacing * i * averagePixelSize,
-        top: gameFieldTop + averagePixelSize * 25,
+        left: (firstAndThirdRowLeftStart * pixelSize) + spacing * i * pixelSize,
+        top: gameFieldTop + pixelSize * 25,
     });
 }
 

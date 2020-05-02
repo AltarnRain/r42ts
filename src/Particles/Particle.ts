@@ -20,11 +20,11 @@ import { fallsWithin } from "../Utility/Location";
  */
 
 const {
-    averagePixelSize
+    pixelSize
 } = dimensionProvider();
 
-const topOffset = averagePixelSize / 2 * -1;
-const bottomOffset = averagePixelSize / 2;
+const topOffset = pixelSize / 2 * -1;
+const bottomOffset = pixelSize / 2;
 
 export default class Particle extends BaseGameObject {
 
@@ -46,7 +46,7 @@ export default class Particle extends BaseGameObject {
         super(locationProvider);
 
         this.currentFrame = getFrame();
-        this.dimensions = getFrameDimensions(this.currentFrame, averagePixelSize);
+        this.dimensions = getFrameDimensions(this.currentFrame, pixelSize);
     }
 
     /**

@@ -8,10 +8,9 @@ import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import { drawBackground, drawWarpBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
-import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
+import { setPlayerPositionToSpawnPosition } from "../State/Player/Actions";
 import { dispatch } from "../State/Store";
-import { setPlayerLocation, setPlayerPositionToSpawnPosition } from "../State/Player/Actions";
 
 /**
  * Module:          WarpLevel
@@ -26,7 +25,7 @@ const backgroundColor: string[] = [
 ];
 
 const {
-    averagePixelSize,
+    pixelSize,
 } = dimensionProvider();
 
 export default class WarpLevel implements ILevel {
@@ -43,7 +42,7 @@ export default class WarpLevel implements ILevel {
         // Determine which additional color next to white the warp background will have.
         const colorIndex = Math.ceil(Math.random() * backgroundColor.length - 1);
         const additionalColor = backgroundColor[colorIndex];
-        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, averagePixelSize)));
+        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor)));
     }
 
     /**

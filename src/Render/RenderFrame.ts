@@ -14,8 +14,7 @@ import { Frame } from "../Types";
  * Responsibility:  Renders a single frame to the canvas
  */
 const {
-    maxPixelSize,
-    averagePixelSize,
+    pixelSize,
 } = dimensionProvider();
 
 /**
@@ -35,8 +34,8 @@ export default function renderFrame(left: number, top: number, frame: Frame): vo
             const color = columns[columnIndex];
 
             // We use the minimum pixel size to determine the position.
-            const x = left + columnIndex * averagePixelSize;
-            const y = top + rowIndex * averagePixelSize;
+            const x = left + columnIndex * pixelSize;
+            const y = top + rowIndex * pixelSize;
 
             if (color !== "0") {
 
@@ -49,7 +48,7 @@ export default function renderFrame(left: number, top: number, frame: Frame): vo
                 ctx.fillStyle = color;
                 // But we use the max pixel size to draw a pixel. This ensures the pixels overlap slightly.
                 // Otherwise, you'll see bits and pieces of the back ground.
-                ctx.fillRect(x, y, maxPixelSize, maxPixelSize);
+                ctx.fillRect(x, y, pixelSize, pixelSize);
             }
         }
     }

@@ -17,7 +17,7 @@ import { getLocation } from "../Utility/Location";
 const {
     gameFieldTop,
     fullWidth,
-    maxPixelSize,
+    pixelSize,
     fullHeight
 } = dimensionProvider();
 
@@ -25,8 +25,8 @@ export default class SideToSideUpAndDownLocationProvider extends BaseLocationPro
 
     public updateState(tick: number): void {
         super.updateState(tick);
-        const leftLimit = maxPixelSize * 2;
-        const rightLimit = fullWidth - this.width - maxPixelSize * 2;
+        const leftLimit = pixelSize * 2;
+        const rightLimit = fullWidth - this.width - pixelSize * 2;
 
         if (this.left <= leftLimit || this.left >= rightLimit) {
             this.angle = 180 - this.angle;
