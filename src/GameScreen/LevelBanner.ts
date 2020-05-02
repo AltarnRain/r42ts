@@ -20,7 +20,8 @@ import getCharacter from "../Utility/getCharacter";
  */
 
 const {
-    pixelSize
+    pixelSize,
+    gameField
 } = dimensionProvider();
 
 const ctx = ctxProvider();
@@ -40,8 +41,8 @@ const {
     width
 } = getFrameDimensions(roundCharacters[0], pixelSize);
 
-const top = 0;
-const left = pixelSize * 22;
+const top = gameField.bottom * 0.33;
+const left = pixelSize * 26;
 const barwidth = pixelSize * 30;
 const roundWidth = 76 * pixelSize;
 const charSpacing = pixelSize * 2;
