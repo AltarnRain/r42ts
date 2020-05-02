@@ -56,13 +56,13 @@ export default class Particle extends BaseGameObject {
     public traveling(): boolean {
         const {
             gameFieldTop,
-            fullWidth,
-            fullHeight,
+            gameFieldHeight,
+            gameFieldWidth
         } = dimensionProvider();
 
         const { left, top} = this.locationProvider.getCurrentLocation();
 
-        return fallsWithin(left, top, gameFieldTop, fullHeight, 0, fullWidth);
+        return fallsWithin(left, top, gameFieldTop, gameFieldHeight, 0, gameFieldWidth);
     }
 
     /**

@@ -5,6 +5,7 @@
  */
 
 import GameLoop from "../GameLoop";
+import Guard from "../Guard";
 import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { setPlayer, setPlayerLocation, setPlayerMovementLimit } from "../State/Player/Actions";
@@ -15,7 +16,6 @@ import { getLocation } from "../Utility/Location";
 import PlayerFormationPart from "./PlayerFormationPart";
 import { getPlayerFormationFrames } from "./PlayerFrames";
 import PlayerShip from "./PlayerShip";
-import Guard from "../Guard";
 
 /**
  * Module:          PlayerSpawnManager

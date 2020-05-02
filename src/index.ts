@@ -8,13 +8,13 @@ import GameLoop from "./GameLoop";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import subscribeToStoreChanges from "./Levels/SubscribeToStore";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
+import ctxProvider from "./Providers/CtxProvider";
 import dimensionProvider from "./Providers/DimensionProvider";
 import playerRunner from "./Runners/PlayerRunner";
 import { hitboxesOn, playerMortality } from "./State/Debugging/Actions";
 import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers } from "./State/Game/Actions";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
-import ctxProvider from "./Providers/CtxProvider";
 
 /**
  * Module:          Index
@@ -26,8 +26,8 @@ window.onload = () => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     if (canvas) {
         // Initialize the dimentions of the canvas.
-        canvas.width = dimensionProvider().fullWidth;
-        canvas.height = dimensionProvider().fullHeight;
+        canvas.width = dimensionProvider().fullGameWidth;
+        canvas.height = dimensionProvider().fullGameHeight;
 
         switch (window.location.search.replace("?", "")) {
             case "playground": {

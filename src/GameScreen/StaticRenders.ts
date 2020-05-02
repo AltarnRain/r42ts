@@ -6,6 +6,7 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
+import WarpLevelConstants from "../Constants/WarpLevel";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 
@@ -16,11 +17,11 @@ import dimensionProvider from "../Providers/DimensionProvider";
 
 const {
     gameFieldTop,
-    fullWidth,
-    statusBarHeight: scoreBoardHeight,
+    statusBarHeight,
     pixelSize,
-    fullHeight,
     gameFieldHeight,
+    gameFieldLeft,
+    gameFieldWidth,
 } = dimensionProvider();
 
 export function drawBackground(): void {
@@ -34,7 +35,7 @@ export function drawBackground(): void {
 function clearGameFieldBackground(): void {
     const ctx = ctxProvider();
     ctx.fillStyle = CGAColors.black;
-    ctx.fillRect(0, gameFieldTop, fullWidth, fullHeight);
+    ctx.fillRect(gameFieldLeft, gameFieldTop, gameFieldWidth, gameFieldHeight);
 }
 
 /**
@@ -42,12 +43,19 @@ function clearGameFieldBackground(): void {
  */
 function drawGameFieldBorder(): void {
     const ctx = ctxProvider();
-    ctx.beginPath();
-    ctx.rect(0, scoreBoardHeight, fullWidth, gameFieldHeight);
-    ctx.lineWidth = pixelSize;
-    ctx.strokeStyle = CGAColors.blue;
-    ctx.stroke();
-    ctx.closePath();
+    ctx.fillStyle = CGAColors.blue;
+
+    // Draw the top field border.
+    ctx.fillRect(0, gameFieldTop, gameFieldWidth, pixelSize );
+
+    // Draw the right field border.
+    ctx.fillRect(gameFieldWidth, gameFieldTop, pixelSize, gameFieldHeight);
+
+    // Draw the bottom field border.
+    ctx.fillRect(0, gameFieldHeight, gameFieldWidth, pixelSize);
+
+    // Draw the left field border.
+    ctx.fillRect(0, gameFieldTop, pixelSize, gameFieldHeight);
 }
 
 /**
@@ -57,18 +65,12 @@ function drawGameFieldBorder(): void {
 export function drawWarpBackground(additionalColor: string): void {
     const ctx = ctxProvider();
 
-    const top = gameFieldTop + pixelSize * 2;
-    const bottom = fullHeight - pixelSize * 20;
-    const height = bottom - top;
-    let left = pixelSize;
-
-    const warpLevelWidth = fullWidth - pixelSize * 2;
-
     // The first line in a warp level is always white.
     // we'll use this flag to altername between white and a randonly picked color.
     let drawWhite = true;
+    let left = WarpLevelConstants.leftStart;
 
-    while (warpLevelWidth > left) {
+    while (WarpLevelConstants.width > left) {
         if (drawWhite) {
             ctx.fillStyle = CGAColors.white;
             drawWhite = false;
@@ -77,7 +79,7 @@ export function drawWarpBackground(additionalColor: string): void {
             drawWhite = true;
         }
 
-        ctx.fillRect(left, top, pixelSize, height);
+        ctx.fillRect(left, WarpLevelConstants.top, pixelSize, WarpLevelConstants.height);
         left += pixelSize;
     }
 }
@@ -85,27 +87,27 @@ export function drawWarpBackground(additionalColor: string): void {
 /**
  * Debugggin function. Draws a grid in the screen for animation alignment.
  */
-export function DEBUGGING_drawGrid(): void {
-    const ctx = ctxProvider();
-    for (let r = 0; r < 200; r += 1) {
-        ctx.beginPath();
-        const y = r * 30 + gameFieldTop;
-        ctx.lineTo(0, y);
-        ctx.lineTo(fullWidth, y);
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = "white";
-        ctx.stroke();
-        ctx.closePath();
-    }
+// export function DEBUGGING_drawGrid(): void {
+//     const ctx = ctxProvider();
+//     for (let r = 0; r < 200; r += 1) {
+//         ctx.beginPath();
+//         const y = r * 30 + gameFieldTop;
+//         ctx.lineTo(0, y);
+//         ctx.lineTo(fullWidth, y);
+//         ctx.lineWidth = 1;
+//         ctx.strokeStyle = "white";
+//         ctx.stroke();
+//         ctx.closePath();
+//     }
 
-    for (let r = 0; r < 200; r += 2) {
-        ctx.beginPath();
-        const x = r * 20;
-        ctx.lineTo(x, 0);
-        ctx.lineTo(x, fullHeight);
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = "white";
-        ctx.stroke();
-        ctx.closePath();
-    }
-}
+//     for (let r = 0; r < 200; r += 2) {
+//         ctx.beginPath();
+//         const x = r * 20;
+//         ctx.lineTo(x, 0);
+//         ctx.lineTo(x, fullHeight);
+//         ctx.lineWidth = 1;
+//         ctx.strokeStyle = "white";
+//         ctx.stroke();
+//         ctx.closePath();
+//     }
+// }

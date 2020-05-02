@@ -16,7 +16,8 @@ import { getLocation } from "../Utility/Location";
 
 const {
     gameFieldTop,
-    fullWidth,
+    gameFieldWidth,
+    gameFieldHeight
 } = dimensionProvider();
 
 export default class VanishRightAppearLeftLocationProvider extends BaseLocationProvider implements ILocationProvider {
@@ -24,11 +25,11 @@ export default class VanishRightAppearLeftLocationProvider extends BaseLocationP
     public updateState(tick: number): void {
         super.updateState(tick);
 
-        if (this.left + this.width > fullWidth) {
+        if (this.left + this.width > gameFieldWidth) {
             this.left = 0;
         }
 
-        if (this.top > fullWidth * 0.5) {
+        if (this.top > gameFieldWidth * 0.5) {
             this.top = gameFieldTop + this.height;
         }
 

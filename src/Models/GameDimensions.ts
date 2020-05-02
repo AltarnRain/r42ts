@@ -14,22 +14,12 @@ export interface GameDimensions {
     /**
      * The entire with of the game.
      */
-    fullWidth: number;
+    fullGameWidth: number;
 
     /**
      * The game entire height of the game.
      */
-    fullHeight: number;
-
-    /**
-     * The game field height
-     */
-    gameFieldHeight: number;
-
-    /**
-     * The number of pixels from the screen's top where the game field is positioned.
-     */
-    gameFieldTop: number;
+    fullGameHeight: number;
 
     /**
      * Height of the status bar.
@@ -40,4 +30,17 @@ export interface GameDimensions {
      * Maxiumum height of each pixel.
      */
     pixelSize: number;
+
+    /**
+     * Pixel size 2x
+     */
+    pixelSize2x: number;
+
+    gameFieldWidth: number;
+
+    gameFieldHeight: number;
+
+    gameFieldTop: number;
+
+    gameFieldLeft: number;
 }

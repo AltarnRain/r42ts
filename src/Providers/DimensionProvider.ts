@@ -27,28 +27,39 @@ export default function dimensionProvider(): GameDimensions {
         if (!body) {
             // Not a nice solution, but the dimensionProvider is called from within unit tests and I do not want
             // to add elements.
-            rect = { height : 1024 } as DOMRect;
+            rect = { height: 1024 } as DOMRect;
         } else {
             rect = body.getBoundingClientRect();
         }
 
         // r42 uses a 4:3 resolution.
-        const height = rect.height;
-        const width = (height / 3) * 4;
-        const pixelSize = Math.floor(width / 160);
+        const canvasHeight = rect.height;
+        const canvasWidth = (canvasHeight / 3) * 4;
 
-        const scoreBoardHeight = pixelSize * 6;
+        // Round pixel size. This is VERY important for canvas rendering.
+        // When a decimal number is rendered by the canvas you get blurry sides.
+        const pixelSize = Math.round(canvasWidth / 160);
 
-        const gameFieldTop = scoreBoardHeight;
-        const gameFieldHeight = height - gameFieldTop;
+        const fullGameHeight = pixelSize * 120;
+        const fullGameWidth = pixelSize * 160;
+
+        const statusBarHeight = pixelSize * 6;
+
+        // Add one pixel to accomodate the border around the game field.
+        const gameFieldTop = statusBarHeight + pixelSize * 2;
+
+        const gameFieldHeight = fullGameHeight - pixelSize;
 
         gameDimensions = {
-            fullWidth: width,
-            fullHeight: height,
+            fullGameWidth,
+            fullGameHeight,
             gameFieldTop,
             gameFieldHeight,
-            statusBarHeight: scoreBoardHeight,
+            statusBarHeight,
             pixelSize,
+            pixelSize2x: pixelSize * 2,
+            gameFieldLeft: pixelSize,
+            gameFieldWidth: fullGameWidth - pixelSize,
         };
     }
 

@@ -20,7 +20,6 @@ import getCharacter from "../Utility/getCharacter";
  */
 
 const {
-    fullHeight,
     pixelSize
 } = dimensionProvider();
 
@@ -41,7 +40,7 @@ const {
     width
 } = getFrameDimensions(roundCharacters[0], pixelSize);
 
-const top = fullHeight * 0.25;
+const top = 0;
 const left = pixelSize * 22;
 const barwidth = pixelSize * 30;
 const roundWidth = 76 * pixelSize;

@@ -6,9 +6,9 @@
 
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
-import ILocationProvider from "../../Interfaces/ILocationProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
+import ILocationProvider from "../../Interfaces/ILocationProvider";
 import Particle from "../../Particles/Particle";
 import { ExplosionProviderFunction, FireAngleProviderFunction, Frame, OffsetFramesProviderFunction } from "../../Types";
 import { getRandomArrayElement } from "../../Utility/Array";

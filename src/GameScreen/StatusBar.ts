@@ -24,9 +24,9 @@ import { padLeft } from "../Utility/String";
 const ctx = ctxProvider();
 
 const {
-    fullWidth,
     statusBarHeight,
-    pixelSize
+    pixelSize,
+    fullGameWidth
 } = dimensionProvider();
 
 const numberFrames = getNumbers(CGAColors.yellow);
@@ -63,9 +63,9 @@ const livesBackgroundWidth = pixelSize * 54;
 // Level number constants.
 const levelStartPosition = scoreBackgroundWidth + phaserBackgroundWidth + livesBackgroundWidth;
 const numberFrameWidth = getFrameDimensions(numberFrames[0], pixelSize).width;
-const leftNumberLeft = fullWidth - (numberFrameWidth * 2.5);
+const leftNumberLeft = fullGameWidth - (numberFrameWidth * 2.5);
 const rightNumberLeft = leftNumberLeft + numberFrameWidth + pixelSize;
-const levelBackgroundWidth = fullWidth - levelStartPosition;
+const levelBackgroundWidth = fullGameWidth - levelStartPosition;
 
 /**
  * Main funtion that draw the entire status bar.

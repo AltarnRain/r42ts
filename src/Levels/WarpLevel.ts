@@ -31,9 +31,8 @@ const backgroundColor: string[] = [
 
 const {
     pixelSize,
-    fullWidth,
-    fullHeight,
-    gameFieldTop
+    fullGameWidth,
+    fullGameHeight
 } = dimensionProvider();
 
 // The WarpGate frame is sixteen pixels wide.
@@ -42,16 +41,20 @@ const warpGateFrame: Frame = [
     []
 ];
 
+// const warpGateColor = "#000000";
+const warpGateColor = "#0000AA";
+
 for (let i = 0; i < 16; i++) {
-    warpGateFrame[0].push("#000000");
-    warpGateFrame[1].push("#000000");
+    warpGateFrame[0].push(warpGateColor);
+    warpGateFrame[1].push(warpGateColor);
 }
 // This constants 'left' takes the width of the wrap gate corridor into consireration.
 // Always start a warp game using this left so we ensure the player is aligned perfectly.
-const warpGateInitialleft = fullWidth / 2 - (16 * pixelSize) / 2;
-const warpGateTopEndPosition = gameFieldTop + pixelSize;
-const warpGateTopStartPosition = fullHeight - pixelSize * 20;
+const warpGateInitialleft = fullGameWidth / 2 - (16 * pixelSize) / 2;
 const doublePixel = pixelSize * 2;
+
+const warpGateTopEndPosition = fullGameHeight - pixelSize * 18;
+const warpGateTopStartPosition = warpGateTopEndPosition - pixelSize * 100;
 
 export default class WarpLevel implements ILevel {
 
@@ -78,13 +81,13 @@ export default class WarpLevel implements ILevel {
         // Determine which additional color next to white the warp background will have.
         const colorIndex = Math.ceil(Math.random() * backgroundColor.length - 1);
         const additionalColor = backgroundColor[colorIndex];
-        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor)));
+        // this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor)));
 
         const warpGateRecrds = this.calculateWarpGate(5);
 
-        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => {
-            warpGateRecrds.forEach((r) => renderFrame(r.left, r.top, warpGateFrame));
-        }));
+        // this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => {
+        //     // warpGateRecrds.forEach((r) => renderFrame(r.left, r.top, warpGateFrame));
+        // }));
     }
     private calculateWarpGate(complexity: number): GameRectangle[] {
 

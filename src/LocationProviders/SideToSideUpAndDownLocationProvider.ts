@@ -16,9 +16,9 @@ import { getLocation } from "../Utility/Location";
 
 const {
     gameFieldTop,
-    fullWidth,
     pixelSize,
-    fullHeight
+    fullGameHeight,
+    fullGameWidth,
 } = dimensionProvider();
 
 export default class SideToSideUpAndDownLocationProvider extends BaseLocationProvider implements ILocationProvider {
@@ -26,13 +26,13 @@ export default class SideToSideUpAndDownLocationProvider extends BaseLocationPro
     public updateState(tick: number): void {
         super.updateState(tick);
         const leftLimit = pixelSize * 2;
-        const rightLimit = fullWidth - this.width - pixelSize * 2;
+        const rightLimit = fullGameWidth - this.width - pixelSize * 2;
 
         if (this.left <= leftLimit || this.left >= rightLimit) {
             this.angle = 180 - this.angle;
         }
 
-        if (this.top <= gameFieldTop || this.top >= fullHeight - this.height) {
+        if (this.top <= gameFieldTop || this.top >= fullGameHeight - this.height) {
             this.angle *= -1;
         }
 
