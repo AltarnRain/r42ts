@@ -33,14 +33,9 @@ export default function dimensionProvider(): GameDimensions {
         }
 
         // r42 uses a 4:3 resolution.
-        const canvasHeight = rect.height;
-        const canvasWidth = (canvasHeight / 3) * 4;
+        const pixelSize = Math.floor(rect.height / 100);
 
-        // Round pixel size. This is VERY important for canvas rendering.
-        // When a decimal number is rendered by the canvas you get blurry sides.
-        const pixelSize = Math.round(canvasWidth / 160);
-
-        const fullGameHeight = pixelSize * 120;
+        const fullGameHeight = pixelSize * 100;
         const fullGameWidth = pixelSize * 160;
 
         const statusBarBottom = pixelSize * 6;
