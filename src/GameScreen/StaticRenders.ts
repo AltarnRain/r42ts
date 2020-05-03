@@ -79,7 +79,7 @@ export function drawWarpBackground(additionalColor: string, gate: GameRectangle[
             drawWhite = true;
         }
 
-        ctx.fillRect(left, WarpLevelConstants.top, pixelSize, WarpLevelConstants.bottom);
+        ctx.fillRect(left, WarpLevelConstants.top, pixelSize, WarpLevelConstants.height);
         left += pixelSize;
     }
 
