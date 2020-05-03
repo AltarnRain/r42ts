@@ -16,12 +16,13 @@ import dimensionProvider from "./DimensionProvider";
 
 const {
     pixelSize,
+    fullGameWidth,
     gameField
 } = dimensionProvider();
 
 const shipDimensions = getFrameDimensions(getPlayerFrame(), pixelSize);
 
-const leftSpawnPosition = (gameField.right / 2) - shipDimensions.width / 2;
+const leftSpawnPosition = (fullGameWidth / 2) - shipDimensions.width / 2;
 const topSpawnPosition = gameField.bottom - pixelSize * 8;
 
 /**
