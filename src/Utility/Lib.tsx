@@ -4,6 +4,8 @@
  * See LICENSE.MD.
  */
 
+import KeyValuePair from "../Models/KeyValuePair";
+
 /**
  * Module:          Lib
  * Responsibility:  A library containing various helper functions
@@ -24,5 +26,16 @@ export function randomNumberInRange(max: number, min: number): number {
  * @param {number} factor. A factor > 1 is an increase, < 1 a decrease.
  */
 export function calculateTimeSpeedIncrease(time: number, factor: number): number {
-    return time *  1 / factor;
+    return time * 1 / factor;
+}
+
+export function getURLQueryKVPs(query: string): KeyValuePair[] {
+    const kvps = query.split("?");
+    return kvps.map((item) => {
+        const kvp = item.split("=");
+        return {
+            key: kvp[0],
+            value: kvp[1],
+        };
+    });
 }

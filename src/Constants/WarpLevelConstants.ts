@@ -23,6 +23,7 @@ export namespace WarpLevelConstants {
     export const left = gameField.left + pixelSize;
     export const right = gameField.right - pixelSize * 2;
     export const bottom = top + height;
+    export const width = pixelSize * 16;
 }
 
 export default WarpLevelConstants;

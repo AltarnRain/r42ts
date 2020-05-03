@@ -91,9 +91,7 @@ export function drawWarpBackground(additionalColor: string, gate: GameRectangle[
 /**
  * Debugggin function. Draws a grid in the screen for animation alignment.
  */
-export function DEBUGGING_drawGrid(): void {
-
-    const gridDetail = 4;
+export function DEBUGGING_drawGrid(gridDetail: number): void {
 
     const ctx = ctxProvider();
     for (let r = 0; r < 120; r += 1) {

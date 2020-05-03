@@ -68,8 +68,8 @@ export default class WarpLevel implements ILevel {
         const warpGateRecrds = this.calculateWarpGate(5);
 
         this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, warpGateRecrds)));
-
     }
+
     private calculateWarpGate(complexity: number): GameRectangle[] {
 
         let left = warpGateInitialleft;
@@ -91,7 +91,7 @@ export default class WarpLevel implements ILevel {
             const rect: GameRectangle = {
                 left,
                 top,
-                right: left + pixelSize * 16,
+                right: left + WarpLevelConstants.width,
                 bottom: top + stepSizeY,
             };
 
@@ -100,6 +100,7 @@ export default class WarpLevel implements ILevel {
             safeZone.push(rect);
         }
 
+        return [];
         return safeZone;
     }
 

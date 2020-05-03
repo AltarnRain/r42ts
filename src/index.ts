@@ -5,6 +5,7 @@
  */
 
 import GameLoop from "./GameLoop";
+import { DEBUGGING_drawGrid } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import subscribeToStoreChanges from "./Levels/SubscribeToStore";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
@@ -15,6 +16,7 @@ import { hitboxesOn, playerMortality } from "./State/Debugging/Actions";
 import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers } from "./State/Game/Actions";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
+import { getURLQueryKVPs } from "./Utility/Lib";
 
 /**
  * Module:          Index
@@ -29,54 +31,72 @@ window.onload = () => {
         canvas.width = dimensionProvider().fullGameWidth;
         canvas.height = dimensionProvider().fullGameHeight;
 
-        switch (window.location.search.replace("?", "")) {
-            case "playground": {
+        const queryKeyValuePairs = getURLQueryKVPs(window.location.search);
 
-                let level = 0;
-                if (window.location.hash && window.location.hash.indexOf("level") > -1) {
-                    level = parseInt(window.location.hash.split("=")[1], 10);
+        const showPlayGround = queryKeyValuePairs.some((kvp) => kvp.key === "playground");
+        const showCanvas = queryKeyValuePairs.some((kvp) => kvp.key === "canvas");
+        let level = queryKeyValuePairs.find((kvp) => kvp.key === "level")?.value;
+        const drawGrid = queryKeyValuePairs.find((kvp) => kvp.key === "grid");
+        const showhitboxes = queryKeyValuePairs.find((kvp) => kvp.key === "hitboxes");
+
+        if (showPlayGround) {
+
+            if (!level) {
+                level = "0";
+            }
+
+            if (showhitboxes) {
+                dispatch(hitboxesOn(true));
+            }
+
+            subscribeToStoreChanges();
+            registerListeners();
+
+            GameLoop.registerBackgroundDrawing(drawStatusBar);
+            GameLoop.registerUpdateState(playerRunner);
+            GameLoop.registerUpdateState(playerSpawnManager);
+            dispatch(playerMortality("immortal"));
+
+            dispatch(setLives(20));
+            dispatch(setPhasers(100));
+
+            if (level) {
+                dispatch(setLevel(parseInt(level, 10)));
+            }
+
+            if (drawGrid) {
+                let gridDetail = 1;
+                if (drawGrid.value) {
+                    gridDetail = parseInt(drawGrid.value, 10);
                 }
 
-                subscribeToStoreChanges();
-                registerListeners();
-
-                GameLoop.registerBackgroundDrawing(drawStatusBar);
-                GameLoop.registerUpdateState(playerRunner);
-                GameLoop.registerUpdateState(playerSpawnManager);
-                dispatch(playerMortality("immortal"));
-
-                dispatch(hitboxesOn(true));
-                dispatch(setLives(20));
-                dispatch(setLevel(level));
-                dispatch(setPhasers(100));
-                GameLoop.Start();
-
-                (window as any).r42 = {
-                    setLevel: (n: number) => dispatch(setLevel(n)),
-                    nextLevel: () => dispatch(nextLevel()),
-                    godMode: () => dispatch(playerMortality("immortal")),
-                    normalMode: () => dispatch(playerMortality("mortal")),
-                    setPhasers: (n: number) => dispatch(setPhasers(n)),
-                    setLives: (n: number) => dispatch(setLives(n)),
-                    increaseScore: (n: number) => dispatch(increaseScore(n)),
-                    addPhaser: () => dispatch(addPhaser()),
-                    showHitboxes: (b: boolean) => dispatch(hitboxesOn(b)),
-                };
-
-                break;
+                GameLoop.registerBackgroundDrawing(() => DEBUGGING_drawGrid(gridDetail));
             }
-            case "canvas":
-                // canvas testing
-                const ctx = ctxProvider();
 
-                // Green.
-                ctx.fillStyle = "#00AA00";
+            GameLoop.Start();
 
-                (window as any).r42 = ctx;
+            (window as any).r42 = {
+                setLevel: (n: number) => dispatch(setLevel(n)),
+                nextLevel: () => dispatch(nextLevel()),
+                godMode: () => dispatch(playerMortality("immortal")),
+                normalMode: () => dispatch(playerMortality("mortal")),
+                setPhasers: (n: number) => dispatch(setPhasers(n)),
+                setLives: (n: number) => dispatch(setLives(n)),
+                increaseScore: (n: number) => dispatch(increaseScore(n)),
+                addPhaser: () => dispatch(addPhaser()),
+                showHitboxes: (b: boolean) => dispatch(hitboxesOn(b)),
+            };
 
-                break;
-            default:
-                startGame();
+        } else if (showCanvas) {
+            // canvas testing
+            const ctx = ctxProvider();
+
+            // Green.
+            ctx.fillStyle = "#00AA00";
+
+            (window as any).r42 = ctx;
+        } else {
+            startGame();
         }
     }
 };
