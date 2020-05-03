@@ -21,6 +21,7 @@ const {
     gameField,
     statusBarBottom,
     fullGameWidth,
+    fullGameHeight
 } = dimensionProvider();
 
 export function drawBackground(): void {
@@ -90,27 +91,30 @@ export function drawWarpBackground(additionalColor: string, gate: GameRectangle[
 /**
  * Debugggin function. Draws a grid in the screen for animation alignment.
  */
-// export function DEBUGGING_drawGrid(): void {
-//     const ctx = ctxProvider();
-//     for (let r = 0; r < 200; r += 1) {
-//         ctx.beginPath();
-//         const y = r * 30 + gameFieldTop;
-//         ctx.lineTo(0, y);
-//         ctx.lineTo(fullWidth, y);
-//         ctx.lineWidth = 1;
-//         ctx.strokeStyle = "white";
-//         ctx.stroke();
-//         ctx.closePath();
-//     }
+export function DEBUGGING_drawGrid(): void {
 
-//     for (let r = 0; r < 200; r += 2) {
-//         ctx.beginPath();
-//         const x = r * 20;
-//         ctx.lineTo(x, 0);
-//         ctx.lineTo(x, fullHeight);
-//         ctx.lineWidth = 1;
-//         ctx.strokeStyle = "white";
-//         ctx.stroke();
-//         ctx.closePath();
-//     }
-// }
+    const gridDetail = 4;
+
+    const ctx = ctxProvider();
+    for (let r = 0; r < 120; r += 1) {
+        ctx.beginPath();
+        const y = r * pixelSize * gridDetail;
+        ctx.lineTo(0, y);
+        ctx.lineTo(fullGameWidth, y);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "white";
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+    for (let r = 0; r < 160; r += 1) {
+        ctx.beginPath();
+        const x = r * pixelSize * gridDetail;
+        ctx.lineTo(x, 0);
+        ctx.lineTo(x, fullGameHeight);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "white";
+        ctx.stroke();
+        ctx.closePath();
+    }
+}
