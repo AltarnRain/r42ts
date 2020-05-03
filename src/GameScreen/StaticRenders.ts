@@ -6,7 +6,8 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
-import WarpLevelConstants from "../Constants/WarpLevel";
+import WarpLevelConstants from "../Constants/WarpLevelConstants";
+import { GameRectangle } from "../Models/GameRectangle";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 
@@ -20,7 +21,6 @@ const {
     gameField,
     statusBarBottom,
     fullGameWidth,
-    fullGameHeight
 } = dimensionProvider();
 
 export function drawBackground(): void {
@@ -61,7 +61,7 @@ function drawGameFieldBorder(): void {
  * Draws the background of the warp level.
  * @param {string} additionalColor. The additional color.
  */
-export function drawWarpBackground(additionalColor: string): void {
+export function drawWarpBackground(additionalColor: string, gate: GameRectangle[]): void {
     const ctx = ctxProvider();
 
     // The first line in a warp level is always white.
@@ -78,9 +78,13 @@ export function drawWarpBackground(additionalColor: string): void {
             drawWhite = true;
         }
 
-        ctx.fillRect(left, WarpLevelConstants.top, pixelSize, WarpLevelConstants.height);
+        ctx.fillRect(left, WarpLevelConstants.top, pixelSize, WarpLevelConstants.bottom);
         left += pixelSize;
     }
+
+    ctx.fillStyle = "black";
+
+    gate.forEach((r) => ctx.fillRect(r.left, r.top, r.right - r.left, r.bottom - r.top));
 }
 
 /**

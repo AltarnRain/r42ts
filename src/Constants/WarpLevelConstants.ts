@@ -13,18 +13,16 @@ import dimensionProvider from "../Providers/DimensionProvider";
 
 const {
     pixelSize,
-    pixelSize2x,
     gameField
 } = dimensionProvider();
 
 export namespace WarpLevelConstants {
+    export const heightPixelCount = 72;
     export const top = pixelSize * 8;
-    // Counter the actual game's pixels from top to bottom of a warp game.
-    export const bottom = top + pixelSize * 72;
-    export const height = bottom - top;
+    export const height = heightPixelCount * pixelSize;
     export const left = gameField.left + pixelSize;
-
     export const right = gameField.right - pixelSize * 2;
+    export const bottom = top + height;
 }
 
 export default WarpLevelConstants;
