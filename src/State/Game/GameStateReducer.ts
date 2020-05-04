@@ -8,6 +8,7 @@ import produce from "immer";
 import Constants from "./Constants";
 import GameState from "./GameState";
 import { GameStateTypes } from "./Types";
+import { WarpLevelComplexity, WarpLevelComplexties } from "./WarpLevelComplexity";
 
 /**
  * Module:          GameStateReducer
@@ -51,6 +52,7 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 break;
             case Constants.setLevel:
                 draft.level = action.payload;
+                draft.warpLevelComplexity = getWarpGateComplexity(action.payload);
                 break;
             case Constants.nextLevel:
                 if (draft.level === 42) {
@@ -58,6 +60,11 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 } else if (draft.level !== undefined) {
                     draft.level++;
                 }
+
+                if (draft.level !== undefined) {
+                    draft.warpLevelComplexity = getWarpGateComplexity(draft.level);
+                }
+
                 break;
             case Constants.addLifeAndPhaser:
                 draft.lives++;
@@ -68,6 +75,15 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 break;
         }
     });
+
+}
+
+function getWarpGateComplexity(level: number): WarpLevelComplexity {
+    if (level < 36) {
+        return warpLevelComplexities[level.toString()];
+    } else {
+        return warpLevelComplexities["36"];
+    }
 }
 
 /**
@@ -81,5 +97,48 @@ function initState(): GameState {
         score: 0,
         phasers: 0,
         pause: false,
+        warpLevelComplexity: getWarpGateComplexity(4),
     };
 }
+
+/**
+ * Typed constants that defined the warp gate complexities.
+ */
+const warpLevelComplexities: WarpLevelComplexties = {
+    4: {
+        stepsX: [0, 2, 2, 4],
+        stepsY: [4, 4, 6, 8]
+    },
+    8: {
+        stepsX: [0, 2, 2, 4],
+        stepsY: [4, 4, 6, 6],
+    },
+    12: {
+        stepsX: [0, 2, 2, 4],
+        stepsY: [4, 4, 4, 6],
+    },
+    16: {
+        stepsX: [2, 2, 4, 4],
+        stepsY: [2, 4, 4, 6],
+    },
+    20: {
+        stepsX: [2, 2, 2, 4],
+        stepsY: [2, 2, 4],
+    },
+    24: {
+        stepsX: [2, 2, 2, 4],
+        stepsY: [2, 2, 4],
+    },
+    28: {
+        stepsX: [2, 2, 4, 4],
+        stepsY: [2, 4],
+    },
+    32: {
+        stepsX: [2, 2, 4, 4],
+        stepsY: [2],
+    },
+    36: {
+        stepsX: [2, 2, 4, 4],
+        stepsY: [2],
+    }
+};

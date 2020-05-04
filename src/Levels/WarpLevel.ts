@@ -29,19 +29,6 @@ const backgroundColor: string[] = [
     CGAColors.blue,
 ];
 
-export const warpLevelComplexities = [
-    [
-        [0, 2, 2, 4], [4, 4, 6, 8], // level 4,
-        [0, 2, 2, 4], [4, 4, 6, 6], // Level 8
-        [0, 2, 2, 4], [4, 4, 4, 6], // Level 12,
-        [2, 2, 4, 4], [2, 4, 4, 6], // Level 16
-        [2, 2, 2, 4], [2, 2, 4], // Level 24,
-        [2, 2, 4, 4], [2, 4], // Level 28,
-        [2, 2, 4, 4], [2], // Level 32,
-        [2, 2, 4], [2], // Level 36 +
-    ]
-];
-
 const {
     pixelSize,
     fullGameWidth,

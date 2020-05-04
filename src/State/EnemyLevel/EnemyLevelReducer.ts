@@ -76,7 +76,7 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
     return newState;
 }
 
-export function initState(): EnemyLevelState {
+function initState(): EnemyLevelState {
     return {
         enemies: [],
         explosionCenters: [],

@@ -4,6 +4,8 @@
  * See LICENSE.MD.
  */
 
+import { WarpLevelComplexity } from "./WarpLevelComplexity";
+
 /**
  * Module:          GameState
  * Responsibility:  Overall state of the game
@@ -34,4 +36,9 @@ export default interface GameState {
      * True then the game is paused.
      */
     pause: boolean;
+
+    /**
+     * The complexity of a warp level.
+     */
+    warpLevelComplexity: WarpLevelComplexity;
 }
