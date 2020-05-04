@@ -80,7 +80,15 @@ export default function gameStateReducer(state: GameState = initState(), action:
 
 function getWarpGateComplexity(level: number): WarpLevelComplexity {
     if (level < 36) {
-        return warpLevelComplexities[level.toString()];
+        const complexity = warpLevelComplexities[level.toString()];
+
+        // If the complexity could not be found, return the highest
+        // complexity. Should not happen while player, useful for debugging.
+        if (complexity === undefined) {
+            return warpLevelComplexities["36"];
+        } else {
+            return complexity;
+        }
     } else {
         return warpLevelComplexities["36"];
     }

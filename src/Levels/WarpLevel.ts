@@ -65,7 +65,11 @@ export default class WarpLevel implements ILevel {
         const colorIndex = Math.ceil(Math.random() * backgroundColor.length - 1);
         const additionalColor = backgroundColor[colorIndex];
 
-        const warpGate = this.calculateWarpGate(gameField.left, gameField.right, [4], [2]);
+        const {
+            gameState
+        } = appState();
+
+        const warpGate = this.calculateWarpGate(gameField.left, gameField.right, gameState.warpLevelComplexity.stepsX, gameState.warpLevelComplexity.stepsY);
 
         this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, warpGate)));
     }
