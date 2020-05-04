@@ -16,6 +16,7 @@ import { appState, appStore, dispatch } from "../State/Store";
 import { Frame } from "../Types";
 import { randomNumberInRange } from "../Utility/Lib";
 import WarpLevelConstants from "../Constants/WarpLevelConstants";
+import { getRandomArrayElement } from "../Utility/Array";
 
 /**
  * Module:          WarpLevel
@@ -32,7 +33,6 @@ const backgroundColor: string[] = [
 const {
     pixelSize,
     fullGameWidth,
-    fullGameHeight
 } = dimensionProvider();
 
 // This constants 'left' takes the width of the wrap gate corridor into consireration.
@@ -65,42 +65,93 @@ export default class WarpLevel implements ILevel {
         const colorIndex = Math.ceil(Math.random() * backgroundColor.length - 1);
         const additionalColor = backgroundColor[colorIndex];
 
-        const warpGateRecrds = this.calculateWarpGate(5);
+        // 4
+        // const warpGate = this.calculateWarpGate([0, 2, 2, 4], [4, 4, 6, 8]);
 
-        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, warpGateRecrds)));
+        // 8
+        // const warpGate = this.calculateWarpGate([0, 2, 2, 4], [4, 4, 6, 6]);
+
+        // 12
+        // const warpGate = this.calculateWarpGate([0, 2, 2, 4], [4, 4, 4, 6]);
+
+        // 16
+        // const warpGate = this.calculateWarpGate([2, 2, 4, 4], [2, 4, 4, 6]);
+
+        // 24
+        const warpGate = this.calculateWarpGate([2, 2, 2, 4], [2, 2, 4]);
+
+        // 28
+        // const warpGate = this.calculateWarpGate([2, 2, 4, 4], [2, 4]);
+
+        // 32
+        // const warpGate = this.calculateWarpGate([2, 2, 4, 4], [2]);
+
+        // 36+
+        // const warpGate = this.calculateWarpGate([2, 4, 4, 4], [2] );
+
+        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, warpGate)));
     }
 
-    private calculateWarpGate(complexity: number): GameRectangle[] {
+    private calculateWarpGate(stepSizesX: number[], stepSizesY: number[]): GameRectangle[] {
 
         let left = warpGateInitialleft;
 
         // We'll start at the bottom and draw up. This
         // allows me to ensure a safe position for the player to
         // enter the warp gate.
-        let top = WarpLevelConstants.bottom;
+        let bottom = WarpLevelConstants.bottom;
+
+        const pixelsToGo = WarpLevelConstants.heightPixelCount;
+        let pixelsToDo = 0;
 
         const safeZone: GameRectangle[] = [];
 
-        // Step sizes determine the amount of game pixels that
-        // the warp gate will move up and to the sides.
-        const stepSizeY = 3 * pixelSize;
-        const stepSizeX = 2 * pixelSize;
+        let stepSizeY = getRandomArrayElement(stepSizesY);
+        let stepSizeX = getRandomArrayElement(stepSizesX);
 
-        while (top >= WarpLevelConstants.top) {
+        while (pixelsToDo + stepSizeY < pixelsToGo) {
+            const up = stepSizeY * pixelSize;
 
             const rect: GameRectangle = {
                 left,
-                top,
+                top: bottom - up,
                 right: left + WarpLevelConstants.width,
-                bottom: top + stepSizeY,
+                bottom,
             };
 
-            top -= stepSizeY;
-            left -= stepSizeX;
+            // New left
+            const verticalMove = stepSizeX * pixelSize;
+
+            const direction = Math.floor(Math.random() * 2) === 1;
+            if (direction) {
+                left -= verticalMove;
+            } else {
+                left += verticalMove;
+            }
+
+            // bottom moves up.
+            bottom -= up;
+
+            // Reduce pixels to do.
+            pixelsToDo += stepSizeY;
+            safeZone.push(rect);
+
+            stepSizeY = getRandomArrayElement(stepSizesY);
+            stepSizeX = getRandomArrayElement(stepSizesX);
+        }
+
+        // Deal with some left over space
+        if (pixelsToDo !== 0) {
+            const rect: GameRectangle = {
+                left,
+                top: WarpLevelConstants.top,
+                right: left + WarpLevelConstants.width,
+                bottom
+            };
+
             safeZone.push(rect);
         }
 
-        return [];
         return safeZone;
     }
 
