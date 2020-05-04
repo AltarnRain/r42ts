@@ -58,7 +58,7 @@ export function movePlayerHandler(speed: number): void {
     const angle = getAngle(localKeyboardState);
     if (angle !== -1) {
         const newLocation = getLocation(playerState.playerLeftLocation, playerState.playerTopLocation, angle, speed);
-        if (fallsWithin(newLocation.left, newLocation.top, gameField.top, gameField.bottom, gameField.left, gameField.right)) {
+        if (fallsWithin(newLocation.left, newLocation.top, gameField.top, gameField.bottom - shipDimensions.height, gameField.left, gameField.right - shipDimensions.width)) {
             dispatch(setPlayerLocation(newLocation.left, newLocation.top));
         }
     }
