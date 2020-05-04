@@ -39,3 +39,11 @@ export function getURLQueryKVPs(query: string): KeyValuePair[] {
         };
     });
 }
+
+/**
+ * 50/50 change to return true of false
+ * @returns {boolean}. True or false.
+ */
+export function coinFlip(): boolean {
+    return Math.floor(Math.random() * 2) === 1;
+}

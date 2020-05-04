@@ -5,6 +5,7 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
+import WarpLevelConstants from "../Constants/WarpLevelConstants";
 import GameLoop from "../GameLoop";
 import { drawBackground, drawWarpBackground } from "../GameScreen/StaticRenders";
 import Guard from "../Guard";
@@ -13,10 +14,8 @@ import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { setPlayerMovementLimit, setPlayerPositionToSpawnPosition } from "../State/Player/Actions";
 import { appState, appStore, dispatch } from "../State/Store";
-import { Frame } from "../Types";
-import { randomNumberInRange } from "../Utility/Lib";
-import WarpLevelConstants from "../Constants/WarpLevelConstants";
 import { getRandomArrayElement } from "../Utility/Array";
+import { coinFlip } from "../Utility/Lib";
 
 /**
  * Module:          WarpLevel
@@ -30,9 +29,23 @@ const backgroundColor: string[] = [
     CGAColors.blue,
 ];
 
+export const warpLevelComplexities = [
+    [
+        [0, 2, 2, 4], [4, 4, 6, 8], // level 4,
+        [0, 2, 2, 4], [4, 4, 6, 6], // Level 8
+        [0, 2, 2, 4], [4, 4, 4, 6], // Level 12,
+        [2, 2, 4, 4], [2, 4, 4, 6], // Level 16
+        [2, 2, 2, 4], [2, 2, 4], // Level 24,
+        [2, 2, 4, 4], [2, 4], // Level 28,
+        [2, 2, 4, 4], [2], // Level 32,
+        [2, 2, 4], [2], // Level 36 +
+    ]
+];
+
 const {
     pixelSize,
     fullGameWidth,
+    gameField
 } = dimensionProvider();
 
 // This constants 'left' takes the width of the wrap gate corridor into consireration.
@@ -65,34 +78,12 @@ export default class WarpLevel implements ILevel {
         const colorIndex = Math.ceil(Math.random() * backgroundColor.length - 1);
         const additionalColor = backgroundColor[colorIndex];
 
-        // 4
-        // const warpGate = this.calculateWarpGate([0, 2, 2, 4], [4, 4, 6, 8]);
-
-        // 8
-        // const warpGate = this.calculateWarpGate([0, 2, 2, 4], [4, 4, 6, 6]);
-
-        // 12
-        // const warpGate = this.calculateWarpGate([0, 2, 2, 4], [4, 4, 4, 6]);
-
-        // 16
-        // const warpGate = this.calculateWarpGate([2, 2, 4, 4], [2, 4, 4, 6]);
-
-        // 24
-        const warpGate = this.calculateWarpGate([2, 2, 2, 4], [2, 2, 4]);
-
-        // 28
-        // const warpGate = this.calculateWarpGate([2, 2, 4, 4], [2, 4]);
-
-        // 32
-        // const warpGate = this.calculateWarpGate([2, 2, 4, 4], [2]);
-
-        // 36+
-        // const warpGate = this.calculateWarpGate([2, 4, 4, 4], [2] );
+        const warpGate = this.calculateWarpGate(gameField.left, gameField.right, [4], [2]);
 
         this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, warpGate)));
     }
 
-    private calculateWarpGate(stepSizesX: number[], stepSizesY: number[]): GameRectangle[] {
+    private calculateWarpGate(outerLeft: number, outerRight: number, stepSizesX: number[], stepSizesY: number[]): GameRectangle[] {
 
         let left = warpGateInitialleft;
 
@@ -122,11 +113,19 @@ export default class WarpLevel implements ILevel {
             // New left
             const verticalMove = stepSizeX * pixelSize;
 
-            const direction = Math.floor(Math.random() * 2) === 1;
+            // 50/50 change that the warp gate goes left or right.
+            const direction = coinFlip();
             if (direction) {
                 left -= verticalMove;
             } else {
                 left += verticalMove;
+            }
+
+            // Prevent the warp gate from going off screen.
+            if (left <= outerLeft) {
+                left += verticalMove;
+            } else if (left + WarpLevelConstants.width >= outerRight) {
+                left -= verticalMove;
             }
 
             // bottom moves up.
