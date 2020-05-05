@@ -76,7 +76,7 @@ export default class WarpLevel implements ILevel {
 
     private calculateWarpGate(outerLeft: number, outerRight: number, stepSizesX: number[], stepSizesY: number[]): GameRectangle[] {
 
-        let left = warpGateInitialleft;
+        let direction = warpGateInitialleft;
 
         // We'll start at the bottom and draw up. This
         // allows me to ensure a safe position for the player to
@@ -95,28 +95,28 @@ export default class WarpLevel implements ILevel {
             const up = stepSizeY * pixelSize;
 
             const rect: GameRectangle = {
-                left,
+                left: direction,
                 top: bottom - up,
-                right: left + WarpLevelConstants.width,
-                bottom,
+                right: direction + WarpLevelConstants.width, // aka the width
+                bottom, // aka the height.
             };
 
             // New left
             const verticalMove = stepSizeX * pixelSize;
 
             // 50/50 change that the warp gate goes left or right.
-            const direction = coinFlip();
-            if (direction) {
-                left -= verticalMove;
+            const leftOrRight = coinFlip();
+            if (leftOrRight) {
+                // Left
+                direction -= verticalMove;
             } else {
-                left += verticalMove;
+                // Right
+                direction += verticalMove;
             }
 
-            // Prevent the warp gate from going off screen.
-            if (left <= outerLeft) {
-                left += verticalMove;
-            } else if (left + WarpLevelConstants.width >= outerRight) {
-                left -= verticalMove;
+            // Prevent the warp gate from going off screen by fliping the direction.
+            if (direction <= outerLeft || direction + WarpLevelConstants.width >= outerRight) {
+                direction *= -1;
             }
 
             // bottom moves up.
@@ -133,9 +133,9 @@ export default class WarpLevel implements ILevel {
         // Deal with some left over space
         if (pixelsToDo !== 0) {
             const rect: GameRectangle = {
-                left,
+                left: direction,
                 top: WarpLevelConstants.top,
-                right: left + WarpLevelConstants.width,
+                right: direction + WarpLevelConstants.width,
                 bottom
             };
 
