@@ -34,7 +34,6 @@ const {
 } = dimensionProvider();
 
 const playerBulletFrame = getTwoPixelBullet(CGAColors.yellow);
-const bulletDimensions = getFrameDimensions(playerBulletFrame, pixelSize);
 
 /**
  * Updates the player state.
@@ -56,7 +55,7 @@ function updateState(): void {
         const nextLoction = getLocation(bullet.left, bullet.top, bullet.angle, bullet.speed);
 
         if (fallsWithin(nextLoction.left, nextLoction.top, gameField.top, gameField.bottom, 0, gameField.right)) {
-            const newState = StateProviders.getParticleState(nextLoction.left, nextLoction.top, playerBulletSpeed, angles.up, playerBulletFrame);
+            const newState = StateProviders.getParticleState(nextLoction.left, nextLoction.top, playerBulletSpeed, angles.up, playerBulletFrame, 1, -0.5 * pixelSize, -0.5 * pixelSize);
             dispatch(setPlayerBulletState(newState));
         } else {
             dispatch(setPlayerBulletState(undefined));
@@ -66,7 +65,7 @@ function updateState(): void {
     // Fire new bullet.
     if (playerState.playerNozzleLocation !== undefined && keyboardState.fire && playerState.playerBulletState === undefined) {
         const nozzleLocation = playerState.playerNozzleLocation;
-        const bullet = StateProviders.getParticleState(nozzleLocation.left, nozzleLocation.top, playerBulletSpeed, angles.up, playerBulletFrame);
+        const bullet = StateProviders.getParticleState(nozzleLocation.left, nozzleLocation.top, playerBulletSpeed, angles.up, playerBulletFrame, 1, -0.5 * pixelSize, -0.5 * pixelSize);
         dispatch(setPlayerBulletState(bullet));
     }
 }
