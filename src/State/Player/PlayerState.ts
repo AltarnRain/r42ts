@@ -8,6 +8,7 @@ import Explosion from "../../Models/Explosion";
 import { GameLocation } from "../../Models/GameLocation";
 import { GameRectangle } from "../../Models/GameRectangle";
 import { MoveLimits, Frame } from "../../Types";
+import { ParticleState } from "./ParticleState";
 
 /**
  * Module:          PlayerState
@@ -23,7 +24,7 @@ export default interface PlayerState {
     /**
      * Quick reference to the player bullet.
      */
-    playerBulletOnScreen: boolean;
+    // playerBulletOnScreen: boolean;
 
     /**
      * Movement limitations for the player
@@ -42,11 +43,11 @@ export default interface PlayerState {
 
     playerHitbox: GameRectangle | undefined;
 
-    playerBulletHitbox: GameRectangle | undefined;
-
     playerNozzleLocation: GameLocation | undefined;
 
     playerExplosion: Explosion;
 
     playerFrame: Frame;
+
+    playerBulletState: ParticleState | undefined;
 }

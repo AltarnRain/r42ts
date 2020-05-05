@@ -13,19 +13,13 @@ import { GameLocation } from "../../Models/GameLocation";
 import { GameRectangle } from "../../Models/GameRectangle";
 import { MoveLimits } from "../../Types";
 import Constants from "./Constants";
-import { PlayerBulletOnScreen, PlayerOnScreen, SetPlayerLocationData, SetPlayerMovementLimit, SetPlayerBulletHitbox } from "./Types";
+import { ParticleState } from "./ParticleState";
+import { PlayerOnScreen, SetPlayerBulletState, SetPlayerLocationData, SetPlayerMovementLimit } from "./Types";
 
 export function setPlayerOnScreen(playerOnScreen: boolean): PlayerOnScreen {
     return {
         type: Constants.playerOnScreen,
         playerOnScreen,
-    };
-}
-
-export function setPlayerBulletOnScreen(playerBulletOnScreen: boolean): PlayerBulletOnScreen {
-    return {
-        type: Constants.playerBulletOnScreen,
-        playerBulletOnScreen,
     };
 }
 
@@ -48,9 +42,9 @@ export function setPlayerLocationData(left: number, top: number, hitbox?: GameRe
     };
 }
 
-export function setPlayerBulletHitbox(hitbox: GameRectangle): SetPlayerBulletHitbox {
+export function setPlayerBulletState(particleState: ParticleState | undefined): SetPlayerBulletState  {
     return {
-        type: Constants.setPlayerBulletHitbox,
-        hitbox
+        type: Constants.setPlayerBulletState,
+        particleState,
     };
 }

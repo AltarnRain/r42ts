@@ -15,9 +15,9 @@ namespace Constants {
     export const removePlayerBullet = "removePlayerBullet";
     export const setPlayerPositionToSpawnPosition = "setPlayerPositionToSpawnPosition";
     export const playerOnScreen = "playerOnScreen";
-    export const playerBulletOnScreen = "playerBulletOnScreen";
     export const setPlayerHitbox = "setPlayerHitbox";
-    export const setPlayerBulletHitbox = "setPlayerBulletHitbox";
+
+    export const setPlayerBulletState = "setPlayerBulletState";
 }
 
 export default Constants;

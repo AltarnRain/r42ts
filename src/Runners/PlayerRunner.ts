@@ -6,16 +6,17 @@
 
 import { angles } from "../Constants/Angles";
 import { playerBulletSpeed } from "../Constants/BulletSpeeds";
+import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
-import AcceleratingLocationProvider from "../LocationProviders/AcceleratingLocationProvider";
-import PlayerBullet from "../Player/PlayerBullet";
-import { getPlayerFrame } from "../Player/PlayerFrames";
+import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import { setPlayerBulletOnScreen } from "../State/Player/Actions";
+import { setPlayerBulletState } from "../State/Player/Actions";
+import { ParticleState } from "../State/Player/ParticleState";
 import { appState, dispatch } from "../State/Store";
-import Mutators from "../Utility/FrameMutators";
+import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
+import { fallsWithin, getLocation } from "../Utility/Location";
 
 /**
  * Module:          PlayerRunner
@@ -27,7 +28,13 @@ export default function playerRunner(): void {
     GameLoop.registerDraw(draw);
 }
 
-let playerBullet: PlayerBullet | undefined;
+const {
+    pixelSize,
+    gameField
+} = dimensionProvider();
+
+const playerBulletFrame = getTwoPixelBullet(CGAColors.yellow);
+const bulletDimensions = getFrameDimensions(playerBulletFrame, pixelSize);
 
 /**
  * Updates the player state.
@@ -43,24 +50,42 @@ function updateState(): void {
 
     const { playerState, keyboardState } = appState();
     movePlayerHandler(10);
-    playerBullet?.updateState();
 
-    // Remove objects no longer required.
-    if (playerBullet?.traveling() === false) {
-        playerBullet = undefined;
-        dispatch(setPlayerBulletOnScreen(false));
+    if (playerState.playerBulletState) {
+        const bullet = playerState.playerBulletState;
+        const nextLoction = getLocation(bullet.left, bullet.top, bullet.angle, bullet.speed);
+
+        if (fallsWithin(nextLoction.left, nextLoction.top, gameField.top, gameField.bottom, 0, gameField.right)) {
+            const newState = getParticleState(nextLoction.left, nextLoction.top, bulletDimensions.width, bulletDimensions.height, playerBulletSpeed);
+            dispatch(setPlayerBulletState(newState));
+        } else {
+            dispatch(setPlayerBulletState(undefined));
+        }
     }
 
     // Fire new bullet.
-    if (playerState.playerNozzleLocation && keyboardState.fire && !playerState.playerBulletOnScreen) {
+    if (playerState.playerNozzleLocation && keyboardState.fire && playerState.playerBulletState === undefined) {
         const nozzleLocation = playerState.playerNozzleLocation;
 
-        const locationProvider = new AcceleratingLocationProvider(nozzleLocation.left, nozzleLocation.top, playerBulletSpeed, angles.up, 1);
-        playerBullet = new PlayerBullet(locationProvider, getTwoPixelBullet);
-        dispatch(setPlayerBulletOnScreen(true));
+        const bullet = getParticleState(nozzleLocation.left, nozzleLocation.top, bulletDimensions.width, bulletDimensions.height, playerBulletSpeed);
+
+        dispatch(setPlayerBulletState(bullet));
     }
 
-    // Self destruct and firing a phaser are handled in the EnemeyLevelRunner. That's the only time either can be used.
+    function getParticleState(left: number, top: number, width: number, height: number, speed: number, acceletation: number = 1): ParticleState {
+        const bulletHitbox = getFrameHitbox(left, top, width, height, 0, 0);
+        const bullet: ParticleState = {
+            acceletation,
+            angle: angles.up,
+            frame: playerBulletFrame,
+            hitbox: bulletHitbox,
+            speed,
+            left,
+            top
+        };
+
+        return bullet;
+    }
 }
 
 /**
@@ -72,5 +97,8 @@ function draw(): void {
         renderFrame(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.playerFrame);
     }
 
-    playerBullet?.draw();
+    if (playerState.playerBulletState) {
+        const bullet = playerState.playerBulletState;
+        renderFrame(bullet.left, bullet.top, bullet.frame);
+    }
 }

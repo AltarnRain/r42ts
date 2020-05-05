@@ -13,15 +13,11 @@ import { GameLocation } from "../../Models/GameLocation";
 import { GameRectangle } from "../../Models/GameRectangle";
 import { MoveLimits } from "../../Types";
 import Constants from "./Constants";
+import { ParticleState } from "./ParticleState";
 
 export interface PlayerOnScreen {
     type: typeof Constants.playerOnScreen;
     playerOnScreen: boolean;
-}
-
-export interface PlayerBulletOnScreen {
-    type: typeof Constants.playerBulletOnScreen;
-    playerBulletOnScreen: boolean;
 }
 
 export interface SetPlayerMovementLimit {
@@ -39,15 +35,14 @@ export interface SetPlayerLocationData {
     };
 }
 
-export interface SetPlayerBulletHitbox {
-    type: typeof Constants.setPlayerBulletHitbox;
-    hitbox: GameRectangle;
+export interface SetPlayerBulletState {
+    type: typeof Constants.setPlayerBulletState;
+    particleState: ParticleState | undefined;
 }
 
 export type PlayerStateTypes =
     PlayerOnScreen |
-    PlayerBulletOnScreen |
     SetPlayerMovementLimit |
     SetPlayerLocationData |
-    SetPlayerBulletHitbox
+    SetPlayerBulletState
     ;

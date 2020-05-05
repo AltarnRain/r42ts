@@ -7,7 +7,6 @@
 import { BaseEnemy } from "./Base/BaseEnemy";
 import BulletParticle from "./Particles/BulletParticle";
 import Particle from "./Particles/Particle";
-import PlayerBullet from "./Player/PlayerBullet";
 import { allGameKeys, GameKeys } from "./Utility/KeyboardEvents";
 
 /**
@@ -29,10 +28,6 @@ namespace Guard {
      */
     export function isEnemy(value: any): value is BaseEnemy {
         return value && value.getObjectType() === "enemy";
-    }
-
-    export function isPlayerBulletActive(value: any): value is PlayerBullet {
-        return value;
     }
 }
 

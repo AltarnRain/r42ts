@@ -18,7 +18,7 @@ import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
 import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, removeExplosionCenter, removeParticle, setEnemies, setPhaserLocations } from "../State/EnemyLevel/Actions";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
-import { setPlayerBulletOnScreen, setPlayerLocationData, setPlayerOnScreen } from "../State/Player/Actions";
+import { setPlayerLocationData, setPlayerOnScreen, setPlayerBulletState } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { Frame } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
@@ -113,9 +113,9 @@ function handleHitDetection() {
                 }
             }
             // Check if the player hit something.
-            if (hitdetectionPlayerState.playerBulletHitbox && Guard.isEnemy(hittableObject)) {
-                if (overlaps(hitdetectionPlayerState.playerBulletHitbox, hittableObjectHitbox)) {
-                    dispatch(setPlayerBulletOnScreen(false));
+            if (hitdetectionPlayerState.playerBulletState?.hitbox && Guard.isEnemy(hittableObject)) {
+                if (overlaps(hitdetectionPlayerState.playerBulletState.hitbox , hittableObjectHitbox)) {
+                    dispatch(setPlayerBulletState(undefined));
                     handleEnemyDestruction(hittableObject);
                 }
             }

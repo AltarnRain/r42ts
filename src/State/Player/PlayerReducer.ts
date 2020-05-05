@@ -35,9 +35,6 @@ const shipDimensions = getFrameDimensions(getPlayerFrame(), pixelSize);
 export default function playerReducer(state: PlayerState = initState(), action: PlayerStateTypes): PlayerState {
     return produce(state, (draft) => {
         switch (action.type) {
-            case Constants.playerBulletOnScreen:
-                draft.playerBulletOnScreen = action.playerBulletOnScreen;
-                break;
             case Constants.playerOnScreen:
                 draft.playerOnScreen = action.playerOnScreen;
                 break;
@@ -50,9 +47,8 @@ export default function playerReducer(state: PlayerState = initState(), action: 
                 draft.playerHitbox = action.payload.hitbox;
                 draft.playerNozzleLocation = action.payload.nozzleLocation;
                 break;
-
-            case Constants.setPlayerBulletHitbox:
-                draft.playerBulletHitbox = action.hitbox;
+            case Constants.setPlayerBulletState:
+                draft.playerBulletState = action.particleState;
                 break;
         }
     });
@@ -75,14 +71,13 @@ function initState(): PlayerState {
 
     return {
         playerOnScreen: false,
-        playerBulletOnScreen: false,
         moveLimit: "none",
         playerLeftLocation: spawnLocation.left,
         playerTopLocation: spawnLocation.top,
-        playerBulletHitbox: { left: 0, top: 0, right: 0, bottom: 0 },
         playerHitbox: { left: 0, top: 0, right: 0, bottom: 0 },
         playerNozzleLocation: { left: 0, top: 0 },
         playerExplosion,
-        playerFrame
+        playerFrame,
+        playerBulletState: undefined,
     };
 }
