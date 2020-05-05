@@ -59,7 +59,7 @@ function onKeyDown(event: KeyboardEvent): void {
 
         // If the space bar is hit and the player is alive the player pauses the game
         // otherwise, the space bar is used to pause formation.
-        if (event.code === "Space" && Guard.isPlayerAlive(playerState.ship)) {
+        if (event.code === "Space" && playerState.playerOnScreen) {
             if (gameState.pause) {
                 dispatch(setPause(false));
             } else {

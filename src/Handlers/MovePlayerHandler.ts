@@ -6,11 +6,11 @@
 
 import { getPlayerFrame } from "../Player/PlayerFrames";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { setPlayerLocation } from "../State/Player/Actions";
+import { setPlayerLocationData } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
-import { getFrameDimensions } from "../Utility/Frame";
+import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { getAngle, getNextX, getNextY } from "../Utility/Geometry";
-import { fallsWithin, getLocation } from "../Utility/Location";
+import { fallsWithin } from "../Utility/Location";
 
 /**
  * Module:          MovePlayer
@@ -67,7 +67,13 @@ export function movePlayerHandler(speed: number): void {
         const newY = getNextY(angle, speedY, playerState.playerTopLocation);
 
         if (fallsWithin(newX, newY, gameField.top, gameField.bottom - shipDimensions.height, gameField.left, gameField.right - shipDimensions.width)) {
-            dispatch(setPlayerLocation(newX, newY));
+            const hitBox = getFrameHitbox(playerState.playerLeftLocation, playerState.playerTopLocation, shipDimensions.width, shipDimensions.height, 0, pixelSize);
+            const nozzleLocation =  {
+                left: newX + pixelSize * 2,
+                top: newY - pixelSize * 1,
+            };
+
+            dispatch(setPlayerLocationData(newX, newY, hitBox, nozzleLocation));
         }
     }
 }

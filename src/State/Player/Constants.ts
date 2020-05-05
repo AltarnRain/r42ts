@@ -10,13 +10,14 @@
  */
 
 namespace Constants {
-    export const setPlayer = "setPlayer";
-    export const setBullet = "setBullet";
     export const setPlayerMovementLimit = "setPlayerMovementLimit";
-    export const setPlayerLocation = "setPlayerLeftLocation";
+    export const setPlayerLocationData = "setPlayerLocationData";
     export const removePlayerBullet = "removePlayerBullet";
-    export const playerDied = "playedDier";
     export const setPlayerPositionToSpawnPosition = "setPlayerPositionToSpawnPosition";
+    export const playerOnScreen = "playerOnScreen";
+    export const playerBulletOnScreen = "playerBulletOnScreen";
+    export const setPlayerHitbox = "setPlayerHitbox";
+    export const setPlayerBulletHitbox = "setPlayerBulletHitbox";
 }
 
 export default Constants;

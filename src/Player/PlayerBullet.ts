@@ -7,6 +7,8 @@
 import CGAColors from "../Constants/CGAColors";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import Particle from "../Particles/Particle";
+import { setPlayerBulletHitbox } from "../State/Player/Actions";
+import { dispatch } from "../State/Store";
 import { FrameProviderFunction, GameObjectType } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
@@ -34,5 +36,12 @@ export default class PlayerBullet extends Particle {
 
     public getObjectType(): GameObjectType {
         return "playerbullet";
+    }
+
+    public updateState(): void {
+        super.updateState();
+
+        const hb = this.getHitbox();
+        dispatch(setPlayerBulletHitbox(hb));
     }
 }

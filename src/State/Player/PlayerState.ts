@@ -4,9 +4,10 @@
  * See LICENSE.MD.
  */
 
-import PlayerBullet from "../../Player/PlayerBullet";
-import PlayerShip from "../../Player/PlayerShip";
-import { MoveLimits } from "../../Types";
+import Explosion from "../../Models/Explosion";
+import { GameLocation } from "../../Models/GameLocation";
+import { GameRectangle } from "../../Models/GameRectangle";
+import { MoveLimits, Frame } from "../../Types";
 
 /**
  * Module:          PlayerState
@@ -17,12 +18,12 @@ export default interface PlayerState {
     /**
      * Reference to the player object.
      */
-    ship: PlayerShip | undefined;
+    playerOnScreen: boolean;
 
     /**
      * Quick reference to the player bullet.
      */
-    playerBullet: PlayerBullet | undefined;
+    playerBulletOnScreen: boolean;
 
     /**
      * Movement limitations for the player
@@ -38,4 +39,14 @@ export default interface PlayerState {
      * Top location of the player
      */
     playerTopLocation: number;
+
+    playerHitbox: GameRectangle | undefined;
+
+    playerBulletHitbox: GameRectangle | undefined;
+
+    playerNozzleLocation: GameLocation | undefined;
+
+    playerExplosion: Explosion;
+
+    playerFrame: Frame;
 }

@@ -9,19 +9,19 @@
  * Responsibility:  Type definitions for action creator functions return type.
  */
 
-import PlayerBullet from "../../Player/PlayerBullet";
-import PlayerShip from "../../Player/PlayerShip";
+import { GameLocation } from "../../Models/GameLocation";
+import { GameRectangle } from "../../Models/GameRectangle";
 import { MoveLimits } from "../../Types";
 import Constants from "./Constants";
 
-export interface SetPlayer {
-    type: typeof Constants.setPlayer;
-    payload: PlayerShip | undefined;
+export interface PlayerOnScreen {
+    type: typeof Constants.playerOnScreen;
+    playerOnScreen: boolean;
 }
 
-export interface SetBullet {
-    type: typeof Constants.setBullet;
-    payload: PlayerBullet | undefined;
+export interface PlayerBulletOnScreen {
+    type: typeof Constants.playerBulletOnScreen;
+    playerBulletOnScreen: boolean;
 }
 
 export interface SetPlayerMovementLimit {
@@ -29,30 +29,25 @@ export interface SetPlayerMovementLimit {
     payload: MoveLimits;
 }
 
-export interface SetPlayerLocation {
-    type: typeof Constants.setPlayerLocation;
-    left: number;
-    top: number;
+export interface SetPlayerLocationData {
+    type: typeof Constants.setPlayerLocationData;
+    payload: {
+        left: number;
+        top: number;
+        hitbox?: GameRectangle,
+        nozzleLocation?: GameLocation,
+    };
 }
 
-export interface RemovePlayerBullet {
-    type: typeof Constants.removePlayerBullet;
-}
-
-export interface PlayerDied {
-    type: typeof Constants.playerDied;
-}
-
-export interface SetPlayerPositionToSpawnPosition {
-    type: typeof Constants.setPlayerPositionToSpawnPosition;
+export interface SetPlayerBulletHitbox {
+    type: typeof Constants.setPlayerBulletHitbox;
+    hitbox: GameRectangle;
 }
 
 export type PlayerStateTypes =
-    SetPlayer |
-    SetBullet |
+    PlayerOnScreen |
+    PlayerBulletOnScreen |
     SetPlayerMovementLimit |
-    SetPlayerLocation |
-    RemovePlayerBullet |
-    PlayerDied |
-    SetPlayerPositionToSpawnPosition
+    SetPlayerLocationData |
+    SetPlayerBulletHitbox
     ;

@@ -25,13 +25,15 @@ export default function orbEnemyAngleProvider(enemy: BaseEnemy, left: number, to
         enemyLevelState,
     } = appState();
 
-    const playerShip = playerState.ship;
-
-    if (playerShip === undefined) {
+    if (!playerState.playerOnScreen) {
         return undefined;
     }
 
-    const playerHitbox = playerShip.getHitbox();
+    const playerHitbox = playerState.playerHitbox;
+
+    if (playerHitbox === undefined) {
+        return undefined;
+    }
 
     // Increase the change the orb enemy will fire down as its numbers are reduced.
     const rnd = Math.ceil(Math.random() * enemyLevelState.enemies.length / 1.5 );

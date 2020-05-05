@@ -12,15 +12,13 @@ import ImmobileLocationProvider from "../LocationProviders/ImmobileLocationProvi
 import Explosion from "../Models/Explosion";
 import ExplosionCenter from "../Particles/ExplosionCenter";
 import getPhaserLocations from "../Player/GetPhaserLocations";
-import PlayerShip from "../Player/PlayerShip";
-import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import particleProvider from "../Providers/ParticleProvider";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
 import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, removeExplosionCenter, removeParticle, setEnemies, setPhaserLocations } from "../State/EnemyLevel/Actions";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
-import { playerDied, removePlayerBullet, setPlayerLocation } from "../State/Player/Actions";
+import { setPlayerBulletOnScreen, setPlayerLocationData, setPlayerOnScreen } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { Frame } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
@@ -82,10 +80,10 @@ function draw(): void {
     enemyLevelState.explosionCenters.forEach((ec) => ec.draw());
     enemyLevelState.phaserLocations.forEach((pf) => renderFrame(pf.left, pf.top, phaserFrame));
 
-    DEBUGGING_drawPhaser();
+    // DEBUGGING_drawPhaser();
 
     // Debugging. Show the hitboxes on screen.
-    DEBUGGING_renderHitboxes();
+    // DEBUGGING_renderHitboxes();
 
     // drawGrid();
 }
@@ -108,16 +106,16 @@ function handleHitDetection() {
             const hitdetectionPlayerState = appState().playerState;
             const hittableObjectHitbox = hittableObject.getHitbox();
             // Check if the player got hit.
-            if (Guard.isPlayerAlive(hitdetectionPlayerState.ship) && debuggingState.playerIsImmortal === false) {
-                if (overlaps(hitdetectionPlayerState.ship.getHitbox(), hittableObjectHitbox)) {
+            if (hitdetectionPlayerState.playerHitbox && debuggingState.playerIsImmortal === false) {
+                if (overlaps(hitdetectionPlayerState.playerHitbox, hittableObjectHitbox)) {
                     // Player was hit. Render the explosion.
-                    handlePlayerDeath(hitdetectionPlayerState.ship);
+                    handlePlayerDeath();
                 }
             }
             // Check if the player hit something.
-            if (Guard.isPlayerBulletActive(hitdetectionPlayerState.playerBullet) && Guard.isEnemy(hittableObject)) {
-                if (overlaps(hitdetectionPlayerState.playerBullet.getHitbox(), hittableObjectHitbox)) {
-                    dispatch(removePlayerBullet());
+            if (hitdetectionPlayerState.playerBulletHitbox && Guard.isEnemy(hittableObject)) {
+                if (overlaps(hitdetectionPlayerState.playerBulletHitbox, hittableObjectHitbox)) {
+                    dispatch(setPlayerBulletOnScreen(false));
                     handleEnemyDestruction(hittableObject);
                 }
             }
@@ -172,15 +170,15 @@ function handleParticles(tick: number): void {
 function handleSelfDestruct(): void {
     const playerState = appState().playerState;
 
-    if (Guard.isPlayerAlive(playerState.ship) && appState().keyboardState.selfDestruct) {
+    if (playerState.playerOnScreen && appState().keyboardState.selfDestruct) {
         const { enemyLevelState } = appState();
         for (const enemy of enemyLevelState.enemies) {
             const center = enemy.ship.getCenterLocation();
             queueExplosionRender(center.left, center.top, enemy.ship.getExplosion());
         }
 
-        queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.ship.getExplosion());
-        handlePlayerDeath(playerState.ship);
+        queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.playerExplosion);
+        handlePlayerDeath();
         dispatch(setEnemies([]));
     }
 }
@@ -207,18 +205,17 @@ function handleEnemyDestruction(ship: BaseEnemy): void {
 
 /**
  * Handles the firing of a phaser charge.
- * @param {PlayerShip} player. Player object
  */
 function handlePhaser(): void {
     const { enemyLevelState, playerState, gameState } = appState();
 
-    if (Guard.isPlayerAlive(playerState.ship) &&
+    if (playerState.playerNozzleLocation &&
         appState().keyboardState.phraser &&
         appState().enemyLevelState.enemies.length > 0 &&
         gameState.phasers > 0 && appState().enemyLevelState.phaserLocations.length === 0) {
 
         const randomEnemy = getRandomArrayElement(enemyLevelState.enemies);
-        const playerNozzleLocation = playerState.ship.getNozzleLocation();
+        const playerNozzleLocation = playerState.playerNozzleLocation;
         const randomEnemyCenter = randomEnemy.ship.getCenterLocation();
 
         // Remove one phaser.
@@ -242,17 +239,16 @@ function handlePhaser(): void {
 
 /**
  * handles a player's death event.
- * @param {PlayerShip} player. Player object.
  */
-function handlePlayerDeath(player: PlayerShip): void {
+function handlePlayerDeath(): void {
     const { playerState } = appState();
 
-    queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, player.getExplosion());
-    dispatch(playerDied());
+    queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.playerExplosion);
+    dispatch(setPlayerOnScreen(false));
     dispatch(removeLife());
 
     const spawnLocation = getShipSpawnLocation();
-    dispatch(setPlayerLocation(spawnLocation.left, spawnLocation.top));
+    dispatch(setPlayerLocationData(spawnLocation.left, spawnLocation.top));
 }
 
 /**
@@ -282,47 +278,47 @@ export function increaseEnemySpeed(value: number): void {
 
 //#region  Debugging
 
-function DEBUGGING_renderHitboxes() {
-    const { debuggingState, playerState, enemyLevelState } = appState();
-    if (debuggingState.drawHitboxes) {
-        const hittableObjects = [
-            ...getHittableObjects(enemyLevelState),
-        ];
+// function DEBUGGING_renderHitboxes() {
+//     const { debuggingState, playerState, enemyLevelState } = appState();
+//     if (debuggingState.drawHitboxes) {
+//         const hittableObjects = [
+//             ...getHittableObjects(enemyLevelState),
+//         ];
 
-        // Add player if defined.
-        if (playerState.ship) {
-            hittableObjects.push(playerState.ship);
-        }
+//         // Add player if defined.
+//         if (playerState.ship) {
+//             hittableObjects.push(playerState.ship);
+//         }
 
-        // Add bullet if defined.
-        if (playerState.playerBullet) {
-            hittableObjects.push(playerState.playerBullet);
-        }
+//         // Add bullet if defined.
+//         if (playerState.playerBullet) {
+//             hittableObjects.push(playerState.playerBullet);
+//         }
 
-        // Draw a circle around each object using the
-        // coordiates and radius of the hitbox.
-        for (const hittableObject of hittableObjects) {
-            const hitbox = hittableObject.getHitbox();
-            const ctx = ctxProvider();
-            ctx.beginPath();
-            ctx.strokeStyle = "white";
-            ctx.rect(hitbox.left, hitbox.top, hitbox.right - hitbox.left, hitbox.bottom - hitbox.top);
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.closePath();
-        }
-    }
-}
+//         // Draw a circle around each object using the
+//         // coordiates and radius of the hitbox.
+//         for (const hittableObject of hittableObjects) {
+//             const hitbox = hittableObject.getHitbox();
+//             const ctx = ctxProvider();
+//             ctx.beginPath();
+//             ctx.strokeStyle = "white";
+//             ctx.rect(hitbox.left, hitbox.top, hitbox.right - hitbox.left, hitbox.bottom - hitbox.top);
+//             ctx.lineWidth = 2;
+//             ctx.stroke();
+//             ctx.closePath();
+//         }
+//     }
+// }
 
 /**
  * Debugging! Draw a phaser beam towards an enemy.
  */
-function DEBUGGING_drawPhaser(): void {
-    const { debuggingState: debugging, playerState: player, enemyLevelState } = appState();
-    if (debugging.renderPhaser && Guard.isPlayerAlive(player.ship) && enemyLevelState.enemies.length > 0) {
-        const enemy = enemyLevelState.enemies[0];
-        getPhaserLocations(player.ship.getNozzleLocation().left, player.ship.getNozzleLocation().top, enemy.ship.getCenterLocation().left, enemy.ship.getCenterLocation().top, pixelSize);
-    }
-}
+// function DEBUGGING_drawPhaser(): void {
+//     const { debuggingState: debugging, playerState: player, enemyLevelState } = appState();
+//     if (debugging.renderPhaser && Guard.isPlayerAlive(player.ship) && enemyLevelState.enemies.length > 0) {
+//         const enemy = enemyLevelState.enemies[0];
+//         getPhaserLocations(.getNozzleLocation().left, player.ship.getNozzleLocation().top, enemy.ship.getCenterLocation().left, enemy.ship.getCenterLocation().top, pixelSize);
+//     }
+// }
 
 //#endregion

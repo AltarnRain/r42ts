@@ -7,12 +7,15 @@
 import { angles } from "../Constants/Angles";
 import { playerBulletSpeed } from "../Constants/BulletSpeeds";
 import GameLoop from "../GameLoop";
-import Guard from "../Guard";
+import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
 import AcceleratingLocationProvider from "../LocationProviders/AcceleratingLocationProvider";
 import PlayerBullet from "../Player/PlayerBullet";
+import { getPlayerFrame } from "../Player/PlayerFrames";
+import renderFrame from "../Render/RenderFrame";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import { removePlayerBullet, setBullet } from "../State/Player/Actions";
+import { setPlayerBulletOnScreen } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
+import Mutators from "../Utility/FrameMutators";
 
 /**
  * Module:          PlayerRunner
@@ -23,6 +26,8 @@ export default function playerRunner(): void {
     updateState();
     GameLoop.registerDraw(draw);
 }
+
+let playerBullet: PlayerBullet | undefined;
 
 /**
  * Updates the player state.
@@ -37,20 +42,22 @@ function updateState(): void {
     }
 
     const { playerState, keyboardState } = appState();
-    playerState.ship?.updateState();
-    playerState.playerBullet?.updateState();
+    movePlayerHandler(10);
+    playerBullet?.updateState();
 
     // Remove objects no longer required.
-    if (playerState.playerBullet?.traveling() === false) {
-        dispatch(removePlayerBullet());
+    if (playerBullet?.traveling() === false) {
+        playerBullet = undefined;
+        dispatch(setPlayerBulletOnScreen(false));
     }
 
     // Fire new bullet.
-    if (Guard.isPlayerAlive(playerState.ship) && keyboardState.fire && playerState.playerBullet === undefined) {
-        const nozzleLocation = playerState.ship.getNozzleLocation();
+    if (playerState.playerNozzleLocation && keyboardState.fire && !playerState.playerBulletOnScreen) {
+        const nozzleLocation = playerState.playerNozzleLocation;
 
         const locationProvider = new AcceleratingLocationProvider(nozzleLocation.left, nozzleLocation.top, playerBulletSpeed, angles.up, 1);
-        dispatch(setBullet(new PlayerBullet(locationProvider, getTwoPixelBullet)));
+        playerBullet = new PlayerBullet(locationProvider, getTwoPixelBullet);
+        dispatch(setPlayerBulletOnScreen(true));
     }
 
     // Self destruct and firing a phaser are handled in the EnemeyLevelRunner. That's the only time either can be used.
@@ -61,6 +68,9 @@ function updateState(): void {
  */
 function draw(): void {
     const { playerState } = appState();
-    playerState.ship?.draw();
-    playerState.playerBullet?.draw();
+    if (playerState.playerOnScreen) {
+        renderFrame(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.playerFrame);
+    }
+
+    playerBullet?.draw();
 }

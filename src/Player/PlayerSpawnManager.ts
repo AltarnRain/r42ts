@@ -5,17 +5,15 @@
  */
 
 import GameLoop from "../GameLoop";
-import Guard from "../Guard";
 import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { setPlayer, setPlayerLocation, setPlayerMovementLimit } from "../State/Player/Actions";
+import { setPlayerLocationData, setPlayerMovementLimit, setPlayerOnScreen } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types";
 import { getFrameReturner } from "../Utility/Frame";
 import { getLocation } from "../Utility/Location";
 import PlayerFormationPart from "./PlayerFormationPart";
 import { getPlayerFormationFrames } from "./PlayerFrames";
-import PlayerShip from "./PlayerShip";
 
 /**
  * Module:          PlayerSpawnManager
@@ -52,7 +50,7 @@ let formationInProgress = false;
 export default function playerSpawnManager(): void {
     const { playerState, enemyLevelState: levelState } = appState();
 
-    if (!Guard.isPlayerAlive(playerState.ship) && formationInProgress === false) {
+    if (!playerState.playerOnScreen && formationInProgress === false) {
         if (levelState.enemies.length > 0) { // Enemies in the level
             if (levelState.particles.length === 0) { // wait till there's no particles.
                 setupFormation(playerState.playerLeftLocation, playerState.playerTopLocation, "slow", "sideways"); // Start the slow formation where the player has control.
@@ -129,7 +127,7 @@ function createParticles(): void {
  */
 function setupFormation(targetLeftLocation: number, targetTopLocation: number, speed: "fast" | "slow", limit: MoveLimits): void {
     formationSpeed = speed;
-    dispatch(setPlayerLocation(targetLeftLocation, targetTopLocation));
+    dispatch(setPlayerLocationData(targetLeftLocation, targetTopLocation, undefined, undefined));
     createParticles();
 
     if (speed === "fast") {
@@ -161,7 +159,7 @@ function updateState(): void {
     }
 
     if (allMovingParts.every((p) => p.traveling() === false)) {
-        dispatch(setPlayer(new PlayerShip()));
+        dispatch(setPlayerOnScreen(true));
         allMovingParts = [];
         formationInProgress = false;
     }

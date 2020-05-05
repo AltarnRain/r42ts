@@ -9,35 +9,23 @@
  * Responsibility:  Action production functions for the PlayerState.
  */
 
-import PlayerBullet from "../../Player/PlayerBullet";
-import PlayerShip from "../../Player/PlayerShip";
+import { GameLocation } from "../../Models/GameLocation";
+import { GameRectangle } from "../../Models/GameRectangle";
 import { MoveLimits } from "../../Types";
 import Constants from "./Constants";
-import { PlayerDied, RemovePlayerBullet, SetBullet, SetPlayer, SetPlayerLocation, SetPlayerMovementLimit, SetPlayerPositionToSpawnPosition } from "./Types";
+import { PlayerBulletOnScreen, PlayerOnScreen, SetPlayerLocationData, SetPlayerMovementLimit, SetPlayerBulletHitbox } from "./Types";
 
-export function setPlayer(ship: PlayerShip): SetPlayer {
+export function setPlayerOnScreen(playerOnScreen: boolean): PlayerOnScreen {
     return {
-        type: Constants.setPlayer,
-        payload: ship,
+        type: Constants.playerOnScreen,
+        playerOnScreen,
     };
 }
 
-export function setBullet(bullet: PlayerBullet): SetBullet {
+export function setPlayerBulletOnScreen(playerBulletOnScreen: boolean): PlayerBulletOnScreen {
     return {
-        type: Constants.setBullet,
-        payload: bullet,
-    };
-}
-
-export function removePlayerBullet(): RemovePlayerBullet {
-    return {
-        type: Constants.removePlayerBullet,
-    };
-}
-
-export function playerDied(): PlayerDied {
-    return {
-        type: Constants.playerDied
+        type: Constants.playerBulletOnScreen,
+        playerBulletOnScreen,
     };
 }
 
@@ -48,16 +36,21 @@ export function setPlayerMovementLimit(moveLimit: MoveLimits): SetPlayerMovement
     };
 }
 
-export function setPlayerLocation(left: number, top: number): SetPlayerLocation {
+export function setPlayerLocationData(left: number, top: number, hitbox?: GameRectangle, nozzleLocation?: GameLocation): SetPlayerLocationData {
     return {
-        type: Constants.setPlayerLocation,
-        left,
-        top
+        type: Constants.setPlayerLocationData,
+        payload: {
+            left,
+            top,
+            hitbox,
+            nozzleLocation
+        }
     };
 }
 
-export function  setPlayerPositionToSpawnPosition(): SetPlayerPositionToSpawnPosition {
+export function setPlayerBulletHitbox(hitbox: GameRectangle): SetPlayerBulletHitbox {
     return {
-        type: Constants.setPlayerPositionToSpawnPosition
+        type: Constants.setPlayerBulletHitbox,
+        hitbox
     };
 }

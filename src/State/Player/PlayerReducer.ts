@@ -5,7 +5,12 @@
  */
 
 import produce from "immer";
+import getPlayerExplosion from "../../Player/PlayerExplosion";
+import { getPlayerFrame } from "../../Player/PlayerFrames";
+import dimensionProvider from "../../Providers/DimensionProvider";
 import getShipSpawnLocation from "../../Providers/PlayerSpawnLocationProvider";
+import { getFrameDimensions, getFrameHitbox } from "../../Utility/Frame";
+import Mutators from "../../Utility/FrameMutators";
 import Constants from "./Constants";
 import PlayerState from "./PlayerState";
 import { PlayerStateTypes } from "./Types";
@@ -14,6 +19,12 @@ import { PlayerStateTypes } from "./Types";
  * Module:          playerReducer
  * Responsibility:  Handles the player's state.
  */
+
+const {
+    pixelSize,
+} = dimensionProvider();
+
+const shipDimensions = getFrameDimensions(getPlayerFrame(), pixelSize);
 
 /**
  * playerReducer
@@ -24,29 +35,24 @@ import { PlayerStateTypes } from "./Types";
 export default function playerReducer(state: PlayerState = initState(), action: PlayerStateTypes): PlayerState {
     return produce(state, (draft) => {
         switch (action.type) {
-            case Constants.setPlayer:
-                draft.ship = action.payload;
+            case Constants.playerBulletOnScreen:
+                draft.playerBulletOnScreen = action.playerBulletOnScreen;
                 break;
-            case Constants.setBullet:
-                draft.playerBullet = action.payload;
+            case Constants.playerOnScreen:
+                draft.playerOnScreen = action.playerOnScreen;
                 break;
             case Constants.setPlayerMovementLimit:
                 draft.moveLimit = action.payload;
                 break;
-            case Constants.setPlayerLocation:
-                draft.playerLeftLocation = action.left;
-                draft.playerTopLocation = action.top;
+            case Constants.setPlayerLocationData:
+                draft.playerLeftLocation = action.payload.left;
+                draft.playerTopLocation = action.payload.top;
+                draft.playerHitbox = action.payload.hitbox;
+                draft.playerNozzleLocation = action.payload.nozzleLocation;
                 break;
-            case Constants.removePlayerBullet:
-                draft.playerBullet = undefined;
-                break;
-            case Constants.playerDied:
-                draft.ship = undefined;
-                break;
-            case Constants.setPlayerPositionToSpawnPosition:
-                const spawnLocation = getShipSpawnLocation();
-                draft.playerLeftLocation = spawnLocation.left;
-                draft.playerTopLocation = spawnLocation.top;
+
+            case Constants.setPlayerBulletHitbox:
+                draft.playerBulletHitbox = action.hitbox;
                 break;
         }
     });
@@ -57,13 +63,26 @@ export default function playerReducer(state: PlayerState = initState(), action: 
  * @returns {PlayerState}
  */
 function initState(): PlayerState {
+    const playerExplosion = getPlayerExplosion();
+    Mutators.Frame.convertHexToCGA(playerExplosion.explosionCenterFrame);
+
+    playerExplosion.particleFrames.forEach((p) => Mutators.Frame.convertHexToCGA(p));
 
     const spawnLocation = getShipSpawnLocation();
+
+    const playerFrame = getPlayerFrame();
+    Mutators.Frame.convertHexToCGA(playerFrame);
+
     return {
-        ship: undefined,
-        playerBullet: undefined,
+        playerOnScreen: false,
+        playerBulletOnScreen: false,
         moveLimit: "none",
         playerLeftLocation: spawnLocation.left,
         playerTopLocation: spawnLocation.top,
+        playerBulletHitbox: { left: 0, top: 0, right: 0, bottom: 0 },
+        playerHitbox: { left: 0, top: 0, right: 0, bottom: 0 },
+        playerNozzleLocation: { left: 0, top: 0 },
+        playerExplosion,
+        playerFrame
     };
 }

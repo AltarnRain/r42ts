@@ -22,11 +22,14 @@ export default function orbsToFire(orbs: BaseEnemy[]): BaseEnemy[] {
         playerState,
     } = appState();
 
-    if (playerState.ship === undefined) {
+    if (!playerState.playerOnScreen) {
         return [];
     }
 
-    const playerhitbox = playerState.ship.getHitbox();
+    const playerhitbox = playerState.playerHitbox;
+    if (playerhitbox === undefined) {
+        return [];
+    }
 
     // To determine which enemies have the best change of hitting
     // the player we calculate difference between the angle at which the

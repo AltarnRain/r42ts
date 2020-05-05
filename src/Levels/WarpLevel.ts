@@ -8,15 +8,14 @@ import CGAColors from "../Constants/CGAColors";
 import WarpLevelConstants from "../Constants/WarpLevelConstants";
 import GameLoop from "../GameLoop";
 import { drawBackground, drawWarpBackground } from "../GameScreen/StaticRenders";
-import Guard from "../Guard";
 import ILevel from "../Interfaces/ILevel";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { setPlayerMovementLimit, setPlayerPositionToSpawnPosition } from "../State/Player/Actions";
+import { setWarpGamteComplexity } from "../State/Game/Actions";
+import { setPlayerMovementLimit } from "../State/Player/Actions";
 import { appState, appStore, dispatch } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
 import { coinFlip } from "../Utility/Lib";
-import { setWarpGamteComplexity } from "../State/Game/Actions";
 
 /**
  * Module:          WarpLevel
@@ -54,14 +53,12 @@ export default class WarpLevel implements ILevel {
         // the player to traverse the warp level.
         // I'm doing this in a subscription because the PlayerSpawnManager will
         // set a movement limit on the player depending on the game state.
-        if (Guard.isPlayerAlive(playerState.ship) && playerState.moveLimit !== "forceup") {
+        if (playerState.playerOnScreen && playerState.moveLimit !== "forceup") {
             dispatch(setPlayerMovementLimit("forceup"));
         }
     });
 
     public start(): void {
-
-        dispatch(setPlayerPositionToSpawnPosition());
 
         // Register the background draw function so it runs in the game loop.
         this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(drawBackground));

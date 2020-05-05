@@ -46,7 +46,7 @@ export default abstract class BaseEnemyLevel implements ILevel {
     private storeSub = appStore().subscribe(() => {
         const { playerState } = appState();
 
-        if (Guard.isPlayerAlive(playerState.ship) && playerState.moveLimit !== "none") {
+        if (playerState.playerOnScreen && playerState.moveLimit !== "none") {
             dispatch(setPlayerMovementLimit("none"));
         }
     });
