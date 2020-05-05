@@ -9,7 +9,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import { setPlayerLocation } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { getFrameDimensions } from "../Utility/Frame";
-import { getAngle } from "../Utility/Geometry";
+import { getAngle, getNextX, getNextY } from "../Utility/Geometry";
 import { fallsWithin, getLocation } from "../Utility/Location";
 
 /**
@@ -34,6 +34,10 @@ export function movePlayerHandler(speed: number): void {
 
     const localKeyboardState = { ...keyboardState };
 
+    // By default the speed for x and y is the speed passed to the movement
+    const speedX = speed;
+    let speedY = speed;
+
     // Certain levels limit the movement of the player.
     // We'll use a fresh keyboardState object and make some adjustments.
     switch (playerState.moveLimit) {
@@ -48,6 +52,7 @@ export function movePlayerHandler(speed: number): void {
             // Used when the player travels through a warp gate.
             localKeyboardState.up = true;
             localKeyboardState.down = false;
+            speedY = 4;
             break;
         case "none":
         // Make not changes and allow 360 degrees of freedown
@@ -57,9 +62,12 @@ export function movePlayerHandler(speed: number): void {
 
     const angle = getAngle(localKeyboardState);
     if (angle !== -1) {
-        const newLocation = getLocation(playerState.playerLeftLocation, playerState.playerTopLocation, angle, speed);
-        if (fallsWithin(newLocation.left, newLocation.top, gameField.top, gameField.bottom - shipDimensions.height, gameField.left, gameField.right - shipDimensions.width)) {
-            dispatch(setPlayerLocation(newLocation.left, newLocation.top));
+
+        const newX = getNextX(angle, speedX, playerState.playerLeftLocation);
+        const newY = getNextY(angle, speedY, playerState.playerTopLocation);
+
+        if (fallsWithin(newX, newY, gameField.top, gameField.bottom - shipDimensions.height, gameField.left, gameField.right - shipDimensions.width)) {
+            dispatch(setPlayerLocation(newX, newY));
         }
     }
 }

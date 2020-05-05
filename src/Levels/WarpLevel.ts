@@ -50,8 +50,12 @@ export default class WarpLevel implements ILevel {
     private storeSub = appStore().subscribe(() => {
         const { playerState } = appState();
 
-        if (Guard.isPlayerAlive(playerState.ship) && playerState.moveLimit !== "none") {
-            dispatch(setPlayerMovementLimit("none"));
+        // Check when the player is alive and set its movement limit to force up to force
+        // the player to traverse the warp level.
+        // I'm doing this in a subscription because the PlayerSpawnManager will
+        // set a movement limit on the player depending on the game state.
+        if (Guard.isPlayerAlive(playerState.ship) && playerState.moveLimit !== "forceup") {
+            dispatch(setPlayerMovementLimit("forceup"));
         }
     });
 
