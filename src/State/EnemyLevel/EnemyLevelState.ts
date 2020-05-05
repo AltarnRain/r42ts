@@ -5,12 +5,10 @@
  */
 
 import { GameLocation } from "../../Models/GameLocation";
-import Particle from "../../Particles/Particle";
-import { Frame } from "../../Types";
+import { ParticleState } from "../Player/ParticleState";
 import { Enemy } from "./Enemy";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 import { ExplosionData } from "./ExplosionData";
-import { ParticleState } from "../Player/ParticleState";
 
 /**
  * Module:          EnemyLevelState
@@ -24,7 +22,10 @@ export default interface EnemyLevelState {
      */
     enemies: Enemy[];
 
-    particles: Particle[];
+    /**
+     * Enemy bullets.
+     */
+    bullets: ParticleState[];
 
     /**
      * Shrapnell particles.

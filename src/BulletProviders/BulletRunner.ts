@@ -5,13 +5,12 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
-import AcceleratingLocationProvider from "../LocationProviders/AcceleratingLocationProvider";
-import BulletParticle from "../Particles/BulletParticle";
+import { StateProviders } from "../Particles/StateProviders";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { addParticle, setEnemyFireTick } from "../State/EnemyLevel/Actions";
+import { addBullet, setEnemyFireTick } from "../State/EnemyLevel/Actions";
 import { appState, dispatch } from "../State/Store";
 import { FireCheckFunction, Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
-import { getFrameReturner } from "../Utility/Frame";
+import Mutators from "../Utility/FrameMutators";
 
 /**
  * Module:          StraightDownBulletProvider
@@ -42,6 +41,7 @@ export default class BulletRunner {
      * The color of the bullet fired.
      */
     private bulletColor: string;
+
     private shipsToFire: ShipsToFireFunction;
 
     constructor(
@@ -56,6 +56,8 @@ export default class BulletRunner {
         this.bulletFrame = getBulletFrame();
         this.fireCheck = fireCheck;
         this.shipsToFire = shipsToFire;
+
+        Mutators.Frame.setColor(this.bulletFrame, this.bulletColor);
     }
 
     public getBullets(tick: number): void {
@@ -98,11 +100,16 @@ export default class BulletRunner {
                     const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - pixelSize;
                     const top = hitbox.bottom + pixelSize;
 
-                    const locationProvider = new AcceleratingLocationProvider(left, top, this.speed, enemyFireAngle, 1);
-                    const bullet = new BulletParticle(locationProvider, ship, this.bulletColor, getFrameReturner(this.bulletFrame));
+                    const bullet = StateProviders.getParticleState(
+                        left,
+                        top,
+                        this.speed,
+                        enemyFireAngle,
+                        this.bulletFrame,
+                        1
+                    );
 
-                    // TODO: Add bullet state.
-                    // dispatch(addParticle(bullet));
+                    dispatch(addBullet(bullet));
                     dispatch(setEnemyFireTick(ship, tick));
                 }
             }

@@ -15,7 +15,7 @@ import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
-import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, setEnemies, setExplosionCenters, setPhaserLocations, setShrapnellState } from "../State/EnemyLevel/Actions";
+import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, setEnemies, setExplosionCenters, setPhaserLocations, setShrapnellState, setBulletState } from "../State/EnemyLevel/Actions";
 import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
 import { setPlayerBulletState, setPlayerLocationData, setPlayerOnScreen } from "../State/Player/Actions";
@@ -65,6 +65,7 @@ function updateState(tick: number) {
     handleSelfDestruct(tick);
     handlePhaser(tick);
     handleShrapnell();
+    handleBullets();
     handleEnemies(tick);
     handleExplosionCenters(tick);
     handleHitDetection(tick);
@@ -89,6 +90,10 @@ function draw(): void {
 
     for (const shrapnell of enemyLevelState.shrapnell) {
         renderFrame(shrapnell.left, shrapnell.top, shrapnell.coloredFrame);
+    }
+
+    for (const bullet of enemyLevelState.bullets) {
+        renderFrame(bullet.left, bullet.top, bullet.coloredFrame);
     }
 
     enemyLevelState.phaserLocations.forEach((pf) => renderFrame(pf.left, pf.top, phaserFrame));
@@ -168,19 +173,31 @@ function handleEnemies(tick: number): void {
  */
 function handleShrapnell(): void {
     const particles = appState().enemyLevelState.shrapnell;
-    const newState: ParticleState[] = [];
+    const newState = getParticleState(particles);
 
+    dispatch(setShrapnellState(newState));
+}
+
+function getParticleState(particles: ParticleState[]) {
+
+    const newState: ParticleState[] = [];
     for (const particle of particles) {
         const newSpeed = particle.speed * particle.acceletation;
         const newLocation = getLocation(particle.left, particle.top, particle.angle, newSpeed);
-
         if (fallsWithinGameField(newLocation.left, newLocation.top)) {
             const particleState = StateProviders.getParticleState(newLocation.left, newLocation.top, newSpeed, particle.angle, particle.coloredFrame, particle.acceletation);
             newState.push(particleState);
         }
     }
 
-    dispatch(setShrapnellState(newState));
+    return newState;
+}
+
+function handleBullets(): void {
+    const bullets = appState().enemyLevelState.bullets;
+    const newState = getParticleState(bullets);
+
+    dispatch(setBulletState(newState));
 }
 
 /**

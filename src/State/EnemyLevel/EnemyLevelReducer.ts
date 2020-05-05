@@ -74,6 +74,12 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
             case Constants.setExplosionCenters:
                 draft.explosionCenters = action.explosionCenters;
                 break;
+            case Constants.addBullet:
+                draft.bullets.push(action.bullet);
+                break;
+            case Constants.setBulletState:
+                draft.bullets = action.bullets;
+                break;
         }
     });
 
@@ -89,6 +95,6 @@ function initState(): EnemyLevelState {
         fireInterval: 0,
         explosionCenters: [],
         explosionData: undefined,
-        particles: [],
+        bullets: [],
     };
 }

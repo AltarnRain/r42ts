@@ -5,8 +5,6 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
-import Guard from "../Guard";
-import BulletParticle from "../Particles/BulletParticle";
 import { appState } from "../State/Store";
 
 /**
@@ -29,7 +27,7 @@ export default function orbFireCheck(enemy: BaseEnemy): boolean {
 
     // Save cast. The typeguard ensures only BulletParticles are returned but TypeScript isn't
     // clever enough (yet) to understand this.
-    const enemyBullets = enemyLevelState.particles.filter((p) => Guard.isEnemyBullet(p)) as BulletParticle[];
+    const enemyBullets = enemyLevelState.bullets;
 
     if (enemyBullets.length === 0) {
         // No bullets, can always fire.
@@ -37,10 +35,10 @@ export default function orbFireCheck(enemy: BaseEnemy): boolean {
     } else if (enemyBullets.length < 5) {
         if (enemyLevelState.enemies.length >= 5) {
             // if there's 5 enemies or more, an enemy is limited to a single bullet.
-            canFire = enemyBullets.filter((p) => p.isOwner(enemy)).length === 0;
+            // canFire = enemyBullets.filter((p) => p.isOwner(enemy)).length === 0;
         } else if (enemyLevelState.enemies.length < 5) {
             // if there's 5 enemies or more, an enemy is limited to a single bullet.
-            canFire = enemyBullets.filter((p) => p.isOwner(enemy)).length < Math.ceil(5 / enemyLevelState.enemies.length);
+            // canFire = enemyBullets.filter((p) => p.isOwner(enemy)).length < Math.ceil(5 / enemyLevelState.enemies.length);
         } else {
             canFire = false;
         }

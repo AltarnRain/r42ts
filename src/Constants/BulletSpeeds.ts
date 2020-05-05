@@ -10,5 +10,5 @@
  */
 
 export const playerBulletSpeed = 42;
-export const robotBulletSpeed = 13;
+export const robotBulletSpeed = 7;
 export const orbBulletSpeed = 13;

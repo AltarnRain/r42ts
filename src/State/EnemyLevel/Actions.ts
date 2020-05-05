@@ -16,7 +16,7 @@ import { ParticleState } from "../Player/ParticleState";
 import Constants from "./Constants";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 import { ExplosionData } from "./ExplosionData";
-import { AddExplosionCenter, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetEnemies, SetEnemyFireTick, SetExplosionData, SetFireInterval, SetPhaserLocations, SetParticleState as SetShrapnellState } from "./Types";
+import { AddExplosionCenter, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetEnemies, SetEnemyFireTick, SetExplosionData, SetFireInterval, SetPhaserLocations, SetParticleState as SetShrapnellState, AddBullet, SetBulletState } from "./Types";
 
 export function resetLevelState(): ResetLevelState {
     return {
@@ -107,5 +107,19 @@ export function setExplosionCenters(explosionCenters: ExplosionCenterState[]) {
     return {
         type: Constants.setExplosionCenters,
         explosionCenters
+    };
+}
+
+export function addBullet(bullet: ParticleState): AddBullet {
+    return {
+        type: Constants.addBullet,
+        bullet,
+    }
+}
+
+export function setBulletState(bullets: ParticleState[]): SetBulletState {
+    return {
+        type: Constants.setBulletState,
+        bullets,
     };
 }

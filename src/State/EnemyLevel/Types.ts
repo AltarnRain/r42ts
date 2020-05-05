@@ -83,6 +83,16 @@ export interface SetExplosionCenters {
     explosionCenters: ExplosionCenterState[];
 }
 
+export interface AddBullet {
+    type: typeof Constants.addBullet;
+    bullet: ParticleState;
+}
+
+export interface SetBulletState {
+    type: typeof Constants.setBulletState;
+    bullets: ParticleState[];
+}
+
 export type EnemyLevelTypes =
     ResetLevelState |
     SetEnemies |
@@ -96,5 +106,7 @@ export type EnemyLevelTypes =
     SetFireInterval |
     SetEnemyFireTick |
     SetExplosionData |
-    SetExplosionCenters
+    SetExplosionCenters |
+    AddBullet |
+    SetBulletState
     ;

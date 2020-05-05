@@ -23,6 +23,8 @@ namespace Constants {
     export const setEnemyFireTick = "setEnemyFireTick";
     export const setExplosionData = "setExplosionData";
     export const setExplosionCenters = "setExplosionCenters";
+    export const addBullet = "addBullet";
+    export const setBulletState = "setBulletState";
 }
 
 export default Constants;
