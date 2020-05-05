@@ -17,6 +17,7 @@ import { setPlayerBulletState } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { getFrameDimensions } from "../Utility/Frame";
 import { fallsWithin, getLocation } from "../Utility/Location";
+import { ParticleState } from "../State/Player/ParticleState";
 
 /**
  * Module:          PlayerRunner
@@ -55,7 +56,7 @@ function updateState(): void {
         const nextLoction = getLocation(bullet.left, bullet.top, bullet.angle, bullet.speed);
 
         if (fallsWithin(nextLoction.left, nextLoction.top, gameField.top, gameField.bottom, 0, gameField.right)) {
-            const newState = StateProviders.getParticleState(nextLoction.left, nextLoction.top, playerBulletSpeed, angles.up, playerBulletFrame, 1, -0.5 * pixelSize, -0.5 * pixelSize);
+            const newState = getPlayerBullet(nextLoction.left, nextLoction.top);
             dispatch(setPlayerBulletState(newState));
         } else {
             dispatch(setPlayerBulletState(undefined));
@@ -65,9 +66,13 @@ function updateState(): void {
     // Fire new bullet.
     if (playerState.playerNozzleLocation !== undefined && keyboardState.fire && playerState.playerBulletState === undefined) {
         const nozzleLocation = playerState.playerNozzleLocation;
-        const bullet = StateProviders.getParticleState(nozzleLocation.left, nozzleLocation.top, playerBulletSpeed, angles.up, playerBulletFrame, 1, -0.5 * pixelSize, -0.5 * pixelSize);
+        const bullet = getPlayerBullet(nozzleLocation.left, nozzleLocation.top);
         dispatch(setPlayerBulletState(bullet));
     }
+}
+
+function getPlayerBullet(left: number, top: number): ParticleState {
+    return StateProviders.getParticleState(left, top, playerBulletSpeed, angles.up, playerBulletFrame, 1, -0.5 * pixelSize, -0.5 * pixelSize);
 }
 
 /**
