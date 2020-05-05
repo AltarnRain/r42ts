@@ -24,7 +24,6 @@ namespace Constants {
     export const addPhaser = "addPhaser";
     export const removePhaser = "removePhaser";
     export const setPause = "setPause";
-    export const increaseWarpLevelComplexity = "increaseWarpLevelComplexity";
     export const setWarpLevelComplexity = "setWarpLevelComplexity";
 
 }

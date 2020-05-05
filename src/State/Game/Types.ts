@@ -65,10 +65,6 @@ export interface SetPause {
     payload: boolean;
 }
 
-export interface IncreaseWarpLevelComplexity {
-    type: typeof Constants.increaseWarpLevelComplexity;
-}
-
 export interface SetWarpGateComplexity {
     type: typeof Constants.setWarpLevelComplexity;
     complexity: WarpLevelComplexity;
@@ -87,6 +83,5 @@ export type GameStateTypes =
     NextLevel |
     AddLifeAndPhaser |
     SetPause |
-    IncreaseWarpLevelComplexity |
     SetWarpGateComplexity
     ;

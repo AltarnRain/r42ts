@@ -69,15 +69,11 @@ export default function gameStateReducer(state: GameState = initState(), action:
             case Constants.setPause:
                 draft.pause = action.payload;
                 break;
-            case Constants.increaseWarpLevelComplexity:
-                draft.warpLevelComplexity += 1;
-                break;
             case Constants.setWarpLevelComplexity:
-                draft.warpLevelComplexity = action.complexity;
+                draft.warpLevelSteps = getWarpGateComplexity(action.complexity);
                 break;
         }
     });
-
 }
 
 /**
@@ -92,6 +88,5 @@ function initState(): GameState {
         phasers: 0,
         pause: false,
         warpLevelSteps: undefined,
-        warpLevelComplexity: 0,
     };
 }

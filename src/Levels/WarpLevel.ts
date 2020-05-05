@@ -16,6 +16,7 @@ import { setPlayerMovementLimit, setPlayerPositionToSpawnPosition } from "../Sta
 import { appState, appStore, dispatch } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
 import { coinFlip } from "../Utility/Lib";
+import { setWarpGamteComplexity } from "../State/Game/Actions";
 
 /**
  * Module:          WarpLevel
@@ -64,6 +65,8 @@ export default class WarpLevel implements ILevel {
         // Determine which additional color next to white the warp background will have.
         const colorIndex = Math.ceil(Math.random() * backgroundColor.length - 1);
         const additionalColor = backgroundColor[colorIndex];
+
+        dispatch(setWarpGamteComplexity(0));
 
         const {
             gameState

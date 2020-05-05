@@ -13,10 +13,11 @@ import ctxProvider from "./Providers/CtxProvider";
 import dimensionProvider from "./Providers/DimensionProvider";
 import playerRunner from "./Runners/PlayerRunner";
 import { hitboxesOn, playerMortality } from "./State/Debugging/Actions";
-import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers } from "./State/Game/Actions";
+import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers, setWarpGamteComplexity } from "./State/Game/Actions";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
 import { getURLQueryKVPs } from "./Utility/Lib";
+import { WarpLevelComplexity } from "./State/Game/WarpLevelTypes";
 
 /**
  * Module:          Index
@@ -85,6 +86,7 @@ window.onload = () => {
                 increaseScore: (n: number) => dispatch(increaseScore(n)),
                 addPhaser: () => dispatch(addPhaser()),
                 showHitboxes: (b: boolean) => dispatch(hitboxesOn(b)),
+                setWarpLevelComplexity: (n: WarpLevelComplexity) => dispatch(setWarpGamteComplexity(n)),
             };
 
         } else if (showCanvas) {
