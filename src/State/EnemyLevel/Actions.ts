@@ -12,10 +12,11 @@
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import { GameLocation } from "../../Models/GameLocation";
 import Particle from "../../Particles/Particle";
+import { ParticleState } from "../Player/ParticleState";
 import Constants from "./Constants";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 import { ExplosionData } from "./ExplosionData";
-import { AddExplosionCenter, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, RemoveParticle, ResetLevelState, SetEnemies, SetEnemyFireTick, SetExplosionData, SetFireInterval, SetPhaserLocations } from "./Types";
+import { AddExplosionCenter, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetEnemies, SetEnemyFireTick, SetExplosionData, SetFireInterval, SetPhaserLocations, SetParticleState as SetShrapnellState } from "./Types";
 
 export function resetLevelState(): ResetLevelState {
     return {
@@ -30,24 +31,24 @@ export function setEnemies(enemies: BaseEnemy[]): SetEnemies {
     };
 }
 
-export function addParticle(particle: Particle): AddParticle {
+export function addParticle(particle: ParticleState): AddParticle {
     return {
         type: Constants.addParticle,
-        payload: particle,
+        particle,
     };
 }
 
-export function addParticles(particles: Particle[]): AddParticles {
+export function addParticles(particles: ParticleState[]): AddParticles {
     return {
         type: Constants.addParticles,
-        payload: particles,
+        particles,
     };
 }
 
-export function removeParticle(particle: Particle): RemoveParticle {
+export function setShrapnellState(shrapnell: ParticleState[]): SetShrapnellState {
     return {
-        type: Constants.removeParticle,
-        payload: particle,
+        type: Constants.setShrapnellState,
+        shrapnell,
     };
 }
 

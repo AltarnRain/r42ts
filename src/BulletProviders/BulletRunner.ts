@@ -101,7 +101,8 @@ export default class BulletRunner {
                     const locationProvider = new AcceleratingLocationProvider(left, top, this.speed, enemyFireAngle, 1);
                     const bullet = new BulletParticle(locationProvider, ship, this.bulletColor, getFrameReturner(this.bulletFrame));
 
-                    dispatch(addParticle(bullet));
+                    // TODO: Add bullet state.
+                    // dispatch(addParticle(bullet));
                     dispatch(setEnemyFireTick(ship, tick));
                 }
             }

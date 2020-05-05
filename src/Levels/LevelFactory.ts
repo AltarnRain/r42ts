@@ -47,7 +47,7 @@ export function levelFactory(level: number): ILevel {
  */
 function clearedEnemies(): boolean {
     const { enemyLevelState: levelState } = appState();
-    if (levelState.enemies.length === 0 && levelState.particles.length === 0) {
+    if (levelState.enemies.length === 0 && levelState.shrapnell.length === 0) {
         return true;
     }
 

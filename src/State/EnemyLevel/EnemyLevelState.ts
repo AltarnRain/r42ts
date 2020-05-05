@@ -10,6 +10,7 @@ import { Frame } from "../../Types";
 import { Enemy } from "./Enemy";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 import { ExplosionData } from "./ExplosionData";
+import { ParticleState } from "../Player/ParticleState";
 
 /**
  * Module:          EnemyLevelState
@@ -23,10 +24,12 @@ export default interface EnemyLevelState {
      */
     enemies: Enemy[];
 
-    /**
-     * Particles travelling on the screen.
-     */
     particles: Particle[];
+
+    /**
+     * Shrapnell particles.
+     */
+    shrapnell: ParticleState[];
 
     /**
      * Counts the number of register enemies.
@@ -48,5 +51,10 @@ export default interface EnemyLevelState {
      */
     explosionCenters: ExplosionCenterState[];
 
+    /**
+     * Holds 'data' for explosions. The frame, width, height, etc. This piece
+     * of state is used to render the explosion center state.
+     */
     explosionData: ExplosionData | undefined;
 }
+

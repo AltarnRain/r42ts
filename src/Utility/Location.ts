@@ -7,6 +7,7 @@
 import { GameLocation } from "../Models/GameLocation";
 import speedProvider from "../Providers/SpeedProvider";
 import { getNextX, getNextY } from "./Geometry";
+import dimensionProvider from "../Providers/DimensionProvider";
 
 /**
  * Module:          Location utilities
@@ -43,7 +44,19 @@ export function fallsWithin(left: number, top: number, outerTop: number, outerBo
     const yBounds = top > outerTop && top < outerBottom;
     const xBounds = left > outerLeft && left < outerRight;
 
-    return xBounds && yBounds;
+    const res = xBounds && yBounds;
+
+    return res;
+}
+
+export function fallsWithinGameField(left: number, top: number): boolean {
+    const {
+        gameField
+    } = dimensionProvider();
+
+    const res = fallsWithin(left, top, gameField.top, gameField.bottom, gameField.left, gameField.right);
+
+    return res;
 }
 
 /**

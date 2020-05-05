@@ -6,13 +6,14 @@
  */
 
 import Explosion from "../Models/Explosion";
+import Mutators from "../Utility/FrameMutators";
 
 /**
  * Module:          Explosion01.
  */
 
-export default function getExplosion01(): Explosion {
-    const Explosion01: Explosion = {
+export default function getExplosion01(centerColor?: string, shrapnellColor?: string): Explosion {
+    const explosion01: Explosion = {
         explosionCenterFrame: [
             ["V", "0", "V", "0"],
             ["V", "V", "V", "V"],
@@ -35,5 +36,13 @@ export default function getExplosion01(): Explosion {
         useSpeed: true,
     };
 
-    return Explosion01;
+    if (centerColor) {
+        Mutators.Frame.setColor(explosion01.explosionCenterFrame, centerColor);
+    }
+
+    if (shrapnellColor) {
+        Mutators.Frames.setColor(explosion01.particleFrames, shrapnellColor);
+    }
+
+    return explosion01;
 }

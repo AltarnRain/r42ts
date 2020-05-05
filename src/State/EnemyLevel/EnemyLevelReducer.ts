@@ -32,13 +32,13 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
                 draft.explosionCenters.push(action.payload);
                 break;
             case Constants.addParticle:
-                draft.particles.push(action.payload);
+                draft.shrapnell.push(action.particle);
                 break;
             case Constants.addParticles:
-                draft.particles.push(...action.payload);
+                draft.shrapnell.push(...action.particles);
                 break;
-            case Constants.removeParticle:
-                draft.particles = draft.particles.filter((p) => p !== action.payload);
+            case Constants.setShrapnellState:
+                draft.shrapnell = action.shrapnell;
                 break;
             case Constants.resetLevelState:
                 draft = initState();
@@ -83,11 +83,12 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
 function initState(): EnemyLevelState {
     return {
         enemies: [],
-        particles: [],
+        shrapnell: [],
         totalNumberOfEnemies: 0,
         phaserLocations: [],
         fireInterval: 0,
         explosionCenters: [],
         explosionData: undefined,
+        particles: [],
     };
 }

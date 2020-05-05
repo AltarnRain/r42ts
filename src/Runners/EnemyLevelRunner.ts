@@ -9,21 +9,23 @@ import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import Guard from "../Guard";
 import Explosion from "../Models/Explosion";
+import { StateProviders } from "../Particles/StateProviders";
 import getPhaserLocations from "../Player/GetPhaserLocations";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
-import particleProvider from "../Providers/ParticleProvider";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
-import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, removeParticle, setEnemies, setExplosionCenters, setPhaserLocations } from "../State/EnemyLevel/Actions";
+import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, setEnemies, setExplosionCenters, setPhaserLocations, setShrapnellState } from "../State/EnemyLevel/Actions";
 import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
 import { setPlayerBulletState, setPlayerLocationData, setPlayerOnScreen } from "../State/Player/Actions";
+import { ParticleState } from "../State/Player/ParticleState";
 import { appState, dispatch } from "../State/Store";
 import { Frame } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
-import { getExplosionReturner, getFrameHitbox } from "../Utility/Frame";
+import { getFrameHitbox } from "../Utility/Frame";
 import { overlaps } from "../Utility/Geometry";
+import { fallsWithinGameField, getLocation } from "../Utility/Location";
 import { getHittableObjects } from "../Utility/StateHelper";
 
 /**
@@ -36,7 +38,8 @@ const phaserFrame: Frame = [
 ];
 
 const {
-    pixelSize
+    pixelSize,
+    gameField
 } = dimensionProvider();
 
 /**
@@ -61,7 +64,7 @@ function updateState(tick: number) {
 
     handleSelfDestruct(tick);
     handlePhaser(tick);
-    handleParticles(tick);
+    handleShrapnell();
     handleEnemies(tick);
     handleExplosionCenters(tick);
     handleHitDetection(tick);
@@ -77,12 +80,15 @@ function draw(): void {
 
     // Draw all the game objects
     enemyLevelState.enemies.forEach((e) => e.ship.draw());
-    enemyLevelState.particles.forEach((p) => p.draw());
 
     if (explosionData) {
         for (const center of explosionCenters) {
             renderFrame(center.left, center.top, explosionData.coloredExplosion.explosionCenterFrame);
         }
+    }
+
+    for (const shrapnell of enemyLevelState.shrapnell) {
+        renderFrame(shrapnell.left, shrapnell.top, shrapnell.coloredFrame);
     }
 
     enemyLevelState.phaserLocations.forEach((pf) => renderFrame(pf.left, pf.top, phaserFrame));
@@ -119,6 +125,7 @@ function handleHitDetection(tick: number) {
                     handlePlayerDeath(tick);
                 }
             }
+
             // Check if the player hit something.
             if (hitdetectionPlayerState.playerBulletState?.hitbox && Guard.isEnemy(hittableObject)) {
                 if (overlaps(hitdetectionPlayerState.playerBulletState.hitbox, hittableObjectHitbox)) {
@@ -159,16 +166,21 @@ function handleEnemies(tick: number): void {
  * Handles particles state updates.
  * @param {number} tick. Current tick.
  */
-function handleParticles(tick: number): void {
-    const particles = appState().enemyLevelState.particles;
-    // Update state and remove particles that are done traveling.
-    particles.forEach((p) => {
-        if (p.traveling()) {
-            p.updateState(tick);
-        } else {
-            dispatch(removeParticle(p));
+function handleShrapnell(): void {
+    const particles = appState().enemyLevelState.shrapnell;
+    const newState: ParticleState[] = [];
+
+    for (const particle of particles) {
+        const newSpeed = particle.speed * particle.acceletation;
+        const newLocation = getLocation(particle.left, particle.top, particle.angle, newSpeed);
+
+        if (fallsWithinGameField(newLocation.left, newLocation.top)) {
+            const particleState = StateProviders.getParticleState(newLocation.left, newLocation.top, newSpeed, particle.angle, particle.coloredFrame, particle.acceletation);
+            newState.push(particleState);
         }
-    });
+    }
+
+    dispatch(setShrapnellState(newState));
 }
 
 /**
@@ -265,20 +277,19 @@ function handlePlayerDeath(tick: number): void {
  * @param {Explosion} explosion. An explosion asset.
  * @param {Particle[]} targetParticleArray. The array where the particles will be pushed into. Helps keep track of particles belonging to the player or an enemy.
  */
-function queueExplosionRender(left: number, top: number, explosion: Explosion, tick: number): void {
+function queueExplosionRender(left: number, top: number, coloredExplosion: Explosion, tick: number): void {
 
-    // const center = new ExplosionCenter(immobile, getFrameReturner(explosion.explosionCenterFrame), explosion.explosionCenterDelay);
-    const newParticles = particleProvider(left, top, getExplosionReturner(explosion));
+    const newShrapnell = StateProviders.explosionShrapnellProvider(left, top, coloredExplosion);
 
     const newExplosion: ExplosionCenterState = {
         left,
         top,
         startTick: tick,
-        hitbox: getFrameHitbox(left, top, explosion.explosionCenterFrame, pixelSize),
+        hitbox: getFrameHitbox(left, top, coloredExplosion.explosionCenterFrame, pixelSize),
     };
 
     dispatch(addExplosionCenter(newExplosion));
-    dispatch(addParticles(newParticles));
+    dispatch(addParticles(newShrapnell));
 }
 
 /**

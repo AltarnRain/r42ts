@@ -85,6 +85,6 @@ function draw(): void {
 
     if (playerState.playerBulletState) {
         const bullet = playerState.playerBulletState;
-        renderFrame(bullet.left, bullet.top, bullet.frame);
+        renderFrame(bullet.left, bullet.top, bullet.coloredFrame);
     }
 }

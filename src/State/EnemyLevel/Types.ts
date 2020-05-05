@@ -15,6 +15,7 @@ import Particle from "../../Particles/Particle";
 import Constants from "./Constants";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 import { ExplosionData } from "./ExplosionData";
+import { ParticleState } from "../Player/ParticleState";
 
 export interface ResetLevelState {
     type: typeof Constants.resetLevelState;
@@ -27,17 +28,17 @@ export interface SetEnemies {
 
 export interface AddParticle {
     type: typeof Constants.addParticle;
-    payload: Particle;
-}
-
-export interface RemoveParticle {
-    type: typeof Constants.removeParticle;
-    payload: Particle;
+    particle: ParticleState;
 }
 
 export interface AddParticles {
     type: typeof Constants.addParticles;
-    payload: Particle[];
+    particles: ParticleState[];
+}
+
+export interface SetParticleState {
+    type: typeof Constants.setShrapnellState;
+    shrapnell: ParticleState[];
 }
 
 export interface RemoveEnemy {
@@ -86,9 +87,8 @@ export type EnemyLevelTypes =
     ResetLevelState |
     SetEnemies |
     AddParticle |
-    RemoveParticle |
-    AddParticle |
     AddParticles |
+    SetParticleState |
     RemoveEnemy |
     AddExplosionCenter |
     SetPhaserLocations |

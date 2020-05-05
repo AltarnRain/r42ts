@@ -34,8 +34,7 @@ export default class Level01 extends BaseEnemyLevel {
     public start(): void {
         super.start();
 
-        const explosion = getExplosion01();
-        Mutators.Frame.setColor(explosion.explosionCenterFrame, CGAColors.white);
+        const explosion = getExplosion01(CGAColors.white, CGAColors.white);
 
         const { width, height } = getFrameDimensions(explosion.explosionCenterFrame);
         const explosionData: ExplosionData = {
