@@ -14,10 +14,9 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { setPlayerBulletState } from "../State/Player/Actions";
-import { appState, dispatch } from "../State/Store";
-import { getFrameDimensions } from "../Utility/Frame";
-import { fallsWithin, getLocation } from "../Utility/Location";
 import { ParticleState } from "../State/Player/ParticleState";
+import { appState, dispatch } from "../State/Store";
+import { fallsWithin, getLocation } from "../Utility/Location";
 
 /**
  * Module:          PlayerRunner
