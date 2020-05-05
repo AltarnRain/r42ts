@@ -80,9 +80,8 @@ function draw(): void {
     enemyLevelState.particles.forEach((p) => p.draw());
 
     if (explosionData) {
-
         for (const center of explosionCenters) {
-            renderFrame(center.top, center.left, explosionData.coloredExplosion.explosionCenterFrame);
+            renderFrame(center.left, center.top, explosionData.coloredExplosion.explosionCenterFrame);
         }
     }
 
@@ -182,7 +181,6 @@ function handleSelfDestruct(tick: number): void {
         const { enemyLevelState } = appState();
         for (const enemy of enemyLevelState.enemies) {
             const center = enemy.ship.getCenterLocation();
-
             queueExplosionRender(center.left, center.top, enemy.ship.getExplosion(), tick);
         }
 
