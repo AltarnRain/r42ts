@@ -16,6 +16,5 @@ export function getHittableObjects(levelState: EnemyLevelState): IHitbox[] {
     return [
         ...ships,
         ...levelState.particles,
-        ...levelState.explosionCenters
     ].filter((o) => o !== undefined);
 }

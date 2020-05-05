@@ -16,11 +16,13 @@ namespace Constants {
     export const addParticles = "addParticles";
     export const removeEnemy = "removeEnemy";
     export const addExplosionCenter = "addExplosionCenter";
-    export const removeExplosionCenter = "removeExplosionCenter";
+    export const setExplosionState = "setExplosionState";
     export const setPhaserLocations = "setPhaserLocations";
     export const clearPhaserLocations = "clearPhaserLocations";
     export const setFireInterval = "setFireInterval";
     export const setEnemyFireTick = "setEnemyFireTick";
+    export const setExplosionData = "setExplosionData";
+    export const setExplosionCenters = "setExplosionCenters";
 }
 
 export default Constants;

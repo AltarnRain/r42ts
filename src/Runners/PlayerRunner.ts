@@ -9,16 +9,14 @@ import { playerBulletSpeed } from "../Constants/BulletSpeeds";
 import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
+import { StateProviders } from "../Particles/StateProviders";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { setPlayerBulletState } from "../State/Player/Actions";
-import { ParticleState } from "../State/Player/ParticleState";
 import { appState, dispatch } from "../State/Store";
-import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
+import { getFrameDimensions } from "../Utility/Frame";
 import { fallsWithin, getLocation } from "../Utility/Location";
-import { Frame } from "../Types";
-import { StateProviders } from "../Particles/StateProviders";
 
 /**
  * Module:          PlayerRunner
@@ -58,7 +56,7 @@ function updateState(): void {
         const nextLoction = getLocation(bullet.left, bullet.top, bullet.angle, bullet.speed);
 
         if (fallsWithin(nextLoction.left, nextLoction.top, gameField.top, gameField.bottom, 0, gameField.right)) {
-            const newState = StateProviders.getParticleState(nextLoction.left, nextLoction.top, bulletDimensions.width, bulletDimensions.height, playerBulletSpeed, angles.up, playerBulletFrame);
+            const newState = StateProviders.getParticleState(nextLoction.left, nextLoction.top, playerBulletSpeed, angles.up, playerBulletFrame);
             dispatch(setPlayerBulletState(newState));
         } else {
             dispatch(setPlayerBulletState(undefined));
@@ -68,7 +66,7 @@ function updateState(): void {
     // Fire new bullet.
     if (playerState.playerNozzleLocation !== undefined && keyboardState.fire && playerState.playerBulletState === undefined) {
         const nozzleLocation = playerState.playerNozzleLocation;
-        const bullet = StateProviders.getParticleState(nozzleLocation.left, nozzleLocation.top, bulletDimensions.width, bulletDimensions.height, playerBulletSpeed, angles.up, playerBulletFrame);
+        const bullet = StateProviders.getParticleState(nozzleLocation.left, nozzleLocation.top, playerBulletSpeed, angles.up, playerBulletFrame);
         dispatch(setPlayerBulletState(bullet));
     }
 }

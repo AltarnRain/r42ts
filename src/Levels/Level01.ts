@@ -9,7 +9,14 @@ import { birdMovementSpeed as birdMovementSpeed } from "../Constants/EnemyMoveme
 import { birdRandomAngles as birdRandomAngles } from "../Constants/MovementAngles";
 import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
 import { enemyFactory } from "../Enemies/EnemyFactory";
+import getExplosion01 from "../SharedFrames/Explosion01";
+import { setExplosionData } from "../State/EnemyLevel/Actions";
+import { ExplosionData } from "../State/EnemyLevel/ExplosionData";
+import { dispatch } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
+import { getFrameDimensions } from "../Utility/Frame";
+import Mutators from "../Utility/FrameMutators";
+import CGAColors from "../Constants/CGAColors";
 
 /**
  * Module:          Level 01
@@ -26,6 +33,18 @@ export default class Level01 extends BaseEnemyLevel {
      */
     public start(): void {
         super.start();
+
+        const explosion = getExplosion01();
+        Mutators.Frame.setColor(explosion.explosionCenterFrame, CGAColors.white);
+
+        const { width, height } = getFrameDimensions(explosion.explosionCenterFrame);
+        const explosionData: ExplosionData = {
+            coloredExplosion: explosion,
+            explosionHeight: height,
+            explosionWidth: width,
+        };
+
+        dispatch(setExplosionData(explosionData));
 
         const enemies = birdSpawnLocations.map((location) => {
 

@@ -58,6 +58,9 @@ namespace Mutators {
          * @param {string} color. A color
          */
         export function setColor(frame: FrameType, ...colors: string[]) {
+            if (colors.length === 0) {
+                throw new Error("No colors");
+            }
             frame.forEach((row, rowIndex) => {
                 row.forEach((cellColor, cellIndex) => {
                     if (cellColor !== "0") {

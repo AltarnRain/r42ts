@@ -198,8 +198,7 @@ export abstract class BaseEnemy extends BaseGameObject {
      * @returns {GameRectangle}. Bird's hitbox.
      */
     public getHitbox(): GameRectangle {
-        const dimensions = getFrameDimensions(this.frameProvider.getCurrentFrame(), pixelSize);
-        return getFrameHitbox(this.offsetLeft, this.offsetTop, dimensions.width, dimensions.height, negativepixelSize, 0);
+        return getFrameHitbox(this.offsetLeft, this.offsetTop, this.currentFrame, negativepixelSize);
     }
 
     /**

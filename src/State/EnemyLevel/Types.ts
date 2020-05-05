@@ -11,9 +11,10 @@
 
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import { GameLocation } from "../../Models/GameLocation";
-import ExplosionCenter from "../../Particles/ExplosionCenter";
 import Particle from "../../Particles/Particle";
 import Constants from "./Constants";
+import { ExplosionCenterState } from "./ExplosionCenterState";
+import { ExplosionData } from "./ExplosionData";
 
 export interface ResetLevelState {
     type: typeof Constants.resetLevelState;
@@ -46,12 +47,7 @@ export interface RemoveEnemy {
 
 export interface AddExplosionCenter {
     type: typeof Constants.addExplosionCenter;
-    payload: ExplosionCenter;
-}
-
-export interface RemoveExplosionCenter {
-    type: typeof Constants.removeExplosionCenter;
-    payload: ExplosionCenter;
+    payload: ExplosionCenterState;
 }
 
 export interface SetPhaserLocations {
@@ -75,6 +71,17 @@ export interface SetEnemyFireTick {
         tick: number;
     };
 }
+
+export interface SetExplosionData {
+    type: typeof Constants.setExplosionData;
+    explosionData: ExplosionData;
+}
+
+export interface SetExplosionCenters {
+    type: typeof Constants.setExplosionCenters;
+    explosionCenters: ExplosionCenterState[];
+}
+
 export type EnemyLevelTypes =
     ResetLevelState |
     SetEnemies |
@@ -84,8 +91,10 @@ export type EnemyLevelTypes =
     AddParticles |
     RemoveEnemy |
     AddExplosionCenter |
-    RemoveExplosionCenter |
     SetPhaserLocations |
     ClearPhaserLocations |
     SetFireInterval |
-    SetEnemyFireTick;
+    SetEnemyFireTick |
+    SetExplosionData |
+    SetExplosionCenters
+    ;

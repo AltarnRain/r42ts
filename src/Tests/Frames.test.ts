@@ -78,21 +78,3 @@ test("getFrameByIndex", () => {
     expect(result1[0][0]).toBe("a");
     expect(() => Frame.getFrameByIndex(frames, 3)).toThrow();
 });
-
-test("getFrameHitbox", () => {
-    // Act
-    const result = Frame.getFrameHitbox(
-        0,
-        0,
-        50,
-        100,
-        10,
-        20,
-    );
-
-    // Assert
-    expect(result.top).toBe(10);
-    expect(result.left).toBe(0);
-    expect(result.right).toBe(50);
-    expect(result.bottom).toBe(120);
-});

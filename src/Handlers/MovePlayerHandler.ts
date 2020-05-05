@@ -61,19 +61,26 @@ export function movePlayerHandler(speed: number): void {
     }
 
     const angle = getAngle(localKeyboardState);
+
+    let newX = playerState.playerLeftLocation;
+    let newY = playerState.playerTopLocation;
+
     if (angle !== -1) {
 
-        const newX = getNextX(angle, speedX, playerState.playerLeftLocation);
-        const newY = getNextY(angle, speedY, playerState.playerTopLocation);
+        newX = getNextX(angle, speedX, playerState.playerLeftLocation);
+        newY = getNextY(angle, speedY, playerState.playerTopLocation);
 
-        if (fallsWithin(newX, newY, gameField.top, gameField.bottom - shipDimensions.height, gameField.left, gameField.right - shipDimensions.width)) {
-            const hitBox = getFrameHitbox(playerState.playerLeftLocation, playerState.playerTopLocation, shipDimensions.width, shipDimensions.height, 0, pixelSize);
-            const nozzleLocation =  {
-                left: newX + pixelSize * 2,
-                top: newY - pixelSize * 1,
-            };
-
-            dispatch(setPlayerLocationData(newX, newY, hitBox, nozzleLocation));
+        if (!fallsWithin(newX, newY, gameField.top, gameField.bottom - shipDimensions.height, gameField.left, gameField.right - shipDimensions.width)) {
+            newX = playerState.playerLeftLocation;
+            newY = playerState.playerTopLocation;
         }
     }
+
+    const hitBox = getFrameHitbox(newX, newY, playerState.playerFrame,  0);
+    const nozzleLocation =  {
+        left: newX + pixelSize * 2,
+        top: newY - pixelSize * 1,
+    };
+
+    dispatch(setPlayerLocationData(newX, newY, hitBox, nozzleLocation));
 }

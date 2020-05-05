@@ -11,10 +11,11 @@
 
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import { GameLocation } from "../../Models/GameLocation";
-import ExplosionCenter from "../../Particles/ExplosionCenter";
 import Particle from "../../Particles/Particle";
 import Constants from "./Constants";
-import { AddExplosionCenter, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, RemoveExplosionCenter, RemoveParticle, ResetLevelState, SetEnemies, SetEnemyFireTick, SetFireInterval, SetPhaserLocations } from "./Types";
+import { ExplosionCenterState } from "./ExplosionCenterState";
+import { ExplosionData } from "./ExplosionData";
+import { AddExplosionCenter, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, RemoveParticle, ResetLevelState, SetEnemies, SetEnemyFireTick, SetExplosionData, SetFireInterval, SetPhaserLocations } from "./Types";
 
 export function resetLevelState(): ResetLevelState {
     return {
@@ -57,16 +58,9 @@ export function removeEnemy(enemy: BaseEnemy): RemoveEnemy {
     };
 }
 
-export function addExplosionCenter(explosionCenter: ExplosionCenter): AddExplosionCenter {
+export function addExplosionCenter(explosionCenter: ExplosionCenterState): AddExplosionCenter {
     return {
         type: Constants.addExplosionCenter,
-        payload: explosionCenter,
-    };
-}
-
-export function removeExplosionCenter(explosionCenter: ExplosionCenter): RemoveExplosionCenter {
-    return {
-        type: Constants.removeExplosionCenter,
         payload: explosionCenter,
     };
 }
@@ -98,5 +92,19 @@ export function setEnemyFireTick(ship: BaseEnemy, tick: number): SetEnemyFireTic
             ship,
             tick
         },
+    };
+}
+
+export function setExplosionData(explosionData: ExplosionData): SetExplosionData {
+    return {
+        type: Constants.setExplosionData,
+        explosionData,
+    };
+}
+
+export function setExplosionCenters(explosionCenters: ExplosionCenterState[]) {
+    return {
+        type: Constants.setExplosionCenters,
+        explosionCenters
     };
 }

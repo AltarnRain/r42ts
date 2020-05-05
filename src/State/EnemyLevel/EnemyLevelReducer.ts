@@ -31,9 +31,6 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
             case Constants.addExplosionCenter:
                 draft.explosionCenters.push(action.payload);
                 break;
-            case Constants.removeExplosionCenter:
-                draft.explosionCenters = draft.explosionCenters.filter((e) => e !== action.payload);
-                break;
             case Constants.addParticle:
                 draft.particles.push(action.payload);
                 break;
@@ -70,6 +67,13 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
                     const enemyIndex = draft.enemies.indexOf(enemy);
                     draft.enemies[enemyIndex].lastFireTick = action.payload.tick;
                 }
+                break;
+            case Constants.setExplosionData:
+                draft.explosionData = action.explosionData;
+                break;
+            case Constants.setExplosionCenters:
+                draft.explosionCenters = action.explosionCenters;
+                break;
         }
     });
 
@@ -79,10 +83,11 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
 function initState(): EnemyLevelState {
     return {
         enemies: [],
-        explosionCenters: [],
         particles: [],
         totalNumberOfEnemies: 0,
         phaserLocations: [],
         fireInterval: 0,
+        explosionCenters: [],
+        explosionData: undefined,
     };
 }

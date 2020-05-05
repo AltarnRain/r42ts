@@ -17,15 +17,14 @@ export namespace StateProviders {
     export function getParticleState(
         left: number,
         top: number,
-        width: number,
-        height: number,
         speed: number,
         angle: number,
         frame: Frame,
         acceletation: number = 1,
         hitboxTopOffset: number = 0,
         hitboxBottomOffset: number = 0): ParticleState {
-        const bulletHitbox = getFrameHitbox(left, top, width, height, hitboxTopOffset, hitboxBottomOffset);
+
+        const bulletHitbox = getFrameHitbox(left, top, frame, hitboxTopOffset, hitboxBottomOffset);
         const bullet: ParticleState = {
             acceletation,
             angle,

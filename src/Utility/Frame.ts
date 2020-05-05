@@ -9,6 +9,7 @@ import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import { Frame, Frames } from "../Types";
+import dimensionProvider from "../Providers/DimensionProvider";
 
 /**
  * Module:          Frame
@@ -20,7 +21,12 @@ import { Frame, Frames } from "../Types";
  * @param {Frame} frame. A frame.
  * @returns {width, height}.
  */
-export function getFrameDimensions(frame: Frame, pixelSize: number): GameSize {
+export function getFrameDimensions(frame: Frame, pixelSize?: number): GameSize {
+
+    if (pixelSize === undefined) {
+        pixelSize = dimensionProvider().pixelSize;
+    }
+
     return {
         width: frame[0].length * pixelSize,
         height: frame.length * pixelSize,
@@ -91,7 +97,9 @@ export function getFrameByIndex(frames: Frames, index: number): Frame {
  * @param {number} bottomOffset.
  * @returns {GameRectangle}. The frame's hitbox.
  */
-export function getFrameHitbox(left: number, top: number, width: number, height: number, topOffset: number, bottomOffset: number): GameRectangle {
+export function getFrameHitbox(left: number, top: number, frame: Frame, topOffset: number = 0, bottomOffset: number = 0, pixelSize?: number): GameRectangle {
+    const { width, height } = getFrameDimensions(frame, pixelSize);
+
     return {
         top: top + topOffset,
         left,
@@ -139,7 +147,7 @@ export function getFrameReturner(frame: Frame): () => Frame {
 }
 
 export function copyExplosion(explosion: Explosion): Explosion {
-    const newExplosion = {...explosion};
+    const newExplosion = { ...explosion };
     newExplosion.particleFrames = copyFrames(explosion.particleFrames);
     newExplosion.explosionCenterFrame = copyFrame(explosion.explosionCenterFrame);
 

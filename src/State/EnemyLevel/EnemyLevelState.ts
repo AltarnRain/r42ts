@@ -5,9 +5,11 @@
  */
 
 import { GameLocation } from "../../Models/GameLocation";
-import ExplosionCenter from "../../Particles/ExplosionCenter";
 import Particle from "../../Particles/Particle";
+import { Frame } from "../../Types";
 import { Enemy } from "./Enemy";
+import { ExplosionCenterState } from "./ExplosionCenterState";
+import { ExplosionData } from "./ExplosionData";
 
 /**
  * Module:          EnemyLevelState
@@ -27,11 +29,6 @@ export default interface EnemyLevelState {
     particles: Particle[];
 
     /**
-     * Explosion centers on the screen.
-     */
-    explosionCenters: ExplosionCenter[];
-
-    /**
      * Counts the number of register enemies.
      */
     totalNumberOfEnemies: number;
@@ -45,4 +42,11 @@ export default interface EnemyLevelState {
      * Fire interval
      */
     fireInterval: number;
+
+    /**
+     * Current state of explosions.
+     */
+    explosionCenters: ExplosionCenterState[];
+
+    explosionData: ExplosionData | undefined;
 }

@@ -69,7 +69,7 @@ export default class Particle extends BaseGameObject {
      */
     public getHitbox(): GameRectangle {
         const { left, top} = this.locationProvider.getCurrentLocation();
-        return getFrameHitbox(left, top, this.dimensions.width, this.dimensions.height, topOffset, bottomOffset);
+        return getFrameHitbox(left, top, this.currentFrame, topOffset, bottomOffset);
     }
 
     /**
