@@ -1,4 +1,15 @@
 /**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
+/**
+ * Module:          WarpLevelTypes
+ * Responsibility:  Types to strong type all warp level related information. Bit of an experiment :)
+ */
+
+/**
  * Steps. Defines the number of pixels in X and Y how much a warp level
  * can go left or right.
  */

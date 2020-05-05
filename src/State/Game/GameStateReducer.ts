@@ -87,6 +87,6 @@ function initState(): GameState {
         score: 0,
         phasers: 0,
         pause: false,
-        warpLevelSteps: undefined,
+        warpLevelSteps: getWarpGateComplexity(0),
     };
 }

@@ -40,5 +40,5 @@ export default interface GameState {
     /**
      * The complexity of a warp level.
      */
-    warpLevelSteps: WarpLevelSteps | undefined;
+    warpLevelSteps: WarpLevelSteps;
 }
