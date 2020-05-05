@@ -9,7 +9,7 @@ import Constants from "./Constants";
 import GameState from "./GameState";
 import { GameStateTypes } from "./Types";
 import getWarpGateComplexity from "./WarpGameComplexities";
-import { WarpLevelComplexity, WarpLevels } from "./WarpLevelTypes";
+import { WarpLevelStepSizes } from "./WarpLevelTypes";
 
 /**
  * Module:          GameStateReducer
@@ -53,17 +53,12 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 break;
             case Constants.setLevel:
                 draft.level = action.payload;
-                draft.warpLevelComplexity = getWarpGateComplexityState(action.payload);
                 break;
             case Constants.nextLevel:
                 if (draft.level === 42) {
                     draft.level = 1;
                 } else if (draft.level !== undefined) {
                     draft.level++;
-                }
-
-                if (draft.level !== undefined) {
-                    draft.warpLevelComplexity = getWarpGateComplexityState(draft.level);
                 }
 
                 break;
@@ -74,17 +69,15 @@ export default function gameStateReducer(state: GameState = initState(), action:
             case Constants.setPause:
                 draft.pause = action.payload;
                 break;
+            case Constants.increaseWarpLevelComplexity:
+                draft.warpLevelComplexity += 1;
+                break;
+            case Constants.setWarpLevelComplexity:
+                draft.warpLevelComplexity = action.complexity;
+                break;
         }
     });
 
-}
-
-function getWarpGateComplexityState(level: number): WarpLevelComplexity | undefined {
-    if (level < 36) {
-        return getWarpGateComplexity(level);
-    } else {
-        return getWarpGateComplexity(36);
-    }
 }
 
 /**
@@ -98,6 +91,7 @@ function initState(): GameState {
         score: 0,
         phasers: 0,
         pause: false,
-        warpLevelComplexity: getWarpGateComplexity(4),
+        warpLevelSteps: undefined,
+        warpLevelComplexity: 0,
     };
 }

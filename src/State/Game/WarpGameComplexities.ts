@@ -1,47 +1,51 @@
-import { WarpLevelComplexity, WarpLevelComplexties, WarpLevels } from "./WarpLevelTypes";
+import { WarpLevelComplexity, WarpLevelComplexitySteps, WarpLevelStepSizes } from "./WarpLevelTypes";
 
 /**
  * Typed constants that defined the warp gate complexities.
  */
-const warpLevelComplexities: WarpLevelComplexties = {
-    4: {
+const warpLevelComplexities: WarpLevelComplexitySteps = {
+    0: {
         stepsX: [0, 2, 2, 4],
         stepsY: [4, 4, 6, 8]
     },
-    8: {
+    1: {
         stepsX: [0, 2, 2, 4],
         stepsY: [4, 4, 6, 6],
     },
-    12: {
+    2: {
         stepsX: [0, 2, 2, 4],
         stepsY: [4, 4, 4, 6],
     },
-    16: {
+    3: {
         stepsX: [2, 2, 4, 4],
         stepsY: [2, 4, 4, 6],
     },
-    20: {
+    4: {
         stepsX: [2, 2, 2, 4],
         stepsY: [2, 2, 4],
     },
-    24: {
+    5: {
         stepsX: [2, 2, 2, 4],
         stepsY: [2, 2, 4],
     },
-    28: {
+    6: {
         stepsX: [2, 2, 4, 4],
         stepsY: [2, 4],
     },
-    32: {
+    7: {
         stepsX: [2, 2, 4, 4],
         stepsY: [2],
     },
-    36: {
+    8: {
         stepsX: [2, 2, 4, 4],
         stepsY: [2],
     }
 };
 
-export default function getWarpGateComplexity(warpLevel: number): WarpLevelComplexity | undefined{
-    return warpLevelComplexities[warpLevel];
+export default function getWarpGateComplexity(complexity: WarpLevelComplexity): WarpLevelStepSizes {
+    if (complexity <= 8) {
+        return getWarpGateComplexity(complexity);
+    } else {
+        return getWarpGateComplexity(8);
+    }
 }

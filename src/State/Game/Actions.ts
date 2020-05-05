@@ -10,7 +10,8 @@
  */
 
 import Constants from "./Constants";
-import { AddLevel, AddLife, AddLifeAndPhaser, AddPhaser, IncreaseScore, NextLevel, RemoveLife, RemovePhaser, SetLevel, SetLives, SetPause, SetPhasers } from "./Types";
+import { AddLevel, AddLife, AddLifeAndPhaser, AddPhaser, IncreaseScore, IncreaseWarpLevelComplexity, NextLevel, RemoveLife, RemovePhaser, SetLevel, SetLives, SetPause, SetPhasers, SetWarpGateComplexity } from "./Types";
+import { WarpLevelComplexity } from "./WarpLevelTypes";
 
 export function increaseScore(score: number): IncreaseScore {
     return {
@@ -70,5 +71,18 @@ export function setPause(pause: boolean): SetPause {
     return {
         type: Constants.setPause,
         payload: pause,
+    };
+}
+
+export function increaseWarpLevelComplexity(): IncreaseWarpLevelComplexity {
+    return {
+        type: Constants.increaseWarpLevelComplexity
+    };
+}
+
+export function setWarpGamteComplexity(complexity: WarpLevelComplexity): SetWarpGateComplexity {
+    return {
+        type: Constants.setWarpLevelComplexity,
+        complexity,
     };
 }

@@ -10,6 +10,7 @@
  */
 
 import Constants from "./Constants";
+import { WarpLevelComplexity } from "./WarpLevelTypes";
 
 export interface IncreaseScore {
     type: typeof Constants.increaseScore;
@@ -63,6 +64,16 @@ export interface SetPause {
     type: typeof Constants.setPause;
     payload: boolean;
 }
+
+export interface IncreaseWarpLevelComplexity {
+    type: typeof Constants.increaseWarpLevelComplexity;
+}
+
+export interface SetWarpGateComplexity {
+    type: typeof Constants.setWarpLevelComplexity;
+    complexity: WarpLevelComplexity;
+}
+
 export type GameStateTypes =
     IncreaseScore |
     SetLives |
@@ -75,5 +86,7 @@ export type GameStateTypes =
     SetLevel |
     NextLevel |
     AddLifeAndPhaser |
-    SetPause
+    SetPause |
+    IncreaseWarpLevelComplexity |
+    SetWarpGateComplexity
     ;
