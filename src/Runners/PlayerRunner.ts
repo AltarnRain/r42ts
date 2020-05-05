@@ -17,6 +17,8 @@ import { ParticleState } from "../State/Player/ParticleState";
 import { appState, dispatch } from "../State/Store";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { fallsWithin, getLocation } from "../Utility/Location";
+import { Frame } from "../Types";
+import { StateProviders } from "../Particles/StateProviders";
 
 /**
  * Module:          PlayerRunner
@@ -56,7 +58,7 @@ function updateState(): void {
         const nextLoction = getLocation(bullet.left, bullet.top, bullet.angle, bullet.speed);
 
         if (fallsWithin(nextLoction.left, nextLoction.top, gameField.top, gameField.bottom, 0, gameField.right)) {
-            const newState = getParticleState(nextLoction.left, nextLoction.top, bulletDimensions.width, bulletDimensions.height, playerBulletSpeed);
+            const newState = StateProviders.getParticleState(nextLoction.left, nextLoction.top, bulletDimensions.width, bulletDimensions.height, playerBulletSpeed, angles.up, playerBulletFrame);
             dispatch(setPlayerBulletState(newState));
         } else {
             dispatch(setPlayerBulletState(undefined));
@@ -64,27 +66,10 @@ function updateState(): void {
     }
 
     // Fire new bullet.
-    if (playerState.playerNozzleLocation && keyboardState.fire && playerState.playerBulletState === undefined) {
+    if (playerState.playerNozzleLocation !== undefined && keyboardState.fire && playerState.playerBulletState === undefined) {
         const nozzleLocation = playerState.playerNozzleLocation;
-
-        const bullet = getParticleState(nozzleLocation.left, nozzleLocation.top, bulletDimensions.width, bulletDimensions.height, playerBulletSpeed);
-
+        const bullet = StateProviders.getParticleState(nozzleLocation.left, nozzleLocation.top, bulletDimensions.width, bulletDimensions.height, playerBulletSpeed, angles.up, playerBulletFrame);
         dispatch(setPlayerBulletState(bullet));
-    }
-
-    function getParticleState(left: number, top: number, width: number, height: number, speed: number, acceletation: number = 1): ParticleState {
-        const bulletHitbox = getFrameHitbox(left, top, width, height, 0, 0);
-        const bullet: ParticleState = {
-            acceletation,
-            angle: angles.up,
-            frame: playerBulletFrame,
-            hitbox: bulletHitbox,
-            speed,
-            left,
-            top
-        };
-
-        return bullet;
     }
 }
 

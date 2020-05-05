@@ -7,7 +7,7 @@
 import Explosion from "../../Models/Explosion";
 import { GameLocation } from "../../Models/GameLocation";
 import { GameRectangle } from "../../Models/GameRectangle";
-import { MoveLimits, Frame } from "../../Types";
+import { Frame, MoveLimits } from "../../Types";
 import { ParticleState } from "./ParticleState";
 
 /**
@@ -41,6 +41,9 @@ export default interface PlayerState {
      */
     playerTopLocation: number;
 
+    /**
+     * Hitbox of the player.
+     */
     playerHitbox: GameRectangle | undefined;
 
     playerNozzleLocation: GameLocation | undefined;
