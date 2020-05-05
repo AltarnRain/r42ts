@@ -8,7 +8,8 @@ import produce from "immer";
 import Constants from "./Constants";
 import GameState from "./GameState";
 import { GameStateTypes } from "./Types";
-import { WarpLevelComplexity, WarpLevelComplexties } from "./WarpLevelComplexity";
+import getWarpGateComplexity from "./WarpGameComplexities";
+import { WarpLevelComplexity, WarpLevels } from "./WarpLevelTypes";
 
 /**
  * Module:          GameStateReducer
@@ -52,7 +53,7 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 break;
             case Constants.setLevel:
                 draft.level = action.payload;
-                draft.warpLevelComplexity = getWarpGateComplexity(action.payload);
+                draft.warpLevelComplexity = getWarpGateComplexityState(action.payload);
                 break;
             case Constants.nextLevel:
                 if (draft.level === 42) {
@@ -62,7 +63,7 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 }
 
                 if (draft.level !== undefined) {
-                    draft.warpLevelComplexity = getWarpGateComplexity(draft.level);
+                    draft.warpLevelComplexity = getWarpGateComplexityState(draft.level);
                 }
 
                 break;
@@ -78,19 +79,11 @@ export default function gameStateReducer(state: GameState = initState(), action:
 
 }
 
-function getWarpGateComplexity(level: number): WarpLevelComplexity {
+function getWarpGateComplexityState(level: number): WarpLevelComplexity | undefined {
     if (level < 36) {
-        const complexity = warpLevelComplexities[level.toString()];
-
-        // If the complexity could not be found, return the highest
-        // complexity. Should not happen while player, useful for debugging.
-        if (complexity === undefined) {
-            return warpLevelComplexities["36"];
-        } else {
-            return complexity;
-        }
+        return getWarpGateComplexity(level);
     } else {
-        return warpLevelComplexities["36"];
+        return getWarpGateComplexity(36);
     }
 }
 
@@ -108,45 +101,3 @@ function initState(): GameState {
         warpLevelComplexity: getWarpGateComplexity(4),
     };
 }
-
-/**
- * Typed constants that defined the warp gate complexities.
- */
-const warpLevelComplexities: WarpLevelComplexties = {
-    4: {
-        stepsX: [0, 2, 2, 4],
-        stepsY: [4, 4, 6, 8]
-    },
-    8: {
-        stepsX: [0, 2, 2, 4],
-        stepsY: [4, 4, 6, 6],
-    },
-    12: {
-        stepsX: [0, 2, 2, 4],
-        stepsY: [4, 4, 4, 6],
-    },
-    16: {
-        stepsX: [2, 2, 4, 4],
-        stepsY: [2, 4, 4, 6],
-    },
-    20: {
-        stepsX: [2, 2, 2, 4],
-        stepsY: [2, 2, 4],
-    },
-    24: {
-        stepsX: [2, 2, 2, 4],
-        stepsY: [2, 2, 4],
-    },
-    28: {
-        stepsX: [2, 2, 4, 4],
-        stepsY: [2, 4],
-    },
-    32: {
-        stepsX: [2, 2, 4, 4],
-        stepsY: [2],
-    },
-    36: {
-        stepsX: [2, 2, 4, 4],
-        stepsY: [2],
-    }
-};

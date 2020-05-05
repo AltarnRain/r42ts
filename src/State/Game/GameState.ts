@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { WarpLevelComplexity } from "./WarpLevelComplexity";
+import { WarpLevelComplexity } from "./WarpLevelTypes";
 
 /**
  * Module:          GameState
@@ -40,5 +40,5 @@ export default interface GameState {
     /**
      * The complexity of a warp level.
      */
-    warpLevelComplexity: WarpLevelComplexity;
+    warpLevelComplexity: WarpLevelComplexity | undefined;
 }

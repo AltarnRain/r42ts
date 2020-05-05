@@ -69,9 +69,10 @@ export default class WarpLevel implements ILevel {
             gameState
         } = appState();
 
-        const warpGate = this.calculateWarpGate(gameField.left, gameField.right, gameState.warpLevelComplexity.stepsX, gameState.warpLevelComplexity.stepsY);
-
-        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, warpGate)));
+        if (gameState.warpLevelComplexity) {
+            const warpGate = this.calculateWarpGate(gameField.left, gameField.right, gameState.warpLevelComplexity.stepsX, gameState.warpLevelComplexity.stepsY);
+            this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, warpGate)));
+        }
     }
 
     private calculateWarpGate(outerLeft: number, outerRight: number, stepSizesX: number[], stepSizesY: number[]): GameRectangle[] {
