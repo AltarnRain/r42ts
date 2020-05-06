@@ -8,14 +8,15 @@ import BulletRunner from "../BulletProviders/BulletRunner";
 import GameLoop from "../GameLoop";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
-import Guard from "../Guard";
 import ILevel from "../Interfaces/ILevel";
-import { resetLevelState, setEnemies, setFireInterval } from "../State/EnemyLevel/Actions";
+import { resetLevelState, setFireInterval } from "../State/EnemyLevel/Actions";
 import { addPhaser, nextLevel } from "../State/Game/Actions";
 import { setPlayerMovementLimit } from "../State/Player/Actions";
 import { appState, appStore, dispatch } from "../State/Store";
 import { TickFunction } from "../Types";
 import { BaseEnemy } from "./BaseEnemy";
+import { setEnemies } from "../Runners/EnemyLevelRunner";
+import { Enemy } from "../State/EnemyLevel/Enemy";
 
 export default abstract class BaseEnemyLevel implements ILevel {
 
@@ -92,7 +93,7 @@ export default abstract class BaseEnemyLevel implements ILevel {
     /**
      * Begin this level. Call from start.
      */
-    protected begin(enemies: BaseEnemy[], fireInterval?: number, bulletRunner?: BulletRunner): void {
+    protected begin(enemies: Enemy[], fireInterval?: number, bulletRunner?: BulletRunner): void {
         // Register the stateManager so it can act on state changes in the level.
         this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));
 
@@ -111,7 +112,7 @@ export default abstract class BaseEnemyLevel implements ILevel {
             }
 
             // Add the enemies to the global state. The registered stateManager will take it from here.
-            dispatch(setEnemies(enemies));
+            setEnemies(enemies);
 
             // Add a function to the GameLoop that will check if a level has been won.
             this.registerSubscription(GameLoop.registerUpdateState(() => this.monitorLevelWonRun()));

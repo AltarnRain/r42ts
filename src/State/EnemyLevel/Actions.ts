@@ -11,23 +11,15 @@
 
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import { GameLocation } from "../../Models/GameLocation";
-import Particle from "../../Particles/Particle";
 import { ParticleState } from "../Player/ParticleState";
 import Constants from "./Constants";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 import { ExplosionData } from "./ExplosionData";
-import { AddExplosionCenter, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetEnemies, SetEnemyFireTick, SetExplosionData, SetFireInterval, SetPhaserLocations, SetParticleState as SetShrapnellState, AddBullet, SetBulletState } from "./Types";
+import { AddBullet, AddExplosionCenter, AddParticle, AddParticles, ClearPhaserLocations, ResetLevelState, SetBulletState, SetEnemyFireTick, SetExplosionData, SetFireInterval, SetParticleState as SetShrapnellState, SetPhaserLocations, SetRemainingEnemies, SetTotalEnemies } from "./Types";
 
 export function resetLevelState(): ResetLevelState {
     return {
         type: Constants.resetLevelState,
-    };
-}
-
-export function setEnemies(enemies: BaseEnemy[]): SetEnemies {
-    return {
-        type: Constants.setEnemies,
-        payload: enemies,
     };
 }
 
@@ -49,13 +41,6 @@ export function setShrapnellState(shrapnell: ParticleState[]): SetShrapnellState
     return {
         type: Constants.setShrapnellState,
         shrapnell,
-    };
-}
-
-export function removeEnemy(enemy: BaseEnemy): RemoveEnemy {
-    return {
-        type: Constants.removeEnemy,
-        payload: enemy
     };
 }
 
@@ -121,5 +106,19 @@ export function setBulletState(bullets: ParticleState[]): SetBulletState {
     return {
         type: Constants.setBulletState,
         bullets,
+    };
+}
+
+export function setTotalEnemies(totalEnemies: number): SetTotalEnemies {
+    return {
+        type: Constants.setTotalEnemies,
+        totalEnemies,
+    };
+}
+
+export function setRemainingEnemies(remainingEnemies: number): SetRemainingEnemies {
+    return {
+        type: Constants.setRemainingEnemies,
+        remainingEnemies,
     };
 }

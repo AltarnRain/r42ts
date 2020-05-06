@@ -11,6 +11,7 @@ import { addBullet, setEnemyFireTick } from "../State/EnemyLevel/Actions";
 import { appState, dispatch } from "../State/Store";
 import { FireCheckFunction, Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
+import { getEnemies } from "../Runners/EnemyLevelRunner";
 
 /**
  * Module:          StraightDownBulletProvider
@@ -71,8 +72,10 @@ export default class BulletRunner {
             return;
         }
 
+        const enemies = getEnemies();
+
         const enemiesWhoMayFire: BaseEnemy[] = [];
-        for (const enemy of enemyLevelState.enemies) {
+        for (const enemy of enemies) {
             const lastShotTick = enemy.lastFireTick;
 
             // Check if this enemy's shot timeout has passed.

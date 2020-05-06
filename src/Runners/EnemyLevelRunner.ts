@@ -15,7 +15,8 @@ import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
-import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, setEnemies, setExplosionCenters, setPhaserLocations, setShrapnellState, setBulletState } from "../State/EnemyLevel/Actions";
+import { addExplosionCenter, addParticles, clearPhaserLocations, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies } from "../State/EnemyLevel/Actions";
+import { Enemy } from "../State/EnemyLevel/Enemy";
 import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
 import { setPlayerBulletState, setPlayerLocationData, setPlayerOnScreen } from "../State/Player/Actions";
@@ -33,13 +34,17 @@ import { getHittableObjects } from "../Utility/StateHelper";
  * Responsibility:  Handles all state reactions and action for levels that contain enemies.
  */
 
+/**
+ * Array of current game objects on screen.
+ */
+let enemies: Enemy[] = [];
+
 const phaserFrame: Frame = [
     [CGAColors.yellow, CGAColors.yellow]
 ];
 
 const {
-    pixelSize,
-    gameField
+    pixelSize
 } = dimensionProvider();
 
 /**
@@ -49,6 +54,15 @@ const {
 export default function enemyLevelRunner(tick: number): void {
     updateState(tick);
     GameLoop.registerDraw(draw);
+}
+
+export function setEnemies(newEnemies: Enemy[]): void {
+    enemies = newEnemies;
+    dispatch(setTotalEnemies(newEnemies.length));
+}
+
+export function getEnemies(): Enemy[] {
+    return enemies;
 }
 
 /**
@@ -80,7 +94,7 @@ function draw(): void {
     const { explosionCenters, explosionData } = enemyLevelState;
 
     // Draw all the game objects
-    enemyLevelState.enemies.forEach((e) => e.ship.draw());
+    enemies.forEach((e) => e.ship.draw());
 
     if (explosionData) {
         for (const center of explosionCenters) {
@@ -111,11 +125,10 @@ function draw(): void {
  */
 function handleHitDetection(tick: number) {
     const {
-        enemyLevelState,
         debuggingState,
     } = appState();
 
-    const hittableObjects = getHittableObjects(enemyLevelState);
+    const hittableObjects = getHittableObjects(enemies);
 
     if (hittableObjects.length > 0) {
         for (const hittableObject of hittableObjects) {
@@ -162,7 +175,7 @@ function handleExplosionCenters(tick: number): void {
  * @param {number} tick. Current tick
  */
 function handleEnemies(tick: number): void {
-    appState().enemyLevelState.enemies.forEach((e) => {
+    enemies.forEach((e) => {
         e.ship.updateState(tick);
     });
 }
@@ -207,15 +220,16 @@ function handleSelfDestruct(tick: number): void {
     const playerState = appState().playerState;
 
     if (playerState.playerOnScreen && appState().keyboardState.selfDestruct) {
-        const { enemyLevelState } = appState();
-        for (const enemy of enemyLevelState.enemies) {
+        for (const enemy of enemies) {
             const center = enemy.ship.getCenterLocation();
             queueExplosionRender(center.left, center.top, enemy.ship.getExplosion(), tick);
         }
 
         queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.playerExplosion, tick);
         handlePlayerDeath(tick);
-        dispatch(setEnemies([]));
+        // dispatch(setEnemies([]));
+
+        enemies = [];
     }
 }
 
@@ -226,11 +240,12 @@ function handleSelfDestruct(tick: number): void {
 function handleEnemyDestruction(ship: BaseEnemy, tick: number): void {
     const { enemyLevelState } = appState();
 
-    enemyLevelState.enemies.forEach((e) => {
+    enemies = enemies.filter((e) => {
         if (e.ship !== ship) {
-            e.ship.increaseSpeed(enemyLevelState.totalNumberOfEnemies / (enemyLevelState.enemies.length - 1));
+            e.ship.increaseSpeed(enemyLevelState.totalNumberOfEnemies / (enemies.length - 1));
+            return true;
         } else {
-            dispatch(removeEnemy(e.ship));
+            return false;
         }
     });
 
@@ -247,10 +262,10 @@ function handlePhaser(tick: number): void {
 
     if (playerState.playerNozzleLocation &&
         appState().keyboardState.phraser &&
-        appState().enemyLevelState.enemies.length > 0 &&
+        enemies.length > 0 &&
         gameState.phasers > 0 && appState().enemyLevelState.phaserLocations.length === 0) {
 
-        const randomEnemy = getRandomArrayElement(enemyLevelState.enemies);
+        const randomEnemy = getRandomArrayElement(enemies);
         const playerNozzleLocation = playerState.playerNozzleLocation;
         const randomEnemyCenter = randomEnemy.ship.getCenterLocation();
 
@@ -314,16 +329,16 @@ function queueExplosionRender(left: number, top: number, coloredExplosion: Explo
  * @param {number} value.
  */
 export function increaseEnemySpeed(value: number): void {
-    appState().enemyLevelState.enemies.forEach((e) => e.ship.increaseSpeed(value));
+    enemies.forEach((e) => e.ship.increaseSpeed(value));
 }
 
 //#region  Debugging
 
 function DEBUGGING_renderHitboxes() {
-    const { debuggingState, playerState, enemyLevelState } = appState();
+    const { debuggingState, playerState } = appState();
     if (debuggingState.drawHitboxes) {
         const hitboxes = [
-            ...getHittableObjects(enemyLevelState).map((e) => e.getHitbox()),
+            ...getHittableObjects(enemies).map((e) => e.getHitbox()),
         ];
 
         // Add player if defined.

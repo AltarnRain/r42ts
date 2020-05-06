@@ -12,6 +12,7 @@
 import { BaseEnemy } from "../Base/BaseEnemy";
 import { angles } from "../Constants/Angles";
 import { appState } from "../State/Store";
+import { getEnemies } from "../Runners/EnemyLevelRunner";
 
 /**
  * Returns an angle of down/left or down/right but only if the passed enemy has a 'change' of hitting the
@@ -35,8 +36,10 @@ export default function orbEnemyAngleProvider(enemy: BaseEnemy, left: number, to
         return undefined;
     }
 
+    const enemies = getEnemies();
+
     // Increase the change the orb enemy will fire down as its numbers are reduced.
-    const rnd = Math.ceil(Math.random() * enemyLevelState.enemies.length / 1.5 );
+    const rnd = Math.ceil(Math.random() * enemies.length / 1.5 );
     const canFireDown = rnd === 1;
 
     if (canFireDown) {

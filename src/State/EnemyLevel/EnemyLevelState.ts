@@ -16,12 +16,6 @@ import { ExplosionData } from "./ExplosionData";
  */
 
 export default interface EnemyLevelState {
-
-    /**
-     * Array of current game objects on screen.
-     */
-    enemies: Enemy[];
-
     /**
      * Enemy bullets.
      */
@@ -57,5 +51,6 @@ export default interface EnemyLevelState {
      * of state is used to render the explosion center state.
      */
     explosionData: ExplosionData | undefined;
-}
 
+    remainingEnemies: number;
+}

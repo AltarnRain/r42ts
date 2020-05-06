@@ -25,9 +25,9 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
 
     const newState = produce(state, (draft) => {
         switch (action.type) {
-            case Constants.removeEnemy:
-                draft.enemies = draft.enemies.filter((e) => e.ship !== action.payload);
-                break;
+            // case Constants.removeEnemy:
+            //     draft.enemies = draft.enemies.filter((e) => e.ship !== action.payload);
+            //     break;
             case Constants.addExplosionCenter:
                 draft.explosionCenters.push(action.payload);
                 break;
@@ -43,15 +43,15 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
             case Constants.resetLevelState:
                 draft = initState();
                 break;
-            case Constants.setEnemies:
-                draft.enemies = action.payload.map((e: BaseEnemy) => {
-                    return {
-                        ship: e,
-                        lastFireTick: 0,
-                    };
-                });
-                draft.totalNumberOfEnemies = action.payload.length;
-                break;
+            // case Constants.setEnemies:
+            //     draft.enemies = action.payload.map((e: BaseEnemy) => {
+            //         return {
+            //             ship: e,
+            //             lastFireTick: 0,
+            //         };
+            //     });
+            //     draft.totalNumberOfEnemies = action.payload.length;
+            //     break;
             case Constants.setPhaserLocations:
                 draft.phaserLocations = action.payload;
                 break;
@@ -61,13 +61,13 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
             case Constants.setFireInterval:
                 draft.fireInterval = action.payload;
                 break;
-            case Constants.setEnemyFireTick:
-                const enemy = draft.enemies.find((e) => e.ship === action.payload.ship);
-                if (enemy !== undefined) {
-                    const enemyIndex = draft.enemies.indexOf(enemy);
-                    draft.enemies[enemyIndex].lastFireTick = action.payload.tick;
-                }
-                break;
+            // case Constants.setEnemyFireTick:
+            //     const enemy = draft.enemies.find((e) => e.ship === action.payload.ship);
+            //     if (enemy !== undefined) {
+            //         const enemyIndex = draft.enemies.indexOf(enemy);
+            //         draft.enemies[enemyIndex].lastFireTick = action.payload.tick;
+            //     }
+            //     break;
             case Constants.setExplosionData:
                 draft.explosionData = action.explosionData;
                 break;
@@ -80,6 +80,12 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
             case Constants.setBulletState:
                 draft.bullets = action.bullets;
                 break;
+            case Constants.setTotalEnemies:
+                draft.totalNumberOfEnemies = action.totalEnemies;
+                break;
+            case Constants.setRemainingEnemies:
+                draft.remainingEnemies = action.remainingEnemies;
+                break;
         }
     });
 
@@ -88,13 +94,14 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
 
 function initState(): EnemyLevelState {
     return {
-        enemies: [],
         shrapnell: [],
-        totalNumberOfEnemies: 0,
+        // totalNumberOfEnemies: 0,
         phaserLocations: [],
         fireInterval: 0,
         explosionCenters: [],
         explosionData: undefined,
         bullets: [],
+        totalNumberOfEnemies: 0,
+        remainingEnemies: 0,
     };
 }

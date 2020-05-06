@@ -10,11 +10,9 @@
 
 namespace Constants {
     export const resetLevelState = "resetLevelState";
-    export const setEnemies = "setEnemies";
     export const addParticle = "addParticle";
     export const addParticles = "addParticles";
     export const setShrapnellState = "setShrapnellState";
-    export const removeEnemy = "removeEnemy";
     export const addExplosionCenter = "addExplosionCenter";
     export const setExplosionState = "setExplosionState";
     export const setPhaserLocations = "setPhaserLocations";
@@ -25,6 +23,8 @@ namespace Constants {
     export const setExplosionCenters = "setExplosionCenters";
     export const addBullet = "addBullet";
     export const setBulletState = "setBulletState";
+    export const setTotalEnemies = "setTotalEnemies";
+    export const setRemainingEnemies = "setRemainingEnemies";
 }
 
 export default Constants;
