@@ -55,7 +55,7 @@ export abstract class BaseEnemy {
     /**
      * Offets for each frame.
      */
-    protected offSets: GameLocation[];
+    private offSets: GameLocation[];
 
     /**
      * Explosion for the enemy.
@@ -65,7 +65,7 @@ export abstract class BaseEnemy {
     /**
      * Maximum enemy dimensions.
      */
-    protected maxDimensions: GameSize;
+    private maxDimensions: GameSize;
 
     /**
      * Helps the enemy determine which angle it will use to fire a bullet.
@@ -84,7 +84,7 @@ export abstract class BaseEnemy {
 
     /**
      * Current frame of the object
-    */
+     */
     protected currentFrame!: Frame;
 
     /**
