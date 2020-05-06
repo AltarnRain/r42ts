@@ -6,10 +6,9 @@
 
 import { GameLocation } from "../../Models/GameLocation";
 import { ParticleState } from "../Player/ParticleState";
-import { Enemy } from "./Enemy";
+import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 import { ExplosionData } from "./ExplosionData";
-import { EnemyState } from "./EnemyState";
 
 /**
  * Module:          EnemyLevelState

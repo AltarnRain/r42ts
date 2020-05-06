@@ -72,16 +72,6 @@ export function setFireInterval(interval: number): SetFireInterval {
     };
 }
 
-export function setEnemyFireTick(ship: BaseEnemy, tick: number): SetEnemyFireTick {
-    return {
-        type: Constants.setEnemyFireTick,
-        payload: {
-            ship,
-            tick
-        },
-    };
-}
-
 export function setExplosionData(explosionData: ExplosionData): SetExplosionData {
     return {
         type: Constants.setExplosionData,
@@ -124,7 +114,7 @@ export function setRemainingEnemies(remainingEnemies: number): SetRemainingEnemi
     };
 }
 
-export function addEnemyToState(enemyState: EnemyState): AddOrUpdateEnemy {
+export function addOrUpdateEnemy(enemyState: EnemyState): AddOrUpdateEnemy {
     return {
         type: Constants.addOrUpdateEnemy,
         enemyState,

@@ -12,6 +12,7 @@
 import { BaseEnemy } from "./Base/BaseEnemy";
 import Explosion from "./Models/Explosion";
 import { OffsetFrames } from "./Models/OffsetFrames";
+import { EnemyState } from "./State/EnemyLevel/EnemyState";
 
 /**
  * Defines frames. Frames are objects with key values that start with F{N}. Where N is the frame number.
@@ -56,7 +57,7 @@ export type FireAngleProviderFunction = (enemy: BaseEnemy, left: number, top: nu
  * A fire check function accepts the current enemy being checked if it can be fired.
  * Fire check functions are NOT pure. They CAN pull in state and do additional checks.
  */
-export type FireCheckFunction = (enemy: BaseEnemy) => boolean;
+export type FireCheckFunction = (enemyState: EnemyState) => boolean;
 
 /**
  * Always provides a fresh explosion object.
@@ -86,6 +87,6 @@ export type Angle = number | undefined;
 /**
  * A function that provides an array of enemies that can fire.
  */
-export type ShipsToFireFunction = (enemies: BaseEnemy[]) => BaseEnemy[];
+export type ShipsToFireFunction = (enemies: EnemyState[]) => EnemyState[];
 
 export type Enemies = "bird" | "robot" | "orb";

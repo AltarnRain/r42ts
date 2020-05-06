@@ -4,11 +4,10 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemy } from "../Base/BaseEnemy";
-import { StateProviders } from "../State/StateProviders";
 import dimensionProvider from "../Providers/DimensionProvider";
-import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
-import { addBullet, setEnemyFireTick } from "../State/EnemyLevel/Actions";
+import { addBullet, addOrUpdateEnemy } from "../State/EnemyLevel/Actions";
+import { EnemyState } from "../State/EnemyLevel/EnemyState";
+import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { FireCheckFunction, Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
@@ -92,15 +91,13 @@ export default class BulletRunner {
             return;
         }
 
-        const enemies = EnemyLevelRunner.getEnemies();
-
-        const enemiesWhoMayFire: BaseEnemy[] = [];
-        for (const enemy of enemies) {
+        const enemiesWhoMayFire: EnemyState[] = [];
+        for (const enemy of enemyLevelState.enemyState) {
             const lastShotTick = enemy.lastFireTick;
 
             // Check if this enemy's shot timeout has passed.
             if (tick - lastShotTick > enemyLevelState.fireInterval) {
-                enemiesWhoMayFire.push(enemy.ship);
+                enemiesWhoMayFire.push(enemy);
             }
         }
 
@@ -116,13 +113,7 @@ export default class BulletRunner {
             // Fire check functions check the state and make the final call if the ship
             // can fire or not.
             if (this.fireCheck(ship)) {
-                const enemyState = StateProviders.getEnemyState(ship);
-
-                const {
-                    fireAngle,
-                    hitbox
-                } = enemyState;
-
+                const {fireAngle , hitbox } = ship;
                 if (fireAngle !== undefined && hitbox !== undefined) {
 
                     const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - pixelSize;
@@ -134,11 +125,13 @@ export default class BulletRunner {
                         this.speed,
                         fireAngle,
                         this.bulletFrame,
-                        ship.getId(),
+                        ship.enemyId,
                     );
 
+                    const newState = {...ship, lastFireTick: tick};
+
                     dispatch(addBullet(bullet));
-                    dispatch(setEnemyFireTick(ship, tick));
+                    dispatch(addOrUpdateEnemy(newState));
                 }
             }
         }

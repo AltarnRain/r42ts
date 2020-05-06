@@ -4,14 +4,14 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemy } from "../../Base/BaseEnemy";
+import { EnemyState } from "../../State/EnemyLevel/EnemyState";
 
 /**
  * Module:          RobotsTofire
  * Responsibility:  Probide a list of robots to fire.
  */
 
-export default function robotsToFire(robots: BaseEnemy[]): BaseEnemy[] {
+export default function robotsToFire(robots: EnemyState[]): EnemyState[] {
     // Just return the robots. pp
     return robots;
 }

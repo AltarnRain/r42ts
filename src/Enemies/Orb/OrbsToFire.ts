@@ -9,16 +9,15 @@
  * Responsibility:  Provide a function which orbs are best suited to fire a bullet.
  */
 
-import { BaseEnemy } from "../../Base/BaseEnemy";
+import { EnemyState } from "../../State/EnemyLevel/EnemyState";
 import { appState } from "../../State/Store";
 import { calculateAngle, calculateAngleDifference } from "../../Utility/Geometry";
-import { StateProviders } from "../../State/StateProviders";
 
 /**
  * A function that selects the orbs that should fire.
  * @param {number} tick. Current tick
  */
-export default function orbsToFire(orbs: BaseEnemy[]): BaseEnemy[] {
+export default function orbsToFire(orbs: EnemyState[]): EnemyState[] {
     const {
         playerState,
         enemyLevelState
@@ -36,16 +35,14 @@ export default function orbsToFire(orbs: BaseEnemy[]): BaseEnemy[] {
     // To determine which enemies have the best change of hitting
     // the player we calculate difference between the angle at which the
     // enemy will fire vs the angle towards the player.
-    const candidates: Array<{ ship: BaseEnemy, angleDifference: number, angle: number }> = [];
+    const candidates: Array<{ ship: EnemyState, angleDifference: number, angle: number }> = [];
 
     let above = 0;
     let below = 0;
     for (const orb of orbs) {
-        const enemyState = StateProviders.getEnemyState(orb);
-        const enemyFireAngle = enemyState.fireAngle;
-        const center = enemyState.centerLocation;
+        const enemyFireAngle = orb.fireAngle;
+        const center = orb.centerLocation;
         if (center) {
-
             const angleToPlayer = calculateAngle(center.left, center.top, playerState.playerLeftLocation, playerState.playerTopLocation);
 
             if (center.top > playerhitbox.bottom) {

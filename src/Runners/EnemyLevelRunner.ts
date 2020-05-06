@@ -14,7 +14,6 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
 import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies } from "../State/EnemyLevel/Actions";
-import { Enemy } from "../State/EnemyLevel/Enemy";
 import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
 import { setPlayerBulletState, setPlayerLocationData, setPlayerOnScreen } from "../State/Player/Actions";
@@ -34,7 +33,7 @@ import { overlaps } from "../Utility/Geometry";
  * Array of current game objects on screen.
  */
 
-const localState: { enemies: Enemy[] } = {
+const localState: { enemies: BaseEnemy[] } = {
     enemies: [],
 };
 
@@ -56,13 +55,9 @@ export namespace EnemyLevelRunner {
         GameLoop.registerDraw(draw);
     }
 
-    export function setEnemies(newEnemies: Enemy[]): void {
+    export function setEnemies(newEnemies: BaseEnemy[]): void {
         localState.enemies = newEnemies;
         dispatch(setTotalEnemies(newEnemies.length));
-    }
-
-    export function getEnemies(): Enemy[] {
-        return localState.enemies;
     }
 }
 
@@ -156,9 +151,9 @@ function handleHitDetection(tick: number) {
                 if (overlaps(playerState.playerBulletState.hitbox, enemyState.hitbox)) {
                     dispatch(setPlayerBulletState(undefined));
 
-                    const enemy = localState.enemies.find((e) => e.ship.getId() === enemyState.enemyId);
+                    const enemy = localState.enemies.find((e) => e.getId() === enemyState.enemyId);
                     if (enemy !== undefined) {
-                        handleEnemyDestruction(enemy.ship, tick);
+                        handleEnemyDestruction(enemy, tick);
                     }
                 }
             }
@@ -187,7 +182,7 @@ function handleExplosionCenters(tick: number): void {
  */
 function handleEnemies(tick: number): void {
     localState.enemies.forEach((e) => {
-        e.ship.updateState(tick);
+        e.updateState(tick);
     });
 }
 
@@ -214,12 +209,12 @@ function handleBullets(): void {
  * Handle self destruct.
  */
 function handleSelfDestruct(tick: number): void {
-    const { playerState, enemyLevelState } = appState()
+    const { playerState } = appState();
 
     if (playerState.playerOnScreen && appState().keyboardState.selfDestruct) {
         for (const enemy of localState.enemies) {
 
-            const enemyState = StateProviders.getEnemyState(enemy.ship);
+            const enemyState = StateProviders.getEnemyState(enemy);
             queueExplosionRender(enemyState.offsetLeft, enemyState.offsetTop, enemyState.coloredExplosion, tick);
         }
 
@@ -237,8 +232,8 @@ function handleEnemyDestruction(ship: BaseEnemy, tick: number): void {
     const { enemyLevelState } = appState();
 
     localState.enemies = localState.enemies.filter((e) => {
-        if (e.ship !== ship) {
-            e.ship.increaseSpeed(enemyLevelState.totalNumberOfEnemies / (localState.enemies.length - 1));
+        if (e !== ship) {
+            e.increaseSpeed(enemyLevelState.totalNumberOfEnemies / (localState.enemies.length - 1));
             return true;
         } else {
             return false;
@@ -281,9 +276,9 @@ function handlePhaser(tick: number): void {
 
                 // Deal the with the enemy that got hit.
 
-                const enemy = localState.enemies.find((e) => e.ship.getId() === randomEnemy.enemyId);
+                const enemy = localState.enemies.find((e) => e.getId() === randomEnemy.enemyId);
                 if (enemy !== undefined) {
-                    handleEnemyDestruction(enemy.ship, tick);
+                    handleEnemyDestruction(enemy, tick);
                 }
 
                 dispatch(clearPhaserLocations());
@@ -334,7 +329,7 @@ function queueExplosionRender(left: number, top: number, coloredExplosion: Explo
  * @param {number} value.
  */
 export function increaseEnemySpeed(value: number): void {
-    localState.enemies.forEach((e) => e.ship.increaseSpeed(value));
+    localState.enemies.forEach((e) => e.increaseSpeed(value));
 }
 
 //#region  Debugging

@@ -25,7 +25,6 @@ import OrbEnemy from "./Orb/OrbEnemy";
 import getOrbFrames from "./Orb/OrbFrames";
 import RobotEnemy from "./Robot/RobotEnemy";
 import getRobotFrames from "./Robot/RobotFrames";
-import { Enemy } from "../State/EnemyLevel/Enemy";
 
 /**
  * Module:          EnemyFactory
@@ -36,17 +35,13 @@ const {
     pixelSize,
 } = dimensionProvider();
 
-export function enemyFactory(enemy: Enemies, left: number, top: number, speed: number, angle: number, color?: string): Enemy {
+export function enemyFactory(enemy: Enemies, left: number, top: number, speed: number, angle: number, color?: string): BaseEnemy {
     switch (enemy) {
         case "bird": {
             const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(getBirdFrames().frames));
             const { width, height } = getMaximumFrameDimensions(getBirdFrames().frames, pixelSize);
             const locationProvider = new SideToSideUpAndDown(left, top, speed, angle, width, height);
-
-            return {
-                ship: new BirdEnemy(birdFrameTime, locationProvider, frameProvider, getExplosion01, getBirdFrames),
-                lastFireTick: 0,
-            };
+            return new BirdEnemy(birdFrameTime, locationProvider, frameProvider, getExplosion01, getBirdFrames);
         }
         case "robot": {
             const frameProvider = new BackAndForthFrameProvider(0);
@@ -57,19 +52,13 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, speed: n
                 throw new Error("Robot enemy requires a color");
             }
 
-            return {
-                ship: new RobotEnemy(color, robotFrameTime, locationProvider, frameProvider, getExplosion02, getRobotFrames),
-                lastFireTick: 0,
-            };
+            return new RobotEnemy(color, robotFrameTime, locationProvider, frameProvider, getExplosion02, getRobotFrames);
         }
         case "orb": {
             const frameProvider = new CircleFrameProvider(0);
             const { width, height } = getMaximumFrameDimensions(getOrbFrames().frames, pixelSize);
             const locationProvider = new MoveDownAppearUp(80, left, top, orbMovementSpeed, angle, width, height);
-            return {
-                ship: new OrbEnemy(orbFrameTime, locationProvider, frameProvider, getExplosion02, getOrbFrames, orbEnemyAngleProvider),
-                lastFireTick: 0,
-            };
+            return  new OrbEnemy(orbFrameTime, locationProvider, frameProvider, getExplosion02, getOrbFrames, orbEnemyAngleProvider);
         }
 
         default:

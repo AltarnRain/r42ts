@@ -11,11 +11,11 @@ import { drawBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { resetLevelState, setFireInterval } from "../State/EnemyLevel/Actions";
-import { Enemy } from "../State/EnemyLevel/Enemy";
 import { addPhaser, nextLevel } from "../State/Game/Actions";
 import { setPlayerMovementLimit } from "../State/Player/Actions";
 import { appState, appStore, dispatch } from "../State/Store";
 import { TickFunction } from "../Types";
+import { BaseEnemy } from "./BaseEnemy";
 
 export default abstract class BaseEnemyLevel implements ILevel {
 
@@ -92,7 +92,7 @@ export default abstract class BaseEnemyLevel implements ILevel {
     /**
      * Begin this level. Call from start.
      */
-    protected begin(enemies: Enemy[], fireInterval?: number, bulletRunner?: BulletRunner): void {
+    protected begin(enemies: BaseEnemy[], fireInterval?: number, bulletRunner?: BulletRunner): void {
         // Register the stateManager so it can act on state changes in the level.
         this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));
 

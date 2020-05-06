@@ -10,7 +10,7 @@ import Explosion from "../Models/Explosion";
 import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { addEnemyToState } from "../State/EnemyLevel/Actions";
+import { addOrUpdateEnemy } from "../State/EnemyLevel/Actions";
 import { dispatch } from "../State/Store";
 import { Angle, ExplosionProviderFunction, FireAngleProviderFunction, Frame, OffsetFramesProviderFunction } from "../Types";
 import { getFrameCenter, getFrameHitbox } from "../Utility/Frame";
@@ -164,7 +164,7 @@ export abstract class BaseEnemy {
         this.offsetLeft = offsetLocation.left;
         this.offsetTop = offsetLocation.top;
 
-        dispatch(addEnemyToState({
+        dispatch(addOrUpdateEnemy({
             enemyId: this.getId(),
             coloredExplosion: this.explosion,
             offsetLeft: this.offsetLeft,
@@ -174,6 +174,7 @@ export abstract class BaseEnemy {
             hitbox: this.getHitbox(),
             centerLocation: this.getCenterLocation(),
             fireAngle: undefined,
+            lastFireTick: 0,
         }));
     }
 

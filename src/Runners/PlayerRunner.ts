@@ -9,12 +9,12 @@ import { playerBulletSpeed } from "../Constants/BulletSpeeds";
 import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
-import { StateProviders } from "../State/StateProviders";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { setPlayerBulletState } from "../State/Player/Actions";
 import { ParticleState } from "../State/Player/ParticleState";
+import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { fallsWithin, getLocation } from "../Utility/Location";
 
