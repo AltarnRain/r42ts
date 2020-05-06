@@ -7,7 +7,6 @@
 import { BaseEnemy } from "../Base/BaseEnemy";
 import { birdFrameTime, orbFrameTime, robotFrameTime } from "../Constants/EnemyFrameTime";
 import { orbMovementSpeed, robotMovementSpeed } from "../Constants/EnemyMovementSpeeds";
-import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
 import orbEnemyAngleProvider from "../FireAngleProviders/OrbEnemyAngleProvider";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUpLocaionProvider";
 import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDownLocationProvider";
@@ -58,7 +57,7 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, speed: n
             const frameProvider = new CircleFrameProvider(0);
             const { width, height } = getMaximumFrameDimensions(getOrbFrames().frames, pixelSize);
             const locationProvider = new MoveDownAppearUp(80, left, top, orbMovementSpeed, angle, width, height);
-            return  new OrbEnemy(orbFrameTime, locationProvider, frameProvider, getExplosion02, getOrbFrames, orbEnemyAngleProvider);
+            return  new OrbEnemy(orbFrameTime, locationProvider, frameProvider, getExplosion02, getOrbFrames);
         }
 
         default:

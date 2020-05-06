@@ -9,9 +9,8 @@
  * Responsibility:  Returns down/left or down/right aimed at the player
  */
 
-import { BaseEnemy } from "../Base/BaseEnemy";
 import { angles } from "../Constants/Angles";
-import { StateProviders } from "../State/StateProviders";
+import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { appState } from "../State/Store";
 
 /**
@@ -19,7 +18,7 @@ import { appState } from "../State/Store";
  * player. If it can't hit the player the angle will be undefined.
  * @param {BaseEnemy} self. An enemy.
  */
-export default function orbEnemyAngleProvider(enemy: BaseEnemy, left: number, top: number): number | undefined {
+export default function orbEnemyAngleProvider(enemy: EnemyState, left: number, top: number): number | undefined {
 
     const {
         playerState,
@@ -41,11 +40,9 @@ export default function orbEnemyAngleProvider(enemy: BaseEnemy, left: number, to
     const canFireDown = rnd === 1;
 
     if (canFireDown) {
-        const enemyState = StateProviders.getEnemyState(enemy);
-
         const {
             centerLocation,
-        } = enemyState;
+        } = enemy;
 
         if (centerLocation !== undefined) {
             // Check if it makes sense for the orb to fire down. If not, it'll pick one of its diagonal angles.

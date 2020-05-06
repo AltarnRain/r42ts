@@ -42,8 +42,7 @@ export default class OrbEnemy extends BaseEnemy {
         locationProvider: ILocationProvider,
         frameProvider: BaseFrameProvider,
         getExplosion: ExplosionProviderFunction,
-        getFrames: OffsetFramesProviderFunction,
-        angleProvider?: FireAngleProviderFunction) {
+        getFrames: OffsetFramesProviderFunction) {
         super(frameChangeTime, getFrames, getExplosion, locationProvider, frameProvider);
 
         // We only have one frame in this enemy but its color DOES change. Set the currentFrame to the only available one

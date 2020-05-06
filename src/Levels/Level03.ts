@@ -14,6 +14,7 @@ import { orbAngle } from "../Constants/MovementAngles";
 import { enemyFactory } from "../Enemies/EnemyFactory";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import orbsToFire from "../Enemies/Orb/OrbsToFire";
+import orbEnemyAngleProvider from "../FireAngleProviders/OrbEnemyAngleProvider";
 import orbFireCheck from "../FireChecks/OrbFireCheck";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 
@@ -30,7 +31,7 @@ export class Level03 extends BaseEnemyLevel {
             return enemyFactory("orb", location.left, location.top, orbMovementSpeed, orbAngle);
         });
 
-        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, orbBulletSpeed, orbsToFire, orbFireCheck);
+        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, orbBulletSpeed, orbEnemyAngleProvider, orbsToFire, orbFireCheck);
         this.begin(enemies, orbFireFrequence, bulletRunner);
     }
 }

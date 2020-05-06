@@ -45,19 +45,24 @@ export type MoveLimits = "immobile" | "sideways" | "forceup" | "none";
 export type PlayerFormationPhases = "begin" | "inprogress" | undefined;
 
 /**
+ * A function that provides an array of enemies that can fire.
+ */
+export type ShipsToFireFunction = (enemies: EnemyState[], angle?: number) => EnemyState[];
+
+/**
  * Function definition of an angle provider function.
  * An angle provider function is NOT a pure function. It may pull in state
  * To determine the best angle. For example, enemies mostly limited to diagonal angles
  * Begin firing straight down once a certain amount of enemies are left.
  */
-export type FireAngleProviderFunction = (enemy: BaseEnemy, left: number, top: number) => number | undefined;
+export type FireAngleProviderFunction = (enemy: EnemyState, left: number, top: number) => number | undefined;
 
 /**
  * Function definition of a FireCheckFunction.
  * A fire check function accepts the current enemy being checked if it can be fired.
  * Fire check functions are NOT pure. They CAN pull in state and do additional checks.
  */
-export type FireCheckFunction = (enemyState: EnemyState) => boolean;
+export type FireCheckFunction = (enemyState: EnemyState, angle?: number) => boolean;
 
 /**
  * Always provides a fresh explosion object.
@@ -83,10 +88,5 @@ export type FrameProviderFunction = () => Frame;
  * An angle. An angle can be a number or undefined.
  */
 export type Angle = number | undefined;
-
-/**
- * A function that provides an array of enemies that can fire.
- */
-export type ShipsToFireFunction = (enemies: EnemyState[]) => EnemyState[];
 
 export type Enemies = "bird" | "robot" | "orb";

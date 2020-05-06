@@ -173,7 +173,6 @@ export abstract class BaseEnemy {
             hitpoints: this.getHitpoints(),
             hitbox: this.getHitbox(),
             centerLocation: this.getCenterLocation(),
-            fireAngle: undefined,
             lastFireTick: 0,
         }));
     }

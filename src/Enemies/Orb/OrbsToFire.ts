@@ -17,10 +17,9 @@ import { calculateAngle, calculateAngleDifference } from "../../Utility/Geometry
  * A function that selects the orbs that should fire.
  * @param {number} tick. Current tick
  */
-export default function orbsToFire(orbs: EnemyState[]): EnemyState[] {
+export default function orbsToFire(orbs: EnemyState[], angle?: number): EnemyState[] {
     const {
         playerState,
-        enemyLevelState
     } = appState();
 
     if (!playerState.playerOnScreen) {
@@ -40,7 +39,6 @@ export default function orbsToFire(orbs: EnemyState[]): EnemyState[] {
     let above = 0;
     let below = 0;
     for (const orb of orbs) {
-        const enemyFireAngle = orb.fireAngle;
         const center = orb.centerLocation;
         if (center) {
             const angleToPlayer = calculateAngle(center.left, center.top, playerState.playerLeftLocation, playerState.playerTopLocation);
@@ -51,9 +49,9 @@ export default function orbsToFire(orbs: EnemyState[]): EnemyState[] {
                 above += 1;
             }
 
-            if (enemyFireAngle !== undefined && angleToPlayer !== undefined) {
-                const angleDifference = calculateAngleDifference(enemyFireAngle, angleToPlayer);
-                candidates.push({ ship: orb, angleDifference, angle: enemyFireAngle });
+            if (angle !== undefined && angleToPlayer !== undefined) {
+                const angleDifference = calculateAngleDifference(angle, angleToPlayer);
+                candidates.push({ ship: orb, angleDifference, angle });
             }
         }
     }

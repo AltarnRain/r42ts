@@ -9,7 +9,7 @@ import { addBullet, addOrUpdateEnemy } from "../State/EnemyLevel/Actions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
-import { FireCheckFunction, Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
+import { FireCheckFunction, Frame, FrameProviderFunction, ShipsToFireFunction, FireAngleProviderFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
 /**
@@ -54,6 +54,7 @@ export default class BulletRunner {
      * @memberof BulletRunner
      */
     private shipsToFire: ShipsToFireFunction;
+    private fireAngleProvider: FireAngleProviderFunction;
 
     /**
      * Creates an instance of BulletRunner.
@@ -68,6 +69,7 @@ export default class BulletRunner {
         getBulletFrame: FrameProviderFunction,
         bulletColor: string,
         speed: number,
+        fireAngleProvider: FireAngleProviderFunction,
         shipsToFire: ShipsToFireFunction,
         fireCheck: FireCheckFunction) {
 
@@ -76,6 +78,7 @@ export default class BulletRunner {
         this.bulletFrame = getBulletFrame();
         this.fireCheck = fireCheck;
         this.shipsToFire = shipsToFire;
+        this.fireAngleProvider = fireAngleProvider;
 
         Mutators.Frame.setColor(this.bulletFrame, this.bulletColor);
     }
@@ -113,7 +116,8 @@ export default class BulletRunner {
             // Fire check functions check the state and make the final call if the ship
             // can fire or not.
             if (this.fireCheck(ship)) {
-                const {fireAngle , hitbox } = ship;
+                const { hitbox } = ship;
+                const fireAngle = this.fireAngleProvider(ship, ship.offsetLeft, ship.offsetTop);
                 if (fireAngle !== undefined && hitbox !== undefined) {
 
                     const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - pixelSize;
@@ -128,7 +132,7 @@ export default class BulletRunner {
                         ship.enemyId,
                     );
 
-                    const newState = {...ship, lastFireTick: tick};
+                    const newState = { ...ship, lastFireTick: tick };
 
                     dispatch(addBullet(bullet));
                     dispatch(addOrUpdateEnemy(newState));
