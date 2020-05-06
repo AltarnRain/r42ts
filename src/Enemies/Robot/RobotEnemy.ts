@@ -25,15 +25,13 @@ export default class RobotEnemy extends BaseEnemy {
         locationProvider: ILocationProvider,
         frameProvider: BaseFrameProvider,
         getExplosion: ExplosionProviderFunction,
-        getFrames: OffsetFramesProviderFunction,
-        angleProvider?: FireAngleProviderFunction) {
+        getFrames: OffsetFramesProviderFunction) {
         super(
             frameChangeTime,
             getFrames,
             getExplosion,
             locationProvider,
-            frameProvider,
-            angleProvider);
+            frameProvider);
 
         Mutators.Frame.setColor(this.explosion.explosionCenterFrame, color);
         Mutators.Frame.setColor(this.explosion.particleFrames[0], color);

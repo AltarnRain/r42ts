@@ -44,17 +44,20 @@ export default function orbsToFire(orbs: BaseEnemy[]): BaseEnemy[] {
         const enemyState = StateProviders.getEnemyState(orb);
         const enemyFireAngle = enemyState.fireAngle;
         const center = enemyState.centerLocation;
-        const angleToPlayer = calculateAngle(center.left, center.top, playerState.playerLeftLocation, playerState.playerTopLocation);
+        if (center) {
 
-        if (center.top > playerhitbox.bottom) {
-            below += 1;
-        } else {
-            above += 1;
-        }
+            const angleToPlayer = calculateAngle(center.left, center.top, playerState.playerLeftLocation, playerState.playerTopLocation);
 
-        if (enemyFireAngle !== undefined && angleToPlayer !== undefined) {
-            const angleDifference = calculateAngleDifference(enemyFireAngle, angleToPlayer);
-            candidates.push({ ship: orb, angleDifference, angle: enemyFireAngle });
+            if (center.top > playerhitbox.bottom) {
+                below += 1;
+            } else {
+                above += 1;
+            }
+
+            if (enemyFireAngle !== undefined && angleToPlayer !== undefined) {
+                const angleDifference = calculateAngleDifference(enemyFireAngle, angleToPlayer);
+                candidates.push({ ship: orb, angleDifference, angle: enemyFireAngle });
+            }
         }
     }
 

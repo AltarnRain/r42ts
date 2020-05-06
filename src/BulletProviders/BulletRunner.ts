@@ -123,7 +123,7 @@ export default class BulletRunner {
                     hitbox
                 } = enemyState;
 
-                if (fireAngle !== undefined) {
+                if (fireAngle !== undefined && hitbox !== undefined) {
 
                     const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - pixelSize;
                     const top = hitbox.bottom + pixelSize;

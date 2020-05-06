@@ -7,25 +7,23 @@
 import { BaseEnemy } from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
-import Guard from "../Guard";
 import Explosion from "../Models/Explosion";
-import { StateProviders } from "../State/StateProviders";
 import getPhaserLocations from "../Player/GetPhaserLocations";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
-import { addExplosionCenter, addParticles, clearPhaserLocations, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies, removeEnemy } from "../State/EnemyLevel/Actions";
+import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies } from "../State/EnemyLevel/Actions";
 import { Enemy } from "../State/EnemyLevel/Enemy";
 import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
 import { setPlayerBulletState, setPlayerLocationData, setPlayerOnScreen } from "../State/Player/Actions";
+import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { Frame } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getFrameHitbox } from "../Utility/Frame";
 import { overlaps } from "../Utility/Geometry";
-import { levelFactory } from "../Levels/LevelFactory";
 
 /**
  * Module:          EnemyLevelRunner
@@ -141,24 +139,27 @@ function handleHitDetection(tick: number) {
     } = appState();
 
     for (const enemyState of enemyLevelState.enemyState) {
-        // In this loop the state is updated. We need to get the most
-        // recent one.
-        // Check if the player got hit.
-        if (playerState.playerHitbox && debuggingState.playerIsImmortal === false) {
-            if (overlaps(playerState.playerHitbox, enemyState.hitbox)) {
-                // Player was hit. Render the explosion.
-                handlePlayerDeath(tick);
+
+        if (enemyState.hitbox !== undefined) {
+            // In this loop the state is updated. We need to get the most
+            // recent one.
+            // Check if the player got hit.
+            if (playerState.playerHitbox && debuggingState.playerIsImmortal === false) {
+                if (overlaps(playerState.playerHitbox, enemyState.hitbox)) {
+                    // Player was hit. Render the explosion.
+                    handlePlayerDeath(tick);
+                }
             }
-        }
 
-        // Check if the player hit something.
-        if (playerState.playerBulletState?.hitbox) {
-            if (overlaps(playerState.playerBulletState.hitbox, enemyState.hitbox)) {
-                dispatch(setPlayerBulletState(undefined));
+            // Check if the player hit something.
+            if (playerState.playerBulletState?.hitbox !== undefined) {
+                if (overlaps(playerState.playerBulletState.hitbox, enemyState.hitbox)) {
+                    dispatch(setPlayerBulletState(undefined));
 
-                const enemy = localState.enemies.find((e) => e.ship.getId() === enemyState.enemyId);
-                if (enemy !== undefined) {
-                    handleEnemyDestruction(enemy.ship, tick);
+                    const enemy = localState.enemies.find((e) => e.ship.getId() === enemyState.enemyId);
+                    if (enemy !== undefined) {
+                        handleEnemyDestruction(enemy.ship, tick);
+                    }
                 }
             }
         }
@@ -254,10 +255,10 @@ function handleEnemyDestruction(ship: BaseEnemy, tick: number): void {
  * Handles the firing of a phaser charge.
  */
 function handlePhaser(tick: number): void {
-    const { enemyLevelState, playerState, gameState } = appState();
+    const { enemyLevelState, playerState, gameState, keyboardState } = appState();
 
     if (playerState.playerNozzleLocation &&
-        appState().keyboardState.phraser &&
+        keyboardState.phraser &&
         localState.enemies.length > 0 &&
         gameState.phasers > 0 &&
         enemyLevelState.phaserLocations.length === 0) {
@@ -265,28 +266,29 @@ function handlePhaser(tick: number): void {
         const randomEnemy = getRandomArrayElement(enemyLevelState.enemyState);
         const playerNozzleLocation = playerState.playerNozzleLocation;
         const randomEnemyCenter = randomEnemy.centerLocation;
+        if (randomEnemyCenter !== undefined) {
+            // Remove one phaser.
+            dispatch(removePhaser());
+            const phaserLocations = getPhaserLocations(playerNozzleLocation.left, playerNozzleLocation.top, randomEnemyCenter.left, randomEnemyCenter.top, pixelSize);
+            dispatch(setPhaserLocations(phaserLocations));
 
-        // Remove one phaser.
-        dispatch(removePhaser());
-        const phaserLocations = getPhaserLocations(playerNozzleLocation.left, playerNozzleLocation.top, randomEnemyCenter.left, randomEnemyCenter.top, pixelSize);
-        dispatch(setPhaserLocations(phaserLocations));
+            // Pause the game for a very brief period. This is what the original game did
+            // when you fired a phasor shot.
+            dispatch(setPause(true));
+            window.setTimeout(() => {
+                // Unpause the game to let rendering continue.
+                dispatch(setPause(false));
 
-        // Pause the game for a very brief period. This is what the original game did
-        // when you fired a phasor shot.
-        dispatch(setPause(true));
-        window.setTimeout(() => {
-            // Unpause the game to let rendering continue.
-            dispatch(setPause(false));
+                // Deal the with the enemy that got hit.
 
-            // Deal the with the enemy that got hit.
+                const enemy = localState.enemies.find((e) => e.ship.getId() === randomEnemy.enemyId);
+                if (enemy !== undefined) {
+                    handleEnemyDestruction(enemy.ship, tick);
+                }
 
-            const enemy = localState.enemies.find((e) => e.ship.getId() === randomEnemy.enemyId);
-            if (enemy !== undefined) {
-                handleEnemyDestruction(enemy.ship, tick);
-            }
-
-            dispatch(clearPhaserLocations());
-        }, 100);
+                dispatch(clearPhaserLocations());
+            }, 100);
+        }
     }
 }
 
@@ -356,13 +358,15 @@ function DEBUGGING_renderHitboxes() {
         // coordiates and radius of the hitbox.
         for (const hitbox of hitboxes) {
 
-            const ctx = ctxProvider();
-            ctx.beginPath();
-            ctx.strokeStyle = "white";
-            ctx.rect(hitbox.left, hitbox.top, hitbox.right - hitbox.left, hitbox.bottom - hitbox.top);
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.closePath();
+            if (hitbox !== undefined) {
+                const ctx = ctxProvider();
+                ctx.beginPath();
+                ctx.strokeStyle = "white";
+                ctx.rect(hitbox.left, hitbox.top, hitbox.right - hitbox.left, hitbox.bottom - hitbox.top);
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.closePath();
+            }
         }
     }
 }

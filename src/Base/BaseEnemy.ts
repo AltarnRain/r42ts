@@ -63,11 +63,6 @@ export abstract class BaseEnemy {
     protected explosion: Explosion;
 
     /**
-     * Helps the enemy determine which angle it will use to fire a bullet.
-     */
-    private angleProvider?: FireAngleProviderFunction;
-
-    /**
      * Left position offset for animation.
      */
     private offsetLeft: number;
@@ -80,7 +75,7 @@ export abstract class BaseEnemy {
     /**
      * Current frame of the object
      */
-    protected currentFrame!: Frame;
+    protected currentFrame?: Frame;
 
     /**
      * Provides location. Can be used to alter the movement behaviour of enemies.
@@ -102,8 +97,7 @@ export abstract class BaseEnemy {
         getOffsetFrames: OffsetFramesProviderFunction,
         getExplosion: ExplosionProviderFunction,
         locationProvider: ILocationProvider,
-        frameProvider: BaseFrameProvider,
-        fireAngleProvider?: FireAngleProviderFunction) {
+        frameProvider: BaseFrameProvider) {
 
         this.locationProvider = locationProvider;
 
@@ -118,9 +112,10 @@ export abstract class BaseEnemy {
             };
         });
 
-        this.angleProvider = fireAngleProvider;
         this.frameProvider = frameProvider;
         this.frameProvider.setFrames(offSetFrames.frames);
+
+        this.currentFrame = this.frameProvider.getCurrentFrame();
 
         const { left, top } = this.getOffsetLocation();
         this.offsetLeft = left;
@@ -159,17 +154,6 @@ export abstract class BaseEnemy {
     protected abstract onFrameChange(): void;
 
     /**
-     * Returns the enemies offsets locations.
-     */
-    private getLocation(): GameLocation {
-        // Overrides BaseEnemy
-        return {
-            left: this.offsetLeft,
-            top: this.offsetTop
-        };
-    }
-
-    /**
      * Base implementation of a state update.
      * @param {number} tick
      */
@@ -189,7 +173,7 @@ export abstract class BaseEnemy {
             hitpoints: this.getHitpoints(),
             hitbox: this.getHitbox(),
             centerLocation: this.getCenterLocation(),
-            fireAngle: this.getFireAngle(),
+            fireAngle: undefined,
         }));
     }
 
@@ -225,9 +209,11 @@ export abstract class BaseEnemy {
      * Returns the center location of the object.
      * @returns {GameLocation}. Location located at the center of the object.
      */
-    private getCenterLocation(): GameLocation {
-        const { left, top } = this.locationProvider.getCurrentLocation();
-        return getFrameCenter(left, top, this.currentFrame, pixelSize);
+    private getCenterLocation(): GameLocation | undefined {
+        if (this.currentFrame !== undefined) {
+            const { left, top } = this.locationProvider.getCurrentLocation();
+            return getFrameCenter(left, top, this.currentFrame, pixelSize);
+        }
     }
 
     /**
@@ -235,21 +221,9 @@ export abstract class BaseEnemy {
      * @returns {GameRectangle}
      * @memberof BaseEnemy
      */
-    private getHitbox(): GameRectangle {
-        return getFrameHitbox(this.offsetLeft, this.offsetTop, this.currentFrame, negativepixelSize);
-    }
-
-    /**
-     * Returns the fire angle of the orb enemy.
-     * @returns {Angle}. An angle.
-     */
-    private getFireAngle(): Angle {
-        if (this.angleProvider === undefined) {
-            return undefined;
+    private getHitbox(): GameRectangle | undefined {
+        if (this.currentFrame) {
+            return getFrameHitbox(this.offsetLeft, this.offsetTop, this.currentFrame, negativepixelSize);
         }
-
-        const center = this.getCenterLocation();
-        const angle = this.angleProvider(this, center.left, center.top);
-        return angle;
     }
 }

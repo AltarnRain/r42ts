@@ -10,7 +10,7 @@ export interface EnemyState {
     offsetTop: number;
     currentFrame?: Frame;
     hitpoints: number;
-    hitbox: GameRectangle;
-    centerLocation: GameLocation;
+    hitbox: GameRectangle | undefined;
+    centerLocation: GameLocation | undefined;
     fireAngle: number | undefined;
 }

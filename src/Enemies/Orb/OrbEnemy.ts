@@ -44,7 +44,7 @@ export default class OrbEnemy extends BaseEnemy {
         getExplosion: ExplosionProviderFunction,
         getFrames: OffsetFramesProviderFunction,
         angleProvider?: FireAngleProviderFunction) {
-        super(frameChangeTime, getFrames, getExplosion, locationProvider, frameProvider, angleProvider);
+        super(frameChangeTime, getFrames, getExplosion, locationProvider, frameProvider);
 
         // We only have one frame in this enemy but its color DOES change. Set the currentFrame to the only available one
         // and sets its color to the first color set so we get a a good render when the enemy first appears.
@@ -54,8 +54,6 @@ export default class OrbEnemy extends BaseEnemy {
         Mutators.Frames.setColor(this.explosion.particleFrames, CGAColors.magenta);
 
         this.colorTickHandler = new TickHandler(100, () => this.onColorChange());
-
-        this.onFrameChange();
     }
 
     /**

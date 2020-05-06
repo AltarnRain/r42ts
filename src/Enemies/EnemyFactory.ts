@@ -58,7 +58,7 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, speed: n
             }
 
             return {
-                ship: new RobotEnemy(color, robotFrameTime, locationProvider, frameProvider, getExplosion02, getRobotFrames, downFireAngleProvider),
+                ship: new RobotEnemy(color, robotFrameTime, locationProvider, frameProvider, getExplosion02, getRobotFrames),
                 lastFireTick: 0,
             };
         }
