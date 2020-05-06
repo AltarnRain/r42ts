@@ -9,7 +9,6 @@ import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
-import Particle from "../../Particles/Particle";
 import { ExplosionProviderFunction, FireAngleProviderFunction, Frame, OffsetFramesProviderFunction } from "../../Types";
 import { getRandomArrayElement } from "../../Utility/Array";
 import Mutators from "../../Utility/FrameMutators";
@@ -79,15 +78,6 @@ export default class BirdEnemy extends BaseEnemy {
      */
     public getPoints(): number {
         return 200;
-    }
-
-    /**
-     * Returns a bullet particle.
-     * @returns {Particle}. Bullet particle of the BirdEnemy.
-     */
-    protected getBulletParticle(): Particle {
-        // TODO: Bird will fire diagolan bullets on hard mode.
-        return {} as Particle;
     }
 
     /**

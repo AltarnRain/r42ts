@@ -5,7 +5,7 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
-import { StateProviders } from "../Particles/StateProviders";
+import { StateProviders } from "../State/StateProviders";
 import dimensionProvider from "../Providers/DimensionProvider";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { addBullet, setEnemyFireTick } from "../State/EnemyLevel/Actions";

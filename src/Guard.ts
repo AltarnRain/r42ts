@@ -5,8 +5,6 @@
  */
 
 import { BaseEnemy } from "./Base/BaseEnemy";
-import BulletParticle from "./Particles/BulletParticle";
-import Particle from "./Particles/Particle";
 import { allGameKeys, GameKeys } from "./Utility/KeyboardEvents";
 
 /**
@@ -15,10 +13,6 @@ import { allGameKeys, GameKeys } from "./Utility/KeyboardEvents";
  */
 
 namespace Guard {
-    export function isEnemyBullet(particle: Particle): particle is BulletParticle {
-        return particle && particle.getObjectType() === "enemybullet";
-    }
-
     export function isValidGameKey(value: string): value is GameKeys {
         return allGameKeys.indexOf(value as GameKeys) !== -1;
     }

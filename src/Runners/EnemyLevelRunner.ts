@@ -9,7 +9,7 @@ import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import Guard from "../Guard";
 import Explosion from "../Models/Explosion";
-import { StateProviders } from "../Particles/StateProviders";
+import { StateProviders } from "../State/StateProviders";
 import getPhaserLocations from "../Player/GetPhaserLocations";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
