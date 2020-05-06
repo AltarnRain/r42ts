@@ -5,8 +5,8 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
-import { appState } from "../State/Store";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
+import { appState } from "../State/Store";
 
 /**
  * Module:          OrbFireCheck
@@ -37,10 +37,10 @@ export default function orbFireCheck(enemy: BaseEnemy): boolean {
     } else if (enemyBullets.length < 5) {
         if (enemies.length >= 5) {
             // if there's 5 enemies or more, an enemy is limited to a single bullet.
-            // canFire = enemyBullets.filter((p) => p.isOwner(enemy)).length === 0;
+            canFire = enemyBullets.filter((p) => p.owner === enemy.getId()).length === 0;
         } else if (enemies.length < 5) {
             // if there's 5 enemies or more, an enemy is limited to a single bullet.
-            // canFire = enemyBullets.filter((p) => p.isOwner(enemy)).length < Math.ceil(5 / enemyLevelState.enemies.length);
+            canFire = enemyBullets.filter((p) => p.owner === enemy.getId()).length < Math.ceil(5 / enemyLevelState.remainingEnemies);
         } else {
             canFire = false;
         }

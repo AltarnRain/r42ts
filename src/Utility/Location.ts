@@ -51,10 +51,11 @@ export function fallsWithin(left: number, top: number, outerTop: number, outerBo
 
 export function fallsWithinGameField(left: number, top: number): boolean {
     const {
-        gameField
+        gameField,
+        pixelSize
     } = dimensionProvider();
 
-    const res = fallsWithin(left, top, gameField.top, gameField.bottom, gameField.left, gameField.right);
+    const res = fallsWithin(left, top, gameField.top, gameField.bottom - pixelSize, gameField.left, gameField.right);
 
     return res;
 }

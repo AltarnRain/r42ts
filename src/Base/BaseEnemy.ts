@@ -33,6 +33,16 @@ const negativepixelSize = pixelSize * -1;
 export abstract class BaseEnemy extends BaseGameObject {
 
     /**
+     * Static to ensure every enemy gets a new id.
+     */
+    private static idCounter = 0;
+
+    /**
+     * Id of the enemy. Used to check if a bullet belongs to an enemy.
+     */
+    private enemyId = 0;
+
+    /**
      * The frame provider. Must be set in an inheriting class.
      */
     protected frameProvider: BaseFrameProvider;
@@ -105,6 +115,9 @@ export abstract class BaseEnemy extends BaseGameObject {
         const { left, top } = this.getOffsetLocation();
         this.offsetLeft = left;
         this.offsetTop = top;
+
+        this.enemyId = BaseEnemy.idCounter;
+        BaseEnemy.idCounter += 1;
     }
 
     /**
@@ -113,6 +126,13 @@ export abstract class BaseEnemy extends BaseGameObject {
      */
     public getExplosion(): Explosion {
         return this.explosion;
+    }
+
+    /**
+     * Returns the id of this enemy.
+     */
+    public getId(): number {
+        return this.enemyId;
     }
 
     /**

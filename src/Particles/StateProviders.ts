@@ -41,6 +41,22 @@ export namespace StateProviders {
         return bullet;
     }
 
+    export function getBulletParticleState(
+        left: number,
+        top: number,
+        speed: number,
+        angle: number,
+        frame: Frame,
+        owner: number,
+        hitboxTopOffset: number = 0,
+        hitboxBottomOffset: number = 0): ParticleState {
+
+        const particle = getParticleState(left, top, speed, angle, frame, 1, hitboxTopOffset, hitboxBottomOffset);
+        particle.owner = owner;
+
+        return particle;
+    }
+
     /**
      * particleProvider. Provides particle objects based on an Explosion asset.
      * @param {number} left. Left coordinate.
@@ -73,19 +89,24 @@ export namespace StateProviders {
      */
     export function getUpdatedParticleState(particles: ParticleState[]): ParticleState[] {
 
-        return produce(particles, (draft) => {
-            draft.filter((particle) => {
+        const nextState: ParticleState[] = [];
+        for (const particle of particles) {
+
+            const updatedParticle = produce(particle, (draft) => {
                 const newLocation = getLocation(particle.left, particle.top, particle.angle, particle.speed);
 
                 if (fallsWithinGameField(particle.left, particle.top)) {
-                    particle.left = newLocation.left;
-                    particle.top = newLocation.top;
-                    particle.speed = particle.speed * particle.acceletation;
-                    return true;
-                } else {
-                    return false;
+                    draft.left = newLocation.left;
+                    draft.top = newLocation.top;
+                    draft.speed = particle.speed * particle.acceletation;
                 }
             });
-        });
+
+            if (particle !== updatedParticle) {
+                nextState.push(updatedParticle);
+            }
+        }
+
+        return nextState;
     }
 }

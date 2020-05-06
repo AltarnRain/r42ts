@@ -20,4 +20,5 @@ export interface ParticleState {
     acceletation: number;
     left: number;
     top: number;
+    owner?: number;
 }

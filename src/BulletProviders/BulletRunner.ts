@@ -103,12 +103,13 @@ export default class BulletRunner {
                     const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - pixelSize;
                     const top = hitbox.bottom + pixelSize;
 
-                    const bullet = StateProviders.getParticleState(
+                    const bullet = StateProviders.getBulletParticleState(
                         left,
                         top,
                         this.speed,
                         enemyFireAngle,
                         this.bulletFrame,
+                        ship.getId(),
                     );
 
                     dispatch(addBullet(bullet));

@@ -25,7 +25,6 @@ import { Frame } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getFrameHitbox } from "../Utility/Frame";
 import { overlaps } from "../Utility/Geometry";
-import { getHittableObjects } from "../Utility/StateHelper";
 
 /**
  * Module:          EnemyLevelRunner
@@ -133,10 +132,10 @@ function handleHitDetection(tick: number) {
         debuggingState,
     } = appState();
 
-    const hittableObjects = getHittableObjects(localState.enemies);
+    const enemyShips = localState.enemies.map((e) => e.ship);
 
-    if (hittableObjects.length > 0) {
-        for (const hittableObject of hittableObjects) {
+    if (enemyShips.length > 0) {
+        for (const hittableObject of enemyShips) {
             // In this loop the state is updated. We need to get the most
             // recent one.
             const hitdetectionPlayerState = appState().playerState;
@@ -328,9 +327,7 @@ export function increaseEnemySpeed(value: number): void {
 function DEBUGGING_renderHitboxes() {
     const { debuggingState, playerState } = appState();
     if (debuggingState.drawHitboxes) {
-        const hitboxes = [
-            ...getHittableObjects(localState.enemies).map((e) => e.getHitbox()),
-        ];
+        const hitboxes = localState.enemies.map((e) => e.ship.getHitbox());
 
         // Add player if defined.
         if (playerState.playerHitbox) {
