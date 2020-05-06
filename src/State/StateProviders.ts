@@ -10,16 +10,29 @@
  */
 
 import { produce } from "immer";
+import { BaseEnemy } from "../Base/BaseEnemy";
 import Explosion from "../Models/Explosion";
-import { ParticleState } from "./Player/ParticleState";
 import { Frame } from "../Types";
 import { getFrameHitbox } from "../Utility/Frame";
 import { fallsWithinGameField, getLocation } from "../Utility/Location";
-import { BaseEnemy } from "../Base/BaseEnemy";
 import { EnemyState } from "./EnemyLevel/EnemyState";
+import { ParticleState } from "./Player/ParticleState";
 import { appState } from "./Store";
 
 export namespace StateProviders {
+    /**
+     * Gets a particle state object.
+     * @export
+     * @param {number} left. Left coordinate.
+     * @param {number} top. Top coordinate
+     * @param {number} speed. Speed of the particle in px/tick
+     * @param {number} angle. Direction angle
+     * @param {Frame} frame. Frame to render.
+     * @param {number} [acceletation=1]. Below 1 slows down, above 1 speeds up. 1 by default
+     * @param {number} [hitboxTopOffset=0]. Offset, in game pixels, that increases the top of the hitbox.
+     * @param {number} [hitboxBottomOffset=0]. Offset, in game pixels, that increases the bottom of the hitbox.
+     * @returns {ParticleState}
+     */
     export function getParticleState(
         left: number,
         top: number,
@@ -44,18 +57,31 @@ export namespace StateProviders {
         return bullet;
     }
 
+    /**
+     * Gets a particle state object.
+     * @export
+     * @param {number} left. Left coordinate.
+     * @param {number} top. Top coordinate
+     * @param {number} speed. Speed of the particle in px/tick
+     * @param {number} angle. Direction angle
+     * @param {Frame} frame. Frame to render.
+     * @param {number} order. The id of the owner. aka. The ship that fired the bullet.
+     * @param {number} [hitboxTopOffset=0]. Offset, in game pixels, that increases the top of the hitbox.
+     * @param {number} [hitboxBottomOffset=0]. Offset, in game pixels, that increases the bottom of the hitbox.
+     * @returns {ParticleState}
+     */
     export function getBulletParticleState(
         left: number,
         top: number,
         speed: number,
         angle: number,
         frame: Frame,
-        owner: number,
+        ownerId: number,
         hitboxTopOffset: number = 0,
         hitboxBottomOffset: number = 0): ParticleState {
 
         const particle = getParticleState(left, top, speed, angle, frame, 1, hitboxTopOffset, hitboxBottomOffset);
-        particle.owner = owner;
+        particle.owner = ownerId;
 
         return particle;
     }
