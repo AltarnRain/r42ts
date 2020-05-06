@@ -15,7 +15,7 @@ import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
-import { addExplosionCenter, addParticles, clearPhaserLocations, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies } from "../State/EnemyLevel/Actions";
+import { addExplosionCenter, addParticles, clearPhaserLocations, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies, setRemainingEnemies } from "../State/EnemyLevel/Actions";
 import { Enemy } from "../State/EnemyLevel/Enemy";
 import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
@@ -47,23 +47,28 @@ const {
     pixelSize
 } = dimensionProvider();
 
-/**
- * Runner function that can be registered in the GameLoop.
- * @param {number} tick. The current tick.
- */
-export default function enemyLevelRunner(tick: number): void {
-    updateState(tick);
-    GameLoop.registerDraw(draw);
+
+export namespace EnemyLevelRunner {
+    /**
+     * Runner function that can be registered in the GameLoop.
+     * @param {number} tick. The current tick.
+     */
+    export function run(tick: number): void {
+        updateState(tick);
+        GameLoop.registerDraw(draw);
+    }
+
+    export function setEnemies(newEnemies: Enemy[]): void {
+        enemies = newEnemies;
+        dispatch(setTotalEnemies(newEnemies.length));
+    }
+
+    export function getEnemies(): Enemy[] {
+        return enemies;
+    }
 }
 
-export function setEnemies(newEnemies: Enemy[]): void {
-    enemies = newEnemies;
-    dispatch(setTotalEnemies(newEnemies.length));
-}
-
-export function getEnemies(): Enemy[] {
-    return enemies;
-}
+export default EnemyLevelRunner;
 
 /**
  * Handles all level state changes.
@@ -98,7 +103,7 @@ function draw(): void {
 
     if (explosionData) {
         for (const center of explosionCenters) {
-            renderFrame(center.left, center.top, explosionData.coloredExplosion.explosionCenterFrame);
+            renderFrame(center.left, center.top, center.coloredFrame);
         }
     }
 
@@ -163,7 +168,7 @@ function handleExplosionCenters(tick: number): void {
     const { explosionCenters, explosionData } = appState().enemyLevelState;
 
     if (explosionData !== undefined) {
-        const burnTime = explosionData.coloredExplosion.explosionCenterDelay;
+        const burnTime = explosionData.explosionCenterDelay;
         const remainingExplosions = explosionCenters.filter((ec) => ec.startTick + burnTime > tick);
 
         dispatch(setExplosionCenters(remainingExplosions));
@@ -263,7 +268,8 @@ function handlePhaser(tick: number): void {
     if (playerState.playerNozzleLocation &&
         appState().keyboardState.phraser &&
         enemies.length > 0 &&
-        gameState.phasers > 0 && appState().enemyLevelState.phaserLocations.length === 0) {
+        gameState.phasers > 0 &&
+        enemyLevelState.phaserLocations.length === 0) {
 
         const randomEnemy = getRandomArrayElement(enemies);
         const playerNozzleLocation = playerState.playerNozzleLocation;
@@ -318,6 +324,7 @@ function queueExplosionRender(left: number, top: number, coloredExplosion: Explo
         top,
         startTick: tick,
         hitbox: getFrameHitbox(left, top, coloredExplosion.explosionCenterFrame, pixelSize),
+        coloredFrame: coloredExplosion.explosionCenterFrame,
     };
 
     dispatch(addExplosionCenter(newExplosion));

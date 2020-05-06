@@ -7,11 +7,11 @@
 import { BaseEnemy } from "../Base/BaseEnemy";
 import { StateProviders } from "../Particles/StateProviders";
 import dimensionProvider from "../Providers/DimensionProvider";
+import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { addBullet, setEnemyFireTick } from "../State/EnemyLevel/Actions";
 import { appState, dispatch } from "../State/Store";
 import { FireCheckFunction, Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
-import { getEnemies } from "../Runners/EnemyLevelRunner";
 
 /**
  * Module:          StraightDownBulletProvider
@@ -72,7 +72,7 @@ export default class BulletRunner {
             return;
         }
 
-        const enemies = getEnemies();
+        const enemies = EnemyLevelRunner.getEnemies();
 
         const enemiesWhoMayFire: BaseEnemy[] = [];
         for (const enemy of enemies) {

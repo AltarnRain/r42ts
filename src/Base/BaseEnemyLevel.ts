@@ -10,13 +10,12 @@ import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
 import { resetLevelState, setFireInterval } from "../State/EnemyLevel/Actions";
+import { Enemy } from "../State/EnemyLevel/Enemy";
 import { addPhaser, nextLevel } from "../State/Game/Actions";
 import { setPlayerMovementLimit } from "../State/Player/Actions";
 import { appState, appStore, dispatch } from "../State/Store";
 import { TickFunction } from "../Types";
-import { BaseEnemy } from "./BaseEnemy";
-import { setEnemies } from "../Runners/EnemyLevelRunner";
-import { Enemy } from "../State/EnemyLevel/Enemy";
+import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 
 export default abstract class BaseEnemyLevel implements ILevel {
 
@@ -111,8 +110,8 @@ export default abstract class BaseEnemyLevel implements ILevel {
                 dispatch(setFireInterval(fireInterval));
             }
 
-            // Add the enemies to the global state. The registered stateManager will take it from here.
-            setEnemies(enemies);
+            // Add the enemies to the enemy level runner. The registered stateManager will take it from here.
+            EnemyLevelRunner.setEnemies(enemies);
 
             // Add a function to the GameLoop that will check if a level has been won.
             this.registerSubscription(GameLoop.registerUpdateState(() => this.monitorLevelWonRun()));

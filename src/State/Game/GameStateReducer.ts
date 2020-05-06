@@ -9,7 +9,6 @@ import Constants from "./Constants";
 import GameState from "./GameState";
 import { GameStateTypes } from "./Types";
 import getWarpGateComplexity from "./WarpGameComplexities";
-import { WarpLevelStepSizes } from "./WarpLevelTypes";
 
 /**
  * Module:          GameStateReducer

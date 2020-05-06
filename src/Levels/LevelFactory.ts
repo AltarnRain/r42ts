@@ -10,7 +10,7 @@
  */
 
 import ILevel from "../Interfaces/ILevel";
-import enemyLevelRunner from "../Runners/EnemyLevelRunner";
+import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { appState } from "../State/Store";
 import Level01 from "./Level01";
 import Level02 from "./Level02";
@@ -29,15 +29,15 @@ export function levelFactory(level: number): ILevel {
             return new WarpLevel();
             // return new Level00(enemyLevelRunner, never);
         case 1:
-            return new Level01(enemyLevelRunner, clearedEnemies);
+            return new Level01(EnemyLevelRunner.run, clearedEnemies);
         case 2:
-            return new Level02(enemyLevelRunner, clearedEnemies);
+            return new Level02(EnemyLevelRunner.run, clearedEnemies);
         case 3:
-            return new Level03(enemyLevelRunner, clearedEnemies);
+            return new Level03(EnemyLevelRunner.run, clearedEnemies);
         case 4:
             return new WarpLevel();
         default:
-            return new Level01(enemyLevelRunner, never);
+            return new Level01(EnemyLevelRunner.run, never);
     }
 }
 
@@ -46,8 +46,8 @@ export function levelFactory(level: number): ILevel {
  * @returns {boolean}. Returns true if all enemies (and particles) have been removed from the ApplicationState.
  */
 function clearedEnemies(): boolean {
-    const { enemyLevelState: levelState } = appState();
-    if (levelState.remainingEnemies === 0 && levelState.shrapnell.length === 0) {
+    const { enemyLevelState } = appState();
+    if (enemyLevelState.remainingEnemies === 0 && enemyLevelState.shrapnell.length === 0) {
         return true;
     }
 

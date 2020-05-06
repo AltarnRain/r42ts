@@ -6,7 +6,7 @@
 
 import { BaseEnemy } from "../Base/BaseEnemy";
 import { appState } from "../State/Store";
-import { getEnemies } from "../Runners/EnemyLevelRunner";
+import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 
 /**
  * Module:          OrbFireCheck
@@ -29,7 +29,7 @@ export default function orbFireCheck(enemy: BaseEnemy): boolean {
     // Save cast. The typeguard ensures only BulletParticles are returned but TypeScript isn't
     // clever enough (yet) to understand this.
     const enemyBullets = enemyLevelState.bullets;
-    const enemies = getEnemies();
+    const enemies = EnemyLevelRunner.getEnemies();
 
     if (enemyBullets.length === 0) {
         // No bullets, can always fire.

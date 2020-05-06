@@ -5,8 +5,7 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
-import { appState } from "../State/Store";
-import { getEnemies } from "../Runners/EnemyLevelRunner";
+import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 
 /**
  * Module:          RobotFireCheck
@@ -19,7 +18,7 @@ import { getEnemies } from "../Runners/EnemyLevelRunner";
  * if the robot can fire bullets or not.
  */
 export default function robotLevel02FireCheck(enemy: BaseEnemy): boolean {
-    const enemies = getEnemies();
+    const enemies = EnemyLevelRunner.getEnemies();
     const lastEnemy = enemies[enemies.length - 1];
 
     if (lastEnemy !== undefined) {

@@ -5,6 +5,7 @@
  */
 
 import BaseEnemyLevel from "../Base/BaseEnemyLevel";
+import CGAColors from "../Constants/CGAColors";
 import { birdMovementSpeed as birdMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import { birdRandomAngles as birdRandomAngles } from "../Constants/MovementAngles";
 import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
@@ -15,8 +16,6 @@ import { ExplosionData } from "../State/EnemyLevel/ExplosionData";
 import { dispatch } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getFrameDimensions } from "../Utility/Frame";
-import Mutators from "../Utility/FrameMutators";
-import CGAColors from "../Constants/CGAColors";
 
 /**
  * Module:          Level 01
@@ -38,7 +37,7 @@ export default class Level01 extends BaseEnemyLevel {
 
         const { width, height } = getFrameDimensions(explosion.explosionCenterFrame);
         const explosionData: ExplosionData = {
-            coloredExplosion: explosion,
+            explosionCenterDelay: explosion.explosionCenterDelay,
             explosionHeight: height,
             explosionWidth: width,
         };
