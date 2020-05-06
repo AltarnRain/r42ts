@@ -5,8 +5,8 @@
  */
 
 import { BaseEnemy } from "../Base/BaseEnemy";
-import { appState } from "../State/Store";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
+import { appState } from "../State/Store";
 
 /**
  * Module:          RobotFireCheck
@@ -24,7 +24,7 @@ export default function robotLevel02FireCheck(enemy: EnemyState): boolean {
         enemyState,
     } = appState().enemyLevelState;
 
-    const lastEnemy = enemyState[enemyState.length -1];
+    const lastEnemy = enemyState[enemyState.length - 1];
 
     if (lastEnemy !== undefined) {
         if (lastEnemy.enemyId === enemy.enemyId) {

@@ -5,9 +5,9 @@
  */
 
 import { GameLocation } from "../Models/GameLocation";
+import dimensionProvider from "../Providers/DimensionProvider";
 import speedProvider from "../Providers/SpeedProvider";
 import { getNextX, getNextY } from "./Geometry";
-import dimensionProvider from "../Providers/DimensionProvider";
 
 /**
  * Module:          Location utilities

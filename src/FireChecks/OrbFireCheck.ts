@@ -4,10 +4,8 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemy } from "../Base/BaseEnemy";
-import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
-import { appState } from "../State/Store";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
+import { appState } from "../State/Store";
 
 /**
  * Module:          OrbFireCheck

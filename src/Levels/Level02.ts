@@ -14,9 +14,9 @@ import { robotAngle as robotAngle } from "../Constants/MovementAngles";
 import { enemyFactory } from "../Enemies/EnemyFactory";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import robotsToFire from "../Enemies/Robot/RobotsToFire";
+import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
 import robotLevel02FireCheck from "../FireChecks/RobotFireCheck";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
 
 /**
  * Module:          Level 02

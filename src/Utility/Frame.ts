@@ -8,8 +8,8 @@ import Explosion from "../Models/Explosion";
 import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
-import { Frame, Frames } from "../Types";
 import dimensionProvider from "../Providers/DimensionProvider";
+import { Frame, Frames } from "../Types";
 
 /**
  * Module:          Frame
