@@ -15,18 +15,16 @@ import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
-import { addExplosionCenter, addParticles, clearPhaserLocations, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies, setRemainingEnemies } from "../State/EnemyLevel/Actions";
+import { addExplosionCenter, addParticles, clearPhaserLocations, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies } from "../State/EnemyLevel/Actions";
 import { Enemy } from "../State/EnemyLevel/Enemy";
 import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
 import { setPlayerBulletState, setPlayerLocationData, setPlayerOnScreen } from "../State/Player/Actions";
-import { ParticleState } from "../State/Player/ParticleState";
 import { appState, dispatch } from "../State/Store";
 import { Frame } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getFrameHitbox } from "../Utility/Frame";
 import { overlaps } from "../Utility/Geometry";
-import { fallsWithinGameField, getLocation } from "../Utility/Location";
 import { getHittableObjects } from "../Utility/StateHelper";
 
 /**
@@ -37,7 +35,10 @@ import { getHittableObjects } from "../Utility/StateHelper";
 /**
  * Array of current game objects on screen.
  */
-let enemies: Enemy[] = [];
+
+const localState: { enemies: Enemy[] } = {
+    enemies: [],
+};
 
 const phaserFrame: Frame = [
     [CGAColors.yellow, CGAColors.yellow]
@@ -46,7 +47,6 @@ const phaserFrame: Frame = [
 const {
     pixelSize
 } = dimensionProvider();
-
 
 export namespace EnemyLevelRunner {
     /**
@@ -59,12 +59,12 @@ export namespace EnemyLevelRunner {
     }
 
     export function setEnemies(newEnemies: Enemy[]): void {
-        enemies = newEnemies;
+        localState.enemies = newEnemies;
         dispatch(setTotalEnemies(newEnemies.length));
     }
 
     export function getEnemies(): Enemy[] {
-        return enemies;
+        return localState.enemies;
     }
 }
 
@@ -99,7 +99,7 @@ function draw(): void {
     const { explosionCenters, explosionData } = enemyLevelState;
 
     // Draw all the game objects
-    enemies.forEach((e) => e.ship.draw());
+    localState.enemies.forEach((e) => e.ship.draw());
 
     if (explosionData) {
         for (const center of explosionCenters) {
@@ -133,7 +133,7 @@ function handleHitDetection(tick: number) {
         debuggingState,
     } = appState();
 
-    const hittableObjects = getHittableObjects(enemies);
+    const hittableObjects = getHittableObjects(localState.enemies);
 
     if (hittableObjects.length > 0) {
         for (const hittableObject of hittableObjects) {
@@ -180,7 +180,7 @@ function handleExplosionCenters(tick: number): void {
  * @param {number} tick. Current tick
  */
 function handleEnemies(tick: number): void {
-    enemies.forEach((e) => {
+    localState.enemies.forEach((e) => {
         e.ship.updateState(tick);
     });
 }
@@ -190,30 +190,16 @@ function handleEnemies(tick: number): void {
  * @param {number} tick. Current tick.
  */
 function handleShrapnell(): void {
-    const newState = getParticleState(appState().enemyLevelState.shrapnell);
+    const newState = StateProviders.getUpdatedParticleState(appState().enemyLevelState.shrapnell);
     dispatch(setShrapnellState(newState));
 }
 
-function getParticleState(particles: ParticleState[]) {
-
-    const newState: ParticleState[] = [];
-
-    for (const particle of particles) {
-        const newSpeed = particle.speed * particle.acceletation;
-        const newLocation = getLocation(particle.left, particle.top, particle.angle, newSpeed);
-
-        if (fallsWithinGameField(newLocation.left, newLocation.top)) {
-            const particleState = StateProviders.getParticleState(newLocation.left, newLocation.top, newSpeed, particle.angle, particle.coloredFrame, particle.acceletation);
-            newState.push(particleState);
-        }
-    }
-
-    return newState;
-}
-
+/**
+ * Handle bullet movement.
+ */
 function handleBullets(): void {
     const bullets = appState().enemyLevelState.bullets;
-    const newState = getParticleState(bullets);
+    const newState = StateProviders.getUpdatedParticleState(bullets);
 
     dispatch(setBulletState(newState));
 }
@@ -225,16 +211,14 @@ function handleSelfDestruct(tick: number): void {
     const playerState = appState().playerState;
 
     if (playerState.playerOnScreen && appState().keyboardState.selfDestruct) {
-        for (const enemy of enemies) {
+        for (const enemy of localState.enemies) {
             const center = enemy.ship.getCenterLocation();
             queueExplosionRender(center.left, center.top, enemy.ship.getExplosion(), tick);
         }
 
         queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.playerExplosion, tick);
         handlePlayerDeath(tick);
-        // dispatch(setEnemies([]));
-
-        enemies = [];
+        localState.enemies = [];
     }
 }
 
@@ -245,9 +229,9 @@ function handleSelfDestruct(tick: number): void {
 function handleEnemyDestruction(ship: BaseEnemy, tick: number): void {
     const { enemyLevelState } = appState();
 
-    enemies = enemies.filter((e) => {
+    localState.enemies = localState.enemies.filter((e) => {
         if (e.ship !== ship) {
-            e.ship.increaseSpeed(enemyLevelState.totalNumberOfEnemies / (enemies.length - 1));
+            e.ship.increaseSpeed(enemyLevelState.totalNumberOfEnemies / (localState.enemies.length - 1));
             return true;
         } else {
             return false;
@@ -267,11 +251,11 @@ function handlePhaser(tick: number): void {
 
     if (playerState.playerNozzleLocation &&
         appState().keyboardState.phraser &&
-        enemies.length > 0 &&
+        localState.enemies.length > 0 &&
         gameState.phasers > 0 &&
         enemyLevelState.phaserLocations.length === 0) {
 
-        const randomEnemy = getRandomArrayElement(enemies);
+        const randomEnemy = getRandomArrayElement(localState.enemies);
         const playerNozzleLocation = playerState.playerNozzleLocation;
         const randomEnemyCenter = randomEnemy.ship.getCenterLocation();
 
@@ -336,7 +320,7 @@ function queueExplosionRender(left: number, top: number, coloredExplosion: Explo
  * @param {number} value.
  */
 export function increaseEnemySpeed(value: number): void {
-    enemies.forEach((e) => e.ship.increaseSpeed(value));
+    localState.enemies.forEach((e) => e.ship.increaseSpeed(value));
 }
 
 //#region  Debugging
@@ -345,7 +329,7 @@ function DEBUGGING_renderHitboxes() {
     const { debuggingState, playerState } = appState();
     if (debuggingState.drawHitboxes) {
         const hitboxes = [
-            ...getHittableObjects(enemies).map((e) => e.getHitbox()),
+            ...getHittableObjects(localState.enemies).map((e) => e.getHitbox()),
         ];
 
         // Add player if defined.

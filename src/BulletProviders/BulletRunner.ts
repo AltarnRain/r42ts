@@ -109,7 +109,6 @@ export default class BulletRunner {
                         this.speed,
                         enemyFireAngle,
                         this.bulletFrame,
-                        1
                     );
 
                     dispatch(addBullet(bullet));

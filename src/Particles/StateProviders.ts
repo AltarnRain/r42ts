@@ -9,10 +9,12 @@
  * Responsibility:  Functions that provide a state object.
  */
 
+import { produce } from "immer";
 import Explosion from "../Models/Explosion";
 import { ParticleState } from "../State/Player/ParticleState";
 import { Frame } from "../Types";
 import { getFrameHitbox } from "../Utility/Frame";
+import { fallsWithinGameField, getLocation } from "../Utility/Location";
 
 export namespace StateProviders {
     export function getParticleState(
@@ -62,5 +64,28 @@ export namespace StateProviders {
         }
 
         return particles;
+    }
+
+    /**
+     * Retrns a new particle state with updated speeds and locations.
+     * @param {ParticleState[]} particles. Array of ParticleState
+     * @returns {ParticleState[]}. Remaining particles with updated speeds and locations.
+     */
+    export function getUpdatedParticleState(particles: ParticleState[]): ParticleState[] {
+
+        return produce(particles, (draft) => {
+            draft.filter((particle) => {
+                const newLocation = getLocation(particle.left, particle.top, particle.angle, particle.speed);
+
+                if (fallsWithinGameField(particle.left, particle.top)) {
+                    particle.left = newLocation.left;
+                    particle.top = newLocation.top;
+                    particle.speed = particle.speed * particle.acceletation;
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
     }
 }
