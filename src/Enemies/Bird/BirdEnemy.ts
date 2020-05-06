@@ -65,14 +65,6 @@ export default class BirdEnemy extends BaseEnemy {
     }
 
     /**
-     * Returns the frame of the birds bullet.
-     */
-    public getBulletFrame(): Frame {
-        // TODO: Implement.
-        return {} as Frame;
-    }
-
-    /**
      * Returns the points for the bird.
      * @returns {number}. Points rewarded when the BirdEnemy is destroyed.
      */
