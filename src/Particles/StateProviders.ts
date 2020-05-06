@@ -57,7 +57,7 @@ export namespace StateProviders {
             const angle = explosion.angles[i];
             const speed = explosion.useSpeed ? explosion.speed : explosion.speeds[i];
 
-            const p = StateProviders.getParticleState(left, top, speed, angle, particleFrame, 1, 0, 0);
+            const p = StateProviders.getParticleState(left, top, speed, angle, particleFrame, explosion.acceleration, 0, 0);
             particles.push(p);
         }
 

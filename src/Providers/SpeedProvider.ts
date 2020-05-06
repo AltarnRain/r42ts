@@ -16,6 +16,6 @@ const {
 } = dimensionProvider();
 
 export default function speedProvider(speed: number): number {
-    // 1793 is the size of the canvas when I was developing the game. All game speeds are based on this.
-    return speed * (gameField.right / 1793);
+    // 1600 is the size of the canvas when I was developing the game. All game speeds are based on this.
+    return speed * (gameField.right / 1600);
 }

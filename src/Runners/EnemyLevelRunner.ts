@@ -190,18 +190,18 @@ function handleEnemies(tick: number): void {
  * @param {number} tick. Current tick.
  */
 function handleShrapnell(): void {
-    const particles = appState().enemyLevelState.shrapnell;
-    const newState = getParticleState(particles);
-
+    const newState = getParticleState(appState().enemyLevelState.shrapnell);
     dispatch(setShrapnellState(newState));
 }
 
 function getParticleState(particles: ParticleState[]) {
 
     const newState: ParticleState[] = [];
+
     for (const particle of particles) {
         const newSpeed = particle.speed * particle.acceletation;
         const newLocation = getLocation(particle.left, particle.top, particle.angle, newSpeed);
+
         if (fallsWithinGameField(newLocation.left, newLocation.top)) {
             const particleState = StateProviders.getParticleState(newLocation.left, newLocation.top, newSpeed, particle.angle, particle.coloredFrame, particle.acceletation);
             newState.push(particleState);
