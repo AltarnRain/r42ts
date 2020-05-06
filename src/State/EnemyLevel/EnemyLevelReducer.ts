@@ -10,7 +10,6 @@
  */
 
 import produce from "immer";
-import { BaseEnemy } from "../../Base/BaseEnemy";
 import Constants from "./Constants";
 import EnemyLevelState from "./EnemyLevelState";
 import { EnemyLevelTypes } from "./Types";
@@ -68,6 +67,17 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
             case Constants.setRemainingEnemies:
                 draft.remainingEnemies = action.remainingEnemies;
                 break;
+            case Constants.addOrUpdateEnemy:
+                const index = state.enemyState.findIndex((es) => es.enemyId === action.enemyState.enemyId);
+                if (index > -1) {
+                    draft.enemyState[index] = action.enemyState;
+                } else {
+                    draft.enemyState.push(action.enemyState);
+                }
+                break;
+            case Constants.removeEnemy:
+                draft.enemyState = draft.enemyState.filter((es) => es.enemyId !== action.enemyId);
+                break;
         }
     });
 
@@ -84,5 +94,6 @@ function initState(): EnemyLevelState {
         bullets: [],
         totalNumberOfEnemies: 0,
         remainingEnemies: 0,
+        enemyState: [],
     };
 }

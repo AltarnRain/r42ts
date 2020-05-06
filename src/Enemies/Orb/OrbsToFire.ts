@@ -12,6 +12,7 @@
 import { BaseEnemy } from "../../Base/BaseEnemy";
 import { appState } from "../../State/Store";
 import { calculateAngle, calculateAngleDifference } from "../../Utility/Geometry";
+import { StateProviders } from "../../State/StateProviders";
 
 /**
  * A function that selects the orbs that should fire.
@@ -20,6 +21,7 @@ import { calculateAngle, calculateAngleDifference } from "../../Utility/Geometry
 export default function orbsToFire(orbs: BaseEnemy[]): BaseEnemy[] {
     const {
         playerState,
+        enemyLevelState
     } = appState();
 
     if (!playerState.playerOnScreen) {
@@ -39,11 +41,12 @@ export default function orbsToFire(orbs: BaseEnemy[]): BaseEnemy[] {
     let above = 0;
     let below = 0;
     for (const orb of orbs) {
-        const enemyFireAngle = orb.getFireAngle();
-        const center = orb.getCenterLocation();
+        const enemyState = StateProviders.getEnemyState(orb);
+        const enemyFireAngle = enemyState.fireAngle;
+        const center = enemyState.centerLocation;
         const angleToPlayer = calculateAngle(center.left, center.top, playerState.playerLeftLocation, playerState.playerTopLocation);
 
-        if (orb.getCenterLocation().top > playerhitbox.bottom) {
+        if (center.top > playerhitbox.bottom) {
             below += 1;
         } else {
             above += 1;

@@ -9,6 +9,7 @@ import { ParticleState } from "../Player/ParticleState";
 import { Enemy } from "./Enemy";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 import { ExplosionData } from "./ExplosionData";
+import { EnemyState } from "./EnemyState";
 
 /**
  * Module:          EnemyLevelState
@@ -52,5 +53,13 @@ export default interface EnemyLevelState {
      */
     explosionData: ExplosionData | undefined;
 
+    /**
+     * The number of enemies that remain.
+     */
     remainingEnemies: number;
+
+    /**
+     * State of the current enemies.
+     */
+    enemyState: EnemyState[];
 }

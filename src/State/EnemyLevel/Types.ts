@@ -13,6 +13,7 @@ import { BaseEnemy } from "../../Base/BaseEnemy";
 import { GameLocation } from "../../Models/GameLocation";
 import { ParticleState } from "../Player/ParticleState";
 import Constants from "./Constants";
+import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 import { ExplosionData } from "./ExplosionData";
 
@@ -30,11 +31,10 @@ export interface AddParticles {
     particles: ParticleState[];
 }
 
-export interface SetParticleState {
+export interface SetShrapnellState {
     type: typeof Constants.setShrapnellState;
     shrapnell: ParticleState[];
 }
-
 
 export interface AddExplosionCenter {
     type: typeof Constants.addExplosionCenter;
@@ -93,11 +93,21 @@ export interface SetRemainingEnemies {
     remainingEnemies: number;
 }
 
+export interface AddOrUpdateEnemy {
+    type: typeof Constants.addOrUpdateEnemy;
+    enemyState: EnemyState;
+}
+
+export interface RemoveEnemy {
+    type: typeof Constants.removeEnemy;
+    enemyId: number;
+}
+
 export type EnemyLevelTypes =
     ResetLevelState |
     AddParticle |
     AddParticles |
-    SetParticleState |
+    SetShrapnellState |
     AddExplosionCenter |
     SetPhaserLocations |
     ClearPhaserLocations |
@@ -108,5 +118,7 @@ export type EnemyLevelTypes =
     AddBullet |
     SetBulletState |
     SetTotalEnemies |
-    SetRemainingEnemies
+    SetRemainingEnemies |
+    AddOrUpdateEnemy |
+    RemoveEnemy
     ;

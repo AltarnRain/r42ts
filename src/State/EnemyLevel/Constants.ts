@@ -25,6 +25,8 @@ namespace Constants {
     export const setBulletState = "setBulletState";
     export const setTotalEnemies = "setTotalEnemies";
     export const setRemainingEnemies = "setRemainingEnemies";
+    export const addOrUpdateEnemy = "addOrUpdateEnemy";
+    export const removeEnemy = "removeEnemy";
 }
 
 export default Constants;

@@ -13,9 +13,10 @@ import { BaseEnemy } from "../../Base/BaseEnemy";
 import { GameLocation } from "../../Models/GameLocation";
 import { ParticleState } from "../Player/ParticleState";
 import Constants from "./Constants";
+import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 import { ExplosionData } from "./ExplosionData";
-import { AddBullet, AddExplosionCenter, AddParticle, AddParticles, ClearPhaserLocations, ResetLevelState, SetBulletState, SetEnemyFireTick, SetExplosionData, SetFireInterval, SetParticleState as SetShrapnellState, SetPhaserLocations, SetRemainingEnemies, SetTotalEnemies } from "./Types";
+import { AddBullet, AddExplosionCenter, AddOrUpdateEnemy, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetBulletState, SetEnemyFireTick, SetExplosionData, SetFireInterval, SetPhaserLocations, SetRemainingEnemies, SetShrapnellState, SetTotalEnemies } from "./Types";
 
 export function resetLevelState(): ResetLevelState {
     return {
@@ -120,5 +121,19 @@ export function setRemainingEnemies(remainingEnemies: number): SetRemainingEnemi
     return {
         type: Constants.setRemainingEnemies,
         remainingEnemies,
+    };
+}
+
+export function addEnemyToState(enemyState: EnemyState): AddOrUpdateEnemy {
+    return {
+        type: Constants.addOrUpdateEnemy,
+        enemyState,
+    };
+}
+
+export function removeEnemy(enemyId: number): RemoveEnemy {
+    return {
+        type: Constants.removeEnemy,
+        enemyId,
     };
 }

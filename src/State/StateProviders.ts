@@ -15,6 +15,9 @@ import { ParticleState } from "./Player/ParticleState";
 import { Frame } from "../Types";
 import { getFrameHitbox } from "../Utility/Frame";
 import { fallsWithinGameField, getLocation } from "../Utility/Location";
+import { BaseEnemy } from "../Base/BaseEnemy";
+import { EnemyState } from "./EnemyLevel/EnemyState";
+import { appState } from "./Store";
 
 export namespace StateProviders {
     export function getParticleState(
@@ -108,5 +111,21 @@ export namespace StateProviders {
         }
 
         return nextState;
+    }
+
+    /**
+     * Gets the enemy's ship's state. Throws an exception if the enemy could not be found.
+     * @export
+     * @param {BaseEnemy} enemy
+     * @returns {EnemyState}
+     */
+    export function getEnemyState(enemy: BaseEnemy): EnemyState {
+        const state = appState().enemyLevelState.enemyState.find((e) => e.enemyId === enemy.getId());
+
+        if (state === undefined) {
+            throw new Error("Could not retrie state for enemy " + enemy.getId());
+        }
+
+        return state;
     }
 }

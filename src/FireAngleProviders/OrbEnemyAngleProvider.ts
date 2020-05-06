@@ -11,8 +11,9 @@
 
 import { BaseEnemy } from "../Base/BaseEnemy";
 import { angles } from "../Constants/Angles";
-import { appState } from "../State/Store";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
+import { appState } from "../State/Store";
+import { StateProviders } from "../State/StateProviders";
 
 /**
  * Returns an angle of down/left or down/right but only if the passed enemy has a 'change' of hitting the
@@ -39,13 +40,18 @@ export default function orbEnemyAngleProvider(enemy: BaseEnemy, left: number, to
     const enemies = EnemyLevelRunner.getEnemies();
 
     // Increase the change the orb enemy will fire down as its numbers are reduced.
-    const rnd = Math.ceil(Math.random() * enemies.length / 1.5 );
+    const rnd = Math.ceil(Math.random() * enemies.length / 1.5);
     const canFireDown = rnd === 1;
 
     if (canFireDown) {
+        const enemyState = StateProviders.getEnemyState(enemy);
+
+        const {
+            centerLocation,
+        } = enemyState;
+
         // Check if it makes sense for the orb to fire down. If not, it'll pick one of its diagonal angles.
-        const center = enemy.getCenterLocation();
-        if (center.left >= playerHitbox.left && center.left <= playerHitbox.right) {
+        if (centerLocation.left >= playerHitbox.left && centerLocation.left <= playerHitbox.right) {
             return angles.down;
         }
     }

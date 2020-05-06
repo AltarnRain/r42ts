@@ -116,9 +116,14 @@ export default class BulletRunner {
             // Fire check functions check the state and make the final call if the ship
             // can fire or not.
             if (this.fireCheck(ship)) {
-                const hitbox = ship.getHitbox();
-                const enemyFireAngle = ship.getFireAngle();
-                if (enemyFireAngle !== undefined) {
+                const enemyState = StateProviders.getEnemyState(ship);
+
+                const {
+                    fireAngle,
+                    hitbox
+                } = enemyState;
+
+                if (fireAngle !== undefined) {
 
                     const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - pixelSize;
                     const top = hitbox.bottom + pixelSize;
@@ -127,7 +132,7 @@ export default class BulletRunner {
                         left,
                         top,
                         this.speed,
-                        enemyFireAngle,
+                        fireAngle,
                         this.bulletFrame,
                         ship.getId(),
                     );

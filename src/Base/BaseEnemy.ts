@@ -9,13 +9,13 @@ import ILocationProvider from "../Interfaces/ILocationProvider";
 import Explosion from "../Models/Explosion";
 import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
-import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { Angle, ExplosionProviderFunction, FireAngleProviderFunction, Frame, GameObjectType, OffsetFramesProviderFunction } from "../Types";
-import { getFrameCenter, getFrameHitbox, getMaximumFrameDimensions } from "../Utility/Frame";
+import { addEnemyToState } from "../State/EnemyLevel/Actions";
+import { dispatch } from "../State/Store";
+import { Angle, ExplosionProviderFunction, FireAngleProviderFunction, Frame, OffsetFramesProviderFunction } from "../Types";
+import { getFrameCenter, getFrameHitbox } from "../Utility/Frame";
 import { getOffsetLocation } from "../Utility/Location";
 import BaseFrameProvider from "./BaseFrameProvider";
-import renderFrame from "../Render/RenderFrame";
 
 /**
  * Module:          BaseEnemy
@@ -161,7 +161,7 @@ export abstract class BaseEnemy {
     /**
      * Returns the enemies offsets locations.
      */
-    public getLocation(): GameLocation {
+    private getLocation(): GameLocation {
         // Overrides BaseEnemy
         return {
             left: this.offsetLeft,
@@ -179,6 +179,18 @@ export abstract class BaseEnemy {
         const offsetLocation = this.getOffsetLocation();
         this.offsetLeft = offsetLocation.left;
         this.offsetTop = offsetLocation.top;
+
+        dispatch(addEnemyToState({
+            enemyId: this.getId(),
+            coloredExplosion: this.explosion,
+            offsetLeft: this.offsetLeft,
+            offsetTop: this.offsetTop,
+            currentFrame: this.currentFrame,
+            hitpoints: this.getHitpoints(),
+            hitbox: this.getHitbox(),
+            centerLocation: this.getCenterLocation(),
+            fireAngle: this.getFireAngle(),
+        }));
     }
 
     /**
@@ -200,16 +212,12 @@ export abstract class BaseEnemy {
         this.frameTickHandler.increaseSpeed(value);
     }
 
-    public draw(): void {
-        renderFrame(this.offsetLeft, this.offsetTop, this.currentFrame);
-    }
-
     /**
      * Returns the hitpoint of the enemy.
      * @returns {number}
      * @memberof BaseEnemy
      */
-    public getHitpoints(): number {
+    private getHitpoints(): number {
         return 0;
     }
 
@@ -217,18 +225,9 @@ export abstract class BaseEnemy {
      * Returns the center location of the object.
      * @returns {GameLocation}. Location located at the center of the object.
      */
-    public getCenterLocation(): GameLocation {
+    private getCenterLocation(): GameLocation {
         const { left, top } = this.locationProvider.getCurrentLocation();
         return getFrameCenter(left, top, this.currentFrame, pixelSize);
-    }
-
-    /**
-     * Returns the object type.
-     * @returns {GameObjectType}
-     * @memberof BaseEnemy
-     */
-    public getObjectType(): GameObjectType {
-        return "enemy";
     }
 
     /**
@@ -236,7 +235,7 @@ export abstract class BaseEnemy {
      * @returns {GameRectangle}
      * @memberof BaseEnemy
      */
-    public getHitbox(): GameRectangle {
+    private getHitbox(): GameRectangle {
         return getFrameHitbox(this.offsetLeft, this.offsetTop, this.currentFrame, negativepixelSize);
     }
 
@@ -244,7 +243,7 @@ export abstract class BaseEnemy {
      * Returns the fire angle of the orb enemy.
      * @returns {Angle}. An angle.
      */
-    public getFireAngle(): Angle {
+    private getFireAngle(): Angle {
         if (this.angleProvider === undefined) {
             return undefined;
         }
