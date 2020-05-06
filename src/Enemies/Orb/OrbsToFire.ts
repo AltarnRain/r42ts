@@ -11,13 +11,19 @@
 
 import { EnemyState } from "../../State/EnemyLevel/EnemyState";
 import { appState } from "../../State/Store";
+import { FireAngleProviderFunction } from "../../Types";
 import { calculateAngle, calculateAngleDifference } from "../../Utility/Geometry";
 
 /**
  * A function that selects the orbs that should fire.
  * @param {number} tick. Current tick
  */
-export default function orbsToFire(orbs: EnemyState[], angle?: number): EnemyState[] {
+export default function orbsToFire(orbs: EnemyState[], fireAngleProvider?: FireAngleProviderFunction): EnemyState[] {
+
+    if (fireAngleProvider === undefined) {
+        throw new Error("Fire angle provider is required for OrbsToFire");
+    }
+
     const {
         playerState,
     } = appState();
@@ -40,7 +46,9 @@ export default function orbsToFire(orbs: EnemyState[], angle?: number): EnemySta
     let below = 0;
     for (const orb of orbs) {
         const center = orb.centerLocation;
+
         if (center) {
+            const angle = fireAngleProvider(orb, orb.offsetLeft, orb.offsetTop);
             const angleToPlayer = calculateAngle(center.left, center.top, playerState.playerLeftLocation, playerState.playerTopLocation);
 
             if (center.top > playerhitbox.bottom) {

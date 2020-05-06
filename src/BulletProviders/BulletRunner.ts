@@ -9,7 +9,7 @@ import { addBullet, addOrUpdateEnemy } from "../State/EnemyLevel/Actions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
-import { FireCheckFunction, Frame, FrameProviderFunction, ShipsToFireFunction, FireAngleProviderFunction } from "../Types";
+import { FireAngleProviderFunction, FireCheckFunction, Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
 /**
@@ -54,6 +54,13 @@ export default class BulletRunner {
      * @memberof BulletRunner
      */
     private shipsToFire: ShipsToFireFunction;
+
+    /**
+     * Provides a fire angle for a ship.
+     * @private
+     * @type {FireAngleProviderFunction}
+     * @memberof BulletRunner
+     */
     private fireAngleProvider: FireAngleProviderFunction;
 
     /**
@@ -104,20 +111,20 @@ export default class BulletRunner {
             }
         }
 
-        const ships = this.shipsToFire(enemiesWhoMayFire);
+        const ships = this.shipsToFire(enemiesWhoMayFire, this.fireAngleProvider);
 
         // The candiates are sorted so the enemeies with the best odds of hitting the player
         // are at the top. Now we'll use the firecheck function to get an array of enemies that
         // can actually fire.
         for (const ship of ships) {
+            const fireAngle = this.fireAngleProvider(ship, ship.offsetLeft, ship.offsetTop);
 
             // Always call a fire check function with the last version of the enemyLevelState
             // this state is constantly updated by the dispatches done below.
             // Fire check functions check the state and make the final call if the ship
             // can fire or not.
-            if (this.fireCheck(ship)) {
+            if (this.fireCheck(ship, fireAngle)) {
                 const { hitbox } = ship;
-                const fireAngle = this.fireAngleProvider(ship, ship.offsetLeft, ship.offsetTop);
                 if (fireAngle !== undefined && hitbox !== undefined) {
 
                     const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - pixelSize;

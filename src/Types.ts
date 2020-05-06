@@ -47,7 +47,7 @@ export type PlayerFormationPhases = "begin" | "inprogress" | undefined;
 /**
  * A function that provides an array of enemies that can fire.
  */
-export type ShipsToFireFunction = (enemies: EnemyState[], angle?: number) => EnemyState[];
+export type ShipsToFireFunction = (enemies: EnemyState[], fireAngleProvider?: FireAngleProviderFunction) => EnemyState[];
 
 /**
  * Function definition of an angle provider function.
@@ -62,7 +62,7 @@ export type FireAngleProviderFunction = (enemy: EnemyState, left: number, top: n
  * A fire check function accepts the current enemy being checked if it can be fired.
  * Fire check functions are NOT pure. They CAN pull in state and do additional checks.
  */
-export type FireCheckFunction = (enemyState: EnemyState, angle?: number) => boolean;
+export type FireCheckFunction = (enemyState: EnemyState, angle: number | undefined) => boolean;
 
 /**
  * Always provides a fresh explosion object.

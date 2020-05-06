@@ -164,6 +164,8 @@ export abstract class BaseEnemy {
         this.offsetLeft = offsetLocation.left;
         this.offsetTop = offsetLocation.top;
 
+        this.locationProvider.updateState(tick);
+
         dispatch(addOrUpdateEnemy({
             enemyId: this.getId(),
             coloredExplosion: this.explosion,
