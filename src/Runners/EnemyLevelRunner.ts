@@ -16,7 +16,7 @@ import renderFrame from "../Render/RenderFrame";
 import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies } from "../State/EnemyLevel/Actions";
 import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/Actions";
-import { setPlayerBulletState, setPlayerLocationData, setPlayerOnScreen } from "../State/Player/Actions";
+import { setPlayerBulletState, setPlayerLocationData } from "../State/Player/Actions";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { Frame } from "../Types";
@@ -136,9 +136,6 @@ function handleHitDetection(tick: number) {
     for (const enemyState of enemyLevelState.enemyState) {
 
         if (enemyState.hitbox !== undefined) {
-            // In this loop the state is updated. We need to get the most
-            // recent one.
-            // Check if the player got hit.
             if (playerState.playerHitbox && debuggingState.playerIsImmortal === false) {
                 if (overlaps(playerState.playerHitbox, enemyState.hitbox)) {
                     // Player was hit. Render the explosion.
@@ -156,6 +153,22 @@ function handleHitDetection(tick: number) {
                         handleEnemyDestruction(enemy, tick);
                     }
                 }
+            }
+        }
+    }
+
+    if (playerState.playerHitbox !== undefined) {
+        for (const shrapnell of enemyLevelState.shrapnell) {
+            if (overlaps(playerState.playerHitbox, shrapnell.hitbox)) {
+                handlePlayerDeath(tick);
+                break;
+            }
+        }
+
+        for (const bullet of enemyLevelState.bullets) {
+            if (overlaps(playerState.playerHitbox, bullet.hitbox)) {
+                handlePlayerDeath(tick);
+                break;
             }
         }
     }
@@ -294,7 +307,6 @@ function handlePlayerDeath(tick: number): void {
     const { playerState } = appState();
 
     queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.playerExplosion, tick);
-    dispatch(setPlayerOnScreen(false));
     dispatch(removeLife());
 
     const spawnLocation = getShipSpawnLocation();
@@ -348,6 +360,9 @@ function DEBUGGING_renderHitboxes() {
         if (playerState.playerBulletState?.hitbox) {
             hitboxes.push(playerState.playerBulletState.hitbox);
         }
+
+        enemyLevelState.bullets.forEach((b) => hitboxes.push(b.hitbox));
+        enemyLevelState.shrapnell.forEach((b) => hitboxes.push(b.hitbox));
 
         // Draw a circle around each object using the
         // coordiates and radius of the hitbox.
