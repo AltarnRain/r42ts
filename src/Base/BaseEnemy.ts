@@ -11,11 +11,11 @@ import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { Angle, ExplosionProviderFunction, FireAngleProviderFunction, GameObjectType, OffsetFramesProviderFunction } from "../Types";
-import { getFrameCenter, getFrameDimensions, getFrameHitbox, getMaximumFrameDimensions } from "../Utility/Frame";
+import { Angle, ExplosionProviderFunction, FireAngleProviderFunction, Frame, GameObjectType, OffsetFramesProviderFunction } from "../Types";
+import { getFrameCenter, getFrameHitbox, getMaximumFrameDimensions } from "../Utility/Frame";
 import { getOffsetLocation } from "../Utility/Location";
 import BaseFrameProvider from "./BaseFrameProvider";
-import BaseGameObject from "./BaseGameObject";
+import renderFrame from "../Render/RenderFrame";
 
 /**
  * Module:          BaseEnemy
@@ -30,7 +30,7 @@ const {
 
 const negativepixelSize = pixelSize * -1;
 
-export abstract class BaseEnemy extends BaseGameObject {
+export abstract class BaseEnemy {
 
     /**
      * Static to ensure every enemy gets a new id.
@@ -83,6 +83,16 @@ export abstract class BaseEnemy extends BaseGameObject {
     private offsetTop: number;
 
     /**
+     * Current frame of the object
+    */
+    protected currentFrame!: Frame;
+
+    /**
+     * Provides location. Can be used to alter the movement behaviour of enemies.
+     */
+    protected locationProvider: ILocationProvider;
+
+    /**
      * Creates an instance of BaseEnemy.
      * @param {number} frameChangeTime. Time between frames.
      * @param {OffsetFramesProviderFunction} getOffsetFrames. Returns an OffsetFrames object.
@@ -99,7 +109,7 @@ export abstract class BaseEnemy extends BaseGameObject {
         locationProvider: ILocationProvider,
         frameProvider: BaseFrameProvider,
         fireAngleProvider?: FireAngleProviderFunction) {
-        super(locationProvider);
+
 
         this.locationProvider = locationProvider;
 
@@ -171,8 +181,6 @@ export abstract class BaseEnemy extends BaseGameObject {
      * @param {number} tick
      */
     public updateState(tick: number) {
-        super.updateState(tick);
-
         this.frameTickHandler.tick(tick);
 
         const offsetLocation = this.getOffsetLocation();
@@ -197,6 +205,10 @@ export abstract class BaseEnemy extends BaseGameObject {
     public increaseSpeed(value: number): void {
         this.locationProvider.increaseSpeed(value);
         this.frameTickHandler.increaseSpeed(value);
+    }
+
+    public draw(): void {
+        renderFrame(this.offsetLeft, this.offsetTop, this.currentFrame);
     }
 
     /**
