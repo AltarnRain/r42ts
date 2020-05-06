@@ -83,7 +83,14 @@ export abstract class BaseEnemy extends BaseGameObject {
     private offsetTop: number;
 
     /**
-     * Construct the enemy.
+     * Creates an instance of BaseEnemy.
+     * @param {number} frameChangeTime. Time between frames.
+     * @param {OffsetFramesProviderFunction} getOffsetFrames. Returns an OffsetFrames object.
+     * @param {ExplosionProviderFunction} getExplosion. Returns an explosion object.
+     * @param {ILocationProvider} locationProvider. Provides the location of the enemy.
+     * @param {BaseFrameProvider} frameProvider. Provides the frame of the enemy.
+     * @param {FireAngleProviderFunction} [fireAngleProvider]. Provides a fire hangle for the enemy.
+     * @memberof BaseEnemy
      */
     constructor(
         frameChangeTime: number,
@@ -129,7 +136,9 @@ export abstract class BaseEnemy extends BaseGameObject {
     }
 
     /**
-     * Returns the id of this enemy.
+     * getId
+     * @returns {number}
+     * @memberof BaseEnemy
      */
     public getId(): number {
         return this.enemyId;
@@ -173,7 +182,7 @@ export abstract class BaseEnemy extends BaseGameObject {
 
     /**
      * Calculates the offsetLocation
-     * @returns {Location}. Location offset to let the frames render over one another.
+     * @returns {GameLocation}. Location offset to let the frames render over one another.
      */
     protected getOffsetLocation(): GameLocation {
         const frameOffsets = this.offSets[this.frameProvider.getCurrentIndex()];
@@ -191,7 +200,9 @@ export abstract class BaseEnemy extends BaseGameObject {
     }
 
     /**
-     * Returns the enemies hitpoints. Returns 0 by default. Only meteorites have hitpoints.
+     * Returns the hitpoint of the enemy.
+     * @returns {number}
+     * @memberof BaseEnemy
      */
     public getHitpoints(): number {
         return 0;
@@ -199,7 +210,7 @@ export abstract class BaseEnemy extends BaseGameObject {
 
     /**
      * Returns the center location of the object.
-     * @returns {Location}. Location located at the center of the object.
+     * @returns {GameLocation}. Location located at the center of the object.
      */
     public getCenterLocation(): GameLocation {
         const { left, top } = this.locationProvider.getCurrentLocation();
@@ -207,15 +218,18 @@ export abstract class BaseEnemy extends BaseGameObject {
     }
 
     /**
-     * Always an enemy
+     * Returns the object type.
+     * @returns {GameObjectType}
+     * @memberof BaseEnemy
      */
     public getObjectType(): GameObjectType {
         return "enemy";
     }
 
     /**
-     * Returns the current frame's hitbox.
-     * @returns {GameRectangle}. Bird's hitbox.
+     * Returns the enemies hitbox.
+     * @returns {GameRectangle}
+     * @memberof BaseEnemy
      */
     public getHitbox(): GameRectangle {
         return getFrameHitbox(this.offsetLeft, this.offsetTop, this.currentFrame, negativepixelSize);

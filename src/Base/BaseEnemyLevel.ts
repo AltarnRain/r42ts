@@ -9,13 +9,13 @@ import GameLoop from "../GameLoop";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
+import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { resetLevelState, setFireInterval } from "../State/EnemyLevel/Actions";
 import { Enemy } from "../State/EnemyLevel/Enemy";
 import { addPhaser, nextLevel } from "../State/Game/Actions";
 import { setPlayerMovementLimit } from "../State/Player/Actions";
 import { appState, appStore, dispatch } from "../State/Store";
 import { TickFunction } from "../Types";
-import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 
 export default abstract class BaseEnemyLevel implements ILevel {
 

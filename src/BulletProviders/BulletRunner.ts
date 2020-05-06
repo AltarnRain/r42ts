@@ -22,6 +22,11 @@ const {
     pixelSize
 } = dimensionProvider();
 
+/**
+ * Class the handles al bullet business.
+ * @export
+ * @class BulletRunner
+ */
 export default class BulletRunner {
     /**
      * The bullet frame that will be fired.
@@ -43,8 +48,23 @@ export default class BulletRunner {
      */
     private bulletColor: string;
 
+    /**
+     * Ships to fire function.
+     * @private
+     * @type {ShipsToFireFunction}
+     * @memberof BulletRunner
+     */
     private shipsToFire: ShipsToFireFunction;
 
+    /**
+     * Creates an instance of BulletRunner.
+     * @param {FrameProviderFunction} getBulletFrame. A function that returns a bullet frame.
+     * @param {string} bulletColor. The color of the bullet.
+     * @param {number} speed. The speed of the bullet.
+     * @param {ShipsToFireFunction} shipsToFire. A function that returns shits that can fire.
+     * @param {FireCheckFunction} fireCheck. A function that checks individual ships if they can fire.
+     * @memberof BulletRunner
+     */
     constructor(
         getBulletFrame: FrameProviderFunction,
         bulletColor: string,
