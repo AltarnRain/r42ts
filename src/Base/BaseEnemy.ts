@@ -12,7 +12,7 @@ import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { addOrUpdateEnemy } from "../State/EnemyLevel/Actions";
 import { dispatch } from "../State/Store";
-import { Angle, ExplosionProviderFunction, FireAngleProviderFunction, Frame, OffsetFramesProviderFunction } from "../Types";
+import { ExplosionProviderFunction, Frame, OffsetFramesProviderFunction } from "../Types";
 import { getFrameCenter, getFrameHitbox } from "../Utility/Frame";
 import { getOffsetLocation } from "../Utility/Location";
 import BaseFrameProvider from "./BaseFrameProvider";

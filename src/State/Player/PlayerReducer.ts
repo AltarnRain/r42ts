@@ -7,9 +7,7 @@
 import produce from "immer";
 import getPlayerExplosion from "../../Player/PlayerExplosion";
 import { getPlayerFrame } from "../../Player/PlayerFrames";
-import dimensionProvider from "../../Providers/DimensionProvider";
 import getShipSpawnLocation from "../../Providers/PlayerSpawnLocationProvider";
-import { getFrameDimensions, getFrameHitbox } from "../../Utility/Frame";
 import Mutators from "../../Utility/FrameMutators";
 import Constants from "./Constants";
 import PlayerState from "./PlayerState";
@@ -19,12 +17,6 @@ import { PlayerStateTypes } from "./Types";
  * Module:          playerReducer
  * Responsibility:  Handles the player's state.
  */
-
-const {
-    pixelSize,
-} = dimensionProvider();
-
-const shipDimensions = getFrameDimensions(getPlayerFrame(), pixelSize);
 
 /**
  * playerReducer

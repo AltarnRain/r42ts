@@ -9,14 +9,13 @@
  * Responsibility:  Action creators for the EnemyLevelState
  */
 
-import { BaseEnemy } from "../../Base/BaseEnemy";
 import { GameLocation } from "../../Models/GameLocation";
 import { ParticleState } from "../Player/ParticleState";
 import Constants from "./Constants";
 import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 import { ExplosionData } from "./ExplosionData";
-import { AddBullet, AddExplosionCenter, AddOrUpdateEnemy, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetBulletState, SetEnemyFireTick, SetExplosionData, SetFireInterval, SetPhaserLocations, SetRemainingEnemies, SetShrapnellState, SetTotalEnemies } from "./Types";
+import { AddBullet, AddExplosionCenter, AddOrUpdateEnemy, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetBulletState, SetExplosionData, SetFireInterval, SetPhaserLocations, SetRemainingEnemies, SetShrapnellState, SetTotalEnemies } from "./Types";
 
 export function resetLevelState(): ResetLevelState {
     return {
@@ -90,7 +89,7 @@ export function addBullet(bullet: ParticleState): AddBullet {
     return {
         type: Constants.addBullet,
         bullet,
-    }
+    };
 }
 
 export function setBulletState(bullets: ParticleState[]): SetBulletState {

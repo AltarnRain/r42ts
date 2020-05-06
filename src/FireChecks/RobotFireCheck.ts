@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemy } from "../Base/BaseEnemy";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { appState } from "../State/Store";
 

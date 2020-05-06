@@ -9,7 +9,6 @@
  * Responsibility:  Define Types
  */
 
-import { BaseEnemy } from "./Base/BaseEnemy";
 import Explosion from "./Models/Explosion";
 import { OffsetFrames } from "./Models/OffsetFrames";
 import { EnemyState } from "./State/EnemyLevel/EnemyState";

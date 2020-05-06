@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { WarpLevelSteps, WarpLevelComplexity } from "./WarpLevelTypes";
+import { WarpLevelSteps } from "./WarpLevelTypes";
 
 /**
  * Module:          GameState

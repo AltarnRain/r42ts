@@ -7,7 +7,6 @@
 import { BaseEnemy } from "../Base/BaseEnemy";
 import { birdFrameTime, orbFrameTime, robotFrameTime } from "../Constants/EnemyFrameTime";
 import { orbMovementSpeed, robotMovementSpeed } from "../Constants/EnemyMovementSpeeds";
-import orbEnemyAngleProvider from "../FireAngleProviders/OrbEnemyAngleProvider";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUpLocaionProvider";
 import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDownLocationProvider";
 import VanishRightAppearLeftLocationProvider from "../LocationProviders/VanishRightAppearLeftLocationProvider";
