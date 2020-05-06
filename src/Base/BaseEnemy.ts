@@ -63,11 +63,6 @@ export abstract class BaseEnemy {
     protected explosion: Explosion;
 
     /**
-     * Maximum enemy dimensions.
-     */
-    private maxDimensions: GameSize;
-
-    /**
      * Helps the enemy determine which angle it will use to fire a bullet.
      */
     private angleProvider?: FireAngleProviderFunction;
@@ -110,7 +105,6 @@ export abstract class BaseEnemy {
         frameProvider: BaseFrameProvider,
         fireAngleProvider?: FireAngleProviderFunction) {
 
-
         this.locationProvider = locationProvider;
 
         this.explosion = getExplosion();
@@ -124,7 +118,6 @@ export abstract class BaseEnemy {
             };
         });
 
-        this.maxDimensions = getMaximumFrameDimensions(offSetFrames.frames, pixelSize);
         this.angleProvider = fireAngleProvider;
         this.frameProvider = frameProvider;
         this.frameProvider.setFrames(offSetFrames.frames);
