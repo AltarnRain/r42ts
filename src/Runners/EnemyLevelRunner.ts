@@ -237,15 +237,10 @@ function handleBullets(): void {
  * Handle self destruct.
  */
 function handleSelfDestruct(tick: number): void {
-    const { playerState } = appState();
+    const { playerState, enemyLevelState } = appState();
 
     if (playerState.alive && appState().keyboardState.selfDestruct) {
-        for (const enemy of localState.enemies) {
-
-            const enemyState = StateProviders.getEnemyState(enemy);
-            queueExplosionRender(enemyState.offsetLeft, enemyState.offsetTop, enemyState.coloredExplosion, tick);
-        }
-
+        enemyLevelState.enemyState.forEach((es) => queueExplosionRender(es.offsetLeft, es.offsetTop, es.coloredExplosion, tick));
         queueExplosionRender(playerState.left, playerState.top, playerState.coloredExplosion, tick);
         handlePlayerDeath(tick);
         localState.enemies = [];
@@ -281,7 +276,7 @@ function handlePhaser(tick: number): void {
 
     if (playerState.nozzleLocation &&
         keyboardState.phraser &&
-        localState.enemies.length > 0 &&
+        enemyLevelState.enemyState.length > 0 &&
         gameState.phasers > 0 &&
         enemyLevelState.phaserLocations.length === 0) {
 
@@ -343,14 +338,6 @@ function queueExplosionRender(left: number, top: number, coloredExplosion: Explo
     };
 
     dispatch(addExplosionCenter(newExplosion, newShrapnell));
-}
-
-/**
- * Increases all enemies speed.
- * @param {number} value.
- */
-export function increaseEnemySpeed(value: number): void {
-    localState.enemies.forEach((e) => e.increaseSpeed(value));
 }
 
 //#region  Debugging
