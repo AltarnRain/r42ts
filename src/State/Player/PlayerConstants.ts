@@ -16,19 +16,14 @@
  */
 
 /**
- * Module:          Consntants
+ * Module:          Constants
  * Responsibility:  Provide constants for the player reducer and actions.
  */
-
 
 namespace Constants {
     export const setPlayerIsAlive = "setPlayerIsAlive";
     export const setPlayerMovementLimit = "setPlayerMovementLimit";
     export const setPlayerLocationData = "setPlayerLocationData";
-    export const removePlayerBullet = "removePlayerBullet";
-    export const setPlayerPositionToSpawnPosition = "setPlayerPositionToSpawnPosition";
-    export const setPlayerHitbox = "setPlayerHitbox";
-
     export const setPlayerBulletState = "setPlayerBulletState";
 }
 
