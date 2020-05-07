@@ -10,9 +10,9 @@
  */
 
 import Constants from "./DebuggingConstants";
-import { Hitboxes, PlayerImmortal as PlayerMortality, RenderPhaser } from "./DebuggingTypes";
+import { Hitboxes, PlayerImmortal, RenderPhaser } from "./DebuggingTypes";
 
-export function playerMortality(mortality: "mortal" | "immortal"): PlayerMortality {
+export function playerMortality(mortality: "mortal" | "immortal"): PlayerImmortal {
     return {
         type: Constants.playerMortality,
         payload: mortality,

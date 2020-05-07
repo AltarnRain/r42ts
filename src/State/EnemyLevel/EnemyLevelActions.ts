@@ -12,10 +12,10 @@
 import { GameLocation } from "../../Models/GameLocation";
 import { ParticleState } from "../Player/ParticleState";
 import Constants from "./EnemyLevelConstants";
+import { AddBullet, AddExplosionCenter, AddOrUpdateEnemy, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetBulletState, SetExplosionData, SetFireInterval, SetPhaserLocations, SetRemainingEnemies, SetShrapnellState, SetTotalEnemies } from "./EnemyLevelTypes";
 import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 import { ExplosionData } from "./ExplosionData";
-import { AddBullet, AddExplosionCenter, AddOrUpdateEnemy, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetBulletState, SetExplosionData, SetFireInterval, SetPhaserLocations, SetRemainingEnemies, SetShrapnellState, SetTotalEnemies } from "./EnemyLevelTypes";
 
 export function resetLevelState(): ResetLevelState {
     return {
