@@ -12,7 +12,7 @@ import getPhaserLocations from "../Player/GetPhaserLocations";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import { addExplosionCenter, clearPhaserLocations, removeEnemy, setBulletState, setExplosionCenters, setPhaserLocations, setTotalEnemies, setShrapnellState } from "../State/EnemyLevel/EnemyLevelActions";
+import { addExplosionCenter, clearPhaserLocations, removeEnemy, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/GameActions";
@@ -93,7 +93,6 @@ function draw(): void {
     const { explosionCenters, explosionData } = enemyLevelState;
 
     // Draw all the game objects
-
     for (const enemyState of enemyLevelState.enemyState) {
         if (enemyState.currentFrame !== undefined) {
             renderFrame(enemyState.offsetLeft, enemyState.offsetTop, enemyState.currentFrame);
@@ -171,9 +170,7 @@ function playerHitEnemyDetection(tick: number) {
 function enemyHitPlayerDetection(tick: number) {
     const { enemyLevelState, debuggingState, playerState } = appState();
     if (playerState.alive && playerState.hitbox !== undefined && debuggingState.playerIsImmortal === false) {
-        const playerIsHit = enemyLevelState.enemyState.some((e) => {
-            return overlaps(playerState.hitbox, e.hitbox);
-        });
+        const playerIsHit = enemyLevelState.enemyState.some((e) => overlaps(playerState.hitbox, e.hitbox));
 
         if (playerIsHit) {
             handlePlayerDeath(tick);
@@ -190,9 +187,7 @@ function playerHitByParticle(tick: number, particles: ParticleState[]): void {
 
     const { playerState, debuggingState } = appState();
     if (playerState.alive && playerState.hitbox !== undefined && debuggingState.playerIsImmortal === false) {
-        const playerIsHit = particles.some((e) => {
-            overlaps(playerState.hitbox, e.hitbox);
-        });
+        const playerIsHit = particles.some((e) => overlaps(playerState.hitbox, e.hitbox));
 
         if (playerIsHit) {
             handlePlayerDeath(tick);

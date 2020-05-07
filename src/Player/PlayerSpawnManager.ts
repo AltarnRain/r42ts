@@ -7,7 +7,8 @@
 import GameLoop from "../GameLoop";
 import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { setPlayerLocationData, setPlayerMovementLimit, setPlayerIsAlive } from "../State/Player/PlayerActions";
+import getPlayerSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
+import { setPlayerIsAlive, setPlayerLocationData, setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types";
 import { getFrameReturner } from "../Utility/Frame";
@@ -48,16 +49,16 @@ let formationInProgress = false;
  * the state if the player can and show respawn.
  */
 export default function playerSpawnManager(): void {
-    const { playerState, enemyLevelState: levelState } = appState();
+    const { playerState, enemyLevelState } = appState();
 
     if (!playerState.alive && formationInProgress === false) {
-        if (levelState.remainingEnemies > 0) { // Enemies in the level
-            if (levelState.shrapnell.length === 0) { // wait till there's no particles.
-                setupFormation(playerState.left, playerState.top, "slow", "sideways"); // Start the slow formation where the player has control.
+        if (enemyLevelState.remainingEnemies > 0) { // Enemies in the level
+            if (enemyLevelState.shrapnell.length === 0 && enemyLevelState.bullets.length === 0) { // wait till there's no particles.
+                setupFormation("slow", "sideways"); // Start the slow formation where the player has control.
             }
         } else {
             // No enemies, fast formation
-            setupFormation(playerState.left, playerState.top, "fast", "immobile");
+            setupFormation("fast", "immobile");
         }
     }
 
@@ -125,9 +126,10 @@ function createParticles(): void {
  * @param {"fast" | "slow"} speed. Speed of the player formation.
  * @param {MoveLimits} limit. Movement limit impaired on the player while the ship is forming.
  */
-function setupFormation(targetLeftLocation: number, targetTopLocation: number, speed: "fast" | "slow", limit: MoveLimits): void {
+function setupFormation(speed: "fast" | "slow", limit: MoveLimits): void {
     formationSpeed = speed;
-    dispatch(setPlayerLocationData(targetLeftLocation, targetTopLocation, undefined, undefined));
+    const  {left, top }  = getPlayerSpawnLocation();
+    dispatch(setPlayerLocationData(left, top));
     createParticles();
 
     if (speed === "fast") {

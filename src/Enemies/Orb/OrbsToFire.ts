@@ -32,6 +32,8 @@ export default function orbsToFire(orbs: EnemyState[], fireAngleProvider?: FireA
         return [];
     }
 
+    // This check is to sasify the compiler. When the player is alive they always have a hitbox
+    // but te compiler doesn't know this.
     const playerhitbox = playerState.hitbox;
     if (playerhitbox === undefined) {
         return [];

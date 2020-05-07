@@ -12,8 +12,8 @@ import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { ParticleState } from "../State/Player/ParticleState";
+import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { fallsWithin, getLocation } from "../Utility/Location";
@@ -40,17 +40,44 @@ const playerBulletFrame = getTwoPixelBullet(CGAColors.yellow);
  */
 function updateState(): void {
     const {
-        gameState
+        gameState, playerState
     } = appState();
 
     if (gameState.pause) {
         return;
     }
 
-    const { playerState, keyboardState } = appState();
+    // Important! The player runner is responsible for handling player action while the
+    // player is alive. When the player dies the PlayerSpawnManager takes over.
+    if (!playerState.alive) {
+        return;
+    }
+
     movePlayerHandler(10);
 
-    if (playerState.bulletState) {
+    handlePlayerBulletMovement();
+    handlePlayerBulletFiring();
+}
+
+/**
+ * Checks if the player can fire and if they pressed the fire key. If so, a bullet is dispatched to the state.
+ */
+function handlePlayerBulletFiring(): void {
+    const { playerState, keyboardState } = appState();
+    if (playerState.nozzleLocation !== undefined && keyboardState.fire && playerState.bulletState === undefined) {
+        const nozzleLocation = playerState.nozzleLocation;
+        const bullet = getPlayerBullet(nozzleLocation.left, nozzleLocation.top);
+        dispatch(setPlayerBulletState(bullet));
+    }
+}
+
+/**
+ * Moves the bullet up until it reached the top of the game game field.
+ * If the bullet hits something, that handled in the EnemyLevelRunner.
+ */
+function handlePlayerBulletMovement(): void {
+    const { playerState } = appState();
+    if (playerState.bulletState !== undefined) {
         const bullet = playerState.bulletState;
         const nextLoction = getLocation(bullet.left, bullet.top, bullet.angle, bullet.speed);
 
@@ -61,15 +88,14 @@ function updateState(): void {
             dispatch(setPlayerBulletState(undefined));
         }
     }
-
-    // Fire new bullet.
-    if (playerState.nozzleLocation !== undefined && keyboardState.fire && playerState.bulletState === undefined) {
-        const nozzleLocation = playerState.nozzleLocation;
-        const bullet = getPlayerBullet(nozzleLocation.left, nozzleLocation.top);
-        dispatch(setPlayerBulletState(bullet));
-    }
 }
 
+/**
+ * Gets a player bullet particle state.
+ * @param {number} left
+ * @param {number} top
+ * @returns {ParticleState}
+ */
 function getPlayerBullet(left: number, top: number): ParticleState {
     return StateProviders.getParticleState(left, top, playerBulletSpeed, angles.up, playerBulletFrame, 1, -0.5 * pixelSize, -0.5 * pixelSize);
 }

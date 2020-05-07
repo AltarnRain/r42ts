@@ -4,13 +4,12 @@
  * See LICENSE.MD.
  */
 
-import { getPlayerFrame } from "../Player/PlayerFrames";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { setPlayerLocationData } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
-import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
+import { getFrameHitbox } from "../Utility/Frame";
 import { getAngle, getNextX, getNextY } from "../Utility/Geometry";
-import { fallsWithin } from "../Utility/Location";
+import { fallsWithinGameField } from "../Utility/Location";
 
 /**
  * Module:          MovePlayer
@@ -20,10 +19,7 @@ import { fallsWithin } from "../Utility/Location";
 
 const {
     pixelSize,
-    gameField,
 } = dimensionProvider();
-
-const shipDimensions = getFrameDimensions(getPlayerFrame(), pixelSize);
 
 /**
  * Handles player movement.
@@ -70,7 +66,7 @@ export function movePlayerHandler(speed: number): void {
         newX = getNextX(angle, speedX, playerState.left);
         newY = getNextY(angle, speedY, playerState.top);
 
-        if (!fallsWithin(newX, newY, gameField.top, gameField.bottom - shipDimensions.height, gameField.left, gameField.right - shipDimensions.width)) {
+        if (!fallsWithinGameField(newX, newY)) {
             newX = playerState.left;
             newY = playerState.top;
         }
