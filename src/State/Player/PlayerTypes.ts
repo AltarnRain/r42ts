@@ -12,8 +12,8 @@
 import { GameLocation } from "../../Models/GameLocation";
 import { GameRectangle } from "../../Models/GameRectangle";
 import { MoveLimits } from "../../Types";
-import Constants from "./PlayerConstants";
 import { ParticleState } from "./ParticleState";
+import Constants from "./PlayerConstants";
 
 export interface SetPlayerIsAlive {
     type: typeof Constants.setPlayerIsAlive;

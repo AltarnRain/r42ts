@@ -12,7 +12,7 @@ import playerSpawnManager from "./Player/PlayerSpawnManager";
 import ctxProvider from "./Providers/CtxProvider";
 import dimensionProvider from "./Providers/DimensionProvider";
 import playerRunner from "./Runners/PlayerRunner";
-import { hitboxesOn, playerMortality } from "./State/Debugging/Actions";
+import { hitboxesOn, playerMortality } from "./State/Debugging/DebuggingActions";
 import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers, setWarpGamteComplexity } from "./State/Game/GameActions";
 import { WarpLevelComplexity } from "./State/Game/WarpLevelTypes";
 import { dispatch } from "./State/Store";

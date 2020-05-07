@@ -9,8 +9,8 @@
  * Responsibility:  Actions for Debugging state.
  */
 
-import Constants from "./Constants";
-import { Hitboxes, PlayerImmortal as PlayerMortality, RenderPhaser } from "./Types";
+import Constants from "./DebuggingConstants";
+import { Hitboxes, PlayerImmortal as PlayerMortality, RenderPhaser } from "./DebuggingTypes";
 
 export function playerMortality(mortality: "mortal" | "immortal"): PlayerMortality {
     return {

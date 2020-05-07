@@ -9,7 +9,7 @@
  * Responsibility:  Types for debugging state actions
  */
 
-import Constants from "./Constants";
+import Constants from "./DebuggingConstants";
 
 export interface PlayerImmortal {
     type: typeof Constants.playerMortality;

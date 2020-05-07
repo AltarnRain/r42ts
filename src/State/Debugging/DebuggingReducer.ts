@@ -5,9 +5,9 @@
  */
 
 import produce from "immer";
-import Constants from "./Constants";
+import Constants from "./DebuggingConstants";
 import DebuggingState from "./DebuggingState";
-import { DebuggingTypes } from "./Types";
+import { DebuggingTypes } from "./DebuggingTypes";
 
 /**
  * Module:          debuggingReducer
