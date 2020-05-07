@@ -11,13 +11,13 @@ import Explosion from "../Models/Explosion";
 import getPhaserLocations from "../Player/GetPhaserLocations";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
-import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
-import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
+import { addExplosionCenter, clearPhaserLocations, removeEnemy, setBulletState, setExplosionCenters, setPhaserLocations, setTotalEnemies, setShrapnellState } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/GameActions";
-import { setPlayerBulletState, setPlayerLocationData } from "../State/Player/PlayerActions";
+import { ParticleState } from "../State/Player/ParticleState";
+import { setPlayerBulletState, setPlayerIsAlive } from "../State/Player/PlayerActions";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { Frame } from "../Types";
@@ -130,21 +130,24 @@ function draw(): void {
 function handleHitDetection(tick: number) {
 
     // Check if the player was hit.
-    enemyHitPlayerDetection();
+    enemyHitPlayerDetection(tick);
 
     // Check if the player hit anything
-    playerHitEnemyDetection();
+    playerHitEnemyDetection(tick);
 
-    // Check if the player got hit by a piece of shrapnell
-    playerHitByShrapnell(tick);
+    // Check if the player was hit by shrapnell.
+    playerHitByParticle(tick, appState().enemyLevelState.shrapnell);
 
-    // Check if the player hit an enemy.
-    playerHitByBulletDetection(tick);
+    // Check if the player was hit by a bullet.
+    playerHitByParticle(tick, appState().enemyLevelState.bullets);
 }
 
-function playerHitEnemyDetection() {
+/**
+ * Check if the player hit an enemy.
+ * @param {number} tick. Current tick.
+ */
+function playerHitEnemyDetection(tick: number) {
     const { playerState, enemyLevelState } = appState();
-    // Check if the player an enemy something.
     if (playerState.bulletState !== undefined && playerState.bulletState.hitbox !== undefined) {
 
         const playerBulletHitbox = playerState.bulletState.hitbox;
@@ -156,50 +159,43 @@ function playerHitEnemyDetection() {
 
         if (hitEnemy !== undefined) {
             handleEnemyDestruction(hitEnemy, tick);
-            // Player hit an enemy, remove the bullet.
             dispatch(setPlayerBulletState(undefined));
-
         }
     }
 }
 
-function enemyHitPlayerDetection() {
-    const { enemyLevelState, debuggingState } = appState();
-    for (const enemyState of enemyLevelState.enemyState) {
+/**
+ * Check if an enemy physically hit the player.
+ * @param {number} tick. Current tick.
+ */
+function enemyHitPlayerDetection(tick: number) {
+    const { enemyLevelState, debuggingState, playerState } = appState();
+    if (playerState.alive && playerState.hitbox !== undefined && debuggingState.playerIsImmortal === false) {
+        const playerIsHit = enemyLevelState.enemyState.some((e) => {
+            return overlaps(playerState.hitbox, e.hitbox);
+        });
 
-        // Always pull in a fresh version of the player state since we're
-        // doing dispatches within this loop that can effect the player state.
-        const { playerState } = appState();
-        if (enemyState.hitbox !== undefined) {
-            if (playerState.alive && playerState.hitbox && debuggingState.playerIsImmortal === false) {
-                if (overlaps(playerState.hitbox, enemyState.hitbox)) {
-                    // Player was hit. Render the explosion.
-                    handlePlayerDeath(tick);
-                }
-            }
-        }
-    }
-}
-
-function playerHitByShrapnell(tick: number): void {
-    const shrapnels = appState().enemyLevelState.shrapnell;
-
-    for (const shrapnell of shrapnels) {
-        const { playerState } = appState();
-        if (playerState.alive && overlaps(playerState.hitbox, shrapnell.hitbox)) {
+        if (playerIsHit) {
             handlePlayerDeath(tick);
-            break;
         }
     }
 }
 
-function playerHitByBulletDetection(tick: number): void {
-    const bullets = appState().enemyLevelState.bullets;
-    for (const bullet of bullets) {
-        const playerState = appState().playerState;
-        if (playerState.alive && overlaps(playerState.hitbox, bullet.hitbox)) {
+/**
+ * Check if the player was hit by a particle. This can be an enemy bullet or a piece of shrapnell.
+ * @param {number} tick. Current tuck
+ * @param {ParticleState[]} particles. Particles.
+ */
+function playerHitByParticle(tick: number, particles: ParticleState[]): void {
+
+    const { playerState, debuggingState } = appState();
+    if (playerState.alive && playerState.hitbox !== undefined && debuggingState.playerIsImmortal === false) {
+        const playerIsHit = particles.some((e) => {
+            overlaps(playerState.hitbox, e.hitbox);
+        });
+
+        if (playerIsHit) {
             handlePlayerDeath(tick);
-            break;
         }
     }
 }
@@ -326,16 +322,15 @@ function handlePhaser(tick: number): void {
 }
 
 /**
- * handles a player's death event.
+ * Handles a the player's death.
+ * @param {number} tick
  */
 function handlePlayerDeath(tick: number): void {
     const { playerState } = appState();
-
     queueExplosionRender(playerState.left, playerState.top, playerState.coloredExplosion, tick);
-    dispatch(removeLife());
 
-    const spawnLocation = getShipSpawnLocation();
-    dispatch(setPlayerLocationData(spawnLocation.left, spawnLocation.top));
+    dispatch(removeLife());
+    dispatch(setPlayerIsAlive(false));
 }
 
 /**
@@ -357,8 +352,7 @@ function queueExplosionRender(left: number, top: number, coloredExplosion: Explo
         coloredFrame: coloredExplosion.explosionCenterFrame,
     };
 
-    dispatch(addExplosionCenter(newExplosion));
-    dispatch(addParticles(newShrapnell));
+    dispatch(addExplosionCenter(newExplosion, newShrapnell));
 }
 
 /**

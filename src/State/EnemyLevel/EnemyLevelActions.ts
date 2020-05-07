@@ -37,17 +37,18 @@ export function addParticles(particles: ParticleState[]): AddParticles {
     };
 }
 
-export function setShrapnellState(shrapnell: ParticleState[]): SetShrapnellState {
+export function addExplosionCenter(explosionCenter: ExplosionCenterState, shrapnell: ParticleState[]): AddExplosionCenter {
     return {
-        type: Constants.setShrapnellState,
+        type: Constants.addExplosionCenter,
+        explosionCenter,
         shrapnell,
     };
 }
 
-export function addExplosionCenter(explosionCenter: ExplosionCenterState): AddExplosionCenter {
+export function setShrapnellState(shrapnell: ParticleState[]): SetShrapnellState {
     return {
-        type: Constants.addExplosionCenter,
-        payload: explosionCenter,
+        type: Constants.setShrapnellState,
+        shrapnell,
     };
 }
 

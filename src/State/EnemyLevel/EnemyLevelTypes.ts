@@ -38,7 +38,8 @@ export interface SetShrapnellState {
 
 export interface AddExplosionCenter {
     type: typeof Constants.addExplosionCenter;
-    payload: ExplosionCenterState;
+    explosionCenter: ExplosionCenterState;
+    shrapnell: ParticleState[];
 }
 
 export interface SetPhaserLocations {

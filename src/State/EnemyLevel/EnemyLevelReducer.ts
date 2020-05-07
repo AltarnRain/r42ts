@@ -25,16 +25,14 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
     const newState = produce(state, (draft) => {
         switch (action.type) {
             case Constants.addExplosionCenter:
-                draft.explosionCenters.push(action.payload);
+                draft.explosionCenters.push(action.explosionCenter);
+                draft.shrapnell.push(...action.shrapnell);
                 break;
             case Constants.addParticle:
                 draft.shrapnell.push(action.particle);
                 break;
             case Constants.addParticles:
                 draft.shrapnell.push(...action.particles);
-                break;
-            case Constants.setShrapnellState:
-                draft.shrapnell = action.shrapnell;
                 break;
             case Constants.resetLevelState:
                 draft = initState();
