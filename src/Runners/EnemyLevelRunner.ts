@@ -90,7 +90,7 @@ function updateState(tick: number) {
  */
 function draw(): void {
     const { enemyLevelState } = appState();
-    const { explosionCenters, explosionData } = enemyLevelState;
+    const { explosionCenters } = enemyLevelState;
 
     // Draw all the game objects
     for (const enemyState of enemyLevelState.enemyState) {
@@ -99,10 +99,8 @@ function draw(): void {
         }
     }
 
-    if (explosionData) {
-        for (const center of explosionCenters) {
-            renderFrame(center.left, center.top, center.coloredFrame);
-        }
+    for (const center of explosionCenters) {
+        renderFrame(center.left, center.top, center.coloredFrame);
     }
 
     for (const shrapnell of enemyLevelState.shrapnell) {
@@ -200,14 +198,10 @@ function playerHitByParticle(tick: number, particles: ParticleState[]): void {
  * @param {number} tick. Current tick
  */
 function handleExplosionCenters(tick: number): void {
-    const { explosionCenters, explosionData } = appState().enemyLevelState;
+    const { explosionCenters } = appState().enemyLevelState;
 
-    if (explosionData !== undefined) {
-        const burnTime = explosionData.explosionCenterDelay;
-        const remainingExplosions = explosionCenters.filter((ec) => ec.startTick + burnTime > tick);
-
-        dispatch(setExplosionCenters(remainingExplosions));
-    }
+    const remainingExplosions = explosionCenters.filter((ec) => ec.startTick + ec.explosionCenterDelay > tick);
+    dispatch(setExplosionCenters(remainingExplosions));
 }
 
 /**
@@ -345,6 +339,7 @@ function queueExplosionRender(left: number, top: number, coloredExplosion: Explo
         startTick: tick,
         hitbox: getFrameHitbox(left, top, coloredExplosion.explosionCenterFrame, pixelSize),
         coloredFrame: coloredExplosion.explosionCenterFrame,
+        explosionCenterDelay: coloredExplosion.explosionCenterDelay,
     };
 
     dispatch(addExplosionCenter(newExplosion, newShrapnell));

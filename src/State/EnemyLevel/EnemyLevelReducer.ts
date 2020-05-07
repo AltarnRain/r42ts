@@ -49,9 +49,6 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
             case Constants.setFireInterval:
                 draft.fireInterval = action.payload;
                 break;
-            case Constants.setExplosionData:
-                draft.explosionData = action.explosionData;
-                break;
             case Constants.setExplosionCenters:
                 draft.explosionCenters = action.explosionCenters;
                 break;
@@ -91,7 +88,6 @@ function initState(): EnemyLevelState {
         phaserLocations: [],
         fireInterval: 0,
         explosionCenters: [],
-        explosionData: undefined,
         bullets: [],
         totalNumberOfEnemies: 0,
         remainingEnemies: 0,

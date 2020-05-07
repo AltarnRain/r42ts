@@ -9,13 +9,11 @@
  * Responsibility:  Action types for the EnemyLevel state
  */
 
-import { BaseEnemy } from "../../Base/BaseEnemy";
 import { GameLocation } from "../../Models/GameLocation";
 import { ParticleState } from "../Player/ParticleState";
 import Constants from "./EnemyLevelConstants";
 import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";
-import { ExplosionData } from "./ExplosionData";
 
 export interface ResetLevelState {
     type: typeof Constants.resetLevelState;
@@ -54,19 +52,6 @@ export interface ClearPhaserLocations {
 export interface SetFireInterval {
     type: typeof Constants.setFireInterval;
     payload: number;
-}
-
-export interface SetEnemyFireTick {
-    type: typeof Constants.setEnemyFireTick;
-    payload: {
-        ship: BaseEnemy;
-        tick: number;
-    };
-}
-
-export interface SetExplosionData {
-    type: typeof Constants.setExplosionData;
-    explosionData: ExplosionData;
 }
 
 export interface SetExplosionCenters {
@@ -113,8 +98,6 @@ export type EnemyLevelTypes =
     SetPhaserLocations |
     ClearPhaserLocations |
     SetFireInterval |
-    SetEnemyFireTick |
-    SetExplosionData |
     SetExplosionCenters |
     AddBullet |
     SetBulletState |

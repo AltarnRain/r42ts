@@ -8,7 +8,6 @@ import { GameLocation } from "../../Models/GameLocation";
 import { ParticleState } from "../Player/ParticleState";
 import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";
-import { ExplosionData } from "./ExplosionData";
 
 /**
  * Module:          EnemyLevelState
@@ -45,12 +44,6 @@ export default interface EnemyLevelState {
      * Current state of explosions.
      */
     explosionCenters: ExplosionCenterState[];
-
-    /**
-     * Holds 'data' for explosions. The frame, width, height, etc. This piece
-     * of state is used to render the explosion center state.
-     */
-    explosionData: ExplosionData | undefined;
 
     /**
      * The number of enemies that remain.

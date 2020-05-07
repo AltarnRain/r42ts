@@ -14,12 +14,9 @@ namespace Constants {
     export const addParticles = "addParticles";
     export const setShrapnellState = "setShrapnellState";
     export const addExplosionCenter = "addExplosionCenter";
-    export const setExplosionState = "setExplosionState";
     export const setPhaserLocations = "setPhaserLocations";
     export const clearPhaserLocations = "clearPhaserLocations";
     export const setFireInterval = "setFireInterval";
-    export const setEnemyFireTick = "setEnemyFireTick";
-    export const setExplosionData = "setExplosionData";
     export const setExplosionCenters = "setExplosionCenters";
     export const addBullet = "addBullet";
     export const setBulletState = "setBulletState";
