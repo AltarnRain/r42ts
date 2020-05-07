@@ -129,58 +129,60 @@ function draw(): void {
  */
 function handleHitDetection(tick: number) {
 
-    // Check if the player hit an enemy.
+    // Check if the player was hit.
     enemyHitPlayerDetection();
+
+    // Check if the player hit anything
     playerHitEnemyDetection();
 
-    function playerHitEnemyDetection() {
-        const { playerState, enemyLevelState } = appState();
-        // Check if the player an enemy something.
-        if (playerState.bulletState !== undefined && playerState.bulletState.hitbox !== undefined) {
+    // Check if the player got hit by a piece of shrapnell
+    playerHitByShrapnell(tick);
 
-            const playerBulletHitbox = playerState.bulletState.hitbox;
-            const hitEnemy = enemyLevelState.enemyState.find((e) => {
-                if (overlaps(playerBulletHitbox, e.hitbox)) {
-                    return true;
-                }
-            });
-
-            if (hitEnemy !== undefined) {
-                handleEnemyDestruction(hitEnemy, tick);
-                // Player hit an enemy, remove the bullet.
-                dispatch(setPlayerBulletState(undefined));
-
-            }
-        }
-    }
-
-    abc(tick);
-
-    function enemyHitPlayerDetection() {
-        const { enemyLevelState, debuggingState } = appState();
-        for (const enemyState of enemyLevelState.enemyState) {
-
-            // Always pull in a fresh version of the player state since we're
-            // doing dispatches within this loop that can effect the player state.
-            const { playerState } = appState();
-            if (enemyState.hitbox !== undefined) {
-                if (playerState.alive && playerState.hitbox && debuggingState.playerIsImmortal === false) {
-                    if (overlaps(playerState.hitbox, enemyState.hitbox)) {
-                        // Player was hit. Render the explosion.
-                        handlePlayerDeath(tick);
-                    }
-                }
-            }
-        }
-    }
-
-
-
+    // Check if the player hit an enemy.
+    playerHitByBulletDetection(tick);
 }
 
-function abc(tick: number): void {
+function playerHitEnemyDetection() {
+    const { playerState, enemyLevelState } = appState();
+    // Check if the player an enemy something.
+    if (playerState.bulletState !== undefined && playerState.bulletState.hitbox !== undefined) {
+
+        const playerBulletHitbox = playerState.bulletState.hitbox;
+        const hitEnemy = enemyLevelState.enemyState.find((e) => {
+            if (overlaps(playerBulletHitbox, e.hitbox)) {
+                return true;
+            }
+        });
+
+        if (hitEnemy !== undefined) {
+            handleEnemyDestruction(hitEnemy, tick);
+            // Player hit an enemy, remove the bullet.
+            dispatch(setPlayerBulletState(undefined));
+
+        }
+    }
+}
+
+function enemyHitPlayerDetection() {
+    const { enemyLevelState, debuggingState } = appState();
+    for (const enemyState of enemyLevelState.enemyState) {
+
+        // Always pull in a fresh version of the player state since we're
+        // doing dispatches within this loop that can effect the player state.
+        const { playerState } = appState();
+        if (enemyState.hitbox !== undefined) {
+            if (playerState.alive && playerState.hitbox && debuggingState.playerIsImmortal === false) {
+                if (overlaps(playerState.hitbox, enemyState.hitbox)) {
+                    // Player was hit. Render the explosion.
+                    handlePlayerDeath(tick);
+                }
+            }
+        }
+    }
+}
+
+function playerHitByShrapnell(tick: number): void {
     const shrapnels = appState().enemyLevelState.shrapnell;
-    const bullets = appState().enemyLevelState.bullets;
 
     for (const shrapnell of shrapnels) {
         const { playerState } = appState();
@@ -189,7 +191,10 @@ function abc(tick: number): void {
             break;
         }
     }
+}
 
+function playerHitByBulletDetection(tick: number): void {
+    const bullets = appState().enemyLevelState.bullets;
     for (const bullet of bullets) {
         const playerState = appState().playerState;
         if (playerState.alive && overlaps(playerState.hitbox, bullet.hitbox)) {
