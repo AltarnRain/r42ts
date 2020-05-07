@@ -86,61 +86,83 @@ export default class WarpLevel implements ILevel {
     private hitDetection(warpGate: GameRectangle[]): void {
         const { hitbox, alive } = appState().playerState;
 
+        const ctx = ctxProvider();
         if (alive && hitbox !== undefined) {
 
-            // First we get a list of the save zones the player is in.
-            const currentSafeZones = warpGate
-                .filter((wg) => overlaps(wg, hitbox))
-                .sort((a, b) => a.top < b.top ? -1 : 1);
+            // // First we get a list of the save zones the player is in.
+            // const currentSafeZones = warpGate
+            //     .filter((wg) => overlaps(wg, hitbox))
+            //     .sort((a, b) => a.top < b.top ? -1 : 1);
 
-            const ctx = ctxProvider();
+            // const partialHitboxes = currentSafeZones.map<{ hitbox: GameRectangle; safeSonze: GameRectangle }>((sz) => {
 
-            const partialHitboxes = currentSafeZones.map<{ hitbox: GameRectangle; safeSonze: GameRectangle }>((sz) => {
+            //     const topDiff = hitbox.top + (sz.top - hitbox.top);
+            //     const bottomDiff = hitbox.bottom + (sz.bottom - hitbox.bottom);
 
-                const topDiff = hitbox.top + (sz.top - hitbox.top);
-                const bottomDiff = hitbox.bottom + (sz.bottom - hitbox.bottom);
+            //     return {
+            //         hitbox: {
+            //             left: hitbox.left,
+            //             top: topDiff,
+            //             bottom: bottomDiff,
+            //             right: hitbox.right,
+            //         },
+            //         safeSonze: sz,
+            //     };
+            // });
 
-                return {
-                    hitbox: {
-                        left: hitbox.left,
-                        top: topDiff,
-                        bottom: bottomDiff,
-                        right: hitbox.right,
-                    },
-                    safeSonze: sz,
-                };
+            // const safe = partialHitboxes.every((ph) => fallsWithin(hitbox.left, hitbox.right, hitbox.top, hitbox.bottom, ph.safeSonze.left, ph.safeSonze.right, ph.safeSonze.top, ph.safeSonze.bottom));
+
+            // currentSafeZones.forEach((r, index) => {
+            //     ctx.fillStyle = validColors[index];
+            //     ctx.fillRect(r.left, r.top, r.right - r.left, r.bottom - r.top);
+            // });
+
+            // if (safe === false) {
+            //     DEBUGGING_drawGameRect(hitbox, "red", 5);
+            // }
+
+            // partialHitboxes.forEach((r) => {
+            //     DEBUGGING_drawGameRect(r.hitbox, CGAColors.lightMagenta);
+            // });
+
+            const badSpace = warpGate
+                .map((wg) => {
+                    return {
+                        left: {
+                            left: gameField.left,
+                            right: wg.left,
+                            top: wg.top,
+                            bottom: wg.bottom,
+                        },
+                        right: {
+                            left: wg.right,
+                            right: gameField.right,
+                            top: wg.top,
+                            bottom: wg.bottom,
+                        },
+                    };
+                });
+
+            badSpace.forEach((bs) => {
+                DEBUGGING_drawGameRect(bs.left, "red");
+                DEBUGGING_drawGameRect(bs.right, "red");
             });
 
-            const safe = partialHitboxes.every((ph) => fallsWithin(hitbox.left, hitbox.right, hitbox.top, hitbox.bottom, ph.safeSonze.left, ph.safeSonze.right, ph.safeSonze.top, ph.safeSonze.bottom));
-
-            currentSafeZones.forEach((r, index) => {
-                ctx.fillStyle = validColors[index];
-                ctx.fillRect(r.left, r.top, r.right - r.left, r.bottom - r.top);
+            const dead = badSpace.some((sb) => {
+                const { left: leftDanger, right: rightDanger } = sb;
+                return fallsWithin(hitbox.left, hitbox.right, hitbox.top, hitbox.bottom, leftDanger.left, leftDanger.right, leftDanger.top, leftDanger.bottom) ||
+                    fallsWithin(hitbox.left, hitbox.right, hitbox.top, hitbox.bottom, rightDanger.left, rightDanger.right, rightDanger.top, rightDanger.bottom);
             });
 
-            if (safe === false) {
+            if (dead) {
                 DEBUGGING_drawGameRect(hitbox, "red", 5);
             }
-
-            partialHitboxes.forEach((r) => {
-                DEBUGGING_drawGameRect(r.hitbox, CGAColors.lightMagenta);
-            });
         }
     }
 
     private calculateWarpGate(outerLeft: number, outerRight: number, stepSizesX: number[], stepSizesY: number[]): GameRectangle[] {
 
         const safeZone: GameRectangle[] = [];
-
-        // Make the entire bottom of the screen part of the warp gate to mark it as a safe zone.
-        const screenBottom: GameRectangle = {
-            left: gameField.left,
-            right: gameField.right,
-            top: WarpLevelConstants.bottom,
-            bottom: gameField.bottom,
-        };
-
-        safeZone.push(screenBottom);
 
         let direction = warpGateInitialleft;
 
