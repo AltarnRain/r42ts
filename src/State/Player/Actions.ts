@@ -14,12 +14,12 @@ import { GameRectangle } from "../../Models/GameRectangle";
 import { MoveLimits } from "../../Types";
 import Constants from "./Constants";
 import { ParticleState } from "./ParticleState";
-import { PlayerOnScreen, SetPlayerBulletState, SetPlayerLocationData, SetPlayerMovementLimit } from "./Types";
+import { SetPlayerBulletState, SetPlayerIsAlive, SetPlayerLocationData, SetPlayerMovementLimit } from "./Types";
 
-export function setPlayerOnScreen(playerOnScreen: boolean): PlayerOnScreen {
+export function setPlayerIsAlive(playerAlive: boolean): SetPlayerIsAlive {
     return {
-        type: Constants.playerOnScreen,
-        playerOnScreen,
+        type: Constants.setPlayerIsAlive,
+        playerIsAlive: playerAlive,
     };
 }
 

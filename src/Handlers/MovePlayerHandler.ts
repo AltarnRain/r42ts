@@ -76,7 +76,7 @@ export function movePlayerHandler(speed: number): void {
         }
     }
 
-    const hitBox = getFrameHitbox(newX, newY, playerState.playerFrame,  0);
+    const hitBox = getFrameHitbox(newX, newY, playerState.coloredFrame,  0);
     const nozzleLocation =  {
         left: newX + pixelSize * 2,
         top: newY - pixelSize * 1,

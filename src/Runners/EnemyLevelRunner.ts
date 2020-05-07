@@ -224,14 +224,14 @@ function handleBullets(): void {
 function handleSelfDestruct(tick: number): void {
     const { playerState } = appState();
 
-    if (playerState.playerOnScreen && appState().keyboardState.selfDestruct) {
+    if (playerState.playerAlive && appState().keyboardState.selfDestruct) {
         for (const enemy of localState.enemies) {
 
             const enemyState = StateProviders.getEnemyState(enemy);
             queueExplosionRender(enemyState.offsetLeft, enemyState.offsetTop, enemyState.coloredExplosion, tick);
         }
 
-        queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.playerExplosion, tick);
+        queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.coloredExplosion, tick);
         handlePlayerDeath(tick);
         localState.enemies = [];
     }
@@ -306,7 +306,7 @@ function handlePhaser(tick: number): void {
 function handlePlayerDeath(tick: number): void {
     const { playerState } = appState();
 
-    queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.playerExplosion, tick);
+    queueExplosionRender(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.coloredExplosion, tick);
     dispatch(removeLife());
 
     const spawnLocation = getShipSpawnLocation();

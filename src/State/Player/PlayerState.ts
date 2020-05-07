@@ -17,14 +17,11 @@ import { ParticleState } from "./ParticleState";
 
 export default interface PlayerState {
     /**
-     * Reference to the player object.
+     * A flag to track if the player is alive or not.
+     * The player can me semi-alive when they are forming.
+     * This flag can be used to trigger alive/dead behaviour for enemies, etc.
      */
-    playerOnScreen: boolean;
-
-    /**
-     * Quick reference to the player bullet.
-     */
-    // playerBulletOnScreen: boolean;
+    playerAlive: boolean;
 
     /**
      * Movement limitations for the player
@@ -46,11 +43,23 @@ export default interface PlayerState {
      */
     playerHitbox: GameRectangle | undefined;
 
+    /**
+     * Location of the player's nozzle. Used to determine when the player's bullet should appear.
+     */
     playerNozzleLocation: GameLocation | undefined;
 
-    playerExplosion: Explosion;
+    /**
+     * PlayerExplosion asset.
+     */
+    coloredExplosion: Explosion;
 
-    playerFrame: Frame;
+    /**
+     * The frame of the player ship.
+     */
+    coloredFrame: Frame;
 
+    /**
+     * State of the player's bullet.
+     */
     playerBulletState: ParticleState | undefined;
 }

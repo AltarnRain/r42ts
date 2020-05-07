@@ -97,7 +97,7 @@ export default class BulletRunner {
         } = appState();
 
         // Enemies never fire bullets when the player is dead.
-        if (!playerState.playerOnScreen) {
+        if (!playerState.playerAlive) {
             return;
         }
 

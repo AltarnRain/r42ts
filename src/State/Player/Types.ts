@@ -15,9 +15,9 @@ import { MoveLimits } from "../../Types";
 import Constants from "./Constants";
 import { ParticleState } from "./ParticleState";
 
-export interface PlayerOnScreen {
-    type: typeof Constants.playerOnScreen;
-    playerOnScreen: boolean;
+export interface SetPlayerIsAlive {
+    type: typeof Constants.setPlayerIsAlive;
+    playerIsAlive: boolean;
 }
 
 export interface SetPlayerMovementLimit {
@@ -41,7 +41,7 @@ export interface SetPlayerBulletState {
 }
 
 export type PlayerStateTypes =
-    PlayerOnScreen |
+    SetPlayerIsAlive |
     SetPlayerMovementLimit |
     SetPlayerLocationData |
     SetPlayerBulletState

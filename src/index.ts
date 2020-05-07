@@ -39,6 +39,7 @@ window.onload = () => {
         let level = queryKeyValuePairs.find((kvp) => kvp.key === "level")?.value;
         const drawGrid = queryKeyValuePairs.find((kvp) => kvp.key === "grid");
         const showhitboxes = queryKeyValuePairs.find((kvp) => kvp.key === "hitboxes");
+        const immortal = queryKeyValuePairs.find((kvp) => kvp.key === "god");
 
         if (showPlayGround) {
 
@@ -56,7 +57,12 @@ window.onload = () => {
             GameLoop.registerBackgroundDrawing(drawStatusBar);
             GameLoop.registerUpdateState(playerRunner);
             GameLoop.registerUpdateState(playerSpawnManager);
-            dispatch(playerMortality("immortal"));
+
+            if (immortal) {
+                dispatch(playerMortality("immortal"));
+            } else {
+                dispatch(playerMortality("mortal"));
+            }
 
             dispatch(setLives(20));
             dispatch(setPhasers(100));
@@ -104,17 +110,17 @@ window.onload = () => {
 };
 
 function startGame(): void {
-    subscribeToStoreChanges();
-    registerListeners();
+    // subscribeToStoreChanges();
+    // registerListeners();
 
-    dispatch(setPhasers(1));
-    dispatch(setLives(2));
+    // dispatch(setPhasers(1));
+    // dispatch(setLives(2));
 
-    GameLoop.registerBackgroundDrawing(drawStatusBar);
-    GameLoop.registerUpdateState(playerRunner);
-    GameLoop.registerUpdateState(playerSpawnManager);
-    dispatch(playerMortality("mortal"));
+    // GameLoop.registerBackgroundDrawing(drawStatusBar);
+    // GameLoop.registerUpdateState(playerRunner);
+    // GameLoop.registerUpdateState(playerSpawnManager);
+    // dispatch(playerMortality("mortal"));
 
-    dispatch(setLevel(1));
-    GameLoop.Start();
+    // dispatch(setLevel(1));
+    // GameLoop.Start();
 }

@@ -79,8 +79,8 @@ function getPlayerBullet(left: number, top: number): ParticleState {
  */
 function draw(): void {
     const { playerState } = appState();
-    if (playerState.playerOnScreen) {
-        renderFrame(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.playerFrame);
+    if (playerState.playerAlive) {
+        renderFrame(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.coloredFrame);
     }
 
     if (playerState.playerBulletState) {

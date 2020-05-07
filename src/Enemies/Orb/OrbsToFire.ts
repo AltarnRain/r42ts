@@ -28,7 +28,7 @@ export default function orbsToFire(orbs: EnemyState[], fireAngleProvider?: FireA
         playerState,
     } = appState();
 
-    if (!playerState.playerOnScreen) {
+    if (!playerState.playerAlive) {
         return [];
     }
 

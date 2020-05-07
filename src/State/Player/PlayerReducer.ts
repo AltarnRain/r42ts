@@ -27,8 +27,8 @@ import { PlayerStateTypes } from "./Types";
 export default function playerReducer(state: PlayerState = initState(), action: PlayerStateTypes): PlayerState {
     return produce(state, (draft) => {
         switch (action.type) {
-            case Constants.playerOnScreen:
-                draft.playerOnScreen = action.playerOnScreen;
+            case Constants.setPlayerIsAlive:
+                draft.playerAlive = action.playerIsAlive;
                 break;
             case Constants.setPlayerMovementLimit:
                 draft.moveLimit = action.payload;
@@ -62,14 +62,14 @@ function initState(): PlayerState {
     Mutators.Frame.convertHexToCGA(playerFrame);
 
     return {
-        playerOnScreen: false,
+        playerAlive: false,
         moveLimit: "none",
         playerLeftLocation: spawnLocation.left,
         playerTopLocation: spawnLocation.top,
-        playerHitbox: { left: 0, top: 0, right: 0, bottom: 0 },
+        playerHitbox: undefined,
         playerNozzleLocation: { left: 0, top: 0 },
-        playerExplosion,
-        playerFrame,
+        coloredExplosion: playerExplosion,
+        coloredFrame: playerFrame,
         playerBulletState: undefined,
     };
 }

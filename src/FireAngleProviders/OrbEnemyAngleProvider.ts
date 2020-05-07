@@ -25,7 +25,7 @@ export default function orbEnemyAngleProvider(enemy: EnemyState, left: number, t
         enemyLevelState
     } = appState();
 
-    if (!playerState.playerOnScreen) {
+    if (!playerState.playerAlive) {
         return undefined;
     }
 

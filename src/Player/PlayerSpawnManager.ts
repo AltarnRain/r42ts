@@ -7,7 +7,7 @@
 import GameLoop from "../GameLoop";
 import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { setPlayerLocationData, setPlayerMovementLimit, setPlayerOnScreen } from "../State/Player/Actions";
+import { setPlayerLocationData, setPlayerMovementLimit, setPlayerIsAlive } from "../State/Player/Actions";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types";
 import { getFrameReturner } from "../Utility/Frame";
@@ -50,7 +50,7 @@ let formationInProgress = false;
 export default function playerSpawnManager(): void {
     const { playerState, enemyLevelState: levelState } = appState();
 
-    if (!playerState.playerOnScreen && formationInProgress === false) {
+    if (!playerState.playerAlive && formationInProgress === false) {
         if (levelState.remainingEnemies > 0) { // Enemies in the level
             if (levelState.shrapnell.length === 0) { // wait till there's no particles.
                 setupFormation(playerState.playerLeftLocation, playerState.playerTopLocation, "slow", "sideways"); // Start the slow formation where the player has control.
@@ -159,7 +159,7 @@ function updateState(): void {
     }
 
     if (allMovingParts.every((p) => p.traveling() === false)) {
-        dispatch(setPlayerOnScreen(true));
+        dispatch(setPlayerIsAlive(true));
         allMovingParts = [];
         formationInProgress = false;
     }
