@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemy } from "../Base/BaseEnemy";
+import BaseEnemy from "../Base/BaseEnemy";
 import { birdFrameTime, orbFrameTime, robotFrameTime } from "../Constants/EnemyFrameTime";
 import { orbMovementSpeed, robotMovementSpeed } from "../Constants/EnemyMovementSpeeds";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUpLocaionProvider";

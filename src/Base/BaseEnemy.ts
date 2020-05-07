@@ -30,7 +30,7 @@ const {
 
 const negativepixelSize = pixelSize * -1;
 
-export abstract class BaseEnemy {
+export default abstract class BaseEnemy {
 
     /**
      * Static to ensure every enemy gets a new id.

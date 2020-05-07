@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemy } from "../../Base/BaseEnemy";
+import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";

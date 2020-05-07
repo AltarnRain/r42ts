@@ -15,7 +15,7 @@ import { addPhaser, nextLevel } from "../State/Game/GameActions";
 import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, appStore, dispatch } from "../State/Store";
 import { TickFunction } from "../Types";
-import { BaseEnemy } from "./BaseEnemy";
+import BaseEnemy from "./BaseEnemy";
 
 export default abstract class BaseEnemyLevel implements ILevel {
 

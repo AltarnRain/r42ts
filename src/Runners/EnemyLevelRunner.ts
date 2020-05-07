@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemy } from "../Base/BaseEnemy";
+import BaseEnemy from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import Explosion from "../Models/Explosion";

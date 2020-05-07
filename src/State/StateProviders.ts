@@ -10,7 +10,7 @@
  */
 
 import { produce } from "immer";
-import { BaseEnemy } from "../Base/BaseEnemy";
+import BaseEnemy from "../Base/BaseEnemy";
 import Explosion from "../Models/Explosion";
 import { Frame } from "../Types";
 import { getFrameHitbox } from "../Utility/Frame";

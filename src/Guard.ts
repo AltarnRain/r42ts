@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemy } from "./Base/BaseEnemy";
+import BaseEnemy from "./Base/BaseEnemy";
 import { allGameKeys, GameKeys } from "./Utility/KeyboardEvents";
 
 /**

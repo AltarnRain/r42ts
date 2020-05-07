@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { BaseEnemy } from "../../Base/BaseEnemy";
+import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import CGAColors from "../../Constants/CGAColors";
 import TickHandler from "../../Handlers/TickHandler";
