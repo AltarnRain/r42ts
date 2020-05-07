@@ -11,11 +11,6 @@
 
 export default interface DebuggingState {
     /**
-     * When true draws hitboxes around game objects.
-     */
-    drawHitboxes: boolean;
-
-    /**
      * When true the player cannot die.
      */
     playerIsImmortal: boolean;

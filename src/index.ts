@@ -4,15 +4,15 @@
  * See LICENSE.MD.
  */
 
+import { DEBUGGING_drawGrid, DEBUGGING_renderHitboxes } from "./Debugging/Debugging";
 import GameLoop from "./GameLoop";
-import { DEBUGGING_drawGrid } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import subscribeToStoreChanges from "./Levels/SubscribeToStore";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
 import ctxProvider from "./Providers/CtxProvider";
 import dimensionProvider from "./Providers/DimensionProvider";
 import playerRunner from "./Runners/PlayerRunner";
-import { hitboxesOn, playerMortality } from "./State/Debugging/DebuggingActions";
+import { playerMortality } from "./State/Debugging/DebuggingActions";
 import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers, setWarpGamteComplexity } from "./State/Game/GameActions";
 import { WarpLevelComplexity } from "./State/Game/WarpLevelTypes";
 import { dispatch } from "./State/Store";
@@ -47,10 +47,6 @@ window.onload = () => {
                 level = "0";
             }
 
-            if (showhitboxes) {
-                dispatch(hitboxesOn(true));
-            }
-
             subscribeToStoreChanges();
             registerListeners();
 
@@ -80,6 +76,10 @@ window.onload = () => {
                 GameLoop.registerBackgroundDrawing(() => DEBUGGING_drawGrid(gridDetail));
             }
 
+            if (showhitboxes) {
+                GameLoop.registerBackgroundDrawing(() => DEBUGGING_renderHitboxes());
+            }
+
             GameLoop.Start();
 
             (window as any).r42 = {
@@ -91,7 +91,6 @@ window.onload = () => {
                 setLives: (n: number) => dispatch(setLives(n)),
                 increaseScore: (n: number) => dispatch(increaseScore(n)),
                 addPhaser: () => dispatch(addPhaser()),
-                showHitboxes: (b: boolean) => dispatch(hitboxesOn(b)),
                 setWarpLevelComplexity: (n: WarpLevelComplexity) => dispatch(setWarpGamteComplexity(n)),
             };
 

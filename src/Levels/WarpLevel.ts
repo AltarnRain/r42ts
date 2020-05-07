@@ -53,8 +53,8 @@ export default class WarpLevel implements ILevel {
         // the player to traverse the warp level.
         // I'm doing this in a subscription because the PlayerSpawnManager will
         // set a movement limit on the player depending on the game state.
-        if (playerState.alive && playerState.moveLimit !== "forceup") {
-            dispatch(setPlayerMovementLimit("forceup"));
+        if (playerState.alive && playerState.moveLimit !== "none") {
+            dispatch(setPlayerMovementLimit("none"));
         }
     });
 

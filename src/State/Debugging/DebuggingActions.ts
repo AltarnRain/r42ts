@@ -10,7 +10,7 @@
  */
 
 import Constants from "./DebuggingConstants";
-import { Hitboxes, PlayerImmortal, RenderPhaser } from "./DebuggingTypes";
+import { PlayerImmortal, RenderPhaser } from "./DebuggingTypes";
 
 export function playerMortality(mortality: "mortal" | "immortal"): PlayerImmortal {
     return {
@@ -23,12 +23,5 @@ export function renderPhaserOn(render: boolean): RenderPhaser {
     return {
         type: Constants.renderPhaser,
         render
-    };
-}
-
-export function hitboxesOn(show: boolean): Hitboxes {
-    return {
-        type: Constants.hitboxes,
-        show
     };
 }

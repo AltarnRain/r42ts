@@ -29,9 +29,6 @@ export default function debuggingReducer(state: DebuggingState = initState(), ac
             case Constants.renderPhaser:
                 draft.renderPhaser = action.render;
                 break;
-            case Constants.hitboxes:
-                draft.drawHitboxes = action.show;
-                break;
         }
     });
 }
@@ -42,7 +39,6 @@ export default function debuggingReducer(state: DebuggingState = initState(), ac
  */
 function initState(): DebuggingState {
     return {
-        drawHitboxes: false,
         playerIsImmortal: false,
         renderPhaser: false,
     };

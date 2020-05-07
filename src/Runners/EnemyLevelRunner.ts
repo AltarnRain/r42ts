@@ -9,7 +9,6 @@ import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import Explosion from "../Models/Explosion";
 import getPhaserLocations from "../Player/GetPhaserLocations";
-import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { addExplosionCenter, clearPhaserLocations, removeEnemy, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
@@ -112,13 +111,6 @@ function draw(): void {
     }
 
     enemyLevelState.phaserLocations.forEach((pf) => renderFrame(pf.left, pf.top, phaserFrame));
-
-    // DEBUGGING_drawPhaser();
-
-    // Debugging. Show the hitboxes on screen.
-    DEBUGGING_renderHitboxes();
-
-    // drawGrid();
 }
 
 /**
@@ -339,53 +331,3 @@ function queueExplosionRender(left: number, top: number, coloredExplosion: Explo
 
     dispatch(addExplosionCenter(newExplosion, newShrapnell));
 }
-
-//#region  Debugging
-
-function DEBUGGING_renderHitboxes() {
-    const { debuggingState, playerState, enemyLevelState } = appState();
-    if (debuggingState.drawHitboxes) {
-        const hitboxes = enemyLevelState.enemyState.map((e) => e.hitbox);
-
-        // Add player if defined.
-        if (playerState.hitbox) {
-            hitboxes.push(playerState.hitbox);
-        }
-
-        // Add bullet if defined.
-        if (playerState.bulletState?.hitbox) {
-            hitboxes.push(playerState.bulletState.hitbox);
-        }
-
-        enemyLevelState.bullets.forEach((b) => hitboxes.push(b.hitbox));
-        enemyLevelState.shrapnell.forEach((b) => hitboxes.push(b.hitbox));
-
-        // Draw a circle around each object using the
-        // coordiates and radius of the hitbox.
-        for (const hitbox of hitboxes) {
-
-            if (hitbox !== undefined) {
-                const ctx = ctxProvider();
-                ctx.beginPath();
-                ctx.strokeStyle = "white";
-                ctx.rect(hitbox.left, hitbox.top, hitbox.right - hitbox.left, hitbox.bottom - hitbox.top);
-                ctx.lineWidth = 2;
-                ctx.stroke();
-                ctx.closePath();
-            }
-        }
-    }
-}
-
-/**
- * Debugging! Draw a phaser beam towards an enemy.
- */
-// function DEBUGGING_drawPhaser(): void {
-//     const { debuggingState: debugging, playerState: player, enemyLevelState } = appState();
-//     if (debugging.renderPhaser && Guard.isPlayerAlive(player.ship) && enemyLevelState.enemies.length > 0) {
-//         const enemy = enemyLevelState.enemies[0];
-//         getPhaserLocations(.getNozzleLocation().left, player.ship.getNozzleLocation().top, enemy.ship.getCenterLocation().left, enemy.ship.getCenterLocation().top, pixelSize);
-//     }
-// }
-
-//#endregion

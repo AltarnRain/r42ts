@@ -87,32 +87,3 @@ export function drawWarpBackground(additionalColor: string, gate: GameRectangle[
 
     gate.forEach((r) => ctx.fillRect(r.left, r.top, r.right - r.left, r.bottom - r.top));
 }
-
-/**
- * Debugggin function. Draws a grid in the screen for animation alignment.
- */
-export function DEBUGGING_drawGrid(gridDetail: number): void {
-
-    const ctx = ctxProvider();
-    for (let r = 0; r < 120; r += 1) {
-        ctx.beginPath();
-        const y = r * pixelSize * gridDetail;
-        ctx.lineTo(0, y);
-        ctx.lineTo(fullGameWidth, y);
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = "white";
-        ctx.stroke();
-        ctx.closePath();
-    }
-
-    for (let r = 0; r < 160; r += 1) {
-        ctx.beginPath();
-        const x = r * pixelSize * gridDetail;
-        ctx.lineTo(x, 0);
-        ctx.lineTo(x, fullGameHeight);
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = "white";
-        ctx.stroke();
-        ctx.closePath();
-    }
-}
