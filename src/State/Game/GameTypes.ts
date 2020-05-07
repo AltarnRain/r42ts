@@ -9,7 +9,7 @@
  * Responsibility:  Action return types for the GameState
  */
 
-import Constants from "./Constants";
+import Constants from "./GameConstants";
 import { WarpLevelComplexity } from "./WarpLevelTypes";
 
 export interface IncreaseScore {

@@ -9,9 +9,9 @@ import getPlayerExplosion from "../../Player/PlayerExplosion";
 import { getPlayerFrame } from "../../Player/PlayerFrames";
 import getShipSpawnLocation from "../../Providers/PlayerSpawnLocationProvider";
 import Mutators from "../../Utility/FrameMutators";
-import Constants from "./Constants";
+import Constants from "./PlayerConstants";
 import PlayerState from "./PlayerState";
-import { PlayerStateTypes } from "./Types";
+import { PlayerStateTypes } from "./PlayerTypes";
 
 /**
  * Module:          playerReducer
@@ -28,19 +28,19 @@ export default function playerReducer(state: PlayerState = initState(), action: 
     return produce(state, (draft) => {
         switch (action.type) {
             case Constants.setPlayerIsAlive:
-                draft.playerAlive = action.playerIsAlive;
+                draft.alive = action.playerIsAlive;
                 break;
             case Constants.setPlayerMovementLimit:
                 draft.moveLimit = action.payload;
                 break;
             case Constants.setPlayerLocationData:
-                draft.playerLeftLocation = action.payload.left;
-                draft.playerTopLocation = action.payload.top;
-                draft.playerHitbox = action.payload.hitbox;
-                draft.playerNozzleLocation = action.payload.nozzleLocation;
+                draft.left = action.payload.left;
+                draft.top = action.payload.top;
+                draft.hitbox = action.payload.hitbox;
+                draft.nozzleLocation = action.payload.nozzleLocation;
                 break;
             case Constants.setPlayerBulletState:
-                draft.playerBulletState = action.particleState;
+                draft.bulletState = action.particleState;
                 break;
         }
     });
@@ -62,14 +62,14 @@ function initState(): PlayerState {
     Mutators.Frame.convertHexToCGA(playerFrame);
 
     return {
-        playerAlive: false,
+        alive: false,
         moveLimit: "none",
-        playerLeftLocation: spawnLocation.left,
-        playerTopLocation: spawnLocation.top,
-        playerHitbox: undefined,
-        playerNozzleLocation: { left: 0, top: 0 },
+        left: spawnLocation.left,
+        top: spawnLocation.top,
+        hitbox: undefined,
+        nozzleLocation: { left: 0, top: 0 },
         coloredExplosion: playerExplosion,
         coloredFrame: playerFrame,
-        playerBulletState: undefined,
+        bulletState: undefined,
     };
 }

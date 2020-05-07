@@ -6,7 +6,7 @@
 
 import { getPlayerFrame } from "../Player/PlayerFrames";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { setPlayerLocationData } from "../State/Player/Actions";
+import { setPlayerLocationData } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { getAngle, getNextX, getNextY } from "../Utility/Geometry";
@@ -62,17 +62,17 @@ export function movePlayerHandler(speed: number): void {
 
     const angle = getAngle(localKeyboardState);
 
-    let newX = playerState.playerLeftLocation;
-    let newY = playerState.playerTopLocation;
+    let newX = playerState.left;
+    let newY = playerState.top;
 
     if (angle !== -1) {
 
-        newX = getNextX(angle, speedX, playerState.playerLeftLocation);
-        newY = getNextY(angle, speedY, playerState.playerTopLocation);
+        newX = getNextX(angle, speedX, playerState.left);
+        newY = getNextY(angle, speedY, playerState.top);
 
         if (!fallsWithin(newX, newY, gameField.top, gameField.bottom - shipDimensions.height, gameField.left, gameField.right - shipDimensions.width)) {
-            newX = playerState.playerLeftLocation;
-            newY = playerState.playerTopLocation;
+            newX = playerState.left;
+            newY = playerState.top;
         }
     }
 

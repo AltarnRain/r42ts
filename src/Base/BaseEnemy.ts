@@ -10,7 +10,7 @@ import Explosion from "../Models/Explosion";
 import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { addOrUpdateEnemy } from "../State/EnemyLevel/Actions";
+import { addOrUpdateEnemy } from "../State/EnemyLevel/EnemyLevelActions";
 import { dispatch } from "../State/Store";
 import { ExplosionProviderFunction, Frame, OffsetFramesProviderFunction } from "../Types";
 import { getFrameCenter, getFrameHitbox } from "../Utility/Frame";

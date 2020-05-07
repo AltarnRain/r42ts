@@ -10,9 +10,9 @@
  */
 
 import produce from "immer";
-import Constants from "./Constants";
+import Constants from "./KeyboardConstants";
 import KeyboardState from "./KeyboardState";
-import { KeyboardTypes } from "./Types";
+import { KeyboardTypes } from "./KeyboardTypes";
 
 /**
  * keyboardStateReducer

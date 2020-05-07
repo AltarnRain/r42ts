@@ -11,7 +11,7 @@ import { birdRandomAngles as birdRandomAngles } from "../Constants/MovementAngle
 import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
 import { enemyFactory } from "../Enemies/EnemyFactory";
 import getExplosion01 from "../SharedFrames/Explosion01";
-import { setExplosionData } from "../State/EnemyLevel/Actions";
+import { setExplosionData } from "../State/EnemyLevel/EnemyLevelActions";
 import { ExplosionData } from "../State/EnemyLevel/ExplosionData";
 import { dispatch } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";

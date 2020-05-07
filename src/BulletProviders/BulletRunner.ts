@@ -5,7 +5,7 @@
  */
 
 import dimensionProvider from "../Providers/DimensionProvider";
-import { addBullet, addOrUpdateEnemy } from "../State/EnemyLevel/Actions";
+import { addBullet, addOrUpdateEnemy } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
@@ -97,7 +97,7 @@ export default class BulletRunner {
         } = appState();
 
         // Enemies never fire bullets when the player is dead.
-        if (!playerState.playerAlive) {
+        if (!playerState.alive) {
             return;
         }
 

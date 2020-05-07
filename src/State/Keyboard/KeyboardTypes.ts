@@ -10,7 +10,7 @@
  */
 
 import { GameKeys } from "../../Utility/KeyboardEvents";
-import Constants from "./Constants";
+import Constants from "./KeyboardConstants";
 
 export interface KeyUp {
     type: typeof Constants.keyup;

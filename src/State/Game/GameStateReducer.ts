@@ -5,9 +5,9 @@
  */
 
 import produce from "immer";
-import Constants from "./Constants";
+import Constants from "./GameConstants";
 import GameState from "./GameState";
-import { GameStateTypes } from "./Types";
+import { GameStateTypes } from "./GameTypes";
 import getWarpGateComplexity from "./WarpGameComplexities";
 
 /**

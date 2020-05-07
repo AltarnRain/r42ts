@@ -12,7 +12,7 @@
 import { GameLocation } from "../../Models/GameLocation";
 import { GameRectangle } from "../../Models/GameRectangle";
 import { MoveLimits } from "../../Types";
-import Constants from "./Constants";
+import Constants from "./PlayerConstants";
 import { ParticleState } from "./ParticleState";
 
 export interface SetPlayerIsAlive {

@@ -11,8 +11,8 @@ import { drawBackground, drawWarpBackground } from "../GameScreen/StaticRenders"
 import ILevel from "../Interfaces/ILevel";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { setWarpGamteComplexity } from "../State/Game/Actions";
-import { setPlayerMovementLimit } from "../State/Player/Actions";
+import { setWarpGamteComplexity } from "../State/Game/GameActions";
+import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, appStore, dispatch } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
 import { coinFlip } from "../Utility/Lib";
@@ -53,7 +53,7 @@ export default class WarpLevel implements ILevel {
         // the player to traverse the warp level.
         // I'm doing this in a subscription because the PlayerSpawnManager will
         // set a movement limit on the player depending on the game state.
-        if (playerState.playerAlive && playerState.moveLimit !== "forceup") {
+        if (playerState.alive && playerState.moveLimit !== "forceup") {
             dispatch(setPlayerMovementLimit("forceup"));
         }
     });

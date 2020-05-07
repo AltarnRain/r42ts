@@ -10,9 +10,9 @@ import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
-import { resetLevelState, setFireInterval } from "../State/EnemyLevel/Actions";
-import { addPhaser, nextLevel } from "../State/Game/Actions";
-import { setPlayerMovementLimit } from "../State/Player/Actions";
+import { resetLevelState, setFireInterval } from "../State/EnemyLevel/EnemyLevelActions";
+import { addPhaser, nextLevel } from "../State/Game/GameActions";
+import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, appStore, dispatch } from "../State/Store";
 import { TickFunction } from "../Types";
 import { BaseEnemy } from "./BaseEnemy";
@@ -46,7 +46,7 @@ export default abstract class BaseEnemyLevel implements ILevel {
     private storeSub = appStore().subscribe(() => {
         const { playerState } = appState();
 
-        if (playerState.playerAlive && playerState.moveLimit !== "none") {
+        if (playerState.alive && playerState.moveLimit !== "none") {
             dispatch(setPlayerMovementLimit("none"));
         }
     });

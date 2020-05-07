@@ -12,9 +12,9 @@
 import { GameLocation } from "../../Models/GameLocation";
 import { GameRectangle } from "../../Models/GameRectangle";
 import { MoveLimits } from "../../Types";
-import Constants from "./Constants";
+import Constants from "./PlayerConstants";
 import { ParticleState } from "./ParticleState";
-import { SetPlayerBulletState, SetPlayerIsAlive, SetPlayerLocationData, SetPlayerMovementLimit } from "./Types";
+import { SetPlayerBulletState, SetPlayerIsAlive, SetPlayerLocationData, SetPlayerMovementLimit } from "./PlayerTypes";
 
 export function setPlayerIsAlive(playerAlive: boolean): SetPlayerIsAlive {
     return {

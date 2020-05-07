@@ -28,11 +28,11 @@ export default function orbsToFire(orbs: EnemyState[], fireAngleProvider?: FireA
         playerState,
     } = appState();
 
-    if (!playerState.playerAlive) {
+    if (!playerState.alive) {
         return [];
     }
 
-    const playerhitbox = playerState.playerHitbox;
+    const playerhitbox = playerState.hitbox;
     if (playerhitbox === undefined) {
         return [];
     }
@@ -49,7 +49,7 @@ export default function orbsToFire(orbs: EnemyState[], fireAngleProvider?: FireA
 
         if (center) {
             const angle = fireAngleProvider(orb, orb.offsetLeft, orb.offsetTop);
-            const angleToPlayer = calculateAngle(center.left, center.top, playerState.playerLeftLocation, playerState.playerTopLocation);
+            const angleToPlayer = calculateAngle(center.left, center.top, playerState.left, playerState.top);
 
             if (center.top > playerhitbox.bottom) {
                 below += 1;

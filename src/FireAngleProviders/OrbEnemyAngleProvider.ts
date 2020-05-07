@@ -25,11 +25,11 @@ export default function orbEnemyAngleProvider(enemy: EnemyState, left: number, t
         enemyLevelState
     } = appState();
 
-    if (!playerState.playerAlive) {
+    if (!playerState.alive) {
         return undefined;
     }
 
-    const playerHitbox = playerState.playerHitbox;
+    const playerHitbox = playerState.hitbox;
 
     if (playerHitbox === undefined) {
         return undefined;

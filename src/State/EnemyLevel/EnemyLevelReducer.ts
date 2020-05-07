@@ -10,9 +10,9 @@
  */
 
 import produce from "immer";
-import Constants from "./Constants";
+import Constants from "./EnemyLevelConstants";
 import EnemyLevelState from "./EnemyLevelState";
-import { EnemyLevelTypes } from "./Types";
+import { EnemyLevelTypes } from "./EnemyLevelTypes";
 
 /**
  * enemyLevelReducer

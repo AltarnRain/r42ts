@@ -12,7 +12,7 @@ import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import { setPlayerBulletState } from "../State/Player/Actions";
+import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { ParticleState } from "../State/Player/ParticleState";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
@@ -50,8 +50,8 @@ function updateState(): void {
     const { playerState, keyboardState } = appState();
     movePlayerHandler(10);
 
-    if (playerState.playerBulletState) {
-        const bullet = playerState.playerBulletState;
+    if (playerState.bulletState) {
+        const bullet = playerState.bulletState;
         const nextLoction = getLocation(bullet.left, bullet.top, bullet.angle, bullet.speed);
 
         if (fallsWithin(nextLoction.left, nextLoction.top, gameField.top, gameField.bottom, 0, gameField.right)) {
@@ -63,8 +63,8 @@ function updateState(): void {
     }
 
     // Fire new bullet.
-    if (playerState.playerNozzleLocation !== undefined && keyboardState.fire && playerState.playerBulletState === undefined) {
-        const nozzleLocation = playerState.playerNozzleLocation;
+    if (playerState.nozzleLocation !== undefined && keyboardState.fire && playerState.bulletState === undefined) {
+        const nozzleLocation = playerState.nozzleLocation;
         const bullet = getPlayerBullet(nozzleLocation.left, nozzleLocation.top);
         dispatch(setPlayerBulletState(bullet));
     }
@@ -79,12 +79,12 @@ function getPlayerBullet(left: number, top: number): ParticleState {
  */
 function draw(): void {
     const { playerState } = appState();
-    if (playerState.playerAlive) {
-        renderFrame(playerState.playerLeftLocation, playerState.playerTopLocation, playerState.coloredFrame);
+    if (playerState.alive) {
+        renderFrame(playerState.left, playerState.top, playerState.coloredFrame);
     }
 
-    if (playerState.playerBulletState) {
-        const bullet = playerState.playerBulletState;
+    if (playerState.bulletState) {
+        const bullet = playerState.bulletState;
         renderFrame(bullet.left, bullet.top, bullet.coloredFrame);
     }
 }

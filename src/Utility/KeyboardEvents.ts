@@ -5,8 +5,8 @@
  */
 
 import Guard from "../Guard";
-import { setPause } from "../State/Game/Actions";
-import { keyDown, keyUp } from "../State/Keyboard/Actions";
+import { setPause } from "../State/Game/GameActions";
+import { keyDown, keyUp } from "../State/Keyboard/KeyboardActions";
 import { appState, dispatch } from "../State/Store";
 
 /**
@@ -59,7 +59,7 @@ function onKeyDown(event: KeyboardEvent): void {
 
         // If the space bar is hit and the player is alive the player pauses the game
         // otherwise, the space bar is used to pause formation.
-        if (event.code === "Space" && playerState.playerAlive) {
+        if (event.code === "Space" && playerState.alive) {
             if (gameState.pause) {
                 dispatch(setPause(false));
             } else {

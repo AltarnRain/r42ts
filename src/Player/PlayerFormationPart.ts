@@ -83,8 +83,8 @@ export default class PlayerFormationPart {
             playerState
         } = appState();
 
-        const targetLeftLocation = playerState.playerLeftLocation + this.leftOffset;
-        const targetTopLocation = playerState.playerTopLocation + this.topOffset;
+        const targetLeftLocation = playerState.left + this.leftOffset;
+        const targetTopLocation = playerState.top + this.topOffset;
 
         const angle = calculateAngle(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
         const distance = calculateDistance(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
@@ -115,8 +115,8 @@ export default class PlayerFormationPart {
             playerState
         } = appState();
 
-        const targetLeftLocation = playerState.playerLeftLocation + this.leftOffset;
-        const targetTopLocation = playerState.playerTopLocation + this.topOffset;
+        const targetLeftLocation = playerState.left + this.leftOffset;
+        const targetTopLocation = playerState.top + this.topOffset;
 
         const distance = calculateDistance(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
         return distance > minimumDistance;

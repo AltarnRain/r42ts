@@ -21,7 +21,7 @@ export default interface PlayerState {
      * The player can me semi-alive when they are forming.
      * This flag can be used to trigger alive/dead behaviour for enemies, etc.
      */
-    playerAlive: boolean;
+    alive: boolean;
 
     /**
      * Movement limitations for the player
@@ -31,22 +31,22 @@ export default interface PlayerState {
     /**
      * Left location of the player
      */
-    playerLeftLocation: number;
+    left: number;
 
     /**
      * Top location of the player
      */
-    playerTopLocation: number;
+    top: number;
 
     /**
      * Hitbox of the player.
      */
-    playerHitbox: GameRectangle | undefined;
+    hitbox: GameRectangle | undefined;
 
     /**
      * Location of the player's nozzle. Used to determine when the player's bullet should appear.
      */
-    playerNozzleLocation: GameLocation | undefined;
+    nozzleLocation: GameLocation | undefined;
 
     /**
      * PlayerExplosion asset.
@@ -61,5 +61,5 @@ export default interface PlayerState {
     /**
      * State of the player's bullet.
      */
-    playerBulletState: ParticleState | undefined;
+    bulletState: ParticleState | undefined;
 }

@@ -10,8 +10,8 @@
  */
 
 import { GameKeys } from "../../Utility/KeyboardEvents";
-import Constants from "./Constants";
-import { KeyDown, KeyUp } from "./Types";
+import Constants from "./KeyboardConstants";
+import { KeyDown, KeyUp } from "./KeyboardTypes";
 
 export function keyDown(key: GameKeys): KeyDown {
     return {

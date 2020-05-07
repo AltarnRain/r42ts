@@ -7,7 +7,7 @@
 import GameLoop from "../GameLoop";
 import { movePlayerHandler } from "../Handlers/MovePlayerHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { setPlayerLocationData, setPlayerMovementLimit, setPlayerIsAlive } from "../State/Player/Actions";
+import { setPlayerLocationData, setPlayerMovementLimit, setPlayerIsAlive } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types";
 import { getFrameReturner } from "../Utility/Frame";
@@ -50,14 +50,14 @@ let formationInProgress = false;
 export default function playerSpawnManager(): void {
     const { playerState, enemyLevelState: levelState } = appState();
 
-    if (!playerState.playerAlive && formationInProgress === false) {
+    if (!playerState.alive && formationInProgress === false) {
         if (levelState.remainingEnemies > 0) { // Enemies in the level
             if (levelState.shrapnell.length === 0) { // wait till there's no particles.
-                setupFormation(playerState.playerLeftLocation, playerState.playerTopLocation, "slow", "sideways"); // Start the slow formation where the player has control.
+                setupFormation(playerState.left, playerState.top, "slow", "sideways"); // Start the slow formation where the player has control.
             }
         } else {
             // No enemies, fast formation
-            setupFormation(playerState.playerLeftLocation, playerState.playerTopLocation, "fast", "immobile");
+            setupFormation(playerState.left, playerState.top, "fast", "immobile");
         }
     }
 
@@ -76,8 +76,8 @@ function createParticles(): void {
         playerState
     } = appState();
 
-    const left = playerState.playerLeftLocation;
-    const top = playerState.playerTopLocation;
+    const left = playerState.left;
+    const top = playerState.top;
 
     const nozzleTip = getLocation(left, top, nozzleOutAngle, nozzleDistance);
     const nozzleBottom = getLocation(left, top, nozzleOutAngle, particleTravelDistance);
