@@ -14,6 +14,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import renderFrame from "../Render/RenderFrame";
 import { addExplosionCenter, addParticles, clearPhaserLocations, removeEnemy, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
+import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
 import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/GameActions";
 import { setPlayerBulletState, setPlayerLocationData } from "../State/Player/PlayerActions";
@@ -127,49 +128,73 @@ function draw(): void {
  * Handles all hit detection.
  */
 function handleHitDetection(tick: number) {
-    const {
-        debuggingState,
-        enemyLevelState,
-        playerState
-    } = appState();
 
-    for (const enemyState of enemyLevelState.enemyState) {
+    // Check if the player hit an enemy.
+    enemyHitPlayerDetection();
+    playerHitEnemyDetection();
 
-        if (enemyState.hitbox !== undefined) {
-            if (playerState.hitbox && debuggingState.playerIsImmortal === false) {
-                if (overlaps(playerState.hitbox, enemyState.hitbox)) {
-                    // Player was hit. Render the explosion.
-                    handlePlayerDeath(tick);
+    function playerHitEnemyDetection() {
+        const { playerState, enemyLevelState } = appState();
+        // Check if the player an enemy something.
+        if (playerState.bulletState !== undefined && playerState.bulletState.hitbox !== undefined) {
+
+            const playerBulletHitbox = playerState.bulletState.hitbox;
+            const hitEnemy = enemyLevelState.enemyState.find((e) => {
+                if (overlaps(playerBulletHitbox, e.hitbox)) {
+                    return true;
                 }
+            });
+
+            if (hitEnemy !== undefined) {
+                handleEnemyDestruction(hitEnemy, tick);
+                // Player hit an enemy, remove the bullet.
+                dispatch(setPlayerBulletState(undefined));
+
             }
+        }
+    }
 
-            // Check if the player hit something.
-            if (playerState.bulletState?.hitbox !== undefined) {
-                if (overlaps(playerState.bulletState.hitbox, enemyState.hitbox)) {
-                    dispatch(setPlayerBulletState(undefined));
+    abc(tick);
 
-                    const enemy = localState.enemies.find((e) => e.getId() === enemyState.enemyId);
-                    if (enemy !== undefined) {
-                        handleEnemyDestruction(enemy, tick);
+    function enemyHitPlayerDetection() {
+        const { enemyLevelState, debuggingState } = appState();
+        for (const enemyState of enemyLevelState.enemyState) {
+
+            // Always pull in a fresh version of the player state since we're
+            // doing dispatches within this loop that can effect the player state.
+            const { playerState } = appState();
+            if (enemyState.hitbox !== undefined) {
+                if (playerState.alive && playerState.hitbox && debuggingState.playerIsImmortal === false) {
+                    if (overlaps(playerState.hitbox, enemyState.hitbox)) {
+                        // Player was hit. Render the explosion.
+                        handlePlayerDeath(tick);
                     }
                 }
             }
         }
     }
 
-    if (playerState.hitbox !== undefined) {
-        for (const shrapnell of enemyLevelState.shrapnell) {
-            if (overlaps(playerState.hitbox, shrapnell.hitbox)) {
-                handlePlayerDeath(tick);
-                break;
-            }
-        }
 
-        for (const bullet of enemyLevelState.bullets) {
-            if (overlaps(playerState.hitbox, bullet.hitbox)) {
-                handlePlayerDeath(tick);
-                break;
-            }
+
+}
+
+function abc(tick: number): void {
+    const shrapnels = appState().enemyLevelState.shrapnell;
+    const bullets = appState().enemyLevelState.bullets;
+
+    for (const shrapnell of shrapnels) {
+        const { playerState } = appState();
+        if (playerState.alive && overlaps(playerState.hitbox, shrapnell.hitbox)) {
+            handlePlayerDeath(tick);
+            break;
+        }
+    }
+
+    for (const bullet of bullets) {
+        const playerState = appState().playerState;
+        if (playerState.alive && overlaps(playerState.hitbox, bullet.hitbox)) {
+            handlePlayerDeath(tick);
+            break;
         }
     }
 }
@@ -241,11 +266,11 @@ function handleSelfDestruct(tick: number): void {
  * handles the destruction of an enemy.
  * @param {BaseEnemy} enemy.
  */
-function handleEnemyDestruction(ship: BaseEnemy, tick: number): void {
+function handleEnemyDestruction(enemy: EnemyState, tick: number): void {
     const { enemyLevelState } = appState();
 
     localState.enemies = localState.enemies.filter((e) => {
-        if (e !== ship) {
+        if (e.getId() !== enemy.enemyId) {
             e.increaseSpeed(enemyLevelState.totalNumberOfEnemies / (localState.enemies.length - 1));
             return true;
         } else {
@@ -253,10 +278,9 @@ function handleEnemyDestruction(ship: BaseEnemy, tick: number): void {
         }
     });
 
-    const enemyState = StateProviders.getEnemyState(ship);
-    queueExplosionRender(enemyState.offsetLeft, enemyState.offsetTop, enemyState.coloredExplosion, tick);
-    dispatch(removeEnemy(enemyState.enemyId));
-    dispatch(increaseScore(ship.getPoints()));
+    queueExplosionRender(enemy.offsetLeft, enemy.offsetTop, enemy.coloredExplosion, tick);
+    dispatch(removeEnemy(enemy.enemyId));
+    dispatch(increaseScore(enemy.points));
 }
 
 /**
@@ -289,11 +313,7 @@ function handlePhaser(tick: number): void {
 
                 // Deal the with the enemy that got hit.
 
-                const enemy = localState.enemies.find((e) => e.getId() === randomEnemy.enemyId);
-                if (enemy !== undefined) {
-                    handleEnemyDestruction(enemy, tick);
-                }
-
+                handleEnemyDestruction(randomEnemy, tick);
                 dispatch(clearPhaserLocations());
             }, 100);
         }

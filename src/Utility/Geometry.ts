@@ -69,7 +69,11 @@ export function getAngle(state: KeyboardState): number {
  * @param {GameRectangle} hitbox2.
  * @returns {boolean}. True if overlap.
  */
-export function overlaps(hitbox1: GameRectangle, hitbox2: GameRectangle): boolean {
+export function overlaps(hitbox1: GameRectangle | undefined, hitbox2: GameRectangle | undefined): boolean {
+
+    if (hitbox1 === undefined || hitbox2 === undefined) {
+        return false;
+    }
 
     if (hitbox1.right < hitbox2.left || hitbox1.left > hitbox2.right) {
         return false;
@@ -106,8 +110,8 @@ export function reverseDegreeAngle(angle: number): number {
  * @returns {number | undefined}. The angle to towards the target in degrees.
  */
 export function calculateAngle(startLeft: number, startTop: number, endLeft: number, endTop: number): number | undefined {
-    const dx =  endLeft - startLeft;
-    const dy =  endTop - startTop;
+    const dx = endLeft - startLeft;
+    const dy = endTop - startTop;
 
     // Singularity.
     if (dx === 0 && dy === 0) {
