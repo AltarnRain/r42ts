@@ -60,20 +60,21 @@ export function movePlayerHandler(speed: number): void {
 
     let newX = playerState.left;
     let newY = playerState.top;
+    let hitBox = getFrameHitbox(newX, newY, playerState.coloredFrame, 0);
 
     if (angle !== -1) {
 
         newX = getNextX(angle, speedX, playerState.left);
         newY = getNextY(angle, speedY, playerState.top);
+        hitBox = getFrameHitbox(newX, newY, playerState.coloredFrame, 0);
 
-        if (!fallsWithinGameField(newX, newY)) {
+        if (!fallsWithinGameField(hitBox.left, hitBox.right, hitBox.top, hitBox.bottom)) {
             newX = playerState.left;
             newY = playerState.top;
         }
     }
 
-    const hitBox = getFrameHitbox(newX, newY, playerState.coloredFrame,  0);
-    const nozzleLocation =  {
+    const nozzleLocation = {
         left: newX + pixelSize * 2,
         top: newY - pixelSize * 1,
     };

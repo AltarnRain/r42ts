@@ -1,6 +1,7 @@
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { appState } from "../State/Store";
+import { GameRectangle } from "../Models/GameRectangle";
 
 const {
     pixelSize,
@@ -30,15 +31,19 @@ export function DEBUGGING_renderHitboxes() {
     for (const hitbox of hitboxes) {
 
         if (hitbox !== undefined) {
-            const ctx = ctxProvider();
-            ctx.beginPath();
-            ctx.strokeStyle = "white";
-            ctx.rect(hitbox.left, hitbox.top, hitbox.right - hitbox.left, hitbox.bottom - hitbox.top);
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.closePath();
+            DEBUGGING_drawGameRect(hitbox, "white");
         }
     }
+}
+
+export function DEBUGGING_drawGameRect(hitbox: GameRectangle, color: string, lineWith: number = 2) {
+    const ctx = ctxProvider();
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.rect(hitbox.left, hitbox.top, hitbox.right - hitbox.left, hitbox.bottom - hitbox.top);
+    ctx.lineWidth = lineWith;
+    ctx.stroke();
+    ctx.closePath();
 }
 
 /**

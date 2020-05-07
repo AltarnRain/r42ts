@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import CGAColors from "../Constants/CGAColors";
+import CGAColors, { validColors } from "../Constants/CGAColors";
 import WarpLevelConstants from "../Constants/WarpLevelConstants";
 import GameLoop from "../GameLoop";
 import { drawBackground, drawWarpBackground } from "../GameScreen/StaticRenders";
@@ -16,6 +16,11 @@ import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, appStore, dispatch } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
 import { coinFlip } from "../Utility/Lib";
+import { playerBulletSpeed } from "../Constants/BulletSpeeds";
+import ctxProvider from "../Providers/CtxProvider";
+import { overlaps } from "../Utility/Geometry";
+import { fallsWithin } from "../Utility/Location";
+import { DEBUGGING_drawGameRect } from "../Debugging/Debugging";
 
 /**
  * Module:          WarpLevel
@@ -75,9 +80,67 @@ export default class WarpLevel implements ILevel {
 
         const warpGate = this.calculateWarpGate(gameField.left, gameField.right, gameState.warpLevelSteps.stepsX, gameState.warpLevelSteps.stepsY);
         this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, warpGate)));
+        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => this.hitDetection(warpGate)));
+    }
+
+    private hitDetection(warpGate: GameRectangle[]): void {
+        const { hitbox, alive } = appState().playerState;
+
+        if (alive && hitbox !== undefined) {
+
+            // First we get a list of the save zones the player is in.
+            const currentSafeZones = warpGate
+                .filter((wg) => overlaps(wg, hitbox))
+                .sort((a, b) => a.top < b.top ? -1 : 1);
+
+            const ctx = ctxProvider();
+
+            const partialHitboxes = currentSafeZones.map<{ hitbox: GameRectangle; safeSonze: GameRectangle }>((sz) => {
+
+                const topDiff = hitbox.top + (sz.top - hitbox.top);
+                const bottomDiff = hitbox.bottom + (sz.bottom - hitbox.bottom);
+
+                return {
+                    hitbox: {
+                        left: hitbox.left,
+                        top: topDiff,
+                        bottom: bottomDiff,
+                        right: hitbox.right,
+                    },
+                    safeSonze: sz,
+                };
+            });
+
+            const safe = partialHitboxes.every((ph) => fallsWithin(hitbox.left, hitbox.right, hitbox.top, hitbox.bottom, ph.safeSonze.left, ph.safeSonze.right, ph.safeSonze.top, ph.safeSonze.bottom));
+
+            currentSafeZones.forEach((r, index) => {
+                ctx.fillStyle = validColors[index];
+                ctx.fillRect(r.left, r.top, r.right - r.left, r.bottom - r.top);
+            });
+
+            if (safe === false) {
+                DEBUGGING_drawGameRect(hitbox, "red", 5);
+            }
+
+            partialHitboxes.forEach((r) => {
+                DEBUGGING_drawGameRect(r.hitbox, CGAColors.lightMagenta);
+            });
+        }
     }
 
     private calculateWarpGate(outerLeft: number, outerRight: number, stepSizesX: number[], stepSizesY: number[]): GameRectangle[] {
+
+        const safeZone: GameRectangle[] = [];
+
+        // Make the entire bottom of the screen part of the warp gate to mark it as a safe zone.
+        const screenBottom: GameRectangle = {
+            left: gameField.left,
+            right: gameField.right,
+            top: WarpLevelConstants.bottom,
+            bottom: gameField.bottom,
+        };
+
+        safeZone.push(screenBottom);
 
         let direction = warpGateInitialleft;
 
@@ -88,8 +151,6 @@ export default class WarpLevel implements ILevel {
 
         const pixelsToGo = WarpLevelConstants.heightPixelCount;
         let pixelsToDo = 0;
-
-        const safeZone: GameRectangle[] = [];
 
         let stepSizeY = getRandomArrayElement(stepSizesY);
         let stepSizeX = getRandomArrayElement(stepSizesX);

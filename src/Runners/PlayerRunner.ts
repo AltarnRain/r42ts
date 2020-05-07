@@ -16,7 +16,8 @@ import { ParticleState } from "../State/Player/ParticleState";
 import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
-import { fallsWithin, getLocation } from "../Utility/Location";
+import { getFrameHitbox } from "../Utility/Frame";
+import { fallsWithinGameField, getLocation } from "../Utility/Location";
 
 /**
  * Module:          PlayerRunner
@@ -79,10 +80,11 @@ function handlePlayerBulletMovement(): void {
     const { playerState } = appState();
     if (playerState.bulletState !== undefined) {
         const bullet = playerState.bulletState;
-        const nextLoction = getLocation(bullet.left, bullet.top, bullet.angle, bullet.speed);
+        const nextLocation = getLocation(bullet.left, bullet.top, bullet.angle, bullet.speed);
+        const newHitbox = getFrameHitbox(nextLocation.left, nextLocation.top, bullet.coloredFrame);
 
-        if (fallsWithin(nextLoction.left, nextLoction.top, gameField.top, gameField.bottom, 0, gameField.right)) {
-            const newState = getPlayerBullet(nextLoction.left, nextLoction.top);
+        if (fallsWithinGameField(newHitbox.left, newHitbox.right, nextLocation.top, newHitbox.bottom)) {
+            const newState = getPlayerBullet(nextLocation.left, nextLocation.top);
             dispatch(setPlayerBulletState(newState));
         } else {
             dispatch(setPlayerBulletState(undefined));

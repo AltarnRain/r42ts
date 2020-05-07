@@ -39,23 +39,23 @@ export function calculateDistance(left1: number, top1: number, left2: number, to
  * @param {number} outerLeft. Left of the area.
  * @param {number} outerRight. Right of the area.
  */
-export function fallsWithin(left: number, top: number, outerTop: number, outerBottom: number, outerLeft: number, outerRight: number): boolean {
+export function fallsWithin(left: number, right: number, top: number, bottom: number, outerLeft: number, outerRight: number, outerTop: number, outerBottom: number): boolean {
 
-    const yBounds = top > outerTop && top < outerBottom;
-    const xBounds = left > outerLeft && left < outerRight;
+    const yBounds = bottom >= outerTop && top <= outerBottom;
+    const xBounds = right >= outerLeft && left <= outerRight;
 
     const res = xBounds && yBounds;
 
     return res;
 }
 
-export function fallsWithinGameField(left: number, top: number): boolean {
+export function fallsWithinGameField(left: number, right: number, top: number, bottom: number): boolean {
     const {
         gameField,
         pixelSize
     } = dimensionProvider();
 
-    const res = fallsWithin(left, top, gameField.top, gameField.bottom - pixelSize, gameField.left, gameField.right);
+    const res = fallsWithin(left, right, top, bottom, gameField.left, gameField.right, gameField.top, gameField.bottom - pixelSize);
 
     return res;
 }

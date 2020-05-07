@@ -123,8 +123,9 @@ export namespace StateProviders {
 
             const updatedParticle = produce(particle, (draft) => {
                 const newLocation = getLocation(particle.left, particle.top, particle.angle, particle.speed);
+                const hitbox = getFrameHitbox(newLocation.left, newLocation.top, particle.coloredFrame);
 
-                if (fallsWithinGameField(newLocation.left, newLocation.top)) {
+                if (fallsWithinGameField(hitbox.left, hitbox.right, newLocation.top, hitbox.bottom)) {
                     draft.left = newLocation.left;
                     draft.top = newLocation.top;
                     draft.speed = particle.speed * particle.acceletation;
