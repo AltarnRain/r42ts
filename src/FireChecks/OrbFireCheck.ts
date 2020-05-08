@@ -20,23 +20,23 @@ import { appState } from "../State/Store";
  */
 export default function orbFireCheck(enemy: EnemyState): boolean {
     const {
-        enemyLevelState
+        enemyLevelState: { enemies, bullets}
     } = appState();
 
     let canFire = false;
 
-    const enemyBullets = enemyLevelState.bullets;
+    const remainingEnemies = enemies.length;
 
-    if (enemyBullets.length === 0) {
+    if (bullets.length === 0) {
         // No bullets, can always fire.
         return true;
-    } else if (enemyBullets.length < 5) {
-        if (enemyLevelState.remainingEnemies >= 5) {
+    } else if (bullets.length < 5) {
+        if (remainingEnemies >= 5) {
             // if there's 5 enemies or more, an enemy is limited to a single bullet.
-            canFire = enemyBullets.filter((p) => p.owner === enemy.enemyId).length === 0;
-        } else if (enemyLevelState.remainingEnemies < 5) {
+            canFire = bullets.filter((p) => p.owner === enemy.enemyId).length === 0;
+        } else if (remainingEnemies < 5) {
             // if there's 5 enemies or more, an enemy is limited to a single bullet.
-            canFire = enemyBullets.filter((p) => p.owner === enemy.enemyId).length < Math.ceil(5 / enemyLevelState.remainingEnemies);
+            canFire = bullets.filter((p) => p.owner === enemy.enemyId).length < Math.ceil(5 / remainingEnemies);
         } else {
             canFire = false;
         }

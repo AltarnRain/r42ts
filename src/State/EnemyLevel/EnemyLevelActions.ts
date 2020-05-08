@@ -12,7 +12,7 @@
 import { GameLocation } from "../../Models/GameLocation";
 import { ParticleState } from "../Player/ParticleState";
 import Constants from "./EnemyLevelConstants";
-import { AddBullet, AddExplosionCenter, AddOrUpdateEnemy, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetBulletState, SetFireInterval, SetPhaserLocations, SetRemainingEnemies, SetShrapnellState, SetTotalEnemies } from "./EnemyLevelTypes";
+import { AddBullet, AddExplosionCenter, AddOrUpdateEnemy, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetBulletState, SetFireInterval, SetPhaserLocations, SetShrapnellState, SetTotalEnemies } from "./EnemyLevelTypes";
 import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 
@@ -96,13 +96,6 @@ export function setTotalEnemies(totalEnemies: number): SetTotalEnemies {
     return {
         type: Constants.setTotalEnemies,
         totalEnemies,
-    };
-}
-
-export function setRemainingEnemies(remainingEnemies: number): SetRemainingEnemies {
-    return {
-        type: Constants.setRemainingEnemies,
-        remainingEnemies,
     };
 }
 

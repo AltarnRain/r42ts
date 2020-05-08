@@ -46,8 +46,8 @@ export function levelFactory(level: number): ILevel {
  * @returns {boolean}. Returns true if all enemies (and particles) have been removed from the ApplicationState.
  */
 function clearedEnemies(): boolean {
-    const { enemyLevelState } = appState();
-    if (enemyLevelState.remainingEnemies === 0 && enemyLevelState.shrapnells.length === 0) {
+    const { enemyLevelState: { enemies, shrapnells } } = appState();
+    if (enemies.length === 0 && shrapnells.length === 0) {
         return true;
     }
 

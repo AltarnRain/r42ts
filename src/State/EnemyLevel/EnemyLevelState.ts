@@ -46,11 +46,6 @@ export default interface EnemyLevelState {
     explosionCenters: ExplosionCenterState[];
 
     /**
-     * The number of enemies that remain.
-     */
-    remainingEnemies: number;
-
-    /**
      * State of the current enemies.
      */
     enemies: EnemyState[];

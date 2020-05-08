@@ -60,10 +60,6 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
                 break;
             case Constants.setTotalEnemies:
                 draft.totalNumberOfEnemies = action.totalEnemies;
-                draft.remainingEnemies = action.totalEnemies;
-                break;
-            case Constants.setRemainingEnemies:
-                draft.remainingEnemies = action.remainingEnemies;
                 break;
             case Constants.addOrUpdateEnemy:
                 const index = state.enemies.findIndex((es) => es.enemyId === action.enemyState.enemyId);
@@ -90,7 +86,6 @@ function initState(): EnemyLevelState {
         explosionCenters: [],
         bullets: [],
         totalNumberOfEnemies: 0,
-        remainingEnemies: 0,
         enemies: [],
     };
 }

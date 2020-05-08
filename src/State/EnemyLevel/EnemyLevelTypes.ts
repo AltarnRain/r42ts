@@ -74,11 +74,6 @@ export interface SetTotalEnemies {
     totalEnemies: number;
 }
 
-export interface SetRemainingEnemies {
-    type: typeof Constants.setRemainingEnemies;
-    remainingEnemies: number;
-}
-
 export interface AddOrUpdateEnemy {
     type: typeof Constants.addOrUpdateEnemy;
     enemyState: EnemyState;
@@ -102,7 +97,6 @@ export type EnemyLevelTypes =
     AddBullet |
     SetBulletState |
     SetTotalEnemies |
-    SetRemainingEnemies |
     AddOrUpdateEnemy |
     RemoveEnemy
     ;

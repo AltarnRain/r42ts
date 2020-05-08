@@ -49,11 +49,11 @@ let formationInProgress = false;
  * the state if the player can and show respawn.
  */
 export default function playerSpawnManager(): void {
-    const { playerState, enemyLevelState } = appState();
+    const { playerState, enemyLevelState: { enemies, shrapnells, bullets } } = appState();
 
-    if (!playerState.alive && formationInProgress === false && enemyLevelState.shrapnells.length === 0) {
-        if (enemyLevelState.remainingEnemies > 0) { // Enemies in the level
-            if (enemyLevelState.bullets.length === 0) { // wait till there's no particles.
+    if (!playerState.alive && formationInProgress === false && shrapnells.length === 0) {
+        if (enemies.length > 0) { // Enemies in the level
+            if (bullets.length === 0) { // wait till there's no particles.
                 setupFormation("slow", "sideways"); // Start the slow formation where the player has control.
             }
         } else {
