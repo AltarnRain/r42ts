@@ -1,7 +1,7 @@
+import { GameRectangle } from "../Models/GameRectangle";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { appState } from "../State/Store";
-import { GameRectangle } from "../Models/GameRectangle";
 
 const {
     pixelSize,

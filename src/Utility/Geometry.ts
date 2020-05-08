@@ -20,8 +20,8 @@ import KeyboardState from "../State/Keyboard/KeyboardState";
  * @param {number} current. The current X coordinate.
  * @returns {number}. The next X coordinate.
  */
-export function getNextX(angle: number, speed: number, current: number): number {
-    return Math.cos(angle * Math.PI / 180) * speed + current;
+export function getNextX(angle: number, speed: number, currentX: number): number {
+    return Math.cos(angle * Math.PI / 180) * speed + currentX;
 }
 
 /**
@@ -31,8 +31,8 @@ export function getNextX(angle: number, speed: number, current: number): number 
  * @param {number} current. The current X coordinate.
  * @returns {number}. The next Y coordinate.
  */
-export function getNextY(angle: number, speed: number, current: number): number {
-    return Math.sin(angle * (Math.PI / 180)) * speed + current;
+export function getNextY(angle: number, speed: number, currentY: number): number {
+    return Math.sin(angle * (Math.PI / 180)) * speed + currentY;
 }
 
 /**
