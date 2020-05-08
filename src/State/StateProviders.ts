@@ -12,19 +12,12 @@
 import { produce } from "immer";
 import BaseEnemy from "../Base/BaseEnemy";
 import Explosion from "../Models/Explosion";
-import dimensionProvider from "../Providers/DimensionProvider";
 import { Frame } from "../Types";
 import { getFrameHitbox } from "../Utility/Frame";
 import { fallsWithinGameField, getLocation } from "../Utility/Location";
 import { EnemyState } from "./EnemyLevel/EnemyState";
 import { ParticleState } from "./Player/ParticleState";
 import { appState } from "./Store";
-import { GameRectangle } from "../Models/GameRectangle";
-import gameStateReducer from "./Game/GameStateReducer";
-
-const {
-    pixelSize
-} = dimensionProvider();
 
 export namespace StateProviders {
     /**

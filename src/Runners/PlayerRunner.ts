@@ -31,7 +31,6 @@ export default function playerRunner(): void {
 
 const {
     pixelSize,
-    gameField
 } = dimensionProvider();
 
 const playerBulletFrame = getTwoPixelBullet(CGAColors.yellow);

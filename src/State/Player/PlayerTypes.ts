@@ -10,7 +10,6 @@
  */
 
 import { GameLocation } from "../../Models/GameLocation";
-import { GameRectangle } from "../../Models/GameRectangle";
 import { MoveLimits } from "../../Types";
 import { ParticleState } from "./ParticleState";
 import Constants from "./PlayerConstants";
