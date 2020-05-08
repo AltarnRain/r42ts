@@ -97,7 +97,7 @@ export default abstract class BaseEnemyLevel implements ILevel {
         this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));
 
         if (bulletRunner !== undefined) {
-            this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletRunner.getBullets(tick)));
+            this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletRunner.updateState(tick)));
         }
 
         window.setTimeout(() => {

@@ -90,7 +90,11 @@ export default class BulletRunner {
         Mutators.Frame.setColor(this.bulletFrame, this.bulletColor);
     }
 
-    public getBullets(tick: number): void {
+    /**
+     * Determines which enemies can fire and how. Then dispatches bullets to the state.
+     * @param {number} tick. Current tick.
+     */
+    public updateState(tick: number): void {
         const {
             playerState,
             enemyLevelState
@@ -125,7 +129,7 @@ export default class BulletRunner {
             // can fire or not.
             if (this.fireCheck(ship, fireAngle)) {
                 const { hitbox } = ship;
-                if (fireAngle !== undefined && hitbox !== undefined) {
+                if (fireAngle !== undefined) {
 
                     const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - pixelSize;
                     const top = hitbox.bottom + pixelSize;
