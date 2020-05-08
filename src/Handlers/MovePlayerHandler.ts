@@ -67,12 +67,12 @@ export function movePlayerHandler(speed: number): void {
     }
 
     const angle = getAngle(localKeyboardState);
-    const { left: nextX, top: nextY } = getNextLocationForPlayer(angle, speedX, playerState.left, playerState.top);
+    const { left: nextX, top: nextY } = getNextLocationForPlayer(angle, speedX, speedY, playerState.left, playerState.top);
 
     const hitBox = getFrameHitbox(nextX, nextY, playerState.coloredFrame, 0);
 
     const middleHitbox = { ...hitBox, left: hitBox.left + doublePixel, right: hitBox.right - doublePixel };
-    const bottomHitbox = { ...hitBox, top: hitBox.top + doublePixel };
+    const bottomHitbox = { ...hitBox, top: hitBox.top + pixelSize };
 
     const hitBoxes = { middle: middleHitbox, bottom: bottomHitbox };
 
@@ -88,19 +88,19 @@ export function movePlayerHandler(speed: number): void {
  * Returns the next locatoin for the player taking into account, no movement and moving outside the game field.
  * @export
  * @param {number} angle
- * @param {number} speed
+ * @param {number} speedX
  * @param {number} currentX
  * @param {number} currentY
  * @returns {GameLocation}
  */
-function getNextLocationForPlayer(angle: number, speed: number, currentX: number, currentY: number): GameLocation {
+function getNextLocationForPlayer(angle: number, speedX: number, speedY: number, currentX: number, currentY: number): GameLocation {
     const currentLocation = { left: currentX, top: currentY };
     if (angle === -1) {
         return currentLocation;
     }
 
-    const nextX = getNextX(angle, speed, currentX);
-    const nextY = getNextY(angle, speed, currentY);
+    const nextX = getNextX(angle, speedX, currentX);
+    const nextY = getNextY(angle, speedY, currentY);
 
     if (nextX < gameField.left || nextX + playerWidth > gameField.right) {
         return currentLocation;

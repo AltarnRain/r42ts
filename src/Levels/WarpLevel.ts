@@ -152,9 +152,10 @@ export default class WarpLevel implements ILevel {
                 const { left: leftDanger, right: rightDanger } = sb;
                 const { middle, bottom } = hitboxes;
 
-                return fallsWithin(middle.left, middle.right, middle.top, middle.bottom, leftDanger.left, leftDanger.right, leftDanger.top, leftDanger.bottom) ||
-                    fallsWithin(bottom.left, bottom.right, bottom.top, bottom.bottom, rightDanger.left, rightDanger.right, rightDanger.top, rightDanger.bottom);
-
+                return fallsWithin(bottom.left, bottom.right, bottom.top, bottom.bottom, leftDanger.left, leftDanger.right, leftDanger.top, leftDanger.bottom) ||
+                    fallsWithin(bottom.left, bottom.right, bottom.top, bottom.bottom, rightDanger.left, rightDanger.right, rightDanger.top, rightDanger.bottom) ||
+                    fallsWithin(middle.left, middle.right, middle.top, middle.bottom, leftDanger.left, leftDanger.right, leftDanger.top, leftDanger.bottom) ||
+                    fallsWithin(middle.left, middle.right, middle.top, middle.bottom, rightDanger.left, rightDanger.right, rightDanger.top, rightDanger.bottom);
             });
 
             if (dead) {
