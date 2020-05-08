@@ -102,7 +102,7 @@ export default class BulletRunner {
         }
 
         const enemiesWhoMayFire: EnemyState[] = [];
-        for (const enemy of enemyLevelState.enemyState) {
+        for (const enemy of enemyLevelState.enemies) {
             const lastShotTick = enemy.lastFireTick;
 
             // Check if this enemy's shot timeout has passed.

@@ -51,9 +51,9 @@ let formationInProgress = false;
 export default function playerSpawnManager(): void {
     const { playerState, enemyLevelState } = appState();
 
-    if (!playerState.alive && formationInProgress === false) {
+    if (!playerState.alive && formationInProgress === false && enemyLevelState.shrapnells.length === 0) {
         if (enemyLevelState.remainingEnemies > 0) { // Enemies in the level
-            if (enemyLevelState.shrapnell.length === 0 && enemyLevelState.bullets.length === 0) { // wait till there's no particles.
+            if (enemyLevelState.bullets.length === 0) { // wait till there's no particles.
                 setupFormation("slow", "sideways"); // Start the slow formation where the player has control.
             }
         } else {

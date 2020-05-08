@@ -23,7 +23,7 @@ export default interface EnemyLevelState {
     /**
      * Shrapnell particles.
      */
-    shrapnell: ParticleState[];
+    shrapnells: ParticleState[];
 
     /**
      * Counts the number of register enemies.
@@ -53,5 +53,5 @@ export default interface EnemyLevelState {
     /**
      * State of the current enemies.
      */
-    enemyState: EnemyState[];
+    enemies: EnemyState[];
 }

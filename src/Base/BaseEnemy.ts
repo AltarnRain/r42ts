@@ -212,10 +212,17 @@ export default abstract class BaseEnemy {
      * Returns the center location of the object.
      * @returns {GameLocation}. Location located at the center of the object.
      */
-    private getCenterLocation(): GameLocation | undefined {
+    private getCenterLocation(): GameLocation {
         if (this.currentFrame !== undefined) {
             const { left, top } = this.locationProvider.getCurrentLocation();
             return getFrameCenter(left, top, this.currentFrame, pixelSize);
+        } else {
+            // Return a non existing location. This simply means the enemy is not on the screen
+            // and it saves a billion undefined checks.
+            return {
+                top: -100,
+                left: -100,
+            };
         }
     }
 
@@ -224,9 +231,16 @@ export default abstract class BaseEnemy {
      * @returns {GameRectangle}
      * @memberof BaseEnemy
      */
-    private getHitbox(): GameRectangle | undefined {
+    private getHitbox(): GameRectangle {
         if (this.currentFrame) {
             return getFrameHitbox(this.offsetLeft, this.offsetTop, this.currentFrame, negativepixelSize);
+        } else {
+            return {
+                left: 0,
+                top: 0,
+                right: 0,
+                bottom: 0,
+            };
         }
     }
 }

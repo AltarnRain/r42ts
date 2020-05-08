@@ -7,22 +7,20 @@
 import BaseEnemy from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
-import Explosion from "../Models/Explosion";
 import getPhaserLocations from "../Player/GetPhaserLocations";
 import { playerIsHit } from "../Player/PlayerHelper";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import { addExplosionCenter, clearPhaserLocations, removeEnemy, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
+import { clearPhaserLocations, removeEnemy, setPhaserLocations, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
-import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
-import { increaseScore, removeLife, removePhaser, setPause } from "../State/Game/GameActions";
+import { increaseScore, removePhaser, setPause } from "../State/Game/GameActions";
 import { ParticleState } from "../State/Player/ParticleState";
-import { setPlayerBulletState, setPlayerIsAlive } from "../State/Player/PlayerActions";
-import { StateProviders } from "../State/StateProviders";
+import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
+import { dispatchExplosion } from "../StateHandlers/DispatchExplosion";
+import { handlePlayerDeath } from "../StateHandlers/HandlePlayerDeath";
 import { Frame } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
-import { getFrameHitbox } from "../Utility/Frame";
 import { overlaps } from "../Utility/Geometry";
 
 /**
@@ -77,10 +75,7 @@ function updateState(tick: number) {
 
     handleSelfDestruct(tick);
     handlePhaser(tick);
-    handleShrapnell();
-    handleBullets();
     handleEnemies(tick);
-    handleExplosionCenters(tick);
     handleHitDetection(tick);
 }
 
@@ -89,29 +84,20 @@ function updateState(tick: number) {
  * @param {number} tick. Tick.
  */
 function draw(): void {
-    const { enemyLevelState } = appState();
-    const { explosionCenters } = enemyLevelState;
+    const { enemies, bullets, phaserLocations } = appState().enemyLevelState;
 
     // Draw all the game objects
-    for (const enemyState of enemyLevelState.enemyState) {
+    for (const enemyState of enemies) {
         if (enemyState.currentFrame !== undefined) {
             renderFrame(enemyState.offsetLeft, enemyState.offsetTop, enemyState.currentFrame);
         }
     }
 
-    for (const center of explosionCenters) {
-        renderFrame(center.left, center.top, center.coloredFrame);
-    }
-
-    for (const shrapnell of enemyLevelState.shrapnell) {
-        renderFrame(shrapnell.left, shrapnell.top, shrapnell.coloredFrame);
-    }
-
-    for (const bullet of enemyLevelState.bullets) {
+    for (const bullet of bullets) {
         renderFrame(bullet.left, bullet.top, bullet.coloredFrame);
     }
 
-    enemyLevelState.phaserLocations.forEach((pf) => renderFrame(pf.left, pf.top, phaserFrame));
+    phaserLocations.forEach((pf) => renderFrame(pf.left, pf.top, phaserFrame));
 }
 
 /**
@@ -126,7 +112,7 @@ function handleHitDetection(tick: number) {
     playerHitEnemyDetection(tick);
 
     // Check if the player was hit by shrapnell.
-    playerHitByParticle(tick, appState().enemyLevelState.shrapnell);
+    playerHitByParticle(tick, appState().enemyLevelState.shrapnells);
 
     // Check if the player was hit by a bullet.
     playerHitByParticle(tick, appState().enemyLevelState.bullets);
@@ -141,7 +127,7 @@ function playerHitEnemyDetection(tick: number) {
     if (playerState.bulletState !== undefined && playerState.bulletState.hitbox !== undefined) {
 
         const playerBulletHitbox = playerState.bulletState.hitbox;
-        const hitEnemy = enemyLevelState.enemyState.find((e) => {
+        const hitEnemy = enemyLevelState.enemies.find((e) => {
             if (overlaps(playerBulletHitbox, e.hitbox)) {
                 return true;
             }
@@ -161,7 +147,7 @@ function playerHitEnemyDetection(tick: number) {
 function enemyHitPlayerDetection(tick: number) {
     const { enemyLevelState, debuggingState, playerState } = appState();
     if (playerState.alive && debuggingState.playerIsImmortal === false) {
-        const hit = enemyLevelState.enemyState.some((e) => playerIsHit(playerState.hitboxes, e.hitbox));
+        const hit = enemyLevelState.enemies.some((e) => playerIsHit(playerState.hitboxes, e.hitbox));
 
         if (hit) {
             handlePlayerDeath(tick);
@@ -187,17 +173,6 @@ function playerHitByParticle(tick: number, particles: ParticleState[]): void {
 }
 
 /**
- * Handles explosion centers.
- * @param {number} tick. Current tick
- */
-function handleExplosionCenters(tick: number): void {
-    const { explosionCenters } = appState().enemyLevelState;
-
-    const remainingExplosions = explosionCenters.filter((ec) => ec.startTick + ec.explosionCenterDelay > tick);
-    dispatch(setExplosionCenters(remainingExplosions));
-}
-
-/**
  * Handles enemy state updates.
  * @param {number} tick. Current tick
  */
@@ -208,33 +183,14 @@ function handleEnemies(tick: number): void {
 }
 
 /**
- * Handles particles state updates.
- * @param {number} tick. Current tick.
- */
-function handleShrapnell(): void {
-    const newState = StateProviders.getUpdatedParticleState(appState().enemyLevelState.shrapnell);
-    dispatch(setShrapnellState(newState));
-}
-
-/**
- * Handle bullet movement.
- */
-function handleBullets(): void {
-    const bullets = appState().enemyLevelState.bullets;
-    const newState = StateProviders.getUpdatedParticleState(bullets);
-
-    dispatch(setBulletState(newState));
-}
-
-/**
  * Handle self destruct.
  */
 function handleSelfDestruct(tick: number): void {
     const { playerState, enemyLevelState } = appState();
 
     if (playerState.alive && appState().keyboardState.selfDestruct) {
-        enemyLevelState.enemyState.forEach((es) => queueExplosionRender(es.offsetLeft, es.offsetTop, es.coloredExplosion, tick));
-        queueExplosionRender(playerState.left, playerState.top, playerState.coloredExplosion, tick);
+        enemyLevelState.enemies.forEach((es) => dispatchExplosion(es.offsetLeft, es.offsetTop, es.coloredExplosion, tick));
+        dispatchExplosion(playerState.left, playerState.top, playerState.coloredExplosion, tick);
         handlePlayerDeath(tick);
         localState.enemies = [];
     }
@@ -256,7 +212,7 @@ function handleEnemyDestruction(enemy: EnemyState, tick: number): void {
         }
     });
 
-    queueExplosionRender(enemy.offsetLeft, enemy.offsetTop, enemy.coloredExplosion, tick);
+    dispatchExplosion(enemy.offsetLeft, enemy.offsetTop, enemy.coloredExplosion, tick);
     dispatch(removeEnemy(enemy.enemyId));
     dispatch(increaseScore(enemy.points));
 }
@@ -269,11 +225,11 @@ function handlePhaser(tick: number): void {
 
     if (playerState.nozzleLocation &&
         keyboardState.phraser &&
-        enemyLevelState.enemyState.length > 0 &&
+        enemyLevelState.enemies.length > 0 &&
         gameState.phasers > 0 &&
         enemyLevelState.phaserLocations.length === 0) {
 
-        const randomEnemy = getRandomArrayElement(enemyLevelState.enemyState);
+        const randomEnemy = getRandomArrayElement(enemyLevelState.enemies);
         const playerNozzleLocation = playerState.nozzleLocation;
         const randomEnemyCenter = randomEnemy.centerLocation;
         if (randomEnemyCenter !== undefined) {
@@ -296,39 +252,4 @@ function handlePhaser(tick: number): void {
             }, 100);
         }
     }
-}
-
-/**
- * Handles a the player's death.
- * @param {number} tick
- */
-function handlePlayerDeath(tick: number): void {
-    const { playerState } = appState();
-    queueExplosionRender(playerState.left, playerState.top, playerState.coloredExplosion, tick);
-
-    dispatch(removeLife());
-    dispatch(setPlayerIsAlive(false));
-}
-
-/**
- * Queue an explosion center and the explosion particles.
- * @param {number} left. Left coordinate.
- * @param {number} top. Top coordinate.
- * @param {Explosion} explosion. An explosion asset.
- * @param {Particle[]} targetParticleArray. The array where the particles will be pushed into. Helps keep track of particles belonging to the player or an enemy.
- */
-function queueExplosionRender(left: number, top: number, coloredExplosion: Explosion, tick: number): void {
-
-    const newShrapnell = StateProviders.explosionShrapnellProvider(left, top, coloredExplosion);
-
-    const newExplosion: ExplosionCenterState = {
-        left,
-        top,
-        startTick: tick,
-        hitbox: getFrameHitbox(left, top, coloredExplosion.explosionCenterFrame, pixelSize),
-        coloredFrame: coloredExplosion.explosionCenterFrame,
-        explosionCenterDelay: coloredExplosion.explosionCenterDelay,
-    };
-
-    dispatch(addExplosionCenter(newExplosion, newShrapnell));
 }

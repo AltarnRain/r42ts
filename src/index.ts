@@ -11,6 +11,7 @@ import subscribeToStoreChanges from "./Levels/SubscribeToStore";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
 import ctxProvider from "./Providers/CtxProvider";
 import dimensionProvider from "./Providers/DimensionProvider";
+import genericRunner from "./Runners/GenericRunner";
 import playerRunner from "./Runners/PlayerRunner";
 import { playerMortality } from "./State/Debugging/DebuggingActions";
 import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers, setWarpGamteComplexity } from "./State/Game/GameActions";
@@ -53,6 +54,7 @@ window.onload = () => {
             GameLoop.registerBackgroundDrawing(drawStatusBar);
             GameLoop.registerUpdateState(playerRunner);
             GameLoop.registerUpdateState(playerSpawnManager);
+            GameLoop.registerUpdateState(genericRunner);
 
             if (immortal) {
                 dispatch(playerMortality("immortal"));

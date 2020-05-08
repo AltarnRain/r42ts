@@ -26,16 +26,16 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
         switch (action.type) {
             case Constants.addExplosionCenter:
                 draft.explosionCenters.push(action.explosionCenter);
-                draft.shrapnell.push(...action.shrapnell);
+                draft.shrapnells.push(...action.shrapnell);
                 break;
             case Constants.setShrapnellState:
-                draft.shrapnell = action.shrapnell;
+                draft.shrapnells = action.shrapnell;
                 break;
             case Constants.addParticle:
-                draft.shrapnell.push(action.particle);
+                draft.shrapnells.push(action.particle);
                 break;
             case Constants.addParticles:
-                draft.shrapnell.push(...action.particles);
+                draft.shrapnells.push(...action.particles);
                 break;
             case Constants.resetLevelState:
                 draft = initState();
@@ -66,15 +66,15 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
                 draft.remainingEnemies = action.remainingEnemies;
                 break;
             case Constants.addOrUpdateEnemy:
-                const index = state.enemyState.findIndex((es) => es.enemyId === action.enemyState.enemyId);
+                const index = state.enemies.findIndex((es) => es.enemyId === action.enemyState.enemyId);
                 if (index > -1) {
-                    draft.enemyState[index] = action.enemyState;
+                    draft.enemies[index] = action.enemyState;
                 } else {
-                    draft.enemyState.push(action.enemyState);
+                    draft.enemies.push(action.enemyState);
                 }
                 break;
             case Constants.removeEnemy:
-                draft.enemyState = draft.enemyState.filter((es) => es.enemyId !== action.enemyId);
+                draft.enemies = draft.enemies.filter((es) => es.enemyId !== action.enemyId);
                 break;
         }
     });
@@ -84,13 +84,13 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
 
 function initState(): EnemyLevelState {
     return {
-        shrapnell: [],
+        shrapnells: [],
         phaserLocations: [],
         fireInterval: 0,
         explosionCenters: [],
         bullets: [],
         totalNumberOfEnemies: 0,
         remainingEnemies: 0,
-        enemyState: [],
+        enemies: [],
     };
 }

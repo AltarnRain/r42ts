@@ -11,7 +11,7 @@ const {
 
 export function DEBUGGING_renderHitboxes() {
     const { playerState, enemyLevelState } = appState();
-    const hitboxes = enemyLevelState.enemyState.map((e) => e.hitbox);
+    const hitboxes = enemyLevelState.enemies.map((e) => e.hitbox);
 
     // Add player if defined.
     if (playerState.hitboxes) {
@@ -25,7 +25,7 @@ export function DEBUGGING_renderHitboxes() {
     }
 
     enemyLevelState.bullets.forEach((b) => hitboxes.push(b.hitbox));
-    enemyLevelState.shrapnell.forEach((b) => hitboxes.push(b.hitbox));
+    enemyLevelState.shrapnells.forEach((b) => hitboxes.push(b.hitbox));
 
     // Draw a circle around each object using the
     // coordiates and radius of the hitbox.

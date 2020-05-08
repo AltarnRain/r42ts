@@ -12,12 +12,19 @@
 import { produce } from "immer";
 import BaseEnemy from "../Base/BaseEnemy";
 import Explosion from "../Models/Explosion";
+import dimensionProvider from "../Providers/DimensionProvider";
 import { Frame } from "../Types";
 import { getFrameHitbox } from "../Utility/Frame";
 import { fallsWithinGameField, getLocation } from "../Utility/Location";
 import { EnemyState } from "./EnemyLevel/EnemyState";
 import { ParticleState } from "./Player/ParticleState";
 import { appState } from "./Store";
+import { GameRectangle } from "../Models/GameRectangle";
+import gameStateReducer from "./Game/GameStateReducer";
+
+const {
+    pixelSize
+} = dimensionProvider();
 
 export namespace StateProviders {
     /**
@@ -44,6 +51,7 @@ export namespace StateProviders {
         hitboxBottomOffset: number = 0): ParticleState {
 
         const bulletHitbox = getFrameHitbox(left, top, frame, hitboxTopOffset, hitboxBottomOffset);
+
         const bullet: ParticleState = {
             acceletation,
             angle,
@@ -51,7 +59,7 @@ export namespace StateProviders {
             hitbox: bulletHitbox,
             speed,
             left,
-            top
+            top,
         };
 
         return bullet;
@@ -148,7 +156,7 @@ export namespace StateProviders {
      * @returns {EnemyState}
      */
     export function getEnemyState(enemy: BaseEnemy): EnemyState {
-        const state = appState().enemyLevelState.enemyState.find((e) => e.enemyId === enemy.getId());
+        const state = appState().enemyLevelState.enemies.find((e) => e.enemyId === enemy.getId());
 
         if (state === undefined) {
             throw new Error("Could not retrie state for enemy " + enemy.getId());

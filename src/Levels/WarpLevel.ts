@@ -4,8 +4,9 @@
  * See LICENSE.MD.
  */
 
-import CGAColors, { validColors } from "../Constants/CGAColors";
+import CGAColors from "../Constants/CGAColors";
 import WarpLevelConstants from "../Constants/WarpLevelConstants";
+import { DEBUGGING_drawGameRect } from "../Debugging/Debugging";
 import GameLoop from "../GameLoop";
 import { drawBackground, drawWarpBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
@@ -14,13 +15,10 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import { setWarpGamteComplexity } from "../State/Game/GameActions";
 import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, appStore, dispatch } from "../State/Store";
+import { handlePlayerDeath } from "../StateHandlers/HandlePlayerDeath";
 import { getRandomArrayElement } from "../Utility/Array";
 import { coinFlip } from "../Utility/Lib";
-import { playerBulletSpeed } from "../Constants/BulletSpeeds";
-import ctxProvider from "../Providers/CtxProvider";
-import { overlaps } from "../Utility/Geometry";
 import { fallsWithin } from "../Utility/Location";
-import { DEBUGGING_drawGameRect } from "../Debugging/Debugging";
 
 /**
  * Module:          WarpLevel
@@ -79,76 +77,41 @@ export default class WarpLevel implements ILevel {
         } = appState();
 
         const warpGate = this.calculateWarpGate(gameField.left, gameField.right, gameState.warpLevelSteps.stepsX, gameState.warpLevelSteps.stepsY);
+
+        const badSpace = warpGate
+            .map((wg) => {
+                return {
+                    left: {
+                        left: gameField.left,
+                        right: wg.left,
+                        top: wg.top,
+                        bottom: wg.bottom,
+                    },
+                    right: {
+                        left: wg.right,
+                        right: gameField.right,
+                        top: wg.top,
+                        bottom: wg.bottom,
+                    },
+                };
+            });
+
         this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, warpGate)));
-        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => this.hitDetection(warpGate)));
+        this.gameLoopSubscriptions.push(GameLoop.registerUpdateState((tick) => this.hitDetection(tick, badSpace)));
     }
 
-    private hitDetection(warpGate: GameRectangle[]): void {
-        const { hitboxes, alive } = appState().playerState;
+    private hitDetection(tick: number, badSpace: Array<{ left: GameRectangle; right: GameRectangle }>): void {
+        const { playerState: { hitboxes, alive } } = appState();
 
-        const ctx = ctxProvider();
+        // const ctx = ctxProvider();
         if (alive && hitboxes !== undefined) {
-
-            // // First we get a list of the save zones the player is in.
-            // const currentSafeZones = warpGate
-            //     .filter((wg) => overlaps(wg, hitbox))
-            //     .sort((a, b) => a.top < b.top ? -1 : 1);
-
-            // const partialHitboxes = currentSafeZones.map<{ hitbox: GameRectangle; safeSonze: GameRectangle }>((sz) => {
-
-            //     const topDiff = hitbox.top + (sz.top - hitbox.top);
-            //     const bottomDiff = hitbox.bottom + (sz.bottom - hitbox.bottom);
-
-            //     return {
-            //         hitbox: {
-            //             left: hitbox.left,
-            //             top: topDiff,
-            //             bottom: bottomDiff,
-            //             right: hitbox.right,
-            //         },
-            //         safeSonze: sz,
-            //     };
-            // });
-
-            // const safe = partialHitboxes.every((ph) => fallsWithin(hitbox.left, hitbox.right, hitbox.top, hitbox.bottom, ph.safeSonze.left, ph.safeSonze.right, ph.safeSonze.top, ph.safeSonze.bottom));
-
-            // currentSafeZones.forEach((r, index) => {
-            //     ctx.fillStyle = validColors[index];
-            //     ctx.fillRect(r.left, r.top, r.right - r.left, r.bottom - r.top);
-            // });
-
-            // if (safe === false) {
-            //     DEBUGGING_drawGameRect(hitbox, "red", 5);
-            // }
-
-            // partialHitboxes.forEach((r) => {
-            //     DEBUGGING_drawGameRect(r.hitbox, CGAColors.lightMagenta);
-            // });
-
-            const badSpace = warpGate
-                .map((wg) => {
-                    return {
-                        left: {
-                            left: gameField.left,
-                            right: wg.left,
-                            top: wg.top,
-                            bottom: wg.bottom,
-                        },
-                        right: {
-                            left: wg.right,
-                            right: gameField.right,
-                            top: wg.top,
-                            bottom: wg.bottom,
-                        },
-                    };
-                });
 
             badSpace.forEach((bs) => {
                 DEBUGGING_drawGameRect(bs.left, "red");
                 DEBUGGING_drawGameRect(bs.right, "red");
             });
 
-            const dead = badSpace.some((sb) => {
+            const hitside = badSpace.some((sb) => {
                 const { left: leftDanger, right: rightDanger } = sb;
                 const { middle, bottom } = hitboxes;
 
@@ -158,9 +121,11 @@ export default class WarpLevel implements ILevel {
                     fallsWithin(middle.left, middle.right, middle.top, middle.bottom, rightDanger.left, rightDanger.right, rightDanger.top, rightDanger.bottom);
             });
 
-            if (dead) {
+            if (hitside && alive) {
                 DEBUGGING_drawGameRect(hitboxes.bottom, "red", 5);
                 DEBUGGING_drawGameRect(hitboxes.middle, "red", 5);
+
+                handlePlayerDeath(tick);
             }
         }
     }

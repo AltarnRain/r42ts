@@ -20,7 +20,7 @@ import { appState } from "../State/Store";
 export default function robotLevel02FireCheck(enemy: EnemyState): boolean {
 
     const {
-        enemyState,
+        enemies: enemyState,
     } = appState().enemyLevelState;
 
     const lastEnemy = enemyState[enemyState.length - 1];

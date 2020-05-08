@@ -63,9 +63,9 @@ export default function getPlayerExplosion(): Explosion {
             4.5, 8, // Speeds for the fith fow of angles
             4.5, 8, // Speeds for the fith fow of angles
         ],
-        acceleration: 1.1,
-        explosionCenterDelay: 150,
-        useSpeed: false,
+        acceleration: 1,
+        explosionCenterDelay: 50000,
+        useSpeed: true,
         speed: 0, // not used.
     };
 

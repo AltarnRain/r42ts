@@ -5,6 +5,7 @@
  */
 
 import { angles } from "../Constants/Angles";
+import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import KeyboardState from "../State/Keyboard/KeyboardState";
 
@@ -132,4 +133,25 @@ export function calculateAngleDifference(angle1: number, angle2: number): number
     const absoluteAngleDifference = Math.abs(angle1 - angle2);
     const angleDifference = (absoluteAngleDifference + 180) % 360 - 180;
     return Math.abs(angleDifference);
+}
+
+/**
+ * Calculates the ideal location where a spaller rectangle should appear in a bigger one.
+ * @param {GameRectangle} outerRect. Enveloping rectangle.
+ * @param {GameRectangle} innerRect. Inner rectangle.
+ */
+export function calculateOptinalInnerRectablePlacement(outerRect: GameRectangle, innerRect: GameRectangle): GameLocation {
+    const outerRectWidth = outerRect.right - outerRect.left;
+    const outerRectHeight = outerRect.bottom - outerRect.top;
+
+    const innerRectWidth = innerRect.right - innerRect.left;
+    const innerRectHeight = innerRect.bottom - innerRect.top;
+
+    const widthDifference = outerRectWidth - innerRectWidth;
+    const heightDifference = outerRectHeight - innerRectHeight;
+
+    return {
+        left: outerRect.left + widthDifference / 2,
+        top: outerRect.top + heightDifference / 2,
+    };
 }
