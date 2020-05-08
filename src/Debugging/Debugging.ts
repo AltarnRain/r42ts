@@ -14,8 +14,9 @@ export function DEBUGGING_renderHitboxes() {
     const hitboxes = enemyLevelState.enemyState.map((e) => e.hitbox);
 
     // Add player if defined.
-    if (playerState.hitbox) {
-        hitboxes.push(playerState.hitbox);
+    if (playerState.hitboxes) {
+        hitboxes.push(playerState.hitboxes.bottom);
+        hitboxes.push(playerState.hitboxes.middle);
     }
 
     // Add bullet if defined.

@@ -29,8 +29,8 @@ export default function orbEnemyAngleProvider(enemy: EnemyState, left: number, t
         return undefined;
     }
 
-    const playerHitbox = playerState.hitbox;
-    if (playerHitbox === undefined) {
+    const playerHitboxes = playerState.hitboxes;
+    if (playerHitboxes === undefined) {
         return undefined;
     }
 
@@ -45,13 +45,13 @@ export default function orbEnemyAngleProvider(enemy: EnemyState, left: number, t
 
         if (centerLocation !== undefined) {
             // Check if it makes sense for the orb to fire down. If not, it'll pick one of its diagonal angles.
-            if (centerLocation.left >= playerHitbox.left && centerLocation.left <= playerHitbox.right) {
+            if (centerLocation.left >= playerHitboxes.middle.left && centerLocation.left <= playerHitboxes.middle.right) {
                 return angles.down;
             }
         }
     }
 
-    if (left < playerHitbox.left) {
+    if (left < playerHitboxes.middle.left) {
         return angles.rightdown;
     } else {
         return angles.leftdown;

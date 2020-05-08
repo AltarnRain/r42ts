@@ -21,6 +21,9 @@ const {
     pixelSize,
 } = dimensionProvider();
 
+// Used in player hitbox calculation, never changes so it can be a constant.
+const doublePixel = pixelSize * 2;
+
 /**
  * Handles player movement.
  * @param {number} speed. Speed the ship can travel. Can vary depending on the level or if the player ship is forming.
@@ -60,15 +63,28 @@ export function movePlayerHandler(speed: number): void {
 
     let newX = playerState.left;
     let newY = playerState.top;
-    let hitBox = getFrameHitbox(newX, newY, playerState.coloredFrame, 0);
+    let hitBoxes = playerState.hitboxes;
 
     if (angle !== -1) {
 
         newX = getNextX(angle, speedX, playerState.left);
         newY = getNextY(angle, speedY, playerState.top);
-        hitBox = getFrameHitbox(newX, newY, playerState.coloredFrame, 0);
+        const hitBox = getFrameHitbox(newX, newY, playerState.coloredFrame, 0);
 
+        // We only need one hitbox to determine if the player left the field, a simple rect suffices.
         if (!fallsWithinGameField(hitBox.left, hitBox.right, hitBox.top, hitBox.bottom)) {
+
+            // A hitbox that envlops the middle part of the ship.
+            const middleHitbox = { ...hitBox, left: hitBox.left + doublePixel, right: hitBox.right - doublePixel };
+
+            // A hitbox that envelops the bottom part of the ship.
+            const bottomHitbox = { ...hitBox, top: hitBox.top + doublePixel };
+
+            hitBoxes = {
+                middle: middleHitbox,
+                bottom: bottomHitbox,
+            };
+
             newX = playerState.left;
             newY = playerState.top;
         }
@@ -79,5 +95,5 @@ export function movePlayerHandler(speed: number): void {
         top: newY - pixelSize * 1,
     };
 
-    dispatch(setPlayerLocationData(newX, newY, hitBox, nozzleLocation));
+    dispatch(setPlayerLocationData(newX, newY, hitBoxes, nozzleLocation));
 }

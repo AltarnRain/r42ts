@@ -15,6 +15,7 @@ import { MoveLimits } from "../../Types";
 import { ParticleState } from "./ParticleState";
 import Constants from "./PlayerConstants";
 import { SetPlayerBulletState, SetPlayerIsAlive, SetPlayerLocationData, SetPlayerMovementLimit } from "./PlayerTypes";
+import { PlayerHitboxes } from "./PlayerState";
 
 export function setPlayerIsAlive(playerAlive: boolean): SetPlayerIsAlive {
     return {
@@ -30,13 +31,13 @@ export function setPlayerMovementLimit(moveLimit: MoveLimits): SetPlayerMovement
     };
 }
 
-export function setPlayerLocationData(left: number, top: number, hitbox?: GameRectangle, nozzleLocation?: GameLocation): SetPlayerLocationData {
+export function setPlayerLocationData(left: number, top: number, hitboxes?: PlayerHitboxes, nozzleLocation?: GameLocation): SetPlayerLocationData {
     return {
         type: Constants.setPlayerLocationData,
         payload: {
             left,
             top,
-            hitbox,
+            hitboxes,
             nozzleLocation
         }
     };

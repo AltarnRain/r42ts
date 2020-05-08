@@ -41,7 +41,7 @@ export default interface PlayerState {
     /**
      * Hitbox of the player.
      */
-    hitbox: GameRectangle | undefined;
+    hitboxes: PlayerHitboxes | undefined;
 
     /**
      * Location of the player's nozzle. Used to determine when the player's bullet should appear.
@@ -62,4 +62,9 @@ export default interface PlayerState {
      * State of the player's bullet.
      */
     bulletState: ParticleState | undefined;
+}
+
+export interface PlayerHitboxes {
+    middle: GameRectangle;
+    bottom: GameRectangle;
 }

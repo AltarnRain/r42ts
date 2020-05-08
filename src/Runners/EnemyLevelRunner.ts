@@ -9,6 +9,7 @@ import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import Explosion from "../Models/Explosion";
 import getPhaserLocations from "../Player/GetPhaserLocations";
+import { playerIsHit } from "../Player/PlayerHelper";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { addExplosionCenter, clearPhaserLocations, removeEnemy, setBulletState, setExplosionCenters, setPhaserLocations, setShrapnellState, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
@@ -159,10 +160,10 @@ function playerHitEnemyDetection(tick: number) {
  */
 function enemyHitPlayerDetection(tick: number) {
     const { enemyLevelState, debuggingState, playerState } = appState();
-    if (playerState.alive && playerState.hitbox !== undefined && debuggingState.playerIsImmortal === false) {
-        const playerIsHit = enemyLevelState.enemyState.some((e) => overlaps(playerState.hitbox, e.hitbox));
+    if (playerState.alive && debuggingState.playerIsImmortal === false) {
+        const hit = enemyLevelState.enemyState.some((e) => playerIsHit(playerState.hitboxes, e.hitbox));
 
-        if (playerIsHit) {
+        if (hit) {
             handlePlayerDeath(tick);
         }
     }
@@ -176,10 +177,10 @@ function enemyHitPlayerDetection(tick: number) {
 function playerHitByParticle(tick: number, particles: ParticleState[]): void {
 
     const { playerState, debuggingState } = appState();
-    if (playerState.alive && playerState.hitbox !== undefined && debuggingState.playerIsImmortal === false) {
-        const playerIsHit = particles.some((e) => overlaps(playerState.hitbox, e.hitbox));
+    if (playerState.alive && debuggingState.playerIsImmortal === false) {
+        const hit = particles.some((e) => playerIsHit(playerState.hitboxes, e.hitbox));
 
-        if (playerIsHit) {
+        if (hit) {
             handlePlayerDeath(tick);
         }
     }

@@ -36,7 +36,7 @@ export default function playerReducer(state: PlayerState = initState(), action: 
             case Constants.setPlayerLocationData:
                 draft.left = action.payload.left;
                 draft.top = action.payload.top;
-                draft.hitbox = action.payload.hitbox;
+                draft.hitboxes = action.payload.hitboxes;
                 draft.nozzleLocation = action.payload.nozzleLocation;
                 break;
             case Constants.setPlayerBulletState:
@@ -66,7 +66,7 @@ function initState(): PlayerState {
         moveLimit: "none",
         left: spawnLocation.left,
         top: spawnLocation.top,
-        hitbox: undefined,
+        hitboxes: undefined,
         nozzleLocation: { left: 0, top: 0 },
         coloredExplosion: playerExplosion,
         coloredFrame: playerFrame,

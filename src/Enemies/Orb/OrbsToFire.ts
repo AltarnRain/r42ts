@@ -34,7 +34,7 @@ export default function orbsToFire(orbs: EnemyState[], fireAngleProvider?: FireA
 
     // This check is to sasify the compiler. When the player is alive they always have a hitbox
     // but te compiler doesn't know this.
-    const playerhitbox = playerState.hitbox;
+    const playerhitbox = playerState.hitboxes;
     if (playerhitbox === undefined) {
         return [];
     }
@@ -53,7 +53,7 @@ export default function orbsToFire(orbs: EnemyState[], fireAngleProvider?: FireA
             const angle = fireAngleProvider(orb, orb.offsetLeft, orb.offsetTop);
             const angleToPlayer = calculateAngle(center.left, center.top, playerState.left, playerState.top);
 
-            if (center.top > playerhitbox.bottom) {
+            if (center.top > playerhitbox.middle.bottom) {
                 below += 1;
             } else {
                 above += 1;

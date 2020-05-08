@@ -14,6 +14,7 @@ import { GameRectangle } from "../../Models/GameRectangle";
 import { MoveLimits } from "../../Types";
 import { ParticleState } from "./ParticleState";
 import Constants from "./PlayerConstants";
+import { PlayerHitboxes } from "./PlayerState";
 
 export interface SetPlayerIsAlive {
     type: typeof Constants.setPlayerIsAlive;
@@ -30,7 +31,7 @@ export interface SetPlayerLocationData {
     payload: {
         left: number;
         top: number;
-        hitbox?: GameRectangle,
+        hitboxes?: PlayerHitboxes,
         nozzleLocation?: GameLocation,
     };
 }

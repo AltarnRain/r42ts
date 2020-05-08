@@ -84,10 +84,10 @@ export default class WarpLevel implements ILevel {
     }
 
     private hitDetection(warpGate: GameRectangle[]): void {
-        const { hitbox, alive } = appState().playerState;
+        const { hitboxes, alive } = appState().playerState;
 
         const ctx = ctxProvider();
-        if (alive && hitbox !== undefined) {
+        if (alive && hitboxes !== undefined) {
 
             // // First we get a list of the save zones the player is in.
             // const currentSafeZones = warpGate
@@ -150,12 +150,16 @@ export default class WarpLevel implements ILevel {
 
             const dead = badSpace.some((sb) => {
                 const { left: leftDanger, right: rightDanger } = sb;
-                return fallsWithin(hitbox.left, hitbox.right, hitbox.top, hitbox.bottom, leftDanger.left, leftDanger.right, leftDanger.top, leftDanger.bottom) ||
-                    fallsWithin(hitbox.left, hitbox.right, hitbox.top, hitbox.bottom, rightDanger.left, rightDanger.right, rightDanger.top, rightDanger.bottom);
+                const { middle, bottom } = hitboxes;
+
+                return fallsWithin(middle.left, middle.right, middle.top, middle.bottom, leftDanger.left, leftDanger.right, leftDanger.top, leftDanger.bottom) ||
+                    fallsWithin(bottom.left, bottom.right, bottom.top, bottom.bottom, rightDanger.left, rightDanger.right, rightDanger.top, rightDanger.bottom);
+
             });
 
             if (dead) {
-                DEBUGGING_drawGameRect(hitbox, "red", 5);
+                DEBUGGING_drawGameRect(hitboxes.bottom, "red", 5);
+                DEBUGGING_drawGameRect(hitboxes.middle, "red", 5);
             }
         }
     }
