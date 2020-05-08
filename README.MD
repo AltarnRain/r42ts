@@ -15,7 +15,7 @@ A full-stack developer.
 
 I felt it deserved a remake because it was and still is a good game.
 
-# Round 42 - History
+# Round 42 - History & me
 
 Round 42 was released as Shareware in 1986. For those not familiar with the term Shareware, it was a program you could use for free and share and could, optionally, pay for.
 
@@ -32,6 +32,10 @@ Round 42 also gave you a never-miss weapon called the Phasor (Phaser?). This add
 Oh, and while Space Invaders acceleration as you killed enemies was a happy accident Round 42 had that hard coded into it.
 
 And to top it all off there are the warp levels where you have to traverse a generated tunnel that gets harder the further to progress.
+
+It took me years to actually finish the game but it felt like an achievement something I'd been building up to for years.
+
+It's safe to say that Round 42 was the spark that lit the fuse and may have played a big part in why I am writing this now and working on a 1 on 1(ish) remake.
 
 # The Remake
 I initially wanted to build this game using React. I wrote several games using React as a personal challenge (and to learn more about React) but when I got to the point where I had 20 enemies + a player ship shooting I saw the CPU was at 100% all the time.
@@ -68,6 +72,11 @@ Now that was fun to figure out :)
 
 In my version the orbs will shoot to kill. Also, there's a slight change that they will shoot directly at you. This chance goes up as you kill them. I am not sure how the original game handled this but I am happy with the result.
 
+# Level 04 - The first warp level
+Wow, now this was cool to code but now that I'm finished I'm litteraly finished with every warp level in the game.
+
+One thing I didn't do (but might) is the random starting point. I didn't see the value of it so warp levels in the remake will have you spawn center screen.
+
 # Done
 1. Adding and removing lives
 1. Phaser hits a random target and pauses the game for a second so you can revel in its awsomenes.
@@ -79,11 +88,16 @@ In my version the orbs will shoot to kill. Also, there's a slight change that th
 1. Level 01 with birds
 1. Level 02 with robots
 1. Level 03 with orbs.
+1. Level 04, warp and all warps.
 
 # TODO
 * Lots more levels
-* Developing an alg that produced as warp tunnel that gets tougher the further you progress
+  * This also means a lot of 'bitmaps' but they're pretty simple.
 * Game over. Seriously, you can die but you never lose the game.
 * Keeping track of bullets shot by the player. Original game did this
 * Keeping track of hits.
-
+* Sounds
+  * Plan on using original sounds but...
+    * I might try my hand at the AudioContext's API for generating beeps and bops.
+    * I might record each enemies sound at varies pitches and deploy the game with that.
+* General tweaking like starting position, movement speeds of, e.g, enemies, the player, bullets.
