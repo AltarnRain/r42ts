@@ -19,6 +19,7 @@ import { handlePlayerDeath } from "../StateHandlers/HandlePlayerDeath";
 import { getRandomArrayElement } from "../Utility/Array";
 import { coinFlip } from "../Utility/Lib";
 import { fallsWithin } from "../Utility/Location";
+import Guard from "../Guard";
 
 /**
  * Module:          WarpLevel
@@ -57,7 +58,7 @@ export default class WarpLevel implements ILevel {
         // I'm doing this in a subscription because the PlayerSpawnManager will
         // set a movement limit on the player depending on the game state.
         if (playerState.alive && playerState.moveLimit !== "none") {
-            dispatch(setPlayerMovementLimit("none"));
+            dispatch(setPlayerMovementLimit("forceup"));
         }
     });
 
@@ -101,10 +102,10 @@ export default class WarpLevel implements ILevel {
     }
 
     private hitDetection(tick: number, badSpace: Array<{ left: GameRectangle; right: GameRectangle }>): void {
-        const { playerState: { hitboxes, alive } } = appState();
+        const { playerState } = appState();
+        if (Guard.isPlayerAlive(playerState)) {
 
-        // const ctx = ctxProvider();
-        if (alive && hitboxes !== undefined) {
+            const { hitboxes, alive } = playerState;
 
             badSpace.forEach((bs) => {
                 DEBUGGING_drawGameRect(bs.left, "red");

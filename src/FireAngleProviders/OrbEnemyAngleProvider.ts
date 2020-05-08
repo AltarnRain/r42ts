@@ -10,6 +10,7 @@
  */
 
 import { angles } from "../Constants/Angles";
+import Guard from "../Guard";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { appState } from "../State/Store";
 
@@ -21,39 +22,35 @@ import { appState } from "../State/Store";
 export default function orbEnemyAngleProvider(enemy: EnemyState, left: number, top: number): number | undefined {
 
     const {
-        playerState: { hitboxes, alive  },
+        playerState,
         enemyLevelState: { enemies }
     } = appState();
 
     // do nothin when the player is dead.
-    if (!alive) {
-        return undefined;
-    }
+    if (Guard.isPlayerAlive(playerState)) {
+        const { hitboxes } = playerState;
 
-    if (hitboxes === undefined) {
-        return undefined;
-    }
+        // Increase the change the orb enemy will fire down as its numbers are reduced.
+        const rnd = Math.ceil(Math.random() * enemies.length / 1.5);
+        const canFireDown = rnd === 1;
 
-    // Increase the change the orb enemy will fire down as its numbers are reduced.
-    const rnd = Math.ceil(Math.random() * enemies.length / 1.5);
-    const canFireDown = rnd === 1;
+        if (canFireDown) {
+            const {
+                centerLocation,
+            } = enemy;
 
-    if (canFireDown) {
-        const {
-            centerLocation,
-        } = enemy;
-
-        if (centerLocation !== undefined) {
-            // Check if it makes sense for the orb to fire down. If not, it'll pick one of its diagonal angles.
-            if (centerLocation.left >= hitboxes.middle.left && centerLocation.left <= hitboxes.middle.right) {
-                return angles.down;
+            if (centerLocation !== undefined) {
+                // Check if it makes sense for the orb to fire down. If not, it'll pick one of its diagonal angles.
+                if (centerLocation.left >= hitboxes.middle.left && centerLocation.left <= hitboxes.middle.right) {
+                    return angles.down;
+                }
             }
         }
-    }
 
-    if (left < hitboxes.middle.left) {
-        return angles.rightdown;
-    } else {
-        return angles.leftdown;
+        if (left < hitboxes.middle.left) {
+            return angles.rightdown;
+        } else {
+            return angles.leftdown;
+        }
     }
 }

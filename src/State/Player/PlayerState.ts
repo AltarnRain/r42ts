@@ -68,3 +68,15 @@ export interface PlayerHitboxes {
     middle: GameRectangle;
     bottom: GameRectangle;
 }
+
+export interface AlivePlayer extends PlayerState {
+    /**
+     * Hitbox of the player.
+     */
+    hitboxes: PlayerHitboxes;
+
+    /**
+     * Location of the player's nozzle. Used to determine when the player's bullet should appear.
+     */
+    nozzleLocation: GameLocation;
+}

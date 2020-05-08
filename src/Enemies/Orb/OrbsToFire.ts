@@ -9,6 +9,7 @@
  * Responsibility:  Provide a function which orbs are best suited to fire a bullet.
  */
 
+import Guard from "../../Guard";
 import { EnemyState } from "../../State/EnemyLevel/EnemyState";
 import { appState } from "../../State/Store";
 import { FireAngleProviderFunction } from "../../Types";
@@ -28,55 +29,50 @@ export default function orbsToFire(orbs: EnemyState[], fireAngleProvider?: FireA
         playerState,
     } = appState();
 
-    if (!playerState.alive) {
-        return [];
-    }
+    if (Guard.isPlayerAlive(playerState)) {
+        const { hitboxes } = playerState;
 
-    // This check is to sasify the compiler. When the player is alive they always have a hitbox
-    // but te compiler doesn't know this.
-    const playerhitbox = playerState.hitboxes;
-    if (playerhitbox === undefined) {
-        return [];
-    }
+        // To determine which enemies have the best change of hitting
+        // the player we calculate difference between the angle at which the
+        // enemy will fire vs the angle towards the player.
+        const candidates: Array<{ ship: EnemyState, angleDifference: number, angle: number }> = [];
 
-    // To determine which enemies have the best change of hitting
-    // the player we calculate difference between the angle at which the
-    // enemy will fire vs the angle towards the player.
-    const candidates: Array<{ ship: EnemyState, angleDifference: number, angle: number }> = [];
+        let above = 0;
+        let below = 0;
+        for (const orb of orbs) {
+            const center = orb.centerLocation;
 
-    let above = 0;
-    let below = 0;
-    for (const orb of orbs) {
-        const center = orb.centerLocation;
+            if (center) {
+                const angle = fireAngleProvider(orb, orb.offsetLeft, orb.offsetTop);
+                const angleToPlayer = calculateAngle(center.left, center.top, playerState.left, playerState.top);
 
-        if (center) {
-            const angle = fireAngleProvider(orb, orb.offsetLeft, orb.offsetTop);
-            const angleToPlayer = calculateAngle(center.left, center.top, playerState.left, playerState.top);
+                if (center.top > hitboxes.middle.bottom) {
+                    below += 1;
+                } else {
+                    above += 1;
+                }
 
-            if (center.top > playerhitbox.middle.bottom) {
-                below += 1;
+                if (angle !== undefined && angleToPlayer !== undefined) {
+                    const angleDifference = calculateAngleDifference(angle, angleToPlayer);
+                    candidates.push({ ship: orb, angleDifference, angle });
+                }
+            }
+        }
+
+        // If the player is below the orbs, the ones with the lowest angle difference have the best shot
+        // If the player is above the orbs, the situation is revesed.
+        const sortFunction = above > below ? (a: number, b: number) => a < b : (a: number, b: number) => a > b;
+
+        candidates.sort((e1, e2) => {
+            if (sortFunction(e1.angleDifference, e2.angleDifference)) {
+                return -1;
             } else {
-                above += 1;
+                return 1;
             }
+        });
 
-            if (angle !== undefined && angleToPlayer !== undefined) {
-                const angleDifference = calculateAngleDifference(angle, angleToPlayer);
-                candidates.push({ ship: orb, angleDifference, angle });
-            }
-        }
+        return candidates.map((c) => c.ship);
+    } else {
+        return [];
     }
-
-    // If the player is below the orbs, the ones with the lowest angle difference have the best shot
-    // If the player is above the orbs, the situation is revesed.
-    const sortFunction = above > below ? (a: number, b: number) => a < b : (a: number, b: number) => a > b;
-
-    candidates.sort((e1, e2) => {
-        if (sortFunction(e1.angleDifference, e2.angleDifference)) {
-            return -1;
-        } else {
-            return 1;
-        }
-    });
-
-    return candidates.map((c) => c.ship);
 }
