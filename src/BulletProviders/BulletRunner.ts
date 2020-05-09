@@ -6,10 +6,9 @@
 
 import dimensionProvider from "../Providers/DimensionProvider";
 import { addBullet, addOrUpdateEnemy } from "../State/EnemyLevel/EnemyLevelActions";
-import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { StateProviders } from "../State/StateProviders";
-import { appState, dispatch } from "../State/Store";
-import { FireAngleProviderFunction, FireCheckFunction, Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
+import { dispatch } from "../State/Store";
+import { Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
 /**
@@ -30,12 +29,7 @@ export default class BulletRunner {
     /**
      * The bullet frame that will be fired.
      */
-    private bulletFrame: Frame;
-
-    /**
-     * The fire check function. This function has the final say in whether an enemy will fire or not.
-     */
-    private fireCheck: FireCheckFunction;
+    private coloredBulletFrame: Frame;
 
     /**
      * Speed of the bullets shot by the enemy.
@@ -48,20 +42,9 @@ export default class BulletRunner {
     private bulletColor: string;
 
     /**
-     * Ships to fire function.
-     * @private
-     * @type {ShipsToFireFunction}
-     * @memberof BulletRunner
+     * A function that provides an array of ships that will fire and the angle at which they will fire.
      */
     private shipsToFire: ShipsToFireFunction;
-
-    /**
-     * Provides a fire angle for a ship.
-     * @private
-     * @type {FireAngleProviderFunction}
-     * @memberof BulletRunner
-     */
-    private fireAngleProvider: FireAngleProviderFunction;
 
     /**
      * Creates an instance of BulletRunner.
@@ -76,18 +59,14 @@ export default class BulletRunner {
         getBulletFrame: FrameProviderFunction,
         bulletColor: string,
         speed: number,
-        fireAngleProvider: FireAngleProviderFunction,
-        shipsToFire: ShipsToFireFunction,
-        fireCheck: FireCheckFunction) {
+        shipsToFire: ShipsToFireFunction) {
 
         this.speed = speed;
         this.bulletColor = bulletColor;
-        this.bulletFrame = getBulletFrame();
-        this.fireCheck = fireCheck;
         this.shipsToFire = shipsToFire;
-        this.fireAngleProvider = fireAngleProvider;
 
-        Mutators.Frame.setColor(this.bulletFrame, this.bulletColor);
+        this.coloredBulletFrame = getBulletFrame();
+        Mutators.Frame.setColor(this.coloredBulletFrame, this.bulletColor);
     }
 
     /**
@@ -95,59 +74,33 @@ export default class BulletRunner {
      * @param {number} tick. Current tick.
      */
     public updateState(tick: number): void {
-        const {
-            playerState,
-            enemyLevelState
-        } = appState();
-
-        // Enemies never fire bullets when the player is dead.
-        if (!playerState.alive) {
-            return;
-        }
-
-        const enemiesWhoMayFire: EnemyState[] = [];
-        for (const enemy of enemyLevelState.enemies) {
-            const lastShotTick = enemy.lastFireTick;
-
-            // Check if this enemy's shot timeout has passed.
-            if (tick - lastShotTick > enemyLevelState.fireInterval) {
-                enemiesWhoMayFire.push(enemy);
-            }
-        }
-
-        const ships = this.shipsToFire(enemiesWhoMayFire, this.fireAngleProvider);
+        const shipsToFire = this.shipsToFire(tick);
 
         // The candiates are sorted so the enemeies with the best odds of hitting the player
         // are at the top. Now we'll use the firecheck function to get an array of enemies that
         // can actually fire.
-        for (const ship of ships) {
-            const fireAngle = this.fireAngleProvider(ship, ship.offsetLeft, ship.offsetTop);
+        for (const shipToFire of shipsToFire) {
 
-            // Always call a fire check function with the last version of the enemyLevelState
-            // this state is constantly updated by the dispatches done below.
-            // Fire check functions check the state and make the final call if the ship
-            // can fire or not.
-            if (this.fireCheck(ship, fireAngle)) {
-                const { hitbox } = ship;
-                if (fireAngle !== undefined) {
+            const { enemy, angle, enemy: { hitbox, enemyId } } = shipToFire;
 
-                    const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - pixelSize;
-                    const top = hitbox.bottom + pixelSize;
+            if (angle !== undefined) {
 
-                    const bullet = StateProviders.getBulletParticleState(
-                        left,
-                        top,
-                        this.speed,
-                        fireAngle,
-                        this.bulletFrame,
-                        ship.enemyId,
-                    );
+                const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - pixelSize;
+                const top = hitbox.bottom + pixelSize;
 
-                    const newState = { ...ship, lastFireTick: tick };
+                const bullet = StateProviders.getBulletParticleState(
+                    left,
+                    top,
+                    this.speed,
+                    angle,
+                    this.coloredBulletFrame,
+                    enemyId,
+                );
 
-                    dispatch(addBullet(bullet));
-                    dispatch(addOrUpdateEnemy(newState));
-                }
+                const newState = { ...enemy, lastFireTick: tick };
+
+                dispatch(addBullet(bullet));
+                dispatch(addOrUpdateEnemy(newState));
             }
         }
     }

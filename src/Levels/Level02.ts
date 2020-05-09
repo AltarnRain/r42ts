@@ -12,8 +12,6 @@ import { robotFireFrequence } from "../Constants/FireFrequences";
 import { enemyFactory } from "../Enemies/EnemyFactory";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import robotsToFire from "../Enemies/Robot/RobotsToFire";
-import downFireAngleProvider from "../FireAngleProviders/DownAngleProvider";
-import robotLevel02FireCheck from "../FireChecks/RobotFireCheck";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 
 /**
@@ -36,7 +34,7 @@ export default class Level02 extends BaseEnemyLevel {
             return enemyFactory("robot", lc.left, lc.top, MovementAngles.robot, lc.color);
         });
 
-        const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, Speeds.Bullets.robot, downFireAngleProvider, robotsToFire, robotLevel02FireCheck);
+        const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, Speeds.Bullets.robot, robotsToFire);
         this.begin(enemies, robotFireFrequence, bulletProvider);
     }
 }

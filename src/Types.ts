@@ -11,7 +11,7 @@
 
 import Explosion from "./Models/Explosion";
 import { OffsetFrames } from "./Models/OffsetFrames";
-import { EnemyState } from "./State/EnemyLevel/EnemyState";
+import ShipToFire from "./ShipsToFire";
 
 /**
  * Defines frames. Frames are objects with key values that start with F{N}. Where N is the frame number.
@@ -44,24 +44,9 @@ export type MoveLimits = "immobile" | "sideways" | "forceup" | "none";
 export type PlayerFormationPhases = "begin" | "inprogress" | undefined;
 
 /**
- * A function that provides an array of enemies that can fire.
+ * A function that pulls in state to determine which ships should fire.
  */
-export type ShipsToFireFunction = (enemies: EnemyState[], fireAngleProvider?: FireAngleProviderFunction) => EnemyState[];
-
-/**
- * Function definition of an angle provider function.
- * An angle provider function is NOT a pure function. It may pull in state
- * To determine the best angle. For example, enemies mostly limited to diagonal angles
- * Begin firing straight down once a certain amount of enemies are left.
- */
-export type FireAngleProviderFunction = (enemy: EnemyState, left: number, top: number) => number | undefined;
-
-/**
- * Function definition of a FireCheckFunction.
- * A fire check function accepts the current enemy being checked if it can be fired.
- * Fire check functions are NOT pure. They CAN pull in state and do additional checks.
- */
-export type FireCheckFunction = (enemyState: EnemyState, angle: number | undefined) => boolean;
+export type ShipsToFireFunction = (tick: number) => ShipToFire[];
 
 /**
  * Always provides a fresh explosion object.
