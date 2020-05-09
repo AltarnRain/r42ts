@@ -30,4 +30,3 @@ export function handlePlayerDeath(tick: number): void {
     dispatch(removeLife());
     dispatch(setPlayerIsAlive(false));
 }
-}
