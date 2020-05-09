@@ -71,6 +71,7 @@ export function movePlayerHandler(speed: number): void {
 
     const hitBox = getFrameHitbox(nextX, nextY, playerState.coloredFrame, 0);
 
+
     const middleHitbox = { ...hitBox, left: hitBox.left + doublePixel, right: hitBox.right - doublePixel };
     const bottomHitbox = { ...hitBox, top: hitBox.top + pixelSize };
 

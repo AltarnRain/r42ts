@@ -20,6 +20,7 @@ import { handlePlayerDeath } from "../StateHandlers/HandlePlayerDeath";
 import { getRandomArrayElement } from "../Utility/Array";
 import { coinFlip } from "../Utility/Lib";
 import { fallsWithin } from "../Utility/Location";
+import { MoveLimits } from "../Types";
 
 /**
  * Module:          WarpLevel
@@ -43,6 +44,8 @@ const {
 // Always start a warp game using this left so we ensure the player is aligned perfectly.
 const warpGateInitialleft = fullGameWidth / 2 - (16 * pixelSize) / 2;
 
+const movementLimit: MoveLimits = "none";
+
 export default class WarpLevel implements ILevel {
 
     private gameLoopSubscriptions: Array<(tick?: number) => void> = [];
@@ -57,8 +60,12 @@ export default class WarpLevel implements ILevel {
         // the player to traverse the warp level.
         // I'm doing this in a subscription because the PlayerSpawnManager will
         // set a movement limit on the player depending on the game state.
-        if (playerState.alive && playerState.moveLimit !== "forceup") {
-            dispatch(setPlayerMovementLimit("forceup"));
+        if (playerState.alive && playerState.moveLimit !== movementLimit) {
+
+            // use a constant to check if the movement limit is set to the expected value.
+            // if this check goes wrong you get a stack overflow exception because redux is
+            // bombarded with dispatches.
+            dispatch(setPlayerMovementLimit(movementLimit));
         }
     });
 

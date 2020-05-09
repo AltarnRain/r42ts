@@ -145,8 +145,8 @@ function playerHitEnemyDetection(tick: number) {
  * @param {number} tick. Current tick.
  */
 function enemyHitPlayerDetection(tick: number) {
-    const { enemyLevelState, debuggingState, playerState } = appState();
-    if (playerState.alive && debuggingState.playerIsImmortal === false) {
+    const { enemyLevelState, playerState } = appState();
+    if (playerState.alive) {
         const hit = enemyLevelState.enemies.some((e) => playerIsHit(playerState.hitboxes, e.hitbox));
 
         if (hit) {
@@ -162,8 +162,8 @@ function enemyHitPlayerDetection(tick: number) {
  */
 function playerHitByParticle(tick: number, particles: ParticleState[]): void {
 
-    const { playerState, debuggingState } = appState();
-    if (playerState.alive && debuggingState.playerIsImmortal === false) {
+    const { playerState } = appState();
+    if (playerState.alive) {
         const hit = particles.some((e) => playerIsHit(playerState.hitboxes, e.hitbox));
 
         if (hit) {

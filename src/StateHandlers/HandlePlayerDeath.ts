@@ -19,10 +19,12 @@ import { dispatchExplosion } from "./DispatchExplosion";
  * @param {number} tick
  */
 export function handlePlayerDeath(tick: number): void {
-    const { playerState: { left, top, coloredExplosion} } = appState();
+    const { playerState: { left, top, coloredExplosion}, debuggingState } = appState();
 
-    dispatchExplosion(left, top, coloredExplosion, tick);
+    if (debuggingState.playerIsImmortal === false) {
+        dispatchExplosion(left, top, coloredExplosion, tick);
 
-    dispatch(removeLife());
-    dispatch(setPlayerIsAlive(false));
+        dispatch(removeLife());
+        dispatch(setPlayerIsAlive(false));
+    }
 }
