@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import produce from "immer";
 import Constants from "./DebuggingConstants";
 import DebuggingState from "./DebuggingState";
 import { DebuggingTypes } from "./DebuggingTypes";
@@ -20,26 +19,12 @@ import { DebuggingTypes } from "./DebuggingTypes";
  * @param {ActionPayload<any>} action. The desired action with optional paylood.
  * @returns {DebuggingState}. New state.
  */
-export default function debuggingReducer(state: DebuggingState = initState(), action: DebuggingTypes): DebuggingState {
-    return produce(state, (draft) => {
-        switch (action.type) {
-            case Constants.playerMortality:
-                draft.playerIsImmortal = action.payload === "immortal";
-                break;
-            case Constants.renderPhaser:
-                draft.renderPhaser = action.render;
-                break;
-        }
-    });
-}
+export default function debuggingReducer(state: DebuggingState = {}, action: DebuggingTypes): DebuggingState {
+    switch (action.type) {
+        case Constants.setDebuggingState:
+            state = { ...action.state };
+            break;
+    }
 
-/**
- * Initialize the debugging state.
- * @returns {DebuggingState}. Default state.
- */
-function initState(): DebuggingState {
-    return {
-        playerIsImmortal: false,
-        renderPhaser: false,
-    };
+    return state;
 }

@@ -1,3 +1,4 @@
+import CGAColors from "../Constants/CGAColors";
 import { GameRectangle } from "../Models/GameRectangle";
 import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
@@ -32,7 +33,7 @@ export function DEBUGGING_renderHitboxes() {
     for (const hitbox of hitboxes) {
 
         if (hitbox !== undefined) {
-            DEBUGGING_drawGameRect(hitbox, "white");
+            DEBUGGING_drawGameRect(hitbox, CGAColors.lightRed);
         }
     }
 }
@@ -50,7 +51,11 @@ export function DEBUGGING_drawGameRect(hitbox: GameRectangle, color: string, lin
 /**
  * Debugggin function. Draws a grid in the screen for animation alignment.
  */
-export function DEBUGGING_drawGrid(gridDetail: number): void {
+export function DEBUGGING_drawGrid(gridDetail?: number): void {
+
+    if (gridDetail === undefined) {
+        gridDetail = 1;
+    }
 
     const ctx = ctxProvider();
     for (let r = 0; r < 120; r += 1) {

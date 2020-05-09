@@ -6,11 +6,9 @@
 
 import BaseEnemyLevel from "../Base/BaseEnemyLevel";
 import BulletRunner from "../BulletProviders/BulletRunner";
-import { orbBulletSpeed } from "../Constants/BulletSpeeds";
 import CGAColors from "../Constants/CGAColors";
-import { orbMovementSpeed } from "../Constants/EnemyMovementSpeeds";
+import { MovementAngles, Speeds } from "../Constants/Constants";
 import { orbFireFrequence } from "../Constants/FireFrequences";
-import { orbAngle } from "../Constants/MovementAngles";
 import { enemyFactory } from "../Enemies/EnemyFactory";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import orbsToFire from "../Enemies/Orb/OrbsToFire";
@@ -28,10 +26,10 @@ export class Level03 extends BaseEnemyLevel {
     public start(): void {
         super.start();
         const enemies = orbSpawnLocations.map((location) => {
-            return enemyFactory("orb", location.left, location.top, orbMovementSpeed, orbAngle);
+            return enemyFactory("orb", location.left, location.top, MovementAngles.orb);
         });
 
-        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, orbBulletSpeed, orbEnemyAngleProvider, orbsToFire, orbFireCheck);
+        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, Speeds.Bullets.orb, orbEnemyAngleProvider, orbsToFire, orbFireCheck);
         this.begin(enemies, orbFireFrequence, bulletRunner);
     }
 }

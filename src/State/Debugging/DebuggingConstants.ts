@@ -10,8 +10,7 @@
  */
 
 namespace Constants {
-    export const playerMortality = "playerMortality";
-    export const renderPhaser = "renderPhaser";
+    export const setDebuggingState = "setDebuggingState";
 }
 
 export default Constants;

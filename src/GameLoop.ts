@@ -4,7 +4,9 @@
  * See LICENSE.MD.
  */
 
+import { DEBUGGING_renderHitboxes, DEBUGGING_drawGrid } from "./Debugging/Debugging";
 import { TickFunction } from "./Types";
+import { appState } from "./State/Store";
 
 /**
  * Module:          GameLoop
@@ -97,6 +99,16 @@ export namespace GameLoop {
         backgroundDrawFunctions.forEach((f) => f());
         drawFunctions.forEach((f) => f());
         drawFunctions = [];
+
+        const { debuggingState } = appState();
+
+        if (debuggingState.drawHitboxes) {
+            DEBUGGING_renderHitboxes();
+        }
+
+        if (debuggingState.drawGrid) {
+            DEBUGGING_drawGrid(debuggingState.gridDetail);
+        }
     }
 }
 

@@ -5,8 +5,7 @@
  */
 
 import BaseEnemy from "../Base/BaseEnemy";
-import { birdFrameTime, orbFrameTime, robotFrameTime } from "../Constants/EnemyFrameTime";
-import { orbMovementSpeed, robotMovementSpeed } from "../Constants/EnemyMovementSpeeds";
+import { FrameTimes, Speeds } from "../Constants/Constants";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUpLocaionProvider";
 import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDownLocationProvider";
 import VanishRightAppearLeftLocationProvider from "../LocationProviders/VanishRightAppearLeftLocationProvider";
@@ -33,30 +32,30 @@ const {
     pixelSize,
 } = dimensionProvider();
 
-export function enemyFactory(enemy: Enemies, left: number, top: number, speed: number, angle: number, color?: string): BaseEnemy {
+export function enemyFactory(enemy: Enemies, left: number, top: number, angle: number, color?: string): BaseEnemy {
     switch (enemy) {
         case "bird": {
             const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(getBirdFrames().frames));
             const { width, height } = getMaximumFrameDimensions(getBirdFrames().frames, pixelSize);
-            const locationProvider = new SideToSideUpAndDown(left, top, speed, angle, width, height);
-            return new BirdEnemy(birdFrameTime, locationProvider, frameProvider, getExplosion01, getBirdFrames);
+            const locationProvider = new SideToSideUpAndDown(left, top, Speeds.Movement.bird, angle, width, height);
+            return new BirdEnemy(FrameTimes.bird, locationProvider, frameProvider, getExplosion01, getBirdFrames);
         }
         case "robot": {
             const frameProvider = new BackAndForthFrameProvider(0);
             const { width, height } = getMaximumFrameDimensions(getRobotFrames().frames, pixelSize);
-            const locationProvider = new VanishRightAppearLeftLocationProvider(left, top, robotMovementSpeed, angle, width, height);
+            const locationProvider = new VanishRightAppearLeftLocationProvider(left, top, Speeds.Movement.robot, angle, width, height);
 
             if (color === undefined) {
                 throw new Error("Robot enemy requires a color");
             }
 
-            return new RobotEnemy(color, robotFrameTime, locationProvider, frameProvider, getExplosion02, getRobotFrames);
+            return new RobotEnemy(color, FrameTimes.robot, locationProvider, frameProvider, getExplosion02, getRobotFrames);
         }
         case "orb": {
             const frameProvider = new CircleFrameProvider(0);
             const { width, height } = getMaximumFrameDimensions(getOrbFrames().frames, pixelSize);
-            const locationProvider = new MoveDownAppearUp(80, left, top, orbMovementSpeed, angle, width, height);
-            return  new OrbEnemy(orbFrameTime, locationProvider, frameProvider, getExplosion02, getOrbFrames);
+            const locationProvider = new MoveDownAppearUp(80, left, top, Speeds.Movement.orb, angle, width, height);
+            return  new OrbEnemy(FrameTimes.orb, locationProvider, frameProvider, getExplosion02, getOrbFrames);
         }
 
         default:

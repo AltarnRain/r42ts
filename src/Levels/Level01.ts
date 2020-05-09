@@ -5,8 +5,7 @@
  */
 
 import BaseEnemyLevel from "../Base/BaseEnemyLevel";
-import { birdMovementSpeed as birdMovementSpeed } from "../Constants/EnemyMovementSpeeds";
-import { birdRandomAngles as birdRandomAngles } from "../Constants/MovementAngles";
+import { MovementAngles } from "../Constants/Constants";
 import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
 import { enemyFactory } from "../Enemies/EnemyFactory";
 import { getRandomArrayElement } from "../Utility/Array";
@@ -31,8 +30,8 @@ export default class Level01 extends BaseEnemyLevel {
 
             // This may deviate from te original game but I do not care. Each birds will
             // begin to move in a random direction determined by the function below
-            const randomMovementAngle = getRandomArrayElement(birdRandomAngles);
-            return enemyFactory("bird", location.left, location.top, birdMovementSpeed, randomMovementAngle);
+            const randomMovementAngle = getRandomArrayElement(MovementAngles.birdRandom);
+            return enemyFactory("bird", location.left, location.top, randomMovementAngle);
         });
 
         this.begin(enemies);

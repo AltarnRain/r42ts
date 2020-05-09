@@ -13,9 +13,8 @@ import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { getAngle, getNextX, getNextY } from "../Utility/Geometry";
 
 /**
- * Module:          MovePlayer
- * Responsibility:  Handles changes to the player location due to movement. Also provides a single source of truth for any class or module
- *                  That uses the player location or needs to change it.
+ * Module:          PlayerMovementHandler
+ * Responsibility:  Handles changes to the player due to movement.
  */
 
 const {
@@ -26,6 +25,9 @@ const {
 // Used in player hitbox calculation, never changes so it can be a constant.
 const doublePixel = pixelSize * 2;
 
+// The player's hitbox is a bit smaller than the actual ship. This feels better when playing the game.
+const playerHitboxAdjustment = pixelSize * 0.3;
+
 const {
     width: playerWidth,
     height: playerHeight
@@ -35,7 +37,7 @@ const {
  * Handles player movement.
  * @param {number} speed. Speed the ship can travel. Can vary depending on the level or if the player ship is forming.
  */
-export function movePlayerHandler(speed: number): void {
+export function playerMovementHandler(speed: number): void {
     const { keyboardState, playerState } = appState();
 
     const localKeyboardState = { ...keyboardState };
@@ -71,9 +73,21 @@ export function movePlayerHandler(speed: number): void {
 
     const hitBox = getFrameHitbox(nextX, nextY, playerState.coloredFrame, 0);
 
+    const middleHitbox = {
+        ...hitBox,
+        left: hitBox.left + doublePixel + playerHitboxAdjustment,
+        right: hitBox.right - doublePixel - playerHitboxAdjustment,
+        top: hitBox.top + playerHitboxAdjustment,
+        bottom: hitBox.bottom - playerHitboxAdjustment,
+    };
 
-    const middleHitbox = { ...hitBox, left: hitBox.left + doublePixel, right: hitBox.right - doublePixel };
-    const bottomHitbox = { ...hitBox, top: hitBox.top + pixelSize };
+    const bottomHitbox = {
+        ...hitBox,
+        top: hitBox.top + pixelSize + playerHitboxAdjustment,
+        left: hitBox.left + playerHitboxAdjustment,
+        right: hitBox.right - playerHitboxAdjustment,
+        bottom: hitBox.bottom - playerHitboxAdjustment,
+    };
 
     const hitBoxes = { middle: middleHitbox, bottom: bottomHitbox };
 

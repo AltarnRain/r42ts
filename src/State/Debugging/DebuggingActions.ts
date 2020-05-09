@@ -10,18 +10,13 @@
  */
 
 import Constants from "./DebuggingConstants";
-import { PlayerImmortal, RenderPhaser } from "./DebuggingTypes";
+import DebuggingState from "./DebuggingState";
+import { SetDebuggingState } from "./DebuggingTypes";
 
-export function playerMortality(mortality: "mortal" | "immortal"): PlayerImmortal {
+export function setDebuggingState(state: DebuggingState): SetDebuggingState {
     return {
-        type: Constants.playerMortality,
-        payload: mortality,
-    };
-}
 
-export function renderPhaserOn(render: boolean): RenderPhaser {
-    return {
-        type: Constants.renderPhaser,
-        render
+        type: Constants.setDebuggingState,
+        state,
     };
 }

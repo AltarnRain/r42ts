@@ -13,10 +13,16 @@ export default interface DebuggingState {
     /**
      * When true the player cannot die.
      */
-    playerIsImmortal: boolean;
+    playerIsImmortal?: boolean;
 
     /**
      * When true the player's phaser will be drawn pointing at an enemy.
      */
-    renderPhaser: boolean;
+    renderPhaser?: boolean;
+
+    drawHitboxes?: boolean;
+
+    drawGrid?: boolean;
+
+    gridDetail?: number;
 }

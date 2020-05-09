@@ -10,17 +10,11 @@
  */
 
 import Constants from "./DebuggingConstants";
+import DebuggingState from "./DebuggingState";
 
-export interface PlayerImmortal {
-    type: typeof Constants.playerMortality;
-    payload: "mortal" | "immortal";
+export interface SetDebuggingState {
+    type: typeof Constants.setDebuggingState;
+    state: DebuggingState;
 }
 
-export interface RenderPhaser {
-    type: typeof Constants.renderPhaser;
-    render: boolean;
-}
-export type DebuggingTypes =
-    PlayerImmortal |
-    RenderPhaser
-    ;
+export type DebuggingTypes = SetDebuggingState;

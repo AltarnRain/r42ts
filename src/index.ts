@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import { DEBUGGING_drawGrid, DEBUGGING_renderHitboxes } from "./Debugging/Debugging";
 import GameLoop from "./GameLoop";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import subscribeToStoreChanges from "./Levels/SubscribeToStore";
@@ -13,7 +12,8 @@ import ctxProvider from "./Providers/CtxProvider";
 import dimensionProvider from "./Providers/DimensionProvider";
 import genericRunner from "./Runners/GenericRunner";
 import playerRunner from "./Runners/PlayerRunner";
-import { playerMortality } from "./State/Debugging/DebuggingActions";
+import { setDebuggingState } from "./State/Debugging/DebuggingActions";
+import DebuggingState from "./State/Debugging/DebuggingState";
 import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers, setWarpGamteComplexity } from "./State/Game/GameActions";
 import { WarpLevelComplexity } from "./State/Game/WarpLevelTypes";
 import { dispatch } from "./State/Store";
@@ -44,6 +44,8 @@ window.onload = () => {
 
         if (showPlayGround) {
 
+            const debuggingState: DebuggingState = {};
+
             if (!level) {
                 level = "0";
             }
@@ -56,12 +58,6 @@ window.onload = () => {
             GameLoop.registerUpdateState(playerSpawnManager);
             GameLoop.registerUpdateState(genericRunner);
 
-            if (immortal) {
-                dispatch(playerMortality("immortal"));
-            } else {
-                dispatch(playerMortality("mortal"));
-            }
-
             dispatch(setLives(20));
             dispatch(setPhasers(100));
 
@@ -69,31 +65,37 @@ window.onload = () => {
                 dispatch(setLevel(parseInt(level, 10)));
             }
 
+            GameLoop.Start();
+
+            if (immortal) {
+                debuggingState.playerIsImmortal = true;
+            }
+
             if (drawGrid) {
-                let gridDetail = 1;
+                let gridDetail: number | undefined;
                 if (drawGrid.value) {
                     gridDetail = parseInt(drawGrid.value, 10);
                 }
 
-                GameLoop.registerBackgroundDrawing(() => DEBUGGING_drawGrid(gridDetail));
+                debuggingState.drawGrid = true;
+                debuggingState.gridDetail = gridDetail;
             }
 
             if (showhitboxes) {
-                GameLoop.registerBackgroundDrawing(() => DEBUGGING_renderHitboxes());
+                debuggingState.drawHitboxes = true;
             }
 
-            GameLoop.Start();
+            dispatch(setDebuggingState(debuggingState));
 
             (window as any).r42 = {
                 setLevel: (n: number) => dispatch(setLevel(n)),
                 nextLevel: () => dispatch(nextLevel()),
-                godMode: () => dispatch(playerMortality("immortal")),
-                normalMode: () => dispatch(playerMortality("mortal")),
                 setPhasers: (n: number) => dispatch(setPhasers(n)),
                 setLives: (n: number) => dispatch(setLives(n)),
                 increaseScore: (n: number) => dispatch(increaseScore(n)),
                 addPhaser: () => dispatch(addPhaser()),
                 setWarpLevelComplexity: (n: WarpLevelComplexity) => dispatch(setWarpGamteComplexity(n)),
+                setDebuggingState: (v: DebuggingState) => dispatch(setDebuggingState(v)),
             };
 
         } else if (showCanvas) {
