@@ -8,7 +8,7 @@ import BaseEnemyLevel from "../Base/BaseEnemyLevel";
 import CGAColors from "../Constants/CGAColors";
 import { MovementAngles, Speeds } from "../Constants/Constants";
 import { orbFireFrequence } from "../Constants/FireFrequences";
-import { enemyFactory } from "../Enemies/EnemyFactory";
+import { enemyProvider } from "../Enemies/EnemyProvider";
 import maxFiveDiagonal from "../Providers/ShipsToFireProviders/MaxFiveDiagonal";
 import sevenSixSeverGridProvider from "../Providers/SpawnLocations/SevenSixSevenGridProvider";
 import BulletRunner from "../Runners/BulletRunner";
@@ -26,7 +26,7 @@ export class Level06 extends BaseEnemyLevel {
         super.start();
         const enemies = sevenSixSeverGridProvider().map((location) => {
             const randomAngle = getRandomArrayElement(MovementAngles.spinner);
-            return enemyFactory("balloon", location.left, location.top, randomAngle);
+            return enemyProvider("balloon", location.left, location.top, randomAngle);
         });
 
         const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.white, Speeds.Bullets.spinner, maxFiveDiagonal);

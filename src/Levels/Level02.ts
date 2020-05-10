@@ -8,7 +8,7 @@ import BaseEnemyLevel from "../Base/BaseEnemyLevel";
 import CGAColors from "../Constants/CGAColors";
 import { MovementAngles, Speeds } from "../Constants/Constants";
 import { robotFireFrequence } from "../Constants/FireFrequences";
-import { enemyFactory } from "../Enemies/EnemyFactory";
+import { enemyProvider } from "../Enemies/EnemyProvider";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import firstEnemyOccasionalDown from "../Providers/ShipsToFireProviders/FirstEnemyOccasionalDown";
 import BulletRunner from "../Runners/BulletRunner";
@@ -31,7 +31,7 @@ export default class Level02 extends BaseEnemyLevel {
         super.start();
 
         const enemies = robotSpawnLocationsAndColor.map((lc) => {
-            return enemyFactory("robot", lc.left, lc.top, MovementAngles.robot, lc.color);
+            return enemyProvider("robot", lc.left, lc.top, MovementAngles.robot, lc.color);
         });
 
         const bulletProvider = new BulletRunner(getTwoPixelBullet, CGAColors.lightRed, Speeds.Bullets.robot, firstEnemyOccasionalDown);

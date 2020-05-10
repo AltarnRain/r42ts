@@ -6,7 +6,7 @@
 
 import BaseEnemyLevel from "../Base/BaseEnemyLevel";
 import { MovementAngles } from "../Constants/Constants";
-import { enemyFactory } from "../Enemies/EnemyFactory";
+import { enemyProvider } from "../Enemies/EnemyProvider";
 import sevenSixSeverGridProvider from "../Providers/SpawnLocations/SevenSixSevenGridProvider";
 import { getRandomArrayElement } from "../Utility/Array";
 
@@ -31,7 +31,7 @@ export default class Level01 extends BaseEnemyLevel {
             // This may deviate from te original game but I do not care. Each birds will
             // begin to move in a random direction determined by the function below
             const randomMovementAngle = getRandomArrayElement(MovementAngles.bird);
-            return enemyFactory("bird", location.left, location.top, randomMovementAngle);
+            return enemyProvider("bird", location.left, location.top, randomMovementAngle);
         });
 
         this.begin(enemies);
