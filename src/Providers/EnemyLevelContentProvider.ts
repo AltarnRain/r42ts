@@ -5,6 +5,7 @@
  */
 
 import BaseEnemy from "../Base/BaseEnemy";
+import CGAColors from "../Constants/CGAColors";
 import { FrameTimes, Locations, MovementAngles, Speeds } from "../Constants/Constants";
 import BalloonEnemy from "../Enemies/Balloon/BalloonEnemy";
 import { getBalloonFrames } from "../Enemies/Balloon/BalloonFrames";
@@ -18,19 +19,22 @@ import getRobotFrames from "../Enemies/Robot/RobotFrames";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
 import SpinnerEnemy from "../Enemies/Spinner/SpinnerEnemy";
 import { getSpinnerFrames } from "../Enemies/Spinner/SpinnerFrames";
-import dimensionProvider from "../Providers/DimensionProvider";
-import BackAndForthFrameProvider from "../Providers/FrameProviders/BackAndForthFrameProvider";
-import CircleFrameProvider from "../Providers/FrameProviders/CircleFrameProvider";
-import ImmobileLocationProvider from "../Providers/LocationProviders/ImmobileLocationProvider";
-import MoveDownAppearUp from "../Providers/LocationProviders/MoveDownAppearUpLocaionProvider";
-import SideToSideUpAndDown from "../Providers/LocationProviders/SideToSideUpAndDownLocationProvider";
-import VanishRightAppearLeftLocationProvider from "../Providers/LocationProviders/VanishRightAppearLeftLocationProvider";
-import sevenSixSeverGridProvider from "../Providers/SpawnLocations/SevenSixSevenGridProvider";
+import BulletRunner from "../Runners/BulletRunner";
 import getExplosion01 from "../SharedFrames/Explosion01";
 import { getExplosion02 } from "../SharedFrames/Explosion02";
 import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getMaximumFrameDimensions, getRandomFrameKeyIndex } from "../Utility/Frame";
+import dimensionProvider from "./DimensionProvider";
+import BackAndForthFrameProvider from "./FrameProviders/BackAndForthFrameProvider";
+import CircleFrameProvider from "./FrameProviders/CircleFrameProvider";
+import ImmobileLocationProvider from "./LocationProviders/ImmobileLocationProvider";
+import MoveDownAppearUp from "./LocationProviders/MoveDownAppearUpLocaionProvider";
+import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
+import VanishRightAppearLeftLocationProvider from "./LocationProviders/VanishRightAppearLeftLocationProvider";
+import firstEnemyOccasionalDown from "./ShipsToFireProviders/FirstEnemyOccasionalDown";
+import maxFiveDiagonal from "./ShipsToFireProviders/MaxFiveDiagonal";
+import sevenSixSeverGridProvider from "./SpawnLocations/SevenSixSevenGridProvider";
 
 /**
  * Module:          EnemyFactory
@@ -42,7 +46,7 @@ const {
     gameField
 } = dimensionProvider();
 
-export function enemyFactory(enemy: Enemies): BaseEnemy[] {
+export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: BulletRunner, enemies: BaseEnemy[] } {
     switch (enemy) {
         case "bird": {
             const birdFrames = getBirdFrames().frames;
@@ -60,7 +64,9 @@ export function enemyFactory(enemy: Enemies): BaseEnemy[] {
                 return new BirdEnemy(FrameTimes.bird, locationProvider, frameProvider, getExplosion01, getBirdFrames);
             });
 
-            return enemies;
+            return {
+                enemies,
+            };
         }
         case "robot": {
             const { width, height } = getMaximumFrameDimensions(getRobotFrames().frames, pixelSize);
@@ -72,7 +78,12 @@ export function enemyFactory(enemy: Enemies): BaseEnemy[] {
                 return new RobotEnemy(lc.color, FrameTimes.robot, locationProvider, frameProvider, getExplosion02, getRobotFrames);
             });
 
-            return enemies;
+            const bulletRunner = new BulletRunner(CGAColors.lightRed, Speeds.Bullets.robot, firstEnemyOccasionalDown);
+
+            return {
+                enemies,
+                bulletRunner,
+            };
         }
         case "orb": {
             const { width, height } = getMaximumFrameDimensions(getOrbFrames().frames, pixelSize);
@@ -84,7 +95,12 @@ export function enemyFactory(enemy: Enemies): BaseEnemy[] {
                 return new OrbEnemy(FrameTimes.orb, locationProvider, frameProvider, getExplosion02, getOrbFrames);
             });
 
-            return enemies;
+            const bulletRunner = new BulletRunner(CGAColors.magenta, Speeds.Bullets.orb, maxFiveDiagonal);
+
+            return {
+                enemies,
+                bulletRunner
+            };
         }
 
         case "spinner": {
@@ -103,8 +119,12 @@ export function enemyFactory(enemy: Enemies): BaseEnemy[] {
                 return new SpinnerEnemy(FrameTimes.spinner, locationProvider, frameProvider, getExplosion01, getSpinnerFrames);
             });
 
-            return enemies;
+            const bulletRunner = new BulletRunner(CGAColors.white, Speeds.Bullets.spinner, maxFiveDiagonal);
 
+            return {
+                enemies,
+                bulletRunner,
+            };
         }
 
         case "balloon": {
@@ -119,7 +139,9 @@ export function enemyFactory(enemy: Enemies): BaseEnemy[] {
                 return new BalloonEnemy(FrameTimes.spinner, locationProvider, frameProvider, getExplosion01, getBalloonFrames);
             });
 
-            return enemies;
+            return {
+                enemies
+            };
         }
 
         default:

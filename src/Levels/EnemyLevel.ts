@@ -8,7 +8,7 @@ import GameLoop from "../GameLoop";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
-import { enemyFactory } from "../Factories/EnemyFactory";
+import { enemyLevelContentFactory } from "../Providers/EnemyLevelContentProvider";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { resetLevelState } from "../State/EnemyLevel/EnemyLevelActions";
 import { addPhaser, nextLevel } from "../State/Game/GameActions";
@@ -52,7 +52,7 @@ export default class EnemyLevel implements ILevel {
      */
     public begin(): void {
 
-        const enemies = enemyFactory(this.enemy);
+        const { enemies, bulletRunner } = enemyLevelContentFactory(this.enemy);
 
         const {
             gameState
@@ -74,9 +74,9 @@ export default class EnemyLevel implements ILevel {
             // Register the stateManager so it can act on state changes in the level.
             this.registerSubscription(GameLoop.registerUpdateState(EnemyLevelRunner.run));
 
-            // if (bulletRunner !== undefined) {
-            //     this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletRunner.updateState(tick)));
-            // }
+            if (bulletRunner !== undefined) {
+                this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletRunner.updateState(tick)));
+            }
 
             // Add the enemies to the enemy level runner. The registered stateManager will take it from here.
             EnemyLevelRunner.setEnemies(enemies);
