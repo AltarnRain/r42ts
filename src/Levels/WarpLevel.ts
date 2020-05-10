@@ -47,10 +47,6 @@ const {
 // Always start a warp game using this left so we ensure the player is aligned perfectly.
 const warpGateInitialleft = fullGameWidth / 2 - (16 * pixelSize) / 2;
 
-// A constants used to check if the player's movement limimt is set to the right value for this level.
-// Can be used to debug by setting it to NONE.
-const movementLimit: MoveLimits = "none";
-
 export default class WarpLevel implements ILevel {
 
     /**
@@ -61,7 +57,7 @@ export default class WarpLevel implements ILevel {
     /**
      * Start the level. Required by contract.
      */
-    public start(): void {
+    public begin(): void {
         dispatch(setPlayerMovementLimit("immobile"));
 
         const spawnLocation = getShipSpawnLocation();

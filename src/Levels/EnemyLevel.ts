@@ -8,16 +8,15 @@ import GameLoop from "../GameLoop";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
-import BulletRunner from "../Runners/BulletRunner";
+import { enemyProvider } from "../Factories/EnemyFactory";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
-import { resetLevelState, setFireInterval } from "../State/EnemyLevel/EnemyLevelActions";
+import { resetLevelState } from "../State/EnemyLevel/EnemyLevelActions";
 import { addPhaser, nextLevel } from "../State/Game/GameActions";
 import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
-import { appState, appStore, dispatch } from "../State/Store";
-import { TickFunction } from "../Types";
-import BaseEnemy from "./BaseEnemy";
+import { appState, dispatch } from "../State/Store";
+import { Enemies } from "../Types";
 
-export default abstract class BaseEnemyLevel implements ILevel {
+export default class EnemyLevel implements ILevel {
 
     /**
      * Array of subscriptions registered in the GameLoop. Disposed when the level is disposed.
@@ -25,33 +24,19 @@ export default abstract class BaseEnemyLevel implements ILevel {
     private subscriptions: Array<() => void> = [];
 
     /**
-     * A function that will handle this level's state.
-     */
-    protected stateManager: TickFunction;
-
-    /**
      * Function passed from the outside that checks if a level is won.
      */
     private monitorLevelWon: () => boolean;
+    private enemy: Enemies;
 
     /**
      * Constructs the base level
      * @param {TickFunction} stateManager. A function that will handle the state for the level.
      * @param {() => boolean} monitorLevelWon. A function that checks fort he win condition of a level.
      */
-    constructor(stateManager: TickFunction, monitorLevelWon: () => boolean) {
-        this.stateManager = stateManager;
+    constructor(enemy: Enemies, monitorLevelWon: () => boolean) {
         this.monitorLevelWon = monitorLevelWon;
-    }
-
-    /**
-     * Start the level
-     */
-    public start(): void {
-        dispatch(setPlayerMovementLimit("immobile"));
-
-        // Register the background draw function so it runs in the game loop.
-        this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
+        this.enemy = enemy;
     }
 
     /**
@@ -65,11 +50,18 @@ export default abstract class BaseEnemyLevel implements ILevel {
     /**
      * Begin this level. Call from start.
      */
-    protected begin(enemies: BaseEnemy[], fireInterval?: number, bulletRunner?: BulletRunner): void {
+    public begin(): void {
+
+        const enemies = enemyProvider(this.enemy);
 
         const {
             gameState
         } = appState();
+
+        dispatch(setPlayerMovementLimit("immobile"));
+
+        // Register the background draw function so it runs in the game loop.
+        this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
 
         // Draw the level banner to show which round we're at.
         let level = 0;
@@ -80,16 +72,11 @@ export default abstract class BaseEnemyLevel implements ILevel {
         // Draw the level banner, then start the level.
         drawLevelBanner(level, () => {
             // Register the stateManager so it can act on state changes in the level.
-            this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));
+            this.registerSubscription(GameLoop.registerUpdateState(EnemyLevelRunner.run));
 
-            if (bulletRunner !== undefined) {
-                this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletRunner.updateState(tick)));
-            }
-
-            // Set the fire interval of enemies in the current state
-            if (fireInterval !== undefined) {
-                dispatch(setFireInterval(fireInterval));
-            }
+            // if (bulletRunner !== undefined) {
+            //     this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletRunner.updateState(tick)));
+            // }
 
             // Add the enemies to the enemy level runner. The registered stateManager will take it from here.
             EnemyLevelRunner.setEnemies(enemies);

@@ -87,5 +87,6 @@ function initState(): EnemyLevelState {
         bullets: [],
         totalNumberOfEnemies: 0,
         enemies: [],
+        bulletData: undefined,
     };
 }

@@ -126,14 +126,6 @@ export default abstract class BaseEnemy {
     }
 
     /**
-     * Returns the explosion asset.
-     * @returns {Explosion}. An explosion asset.
-     */
-    public getExplosion(): Explosion {
-        return this.explosion;
-    }
-
-    /**
      * getId
      * @returns {number}
      * @memberof BaseEnemy

@@ -45,7 +45,7 @@ export default function subscribeToStoreChanges(): void {
             currentLevel = levelFactory(levelNumber);
 
             if (currentLevel !== undefined) {
-                currentLevel.start();
+                currentLevel.begin();
             }
         }
 

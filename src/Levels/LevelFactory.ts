@@ -10,14 +10,9 @@
  */
 
 import ILevel from "../Interfaces/ILevel";
-import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { setWarpGamteComplexity } from "../State/Game/GameActions";
 import { appState, dispatch } from "../State/Store";
-import Level01 from "./Level01";
-import Level02 from "./Level02";
-import { Level03 } from "./Level03";
-import { Level05 } from "./Level05";
-import { Level06 } from "./Level06";
+import EnemyLevel from "./EnemyLevel";
 import WarpLevel from "./WarpLevel";
 
 /**
@@ -31,20 +26,20 @@ export function levelFactory(level: number): ILevel {
             // Test level
             return new WarpLevel();
         case 1:
-            return new Level01(EnemyLevelRunner.run, clearedEnemies);
+            return new EnemyLevel("bird", clearedEnemies);
         case 2:
-            return new Level02(EnemyLevelRunner.run, clearedEnemies);
+            return new EnemyLevel("robot", clearedEnemies);
         case 3:
-            return new Level03(EnemyLevelRunner.run, clearedEnemies);
+            return new EnemyLevel("orb", clearedEnemies);
         case 4:
             dispatch(setWarpGamteComplexity(0));
             return new WarpLevel();
         case 5:
-            return new Level05(EnemyLevelRunner.run, clearedEnemies);
+            return new EnemyLevel("spinner", clearedEnemies);
         case 6:
-            return new Level06(EnemyLevelRunner.run, clearedEnemies);
+            return new EnemyLevel("balloon", clearedEnemies);
         default:
-            return new Level01(EnemyLevelRunner.run, never);
+            return new EnemyLevel("bird", clearedEnemies);
     }
 }
 
@@ -58,13 +53,5 @@ function clearedEnemies(): boolean {
         return true;
     }
 
-    return false;
-}
-
-/**
- * Used for debugging in level 00.
- * @returns {boolean}. Always false.
- */
-function never(): boolean {
     return false;
 }
