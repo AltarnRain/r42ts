@@ -32,7 +32,12 @@ export default function dimensionProvider(): GameDimensions {
             rect = body.getBoundingClientRect();
         }
 
-        const pixelSize = Math.floor(rect.height / 100);
+        let pixelSize = 0;
+        if (rect.width < rect.height) {
+            pixelSize = Math.floor(rect.width / 160);
+        } else {
+            pixelSize = Math.floor(rect.height / 100);
+        }
 
         const fullGameHeight = pixelSize * 100;
         const fullGameWidth = pixelSize * 160;
