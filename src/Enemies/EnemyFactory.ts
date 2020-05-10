@@ -5,13 +5,14 @@
  */
 
 import BaseEnemy from "../Base/BaseEnemy";
-import { FrameTimes, Speeds, Locations } from "../Constants/Constants";
-import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUpLocaionProvider";
-import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDownLocationProvider";
-import VanishRightAppearLeftLocationProvider from "../LocationProviders/VanishRightAppearLeftLocationProvider";
-import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
-import CircleFrameProvider from "../Providers/CircleFrameProvider";
+import { FrameTimes, Locations, Speeds } from "../Constants/Constants";
 import dimensionProvider from "../Providers/DimensionProvider";
+import BackAndForthFrameProvider from "../Providers/FrameProviders/BackAndForthFrameProvider";
+import CircleFrameProvider from "../Providers/FrameProviders/CircleFrameProvider";
+import ImmobileLocationProvider from "../Providers/LocationProviders/ImmobileLocationProvider";
+import MoveDownAppearUp from "../Providers/LocationProviders/MoveDownAppearUpLocaionProvider";
+import SideToSideUpAndDown from "../Providers/LocationProviders/SideToSideUpAndDownLocationProvider";
+import VanishRightAppearLeftLocationProvider from "../Providers/LocationProviders/VanishRightAppearLeftLocationProvider";
 import getExplosion01 from "../SharedFrames/Explosion01";
 import { getExplosion02 } from "../SharedFrames/Explosion02";
 import { Enemies } from "../Types";
@@ -23,7 +24,6 @@ import getOrbFrames from "./Orb/OrbFrames";
 import RobotEnemy from "./Robot/RobotEnemy";
 import getRobotFrames from "./Robot/RobotFrames";
 import SpinnerEnemy from "./Spinner/SpinnerEnemy";
-import ImmobileLocationProvider from "../LocationProviders/ImmobileLocationProvider";
 import { getSpinnerFrames } from "./Spinner/SpinnerFrames";
 
 /**

@@ -4,9 +4,9 @@
  * See LICENSE.MD.
  */
 
-import { angles } from "../Constants/Angles";
-import ShipToFire from "../ShipsToFire";
-import { appState } from "../State/Store";
+import { angles } from "../../Constants/Angles";
+import ShipToFire from "../../ShipsToFire";
+import { appState } from "../../State/Store";
 
 /**
  * Module:          firstEnemyOccasionalDown

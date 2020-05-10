@@ -4,8 +4,8 @@
  * See LICENSE.MD.
  */
 
-import ILocationProvider from "../Interfaces/ILocationProvider";
-import { GameLocation } from "../Models/GameLocation";
+import ILocationProvider from "../../Interfaces/ILocationProvider";
+import { GameLocation } from "../../Models/GameLocation";
 
 /**
  * Module:          Immobile

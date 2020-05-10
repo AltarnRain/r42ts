@@ -4,11 +4,11 @@
  * See LICENSE.MD.
  */
 
-import BulletRunner from "../BulletProviders/BulletRunner";
 import GameLoop from "../GameLoop";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
+import BulletRunner from "../Runners/BulletRunner";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { resetLevelState, setFireInterval } from "../State/EnemyLevel/EnemyLevelActions";
 import { addPhaser, nextLevel } from "../State/Game/GameActions";

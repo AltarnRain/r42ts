@@ -5,14 +5,14 @@
  */
 
 import BaseEnemyLevel from "../Base/BaseEnemyLevel";
-import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
 import { MovementAngles, Speeds } from "../Constants/Constants";
 import { orbFireFrequence } from "../Constants/FireFrequences";
 import { enemyFactory } from "../Enemies/EnemyFactory";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
+import maxFiveDiagonal from "../Providers/ShipsToFireProviders/MaxFiveDiagonal";
+import BulletRunner from "../Runners/BulletRunner";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
 
 /**
  * Module:          Level03

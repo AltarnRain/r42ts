@@ -5,14 +5,14 @@
  */
 
 import BaseEnemyLevel from "../Base/BaseEnemyLevel";
-import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
 import { MovementAngles, Speeds } from "../Constants/Constants";
 import { robotFireFrequence } from "../Constants/FireFrequences";
 import { enemyFactory } from "../Enemies/EnemyFactory";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
+import firstEnemyOccasionalDown from "../Providers/ShipsToFireProviders/FirstEnemyOccasionalDown";
+import BulletRunner from "../Runners/BulletRunner";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import firstEnemyOccasionalDown from "../ShipsToFireProviders/FirstEnemyOccasionalDown";
 
 /**
  * Module:          Level 02

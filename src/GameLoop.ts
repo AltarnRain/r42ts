@@ -4,9 +4,9 @@
  * See LICENSE.MD.
  */
 
-import { DEBUGGING_renderHitboxes, DEBUGGING_drawGrid } from "./Debugging/Debugging";
-import { TickFunction } from "./Types";
+import { DEBUGGING_drawGrid, DEBUGGING_renderHitboxes } from "./Debugging/Debugging";
 import { appState } from "./State/Store";
+import { TickFunction } from "./Types";
 
 /**
  * Module:          GameLoop

@@ -4,11 +4,11 @@
  * See LICENSE.MD.
  */
 
+import { Locations } from "../../Constants/Constants";
 import { GameLocation } from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { getFrameDimensions } from "../../Utility/Frame";
 import getOrbFrames from "./OrbFrames";
-import { Locations } from "../../Constants/Constants";
 
 /**
  * Module:          RobotSpawnLocations

@@ -4,9 +4,9 @@
  * See LICENSE.MD.
  */
 
-import ILocationProvider from "../Interfaces/ILocationProvider";
-import { GameLocation } from "../Models/GameLocation";
-import { getLocation } from "../Utility/Location";
+import ILocationProvider from "../../Interfaces/ILocationProvider";
+import { GameLocation } from "../../Models/GameLocation";
+import { getLocation } from "../../Utility/Location";
 
 /**
  * Module:          Accelerating

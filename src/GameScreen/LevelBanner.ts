@@ -5,15 +5,15 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
-import ctxProvider from "../Providers/CtxProvider";
+import GameLoop from "../GameLoop";
 import dimensionProvider from "../Providers/DimensionProvider";
+import ctxProvider from "../Providers/Render/CtxProvider";
 import renderFrame from "../Render/RenderFrame";
 import getCharacters from "../SharedFrames/Characters";
 import getNumbers from "../SharedFrames/Numbers";
 import { Frame } from "../Types";
 import { getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
 import getCharacter from "../Utility/getCharacter";
-import GameLoop from "../GameLoop";
 
 /**
  * Module:          LevelBanner

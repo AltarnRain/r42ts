@@ -4,8 +4,8 @@
  * See LICENSE.MD.
  */
 
-import IFrameProvider from "../Base/BaseFrameProvider";
-import { Frame } from "../Types";
+import IFrameProvider from "../../Base/BaseFrameProvider";
+import { Frame } from "../../Types";
 
 /**
  * Module:          FrameProvider

@@ -5,7 +5,7 @@
  */
 
 import "jest";
-import BackAndForthFrameProvider from "../Providers/BackAndForthFrameProvider";
+import BackAndForthFrameProvider from "../Providers/FrameProviders/BackAndForthFrameProvider";
 import { Frames } from "../Types";
 
 /**

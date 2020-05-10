@@ -6,6 +6,7 @@
 
 import { angles } from "../Constants/Angles";
 import CGAColors from "../Constants/CGAColors";
+import { Speeds } from "../Constants/Constants";
 import GameLoop from "../GameLoop";
 import { playerMovementHandler } from "../Handlers/PlayerMovementHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
@@ -17,7 +18,6 @@ import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { getFrameHitbox } from "../Utility/Frame";
 import { fallsWithinGameField, getLocation } from "../Utility/Location";
-import { Speeds } from "../Constants/Constants";
 
 /**
  * Module:          PlayerRunner

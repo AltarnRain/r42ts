@@ -6,8 +6,8 @@
 
 import CGAColors from "../Constants/CGAColors";
 import { getPlayerFrame } from "../Player/PlayerFrames";
-import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
+import ctxProvider from "../Providers/Render/CtxProvider";
 import renderFrame from "../Render/RenderFrame";
 import getNumbers from "../SharedFrames/Numbers";
 import { appState } from "../State/Store";

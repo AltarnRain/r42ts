@@ -9,13 +9,13 @@
  * Responsibility:  Provides 5 enemies to fire.
  */
 
-import { angles } from "../Constants/Angles";
-import Guard from "../Guard";
-import ShipToFire from "../ShipsToFire";
-import { EnemyState } from "../State/EnemyLevel/EnemyState";
-import { appState } from "../State/Store";
-import { Angle } from "../Types";
-import { calculateAngle, calculateAngleDifference } from "../Utility/Geometry";
+import { angles } from "../../Constants/Angles";
+import Guard from "../../Guard";
+import ShipToFire from "../../ShipsToFire";
+import { EnemyState } from "../../State/EnemyLevel/EnemyState";
+import { appState } from "../../State/Store";
+import { Angle } from "../../Types";
+import { calculateAngle, calculateAngleDifference } from "../../Utility/Geometry";
 
 const maxBullets = 5;
 

@@ -8,8 +8,8 @@
 import CGAColors from "../Constants/CGAColors";
 import WarpLevelConstants from "../Constants/WarpLevelConstants";
 import { GameRectangle } from "../Models/GameRectangle";
-import ctxProvider from "../Providers/CtxProvider";
 import dimensionProvider from "../Providers/DimensionProvider";
+import ctxProvider from "../Providers/Render/CtxProvider";
 
 /**
  * Module:          StaticRenders

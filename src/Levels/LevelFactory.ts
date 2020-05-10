@@ -16,8 +16,8 @@ import { appState, dispatch } from "../State/Store";
 import Level01 from "./Level01";
 import Level02 from "./Level02";
 import { Level03 } from "./Level03";
-import WarpLevel from "./WarpLevel";
 import { Level05 } from "./Level05";
+import WarpLevel from "./WarpLevel";
 
 /**
  * LevelFactory. Provides level objects

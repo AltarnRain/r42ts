@@ -5,14 +5,14 @@
  */
 
 import BaseEnemyLevel from "../Base/BaseEnemyLevel";
-import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
 import { MovementAngles, Speeds } from "../Constants/Constants";
 import { orbFireFrequence } from "../Constants/FireFrequences";
 import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
 import { enemyFactory } from "../Enemies/EnemyFactory";
+import maxFiveDiagonal from "../Providers/ShipsToFireProviders/MaxFiveDiagonal";
+import BulletRunner from "../Runners/BulletRunner";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
 
 /**
  * Module:          Level05

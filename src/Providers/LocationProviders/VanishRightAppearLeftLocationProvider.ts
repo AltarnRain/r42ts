@@ -4,10 +4,10 @@
  * See LICENSE.MD.
  */
 
-import BaseLocationProvider from "../Base/BaseLocationProvider";
-import ILocationProvider from "../Interfaces/ILocationProvider";
-import dimensionProvider from "../Providers/DimensionProvider";
-import { getLocation } from "../Utility/Location";
+import BaseLocationProvider from "../../Base/BaseLocationProvider";
+import ILocationProvider from "../../Interfaces/ILocationProvider";
+import { getLocation } from "../../Utility/Location";
+import dimensionProvider from "../DimensionProvider";
 
 /**
  * Module:          Left to right, then left.
