@@ -17,23 +17,21 @@ import { getLocation } from "../Utility/Location";
  */
 
 const {
-    pixelSize,
     gameField
 } = dimensionProvider();
 
 export default class MoveDownAppearUpLocationProvider extends BaseLocationProvider implements ILocationProvider {
-    /**
-     * The limit to how far the enemy will travel before its position is set to the top position.
-     */
-    private bottomLimit: number;
+    private maxTop: number;
+    private maxBottom: number;
 
     /**
      * Constructs the immobile location provider.
      */
-    constructor(gamePixelsFromBottom: number, left: number, top: number, speed: number, angle: number, width: number, height: number) {
+    constructor(left: number, top: number, speed: number, angle: number, width: number, height: number, maxTop: number, maxBottom: number) {
         super(left, top, speed, angle, width, height);
 
-        this.bottomLimit = gamePixelsFromBottom * pixelSize;
+        this.maxTop = maxTop;
+        this.maxBottom = maxBottom;
     }
 
     /**
@@ -41,8 +39,8 @@ export default class MoveDownAppearUpLocationProvider extends BaseLocationProvid
      */
     public getCurrentLocation(): GameLocation {
 
-        if (this.top + this.height > this.bottomLimit) {
-            this.top = gameField.top + this.height;
+        if (this.top + this.height > this.maxBottom) {
+            this.top = this.maxTop;
         }
 
         return getLocation(this.left, this.top, this.angle, this.speed);
