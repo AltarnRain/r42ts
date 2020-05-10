@@ -82,7 +82,7 @@ export function drawWarpBackground(additionalColor: string, gate: GameRectangle[
         left += pixelSize;
     }
 
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = "black";
 
     gate.forEach((r) => ctx.fillRect(r.left, r.top, r.right - r.left, r.bottom - r.top));
 }

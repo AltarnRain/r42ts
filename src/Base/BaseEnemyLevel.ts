@@ -35,18 +35,6 @@ export default abstract class BaseEnemyLevel implements ILevel {
     private monitorLevelWon: () => boolean;
 
     /**
-     * Subscribe to the store and dispatch the level appropriate movement restriction to the player
-     * When the player is alive and their movement limit is not set to None.
-     */
-    private storeSub = appStore().subscribe(() => {
-        const { playerState } = appState();
-
-        if (playerState.alive && playerState.moveLimit !== "none") {
-            dispatch(setPlayerMovementLimit("none"));
-        }
-    });
-
-    /**
      * Constructs the base level
      * @param {TickFunction} stateManager. A function that will handle the state for the level.
      * @param {() => boolean} monitorLevelWon. A function that checks fort he win condition of a level.
@@ -121,7 +109,6 @@ export default abstract class BaseEnemyLevel implements ILevel {
         // The subscription array contains functions that remove themselves
         // from the GameLoop. Call all of them to remove them from the GameLoop.
         this.subscriptions.forEach((s) => s());
-        this.storeSub();
     }
 
     /**

@@ -41,7 +41,7 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, angle: n
             const birdFrames = getBirdFrames().frames;
             const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(birdFrames));
             const { width, height } = getMaximumFrameDimensions(birdFrames, pixelSize);
-            const locationProvider = new SideToSideUpAndDown(left, top, 0, angle, width, height, gameField.top, gameField.bottom);
+            const locationProvider = new SideToSideUpAndDown(left, top, Speeds.Movement.bird, angle, width, height, gameField.top, gameField.bottom);
             return new BirdEnemy(FrameTimes.bird, locationProvider, frameProvider, getExplosion01, getBirdFrames);
         }
         case "robot": {

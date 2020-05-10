@@ -44,6 +44,8 @@ let formationSpeed: "slow" | "fast";
 
 let formationInProgress = false;
 
+let currentMovementLimit: MoveLimits = "none";
+
 /**
  * playerSpawnManager. Once register in the GameLoop this function will check
  * the state if the player can and show respawn.
@@ -54,11 +56,11 @@ export default function playerSpawnManager(): void {
     if (!playerState.alive && formationInProgress === false && shrapnells.length === 0) {
         if (enemies.length > 0) { // Enemies in the level
             if (bullets.length === 0) { // wait till there's no particles.
-                setupFormation("slow", "sideways"); // Start the slow formation where the player has control.
+                setup("slow", "sideways"); // Start the slow formation where the player has control.
             }
         } else {
             // No enemies, fast formation
-            setupFormation("fast", "immobile");
+            setup("fast", "immobile");
         }
     }
 
@@ -126,8 +128,12 @@ function createParticles(): void {
  * @param {"fast" | "slow"} speed. Speed of the player formation.
  * @param {MoveLimits} limit. Movement limit impaired on the player while the ship is forming.
  */
-function setupFormation(speed: "fast" | "slow", limit: MoveLimits): void {
+function setup(speed: "fast" | "slow", limit: MoveLimits): void {
     formationSpeed = speed;
+
+    // Store the current movement limit so we can restore it once the player has formed.
+    currentMovementLimit = appState().playerState.moveLimit;
+
     const  {left, top }  = getPlayerSpawnLocation();
     dispatch(setPlayerLocationData(left, top));
     createParticles();
@@ -162,6 +168,7 @@ function updateState(): void {
 
     if (allMovingParts.every((p) => p.traveling() === false)) {
         dispatch(setPlayerIsAlive(true));
+        dispatch(setPlayerMovementLimit(currentMovementLimit));
         allMovingParts = [];
         formationInProgress = false;
     }

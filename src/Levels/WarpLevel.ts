@@ -14,9 +14,10 @@ import Guard from "../Guard";
 import ILevel from "../Interfaces/ILevel";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
+import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { addPhaser, nextLevel } from "../State/Game/GameActions";
-import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
-import { appState, appStore, dispatch } from "../State/Store";
+import { setPlayerLocationData, setPlayerMovementLimit } from "../State/Player/PlayerActions";
+import { appState, dispatch } from "../State/Store";
 import { handlePlayerDeath } from "../StateHandlers/HandlePlayerDeath";
 import { MoveLimits } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
@@ -58,28 +59,10 @@ export default class WarpLevel implements ILevel {
     private gameLoopSubscriptions: Array<(tick?: number) => void> = [];
 
     /**
-     * Store the movement restriction to force up
-     */
-    private storeSub = appStore().subscribe(() => {
-        const { playerState } = appState();
-
-        // Check when the player is alive and set its movement limit to force up to force
-        // the player to traverse the warp level.
-        // I'm doing this in a subscription because the PlayerSpawnManager will
-        // set a movement limit on the player depending on the game state.
-        if (playerState.alive && playerState.moveLimit !== movementLimit) {
-
-            // use a constant to check if the movement limit is set to the expected value.
-            // if this check goes wrong you get a stack overflow exception because redux is
-            // bombarded with dispatches.
-            dispatch(setPlayerMovementLimit(movementLimit));
-        }
-    });
-
-    /**
      * Start the level. Required by contract.
      */
     public start(): void {
+        dispatch(setPlayerMovementLimit("immobile"));
 
         // Register the background draw function so it runs in the game loop.
         this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(drawBackground));
@@ -110,6 +93,7 @@ export default class WarpLevel implements ILevel {
             // trigger progression to the next level.
             this.gameLoopSubscriptions.push(GameLoop.registerUpdateState((tick) => this.hitDetection(tick, badSpace)));
 
+            dispatch(setPlayerMovementLimit("forceup"));
         });
     }
 
@@ -163,11 +147,10 @@ export default class WarpLevel implements ILevel {
             }
         }
 
-        // Uncomment code below to render wall hitboxes.
         if (debuggingState.drawHitboxes) {
             badSpace.forEach((bs) => {
-                DEBUGGING_drawGameRect(bs.left, "red");
-                DEBUGGING_drawGameRect(bs.right, "red");
+                GameLoop.registerBackgroundDrawing(() => DEBUGGING_drawGameRect(bs.left, "red"));
+                GameLoop.registerBackgroundDrawing(() => DEBUGGING_drawGameRect(bs.right, "red"));
             });
         }
     }
@@ -260,14 +243,13 @@ export default class WarpLevel implements ILevel {
         } = appState();
 
         if (top < gameField.top + pixelSize * 3) {
-            dispatch(setPlayerMovementLimit("immobile"));
             dispatch(addPhaser());
 
-            // Wait for a moment before proceeding to the next level.
-            window.setTimeout(() => {
-                // Move to the next level.
-                dispatch(nextLevel());
-            }, 1000);
+            // Move to the next level.
+            dispatch(nextLevel());
+
+            const spanwLocation = getShipSpawnLocation();
+            dispatch(setPlayerLocationData(spanwLocation.left, spanwLocation.top));
         }
     }
 
@@ -277,6 +259,5 @@ export default class WarpLevel implements ILevel {
     public dispose(): void {
         // Dispose all game loop subscriptions.
         this.gameLoopSubscriptions.forEach((s) => s());
-        this.storeSub();
     }
 }

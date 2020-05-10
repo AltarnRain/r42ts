@@ -40,7 +40,6 @@ export function levelFactory(level: number): ILevel {
             return new WarpLevel();
         case 5:
             return new Level05(EnemyLevelRunner.run, clearedEnemies);
-            break;
         default:
             return new Level01(EnemyLevelRunner.run, never);
     }
