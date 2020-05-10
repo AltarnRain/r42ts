@@ -25,7 +25,6 @@ export namespace Speeds {
         export const robot = 1.5;
 
         export const orb = 0.1;
-
     }
 
     export namespace Bullets {
@@ -41,7 +40,14 @@ export namespace Locations {
 
         export namespace robot {
             export const topStart = gameField.top + gameField.height / 7;
-            export const maxTop = gameField.height * 1 / 10;
+            export const maxTop = gameField.top + gameField.height * 0.1;
+            export const maxBottom = gameField.top + gameField.height * 0.2;
+
+        }
+
+        export namespace Orb {
+            export const topStart = gameField.top + gameField.height / 4;
+            export const maxTop = gameField.top + gameField.height * 1 / 10;
             export const maxBottom = gameField.top + (gameField.height * 2 / 3);
         }
     }
