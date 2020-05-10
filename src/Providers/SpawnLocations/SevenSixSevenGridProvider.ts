@@ -8,42 +8,54 @@ import { GameLocation } from "../../Models/GameLocation";
 import dimensionProvider from "../DimensionProvider";
 
 /**
- * Module:          BirdSpawnLocations
- * Responsibility:  Define the spawn locations for the BirdEnemy.
+ * Module:          Provides the locations for enemies that start in a grid of 7 / 6 / 7
  */
-
-const firstAndThirdRowLeftStart = 20;
-const secondRowLeftStart = 30;
-const spacing = 20;
-const birdSpawnLocations: GameLocation[] = [];
 
 const {
     pixelSize,
     gameField,
 } = dimensionProvider();
 
-// Top row birds.
-for (let i = 0; i < 7; i++) {
-    birdSpawnLocations.push({
-        left: (firstAndThirdRowLeftStart * pixelSize) + spacing * i * pixelSize,
-        top: gameField.top + pixelSize * 5,
-    });
-}
+const topStart = pixelSize * 9;
+const verticalSpacing = pixelSize * 8;
 
-// Second row birds.
-for (let i = 0; i < 6; i++) {
-    birdSpawnLocations.push({
-        left: (secondRowLeftStart * pixelSize) + spacing * i * pixelSize,
-        top: gameField.top + pixelSize * 15,
-    });
-}
+export const firstAndThirdRowLeftStart = 30;
+export const secondRowLeftStart = 40;
+export const firstAndSecondRowSpacing = 16;
+export const secondRowSpacing = 16;
 
-// Third row birds.
-for (let i = 0; i < 7; i++) {
-    birdSpawnLocations.push({
-        left: (firstAndThirdRowLeftStart * pixelSize) + spacing * i * pixelSize,
-        top: gameField.top + pixelSize * 25,
-    });
-}
+export default function sevenSixSeverGridProvider(): GameLocation[] {
+    const returnValue: GameLocation[] = [];
 
-export default birdSpawnLocations;
+    let top = topStart;
+
+    // Top row.
+    for (let i = 0; i < 7; i++) {
+        returnValue.push({
+            left: (firstAndThirdRowLeftStart * pixelSize) + firstAndSecondRowSpacing * i * pixelSize,
+            top: gameField.top + top,
+        });
+    }
+
+    top += verticalSpacing;
+
+    // Second.
+    for (let i = 0; i < 6; i++) {
+        returnValue.push({
+            left: (secondRowLeftStart * pixelSize) + secondRowSpacing * i * pixelSize,
+            top: gameField.top + top,
+        });
+    }
+
+    top += verticalSpacing;
+
+    // Third row
+    for (let i = 0; i < 7; i++) {
+        returnValue.push({
+            left: (firstAndThirdRowLeftStart * pixelSize) + firstAndSecondRowSpacing * i * pixelSize,
+            top: gameField.top + top,
+        });
+    }
+
+    return returnValue;
+}

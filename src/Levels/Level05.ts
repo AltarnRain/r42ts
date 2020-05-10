@@ -8,9 +8,9 @@ import BaseEnemyLevel from "../Base/BaseEnemyLevel";
 import CGAColors from "../Constants/CGAColors";
 import { MovementAngles, Speeds } from "../Constants/Constants";
 import { orbFireFrequence } from "../Constants/FireFrequences";
-import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
 import { enemyFactory } from "../Enemies/EnemyFactory";
 import maxFiveDiagonal from "../Providers/ShipsToFireProviders/MaxFiveDiagonal";
+import sevenSixSeverGridProvider from "../Providers/SpawnLocations/SevenSixSevenGridProvider";
 import BulletRunner from "../Runners/BulletRunner";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 
@@ -23,7 +23,7 @@ export class Level05 extends BaseEnemyLevel {
 
     public start(): void {
         super.start();
-        const enemies = birdSpawnLocations.map((location) => {
+        const enemies = sevenSixSeverGridProvider().map((location) => {
             return enemyFactory("spinner", location.left, location.top, MovementAngles.orb);
         });
 
