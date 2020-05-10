@@ -42,9 +42,10 @@ export namespace Speeds {
 export namespace Locations {
     export namespace Enemies {
 
+        // All locations were determined by drawing a grid over screenshot.
         export namespace robot {
-            export const topStart = gameField.top + gameField.height / 7;
-            export const maxBottom = gameField.top + gameField.height * 0.6;
+            export const topStart = gameField.top + pixelSize * 18;
+            export const maxBottom = gameField.top + pixelSize * 65;
         }
 
         export namespace Orb {
