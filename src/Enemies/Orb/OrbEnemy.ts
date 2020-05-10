@@ -7,9 +7,12 @@
 import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import CGAColors from "../../Constants/CGAColors";
+import { Locations } from "../../Constants/Constants";
 import TickHandler from "../../Handlers/TickHandler";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
+import dimensionProvider from "../../Providers/DimensionProvider";
 import { ExplosionProviderFunction, Frame, OffsetFramesProviderFunction } from "../../Types";
+import { getFrameDimensions } from "../../Utility/Frame";
 import Mutators from "../../Utility/FrameMutators";
 
 /**
@@ -22,6 +25,10 @@ const colors: string[][] = [
     [CGAColors.lightBlue, CGAColors.white],
     [CGAColors.white, CGAColors.brown],
 ];
+
+const {
+    gameField
+} = dimensionProvider();
 
 export default class OrbEnemy extends BaseEnemy {
     /**
@@ -97,6 +104,20 @@ export default class OrbEnemy extends BaseEnemy {
         super.updateState(tick);
 
         this.colorTickHandler.tick(tick);
+
+        if (this.currentFrame) {
+            const { height } = getFrameDimensions(this.currentFrame);
+            const { top } = this.locationProvider.getCurrentLocation();
+            const offset = top - this.offsetTop;
+
+            if (this.offsetTop < gameField.top) {
+                this.offsetTop = Locations.Enemies.Orb.maxBottom - offset;
+            } else if (this.offsetTop + height > Locations.Enemies.Orb.maxBottom) {
+                this.offsetTop = gameField.top + offset;
+            }
+        }
+
+        this.dispatchCurrentState();
     }
 
     /**

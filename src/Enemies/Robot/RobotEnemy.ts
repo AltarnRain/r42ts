@@ -41,6 +41,12 @@ export default class RobotEnemy extends BaseEnemy {
         this.onFrameChange();
     }
 
+    public updateState(tick: number): void {
+        super.updateState(tick);
+
+        this.dispatchCurrentState();
+    }
+
     /**
      * Called when a frame change is required. The robot frames are all colored at initialisation so we can keep this simple.
      */

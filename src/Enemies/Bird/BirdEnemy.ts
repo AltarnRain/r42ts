@@ -60,6 +60,7 @@ export default class BirdEnemy extends BaseEnemy {
         super.updateState(tick);
 
         this.colorTickHandler.tick(tick);
+        this.dispatchCurrentState();
     }
 
     /**

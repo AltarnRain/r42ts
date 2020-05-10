@@ -70,7 +70,7 @@ export default abstract class BaseEnemy {
     /**
      * Top position offset for animation.
      */
-    private offsetTop: number;
+    protected offsetTop: number;
 
     /**
      * Current frame of the object
@@ -165,7 +165,9 @@ export default abstract class BaseEnemy {
         this.offsetTop = offsetLocation.top;
 
         this.locationProvider.updateState(tick);
+    }
 
+    protected dispatchCurrentState(): void {
         dispatch(addOrUpdateEnemy({
             enemyId: this.getId(),
             coloredExplosion: this.explosion,

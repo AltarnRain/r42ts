@@ -25,7 +25,7 @@ export default class MoveDownAppearUpLocationProvider extends BaseLocationProvid
     constructor(left: number, top: number, speed: number, angle: number, width: number, height: number, maxTop: number, maxBottom: number) {
         super(left, top, speed, angle, width, height);
 
-        this.maxTop = maxTop;
+        this.maxTop = 0;
         this.maxBottom = maxBottom;
     }
 
