@@ -30,7 +30,7 @@ export default class Level01 extends BaseEnemyLevel {
 
             // This may deviate from te original game but I do not care. Each birds will
             // begin to move in a random direction determined by the function below
-            const randomMovementAngle = getRandomArrayElement(MovementAngles.birdRandom);
+            const randomMovementAngle = getRandomArrayElement(MovementAngles.bird);
             return enemyFactory("bird", location.left, location.top, randomMovementAngle);
         });
 

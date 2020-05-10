@@ -25,6 +25,8 @@ export namespace Speeds {
         export const robot = 1.5;
 
         export const orb = 0.1;
+
+        export const spinner = 1.5;
     }
 
     export namespace Bullets {
@@ -55,11 +57,13 @@ export namespace Locations {
 
 // Collective namespace for all movement angles.
 export namespace MovementAngles {
-    export const birdRandom = [2, 358, 178, 182];
+    export const bird = [2, 358, 178, 182];
 
     export const robot = 5;
 
     export const orb = 90;
+
+    export const spinner = [2, 358, 178, 182];
 }
 
 // Collective namespace for all frametimes.
@@ -71,5 +75,5 @@ export namespace FrameTimes {
 
     export const orb = 200;
 
-    export const spinner = 200;
+    export const spinner = 100;
 }

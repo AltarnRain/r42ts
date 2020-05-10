@@ -13,6 +13,7 @@ import maxFiveDiagonal from "../Providers/ShipsToFireProviders/MaxFiveDiagonal";
 import sevenSixSeverGridProvider from "../Providers/SpawnLocations/SevenSixSevenGridProvider";
 import BulletRunner from "../Runners/BulletRunner";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
+import { getRandomArrayElement } from "../Utility/Array";
 
 /**
  * Module:          Level05
@@ -24,7 +25,8 @@ export class Level05 extends BaseEnemyLevel {
     public start(): void {
         super.start();
         const enemies = sevenSixSeverGridProvider().map((location) => {
-            return enemyFactory("spinner", location.left, location.top, MovementAngles.orb);
+            const randomAngle = getRandomArrayElement(MovementAngles.spinner);
+            return enemyFactory("spinner", location.left, location.top, randomAngle);
         });
 
         const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.white, Speeds.Bullets.spinner, maxFiveDiagonal);

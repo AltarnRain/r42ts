@@ -9,7 +9,6 @@ import { FrameTimes, Locations, Speeds } from "../Constants/Constants";
 import dimensionProvider from "../Providers/DimensionProvider";
 import BackAndForthFrameProvider from "../Providers/FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "../Providers/FrameProviders/CircleFrameProvider";
-import ImmobileLocationProvider from "../Providers/LocationProviders/ImmobileLocationProvider";
 import MoveDownAppearUp from "../Providers/LocationProviders/MoveDownAppearUpLocaionProvider";
 import SideToSideUpAndDown from "../Providers/LocationProviders/SideToSideUpAndDownLocationProvider";
 import VanishRightAppearLeftLocationProvider from "../Providers/LocationProviders/VanishRightAppearLeftLocationProvider";
@@ -39,9 +38,10 @@ const {
 export function enemyFactory(enemy: Enemies, left: number, top: number, angle: number, color?: string): BaseEnemy {
     switch (enemy) {
         case "bird": {
-            const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(getBirdFrames().frames));
-            const { width, height } = getMaximumFrameDimensions(getBirdFrames().frames, pixelSize);
-            const locationProvider = new SideToSideUpAndDown(left, top, 0, angle, width, height);
+            const birdFrames = getBirdFrames().frames;
+            const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(birdFrames));
+            const { width, height } = getMaximumFrameDimensions(birdFrames, pixelSize);
+            const locationProvider = new SideToSideUpAndDown(left, top, 0, angle, width, height, gameField.top, gameField.bottom);
             return new BirdEnemy(FrameTimes.bird, locationProvider, frameProvider, getExplosion01, getBirdFrames);
         }
         case "robot": {
@@ -66,9 +66,17 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, angle: n
         }
 
         case "spinner": {
-            const lp = new ImmobileLocationProvider(left, top);
-            const frameProvider = new CircleFrameProvider(0);
-            return new SpinnerEnemy(FrameTimes.spinner, lp, frameProvider, getExplosion01, getSpinnerFrames);
+            const frames = getSpinnerFrames().frames;
+            const { width, height } = getMaximumFrameDimensions(frames, pixelSize);
+
+            const verticalBounds = pixelSize * 4;
+            const maxTop = top - verticalBounds;
+            const maxBottom = top + verticalBounds;
+
+            const locationProvider = new SideToSideUpAndDown(left, top, Speeds.Movement.spinner, angle, width, height, maxTop, maxBottom);
+            const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
+
+            return new SpinnerEnemy(FrameTimes.spinner, locationProvider, frameProvider, getExplosion01, getSpinnerFrames);
         }
 
         default:

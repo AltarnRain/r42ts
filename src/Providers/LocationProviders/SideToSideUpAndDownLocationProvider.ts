@@ -16,23 +16,27 @@ import dimensionProvider from "../DimensionProvider";
 
 const {
     gameField,
-    pixelSize,
-    fullGameHeight,
-    fullGameWidth,
 } = dimensionProvider();
 
 export default class SideToSideUpAndDownLocationProvider extends BaseLocationProvider implements ILocationProvider {
+    private bottomLimit: number;
+    private topLimit: number;
+
+    constructor(left: number, top: number, speed: number, angle: number, width: number, height: number, topLimit: number, bottomLimit: number) {
+        super(left, top, speed, angle, width, height);
+
+        this.topLimit = topLimit;
+        this.bottomLimit = bottomLimit;
+    }
 
     public updateState(tick: number): void {
         super.updateState(tick);
-        const leftLimit = pixelSize * 2;
-        const rightLimit = fullGameWidth - this.width - pixelSize * 2;
 
-        if (this.left <= leftLimit || this.left >= rightLimit) {
+        if (this.left <= gameField.left || this.left + this.width >= gameField.right) {
             this.angle = 180 - this.angle;
         }
 
-        if (this.top <= gameField.top || this.top >= fullGameHeight - this.height) {
+        if (this.top <= this.topLimit || this.top >= this.bottomLimit - this.height) {
             this.angle *= -1;
         }
 
