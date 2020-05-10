@@ -7,7 +7,6 @@
 import BaseLocationProvider from "../Base/BaseLocationProvider";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
-import dimensionProvider from "../Providers/DimensionProvider";
 import { getLocation } from "../Utility/Location";
 
 /**
@@ -15,10 +14,6 @@ import { getLocation } from "../Utility/Location";
  * Responsibility:  A location provider where the enemy moves down to a certain point and then reappears at the top of the screen.
  *                  Enemies will bounce from up to down a few times just like the original game.
  */
-
-const {
-    gameField
-} = dimensionProvider();
 
 export default class MoveDownAppearUpLocationProvider extends BaseLocationProvider implements ILocationProvider {
     private maxTop: number;
