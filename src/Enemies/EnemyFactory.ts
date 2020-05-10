@@ -69,7 +69,7 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, angle: n
             const frames = getSpinnerFrames().frames;
             const { width, height } = getMaximumFrameDimensions(frames, pixelSize);
 
-            const verticalBounds = pixelSize * 4;
+            const verticalBounds = pixelSize * 6;
             const maxTop = top - verticalBounds;
             const maxBottom = top + verticalBounds;
 

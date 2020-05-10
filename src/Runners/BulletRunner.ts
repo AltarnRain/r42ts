@@ -5,7 +5,7 @@
  */
 
 import dimensionProvider from "../Providers/DimensionProvider";
-import { addBullet, addOrUpdateEnemy } from "../State/EnemyLevel/EnemyLevelActions";
+import { addBullet } from "../State/EnemyLevel/EnemyLevelActions";
 import { StateProviders } from "../State/StateProviders";
 import { dispatch } from "../State/Store";
 import { Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
@@ -81,7 +81,7 @@ export default class BulletRunner {
         // can actually fire.
         for (const shipToFire of shipsToFire) {
 
-            const { enemy, angle, enemy: { hitbox, enemyId } } = shipToFire;
+            const { angle, enemy: { hitbox, enemyId } } = shipToFire;
 
             if (angle !== undefined) {
 
@@ -97,10 +97,7 @@ export default class BulletRunner {
                     enemyId,
                 );
 
-                const newState = { ...enemy, lastFireTick: tick };
-
                 dispatch(addBullet(bullet));
-                dispatch(addOrUpdateEnemy(newState));
             }
         }
     }

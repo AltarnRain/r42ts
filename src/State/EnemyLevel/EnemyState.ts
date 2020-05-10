@@ -12,6 +12,5 @@ export interface EnemyState {
     hitpoints: number;
     hitbox: GameRectangle;
     centerLocation: GameLocation;
-    lastFireTick: number;
     points: number;
 }

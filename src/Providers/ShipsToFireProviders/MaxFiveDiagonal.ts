@@ -28,7 +28,7 @@ type Candidates = Array<{ enemy: EnemyState, angleDifference: number, angle: num
 export default function maxFiveDiagonal(tick: number): ShipToFire[] {
 
     const {
-        enemyLevelState: { bullets }
+        enemyLevelState: { bullets, enemies }
     } = appState();
     const returnValue: ShipToFire[] = [];
 
@@ -54,10 +54,11 @@ export default function maxFiveDiagonal(tick: number): ShipToFire[] {
 
                 // Each orb can only have a single bullet on screen.
                 const hasBulletOnScreen = bullets.some((bullet) => bullet.owner === enemy.enemyId);
-                if (!hasBulletOnScreen) {
+
+                // When there's less then 5 enemies, fire away
+                if (!hasBulletOnScreen || enemies.length < maxBullets) {
                     returnValue.push({ enemy, angle });
                 }
-
             }
         }
     }
@@ -71,7 +72,7 @@ export default function maxFiveDiagonal(tick: number): ShipToFire[] {
 function getBestCandiates(tick: number): Candidates {
 
     const {
-        enemyLevelState: { enemies, fireInterval },
+        enemyLevelState: { enemies },
         playerState
     } = appState();
 
@@ -84,11 +85,9 @@ function getBestCandiates(tick: number): Candidates {
     // enemy will fire vs the angle towards the player.
     const candidates: Candidates = [];
 
-    const enemesThatCanFire = enemies.filter((e) => e.lastFireTick + fireInterval < tick);
-
     let above = 0;
     let below = 0;
-    for (const enemy of enemesThatCanFire) {
+    for (const enemy of enemies) {
         const center = enemy.centerLocation;
 
         if (center) {

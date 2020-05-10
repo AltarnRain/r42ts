@@ -177,7 +177,6 @@ export default abstract class BaseEnemy {
             hitpoints: this.getHitpoints(),
             hitbox: this.getHitbox(),
             centerLocation: this.getCenterLocation(),
-            lastFireTick: 0,
             points: this.getPoints(),
         }));
     }
