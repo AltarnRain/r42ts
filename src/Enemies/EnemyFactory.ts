@@ -55,7 +55,8 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, angle: n
         case "orb": {
             const frameProvider = new CircleFrameProvider(0);
             const { width, height } = getMaximumFrameDimensions(getOrbFrames().frames, pixelSize);
-            const locationProvider = new MoveDownAppearUp(80, left, top, Speeds.Movement.orb, angle, width, height);
+            const { maxTop, maxBottom} = Locations.Enemies.Orb;
+            const locationProvider = new MoveDownAppearUp(left, top, Speeds.Movement.orb, angle, width, height, maxTop, maxBottom);
             return  new OrbEnemy(FrameTimes.orb, locationProvider, frameProvider, getExplosion02, getOrbFrames);
         }
 
