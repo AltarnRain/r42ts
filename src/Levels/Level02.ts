@@ -11,8 +11,8 @@ import { MovementAngles, Speeds } from "../Constants/Constants";
 import { robotFireFrequence } from "../Constants/FireFrequences";
 import { enemyFactory } from "../Enemies/EnemyFactory";
 import robotSpawnLocationsAndColor from "../Enemies/Robot/RobotSpawnLocationsAndColor";
-import firstEnemyOccasionalDown from "../ShipsToFireProviders/FirstEnemyOccasionalDown";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
+import firstEnemyOccasionalDown from "../ShipsToFireProviders/FirstEnemyOccasionalDown";
 
 /**
  * Module:          Level 02

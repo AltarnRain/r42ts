@@ -11,8 +11,8 @@ import { MovementAngles, Speeds } from "../Constants/Constants";
 import { orbFireFrequence } from "../Constants/FireFrequences";
 import { enemyFactory } from "../Enemies/EnemyFactory";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
-import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
+import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
 
 /**
  * Module:          Level03
