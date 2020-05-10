@@ -5,7 +5,7 @@
  */
 
 import { GameLocation } from "../../Models/GameLocation";
-import dimensionProvider from "../../Providers/DimensionProvider";
+import dimensionProvider from "../DimensionProvider";
 
 /**
  * Module:          BirdSpawnLocations
