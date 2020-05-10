@@ -30,6 +30,7 @@ import getRobotFrames from "./Robot/RobotFrames";
 
 const {
     pixelSize,
+    gameField
 } = dimensionProvider();
 
 export function enemyFactory(enemy: Enemies, left: number, top: number, angle: number, color?: string): BaseEnemy {
@@ -43,8 +44,8 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, angle: n
         case "robot": {
             const frameProvider = new BackAndForthFrameProvider(0);
             const { width, height } = getMaximumFrameDimensions(getRobotFrames().frames, pixelSize);
-            const { maxTop, maxBottom } = Locations.Enemies.robot;
-            const locationProvider = new VanishRightAppearLeftLocationProvider(left, top, Speeds.Movement.robot, angle, width, height, maxTop, maxBottom);
+            const { maxBottom } = Locations.Enemies.robot;
+            const locationProvider = new VanishRightAppearLeftLocationProvider(left, top, Speeds.Movement.robot, angle, width, height, gameField.top, maxBottom);
 
             if (color === undefined) {
                 throw new Error("Robot enemy requires a color");

@@ -40,8 +40,7 @@ export namespace Locations {
 
         export namespace robot {
             export const topStart = gameField.top + gameField.height / 7;
-            export const maxTop = gameField.top + gameField.height * 0.1;
-            export const maxBottom = gameField.top + gameField.height * 0.2;
+            export const maxBottom = gameField.top + gameField.height * 0.6;
 
         }
 

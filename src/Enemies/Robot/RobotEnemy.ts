@@ -41,6 +41,10 @@ export default class RobotEnemy extends BaseEnemy {
         this.onFrameChange();
     }
 
+    /**
+     * Update the robot state.
+     * @param tick
+     */
     public updateState(tick: number): void {
         super.updateState(tick);
 
