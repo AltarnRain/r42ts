@@ -19,6 +19,18 @@ const {
 } = dimensionProvider();
 
 export default class VanishRightAppearLeftLocationProvider extends BaseLocationProvider implements ILocationProvider {
+    private maxTop: number;
+    private maxBottom: number;
+
+    /**
+     *
+     */
+    constructor(left: number, top: number, speed: number, angle: number, width: number, height: number, maxTop: number, maxBottom: number) {
+        super(left, top, speed, angle, width, height);
+
+        this.maxTop = maxTop,
+        this.maxBottom = maxBottom;
+    }
 
     public updateState(tick: number): void {
         super.updateState(tick);
@@ -27,8 +39,8 @@ export default class VanishRightAppearLeftLocationProvider extends BaseLocationP
             this.left = 0;
         }
 
-        if (this.top > gameField.top * 0.5) {
-            this.top = gameField.top + this.height;
+        if (this.top > this.maxBottom) {
+            this.top = this.maxTop;
         }
 
         const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);

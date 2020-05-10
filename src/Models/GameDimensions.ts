@@ -38,5 +38,10 @@ export interface GameDimensions {
      */
     pixelSize2x: number;
 
-    gameField: GameRectangle;
+    gameField: GameField;
+}
+
+export interface GameField extends GameRectangle {
+    width: number;
+    height: number;
 }

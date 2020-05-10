@@ -4,10 +4,16 @@
  * See LICENSE.MD.
  */
 
+import dimensionProvider from "../Providers/DimensionProvider";
+
 /**
  * Module:          All speeds for all objects
  * Responsibility:  Define constants at which speed an enemy moves.
  */
+
+const {
+    gameField
+} = dimensionProvider();
 
 // Collective namespace for all speeds.
 export namespace Speeds {
@@ -27,6 +33,17 @@ export namespace Speeds {
         export const player = 42;
         export const robot = 7;
         export const orb = 13;
+    }
+}
+
+export namespace Locations {
+    export namespace Enemies {
+
+        export namespace robot {
+            export const topStart = gameField.top + gameField.height / 7;
+            export const maxTop = gameField.height * 1 / 10;
+            export const maxBottom = gameField.top + (gameField.height * 2 / 3);
+        }
     }
 }
 

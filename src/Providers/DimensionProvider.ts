@@ -32,13 +32,20 @@ export default function dimensionProvider(): GameDimensions {
             rect = body.getBoundingClientRect();
         }
 
-        // r42 uses a 4:3 resolution.
         const pixelSize = Math.floor(rect.height / 100);
 
         const fullGameHeight = pixelSize * 100;
         const fullGameWidth = pixelSize * 160;
 
         const statusBarBottom = pixelSize * 6;
+
+        const gameFieldLeft = pixelSize;
+        const gameFieldRight = fullGameWidth - pixelSize;
+        const gameFieldTop = statusBarBottom + pixelSize;
+        const gameFieldBottom = fullGameHeight - pixelSize;
+
+        const gameFieldWidth = gameFieldRight - gameFieldLeft;
+        const gameFieldHeight = gameFieldBottom - gameFieldTop;
 
         gameDimensions = {
             fullGameWidth,
@@ -47,10 +54,12 @@ export default function dimensionProvider(): GameDimensions {
             pixelSize,
             pixelSize2x: pixelSize * 2,
             gameField: {
-                left: pixelSize,
-                top: statusBarBottom + pixelSize,
-                right: fullGameWidth - pixelSize,
-                bottom: fullGameHeight - pixelSize,
+                left: gameFieldLeft,
+                top: gameFieldTop,
+                right: gameFieldRight,
+                bottom: gameFieldBottom,
+                width: gameFieldWidth,
+                height: gameFieldHeight,
             }
         };
     }

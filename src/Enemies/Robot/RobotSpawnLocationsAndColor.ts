@@ -5,6 +5,7 @@
  */
 
 import CGAColors from "../../Constants/CGAColors";
+import { Locations } from "../../Constants/Constants";
 import { GameLocation } from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { getRandomArrayElement } from "../../Utility/Array";
@@ -25,13 +26,13 @@ interface GameLocationAndcolor extends GameLocation {
 
 const {
     pixelSize,
-    gameField
+
 } = dimensionProvider();
 
 const robotSpawnLocationsAndColor: GameLocationAndcolor[] = [];
 const { width } = getFrameDimensions(getRobotFrames().frames[0], pixelSize);
 
-const top = gameField.top + pixelSize * 20;
+const top = Locations.Enemies.robot.topStart;
 const left = pixelSize * 15;
 const spacing = pixelSize * 3;
 

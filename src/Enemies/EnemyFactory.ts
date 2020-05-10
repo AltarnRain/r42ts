@@ -5,7 +5,7 @@
  */
 
 import BaseEnemy from "../Base/BaseEnemy";
-import { FrameTimes, Speeds } from "../Constants/Constants";
+import { FrameTimes, Speeds, Locations } from "../Constants/Constants";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUpLocaionProvider";
 import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDownLocationProvider";
 import VanishRightAppearLeftLocationProvider from "../LocationProviders/VanishRightAppearLeftLocationProvider";
@@ -43,7 +43,8 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, angle: n
         case "robot": {
             const frameProvider = new BackAndForthFrameProvider(0);
             const { width, height } = getMaximumFrameDimensions(getRobotFrames().frames, pixelSize);
-            const locationProvider = new VanishRightAppearLeftLocationProvider(left, top, Speeds.Movement.robot, angle, width, height);
+            const { maxTop, maxBottom } = Locations.Enemies.robot;
+            const locationProvider = new VanishRightAppearLeftLocationProvider(left, top, Speeds.Movement.robot, angle, width, height, maxTop, maxBottom);
 
             if (color === undefined) {
                 throw new Error("Robot enemy requires a color");

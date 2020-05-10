@@ -52,7 +52,7 @@ export default abstract class BaseLocationProvider implements ILocationProvider 
      * @param {number} height. Height of the object.
      */
     public getCurrentLocation(): GameLocation {
-        return {left: this.left, top: this.top };
+        return { left: this.left, top: this.top };
     }
 
     public updateState(tick: number): void {
