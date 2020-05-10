@@ -55,11 +55,7 @@ export default abstract class BaseLocationProvider implements ILocationProvider 
         return { left: this.left, top: this.top };
     }
 
-    public updateState(tick: number): void {
-        const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
-        this.left = left;
-        this.top = top;
-    }
+    public abstract updateState(tick: number): void;
 
     /**
      * increases the speed by the provided factor.

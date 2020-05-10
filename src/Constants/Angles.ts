@@ -19,3 +19,7 @@ export const angles = {
     leftdown: 135,
     rightdown: 45,
 };
+
+export function getAngles(): number[] {
+    return Object.keys(angles).map((k) => (angles as any)[k] as number);
+}

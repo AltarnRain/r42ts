@@ -35,6 +35,8 @@ import VanishRightAppearLeftLocationProvider from "./LocationProviders/VanishRig
 import firstEnemyOccasionalDown from "./ShipsToFireProviders/FirstEnemyOccasionalDown";
 import maxFiveDiagonal from "./ShipsToFireProviders/MaxFiveDiagonal";
 import sevenSixSeverGridProvider from "./SpawnLocations/SevenSixSevenGridProvider";
+import { getAngles } from "../Constants/Angles";
+import Wobble from "./LocationProviders/Wobble";
 
 /**
  * Module:          EnemyFactory
@@ -133,14 +135,18 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
             // const locationProvider = new SideToSideUpAndDown(left, top, Speeds.Movement.spinner, angle, width, height, maxTop, maxBottom);
             const enemies = sevenSixSeverGridProvider().map((location) => {
-                const locationProvider = new ImmobileLocationProvider(location.left, location.top);
                 const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
-                // const randomAngle = getRandomArrayElement(MovementAngles.spinner);
+                const randomAngle = getRandomArrayElement(getAngles());
+
+                const locationProvider = new Wobble(location.left, location.top, Speeds.Movement.balloon, randomAngle, width, height, 200);
                 return new BalloonEnemy(FrameTimes.spinner, locationProvider, frameProvider, getExplosion01, getBalloonFrames);
             });
 
+            const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxFiveDiagonal);
+
             return {
-                enemies
+                enemies,
+                bulletRunner
             };
         }
 

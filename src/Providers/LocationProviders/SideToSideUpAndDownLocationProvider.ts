@@ -30,17 +30,19 @@ export default class SideToSideUpAndDownLocationProvider extends BaseLocationPro
     }
 
     public updateState(tick: number): void {
-        super.updateState(tick);
+        const newLocation = getLocation(this.left, this.top, this.angle, this.speed);
 
-        if (this.left <= gameField.left || this.left + this.width >= gameField.right) {
+        if (newLocation.left <= gameField.left || newLocation.left + this.width >= gameField.right) {
             this.angle = 180 - this.angle;
         }
 
-        if (this.top <= this.topLimit || this.top >= this.bottomLimit - this.height) {
+        if (newLocation.top <= this.topLimit || newLocation.top >= this.bottomLimit - this.height) {
             this.angle *= -1;
         }
 
+        // Grab in a fresh location in case the angle was changed.
         const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
+
         this.left = left;
         this.top = top;
     }

@@ -15,7 +15,7 @@ import { getLocation } from "../../Utility/Location";
  *                  Enemies will bounce from up to down a few times just like the original game.
  */
 
-export default class MoveDownAppearUpLocationProvider extends BaseLocationProvider implements ILocationProvider {
+export default class MoveDownAppearUpLocationProvider extends BaseLocationProvider {
     private maxTop: number;
     private maxBottom: number;
 
@@ -39,5 +39,11 @@ export default class MoveDownAppearUpLocationProvider extends BaseLocationProvid
         }
 
         return getLocation(this.left, this.top, this.angle, this.speed);
+    }
+
+    public updateState(tick: number): void {
+        const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
+        this.left = left;
+        this.top = top;
     }
 }
