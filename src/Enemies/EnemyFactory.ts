@@ -9,6 +9,7 @@ import { FrameTimes, Locations, Speeds } from "../Constants/Constants";
 import dimensionProvider from "../Providers/DimensionProvider";
 import BackAndForthFrameProvider from "../Providers/FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "../Providers/FrameProviders/CircleFrameProvider";
+import ImmobileLocationProvider from "../Providers/LocationProviders/ImmobileLocationProvider";
 import MoveDownAppearUp from "../Providers/LocationProviders/MoveDownAppearUpLocaionProvider";
 import SideToSideUpAndDown from "../Providers/LocationProviders/SideToSideUpAndDownLocationProvider";
 import VanishRightAppearLeftLocationProvider from "../Providers/LocationProviders/VanishRightAppearLeftLocationProvider";
@@ -16,6 +17,8 @@ import getExplosion01 from "../SharedFrames/Explosion01";
 import { getExplosion02 } from "../SharedFrames/Explosion02";
 import { Enemies } from "../Types";
 import { getMaximumFrameDimensions, getRandomFrameKeyIndex } from "../Utility/Frame";
+import BalloonEnemy from "./Balloon/BalloonEnemy";
+import { getBalloonFrames } from "./Balloon/BalloonFrames";
 import BirdEnemy from "./Bird/BirdEnemy";
 import getBirdFrames from "./Bird/BirdFrames";
 import OrbEnemy from "./Orb/OrbEnemy";
@@ -42,6 +45,7 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, angle: n
             const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(birdFrames));
             const { width, height } = getMaximumFrameDimensions(birdFrames, pixelSize);
             const locationProvider = new SideToSideUpAndDown(left, top, Speeds.Movement.bird, angle, width, height, gameField.top, gameField.bottom);
+
             return new BirdEnemy(FrameTimes.bird, locationProvider, frameProvider, getExplosion01, getBirdFrames);
         }
         case "robot": {
@@ -59,7 +63,7 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, angle: n
         case "orb": {
             const frameProvider = new CircleFrameProvider(0);
             const { width, height } = getMaximumFrameDimensions(getOrbFrames().frames, pixelSize);
-            const { maxTop, maxBottom} = Locations.Enemies.Orb;
+            const { maxTop, maxBottom } = Locations.Enemies.Orb;
 
             const locationProvider = new MoveDownAppearUp(left, top, Speeds.Movement.orb, angle, width, height, maxTop, maxBottom);
             return new OrbEnemy(FrameTimes.orb, locationProvider, frameProvider, getExplosion02, getOrbFrames);
@@ -77,6 +81,21 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, angle: n
             const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
 
             return new SpinnerEnemy(FrameTimes.spinner, locationProvider, frameProvider, getExplosion01, getSpinnerFrames);
+        }
+
+        case "balloon": {
+            const frames = getBalloonFrames().frames;
+            const { width, height } = getMaximumFrameDimensions(frames, pixelSize);
+
+            const verticalBounds = pixelSize * 6;
+            const maxTop = top - verticalBounds;
+            const maxBottom = top + verticalBounds;
+
+            // const locationProvider = new SideToSideUpAndDown(left, top, Speeds.Movement.spinner, angle, width, height, maxTop, maxBottom);
+            const locationProvider = new ImmobileLocationProvider(left, top);
+            const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
+
+            return new BalloonEnemy(FrameTimes.spinner, locationProvider, frameProvider, getExplosion01, getBalloonFrames);
         }
 
         default:

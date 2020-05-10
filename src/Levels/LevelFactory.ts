@@ -17,6 +17,7 @@ import Level01 from "./Level01";
 import Level02 from "./Level02";
 import { Level03 } from "./Level03";
 import { Level05 } from "./Level05";
+import { Level06 } from "./Level06";
 import WarpLevel from "./WarpLevel";
 
 /**
@@ -40,6 +41,8 @@ export function levelFactory(level: number): ILevel {
             return new WarpLevel();
         case 5:
             return new Level05(EnemyLevelRunner.run, clearedEnemies);
+        case 6:
+            return new Level06(EnemyLevelRunner.run, clearedEnemies);
         default:
             return new Level01(EnemyLevelRunner.run, never);
     }
