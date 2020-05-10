@@ -50,7 +50,6 @@ export function playerMovementHandler(speed: number): void {
     // We'll use a fresh keyboardState object and make some adjustments.
     switch (playerState.moveLimit) {
         case "immobile":
-            // Player cannot move
             return;
         case "sideways":
             // Used when the player forms. Override the keyboard state.

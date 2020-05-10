@@ -25,11 +25,6 @@ export default abstract class BaseEnemyLevel implements ILevel {
     private subscriptions: Array<() => void> = [];
 
     /**
-     * Subscription that removes the level banner from the game loop when called. Defined in the 'start' method.
-     */
-    protected levelBannerSub!: () => void;
-
-    /**
      * A function that will handle this level's state.
      */
     protected stateManager: TickFunction;
@@ -65,20 +60,10 @@ export default abstract class BaseEnemyLevel implements ILevel {
      * Start the level
      */
     public start(): void {
-        const { gameState } = appState();
-
         dispatch(setPlayerMovementLimit("immobile"));
 
         // Register the background draw function so it runs in the game loop.
         this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
-
-        // Draw the level banner to show which round we're at.
-        let level = 0;
-        if (gameState.level !== undefined) {
-            level = gameState.level;
-        }
-
-        this.levelBannerSub = GameLoop.registerBackgroundDrawing(() => drawLevelBanner(level));
     }
 
     /**
@@ -93,17 +78,25 @@ export default abstract class BaseEnemyLevel implements ILevel {
      * Begin this level. Call from start.
      */
     protected begin(enemies: BaseEnemy[], fireInterval?: number, bulletRunner?: BulletRunner): void {
-        // Register the stateManager so it can act on state changes in the level.
-        this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));
 
-        if (bulletRunner !== undefined) {
-            this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletRunner.updateState(tick)));
+        const {
+            gameState
+        } = appState();
+
+        // Draw the level banner to show which round we're at.
+        let level = 0;
+        if (gameState.level !== undefined) {
+            level = gameState.level;
         }
 
-        window.setTimeout(() => {
+        // Draw the level banner, then start the level.
+        drawLevelBanner(level, () => {
+            // Register the stateManager so it can act on state changes in the level.
+            this.registerSubscription(GameLoop.registerUpdateState(this.stateManager));
 
-            // Remove the level banner after one second.
-            this.levelBannerSub();
+            if (bulletRunner !== undefined) {
+                this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletRunner.updateState(tick)));
+            }
 
             // Set the fire interval of enemies in the current state
             if (fireInterval !== undefined) {
@@ -117,7 +110,7 @@ export default abstract class BaseEnemyLevel implements ILevel {
             this.registerSubscription(GameLoop.registerUpdateState(() => this.monitorLevelWonRun()));
 
             dispatch(setPlayerMovementLimit("none"));
-        }, 1000);
+        });
     }
 
     /**

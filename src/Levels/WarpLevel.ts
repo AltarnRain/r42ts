@@ -8,25 +8,27 @@ import CGAColors from "../Constants/CGAColors";
 import WarpLevelConstants from "../Constants/WarpLevelConstants";
 import { DEBUGGING_drawGameRect } from "../Debugging/Debugging";
 import GameLoop from "../GameLoop";
+import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground, drawWarpBackground } from "../GameScreen/StaticRenders";
 import Guard from "../Guard";
 import ILevel from "../Interfaces/ILevel";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { setWarpGamteComplexity } from "../State/Game/GameActions";
+import { addPhaser, nextLevel } from "../State/Game/GameActions";
 import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, appStore, dispatch } from "../State/Store";
 import { handlePlayerDeath } from "../StateHandlers/HandlePlayerDeath";
+import { MoveLimits } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { coinFlip } from "../Utility/Lib";
 import { fallsWithin } from "../Utility/Location";
-import { MoveLimits } from "../Types";
 
 /**
  * Module:          WarpLevel
  * Responsibility:  Warp level for the player to pass though.
  */
 
+// The colors used alternate between white and something else for background drawing.
 const backgroundColor: string[] = [
     CGAColors.brown,
     CGAColors.green,
@@ -44,10 +46,15 @@ const {
 // Always start a warp game using this left so we ensure the player is aligned perfectly.
 const warpGateInitialleft = fullGameWidth / 2 - (16 * pixelSize) / 2;
 
+// A constants used to check if the player's movement limimt is set to the right value for this level.
+// Can be used to debug by setting it to NONE.
 const movementLimit: MoveLimits = "none";
 
 export default class WarpLevel implements ILevel {
 
+    /**
+     * An array of game loop subscriptions.
+     */
     private gameLoopSubscriptions: Array<(tick?: number) => void> = [];
 
     /**
@@ -69,6 +76,9 @@ export default class WarpLevel implements ILevel {
         }
     });
 
+    /**
+     * Start the level. Required by contract.
+     */
     public start(): void {
 
         // Register the background draw function so it runs in the game loop.
@@ -78,15 +88,37 @@ export default class WarpLevel implements ILevel {
         const colorIndex = Math.ceil(Math.random() * backgroundColor.length - 1);
         const additionalColor = backgroundColor[colorIndex];
 
-        dispatch(setWarpGamteComplexity(8));
-
         const {
             gameState
         } = appState();
 
-        const warpGate = this.calculateWarpGate(gameField.left, gameField.right, gameState.warpLevelSteps.stepsX, gameState.warpLevelSteps.stepsY);
+        // Show the level banner for this warp gate levels. Warp gates show the level banner BEFORE the back ground
+        // is drawn otherwise the level banner is impossible to read.
+        drawLevelBanner(gameState.level, () => {
+            // Generate the warpgate so we can draw a path and calculate the hitboxes of the adjecent walls. The complexity of the
+            // warp gate is taken from the GameState, the WarpGate class hasn't a clue how complicated the gate will be.
+            const warpGate = this.calculateWarpGate(gameField.left, gameField.right, gameState.warpLevelSteps.stepsX, gameState.warpLevelSteps.stepsY);
+            const badSpace = this.getWallHitboxes(warpGate);
 
-        const badSpace = warpGate
+            // Banner is gone, time to draw the background of the warp gate background and path.
+            this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, warpGate)));
+
+            // Add a function to the GameLoop that will check if a level has been won.
+            this.gameLoopSubscriptions.push(GameLoop.registerUpdateState(() => this.monitorLevelWon()));
+
+            // Add a function to the GameLoop that checks if the player has reached the end of the warp gate. This will
+            // trigger progression to the next level.
+            this.gameLoopSubscriptions.push(GameLoop.registerUpdateState((tick) => this.hitDetection(tick, badSpace)));
+
+        });
+    }
+
+    /**
+     * Get the warp gate's wall hitboxes derived from the warpgate.
+     * @param {GameRectangle[]} warpGate. Hitboxes for the walls.
+     */
+    private getWallHitboxes(warpGate: GameRectangle[]): Array<{ left: GameRectangle, right: GameRectangle }> {
+        return warpGate
             .map((wg) => {
                 return {
                     left: {
@@ -103,21 +135,18 @@ export default class WarpLevel implements ILevel {
                     },
                 };
             });
-
-        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, warpGate)));
-        this.gameLoopSubscriptions.push(GameLoop.registerUpdateState((tick) => this.hitDetection(tick, badSpace)));
     }
 
+    /**
+     * Detect if a player hit a wall.
+     * @param {number} tick. Current tick.
+     * @param {BadSpace} badSpace. Where not to go.
+     */
     private hitDetection(tick: number, badSpace: Array<{ left: GameRectangle; right: GameRectangle }>): void {
-        const { playerState } = appState();
+        const { playerState, debuggingState } = appState();
         if (Guard.isPlayerAlive(playerState)) {
 
             const { hitboxes, alive } = playerState;
-
-            badSpace.forEach((bs) => {
-                DEBUGGING_drawGameRect(bs.left, "red");
-                DEBUGGING_drawGameRect(bs.right, "red");
-            });
 
             const hitside = badSpace.some((sb) => {
                 const { left: leftDanger, right: rightDanger } = sb;
@@ -130,14 +159,26 @@ export default class WarpLevel implements ILevel {
             });
 
             if (hitside && alive) {
-                DEBUGGING_drawGameRect(hitboxes.bottom, "red", 5);
-                DEBUGGING_drawGameRect(hitboxes.middle, "red", 5);
-
                 handlePlayerDeath(tick);
             }
         }
+
+        // Uncomment code below to render wall hitboxes.
+        if (debuggingState.drawHitboxes) {
+            badSpace.forEach((bs) => {
+                DEBUGGING_drawGameRect(bs.left, "red");
+                DEBUGGING_drawGameRect(bs.right, "red");
+            });
+        }
     }
 
+    /**
+     * Calculates the warp gate.
+     * @param {number} outerLeft.
+     * @param {number} outerRight.
+     * @param {number} stepSizesX.
+     * @param {number} stepSizesY.
+     */
     private calculateWarpGate(outerLeft: number, outerRight: number, stepSizesX: number[], stepSizesY: number[]): GameRectangle[] {
 
         const safeZone: GameRectangle[] = [];
@@ -207,6 +248,27 @@ export default class WarpLevel implements ILevel {
         }
 
         return safeZone;
+    }
+
+    /**
+     * Checks if the level is won whe the player reaches the end of the warp gate.
+     */
+    private monitorLevelWon(): void {
+
+        const {
+            playerState: { top },
+        } = appState();
+
+        if (top < gameField.top + pixelSize * 3) {
+            dispatch(setPlayerMovementLimit("immobile"));
+            dispatch(addPhaser());
+
+            // Wait for a moment before proceeding to the next level.
+            window.setTimeout(() => {
+                // Move to the next level.
+                dispatch(nextLevel());
+            }, 1000);
+        }
     }
 
     /**

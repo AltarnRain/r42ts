@@ -13,6 +13,7 @@ import getNumbers from "../SharedFrames/Numbers";
 import { Frame } from "../Types";
 import { getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
 import getCharacter from "../Utility/getCharacter";
+import GameLoop from "../GameLoop";
 
 /**
  * Module:          LevelBanner
@@ -47,8 +48,28 @@ const barwidth = pixelSize * 30;
 const roundWidth = 76 * pixelSize;
 const charSpacing = pixelSize * 2;
 
-export function drawLevelBanner(level: number): void {
+export function drawLevelBanner(level: number | undefined, start: () => void): void {
 
+    let levelNumber = 0;
+    if (level !== undefined) {
+        levelNumber = level;
+    }
+
+    const sub = GameLoop.registerBackgroundDrawing(() => draw(levelNumber));
+
+    // Draw the level banner for 1 second. The use the callback to signal the called something else
+    // can now be done.
+    window.setTimeout(() => {
+        sub();
+        start();
+    }, 1000);
+}
+
+/**
+ * Draws the level banner for the passed level.
+ * @param {number} level. Level the level banner should show.
+ */
+function draw(level: number): void {
     let barcolor: string;
     let bartop = top;
     for (let i = 0; i < 3; i++) {

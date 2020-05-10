@@ -39,7 +39,16 @@ export default function orbsToFire(tick: number): ShipToFire[] {
 
         if (candidates.length > 0) {
             for (let b = 0; b < bulletsToFire; b++) {
-                const candiate = candidates[b];
+
+                let index = b;
+
+                // If the number of bullets is more than the candidates the best
+                // Candidate gets to fire.
+                if (candidates.length <= b) {
+                    index = 0;
+                }
+
+                const candiate = candidates[index];
 
                 const { enemy, angle } = candiate;
 

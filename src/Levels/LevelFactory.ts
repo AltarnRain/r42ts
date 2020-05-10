@@ -11,7 +11,8 @@
 
 import ILevel from "../Interfaces/ILevel";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
-import { appState } from "../State/Store";
+import { setWarpGamteComplexity } from "../State/Game/GameActions";
+import { appState, dispatch } from "../State/Store";
 import Level01 from "./Level01";
 import Level02 from "./Level02";
 import { Level03 } from "./Level03";
@@ -27,7 +28,6 @@ export function levelFactory(level: number): ILevel {
         case 0:
             // Test level
             return new WarpLevel();
-            // return new Level00(enemyLevelRunner, never);
         case 1:
             return new Level01(EnemyLevelRunner.run, clearedEnemies);
         case 2:
@@ -35,6 +35,7 @@ export function levelFactory(level: number): ILevel {
         case 3:
             return new Level03(EnemyLevelRunner.run, clearedEnemies);
         case 4:
+            dispatch(setWarpGamteComplexity(0));
             return new WarpLevel();
         default:
             return new Level01(EnemyLevelRunner.run, never);
