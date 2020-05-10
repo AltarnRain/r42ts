@@ -4,18 +4,16 @@
  * See LICENSE.MD.
  */
 
-import { angles } from "../../Constants/Angles";
-import ShipToFire from "../../ShipsToFire";
-import { appState } from "../../State/Store";
+import { angles } from "../Constants/Angles";
+import ShipToFire from "../ShipsToFire";
+import { appState } from "../State/Store";
 
 /**
- * Module:          RobotsTofire
- * Responsibility:  Probide a list of robots to fire.
+ * Module:          firstEnemyOccasionalDown
+ * Responsibility:  First enemy shoots a bullet downs on occasion.
  */
 
-export default function robotsToFire(): ShipToFire[] {
-    // Just return the robots. pp
-
+export default function firstEnemyOccasionalDown(): ShipToFire[] {
     const {
         enemies: enemyState,
     } = appState().enemyLevelState;

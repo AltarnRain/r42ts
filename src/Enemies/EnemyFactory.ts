@@ -22,6 +22,9 @@ import OrbEnemy from "./Orb/OrbEnemy";
 import getOrbFrames from "./Orb/OrbFrames";
 import RobotEnemy from "./Robot/RobotEnemy";
 import getRobotFrames from "./Robot/RobotFrames";
+import SpinnerEnemy from "./Spinner/SpinnerEnemy";
+import ImmobileLocationProvider from "../LocationProviders/ImmobileLocationProvider";
+import { getSpinnerFrames } from "./Spinner/SpinnerFrames";
 
 /**
  * Module:          EnemyFactory
@@ -57,8 +60,15 @@ export function enemyFactory(enemy: Enemies, left: number, top: number, angle: n
             const frameProvider = new CircleFrameProvider(0);
             const { width, height } = getMaximumFrameDimensions(getOrbFrames().frames, pixelSize);
             const { maxTop, maxBottom} = Locations.Enemies.Orb;
+
             const locationProvider = new MoveDownAppearUp(left, top, Speeds.Movement.orb, angle, width, height, maxTop, maxBottom);
-            return  new OrbEnemy(FrameTimes.orb, locationProvider, frameProvider, getExplosion02, getOrbFrames);
+            return new OrbEnemy(FrameTimes.orb, locationProvider, frameProvider, getExplosion02, getOrbFrames);
+        }
+
+        case "spinner": {
+            const lp = new ImmobileLocationProvider(left, top);
+            const frameProvider = new CircleFrameProvider(0);
+            return new SpinnerEnemy(FrameTimes.spinner, lp, frameProvider, getExplosion01, getSpinnerFrames);
         }
 
         default:

@@ -48,8 +48,6 @@ export default class BirdEnemy extends BaseEnemy {
         Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.white);
         Mutators.Frame.setColor(this.explosion.particleFrames[0], CGAColors.white);
         Mutators.Frame.setColor(this.explosion.particleFrames[1], CGAColors.white);
-
-        this.onFrameChange();
     }
 
     /**

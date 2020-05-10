@@ -31,7 +31,8 @@ export namespace Speeds {
         // bullet speeds
         export const player = 42;
         export const robot = 7;
-        export const orb = 13;
+        export const orb = 12;
+        export const spinner = 12;
     }
 }
 
@@ -69,4 +70,6 @@ export namespace FrameTimes {
     export const robot = 200;
 
     export const orb = 200;
+
+    export const spinner = 200;
 }

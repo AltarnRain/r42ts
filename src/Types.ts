@@ -73,4 +73,4 @@ export type FrameProviderFunction = () => Frame;
  */
 export type Angle = number | undefined;
 
-export type Enemies = "bird" | "robot" | "orb";
+export type Enemies = "bird" | "robot" | "orb" | "spinner";

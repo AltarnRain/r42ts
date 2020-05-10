@@ -5,17 +5,17 @@
  */
 
 /**
- * Module:          OrbsTofire
- * Responsibility:  Provide a function which orbs are best suited to fire a bullet.
+ * Module:          MaxFiveDiagonal
+ * Responsibility:  Provides 5 enemies to fire.
  */
 
-import { angles } from "../../Constants/Angles";
-import Guard from "../../Guard";
-import ShipToFire from "../../ShipsToFire";
-import { EnemyState } from "../../State/EnemyLevel/EnemyState";
-import { appState } from "../../State/Store";
-import { Angle } from "../../Types";
-import { calculateAngle, calculateAngleDifference } from "../../Utility/Geometry";
+import { angles } from "../Constants/Angles";
+import Guard from "../Guard";
+import ShipToFire from "../ShipsToFire";
+import { EnemyState } from "../State/EnemyLevel/EnemyState";
+import { appState } from "../State/Store";
+import { Angle } from "../Types";
+import { calculateAngle, calculateAngleDifference } from "../Utility/Geometry";
 
 const maxBullets = 5;
 
@@ -25,7 +25,7 @@ type Candidates = Array<{ enemy: EnemyState, angleDifference: number, angle: num
  * A function that selects the orbs that should fire.
  * @param {number} tick. Current tick
  */
-export default function orbsToFire(tick: number): ShipToFire[] {
+export default function maxFiveDiagonal(tick: number): ShipToFire[] {
 
     const {
         enemyLevelState: { bullets }

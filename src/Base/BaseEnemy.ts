@@ -188,8 +188,13 @@ export default abstract class BaseEnemy {
      */
     protected getOffsetLocation(): GameLocation {
         const frameOffsets = this.offSets[this.frameProvider.getCurrentIndex()];
-        const { left, top } = this.locationProvider.getCurrentLocation();
-        return getOffsetLocation(left, top, frameOffsets.left, frameOffsets.top);
+        const location = this.locationProvider.getCurrentLocation();
+
+        if (frameOffsets) {
+            return getOffsetLocation(location.left, location.top, frameOffsets.left, frameOffsets.top);
+        } else {
+            return location;
+        }
     }
 
     /**

@@ -17,6 +17,7 @@ import Level01 from "./Level01";
 import Level02 from "./Level02";
 import { Level03 } from "./Level03";
 import WarpLevel from "./WarpLevel";
+import { Level05 } from "./Level05";
 
 /**
  * LevelFactory. Provides level objects
@@ -37,6 +38,9 @@ export function levelFactory(level: number): ILevel {
         case 4:
             dispatch(setWarpGamteComplexity(0));
             return new WarpLevel();
+        case 5:
+            return new Level05(EnemyLevelRunner.run, clearedEnemies);
+            break;
         default:
             return new Level01(EnemyLevelRunner.run, never);
     }

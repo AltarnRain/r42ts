@@ -6,21 +6,19 @@
 
 import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
+import CGAColors from "../../Constants/CGAColors";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
 import Mutators from "../../Utility/FrameMutators";
 
 /**
- * Module:          RobotEnemey
- * Responsibility:  Handles the Robot enemeny first seen in level 2.
+ * Module:          SpinnerEnemey
+ * Responsibility:  Handles the Spinner enemeny first seen in level 2.
  */
 
-export default class RobotEnemy extends BaseEnemy {
-
-    private color: string;
+export default class SpinnerEnemy extends BaseEnemy {
 
     constructor(
-        color: string,
         frameChangeTime: number,
         locationProvider: ILocationProvider,
         frameProvider: BaseFrameProvider,
@@ -33,33 +31,31 @@ export default class RobotEnemy extends BaseEnemy {
             locationProvider,
             frameProvider);
 
-        Mutators.Frame.setColor(this.explosion.explosionCenterFrame, color);
-        Mutators.Frame.setColor(this.explosion.particleFrames[0], color);
-
-        this.color = color;
+        Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.white);
+        Mutators.Frame.setColor(this.explosion.particleFrames[0], CGAColors.white);
+        Mutators.Frame.setColor(this.explosion.particleFrames[1], CGAColors.white);
     }
 
     /**
-     * Update the robot state.
+     * Update the Spinner state.
      * @param tick
      */
     public updateState(tick: number): void {
         super.updateState(tick);
-
         this.dispatchCurrentState();
     }
 
     /**
-     * Called when a frame change is required. The robot frames are all colored at initialisation so we can keep this simple.
+     * Called when a frame change is required. The Spinner frames are all colored at initialisation so we can keep this simple.
      */
     protected onFrameChange(): void {
         const nextFrame = this.frameProvider.getNextFrame();
-        Mutators.Frame.setColor(nextFrame, this.color);
+        Mutators.Frame.convertHexToCGA(nextFrame);
         this.currentFrame = nextFrame;
     }
 
     /**
-     * Returns the points of the robot enemy.
+     * Returns the points of the Spinner enemy.
      * @returns {number}.
      */
     public getPoints(): number {

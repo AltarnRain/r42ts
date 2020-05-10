@@ -9,25 +9,25 @@ import BulletRunner from "../BulletProviders/BulletRunner";
 import CGAColors from "../Constants/CGAColors";
 import { MovementAngles, Speeds } from "../Constants/Constants";
 import { orbFireFrequence } from "../Constants/FireFrequences";
+import birdSpawnLocations from "../Enemies/Bird/BirdSpawnLoctions";
 import { enemyFactory } from "../Enemies/EnemyFactory";
-import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
-import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
+import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
 
 /**
- * Module:          Level03
- * Responsibility:  Define level 03
+ * Module:          Level05
+ * Responsibility:  Define level 05
  */
 
-export class Level03 extends BaseEnemyLevel {
+export class Level05 extends BaseEnemyLevel {
 
     public start(): void {
         super.start();
-        const enemies = orbSpawnLocations.map((location) => {
-            return enemyFactory("orb", location.left, location.top, MovementAngles.orb);
+        const enemies = birdSpawnLocations.map((location) => {
+            return enemyFactory("spinner", location.left, location.top, MovementAngles.orb);
         });
 
-        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.magenta, Speeds.Bullets.orb, maxFiveDiagonal);
+        const bulletRunner = new BulletRunner(getTwoPixelBullet, CGAColors.white, Speeds.Bullets.spinner, maxFiveDiagonal);
         this.begin(enemies, orbFireFrequence, bulletRunner);
     }
 }
