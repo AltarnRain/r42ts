@@ -12,7 +12,8 @@ import dimensionProvider from "../Providers/DimensionProvider";
  */
 
 const {
-    gameField
+    gameField,
+    pixelSize
 } = dimensionProvider();
 
 // Collective namespace for all speeds.
@@ -44,13 +45,12 @@ export namespace Locations {
         export namespace robot {
             export const topStart = gameField.top + gameField.height / 7;
             export const maxBottom = gameField.top + gameField.height * 0.6;
-
         }
 
         export namespace Orb {
-            export const topStart = gameField.top + gameField.height / 4;
-            export const maxTop = gameField.top + gameField.height * 1 / 10;
-            export const maxBottom = gameField.top + (gameField.height * 2 / 3);
+            export const topStart = gameField.top + pixelSize * 18;
+            export const maxTop = gameField.top + pixelSize * 5;
+            export const maxBottom = gameField.top + pixelSize * 55;
         }
     }
 }

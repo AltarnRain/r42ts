@@ -7,7 +7,7 @@
 import dimensionProvider from "../Providers/DimensionProvider";
 import { addBullet, addOrUpdateEnemy } from "../State/EnemyLevel/EnemyLevelActions";
 import { StateProviders } from "../State/StateProviders";
-import { dispatch, appState } from "../State/Store";
+import { dispatch } from "../State/Store";
 import { Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
