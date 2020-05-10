@@ -95,6 +95,15 @@ export namespace GameLoop {
      */
     function run(tick: number): void {
         mainHandle = window.requestAnimationFrame(run);
+
+        const {
+            gameState: { pause }
+        } = appState();
+
+        if (pause) {
+            return;
+        }
+
         updateStateFunctions.forEach((f) => f(tick));
         backgroundDrawFunctions.forEach((f) => f());
         drawFunctions.forEach((f) => f());

@@ -7,7 +7,7 @@
 import dimensionProvider from "../Providers/DimensionProvider";
 import { addBullet, addOrUpdateEnemy } from "../State/EnemyLevel/EnemyLevelActions";
 import { StateProviders } from "../State/StateProviders";
-import { dispatch } from "../State/Store";
+import { dispatch, appState } from "../State/Store";
 import { Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
@@ -74,6 +74,15 @@ export default class BulletRunner {
      * @param {number} tick. Current tick.
      */
     public updateState(tick: number): void {
+
+        const {
+            gameState: { pause }
+        } = appState();
+
+        if (pause) {
+            return;
+        }
+
         const shipsToFire = this.shipsToFire(tick);
 
         // The candiates are sorted so the enemeies with the best odds of hitting the player
