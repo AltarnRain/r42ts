@@ -64,6 +64,9 @@ export default class WarpLevel implements ILevel {
     public start(): void {
         dispatch(setPlayerMovementLimit("immobile"));
 
+        const spawnLocation = getShipSpawnLocation();
+        dispatch(setPlayerLocationData(spawnLocation.left, spawnLocation.top));
+
         // Register the background draw function so it runs in the game loop.
         this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(drawBackground));
 
@@ -248,8 +251,8 @@ export default class WarpLevel implements ILevel {
             // Move to the next level.
             dispatch(nextLevel());
 
-            const spanwLocation = getShipSpawnLocation();
-            dispatch(setPlayerLocationData(spanwLocation.left, spanwLocation.top));
+            const spawnLocation = getShipSpawnLocation();
+            dispatch(setPlayerLocationData(spawnLocation.left, spawnLocation.top));
         }
     }
 
