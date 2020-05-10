@@ -74,15 +74,6 @@ export default class BulletRunner {
      * @param {number} tick. Current tick.
      */
     public updateState(tick: number): void {
-
-        const {
-            gameState: { pause }
-        } = appState();
-
-        if (pause) {
-            return;
-        }
-
         const shipsToFire = this.shipsToFire(tick);
 
         // The candiates are sorted so the enemeies with the best odds of hitting the player

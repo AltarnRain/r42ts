@@ -40,12 +40,8 @@ const playerBulletFrame = getTwoPixelBullet(CGAColors.yellow);
  */
 function updateState(): void {
     const {
-        gameState, playerState
+        playerState
     } = appState();
-
-    if (gameState.pause) {
-        return;
-    }
 
     // Important! The player runner is responsible for handling player action while the
     // player is alive. When the player dies the PlayerSpawnManager takes over.

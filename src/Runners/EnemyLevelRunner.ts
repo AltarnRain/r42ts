@@ -67,12 +67,6 @@ export default EnemyLevelRunner;
  * @param {number} tick. Current tick.
  */
 function updateState(tick: number) {
-    const { gameState } = appState();
-
-    if (gameState.pause) {
-        return;
-    }
-
     handleSelfDestruct(tick);
     handlePhaser(tick);
     handleEnemies(tick);
