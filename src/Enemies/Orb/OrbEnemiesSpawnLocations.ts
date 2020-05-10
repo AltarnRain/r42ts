@@ -8,6 +8,7 @@ import { GameLocation } from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { getFrameDimensions } from "../../Utility/Frame";
 import getOrbFrames from "./OrbFrames";
+import { Locations } from "../../Constants/Constants";
 
 /**
  * Module:          RobotSpawnLocations
@@ -16,13 +17,12 @@ import getOrbFrames from "./OrbFrames";
 
 const {
     pixelSize,
-    gameField
 } = dimensionProvider();
 
 const orbSpawnLocations: GameLocation[] = [];
 const { width } = getFrameDimensions(getOrbFrames().frames[0], pixelSize);
 
-const top = gameField.top + pixelSize * 26;
+const top = Locations.Enemies.Orb.topStart;
 const left = pixelSize * 8;
 const spacing = pixelSize * 2;
 
