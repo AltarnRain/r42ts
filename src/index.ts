@@ -50,13 +50,7 @@ window.onload = () => {
                 level = "0";
             }
 
-            subscribeToStoreChanges();
-            registerListeners();
-
-            GameLoop.registerBackgroundDrawing(drawStatusBar);
-            GameLoop.registerUpdateState(playerRunner);
-            GameLoop.registerUpdateState(playerSpawnManager);
-            GameLoop.registerUpdateState(genericRunner);
+            startEssential();
 
             dispatch(setLives(20));
             dispatch(setPhasers(100));
@@ -113,17 +107,21 @@ window.onload = () => {
 };
 
 function startGame(): void {
-    // subscribeToStoreChanges();
-    // registerListeners();
 
-    // dispatch(setPhasers(1));
-    // dispatch(setLives(2));
+    startEssential();
+    dispatch(setPhasers(1));
+    dispatch(setLives(2));
 
-    // GameLoop.registerBackgroundDrawing(drawStatusBar);
-    // GameLoop.registerUpdateState(playerRunner);
-    // GameLoop.registerUpdateState(playerSpawnManager);
-    // dispatch(playerMortality("mortal"));
+    dispatch(setLevel(1));
+    GameLoop.Start();
+}
 
-    // dispatch(setLevel(1));
-    // GameLoop.Start();
+function startEssential() {
+    subscribeToStoreChanges();
+    registerListeners();
+
+    GameLoop.registerBackgroundDrawing(drawStatusBar);
+    GameLoop.registerUpdateState(playerRunner);
+    GameLoop.registerUpdateState(playerSpawnManager);
+    GameLoop.registerUpdateState(genericRunner);
 }
