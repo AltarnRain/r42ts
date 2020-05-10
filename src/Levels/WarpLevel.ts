@@ -149,8 +149,8 @@ export default class WarpLevel implements ILevel {
 
         if (debuggingState.drawHitboxes) {
             badSpace.forEach((bs) => {
-                GameLoop.registerBackgroundDrawing(() => DEBUGGING_drawGameRect(bs.left, "red"));
-                GameLoop.registerBackgroundDrawing(() => DEBUGGING_drawGameRect(bs.right, "red"));
+                GameLoop.registerDraw(() => DEBUGGING_drawGameRect(bs.left, "red"));
+                GameLoop.registerDraw(() => DEBUGGING_drawGameRect(bs.right, "red"));
             });
         }
     }
