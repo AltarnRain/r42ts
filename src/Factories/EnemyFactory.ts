@@ -42,7 +42,7 @@ const {
     gameField
 } = dimensionProvider();
 
-export function enemyProvider(enemy: Enemies): BaseEnemy[] {
+export function enemyFactory(enemy: Enemies): BaseEnemy[] {
     switch (enemy) {
         case "bird": {
             const birdFrames = getBirdFrames().frames;

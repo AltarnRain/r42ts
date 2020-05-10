@@ -8,7 +8,7 @@ import GameLoop from "../GameLoop";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
-import { enemyProvider } from "../Factories/EnemyFactory";
+import { enemyFactory } from "../Factories/EnemyFactory";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { resetLevelState } from "../State/EnemyLevel/EnemyLevelActions";
 import { addPhaser, nextLevel } from "../State/Game/GameActions";
@@ -52,7 +52,7 @@ export default class EnemyLevel implements ILevel {
      */
     public begin(): void {
 
-        const enemies = enemyProvider(this.enemy);
+        const enemies = enemyFactory(this.enemy);
 
         const {
             gameState
