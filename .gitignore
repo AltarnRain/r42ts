@@ -3,3 +3,4 @@ dist
 .cache
 /js
 Speeds with time.xlsx
+deploy.cmd
