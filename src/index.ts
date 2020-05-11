@@ -19,6 +19,7 @@ import { WarpLevelComplexity } from "./State/Game/WarpLevelTypes";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
 import { getURLQueryKVPs } from "./Utility/Lib";
+import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 
 /**
  * Module:          Index
@@ -120,7 +121,8 @@ function startEssential() {
     subscribeToStoreChanges();
     registerListeners();
 
-    GameLoop.registerBackgroundDrawing(drawStatusBar);
+    GameLoop.registerForegroundDrawing(drawStatusBar);
+    GameLoop.registerForegroundDrawing(drawGameFieldBorder);
     GameLoop.registerUpdateState(playerRunner);
     GameLoop.registerUpdateState(playerSpawnManager);
     GameLoop.registerUpdateState(genericRunner);

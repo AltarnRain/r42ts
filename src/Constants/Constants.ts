@@ -29,6 +29,7 @@ export namespace Speeds {
 
         export const spinner = 1.5;
         export const balloon = 1.5;
+        export const asteroid = [1.5, 2, 4, 8];
     }
 
     export namespace Bullets {
@@ -67,6 +68,8 @@ export namespace MovementAngles {
     export const orb = 90;
 
     export const spinner = [2, 358, 178, 182];
+
+    
 }
 
 // Collective namespace for all frametimes.

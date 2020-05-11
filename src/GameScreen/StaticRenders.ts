@@ -25,7 +25,6 @@ const {
 
 export function drawBackground(): void {
     clearGameFieldBackground();
-    drawGameFieldBorder();
 }
 
 /**
@@ -40,7 +39,7 @@ function clearGameFieldBackground(): void {
 /**
  * Draws a solid red recangle where the game's score is displayed.
  */
-function drawGameFieldBorder(): void {
+export function drawGameFieldBorder(): void {
     const ctx = ctxProvider();
     ctx.fillStyle = CGAColors.blue;
 

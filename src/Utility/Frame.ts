@@ -33,7 +33,7 @@ export function getFrameDimensions(frame: Frame, pixelSize?: number): GameSize {
     };
 }
 
-export function getMaximumFrameDimensions(frames: Frames, pixelSize: number): GameSize {
+export function getMaximumFrameDimensions(frames: Frames, pixelSize?: number): GameSize {
     const allFrameDimensions = frames.map((f) => getFrameDimensions(f, pixelSize));
 
     const allWidths = allFrameDimensions.map((af) => af.width);

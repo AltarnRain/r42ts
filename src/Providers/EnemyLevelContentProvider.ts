@@ -5,7 +5,7 @@
  */
 
 import BaseEnemy from "../Base/BaseEnemy";
-import { getAngles } from "../Constants/Angles";
+import { getAngles, angles } from "../Constants/Angles";
 import CGAColors from "../Constants/CGAColors";
 import { FrameTimes, Locations, MovementAngles, Speeds } from "../Constants/Constants";
 import { AsteroidEnemy } from "../Enemies/Asteroid/AsteroidEnemy";
@@ -41,6 +41,7 @@ import firstEnemyOccasionalDown from "./ShipsToFireProviders/FirstEnemyOccasiona
 import maxFiveDiagonal from "./ShipsToFireProviders/MaxFiveDiagonal";
 import sevenSixSeverGridProvider from "./SpawnLocations/SevenSixSevenGridProvider";
 import getExplosion04 from "../SharedFrames/Explosion04";
+import { AsteroidLocationProvider } from "./LocationProviders/AsteroidLocationProvider";
 
 /**
  * Module:          EnemyFactory
@@ -135,11 +136,8 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "balloon": {
             const frames = getBalloonFrames().frames;
-            const { width, height } = getMaximumFrameDimensions(frames, pixelSize);
-
             const enemies = sevenSixSeverGridProvider().map((location) => {
                 const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
-                const randomAngle = getRandomArrayElement(getAngles());
                 const locationProvider = new ImmobileLocationProvider(location.left, location.top);
                 return new BalloonEnemy(FrameTimes.balloon, getBalloonFrames, getExplosion03, locationProvider, frameProvider);
             });
@@ -153,12 +151,14 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "asteroid-down": {
-            // const frames = getAsteroidFrames().frames;
-            const enemies = sevenSixSeverGridProvider().map((location) => {
+            const {width, height} = getMaximumFrameDimensions(getAsteroidFrames().frames);
+            const enemies: BaseEnemy[] = [];
+
+            for (let i = 0; i < 7; i++) {
                 const frameProvider = new OneFrame(0);
-                const locationProvider = new ImmobileLocationProvider(location.left, location.top);
-                return new AsteroidEnemy(0, getAsteroidFrames, getExplosion04, locationProvider, frameProvider);
-            });
+                const locationProvider = new AsteroidLocationProvider(width, height, [angles.down], Speeds.Movement.asteroid);
+                enemies.push(new AsteroidEnemy(0, getAsteroidFrames, getExplosion04, locationProvider, frameProvider));
+            }
 
             return {
                 enemies

@@ -28,6 +28,8 @@ let updateStateFunctions: TickFunction[] = [];
  */
 let backgroundDrawFunctions: Array<() => void> = [];
 
+let foregroundDrawFunctions: Array<() => void> = [];
+
 /**
  * Functions that draw.
  */
@@ -82,6 +84,19 @@ export namespace GameLoop {
     }
 
     /**
+     * Register a function that draws the background.
+     * @param {function} f. Background draw function
+     * @returns {function}. Function to remove the background draw from the queue.
+     */
+    export function registerForegroundDrawing(f: () => void): () => void {
+        foregroundDrawFunctions.push(f);
+
+        return () => {
+            foregroundDrawFunctions = foregroundDrawFunctions.filter((d) => d !== f);
+        };
+    }
+
+    /**
      * Registers a function that is called once, but only if there is currently no render in progress.
      * @param {function} f. A function.
      */
@@ -104,10 +119,19 @@ export namespace GameLoop {
             return;
         }
 
+        // Always update the states. This will also register draw function (if required).
         updateStateFunctions.forEach((f) => f(tick));
+
+        // Draw the back ground, other stuff is drawn over this so we render it first.
         backgroundDrawFunctions.forEach((f) => f());
+
+        // Now we go over the register draw functions
         drawFunctions.forEach((f) => f());
         drawFunctions = [];
+
+        // Finally we finish with drawing foreground stuff. The status bar for one, and the game border
+        // are both foreground and render over anything.
+        foregroundDrawFunctions.forEach((f) => f());
 
         const { debuggingState } = appState();
 
