@@ -4,6 +4,8 @@
  * See LICENSE.MD.
  */
 
+import dimensionProvider from "../Providers/DimensionProvider";
+import speedProvider from "../Providers/SpeedProvider";
 import { calculateAngle as calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
 
@@ -12,7 +14,11 @@ import { calculateDistance, getLocation } from "../Utility/Location";
  * Responsibility:  Calculate the game locations to draw a phaser beam.
  */
 
-export default function getPhaserLocations(sourceLeft: number, sourceTop: number, targetLeft: number, targetTop: number, pixelSize: number): Array<{left: number, top: number}> {
+const {
+    pixelSize
+} = dimensionProvider();
+
+export default function getPhaserLocations(sourceLeft: number, sourceTop: number, targetLeft: number, targetTop: number): Array<{left: number, top: number}> {
 
     // offset left by one game pixel to ensure the phaser appears at the nozzle of the ship.
     const angle = calculateAngle(sourceLeft, sourceTop, targetLeft, targetTop);
@@ -25,7 +31,7 @@ export default function getPhaserLocations(sourceLeft: number, sourceTop: number
 
     while (distance >= 0) {
         returnValue.push(getLocation(left, top, angle, pixelSize));
-        distance -= pixelSize;
+        distance -= speedProvider(pixelSize);
         const nextLocation = getLocation(left, top, angle, pixelSize);
         left = nextLocation.left;
         top = nextLocation.top;

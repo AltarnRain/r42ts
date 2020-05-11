@@ -139,14 +139,17 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
                 const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
                 const randomAngle = getRandomArrayElement(getAngles());
 
-                const locationProvider = new Wobble(location.left, location.top, Speeds.Movement.balloon, randomAngle, width, height, 200);
+                // const locationProvider = new Wobble(location.left, location.top, Speeds.Movement.balloon, randomAngle, width, height, 200);
+                const locationProvider = new ImmobileLocationProvider(location.left, location.top);
                 return new BalloonEnemy(FrameTimes.spinner, locationProvider, frameProvider, getExplosion03, getBalloonFrames);
             });
 
             const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxFiveDiagonal);
 
+            const e = [enemies[0]];
+
             return {
-                enemies,
+                enemies: e,
                 bulletRunner
             };
         }

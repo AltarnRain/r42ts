@@ -230,7 +230,7 @@ function handlePhaser(tick: number): void {
         if (randomEnemyCenter !== undefined) {
             // Remove one phaser.
             dispatch(removePhaser());
-            const phaserLocations = getPhaserLocations(playerNozzleLocation.left, playerNozzleLocation.top, randomEnemyCenter.left, randomEnemyCenter.top, pixelSize);
+            const phaserLocations = getPhaserLocations(playerNozzleLocation.left, playerNozzleLocation.top, randomEnemyCenter.left, randomEnemyCenter.top);
             dispatch(setPhaserLocations(phaserLocations));
 
             // Pause the game for a very brief period. This is what the original game did
