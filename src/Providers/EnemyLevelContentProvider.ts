@@ -5,8 +5,11 @@
  */
 
 import BaseEnemy from "../Base/BaseEnemy";
+import { getAngles } from "../Constants/Angles";
 import CGAColors from "../Constants/CGAColors";
 import { FrameTimes, Locations, MovementAngles, Speeds } from "../Constants/Constants";
+import { AsteroidEnemy } from "../Enemies/Asteroid/AsteroidEnemy";
+import { getAsteroidFrames } from "../Enemies/Asteroid/AsteroidFrames";
 import BalloonEnemy from "../Enemies/Balloon/BalloonEnemy";
 import { getBalloonFrames } from "../Enemies/Balloon/BalloonFrames";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
@@ -22,12 +25,14 @@ import { getSpinnerFrames } from "../Enemies/Spinner/SpinnerFrames";
 import BulletRunner from "../Runners/BulletRunner";
 import getExplosion01 from "../SharedFrames/Explosion01";
 import { getExplosion02 } from "../SharedFrames/Explosion02";
+import getExplosion03 from "../SharedFrames/Explosion03";
 import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getMaximumFrameDimensions, getRandomFrameKeyIndex } from "../Utility/Frame";
 import dimensionProvider from "./DimensionProvider";
 import BackAndForthFrameProvider from "./FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "./FrameProviders/CircleFrameProvider";
+import { OneFrame } from "./FrameProviders/OneFrame";
 import ImmobileLocationProvider from "./LocationProviders/ImmobileLocationProvider";
 import MoveDownAppearUp from "./LocationProviders/MoveDownAppearUpLocaionProvider";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
@@ -35,9 +40,7 @@ import VanishRightAppearLeftLocationProvider from "./LocationProviders/VanishRig
 import firstEnemyOccasionalDown from "./ShipsToFireProviders/FirstEnemyOccasionalDown";
 import maxFiveDiagonal from "./ShipsToFireProviders/MaxFiveDiagonal";
 import sevenSixSeverGridProvider from "./SpawnLocations/SevenSixSevenGridProvider";
-import { getAngles } from "../Constants/Angles";
-import Wobble from "./LocationProviders/Wobble";
-import getExplosion03 from "../SharedFrames/Explosion03";
+import getExplosion04 from "../SharedFrames/Explosion04";
 
 /**
  * Module:          EnemyFactory
@@ -134,14 +137,11 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             const frames = getBalloonFrames().frames;
             const { width, height } = getMaximumFrameDimensions(frames, pixelSize);
 
-            // const locationProvider = new SideToSideUpAndDown(left, top, Speeds.Movement.spinner, angle, width, height, maxTop, maxBottom);
             const enemies = sevenSixSeverGridProvider().map((location) => {
                 const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
                 const randomAngle = getRandomArrayElement(getAngles());
-
-                // const locationProvider = new Wobble(location.left, location.top, Speeds.Movement.balloon, randomAngle, width, height, 200);
                 const locationProvider = new ImmobileLocationProvider(location.left, location.top);
-                return new BalloonEnemy(FrameTimes.spinner, locationProvider, frameProvider, getExplosion03, getBalloonFrames);
+                return new BalloonEnemy(FrameTimes.balloon, getBalloonFrames, getExplosion03, locationProvider, frameProvider);
             });
 
             const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxFiveDiagonal);
@@ -149,6 +149,19 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             return {
                 enemies,
                 bulletRunner
+            };
+        }
+
+        case "asteroid-down": {
+            // const frames = getAsteroidFrames().frames;
+            const enemies = sevenSixSeverGridProvider().map((location) => {
+                const frameProvider = new OneFrame(0);
+                const locationProvider = new ImmobileLocationProvider(location.left, location.top);
+                return new AsteroidEnemy(0, getAsteroidFrames, getExplosion04, locationProvider, frameProvider);
+            });
+
+            return {
+                enemies
             };
         }
 

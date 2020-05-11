@@ -202,7 +202,7 @@ export default abstract class BaseEnemy {
      * @returns {number}
      * @memberof BaseEnemy
      */
-    private getHitpoints(): number {
+    protected getHitpoints(): number {
         return 0;
     }
 

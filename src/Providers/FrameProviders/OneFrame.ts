@@ -8,11 +8,11 @@ import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import { Frame } from "../../Types";
 
 /**
- * Module:          Immobole Frame probider
+ * Module:          PneFrame
  * Responsibility:  Always returns the frame using the initial index
  */
 
-export class ImmoboleFrameProvider extends BaseFrameProvider {
+export class OneFrame extends BaseFrameProvider {
     public getNextFrame(): Frame {
         return super.getCurrentFrame();
     }

@@ -24,11 +24,6 @@ export type Frames = Frame[];
 export type Frame = string[][];
 
 /**
- * The types of game objects.
- */
-export type GameObjectType = "particle" | "enemy" | "player" | "particle" | "explosion" | "playerbullet" | "enemybullet";
-
-/**
  * A function that accepts a 'tick' as a parameter.
  */
 export type TickFunction = (tick: number) => void;
@@ -39,11 +34,6 @@ export type TickFunction = (tick: number) => void;
 export type MoveLimits = "immobile" | "sideways" | "forceup" | "none";
 
 /**
- * Defines the phases of the player formation.
- */
-export type PlayerFormationPhases = "begin" | "inprogress" | undefined;
-
-/**
  * A function that pulls in state to determine which ships should fire.
  */
 export type ShipsToFireFunction = (tick: number) => ShipToFire[];
@@ -52,11 +42,6 @@ export type ShipsToFireFunction = (tick: number) => ShipToFire[];
  * Always provides a fresh explosion object.
  */
 export type ExplosionProviderFunction = () => Explosion;
-
-/**
- * Always provides a fresh frame.
- */
-export type FramesProviderFunction = () => Frames;
 
 /**
  * Always provides a fresh OffsetFrame object.
@@ -73,4 +58,7 @@ export type FrameProviderFunction = () => Frame;
  */
 export type Angle = number | undefined;
 
-export type Enemies = "bird" | "robot" | "orb" | "spinner" | "balloon";
+/**
+ * All enemies and variations.
+ */
+export type Enemies = "bird" | "robot" | "orb" | "spinner" | "balloon" | "asteroid-down";

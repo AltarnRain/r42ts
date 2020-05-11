@@ -79,4 +79,6 @@ export namespace FrameTimes {
     export const orb = 200;
 
     export const spinner = 100;
+
+    export const balloon = 100;
 }

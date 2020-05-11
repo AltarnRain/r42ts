@@ -38,6 +38,8 @@ export function levelFactory(level: number): ILevel {
             return new EnemyLevel("spinner", clearedEnemies);
         case 6:
             return new EnemyLevel("balloon", clearedEnemies);
+        case 7:
+            return new EnemyLevel("asteroid-down", time);
         default:
             return new EnemyLevel("bird", clearedEnemies);
     }
@@ -53,5 +55,9 @@ function clearedEnemies(): boolean {
         return true;
     }
 
+    return false;
+}
+
+function time(): boolean {
     return false;
 }
