@@ -217,7 +217,8 @@ function handleEnemyDestruction(enemy: EnemyState, tick: number): void {
 function handlePhaser(tick: number): void {
     const { enemyLevelState, playerState, gameState, keyboardState } = appState();
 
-    if (playerState.nozzleLocation &&
+    if (playerState.alive &&
+        playerState.nozzleLocation &&
         keyboardState.phraser &&
         enemyLevelState.enemies.length > 0 &&
         gameState.phasers > 0 &&
