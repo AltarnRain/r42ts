@@ -138,7 +138,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
                 const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
                 const randomAngle = getRandomArrayElement(getAngles());
 
-                const locationProvider = new Wobble(location.left, location.top, Speeds.Movement.balloon, randomAngle, width, height, 200, 75);
+                const locationProvider = new Wobble(location.left, location.top, Speeds.Movement.balloon, randomAngle, width, height, 200);
                 return new BalloonEnemy(FrameTimes.spinner, locationProvider, frameProvider, getExplosion01, getBalloonFrames);
             });
 
