@@ -37,6 +37,7 @@ import maxFiveDiagonal from "./ShipsToFireProviders/MaxFiveDiagonal";
 import sevenSixSeverGridProvider from "./SpawnLocations/SevenSixSevenGridProvider";
 import { getAngles } from "../Constants/Angles";
 import Wobble from "./LocationProviders/Wobble";
+import getExplosion03 from "../SharedFrames/Explosion03";
 
 /**
  * Module:          EnemyFactory
@@ -139,7 +140,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
                 const randomAngle = getRandomArrayElement(getAngles());
 
                 const locationProvider = new Wobble(location.left, location.top, Speeds.Movement.balloon, randomAngle, width, height, 200);
-                return new BalloonEnemy(FrameTimes.spinner, locationProvider, frameProvider, getExplosion01, getBalloonFrames);
+                return new BalloonEnemy(FrameTimes.spinner, locationProvider, frameProvider, getExplosion03, getBalloonFrames);
             });
 
             const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxFiveDiagonal);
