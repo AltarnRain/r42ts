@@ -128,7 +128,15 @@ function playerHitEnemyDetection(tick: number) {
         });
 
         if (hitEnemy !== undefined) {
-            handleEnemyDestruction(hitEnemy, tick);
+            if (hitEnemy.hitpoints === 1) {
+                handleEnemyDestruction(hitEnemy, tick);
+            } else {
+                const enemy = localState.enemies.find((e) => e.getId() === hitEnemy.enemyId);
+                if (enemy) {
+                    enemy.recudeHitpoints();
+                }
+            }
+
             dispatch(setPlayerBulletState(undefined));
         }
     }

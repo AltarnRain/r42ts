@@ -202,8 +202,15 @@ export default abstract class BaseEnemy {
      * @returns {number}
      * @memberof BaseEnemy
      */
-    protected getHitpoints(): number {
-        return 0;
+    public getHitpoints(): number {
+        return 1;
+    }
+
+    /**
+     * Reduce the enemies hitpoints.
+     */
+    public recudeHitpoints(): void {
+        // Override. Only the astroid enemy has hitpoints.
     }
 
     /**

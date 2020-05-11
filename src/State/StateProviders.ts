@@ -152,7 +152,7 @@ export namespace StateProviders {
         const state = appState().enemyLevelState.enemies.find((e) => e.enemyId === enemy.getId());
 
         if (state === undefined) {
-            throw new Error("Could not retrie state for enemy " + enemy.getId());
+            throw new Error("Could not retrive state for enemy " + enemy.getId());
         }
 
         return state;

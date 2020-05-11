@@ -5,7 +5,7 @@
  */
 
 import BaseEnemy from "../Base/BaseEnemy";
-import { getAngles, angles } from "../Constants/Angles";
+import { angles } from "../Constants/Angles";
 import CGAColors from "../Constants/CGAColors";
 import { FrameTimes, Locations, MovementAngles, Speeds } from "../Constants/Constants";
 import { AsteroidEnemy } from "../Enemies/Asteroid/AsteroidEnemy";
@@ -26,13 +26,14 @@ import BulletRunner from "../Runners/BulletRunner";
 import getExplosion01 from "../SharedFrames/Explosion01";
 import { getExplosion02 } from "../SharedFrames/Explosion02";
 import getExplosion03 from "../SharedFrames/Explosion03";
+import getExplosion04 from "../SharedFrames/Explosion04";
 import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getMaximumFrameDimensions, getRandomFrameKeyIndex } from "../Utility/Frame";
 import dimensionProvider from "./DimensionProvider";
 import BackAndForthFrameProvider from "./FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "./FrameProviders/CircleFrameProvider";
-import { OneFrame } from "./FrameProviders/OneFrame";
+import { AsteroidLocationProvider } from "./LocationProviders/AsteroidLocationProvider";
 import ImmobileLocationProvider from "./LocationProviders/ImmobileLocationProvider";
 import MoveDownAppearUp from "./LocationProviders/MoveDownAppearUpLocaionProvider";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
@@ -40,8 +41,6 @@ import VanishRightAppearLeftLocationProvider from "./LocationProviders/VanishRig
 import firstEnemyOccasionalDown from "./ShipsToFireProviders/FirstEnemyOccasionalDown";
 import maxFiveDiagonal from "./ShipsToFireProviders/MaxFiveDiagonal";
 import sevenSixSeverGridProvider from "./SpawnLocations/SevenSixSevenGridProvider";
-import getExplosion04 from "../SharedFrames/Explosion04";
-import { AsteroidLocationProvider } from "./LocationProviders/AsteroidLocationProvider";
 
 /**
  * Module:          EnemyFactory
@@ -155,8 +154,8 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             const enemies: BaseEnemy[] = [];
 
             for (let i = 0; i < 7; i++) {
-                const frameProvider = new OneFrame(0);
-                const locationProvider = new AsteroidLocationProvider(width, height, [angles.down], Speeds.Movement.asteroid);
+                const frameProvider = new CircleFrameProvider(0);
+                const locationProvider = new AsteroidLocationProvider(width, height, [angles.down], [0]);
                 enemies.push(new AsteroidEnemy(0, getAsteroidFrames, getExplosion04, locationProvider, frameProvider));
             }
 

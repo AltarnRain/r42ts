@@ -71,4 +71,19 @@ export default abstract class BaseFrameProvider {
     public getCurrentIndex(): number {
         return this.frameIndex;
     }
+
+    /**
+     * Returns the game of the provided index.
+     * @param {number} index. Index of the frame.
+     */
+    public getFrameByIndex(index: number): Frame {
+
+        if (this.frames === undefined) {
+            throw new Error("Set the frames.");
+        }
+
+        const frame = getFrameByIndex(this.frames, index);
+
+        return copyFrame(frame);
+    }
 }

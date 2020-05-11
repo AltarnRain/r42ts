@@ -18,6 +18,8 @@ import Mutators from "../../Utility/FrameMutators";
 
 export class AsteroidEnemy extends BaseEnemy {
 
+    private hitpoints = 4;
+
     constructor(
         frameChangeTime: number,
         getOffsetFrames: OffsetFramesProviderFunction,
@@ -45,10 +47,24 @@ export class AsteroidEnemy extends BaseEnemy {
     }
 
     public getHitpoints(): number {
-        return 4;
+        return this.hitpoints;
     }
 
+    public recudeHitpoints(): void {
+        this.hitpoints--;
+        // A reduction in hitpoints shows the next frame. This makes it
+        // appear as if the asteroid is getting damaged.
+        this.frameProvider.getNextFrame();
+    }
+
+    /**
+     * Frame change handler.
+     */
     protected onFrameChange(): void {
+
+        // The asteroid is an odd duck here. It doesn't change frames to be animated
+        // but to show damage to it.
+        // So, we return the current frame and change the frame when the astroid is hit.
         const newFrame = this.frameProvider.getCurrentFrame();
         Mutators.Frame.convertHexToCGA(newFrame);
         this.currentFrame = newFrame;
