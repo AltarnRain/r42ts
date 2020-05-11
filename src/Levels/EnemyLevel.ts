@@ -34,9 +34,9 @@ export default class EnemyLevel implements ILevel {
      * @param {TickFunction} stateManager. A function that will handle the state for the level.
      * @param {() => boolean} monitorLevelWon. A function that checks fort he win condition of a level.
      */
-    constructor(enemy: Enemies, monitorLevelWon: () => boolean) {
+    constructor(enemies: Enemies, monitorLevelWon: () => boolean) {
         this.monitorLevelWon = monitorLevelWon;
-        this.enemy = enemy;
+        this.enemy = enemies;
     }
 
     /**
@@ -48,9 +48,10 @@ export default class EnemyLevel implements ILevel {
     }
 
     /**
-     * Begin this level. Call from start.
+     * Begin this level.
+     * @param {() => void} levelReady. Optional callback that is called when the level is ready to begin.
      */
-    public begin(): void {
+    public begin(levelReady?: () => void): void {
 
         const { enemies, bulletRunner } = enemyLevelContentFactory(this.enemy);
 
@@ -85,6 +86,10 @@ export default class EnemyLevel implements ILevel {
             this.registerSubscription(GameLoop.registerUpdateState(() => this.monitorLevelWonRun()));
 
             dispatch(setPlayerMovementLimit("none"));
+
+            if (levelReady !== undefined) {
+                levelReady();
+            }
         });
     }
 

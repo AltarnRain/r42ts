@@ -4,11 +4,9 @@
  * See LICENSE.MD.
  */
 
-import CGAColors from "../../Constants/CGAColors";
 import { Locations } from "../../Constants/Constants";
 import { GameLocation } from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
-import { getRandomArrayElement } from "../../Utility/Array";
 import { getFrameDimensions } from "../../Utility/Frame";
 import getRobotFrames from "./RobotFrames";
 
@@ -17,48 +15,27 @@ import getRobotFrames from "./RobotFrames";
  * Responsibility:  Returns the robot spawn locations.
  */
 
-interface GameLocationAndcolor extends GameLocation {
-    /**
-     * color for the robot.
-     */
-    color: string;
-}
-
 const {
     pixelSize,
-
 } = dimensionProvider();
 
-const robotSpawnLocationsAndColor: GameLocationAndcolor[] = [];
+const robotSpawnLocations: GameLocation[] = [];
 const { width } = getFrameDimensions(getRobotFrames().frames[0], pixelSize);
 
 const top = Locations.Enemies.robot.topStart;
 const left = pixelSize * 15;
 const spacing = pixelSize * 3;
 
-const colors = [
-    CGAColors.lightBlue,
-    CGAColors.lightCyan,
-    CGAColors.lightRed,
-    CGAColors.lightGreen,
-    CGAColors.lightBlue,
-    CGAColors.lightMagenta,
-    CGAColors.lightCyan,
-];
-
 for (let i = 0; i < 14; i++) {
     const actualSpacing = i === 0 ? 0 : spacing * i;
     const actualLeft = left + i * width + spacing;
 
-    const color = getRandomArrayElement(colors);
-
     const value = {
         left: actualLeft + actualSpacing,
         top,
-        color,
     };
 
-    robotSpawnLocationsAndColor.push(value);
+    robotSpawnLocations.push(value);
 }
 
-export default robotSpawnLocationsAndColor;
+export default robotSpawnLocations;

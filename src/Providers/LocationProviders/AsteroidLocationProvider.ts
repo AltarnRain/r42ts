@@ -39,12 +39,12 @@ export class AsteroidLocationProvider implements ILocationProvider {
         this.angles = angles;
         this.speeds = speeds;
 
-        this.top = gameField.top + height;
+        const doubleHeight =  this.height * 2;
+        this.top = gameField.top - doubleHeight;
         this.left = this.getRandomLeft();
         this.angle = getRandomArrayElement(angles);
         this.speed =  getRandomArrayElement(speeds);
 
-        const doubleHeight = this.height * 2;
         this.maxBottom = gameField.bottom + doubleHeight;
         this.startTop = gameField.top - doubleHeight;
     }

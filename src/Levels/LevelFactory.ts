@@ -12,6 +12,7 @@
 import ILevel from "../Interfaces/ILevel";
 import { setWarpGamteComplexity } from "../State/Game/GameActions";
 import { appState, dispatch } from "../State/Store";
+import { AsteroidLevel } from "./AsteroidLevel";
 import EnemyLevel from "./EnemyLevel";
 import WarpLevel from "./WarpLevel";
 
@@ -39,7 +40,7 @@ export function levelFactory(level: number): ILevel {
         case 6:
             return new EnemyLevel("balloon", clearedEnemies);
         case 7:
-            return new EnemyLevel("asteroid-down", time);
+            return new AsteroidLevel("asteroid-down", time);
         default:
             return new EnemyLevel("bird", clearedEnemies);
     }

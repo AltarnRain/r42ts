@@ -6,8 +6,10 @@
 
 import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
+import CGAColors from "../../Constants/CGAColors";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
+import { getRandomArrayElement } from "../../Utility/Array";
 import Mutators from "../../Utility/FrameMutators";
 
 /**
@@ -15,12 +17,20 @@ import Mutators from "../../Utility/FrameMutators";
  * Responsibility:  Handles the Robot enemeny first seen in level 2.
  */
 
-export default class RobotEnemy extends BaseEnemy {
+const colors = [
+    CGAColors.lightBlue,
+    CGAColors.lightCyan,
+    CGAColors.lightRed,
+    CGAColors.lightGreen,
+    CGAColors.lightBlue,
+    CGAColors.lightMagenta,
+    CGAColors.lightCyan,
+];
 
+export default class RobotEnemy extends BaseEnemy {
     private color: string;
 
     constructor(
-        color: string,
         frameChangeTime: number,
         locationProvider: ILocationProvider,
         frameProvider: BaseFrameProvider,
@@ -33,10 +43,10 @@ export default class RobotEnemy extends BaseEnemy {
             locationProvider,
             frameProvider);
 
-        Mutators.Frame.setColor(this.explosion.explosionCenterFrame, color);
-        Mutators.Frame.setColor(this.explosion.particleFrames[0], color);
+        this.color = getRandomArrayElement(colors);
 
-        this.color = color;
+        Mutators.Frame.setColor(this.explosion.explosionCenterFrame, this.color);
+        Mutators.Frame.setColor(this.explosion.particleFrames[0], this.color);
     }
 
     /**

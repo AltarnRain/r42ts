@@ -58,6 +58,10 @@ export namespace EnemyLevelRunner {
         localState.enemies = newEnemies;
         dispatch(setTotalEnemies(newEnemies.length));
     }
+
+    export function addEnemy(newEnemy: BaseEnemy): void {
+        localState.enemies.push(newEnemy);
+    }
 }
 
 export default EnemyLevelRunner;
