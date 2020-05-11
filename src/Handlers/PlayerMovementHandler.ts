@@ -92,7 +92,7 @@ export function playerMovementHandler(speed: number): void {
 
     const nozzleLocation = {
         left: nextX + pixelSize * 2,
-        top: nextY - pixelSize * 1,
+        top: nextY,
     };
 
     dispatch(setPlayerLocationData(nextX, nextY, hitBoxes, nozzleLocation));
