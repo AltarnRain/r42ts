@@ -29,7 +29,7 @@ export namespace Speeds {
 
         export const spinner = 1.5;
         export const balloon = 1.5;
-        export const asteroid = [1.5, 2, 4, 8];
+        export const asteroid = [2, 4, 6, 8, 10];
     }
 
     export namespace Bullets {

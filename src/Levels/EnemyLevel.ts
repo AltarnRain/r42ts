@@ -11,9 +11,9 @@ import ILevel from "../Interfaces/ILevel";
 import { enemyLevelContentFactory } from "../Providers/EnemyLevelContentProvider";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { resetLevelState } from "../State/EnemyLevel/EnemyLevelActions";
-import { addPhaser, nextLevel } from "../State/Game/GameActions";
 import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
+import handleLevelWon from "../StateHandlers/HandleLevelWon";
 import { Enemies } from "../Types";
 
 export default class EnemyLevel implements ILevel {
@@ -24,19 +24,17 @@ export default class EnemyLevel implements ILevel {
     private subscriptions: Array<() => void> = [];
 
     /**
-     * Function passed from the outside that checks if a level is won.
+     * Enemies of the level.
      */
-    private monitorLevelWon: () => boolean;
-    private enemy: Enemies;
+    private enemies: Enemies;
 
     /**
      * Constructs the base level
      * @param {TickFunction} stateManager. A function that will handle the state for the level.
      * @param {() => boolean} monitorLevelWon. A function that checks fort he win condition of a level.
      */
-    constructor(enemies: Enemies, monitorLevelWon: () => boolean) {
-        this.monitorLevelWon = monitorLevelWon;
-        this.enemy = enemies;
+    constructor(enemies: Enemies) {
+        this.enemies = enemies;
     }
 
     /**
@@ -53,7 +51,7 @@ export default class EnemyLevel implements ILevel {
      */
     public begin(levelReady?: () => void): void {
 
-        const { enemies, bulletRunner } = enemyLevelContentFactory(this.enemy);
+        const { enemies, bulletRunner } = enemyLevelContentFactory(this.enemies);
 
         const {
             gameState
@@ -106,15 +104,24 @@ export default class EnemyLevel implements ILevel {
     /**
      * This method uses the passed in monotorLeveLWon function to check if we can procede to the next level.
      */
-    private monitorLevelWonRun(): void {
+    protected monitorLevelWonRun(): void {
 
         // Use the provided function to check if the level has been completed.
-        if (this.monitorLevelWon()) {
-            // Add a phaser because that's a level won reward.
-            dispatch(addPhaser());
-
-            // Move to the next level.
-            dispatch(nextLevel());
+        if (this.levelClear()) {
+            handleLevelWon();
         }
+    }
+
+    /**
+     * Functions that checks if the level is completely clear.
+     * @returns {boolean}. True if the enemies and shrapnell is gone.
+     */
+    private levelClear(): boolean {
+        const { enemyLevelState: { enemies, shrapnells } } = appState();
+        if (enemies.length === 0 && shrapnells.length === 0) {
+            return true;
+        }
+
+        return false;
     }
 }

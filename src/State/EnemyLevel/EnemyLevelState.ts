@@ -8,7 +8,6 @@ import { GameLocation } from "../../Models/GameLocation";
 import { ParticleState } from "../Player/ParticleState";
 import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";
-import { BulletData } from "./BulletData";
 
 /**
  * Module:          EnemyLevelState
@@ -50,6 +49,4 @@ export default interface EnemyLevelState {
      * State of the current enemies.
      */
     enemies: EnemyState[];
-
-    bulletData: BulletData | undefined;
 }

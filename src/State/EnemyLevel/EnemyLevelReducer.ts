@@ -37,9 +37,6 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
             case Constants.addParticles:
                 draft.shrapnells.push(...action.particles);
                 break;
-            case Constants.resetLevelState:
-                draft = initState();
-                break;
             case Constants.setPhaserLocations:
                 draft.phaserLocations = action.payload;
                 break;
@@ -75,6 +72,10 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
         }
     });
 
+    if (action.type === Constants.resetLevelState) {
+        return initState();
+    }
+
     return newState;
 }
 
@@ -87,6 +88,5 @@ function initState(): EnemyLevelState {
         bullets: [],
         totalNumberOfEnemies: 0,
         enemies: [],
-        bulletData: undefined,
     };
 }

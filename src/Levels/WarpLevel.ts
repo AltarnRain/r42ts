@@ -23,6 +23,7 @@ import { MoveLimits } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { coinFlip } from "../Utility/Lib";
 import { fallsWithin } from "../Utility/Location";
+import handleLevelWon from "../StateHandlers/HandleLevelWon";
 
 /**
  * Module:          WarpLevel
@@ -242,11 +243,10 @@ export default class WarpLevel implements ILevel {
         } = appState();
 
         if (top < gameField.top + pixelSize * 3) {
-            dispatch(addPhaser());
+            handleLevelWon();
 
-            // Move to the next level.
-            dispatch(nextLevel());
-
+            // Reset the player to the spawn location after a warp level or they'll appear
+            // in the top of the screen right in the middle of enemies.
             const spawnLocation = getShipSpawnLocation();
             dispatch(setPlayerLocationData(spawnLocation.left, spawnLocation.top));
         }

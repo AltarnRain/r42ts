@@ -27,22 +27,22 @@ export function levelFactory(level: number): ILevel {
             // Test level
             return new WarpLevel();
         case 1:
-            return new EnemyLevel("bird", clearedEnemies);
+            return new EnemyLevel("bird");
         case 2:
-            return new EnemyLevel("robot", clearedEnemies);
+            return new EnemyLevel("robot");
         case 3:
-            return new EnemyLevel("orb", clearedEnemies);
+            return new EnemyLevel("orb");
         case 4:
             dispatch(setWarpGamteComplexity(0));
             return new WarpLevel();
         case 5:
-            return new EnemyLevel("spinner", clearedEnemies);
+            return new EnemyLevel("spinner");
         case 6:
-            return new EnemyLevel("balloon", clearedEnemies);
+            return new EnemyLevel("balloon");
         case 7:
-            return new AsteroidLevel("asteroid-down", time);
+            return new AsteroidLevel("asteroid-down");
         default:
-            return new EnemyLevel("bird", clearedEnemies);
+            return new EnemyLevel("bird");
     }
 }
 
@@ -50,14 +50,6 @@ export function levelFactory(level: number): ILevel {
  * clearedEnemies.
  * @returns {boolean}. Returns true if all enemies (and particles) have been removed from the ApplicationState.
  */
-function clearedEnemies(): boolean {
-    const { enemyLevelState: { enemies, shrapnells } } = appState();
-    if (enemies.length === 0 && shrapnells.length === 0) {
-        return true;
-    }
-
-    return false;
-}
 
 function time(): boolean {
     return false;
