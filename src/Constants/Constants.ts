@@ -28,7 +28,7 @@ export namespace Speeds {
         export const orb = 0.1;
 
         export const spinner = 1.5;
-        export const balloon = 1.5;
+        export const balloon = 10;
     }
 
     export namespace Bullets {
