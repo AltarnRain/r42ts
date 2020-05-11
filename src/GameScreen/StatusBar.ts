@@ -37,12 +37,12 @@ Mutators.Frame.setColor(lifeFrame, CGAColors.yellow);
 // Score constants
 const scoreStartPosition = 4 * pixelSize;
 const scoreSpacing = 2 * pixelSize;
-const scoreBackgroundWidth = 40 * pixelSize;
+const scoreBackgroundWidth = 45 * pixelSize;
 
 // Phaser constants.
 const phaserStartPosition = scoreBackgroundWidth;
 const phaserSpacing = pixelSize * 2;
-const phaserBackgroundWidth = pixelSize * 54;
+const phaserBackgroundWidth = pixelSize * 50;
 
 // The phaser frame is only used in the status bar.
 // no point in moving it to anther file.
@@ -59,20 +59,20 @@ Mutators.Frame.convertHexToCGA(phaserFrame);
 // Lives constants.
 const livesSpacing = 2 * pixelSize;
 const livesStartPostion = scoreBackgroundWidth + phaserBackgroundWidth;
-const liveFrameWidth = getFrameDimensions(lifeFrame, pixelSize).width;
+const lifeFrameWidth = getFrameDimensions(lifeFrame, pixelSize).width;
 const livesBackgroundWidth = pixelSize * 54;
 
 // Level number constants.
-const levelStartPosition = scoreBackgroundWidth + phaserBackgroundWidth + livesBackgroundWidth;
-const numberFrameWidth = getFrameDimensions(numberFrames[0], pixelSize).width;
-const leftNumberLeft = fullGameWidth - (numberFrameWidth * 2.5);
-const rightNumberLeft = leftNumberLeft + numberFrameWidth + pixelSize;
-const levelBackgroundWidth = fullGameWidth - levelStartPosition;
+const leftNumberLeft = pixelSize * 148;
+const rightNumberLeft = pixelSize * 154;
+const scoreBoardHeight = pixelSize * 6;
 
 /**
  * Main funtion that draw the entire status bar.
  */
 export function drawStatusBar(): void {
+    ctx.fillStyle = CGAColors.red;
+    ctx.fillRect(0, 0, fullGameWidth, scoreBoardHeight);
     drawScore();
     drawPhasers();
     drawLives();
@@ -84,10 +84,6 @@ export function drawStatusBar(): void {
  */
 function drawScore(): void {
     const { gameState } = appState();
-
-    ctx.fillStyle = CGAColors.red;
-    ctx.fillRect(0, 0, scoreBackgroundWidth, statusBarBottom);
-
     const scoreString = padLeft(gameState.score.toString(), 6, "0");
 
     let cnt = 0;
@@ -100,16 +96,14 @@ function drawScore(): void {
         renderFrame(left, 0, frame);
         cnt++;
     }
-
 }
 
 function drawPhasers(): void {
     const { gameState } = appState();
 
-    ctx.fillStyle = CGAColors.red;
-    ctx.fillRect(phaserStartPosition, 0, phaserBackgroundWidth, statusBarBottom);
+    const maxPhasersToBeDrawn = gameState.phasers < 11 ? gameState.phasers : 11;
 
-    for (let i = 0; i < gameState.phasers; i++) {
+    for (let i = 0; i < maxPhasersToBeDrawn; i++) {
         const actualSpacing = i === 0 ? 0 : phaserSpacing;
         const left = phaserStartPosition + i * pixelSize + i * actualSpacing;
 
@@ -124,26 +118,18 @@ function drawPhasers(): void {
  */
 function drawLives(): void {
     const { gameState } = appState();
+    let left = 135 * pixelSize;
 
-    ctx.fillStyle = CGAColors.red;
-    ctx.fillRect(livesStartPostion, 0, livesBackgroundWidth, statusBarBottom);
+    const maxLivesToBeDrawn = gameState.lives <= 8 ? gameState.lives : 8;
 
-    let left = livesStartPostion + livesBackgroundWidth - liveFrameWidth;
-
-    for (let lives = 1; lives <= gameState.lives; lives++) {
-        if (left >= livesStartPostion) {
-            renderFrame(left, pixelSize, lifeFrame);
-            left -= livesSpacing + liveFrameWidth;
-        }
+    for (let lives = 1; lives <= maxLivesToBeDrawn; lives++) {
+        renderFrame(left, pixelSize, lifeFrame);
+        left -= livesSpacing + lifeFrameWidth;
     }
 }
 
 function drawLevel(): void {
     const { gameState } = appState();
-
-    ctx.fillStyle = CGAColors.red;
-    ctx.fillRect(levelStartPosition, 0, levelBackgroundWidth, statusBarBottom);
-
     let paddedLevelString = "0";
     if (gameState.level !== undefined) {
         paddedLevelString = padLeft(gameState.level.toString(), 2, "0");
