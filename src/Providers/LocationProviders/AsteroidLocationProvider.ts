@@ -6,11 +6,11 @@
 
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import { GameLocation } from "../../Models/GameLocation";
-import dimensionProvider from "../DimensionProvider";
 import { Angle } from "../../Types";
+import { getRandomArrayElement } from "../../Utility/Array";
 import { randomNumberInRange } from "../../Utility/Lib";
 import { getLocation } from "../../Utility/Location";
-import { getRandomArrayElement } from "../../Utility/Array";
+import dimensionProvider from "../DimensionProvider";
 
 /**
  * Module:          AsteroidLocationProvider

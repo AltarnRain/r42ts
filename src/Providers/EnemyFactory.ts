@@ -11,8 +11,12 @@ import { AsteroidEnemy } from "../Enemies/Asteroid/AsteroidEnemy";
 import { getAsteroidFrames } from "../Enemies/Asteroid/AsteroidFrames";
 import BalloonEnemy from "../Enemies/Balloon/BalloonEnemy";
 import { getBalloonFrames } from "../Enemies/Balloon/BalloonFrames";
+import BirdEnemy from "../Enemies/Bird/BirdEnemy";
+import getBirdFrames from "../Enemies/Bird/BirdFrames";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import getOrbFrames from "../Enemies/Orb/OrbFrames";
+import RobotEnemy from "../Enemies/Robot/RobotEnemy";
+import getRobotFrames from "../Enemies/Robot/RobotFrames";
 import SpinnerEnemy from "../Enemies/Spinner/SpinnerEnemy";
 import { getSpinnerFrames } from "../Enemies/Spinner/SpinnerFrames";
 import { GameLocation } from "../Models/GameLocation";
@@ -24,17 +28,13 @@ import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getMaximumFrameDimensions, getRandomFrameKeyIndex } from "../Utility/Frame";
 import dimensionProvider from "./DimensionProvider";
+import BackAndForthFrameProvider from "./FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "./FrameProviders/CircleFrameProvider";
 import { AsteroidLocationProvider } from "./LocationProviders/AsteroidLocationProvider";
 import ImmobileLocationProvider from "./LocationProviders/ImmobileLocationProvider";
 import MoveDownAppearUpLocationProvider from "./LocationProviders/MoveDownAppearUpLocaionProvider";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
-import RobotEnemy from "../Enemies/Robot/RobotEnemy";
-import BackAndForthFrameProvider from "./FrameProviders/BackAndForthFrameProvider";
 import VanishRightAppearLeftLocationProvider from "./LocationProviders/VanishRightAppearLeftLocationProvider";
-import getRobotFrames from "../Enemies/Robot/RobotFrames";
-import BirdEnemy from "../Enemies/Bird/BirdEnemy";
-import getBirdFrames from "../Enemies/Bird/BirdFrames";
 
 /**
  * Module:          EnemyFactory

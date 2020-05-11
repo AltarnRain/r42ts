@@ -5,6 +5,7 @@
  */
 
 import GameLoop from "./GameLoop";
+import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import subscribeToStoreChanges from "./Levels/SubscribeToStore";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
@@ -19,7 +20,6 @@ import { WarpLevelComplexity } from "./State/Game/WarpLevelTypes";
 import { dispatch } from "./State/Store";
 import { registerListeners } from "./Utility/KeyboardEvents";
 import { getURLQueryKVPs } from "./Utility/Lib";
-import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 
 /**
  * Module:          Index

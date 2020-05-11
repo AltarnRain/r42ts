@@ -15,15 +15,13 @@ import ILevel from "../Interfaces/ILevel";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
-import { addPhaser, nextLevel } from "../State/Game/GameActions";
 import { setPlayerLocationData, setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
+import handleLevelWon from "../StateHandlers/HandleLevelWon";
 import { handlePlayerDeath } from "../StateHandlers/HandlePlayerDeath";
-import { MoveLimits } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { coinFlip } from "../Utility/Lib";
 import { fallsWithin } from "../Utility/Location";
-import handleLevelWon from "../StateHandlers/HandleLevelWon";
 
 /**
  * Module:          WarpLevel

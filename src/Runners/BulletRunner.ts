@@ -5,12 +5,12 @@
  */
 
 import dimensionProvider from "../Providers/DimensionProvider";
+import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { addBullet } from "../State/EnemyLevel/EnemyLevelActions";
 import { StateProviders } from "../State/StateProviders";
 import { dispatch } from "../State/Store";
 import { Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
-import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 
 /**
  * Module:          StraightDownBulletProvider

@@ -20,20 +20,15 @@ const {
 export namespace Speeds {
 
     export namespace Movement {
-        // Enemy speeds
         export const bird = 1.5;
-
         export const robot = 1.5;
-
         export const orb = 0.1;
-
         export const spinner = 1.5;
         export const balloon = 1.5;
         export const asteroid = [2, 4, 6, 8, 10];
     }
 
     export namespace Bullets {
-        // bullet speeds
         export const player = 42;
         export const robot = 7;
         export const orb = 12;
@@ -62,26 +57,16 @@ export namespace Locations {
 // Collective namespace for all movement angles.
 export namespace MovementAngles {
     export const bird = [2, 358, 178, 182];
-
     export const robot = 5;
-
     export const orb = 90;
-
     export const spinner = [2, 358, 178, 182];
-
-    
 }
 
 // Collective namespace for all frametimes.
 export namespace FrameTimes {
-
     export const bird = 100;
-
     export const robot = 200;
-
     export const orb = 200;
-
     export const spinner = 100;
-
     export const balloon = 100;
 }
