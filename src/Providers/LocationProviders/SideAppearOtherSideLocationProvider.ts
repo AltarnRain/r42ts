@@ -8,6 +8,7 @@ import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import { getLocation } from "../../Utility/Location";
 import dimensionProvider from "../DimensionProvider";
+import { getLeftOrRightFromAngle } from "../../Utility/Geometry";
 
 /**
  * Module:          Left to right, then left.
@@ -18,29 +19,45 @@ const {
     gameField
 } = dimensionProvider();
 
-export default class VanishRightAppearLeftLocationProvider extends BaseLocationProvider {
+export default class SideAppearOtherSideLocationProvider extends BaseLocationProvider {
     private maxTop: number;
     private maxBottom: number;
 
     /**
      *
      */
-    constructor(left: number, top: number, speed: number, angle: number, width: number, height: number, maxTop: number, maxBottom: number) {
+    constructor(
+        left: number,
+        top: number,
+        speed: number,
+        angle: number,
+        width: number,
+        height: number,
+        maxTop: number,
+        maxBottom: number) {
         super(left, top, speed, angle, width, height);
 
-        this.maxTop = maxTop,
+        this.maxTop = maxTop;
         this.maxBottom = maxBottom;
     }
 
     public updateState(tick: number): void {
         let { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
 
-        if (left - this.width > gameField.right) {
-            left = gameField.left - this.width;
+        const direction = getLeftOrRightFromAngle(this.angle);
+
+        if (direction === "right") {
+            if (left - this.width > gameField.right) {
+                left = gameField.left - this.width;
+            }
+        } else if (direction === "left") {
+            if (left + this.width < gameField.left) {
+                left = gameField.right + this.width;
+            }
         }
 
         if (top > this.maxBottom) {
-           top = this.maxTop;
+            top = this.maxTop;
         }
 
         this.left = left;

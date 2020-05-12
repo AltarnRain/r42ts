@@ -68,7 +68,7 @@ export namespace MovementAngles {
     export const robot = 5;
     export const orb = 90;
     export const spinner = [2, 358, 178, 182];
-    export const pison = 175;
+    export const piston = 175;
 }
 
 // Collective namespace for all frametimes.

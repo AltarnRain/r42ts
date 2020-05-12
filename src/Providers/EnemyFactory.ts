@@ -35,8 +35,8 @@ import CircleFrameProvider from "./FrameProviders/CircleFrameProvider";
 import AsteroidLocationProvider from "./LocationProviders/AsteroidLocationProvider";
 import ImmobileLocationProvider from "./LocationProviders/ImmobileLocationProvider";
 import MoveDownAppearUpLocationProvider from "./LocationProviders/MoveDownAppearUpLocaionProvider";
+import SideAppearOtherSideLocationProvider from "./LocationProviders/SideAppearOtherSideLocationProvider";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
-import VanishRightAppearLeftLocationProvider from "./LocationProviders/VanishRightAppearLeftLocationProvider";
 import Wobble from "./LocationProviders/Wobble";
 
 /**
@@ -80,7 +80,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const { maxSizes: { width, height } } = getRobotResource();
 
             const frameProvider = new BackAndForthFrameProvider(0);
-            const locationProvider = new VanishRightAppearLeftLocationProvider(location.left, location.top, Speeds.Movement.robot, MovementAngles.robot, width, height, gameField.top, maxBottom);
+            const locationProvider = new SideAppearOtherSideLocationProvider(location.left, location.top, Speeds.Movement.robot, MovementAngles.robot, width, height, gameField.top, maxBottom);
             return new RobotEnemy(FrameTimes.robot, locationProvider, frameProvider, getExplosion02, getRobotResource);
         }
 
@@ -137,7 +137,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
 
             const { maxSizes: { width, height } } = getPistonOffsetFrames();
             const frameProvider = new BackAndForthFrameProvider(0);
-            // const locationProvider = new (location.left, location.top, Speeds.Movement.balloon, 0, width, height, 200);
+            // const locationProvider = new SideAppearOtherSideLocationProvider(location.left, location.top, Speeds.Movement.piston, MovementAngles.piston, width, height, gameField.top, gameField.bottom);
             const locationProvider = new ImmobileLocationProvider(location.left, location.top);
             return new PistonEnemy(FrameTimes.piston, getPistonOffsetFrames, getExplosion02, locationProvider, frameProvider);
 
