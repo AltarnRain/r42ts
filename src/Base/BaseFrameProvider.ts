@@ -5,7 +5,7 @@
  */
 
 import { Frame } from "../Types";
-import { copyFrame as copyFrame, copyFrames, getFrameByIndex } from "../Utility/Frame";
+import { copyFrame, copyFrames, getFrameByIndex } from "../Utility/Frame";
 
 /**
  * Module:          IFrameProvider

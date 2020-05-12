@@ -8,11 +8,11 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
 import { getMaximumFrameDimensions } from "../../Utility/Frame";
 
 /**
- * Module:          BalloonFrames
- * Responsibility:  Define the frames of the Balloon enemy.
+ * Module:          GetAsteroidOffsetFrames
+ * Responsibility:  Returns the requires
  */
 
-export function getAsteroidFrames(): OffsetFrames {
+export function getAsteroidOffsetFrames(): OffsetFrames {
     const resource = {
         frames: [
             [

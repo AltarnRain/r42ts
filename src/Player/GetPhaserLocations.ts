@@ -6,7 +6,7 @@
 
 import dimensionProvider from "../Providers/DimensionProvider";
 import speedProvider from "../Providers/SpeedProvider";
-import { calculateAngle as calculateAngle } from "../Utility/Geometry";
+import { calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
 
 /**

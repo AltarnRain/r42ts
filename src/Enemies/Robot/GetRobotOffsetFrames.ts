@@ -8,11 +8,11 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
 import { getMaximumFrameDimensions } from "../../Utility/Frame";
 
 /**
- * Module:          RobotFrames
+ * Module:          GetRobotOffsetFrames
  * Responsibility:  Define the frames of the RobotEnemy
  */
 
-export default function getRobotFrames(): OffsetFrames {
+export default function getRobotOffsetFrames(): OffsetFrames {
 
     let offsetCount = 0;
     const resource: OffsetFrames = {

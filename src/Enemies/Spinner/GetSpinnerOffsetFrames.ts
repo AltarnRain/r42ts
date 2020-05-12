@@ -8,11 +8,11 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
 import { getMaximumFrameDimensions } from "../../Utility/Frame";
 
 /**
- * Module:          SpinnerFrames
+ * Module:          GetSpinnerOffsetFrames
  * Responsibility:  Define the frames of the spinner enemy.
  */
 
-export function getSpinnerFrames(): OffsetFrames {
+export function getSpinnerOffsetFrames(): OffsetFrames {
     const resource = {
         frames: [
             [

@@ -8,7 +8,7 @@ import { Locations } from "../../Constants/Constants";
 import { GameLocation } from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { getFrameDimensions } from "../../Utility/Frame";
-import getRobotFrames from "./RobotFrames";
+import getRobotOffsetFrames from "./GetRobotOffsetFrames";
 
 /**
  * Module:          RobotSpawnLocations
@@ -20,7 +20,7 @@ const {
 } = dimensionProvider();
 
 const robotSpawnLocations: GameLocation[] = [];
-const { width } = getFrameDimensions(getRobotFrames().frames[0], pixelSize);
+const { width } = getFrameDimensions(getRobotOffsetFrames().frames[0], pixelSize);
 
 const top = Locations.Enemies.robot.topStart;
 const left = pixelSize * 15;

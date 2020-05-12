@@ -8,11 +8,11 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
 import { getMaximumFrameDimensions } from "../../Utility/Frame";
 
 /**
- * Module:          Bird enemy
+ * Module:          GetBirdOffsetFrames
  * Responsibility:  Define animation frames for the bird enemy.
  */
 
-export default function getBirdFrames(): OffsetFrames {
+export default function getBirdOffsetFrames(): OffsetFrames {
     const resource: OffsetFrames = {
         frames: [
             [

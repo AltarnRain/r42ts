@@ -8,11 +8,11 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
 import { getMaximumFrameDimensions } from "../../Utility/Frame";
 
 /**
- * Module:          OrbFrames
+ * Module:          GetOrbOffsetFrames
  * Responsibility:  Define the frames for the orb enemy
  */
 
-export default function getOrbFrames(): OffsetFrames {
+export default function getOrbOffsetFrames(): OffsetFrames {
 
     const orbMainFrame = [
         ["0", "V0", "V0", "0"],
