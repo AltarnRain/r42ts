@@ -8,7 +8,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
 import { addBullet } from "../State/EnemyLevel/EnemyLevelActions";
 import { StateProviders } from "../State/StateProviders";
-import { dispatch } from "../State/Store";
+import { dispatch, appState } from "../State/Store";
 import { Frame, FrameProviderFunction, ShipsToFireFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
@@ -74,6 +74,16 @@ export default class BulletRunner {
      * @param {number} tick. Current tick.
      */
     public updateState(tick: number): void {
+
+        const {
+            playerState: { alive}
+        } = appState();
+
+        // Enemies do not fire when the player is dead.
+        if (!alive) {
+            return;
+        }
+
         const shipsToFire = this.shipsToFire(tick);
 
         // The candiates are sorted so the enemeies with the best odds of hitting the player

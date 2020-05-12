@@ -20,20 +20,17 @@ const {
 } = dimensionProvider();
 
 const orbSpawnLocations: GameLocation[] = [];
-const { width } = getFrameDimensions(getOrbOffsetFrames().frames[0], pixelSize);
-
 const top = Locations.Enemies.Orb.topStart;
-const left = pixelSize * 8;
-const spacing = pixelSize * 2;
+let left = pixelSize * 16;
+const spacing = pixelSize * 6;
 
 for (let i = 0; i < 22; i++) {
-    const actualSpacing = i === 0 ? 0 : spacing * i;
-    const actualLeft = left + i * width + spacing;
-
     const value = {
-        left: actualLeft + actualSpacing,
+        left,
         top,
     };
+
+    left += spacing;
 
     orbSpawnLocations.push(value);
 }

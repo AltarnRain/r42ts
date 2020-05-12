@@ -7,12 +7,10 @@
 import { Locations } from "../../Constants/Constants";
 import { GameLocation } from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
-import { getFrameDimensions } from "../../Utility/Frame";
-import getPistonOffsetFrames from "./GetPistonOffsetFrames";
 
 /**
- * Module:          RobotSpawnLocations
- * Responsibility:  Returns the robot spawn locations.
+ * Module:          PistonSpawnLocations
+ * Responsibility:  Returns the Piston spawn locations.
  */
 
 const {

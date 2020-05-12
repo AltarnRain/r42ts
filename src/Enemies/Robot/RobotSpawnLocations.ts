@@ -20,20 +20,19 @@ const {
 } = dimensionProvider();
 
 const robotSpawnLocations: GameLocation[] = [];
-const { width } = getFrameDimensions(getRobotOffsetFrames().frames[0], pixelSize);
 
 const top = Locations.Enemies.robot.topStart;
-const left = pixelSize * 15;
-const spacing = pixelSize * 3;
+let left = pixelSize * 12;
+const spacing = pixelSize * 8;
 
 for (let i = 0; i < 14; i++) {
-    const actualSpacing = i === 0 ? 0 : spacing * i;
-    const actualLeft = left + i * width + spacing;
 
     const value = {
-        left: actualLeft + actualSpacing,
+        left,
         top,
     };
+
+    left += spacing;
 
     robotSpawnLocations.push(value);
 }
