@@ -132,16 +132,25 @@ function playerHitEnemyDetection(tick: number) {
         });
 
         if (hitEnemy !== undefined) {
-            if (hitEnemy.hitpoints === 1) {
-                handleEnemyDestruction(hitEnemy, tick);
-            } else {
-                const enemy = localState.enemies.find((e) => e.getId() === hitEnemy.enemyId);
-                if (enemy) {
-                    enemy.recudeHitpoints();
-                }
-            }
+            handleEnemyHitByplayer(tick, hitEnemy);
 
             dispatch(setPlayerBulletState(undefined));
+        }
+    }
+}
+
+/**
+ * Handles the actions that can occur of the player hits a enemy.
+ * @param {number} tick. Current tick
+ * @param {EnemyState} hitEnemy. Enemy hit by the player.
+ */
+function handleEnemyHitByplayer(tick: number, hitEnemy: EnemyState): void {
+    if (hitEnemy.hitpoints === 1) {
+        handleEnemyDestruction(tick, hitEnemy);
+    } else {
+        const enemy = localState.enemies.find((e) => e.getId() === hitEnemy.enemyId);
+        if (enemy) {
+            enemy.recudeHitpoints();
         }
     }
 }
@@ -206,7 +215,7 @@ function handleSelfDestruct(tick: number): void {
  * handles the destruction of an enemy.
  * @param {BaseEnemy} enemy.
  */
-function handleEnemyDestruction(enemy: EnemyState, tick: number): void {
+function handleEnemyDestruction(tick: number, enemy: EnemyState): void {
     const { enemyLevelState } = appState();
 
     localState.enemies = localState.enemies.filter((e) => {
@@ -254,7 +263,7 @@ function handlePhaser(tick: number): void {
 
                 // Deal the with the enemy that got hit.
 
-                handleEnemyDestruction(randomEnemy, tick);
+                handleEnemyHitByplayer(tick, randomEnemy);
                 dispatch(clearPhaserLocations());
             }, 100);
         }
