@@ -33,4 +33,30 @@ describe("geometry tests", () => {
         expect(result1).toBe(20);
         expect(result2).toBe(20);
     });
+
+    test("get left or right direction from angle", () => {
+        const result1 = Geometry.getLeftOrRightFromAngle(0);
+        const result2 = Geometry.getLeftOrRightFromAngle(360);
+        const result3 = Geometry.getLeftOrRightFromAngle(325);
+        const result4 = Geometry.getLeftOrRightFromAngle(45);
+
+        const result5 = Geometry.getLeftOrRightFromAngle(235);
+        const result6 = Geometry.getLeftOrRightFromAngle(180);
+        const result7 = Geometry.getLeftOrRightFromAngle(135);
+
+        const result8 = Geometry.getLeftOrRightFromAngle(90);
+        const result9 = Geometry.getLeftOrRightFromAngle(270);
+
+        expect(result1).toBe("right");
+        expect(result2).toBe("right");
+        expect(result3).toBe("right");
+        expect(result4).toBe("right");
+
+        expect(result5).toBe("left");
+        expect(result6).toBe("left");
+        expect(result7).toBe("left");
+
+        expect(result8).toBe(undefined);
+        expect(result9).toBe(undefined);
+    });
 });

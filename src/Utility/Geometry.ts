@@ -8,6 +8,7 @@ import { angles } from "../Constants/Angles";
 import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import KeyboardState from "../State/Keyboard/KeyboardState";
+import { Angle } from "../Types";
 
 /**
  * Module:          Geometry
@@ -136,22 +137,18 @@ export function calculateAngleDifference(angle1: number, angle2: number): number
 }
 
 /**
- * Calculates the ideal location where a spaller rectangle should appear in a bigger one.
- * @param {GameRectangle} outerRect. Enveloping rectangle.
- * @param {GameRectangle} innerRect. Inner rectangle.
+ * Checks the angle if it is headed to the left or right.
+ * Returns undefined if the angle is up or down.
+ * @param {number} angle. an angle.
  */
-export function calculateOptinalInnerRectablePlacement(outerRect: GameRectangle, innerRect: GameRectangle): GameLocation {
-    const outerRectWidth = outerRect.right - outerRect.left;
-    const outerRectHeight = outerRect.bottom - outerRect.top;
+export function getLeftOrRightFromAngle(angle: Angle): "left" | "right" | undefined {
+    if (angle === undefined) {
+        return undefined;
+    }
 
-    const innerRectWidth = innerRect.right - innerRect.left;
-    const innerRectHeight = innerRect.bottom - innerRect.top;
-
-    const widthDifference = outerRectWidth - innerRectWidth;
-    const heightDifference = outerRectHeight - innerRectHeight;
-
-    return {
-        left: outerRect.left + widthDifference / 2,
-        top: outerRect.top + heightDifference / 2,
-    };
+    if (angle > 270 && angle <= 360 || angle >= 0 && angle < 90) {
+        return "right";
+    } else if (angle > 90 && angle < 270) {
+        return "left";
+    }
 }
