@@ -5,10 +5,9 @@
  */
 
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
-import ILocationProvider from "../../Interfaces/ILocationProvider";
+import { getLeftOrRightFromAngle } from "../../Utility/Geometry";
 import { getLocation } from "../../Utility/Location";
 import dimensionProvider from "../DimensionProvider";
-import { getLeftOrRightFromAngle } from "../../Utility/Geometry";
 
 /**
  * Module:          Left to right, then left.
