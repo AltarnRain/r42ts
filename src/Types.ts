@@ -14,11 +14,6 @@ import { OffsetFrames } from "./Models/OffsetFrames";
 import ShipToFire from "./ShipsToFire";
 
 /**
- * Defines frames. Frames are objects with key values that start with F{N}. Where N is the frame number.
- */
-export type Frames = Frame[];
-
-/**
  * A single frame.
  */
 export type Frame = string[][];

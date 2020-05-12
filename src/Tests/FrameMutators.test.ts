@@ -5,7 +5,7 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
-import { Frame, Frames } from "../Types";
+import { Frame } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
 /**
@@ -15,7 +15,7 @@ import Mutators from "../Utility/FrameMutators";
 
 test("converFramesColor", () => {
     // Arrange
-    const f: Frames = [[["E"]]];
+    const f: Frame[] = [[["E"]]];
 
     // Act
     Mutators.Frames.convertHexToCGA(f);
@@ -37,7 +37,7 @@ test("convertFrameColor", () => {
 
 test("convertVariableFramesColor", () => {
     // Arrange
-    const f: Frames = [
+    const f: Frame[] = [
         [["V"]]
     ];
 
@@ -50,7 +50,7 @@ test("convertVariableFramesColor", () => {
 
 test("setFramesColor", () => {
     // Arrange
-    const f: Frames = [
+    const f: Frame[] = [
         [["NotAColor"]]
     ];
 

@@ -6,14 +6,14 @@
 
 import "jest";
 import BackAndForthFrameProvider from "../Providers/FrameProviders/BackAndForthFrameProvider";
-import { Frames } from "../Types";
+import { Frame } from "../Types";
 
 /**
  * Module:          FrameProvider.tests
  * Responsibility:  Test the frame provider.
  */
 
-const Frames: Frames = [
+const Frames: Frame[] = [
     [["a"]],
     [["b"]],
     [["c"]],

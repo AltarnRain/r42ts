@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frame as FrameType, Frames } from "../Types";
+import { Frame as FrameType } from "../Types";
 import * as Frame from "../Utility/Frame";
 
 /**
@@ -12,7 +12,7 @@ import * as Frame from "../Utility/Frame";
  * Responsibility:  Test the Frame utility class.
  */
 
-const frames: Frames = [
+const frames: FrameType[] = [
     [["a"]],
     [["b"]],
 ];
@@ -46,7 +46,7 @@ test("getFrameCenter", () => {
 
 test("getRandomFramesKeyIndex single key", () => {
 
-    const f: Frames = [
+    const f: FrameType[] = [
         [[]],
     ];
 

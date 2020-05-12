@@ -5,6 +5,7 @@
  */
 
 import { OffsetFrames } from "../../Models/OffsetFrames";
+import { getMaximumFrameDimensions } from "../../Utility/Frame";
 
 /**
  * Module:          BalloonFrames
@@ -12,7 +13,7 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
  */
 
 export function getBalloonFrames(): OffsetFrames {
-    return {
+    const resource = {
         frames: [
             [
                 ["0", "E", "E", "E", "E", "0"],
@@ -57,6 +58,11 @@ export function getBalloonFrames(): OffsetFrames {
                 ["0", "0", "E", "E", "0", "0"],
             ],
         ],
-        offSets: []
+        offSets: [],
+        maxSizes: { width: 0, height: 0 }
     };
+
+    resource.maxSizes = getMaximumFrameDimensions(resource.frames);
+
+    return resource;
 }

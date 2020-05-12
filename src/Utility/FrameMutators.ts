@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frame as FrameType, Frames as FramesType } from "../Types";
+import { Frame as FrameType } from "../Types";
 import hexToCGAConverter from "./HexToCGAConverter";
 
 /**
@@ -20,7 +20,7 @@ namespace Mutators {
          * Sets a cell's color to the passed color. Doesn't matter if they're variable (V).
          * @param {Frames} frames. All frames.
          */
-        export function setColor(frames: FramesType, ...colors: string[]): void {
+        export function setColor(frames: FrameType[], ...colors: string[]): void {
             for (const frame of frames) {
                 Frame.setColor(frame, ...colors);
             }
@@ -30,7 +30,7 @@ namespace Mutators {
          * Updates a frame to actual CGA colors.
          * @param {Frames} frames. All frames.
          */
-        export function convertHexToCGA(frames: FramesType): void {
+        export function convertHexToCGA(frames: FrameType[]): void {
             for (const frame of frames) {
                 Frame.convertHexToCGA(frame);
             }

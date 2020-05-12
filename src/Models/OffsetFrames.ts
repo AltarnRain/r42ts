@@ -4,8 +4,9 @@
  * See LICENSE.MD.
  */
 
-import { Frames } from "../Types";
+import { Frame } from "../Types";
 import { GameLocation } from "./GameLocation";
+import { GameSize } from "./GameSize";
 
 /**
  * Module:          OffsetFrames
@@ -16,10 +17,15 @@ export interface OffsetFrames {
     /**
      * Frames to draw.
      */
-    frames: Frames;
+    frames: Frame[];
 
     /**
      * Offsets user to render the object on screen.
      */
     offSets: GameLocation[];
+
+    /**
+     * The maximum dimensions of the frames.
+     */
+    maxSizes: GameSize;
 }

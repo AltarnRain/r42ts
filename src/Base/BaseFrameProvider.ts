@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frame, Frames } from "../Types";
+import { Frame } from "../Types";
 import { copyFrame as copyFrame, copyFrames, getFrameByIndex } from "../Utility/Frame";
 
 /**
@@ -16,7 +16,7 @@ export default abstract class BaseFrameProvider {
     /**
      * Animation frames.
      */
-    private frames?: Frames;
+    private frames?: Frame[];
 
     /**
      * The current frame for an animated enemy.
@@ -43,7 +43,7 @@ export default abstract class BaseFrameProvider {
         this.maxIndex = -1;
     }
 
-    public setFrames(frames: Frames): void {
+    public setFrames(frames: Frame[]): void {
         this.frames = copyFrames(frames);
         this.maxIndex = frames.length - 1;
     }

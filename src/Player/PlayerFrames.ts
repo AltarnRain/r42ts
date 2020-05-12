@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frame, Frames } from "../Types";
+import { Frame } from "../Types";
 
 /**
  * Module:          PlayerFrames
@@ -22,8 +22,8 @@ export function getPlayerFrame(): Frame {
     return playerFrame;
 }
 
-export function getPlayerFormationFrames(): Frames {
-    const playerFormationFrames: Frames = [
+export function getPlayerFormationFrames(): Frame[] {
+    const playerFormationFrames: Frame[] = [
         [["B", "B"]],  // nozzle tip
         [["F", "F"]],  // nozle bottom
         [              // left wing

@@ -5,6 +5,7 @@
  */
 
 import { OffsetFrames } from "../../Models/OffsetFrames";
+import { getMaximumFrameDimensions } from "../../Utility/Frame";
 
 /**
  * Module:          RobotFrames
@@ -14,7 +15,7 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
 export default function getRobotFrames(): OffsetFrames {
 
     let offsetCount = 0;
-    const robotFrames: OffsetFrames = {
+    const resource: OffsetFrames = {
         frames: [
             [
                 ["0", "V", "V", "V", "0"],
@@ -84,19 +85,22 @@ export default function getRobotFrames(): OffsetFrames {
                 top: offsetCount += 1,
                 left: 0
             }
-        ]
+        ],
+        maxSizes: { width: 0, height: 0 }
     };
 
     // Add frame 0 an additional 7 times to make the animation look good.
-    robotFrames.frames = [
-        robotFrames.frames[0],
-        robotFrames.frames[0],
-        robotFrames.frames[0],
-        robotFrames.frames[0],
-        robotFrames.frames[0],
-        robotFrames.frames[0],
-        ...robotFrames.frames,
+    resource.frames = [
+        resource.frames[0],
+        resource.frames[0],
+        resource.frames[0],
+        resource.frames[0],
+        resource.frames[0],
+        resource.frames[0],
+        ...resource.frames,
     ];
 
-    return robotFrames;
+    resource.maxSizes = getMaximumFrameDimensions(resource.frames);
+
+    return resource;
 }

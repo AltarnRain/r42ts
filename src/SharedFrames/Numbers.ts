@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frames } from "../Types";
+import { Frame } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
 /**
@@ -12,8 +12,8 @@ import Mutators from "../Utility/FrameMutators";
  * Responsibility:  Numbers 0 to 9. All colors are variant and can be set with single function call.
  */
 
-export default function getNumbers(color: string): Frames {
-    const numbers: Frames = [
+export default function getNumbers(color: string): Frame[] {
+    const numbers: Frame[] = [
         [
             ["0", "V", "V", "0"],
             ["V", "0", "0", "V"],

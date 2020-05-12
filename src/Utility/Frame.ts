@@ -9,7 +9,7 @@ import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { Frame, Frames } from "../Types";
+import { Frame } from "../Types";
 
 /**
  * Module:          Frame
@@ -33,7 +33,7 @@ export function getFrameDimensions(frame: Frame, pixelSize?: number): GameSize {
     };
 }
 
-export function getMaximumFrameDimensions(frames: Frames, pixelSize?: number): GameSize {
+export function getMaximumFrameDimensions(frames: Frame[], pixelSize?: number): GameSize {
     const allFrameDimensions = frames.map((f) => getFrameDimensions(f, pixelSize));
 
     const allWidths = allFrameDimensions.map((af) => af.width);
@@ -65,7 +65,7 @@ export function getFrameCenter(left: number, top: number, frame: Frame, pixelSiz
  * @param {Frames} frames.
  * @returns {number}. Frame index.
  */
-export function getRandomFrameKeyIndex(frames: Frames): number {
+export function getRandomFrameKeyIndex(frames: Frame[]): number {
     const objectKeys = Object.keys(frames).length - 1;
 
     return Math.round(Math.random() * objectKeys);
@@ -77,7 +77,7 @@ export function getRandomFrameKeyIndex(frames: Frames): number {
  * @param {number} index. Index of the frame.
  * @returns {Frame | undefined}. Returns the frame if one was found for the passed index, otherwise returns undefined.
  */
-export function getFrameByIndex(frames: Frames, index: number): Frame {
+export function getFrameByIndex(frames: Frame[], index: number): Frame {
     const frame = frames[index];
 
     if (!frame) {
@@ -129,8 +129,8 @@ export function copyFrame(frame: Frame): Frame {
  * @param {Frames} frames. Frames to copy.
  * @return {Frames}. Fresh copy of the Frames.
  */
-export function copyFrames(frames: Frames): Frames {
-    const newFrames: Frames = [];
+export function copyFrames(frames: Frame[]): Frame[] {
+    const newFrames: Frame[] = [];
 
     for (const frame of frames) {
         const newFrame = copyFrame(frame);

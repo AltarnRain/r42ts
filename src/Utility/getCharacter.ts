@@ -4,14 +4,14 @@
  * See LICENSE.MD.
  */
 
-import { Frame, Frames } from "../Types";
+import { Frame } from "../Types";
 
 /**
  * Module:          getCharacter
  * Responsibility:  Return a character
  */
 
-export default function getCharacter(frames: Frames, character: string): Frame {
+export default function getCharacter(frames: Frame[], character: string): Frame {
     const upperCaseCharacter = character.toUpperCase();
 
     if (upperCaseCharacter === "SPACE") {

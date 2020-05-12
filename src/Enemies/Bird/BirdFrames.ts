@@ -5,6 +5,7 @@
  */
 
 import { OffsetFrames } from "../../Models/OffsetFrames";
+import { getMaximumFrameDimensions } from "../../Utility/Frame";
 
 /**
  * Module:          Bird enemy
@@ -12,7 +13,7 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
  */
 
 export default function getBirdFrames(): OffsetFrames {
-    const birdFrames: OffsetFrames = {
+    const resource: OffsetFrames = {
         frames: [
             [
                 ["0", "V", "0", "V", "0"],
@@ -51,8 +52,11 @@ export default function getBirdFrames(): OffsetFrames {
                 top: 0,
                 left: 0,
             }
-        ]
+        ],
+        maxSizes: { width: 0, height: 0 }
     };
 
-    return birdFrames;
+    resource.maxSizes = getMaximumFrameDimensions(resource.frames);
+
+    return resource;
 }

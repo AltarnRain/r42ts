@@ -5,6 +5,7 @@
  */
 
 import { OffsetFrames } from "../../Models/OffsetFrames";
+import { getMaximumFrameDimensions } from "../../Utility/Frame";
 
 /**
  * Module:          BalloonFrames
@@ -12,7 +13,7 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
  */
 
 export function getAsteroidFrames(): OffsetFrames {
-    return {
+    const resource = {
         frames: [
             [
                 ["0", "0", "6", "6", "0", "0"],
@@ -37,7 +38,7 @@ export function getAsteroidFrames(): OffsetFrames {
                 ["6", "C", "C", "C", "C", "6"],
                 ["0", "6", "C", "C", "6", "0"],
                 ["0", "0", "6", "6", "0", "0"],
-            ],            [
+            ], [
                 ["0", "0", "C", "C", "0", "0"],
                 ["0", "C", "C", "C", "C", "0"],
                 ["C", "C", "C", "C", "C", "C"],
@@ -46,6 +47,11 @@ export function getAsteroidFrames(): OffsetFrames {
                 ["0", "0", "C", "C", "0", "0"],
             ]
         ],
-        offSets: []
+        offSets: [],
+        maxSizes: { width: 0, height: 0 }
     };
+
+    resource.maxSizes = getMaximumFrameDimensions(resource.frames);
+
+    return resource;
 }

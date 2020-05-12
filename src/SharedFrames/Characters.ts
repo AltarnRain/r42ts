@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frames } from "../Types";
+import { Frame } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
 /**
@@ -16,8 +16,8 @@ import Mutators from "../Utility/FrameMutators";
  *                  can be set with a single function call.
  */
 
-export default function getCharacters(color: string): Frames {
-    const Characters: Frames = [
+export default function getCharacters(color: string): Frame[] {
+    const Characters: Frame[] = [
         [
             ["0", "V", "V", "0"],
             ["V", "0", "0", "V"],

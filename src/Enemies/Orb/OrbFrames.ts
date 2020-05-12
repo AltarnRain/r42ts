@@ -5,6 +5,7 @@
  */
 
 import { OffsetFrames } from "../../Models/OffsetFrames";
+import { getMaximumFrameDimensions } from "../../Utility/Frame";
 
 /**
  * Module:          OrbFrames
@@ -20,7 +21,7 @@ export default function getOrbFrames(): OffsetFrames {
         ["0", "V0", "V0", "0"],
     ];
 
-    const orbFrames: OffsetFrames = {
+    const resource: OffsetFrames = {
         frames: [],
         offSets: [
             // Move up
@@ -76,11 +77,14 @@ export default function getOrbFrames(): OffsetFrames {
                 top: 0,
             }
         ],
+        maxSizes: { width: 0, height: 0 }
     };
 
-    orbFrames.offSets.forEach(() => {
-        orbFrames.frames.push(orbMainFrame);
+    resource.offSets.forEach(() => {
+        resource.frames.push(orbMainFrame);
     });
 
-    return orbFrames;
+    resource.maxSizes = getMaximumFrameDimensions(resource.frames);
+
+    return resource;
 }

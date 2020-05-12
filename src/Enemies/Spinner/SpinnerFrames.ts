@@ -5,6 +5,7 @@
  */
 
 import { OffsetFrames } from "../../Models/OffsetFrames";
+import { getMaximumFrameDimensions } from "../../Utility/Frame";
 
 /**
  * Module:          SpinnerFrames
@@ -12,7 +13,7 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
  */
 
 export function getSpinnerFrames(): OffsetFrames {
-    return {
+    const resource = {
         frames: [
             [
                 ["0", "A", "0"],
@@ -35,6 +36,11 @@ export function getSpinnerFrames(): OffsetFrames {
                 ["0", "0", "A"],
             ]
         ],
-        offSets: []
+        offSets: [],
+        maxSizes: { width: 0, height: 0}
     };
+
+    resource.maxSizes = getMaximumFrameDimensions(resource.frames);
+
+    return resource;
 }
