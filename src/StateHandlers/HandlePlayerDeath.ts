@@ -20,10 +20,10 @@ import { dispatchExplosion } from "./DispatchExplosion";
  */
 export function handlePlayerDeath(tick: number): void {
 
-    const { playerState: { left, top, coloredExplosion }, debuggingState, enemyLevelState: {enemies} } = appState();
+    const { playerState: { left, top, coloredExplosion }, debuggingState, enemyLevelState: {enemies, totalNumberOfEnemies} } = appState();
 
     // Don't let the player die once they've killed all enemies.
-    if (debuggingState.playerIsImmortal || enemies.length === 0) {
+    if (debuggingState.playerIsImmortal || enemies.length === 0 && totalNumberOfEnemies > 0) {
         return;
     }
 
