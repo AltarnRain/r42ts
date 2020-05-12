@@ -9,6 +9,7 @@ import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
 import Mutators from "../../Utility/FrameMutators";
+import CGAColors from "../../Constants/CGAColors";
 
 /**
  * Module:          PistonEnemey
@@ -29,8 +30,8 @@ export default class PistonEnemy extends BaseEnemy {
             locationProvider,
             frameProvider);
 
-        Mutators.Frame.setColor(this.explosion.explosionCenterFrame);
-        Mutators.Frame.setColor(this.explosion.particleFrames[0]);
+        Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.lightMagenta);
+        Mutators.Frame.setColor(this.explosion.particleFrames[0], CGAColors.magenta);
     }
 
     /**
@@ -47,6 +48,9 @@ export default class PistonEnemy extends BaseEnemy {
      * Called when a frame change is required. The Piston frames are all colored at initialisation so we can keep this simple.
      */
     protected onFrameChange(): void {
+        const newFrame = this.frameProvider.getNextFrame();
+        Mutators.Frame.convertHexToCGA(newFrame);
+        this.currentFrame = newFrame;
         // TODO
     }
 

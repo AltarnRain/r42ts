@@ -85,7 +85,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "piston": {
-            const enemies = robotSpawnLocations.map((rl) => enemyFactory("robot", rl));
+            const enemies = robotSpawnLocations.map((rl) => enemyFactory("piston", rl));
             return {
                 enemies,
             };

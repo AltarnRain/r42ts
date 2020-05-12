@@ -12,23 +12,13 @@ import { Frame } from "../../Types";
  * Responsibility:  Provide frames for animations.
  */
 
-export default class BackAndForthFrameProvider extends BaseFrameProvider {
+export default class OneFrameProvider extends BaseFrameProvider {
 
     /**
      * Returns the current frame and sets the next one. Goes back and forth between frames.
      * @returns {Frame}. A frame.
      */
     public getNextFrame(): Frame {
-        this.frameIndex += this.add;
-
-        if (this.frameIndex > this.maxIndex) {
-            this.frameIndex = this.maxIndex;
-        }
-
-        if ((this.frameIndex === this.maxIndex) || this.frameIndex === 0) {
-            this.add *= -1;
-        }
-
-        return  this.getCurrentFrame();
+        return this.getCurrentFrame();
     }
 }

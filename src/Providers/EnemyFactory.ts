@@ -16,7 +16,7 @@ import { default as getBirdOffsetFrames, default as getBirdResource } from "../E
 import getOrbResource from "../Enemies/Orb/GetOrbOffsetFrames";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import getPistonOffsetFrames from "../Enemies/Piston/GetPistonOffsetFrames";
-import PistonEnemy from "../Enemies/Piston/Piston";
+import PistonEnemy from "../Enemies/Piston/PistonEnemy";
 import getRobotResource from "../Enemies/Robot/GetRobotOffsetFrames";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import getSpinnerOffsetFrames from "../Enemies/Spinner/GetSpinnerOffsetFrames";
@@ -139,7 +139,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const frameProvider = new BackAndForthFrameProvider(0);
             // const locationProvider = new (location.left, location.top, Speeds.Movement.balloon, 0, width, height, 200);
             const locationProvider = new ImmobileLocationProvider(location.left, location.top);
-            return new PistonEnemy(FrameTimes.piston, getPistonOffsetFrames, getExplosion03, locationProvider, frameProvider);
+            return new PistonEnemy(FrameTimes.piston, getPistonOffsetFrames, getExplosion02, locationProvider, frameProvider);
 
         }
         default:
