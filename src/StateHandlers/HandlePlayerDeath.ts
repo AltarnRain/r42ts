@@ -10,7 +10,7 @@
  */
 
 import { removeLife } from "../State/Game/GameActions";
-import { setPlayerIsAlive } from "../State/Player/PlayerActions";
+import { setPlayerBulletState, setPlayerIsAlive } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { dispatchExplosion } from "./DispatchExplosion";
 
@@ -20,8 +20,10 @@ import { dispatchExplosion } from "./DispatchExplosion";
  */
 export function handlePlayerDeath(tick: number): void {
 
-    const { playerState: { left, top, coloredExplosion }, debuggingState } = appState();
-    if (debuggingState.playerIsImmortal) {
+    const { playerState: { left, top, coloredExplosion }, debuggingState, enemyLevelState: {enemies} } = appState();
+
+    // Don't let the player die once they've killed all enemies.
+    if (debuggingState.playerIsImmortal || enemies.length === 0) {
         return;
     }
 
@@ -29,4 +31,5 @@ export function handlePlayerDeath(tick: number): void {
 
     dispatch(removeLife());
     dispatch(setPlayerIsAlive(false));
+    dispatch(setPlayerBulletState(undefined));
 }
