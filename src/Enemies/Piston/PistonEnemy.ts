@@ -6,10 +6,10 @@
 
 import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
+import CGAColors from "../../Constants/CGAColors";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
 import Mutators from "../../Utility/FrameMutators";
-import CGAColors from "../../Constants/CGAColors";
 
 /**
  * Module:          PistonEnemey
