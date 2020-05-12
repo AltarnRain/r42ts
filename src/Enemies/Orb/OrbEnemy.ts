@@ -46,11 +46,16 @@ export default class OrbEnemy extends BaseEnemy {
      */
     constructor(
         frameChangeTime: number,
-        locationProvider: ILocationProvider,
-        frameProvider: BaseFrameProvider,
+        getFrames: OffsetFramesProviderFunction,
         getExplosion: ExplosionProviderFunction,
-        getFrames: OffsetFramesProviderFunction) {
-        super(frameChangeTime, getFrames, getExplosion, locationProvider, frameProvider);
+        locationProvider: ILocationProvider,
+        frameProvider: BaseFrameProvider) {
+        super(
+            frameChangeTime,
+            getFrames,
+            getExplosion,
+            locationProvider,
+            frameProvider);
 
         // We only have one frame in this enemy but its color DOES change. Set the currentFrame to the only available one
         // and sets its color to the first color set so we get a a good render when the enemy first appears.

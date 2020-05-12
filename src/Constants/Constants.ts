@@ -26,6 +26,7 @@ export namespace Speeds {
         export const spinner = 1.5;
         export const balloon = 1.5;
         export const asteroid = [2, 4, 6, 8, 10];
+        export const piston = 2;
     }
 
     export namespace Bullets {
@@ -34,6 +35,7 @@ export namespace Speeds {
         export const orb = 12;
         export const spinner = 12;
         export const balloon = 12;
+        export const piston = 12;
     }
 }
 
@@ -51,6 +53,12 @@ export namespace Locations {
             export const maxTop = gameField.top + pixelSize * 5;
             export const maxBottom = gameField.top + pixelSize * 55;
         }
+        export namespace Piston {
+            export const topStart = gameField.top + pixelSize * 18;
+            export const maxTop = gameField.top + pixelSize * 5;
+            export const maxBottom = gameField.top + pixelSize * 55;
+
+        }
     }
 }
 
@@ -60,6 +68,7 @@ export namespace MovementAngles {
     export const robot = 5;
     export const orb = 90;
     export const spinner = [2, 358, 178, 182];
+    export const pison = 175;
 }
 
 // Collective namespace for all frametimes.
@@ -69,4 +78,5 @@ export namespace FrameTimes {
     export const orb = 200;
     export const spinner = 100;
     export const balloon = 100;
+    export const piston = 100;
 }

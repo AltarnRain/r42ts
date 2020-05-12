@@ -32,10 +32,10 @@ export default class BirdEnemy extends BaseEnemy {
      */
     constructor(
         frameChangeTime: number,
-        locationProvider: ILocationProvider,
-        frameProvider: BaseFrameProvider,
+        getOffsetFrames: OffsetFramesProviderFunction,
         getExplosion: ExplosionProviderFunction,
-        getOffsetFrames: OffsetFramesProviderFunction) {
+        locationProvider: ILocationProvider,
+        frameProvider: BaseFrameProvider) {
         super(
             frameChangeTime,
             getOffsetFrames,

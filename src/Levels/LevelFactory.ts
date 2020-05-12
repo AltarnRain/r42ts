@@ -44,6 +44,8 @@ export function levelFactory(level: number): ILevel {
         case 8:
             dispatch(setWarpGamteComplexity(1));
             return new WarpLevel();
+        case 9:
+            return new EnemyLevel("piston");
         default:
             return new EnemyLevel("bird");
     }

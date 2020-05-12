@@ -84,6 +84,13 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             };
         }
 
+        case "piston": {
+            const enemies = robotSpawnLocations.map((rl) => enemyFactory("robot", rl));
+            return {
+                enemies,
+            };
+        }
+
         default:
             throw new Error(`Unknown enemy ${enemy}`);
     }

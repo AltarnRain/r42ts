@@ -10,7 +10,7 @@ import Explosion from "../Models/Explosion";
  * Module:          Explosion02
  */
 
-export function getExplosion02(): Explosion {
+export default function getExplosion02(): Explosion {
     const Explosion02: Explosion = {
         explosionCenterFrame: [
             ["V", "V", "V", "V"],

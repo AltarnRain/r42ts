@@ -25,7 +25,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Play ground",
-            "url": "http://localhost:8080/?playground?level=7",
+            "url": "http://localhost:8080/?playground?level=9"
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
             "sourceMaps": true,

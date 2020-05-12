@@ -18,7 +18,7 @@ const {
     gameField
 } = dimensionProvider();
 
-export default class VanishRightAppearLeftLocationProvider extends BaseLocationProvider implements ILocationProvider {
+export default class VanishRightAppearLeftLocationProvider extends BaseLocationProvider {
     private maxTop: number;
     private maxBottom: number;
 

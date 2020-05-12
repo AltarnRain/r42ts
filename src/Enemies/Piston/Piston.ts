@@ -18,10 +18,10 @@ import Mutators from "../../Utility/FrameMutators";
 export default class PistonEnemy extends BaseEnemy {
     constructor(
         frameChangeTime: number,
-        locationProvider: ILocationProvider,
-        frameProvider: BaseFrameProvider,
+        getFrames: OffsetFramesProviderFunction,
         getExplosion: ExplosionProviderFunction,
-        getFrames: OffsetFramesProviderFunction) {
+        locationProvider: ILocationProvider,
+        frameProvider: BaseFrameProvider) {
         super(
             frameChangeTime,
             getFrames,

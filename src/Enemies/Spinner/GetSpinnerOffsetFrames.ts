@@ -12,7 +12,7 @@ import { getMaximumFrameDimensions } from "../../Utility/Frame";
  * Responsibility:  Define the frames of the spinner enemy.
  */
 
-export function getSpinnerOffsetFrames(): OffsetFrames {
+export default function getSpinnerOffsetFrames(): OffsetFrames {
     const resource = {
         frames: [
             [

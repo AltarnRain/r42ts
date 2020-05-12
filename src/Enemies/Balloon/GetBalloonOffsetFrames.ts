@@ -12,7 +12,7 @@ import { getMaximumFrameDimensions } from "../../Utility/Frame";
  * Responsibility:  Define the offset frames of the Balloon enemy.
  */
 
-export function getBalloonOffsetFrames(): OffsetFrames {
+export default function getBalloonOffsetFrames(): OffsetFrames {
     const resource = {
         frames: [
             [

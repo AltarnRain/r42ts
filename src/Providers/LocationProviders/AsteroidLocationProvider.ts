@@ -21,7 +21,7 @@ const {
     gameField
 } = dimensionProvider();
 
-export class AsteroidLocationProvider implements ILocationProvider {
+export default class AsteroidLocationProvider implements ILocationProvider {
     private width: number;
     private height: number;
     private angles: any[];

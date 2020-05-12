@@ -12,7 +12,7 @@ import { getMaximumFrameDimensions } from "../../Utility/Frame";
  * Responsibility:  Define the offset frames of the Piston enemy.
  */
 
-export function getPistonOffsetFrames(): OffsetFrames {
+export default function getPistonOffsetFrames(): OffsetFrames {
     const resource = {
         frames: [
             [
