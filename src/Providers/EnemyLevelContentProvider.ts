@@ -8,6 +8,7 @@ import BaseEnemy from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
 import { Speeds } from "../Constants/Constants";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
+import pistonSpawnLocations from "../Enemies/Piston/PistonSpawnLocations";
 import robotSpawnLocations from "../Enemies/Robot/RobotSpawnLocations";
 import BulletRunner from "../Runners/BulletRunner";
 import { Enemies } from "../Types";
@@ -85,7 +86,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "piston": {
-            const enemies = robotSpawnLocations.map((rl) => enemyFactory("piston", rl));
+            const enemies = pistonSpawnLocations.map((rl) => enemyFactory("piston", rl));
             return {
                 enemies,
             };

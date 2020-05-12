@@ -140,6 +140,7 @@ export function calculateAngleDifference(angle1: number, angle2: number): number
  * Checks the angle if it is headed to the left or right.
  * Returns undefined if the angle is up or down.
  * @param {number} angle. an angle.
+ * @returns {"left" | "right" | "undefined"}. Returns undefined if there is no left or right direction.
  */
 export function getLeftOrRightFromAngle(angle: Angle): "left" | "right" | undefined {
     if (angle === undefined) {
@@ -150,5 +151,24 @@ export function getLeftOrRightFromAngle(angle: Angle): "left" | "right" | undefi
         return "right";
     } else if (angle > 90 && angle < 270) {
         return "left";
+    }
+}
+
+/**
+ * Checks if the angle is headed u or down.
+ * @param {Angle} angle. The angle
+ * @returns {"up" | "down" | undefined}. Returns undefined if the angle is not going up or down.
+ */
+export function getUpOrDownFromAngle(angle: Angle): "up" | "down" | undefined {
+    if (angle === undefined) {
+        return undefined;
+    }
+
+    if (angle === 0 || angle === 360 || angle === 180) {
+        return undefined;
+    } else if (angle > 180 && angle < 360) {
+        return "up";
+    } else if (angle > 0 && angle < 180) {
+        return "down";
     }
 }

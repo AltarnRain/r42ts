@@ -35,6 +35,7 @@ describe("geometry tests", () => {
     });
 
     test("get left or right direction from angle", () => {
+        const result0 = Geometry.getLeftOrRightFromAngle(undefined);
         const result1 = Geometry.getLeftOrRightFromAngle(0);
         const result2 = Geometry.getLeftOrRightFromAngle(360);
         const result3 = Geometry.getLeftOrRightFromAngle(325);
@@ -47,6 +48,8 @@ describe("geometry tests", () => {
         const result8 = Geometry.getLeftOrRightFromAngle(90);
         const result9 = Geometry.getLeftOrRightFromAngle(270);
 
+        expect(result0).toBe(undefined);
+
         expect(result1).toBe("right");
         expect(result2).toBe("right");
         expect(result3).toBe("right");
@@ -58,5 +61,31 @@ describe("geometry tests", () => {
 
         expect(result8).toBe(undefined);
         expect(result9).toBe(undefined);
+    });
+
+    test("get up or down direction from angle", () => {
+        const result0 = Geometry.getUpOrDownFromAngle(undefined);
+
+        const result1 = Geometry.getUpOrDownFromAngle(0);
+        const result2 = Geometry.getUpOrDownFromAngle(360);
+        const result3 = Geometry.getUpOrDownFromAngle(180);
+
+        const result4 = Geometry.getUpOrDownFromAngle(235);
+        const result5 = Geometry.getUpOrDownFromAngle(135);
+
+        const result6 = Geometry.getUpOrDownFromAngle(335);
+        const result7 = Geometry.getUpOrDownFromAngle(45);
+
+        expect(result0).toBe(undefined);
+
+        expect(result1).toBe(undefined);
+        expect(result2).toBe(undefined);
+        expect(result3).toBe(undefined);
+
+        expect(result4).toBe("up");
+        expect(result5).toBe("down");
+
+        expect(result6).toBe("up");
+        expect(result7).toBe("down");
     });
 });

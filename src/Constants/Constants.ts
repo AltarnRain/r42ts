@@ -57,7 +57,6 @@ export namespace Locations {
             export const topStart = gameField.top + pixelSize * 18;
             export const maxTop = gameField.top + pixelSize * 5;
             export const maxBottom = gameField.top + pixelSize * 55;
-
         }
     }
 }
