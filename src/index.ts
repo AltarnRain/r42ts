@@ -53,8 +53,8 @@ window.onload = () => {
 
             startEssential();
 
-            dispatch(setLives(20));
-            dispatch(setPhasers(100));
+            dispatch(setLives(900));
+            dispatch(setPhasers(900));
 
             if (level) {
                 dispatch(setLevel(parseInt(level, 10)));
