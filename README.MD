@@ -77,6 +77,22 @@ Wow, now this was cool to code but now that I'm finished I'm litteraly finished 
 
 One thing I didn't do (but might) is the random starting point. I didn't see the value of it so warp levels in the remake will have you spawn center screen.
 
+# Level 05 - Spinners
+They move from left to right nicely and use the same bullet shooting behaviour of the obs.
+
+# Level 06 - Balloons
+These enemies always reminded me of balloons! They jiggle around but you can clearly tell the game runs at a much higher rez then the original.
+Still, their shooting behaviour looks good, animation is spot on and.
+
+# Level 07 - First asteroids
+Very happy about the result. You'll have 7 ish asteroids to content with. If you damage and enemy it will reappear for you to kill later just like the original game. Though, it might have a new angle and speed. I can live with that. This level takes 20 seconds to complete. Seems about the right time when I look at the original.
+
+# Level 08 - Warp
+The nice this about algorithms is that if they work right they do the work for you. Easy level :)
+
+# Level 09 - Pistons
+These enemies remind me of a piston. I still need to do their movement right and write some code to make them shoot like the OG. Other than that, looking good.
+
 # Done
 1. Adding and removing lives
 1. Phaser hits a random target and pauses the game for a second so you can revel in its awsomenes.
