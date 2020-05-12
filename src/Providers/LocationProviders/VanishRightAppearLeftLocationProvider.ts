@@ -33,14 +33,14 @@ export default class VanishRightAppearLeftLocationProvider extends BaseLocationP
     }
 
     public updateState(tick: number): void {
-        const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
+        let { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
 
-        if (left + this.width > gameField.right) {
-            this.left = 0;
+        if (left - this.width > gameField.right) {
+            left = gameField.left - this.width;
         }
 
         if (top > this.maxBottom) {
-            this.top = this.maxTop;
+           top = this.maxTop;
         }
 
         this.left = left;
