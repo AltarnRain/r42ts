@@ -56,4 +56,4 @@ export type Angle = number | undefined;
 /**
  * All enemies and variations.
  */
-export type Enemies = "bird" | "robot" | "orb" | "spinner" | "balloon" | "asteroid-down" | "piston" | "diabolo" | "spacemonster-down";
+export type Enemies = "bird" | "robot" | "orb" | "spinner" | "balloon" | "asteroid-down" | "piston" | "diabolo" | "spacemonster-down" | "devil";

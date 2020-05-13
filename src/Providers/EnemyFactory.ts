@@ -13,6 +13,8 @@ import BalloonEnemy from "../Enemies/Balloon/BalloonEnemy";
 import getBalloonOffsetFrames from "../Enemies/Balloon/GetBalloonOffsetFrames";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import { default as getBirdOffsetFrames, default as getBirdResource } from "../Enemies/Bird/GetBirdOffsetFrames";
+import DevilEnemy from "../Enemies/Devil/DevilEnemy";
+import getDevilOffsetFrames from "../Enemies/Devil/GetDevilOffsetFrames";
 import getDiaboloOffsetFrames from "../Enemies/Diabolo/GetDiaboloOffsetFrames";
 import getOrbResource from "../Enemies/Orb/GetOrbOffsetFrames";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
@@ -20,6 +22,8 @@ import getPistonOffsetFrames from "../Enemies/Piston/GetPistonOffsetFrames";
 import PistonEnemy from "../Enemies/Piston/PistonEnemy";
 import getRobotResource from "../Enemies/Robot/GetRobotOffsetFrames";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
+import { getSpaceMonsterOffsetFrames } from "../Enemies/SpaceMonster/SpaceMonster";
+import { SpaceMonster as SpaceMonsterEnemy } from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
 import getSpinnerOffsetFrames from "../Enemies/Spinner/GetSpinnerOffsetFrames";
 import SpinnerEnemy from "../Enemies/Spinner/SpinnerEnemy";
 import { GameLocation } from "../Models/GameLocation";
@@ -27,6 +31,7 @@ import getExplosion01 from "../SharedFrames/Explosion01";
 import getExplosion02 from "../SharedFrames/Explosion02";
 import getExplosion03 from "../SharedFrames/Explosion03";
 import getExplosion04 from "../SharedFrames/Explosion04";
+import getExplosion05 from "../SharedFrames/Explosion05";
 import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
@@ -34,14 +39,12 @@ import dimensionProvider from "./DimensionProvider";
 import BackAndForthFrameProvider from "./FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "./FrameProviders/CircleFrameProvider";
 import AsteroidLocationProvider from "./LocationProviders/AsteroidLocationProvider";
+import ImmobileLocationProvider from "./LocationProviders/ImmobileLocationProvider";
 import MoveDownAppearUpLocationProvider from "./LocationProviders/MoveDownAppearUpLocaionProvider";
 import SideAppearOtherSideLocationProvider from "./LocationProviders/SideAppearOtherSideLocationProvider";
 import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
 import Wobble from "./LocationProviders/Wobble";
-import { getSpaceMonsterOffsetFrames } from "../Enemies/SpaceMonster/SpaceMonster";
-import { SpaceMonster as SpaceMonsterEnemy } from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
-import getExplosion05 from "../SharedFrames/Explosion05";
 
 /**
  * Module:          EnemyFactory
@@ -183,6 +186,32 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const frameProvider = new CircleFrameProvider(0);
             const locationProvider = new AsteroidLocationProvider(width, height, [angles.down], Speeds.Movement.asteroid);
             return new SpaceMonsterEnemy(0, getSpaceMonsterOffsetFrames, getExplosion05, locationProvider, frameProvider);
+        }
+
+        case "devil": {
+            if (location === undefined) {
+                throw new Error("Devil enemy requires a starting location");
+            }
+
+            const { maxSizes: { width, height }, frames } = getDevilOffsetFrames();
+            const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
+
+            const randomAngle = getRandomArrayElement(MovementAngles.diabolo);
+
+            const locationProvider = new SideToSideUpAndDown(
+                location.left,
+                location.top,
+                Speeds.Movement.diabolo,
+                randomAngle,
+                width,
+                height,
+                gameField.top,
+                gameField.bottom
+            );
+
+            const immobile = new ImmobileLocationProvider(location?.left, location?.top);
+
+            return new DevilEnemy(FrameTimes.piston, getDevilOffsetFrames, getExplosion01, immobile, frameProvider);
         }
 
         default:

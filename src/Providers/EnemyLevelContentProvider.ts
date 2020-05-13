@@ -118,6 +118,14 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             };
         }
 
+        case "devil": {
+
+            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory("devil", location));
+            return {
+                enemies
+            };
+        }
+
         default:
             throw new Error(`Unknown enemy ${enemy}`);
     }
