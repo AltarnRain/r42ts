@@ -21,7 +21,7 @@ export default abstract class BaseFrameProvider {
     /**
      * The current frame for an animated enemy.
      */
-    protected frameIndex: number = 0;
+    protected frameIndex: number;
 
     /**
      * Added to the current frame index.
@@ -41,6 +41,10 @@ export default abstract class BaseFrameProvider {
     constructor(startFrameIndex: number) {
         this.frameIndex = startFrameIndex;
         this.maxIndex = -1;
+
+                // Get Current index is passed into location provides so they can alter the next location
+        // based on the current frame. This requirs that this function is bound to THIS object.
+        this.getCurrentIndex = this.getCurrentIndex.bind(this);
     }
 
     public setFrames(frames: Frame[]): void {

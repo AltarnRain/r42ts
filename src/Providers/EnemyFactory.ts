@@ -38,6 +38,7 @@ import MoveDownAppearUpLocationProvider from "./LocationProviders/MoveDownAppear
 import SideAppearOtherSideLocationProvider from "./LocationProviders/SideAppearOtherSideLocationProvider";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
 import Wobble from "./LocationProviders/Wobble";
+import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
 
 /**
  * Module:          EnemyFactory
@@ -135,12 +136,23 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 throw new Error("Balloon enemy requires a starting location");
             }
 
-            const { maxSizes: { width, height } } = getPistonOffsetFrames();
+            const { maxSizes: { width } } = getPistonOffsetFrames();
             const frameProvider = new BackAndForthFrameProvider(0);
-            // const locationProvider = new SideAppearOtherSideLocationProvider(location.left, location.top, Speeds.Movement.piston, MovementAngles.piston, width, height, gameField.top, gameField.bottom);
-            const locationProvider = new ImmobileLocationProvider(location.left, location.top);
-            return new PistonEnemy(FrameTimes.piston, getPistonOffsetFrames, getExplosion02, locationProvider, frameProvider);
 
+            const locationProvider = new SideAppearOtherSideVariesSpeed(
+                location.left,
+                location.top,
+                MovementAngles.piston,
+                width,
+                gameField.top,
+                gameField.bottom,
+                frameProvider.getCurrentIndex,
+                Speeds.Movement.Piston.slow,
+                Speeds.Movement.Piston.fast,
+                [0, 1, 2],
+                [3, 4]);
+
+            return new PistonEnemy(FrameTimes.piston, getPistonOffsetFrames, getExplosion02, locationProvider, frameProvider);
         }
         default:
             throw new Error("Unknown enemy " + enemy);

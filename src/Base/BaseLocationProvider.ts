@@ -20,18 +20,38 @@ export default abstract class BaseLocationProvider implements ILocationProvider 
     protected speed: number;
 
     /**
-     * Initial speed for the enemy.
+     * Initial speed for the enemy. Used o calculate speed increases.
      */
     protected baseSpeed: number;
+
+    /**
+     * The width of the enemy. Used to determine if an enemy is moving off the screen.
+     */
     protected width: number;
+
+    /**
+     * Height of the enemy. Also used to determine if an enemy is moving off screen.
+     */
     protected height: number;
+
+    /**
+     * Left position of the enemy.
+     */
     protected left: number;
+
+    /**
+     * Top position of the enemy.
+     */
     protected top: number;
 
     /**
-     * Construct the class
-     * @param {number} speed. Speed to start with.
-     * @param {number} angle. Initial angle.
+     * Initialize the object.
+     * @param {number} left. Inital left.
+     * @param {number} top. Initial top.
+     * @param {number} speed. Initial speed.
+     * @param {number} angle. Movement angle.
+     * @param {number} width. Width of the enemy.
+     * @param {number} height. Height of the enemy.
      */
     constructor(left: number, top: number, speed: number, angle: number, width: number, height: number) {
         this.left = left;
@@ -54,6 +74,10 @@ export default abstract class BaseLocationProvider implements ILocationProvider 
         return { left: this.left, top: this.top };
     }
 
+    /**
+     * Updates the state of the location provider.
+     * @param {number} tick. Current tick
+     */
     public abstract updateState(tick: number): void;
 
     /**

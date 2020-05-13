@@ -7,12 +7,17 @@
 import { GameLocation } from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
 import speedProvider from "../Providers/SpeedProvider";
-import { getNextX, getNextY } from "./Geometry";
+import { getLeftOrRightFromAngle, getNextX, getNextY } from "./Geometry";
 
 /**
  * Module:          Location utilities
  * Responsibility:  Offer utility functions for stuff that needs to know where it is.
  */
+
+const {
+    gameField,
+    pixelSize
+} = dimensionProvider();
 
 /**
  * Calculate distance in pixels.
@@ -50,11 +55,6 @@ export function fallsWithin(left: number, right: number, top: number, bottom: nu
 }
 
 export function fallsWithinGameField(left: number, right: number, top: number, bottom: number): boolean {
-    const {
-        gameField,
-        pixelSize
-    } = dimensionProvider();
-
     const res = fallsWithin(left, right, top, bottom, gameField.left, gameField.right, gameField.top, gameField.bottom - pixelSize);
 
     return res;
@@ -102,4 +102,39 @@ export function getOffsetLocation(left: number, top: number, leftOffset: number,
         left: left + leftOffset,
         top: top + topOffset,
     };
+}
+
+export function getNextLocationWithinBoundaries(
+    currentLeft: number,
+    currentTop: number,
+    width: number,
+    angle: number,
+    speed: number,
+    maxTop: number,
+    maxBottom: number): GameLocation {
+
+    // Get the next location, this location might fall outside the boundaries.
+    let { left, top } = getLocation(currentLeft, currentTop, angle, speed);
+
+    // Determine which way the enemy is rought moving, left or right. This
+    // determine is we use the left or rigth side of the gamfield to
+    // determine if the enemy is moving off screen.
+
+    const direction = getLeftOrRightFromAngle(angle);
+    if (direction === "right") {
+        if (left - width > gameField.right) {
+            left = gameField.left - width;
+        }
+    } else if (direction === "left") {
+        if (left + width < gameField.left) {
+            left = gameField.right + width;
+        }
+    }
+
+    if (top > maxBottom) {
+        top = maxTop;
+    }
+
+    return { left, top };
+
 }

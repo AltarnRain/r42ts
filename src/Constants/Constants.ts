@@ -26,7 +26,11 @@ export namespace Speeds {
         export const spinner = 1.5;
         export const balloon = 1.5;
         export const asteroid = [2, 4, 6, 8, 10];
-        export const piston = 2;
+
+        export namespace Piston {
+            export const slow = 2;
+            export const fast = 6;
+        }
     }
 
     export namespace Bullets {

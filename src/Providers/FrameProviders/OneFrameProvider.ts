@@ -19,6 +19,7 @@ export default class OneFrameProvider extends BaseFrameProvider {
      * @returns {Frame}. A frame.
      */
     public getNextFrame(): Frame {
+        this.frameIndex = 0;
         return this.getCurrentFrame();
     }
 }

@@ -19,6 +19,9 @@ export default class ImmobileLocationProvider implements ILocationProvider {
      */
     constructor(private left: number, private top: number) {
     }
+    public getCurrentIndex(): number {
+        return 0;
+    }
 
     public updateState(tick: number): void {
         // does nothing.

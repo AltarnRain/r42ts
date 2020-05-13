@@ -6,7 +6,7 @@
 
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import { getLeftOrRightFromAngle } from "../../Utility/Geometry";
-import { getLocation } from "../../Utility/Location";
+import { getLocation, getNextLocationWithinBoundaries } from "../../Utility/Location";
 import dimensionProvider from "../DimensionProvider";
 
 /**
@@ -41,23 +41,15 @@ export default class SideAppearOtherSideLocationProvider extends BaseLocationPro
     }
 
     public updateState(tick: number): void {
-        let { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
-
-        const direction = getLeftOrRightFromAngle(this.angle);
-
-        if (direction === "right") {
-            if (left - this.width > gameField.right) {
-                left = gameField.left - this.width;
-            }
-        } else if (direction === "left") {
-            if (left + this.width < gameField.left) {
-                left = gameField.right + this.width;
-            }
-        }
-
-        if (top > this.maxBottom) {
-            top = this.maxTop;
-        }
+        const { left, top } = getNextLocationWithinBoundaries(
+            this.left,
+            this.top,
+            this.width,
+            this.angle,
+            this.speed,
+            this.maxTop,
+            this.maxBottom
+        );
 
         this.left = left;
         this.top = top;
