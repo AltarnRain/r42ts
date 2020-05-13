@@ -4,9 +4,9 @@
  * See LICENSE.MD.
  */
 
+import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
 import { Frame } from "../Types";
 import { copyFrame, copyFrames, getFrameByIndex } from "../Utility/Frame";
-import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
 
 /**
  * Module:          IFrameProvider
@@ -14,7 +14,7 @@ import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
  */
 
 export default abstract class BaseFrameProvider implements IGetCurrentIndex {
-    /**
+    /** 
      * Animation frames.
      */
     private frames?: Frame[];

@@ -6,12 +6,12 @@
 
 import { angles } from "../../Constants/Angles";
 import Guard from "../../Guard";
-import ILocationProvider from "../../Interfaces/ILocationProvider";
+import ILocationDirectionProvider from "../../Interfaces/ILocationDirectionProvider";
 import { GameLocation } from "../../Models/GameLocation";
 import { appState } from "../../State/Store";
 import { getRandomArrayElement } from "../../Utility/Array";
+import { getLeftOrRightFromAngle } from "../../Utility/Geometry";
 import { getNextLocationAndAngle } from "../../Utility/Location";
-import dimensionProvider from "../DimensionProvider";
 
 /**
  * Module:          DevilLocationProvider
@@ -20,12 +20,7 @@ import dimensionProvider from "../DimensionProvider";
  *                  It picks a random angle when it hits the top screen.
  */
 
-const {
-    gameField,
-    pixelSize
-} = dimensionProvider();
-
-export default class DevilLocationProvider implements ILocationProvider {
+export default class DevilLocationProvider implements ILocationDirectionProvider {
     private bottomLimit: number;
     private topLimit: number;
     private left: number;
@@ -66,6 +61,9 @@ export default class DevilLocationProvider implements ILocationProvider {
 
         this.attacking = false;
         this.recovering = false;
+    }
+    public getDirection(): "left" | "right" | undefined {
+        return getLeftOrRightFromAngle(this.angle);
     }
 
     /**

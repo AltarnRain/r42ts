@@ -7,7 +7,7 @@
 import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import CGAColors from "../../Constants/CGAColors";
-import ILocationProvider from "../../Interfaces/ILocationProvider";
+import ILocationDirectionProvider from "../../Interfaces/ILocationDirectionProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
 import Mutators from "../../Utility/FrameMutators";
 
@@ -18,11 +18,13 @@ import Mutators from "../../Utility/FrameMutators";
 
 export default class DevilEnemy extends BaseEnemy {
 
+    private locationDirecntionProvider: ILocationDirectionProvider;
+
     constructor(
         frameChangeTime: number,
         getFrames: OffsetFramesProviderFunction,
         getExplosion: ExplosionProviderFunction,
-        locationProvider: ILocationProvider,
+        locationProvider: ILocationDirectionProvider,
         frameProvider: BaseFrameProvider) {
         super(
             frameChangeTime,
@@ -34,6 +36,8 @@ export default class DevilEnemy extends BaseEnemy {
         Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.white);
         Mutators.Frame.setColor(this.explosion.particleFrames[0], CGAColors.white);
         Mutators.Frame.setColor(this.explosion.particleFrames[1], CGAColors.white);
+
+        this.locationDirecntionProvider = locationProvider;
     }
 
     /**
@@ -42,6 +46,21 @@ export default class DevilEnemy extends BaseEnemy {
      */
     public updateState(tick: number): void {
         super.updateState(tick);
+
+        if (this.locationDirecntionProvider.getDirection() === "left") {
+            // Frame going left is index 0, there's two frames so a get next frames switches to the
+            // frame of the devil heading right.
+            if (this.frameProvider.getCurrentIndex() !== 0) {
+                this.frameProvider.getNextFrame();
+            }
+        } else if (this.locationDirecntionProvider.getDirection() === "right") {
+            // Frame going left is index 0, there's two frames so a get next frames switches to the
+            // frame of the devil heading right.
+            if (this.frameProvider.getCurrentIndex() !== 1) {
+                this.frameProvider.getNextFrame();
+            }
+        }
+
         this.dispatchCurrentState();
     }
 
