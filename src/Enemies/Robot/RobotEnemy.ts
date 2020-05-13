@@ -14,7 +14,7 @@ import Mutators from "../../Utility/FrameMutators";
 
 /**
  * Module:          RobotEnemey
- * Responsibility:  Handles the Robot enemeny first seen in level 2.
+ * Responsibility:  Handles the Robot enemny.
  */
 
 const colors = [

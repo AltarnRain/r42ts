@@ -13,7 +13,7 @@ import Mutators from "../../Utility/FrameMutators";
 
 /**
  * Module:          PistonEnemey
- * Responsibility:  Handles the Piston enemeny first seen in level 2.
+ * Responsibility:  Handles the Piston enemny.
  */
 
 export default class PistonEnemy extends BaseEnemy {

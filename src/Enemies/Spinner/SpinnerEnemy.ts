@@ -12,8 +12,8 @@ import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../T
 import Mutators from "../../Utility/FrameMutators";
 
 /**
- * Module:          SpinnerEnemey
- * Responsibility:  Handles the Spinner enemeny first seen in level 2.
+ * Module:          SpinnerEnemeys
+ * Responsibility:  Handles the Spinner enemny.
  */
 
 export default class SpinnerEnemy extends BaseEnemy {

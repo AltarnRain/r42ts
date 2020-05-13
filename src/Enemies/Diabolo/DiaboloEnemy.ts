@@ -13,7 +13,7 @@ import Mutators from "../../Utility/FrameMutators";
 
 /**
  * Module:          DiaboloEnemey
- * Responsibility:  Handles the Diabolo enemeny first seen in level 2.
+ * Responsibility:  Handles the Diabolo enemny.
  */
 
 export default class DiaboloEnemy extends BaseEnemy {

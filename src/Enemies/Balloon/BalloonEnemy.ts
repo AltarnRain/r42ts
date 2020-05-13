@@ -13,7 +13,7 @@ import Mutators from "../../Utility/FrameMutators";
 
 /**
  * Module:          BaloonEnemey
- * Responsibility:  Handles the Baloon enemeny first seen in level 2.
+ * Responsibility:  Handles the Baloon enemny.
  */
 
 export default class BalloonEnemy extends BaseEnemy {
