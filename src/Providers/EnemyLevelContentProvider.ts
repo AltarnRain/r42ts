@@ -122,7 +122,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
             const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory("devil", location));
             return {
-                enemies
+                enemies: [enemies[0]]
             };
         }
 

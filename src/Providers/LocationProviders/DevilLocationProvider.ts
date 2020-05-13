@@ -22,6 +22,7 @@ import dimensionProvider from "../DimensionProvider";
 
 const {
     gameField,
+    pixelSize
 } = dimensionProvider();
 
 export default class DevilLocationProvider implements ILocationProvider {
@@ -30,17 +31,22 @@ export default class DevilLocationProvider implements ILocationProvider {
     private left: number;
     private top: number;
     private speed: number;
-    private angles: number[];
+    private allAngles: number[];
     private width: number;
     private height: number;
     private baseSpeed: number;
     private angle: number;
+    private sideAngles: number[];
+
+    private attacking: boolean;
+    private recovering: boolean;
 
     constructor(
         left: number,
         top: number,
         speed: number,
-        movementAngles: number[],
+        allAngles: number[],
+        sideAngles: number[],
         width: number,
         height: number,
         topLimit: number,
@@ -50,12 +56,16 @@ export default class DevilLocationProvider implements ILocationProvider {
         this.top = top;
         this.speed = speed;
         this.baseSpeed = speed;
-        this.angles = movementAngles;
+        this.allAngles = allAngles;
+        this.sideAngles = sideAngles;
         this.width = width;
         this.height = height;
-        this.angle = getRandomArrayElement(movementAngles);
+        this.angle = getRandomArrayElement(allAngles);
         this.topLimit = topLimit;
         this.bottomLimit = bottomLimit;
+
+        this.attacking = false;
+        this.recovering = false;
     }
 
     /**
@@ -85,34 +95,40 @@ export default class DevilLocationProvider implements ILocationProvider {
             playerState
         } = appState();
 
-        let left = this.left;
-        let top = this.top;
-        let angle = this.angle;
-
         if (Guard.isPlayerAlive(playerState)) {
             const { hitboxes: { bottom: playerBottomHixbox } } = playerState;
 
-            // When the player moves underneath this enemy it moves down.
-            if (this.left > playerBottomHixbox.left && this.left - this.width < playerBottomHixbox.right) {
+            // When the player moves underneath this enemy it moves down to attcck except when it is going up after an attack or if it is still attacking.
+            if (this.left > playerBottomHixbox.left &&
+                this.left - this.width < playerBottomHixbox.right &&
+                this.recovering === false && this.attacking === false) {
                 this.angle = angles.down;
-            } else if (this.top > this.topLimit) {
-                this.angle = getRandomArrayElement(this.angles);
-            } else {
-                const nextLocationAndangle = getNextLocationAndAngle(
-                    this.left,
-                    this.top,
-                    this.angle,
-                    this.speed,
-                    this.width,
-                    this.height,
-                    this.topLimit,
-                    this.bottomLimit
-                );
+                this.attacking = true;
+            } else if (this.top <= this.topLimit + this.height / 2 && this.recovering) {
 
-                left = nextLocationAndangle.location.left;
-                top = nextLocationAndangle.location.top;
-                angle = nextLocationAndangle.angle;
+                // The enemy finished moving up so it's recovered from an attack.
+                this.recovering = false;
+                this.angle = getRandomArrayElement(this.sideAngles);
+
+            } else if (this.top + this.height * 2 >= this.bottomLimit && this.attacking) {
+                // The enemy has hit the bottom limit while doing an attack, now it must recover.
+                this.recovering = true;
+
+                // Attack done. Time  to recover.
+                this.attacking = false;
+
             }
+
+            const { location: { left, top }, angle } = getNextLocationAndAngle(
+                this.left,
+                this.top,
+                this.angle,
+                this.speed,
+                this.width,
+                this.height,
+                this.topLimit,
+                this.bottomLimit
+            );
 
             this.left = left;
             this.top = top;

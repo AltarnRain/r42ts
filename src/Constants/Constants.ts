@@ -65,6 +65,9 @@ export namespace Locations {
             export const maxTop = gameField.top + pixelSize * 5;
             export const maxBottom = gameField.top + pixelSize * 55;
         }
+        export namespace Devil {
+            export const maxBottom = gameField.top + pixelSize * 60;
+        }
     }
 }
 
@@ -76,7 +79,10 @@ export namespace MovementAngles {
     export const spinner = [2, 358, 178, 182];
     export const piston = 175;
     export const diabolo = [2, 358, 178, 182];
-    export const devil = [angles.leftup, angles.leftdown, angles.rightup, angles.rightdown];
+    export namespace Devil {
+        export const allAngles = [angles.leftup, angles.leftdown, angles.rightup, angles.rightdown];
+        export const sideAngles = [angles.leftdown, angles.rightdown];
+    }
 }
 
 // Collective namespace for all frametimes.

@@ -205,11 +205,12 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 location.left,
                 location.top,
                 Speeds.Movement.diabolo,
-                MovementAngles.devil,
+                MovementAngles.Devil.allAngles,
+                MovementAngles.Devil.sideAngles,
                 width,
                 height,
                 gameField.top,
-                gameField.bottom
+                Locations.Enemies.Devil.maxBottom,
             );
 
             // Frames have no time, the frame of the devil is determined by where it is headed.
