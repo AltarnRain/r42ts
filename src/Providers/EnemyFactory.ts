@@ -39,13 +39,12 @@ import dimensionProvider from "./DimensionProvider";
 import BackAndForthFrameProvider from "./FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "./FrameProviders/CircleFrameProvider";
 import AsteroidLocationProvider from "./LocationProviders/AsteroidLocationProvider";
-import ImmobileLocationProvider from "./LocationProviders/ImmobileLocationProvider";
+import DevilLocationProvider from "./LocationProviders/DevilLocationProvider";
 import MoveDownAppearUpLocationProvider from "./LocationProviders/MoveDownAppearUpLocaionProvider";
 import SideAppearOtherSideLocationProvider from "./LocationProviders/SideAppearOtherSideLocationProvider";
 import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
 import Wobble from "./LocationProviders/Wobble";
-import DevilLocationProvider from "./LocationProviders/DevilLocationProvider";
 
 /**
  * Module:          EnemyFactory

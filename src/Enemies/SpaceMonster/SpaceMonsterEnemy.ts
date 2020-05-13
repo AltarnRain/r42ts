@@ -10,8 +10,8 @@ import CGAColors from "../../Constants/CGAColors";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
-import Mutators from "../../Utility/FrameMutators";
 import { getRandomArrayElement } from "../../Utility/Array";
+import Mutators from "../../Utility/FrameMutators";
 
 /**
  * Module:          SpaceMonster
@@ -28,7 +28,7 @@ const explosionColors = [
     CGAColors.yellow,
     CGAColors.lightGreen,
     CGAColors.lightBlue,
-]
+];
 
 export class SpaceMonster extends BaseEnemy {
 

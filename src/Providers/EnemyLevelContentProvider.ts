@@ -13,11 +13,11 @@ import robotSpawnLocations from "../Enemies/Robot/RobotSpawnLocations";
 import BulletRunner from "../Runners/BulletRunner";
 import { Enemies } from "../Types";
 import enemyFactory from "./EnemyFactory";
+import devilShipsToFire from "./ShipsToFireProviders/DevilShipsToFire";
 import firstEnemyOccasionalDown from "./ShipsToFireProviders/FirstEnemyOccasionalDown";
 import maxFiveDiagonal from "./ShipsToFireProviders/MaxFiveDiagonal";
 import maxThreeDown from "./ShipsToFireProviders/MaxThreeDown";
 import sevenSixSeverGridProvider from "./SpawnLocations/SevenSixSevenGridProvider";
-import devilShipsToFire from "./ShipsToFireProviders/DevilShipsToFire";
 
 /**
  * Module:          EnemyFactory

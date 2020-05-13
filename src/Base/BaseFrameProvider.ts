@@ -14,7 +14,7 @@ import { copyFrame, copyFrames, getFrameByIndex } from "../Utility/Frame";
  */
 
 export default abstract class BaseFrameProvider implements IGetCurrentIndex {
-    /** 
+    /**
      * Animation frames.
      */
     private frames?: Frame[];

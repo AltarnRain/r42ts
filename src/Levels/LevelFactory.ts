@@ -55,6 +55,8 @@ export function levelFactory(level: number): ILevel {
             return new WarpLevel();
         case 13:
             return new EnemyLevel("devil");
+        case 14:
+            return new EnemyLevel("balloon");
         default:
             return new EnemyLevel("bird");
     }
