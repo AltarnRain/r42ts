@@ -50,6 +50,9 @@ export function levelFactory(level: number): ILevel {
             return new EnemyLevel("diabolo");
         case 11:
             return new EnemyLevel("spacemonster-down");
+        case 12:
+            dispatch(setWarpGamteComplexity(2));
+            return new WarpLevel();
         default:
             return new EnemyLevel("bird");
     }
