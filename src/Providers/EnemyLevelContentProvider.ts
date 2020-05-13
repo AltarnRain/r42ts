@@ -15,6 +15,7 @@ import { Enemies } from "../Types";
 import enemyFactory from "./EnemyFactory";
 import firstEnemyOccasionalDown from "./ShipsToFireProviders/FirstEnemyOccasionalDown";
 import maxFiveDiagonal from "./ShipsToFireProviders/MaxFiveDiagonal";
+import maxThreeDown from "./ShipsToFireProviders/MaxThreeDown";
 import sevenSixSeverGridProvider from "./SpawnLocations/SevenSixSevenGridProvider";
 
 /**
@@ -42,12 +43,12 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "orb": {
-            const enemies = orbSpawnLocations.map((location) => enemyFactory("orb", location));
+            const enemies = [orbSpawnLocations.map((location) => enemyFactory("orb", location))[0]];
             const bulletRunner = new BulletRunner(CGAColors.magenta, Speeds.Bullets.orb, maxFiveDiagonal);
 
             return {
                 enemies,
-                bulletRunner
+                bulletRunner    
             };
         }
 
@@ -87,8 +88,11 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "piston": {
             const enemies = pistonSpawnLocations.map((rl) => enemyFactory("piston", rl));
+            const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxThreeDown);
+
             return {
                 enemies,
+                bulletRunner
             };
         }
 

@@ -152,7 +152,9 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 [0, 1, 2],
                 [3, 4]);
 
-            return new PistonEnemy(FrameTimes.piston, getPistonOffsetFrames, getExplosion02, locationProvider, frameProvider);
+            const immobile = new ImmobileLocationProvider(location.left, location.top);
+
+            return new PistonEnemy(FrameTimes.piston, getPistonOffsetFrames, getExplosion02, immobile, frameProvider);
         }
         default:
             throw new Error("Unknown enemy " + enemy);

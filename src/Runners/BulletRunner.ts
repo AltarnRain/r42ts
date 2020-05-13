@@ -6,7 +6,7 @@
 
 import dimensionProvider from "../Providers/DimensionProvider";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import { addBullet } from "../State/EnemyLevel/EnemyLevelActions";
+import { addBullet, addOrUpdateEnemy } from "../State/EnemyLevel/EnemyLevelActions";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { Frame, ShipsToFireFunction } from "../Types";
@@ -91,7 +91,7 @@ export default class BulletRunner {
         // can actually fire.
         for (const shipToFire of shipsToFire) {
 
-            const { angle, enemy: { hitbox, enemyId } } = shipToFire;
+            const { angle, enemy: { hitbox, enemyId }, enemy } = shipToFire;
 
             if (angle !== undefined) {
 

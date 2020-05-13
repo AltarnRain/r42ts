@@ -29,7 +29,7 @@ export namespace Speeds {
 
         export namespace Piston {
             export const slow = 2;
-            export const fast = 6;
+            export const fast = 4;
         }
     }
 

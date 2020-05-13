@@ -16,6 +16,7 @@ import { EnemyState } from "../../State/EnemyLevel/EnemyState";
 import { appState } from "../../State/Store";
 import { Angle } from "../../Types";
 import { calculateAngle, calculateAngleDifference } from "../../Utility/Geometry";
+import { setTotalEnemies } from "../../State/EnemyLevel/EnemyLevelActions";
 
 const maxBullets = 5;
 
@@ -30,8 +31,8 @@ export default function maxFiveDiagonal(tick: number): ShipToFire[] {
     const {
         enemyLevelState: { bullets, enemies }
     } = appState();
-    const returnValue: ShipToFire[] = [];
 
+    const returnValue: ShipToFire[] = [];
     const bulletsToFire = maxBullets - bullets.length;
 
     if (bulletsToFire === 0) {
@@ -55,14 +56,12 @@ export default function maxFiveDiagonal(tick: number): ShipToFire[] {
         }
 
         const candiate = candidates[index];
-
         const { enemy, angle } = candiate;
 
-        // Each orb can only have a single bullet on screen.
-        const hasBulletOnScreen = bullets.some((bullet) => bullet.owner === enemy.enemyId);
+        const queuedTofire = returnValue.find((e) => e.enemy.enemyId === enemy.enemyId) !== undefined;
+        const mayFire = !bullets.some((bullet) => bullet.owner === enemy.enemyId) || enemies.length < maxBullets;
 
-        // When there's less then 5 enemies, fire away
-        if (!hasBulletOnScreen || enemies.length < maxBullets) {
+        if (!queuedTofire && mayFire) {
             returnValue.push({ enemy, angle });
         }
     }
@@ -76,13 +75,9 @@ export default function maxFiveDiagonal(tick: number): ShipToFire[] {
 function getBestCandiates(tick: number): Candidates {
 
     const {
-        enemyLevelState: { enemies },
+        enemyLevelState: { enemies, bullets },
         playerState
     } = appState();
-
-    if (!Guard.isPlayerAlive(playerState)) {
-        return [];
-    }
 
     // To determine which enemies have the best change of hitting
     // the player we calculate difference between the angle at which the
@@ -98,7 +93,7 @@ function getBestCandiates(tick: number): Candidates {
             const angleToPlayer = calculateAngle(center.left, center.top, playerState.left, playerState.top);
             const angle = getBestAngle(enemy);
 
-            if (center.top > playerState.hitboxes.middle.bottom) {
+            if (center.top > playerState.top) {
                 below += 1;
             } else {
                 above += 1;
