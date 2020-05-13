@@ -26,6 +26,7 @@ export namespace Speeds {
         export const spinner = 1.5;
         export const balloon = 1.5;
         export const asteroid = [2, 4, 6, 8, 10];
+        export const diabolo = 2.5;
 
         export namespace Piston {
             export const slow = 2;
@@ -40,6 +41,7 @@ export namespace Speeds {
         export const spinner = 12;
         export const balloon = 12;
         export const piston = 12;
+        export const diabolo = 12;
     }
 }
 
@@ -72,6 +74,7 @@ export namespace MovementAngles {
     export const orb = 90;
     export const spinner = [2, 358, 178, 182];
     export const piston = 175;
+    export const diabolo = [2, 358, 178, 182];
 }
 
 // Collective namespace for all frametimes.
@@ -82,4 +85,5 @@ export namespace FrameTimes {
     export const spinner = 100;
     export const balloon = 100;
     export const piston = 200;
+    export const diabolo = 200;
 }

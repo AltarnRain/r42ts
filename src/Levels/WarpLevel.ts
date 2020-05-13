@@ -15,6 +15,7 @@ import ILevel from "../Interfaces/ILevel";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
+import { increaseScore } from "../State/Game/GameActions";
 import { setPlayerLocationData, setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import handleLevelWon from "../StateHandlers/HandleLevelWon";
@@ -242,6 +243,9 @@ export default class WarpLevel implements ILevel {
 
         if (top < gameField.top + pixelSize * 3) {
             handleLevelWon();
+
+            // Warp levels reward 1400 points when you make it.
+            dispatch(increaseScore(1400));
 
             // Reset the player to the spawn location after a warp level or they'll appear
             // in the top of the screen right in the middle of enemies.

@@ -12,11 +12,11 @@ import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../T
 import Mutators from "../../Utility/FrameMutators";
 
 /**
- * Module:          SpinnerEnemey
- * Responsibility:  Handles the Spinner enemeny first seen in level 2.
+ * Module:          DiaboloEnemey
+ * Responsibility:  Handles the Diabolo enemeny first seen in level 2.
  */
 
-export default class SpinnerEnemy extends BaseEnemy {
+export default class DiaboloEnemy extends BaseEnemy {
 
     constructor(
         frameChangeTime: number,
@@ -37,7 +37,7 @@ export default class SpinnerEnemy extends BaseEnemy {
     }
 
     /**
-     * Update the Spinner state.
+     * Update the Diabolo state.
      * @param tick
      */
     public updateState(tick: number): void {
@@ -46,7 +46,7 @@ export default class SpinnerEnemy extends BaseEnemy {
     }
 
     /**
-     * Called when a frame change is required. The Spinner frames are all colored at initialisation so we can keep this simple.
+     * Called when a frame change is required. The Diabolo frames are all colored at initialisation so we can keep this simple.
      */
     protected onFrameChange(): void {
         const nextFrame = this.frameProvider.getNextFrame();
@@ -55,10 +55,10 @@ export default class SpinnerEnemy extends BaseEnemy {
     }
 
     /**
-     * Returns the points of the Spinner enemy.
+     * Returns the points of the Diabolo enemy.
      * @returns {number}.
      */
     public getPoints(): number {
-        return 200;
+        return 100;
     }
 }

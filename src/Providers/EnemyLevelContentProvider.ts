@@ -96,6 +96,16 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             };
         }
 
+        case "diabolo": {
+            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory("diabolo", location));
+            const bulletRunner = new BulletRunner(CGAColors.yellow, Speeds.Bullets.diabolo, maxFiveDiagonal);
+
+            return {
+                enemies,
+                bulletRunner
+            };
+        }
+
         default:
             throw new Error(`Unknown enemy ${enemy}`);
     }

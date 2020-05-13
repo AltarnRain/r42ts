@@ -13,6 +13,7 @@ import BalloonEnemy from "../Enemies/Balloon/BalloonEnemy";
 import getBalloonOffsetFrames from "../Enemies/Balloon/GetBalloonOffsetFrames";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import { default as getBirdOffsetFrames, default as getBirdResource } from "../Enemies/Bird/GetBirdOffsetFrames";
+import getDiaboloOffsetFrames from "../Enemies/Diabolo/GetDiaboloOffsetFrames";
 import getOrbResource from "../Enemies/Orb/GetOrbOffsetFrames";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import getPistonOffsetFrames from "../Enemies/Piston/GetPistonOffsetFrames";
@@ -152,9 +153,32 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 [0, 1, 2],
                 [3, 4]);
 
+            return new PistonEnemy(FrameTimes.piston, getPistonOffsetFrames, getExplosion02, locationProvider, frameProvider);
+        }
+
+        case "diabolo": {
+            if (location === undefined) {
+                throw new Error("Diabolo enemy requires a starting location");
+            }
+
+            const { maxSizes: { width, height }, frames } = getDiaboloOffsetFrames();
+            const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
+
+            const randomAngle = getRandomArrayElement(MovementAngles.diabolo);
+            const locationProvider = new SideToSideUpAndDown(
+                location.left,
+                location.top,
+                Speeds.Movement.diabolo,
+                randomAngle,
+                width,
+                height,
+                gameField.top,
+                gameField.bottom
+            );
+
             const immobile = new ImmobileLocationProvider(location.left, location.top);
 
-            return new PistonEnemy(FrameTimes.piston, getPistonOffsetFrames, getExplosion02, immobile, frameProvider);
+            return new PistonEnemy(FrameTimes.piston, getDiaboloOffsetFrames, getExplosion01, locationProvider, frameProvider);
         }
         default:
             throw new Error("Unknown enemy " + enemy);

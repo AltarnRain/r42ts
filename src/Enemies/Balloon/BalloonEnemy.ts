@@ -58,6 +58,6 @@ export default class BalloonEnemy extends BaseEnemy {
      * @returns {number}.
      */
     public getPoints(): number {
-        return 100;
+        return 200;
     }
 }

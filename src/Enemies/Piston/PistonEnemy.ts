@@ -30,8 +30,9 @@ export default class PistonEnemy extends BaseEnemy {
             locationProvider,
             frameProvider);
 
-        Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.lightMagenta);
-        Mutators.Frame.setColor(this.explosion.particleFrames[0], CGAColors.magenta);
+        Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.white);
+        Mutators.Frame.setColor(this.explosion.particleFrames[0], CGAColors.white);
+        Mutators.Frame.setColor(this.explosion.particleFrames[1], CGAColors.white);
     }
 
     /**
@@ -51,7 +52,6 @@ export default class PistonEnemy extends BaseEnemy {
         const newFrame = this.frameProvider.getNextFrame();
         Mutators.Frame.convertHexToCGA(newFrame);
         this.currentFrame = newFrame;
-        // TODO
     }
 
     /**
@@ -59,6 +59,6 @@ export default class PistonEnemy extends BaseEnemy {
      * @returns {number}.
      */
     public getPoints(): number {
-        return 100;
+        return 200;
     }
 }
