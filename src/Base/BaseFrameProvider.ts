@@ -9,8 +9,8 @@ import { Frame } from "../Types";
 import { copyFrame, copyFrames, getFrameByIndex } from "../Utility/Frame";
 
 /**
- * Module:          IFrameProvider
- * Responsibility:  Contract for a FrameProvider
+ * Module:          BaseFrameProvider
+ * Responsibility:  BaseClass for most frame providers.
  */
 
 export default abstract class BaseFrameProvider implements IGetCurrentIndex {
@@ -44,6 +44,10 @@ export default abstract class BaseFrameProvider implements IGetCurrentIndex {
         this.maxIndex = -1;
     }
 
+    /**
+     * Called from within an enemy to set the frames.
+     * @param {Frame[]} frames.
+     */
     public setFrames(frames: Frame[]): void {
         this.frames = copyFrames(frames);
         this.maxIndex = frames.length - 1;
@@ -63,6 +67,10 @@ export default abstract class BaseFrameProvider implements IGetCurrentIndex {
         return copyFrame(returnValue);
     }
 
+    /**
+     * Returns gets the next frame.
+     * @returns {Frame}.
+     */
     public abstract getNextFrame(): Frame;
 
     /**
@@ -71,20 +79,5 @@ export default abstract class BaseFrameProvider implements IGetCurrentIndex {
      */
     public getCurrentIndex(): number {
         return this.frameIndex;
-    }
-
-    /**
-     * Returns the game of the provided index.
-     * @param {number} index. Index of the frame.
-     */
-    public getFrameByIndex(index: number): Frame {
-
-        if (this.frames === undefined) {
-            throw new Error("Set the frames.");
-        }
-
-        const frame = getFrameByIndex(this.frames, index);
-
-        return copyFrame(frame);
     }
 }

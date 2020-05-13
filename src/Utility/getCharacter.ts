@@ -11,6 +11,12 @@ import { Frame } from "../Types";
  * Responsibility:  Return a character
  */
 
+/**
+ * Get character
+ * @param {Frame[]} frames. Character frames.
+ * @param {string} character. Character frame to rturn.
+ * @returns {Frame}. Character frame.
+ */
 export default function getCharacter(frames: Frame[], character: string): Frame {
     const upperCaseCharacter = character.toUpperCase();
 

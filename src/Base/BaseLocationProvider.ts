@@ -7,6 +7,11 @@
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
 
+/**
+ * Module:          BaseLocationProvider
+ * Responsibility:  BaseClass for most location providers.
+ */
+
 export default abstract class BaseLocationProvider implements ILocationProvider {
 
     /**

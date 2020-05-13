@@ -19,6 +19,8 @@ import Mutators from "../../Utility/FrameMutators";
  * Module:          OrbEnemy
  * Responsibility:  Define behaviour of the orb enemy.
  */
+
+// The orb constantly varies between a specific set of color combinations. This array is used to set them.
 const colors: string[][] = [
     [CGAColors.lightGreen, CGAColors.lightBlue],
     [CGAColors.brown, CGAColors.lightGreen],
@@ -103,7 +105,7 @@ export default class OrbEnemy extends BaseEnemy {
 
     /**
      * Updates the objects state.
-     * @param {tick: number} tick. Current tick.
+     * @param {number} tick. Current tick.
      */
     public updateState(tick: number): void {
         super.updateState(tick);

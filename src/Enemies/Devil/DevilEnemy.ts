@@ -18,8 +18,14 @@ import Mutators from "../../Utility/FrameMutators";
 
 export default class DevilEnemy extends BaseEnemy {
 
+    /**
+     * A location provider than also provides a method that gives the general direction: left or right.
+     */
     private locationDirecntionProvider: ILocationDirectionProvider;
 
+    /**
+     * Constuct the devil.
+     */
     constructor(
         frameChangeTime: number,
         getFrames: OffsetFramesProviderFunction,
@@ -42,7 +48,7 @@ export default class DevilEnemy extends BaseEnemy {
 
     /**
      * Update the Devil state.
-     * @param tick
+     * @param {number} tick. Current tick
      */
     public updateState(tick: number): void {
         super.updateState(tick);

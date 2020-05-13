@@ -8,14 +8,14 @@ import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import { Frame } from "../../Types";
 
 /**
- * Module:          FrameProvider
- * Responsibility:  Provide frames for animations.
+ * Module:          OneFrameProvider
+ * Responsibility:  Always the current frame. Useful for debugging.
  */
 
 export default class OneFrameProvider extends BaseFrameProvider {
 
     /**
-     * Returns the current frame and sets the next one. Goes back and forth between frames.
+     * Returns the current frame and only the current frame.
      * @returns {Frame}. A frame.
      */
     public getNextFrame(): Frame {

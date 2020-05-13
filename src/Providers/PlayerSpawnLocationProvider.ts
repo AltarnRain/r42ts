@@ -20,7 +20,7 @@ const {
     fullGameHeight
 } = dimensionProvider();
 
-const shipDimensions = getFrameDimensions(getPlayerFrame(), pixelSize);
+const shipDimensions = getFrameDimensions(getPlayerFrame());
 
 const leftSpawnPosition = (fullGameWidth / 2) - shipDimensions.width / 2;
 const topSpawnPosition = fullGameHeight - pixelSize * 8;

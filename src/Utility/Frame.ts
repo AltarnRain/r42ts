@@ -21,11 +21,9 @@ import { Frame } from "../Types";
  * @param {Frame} frame. A frame.
  * @returns {width, height}.
  */
-export function getFrameDimensions(frame: Frame, pixelSize?: number): GameSize {
+export function getFrameDimensions(frame: Frame): GameSize {
 
-    if (pixelSize === undefined) {
-        pixelSize = dimensionProvider().pixelSize;
-    }
+    const pixelSize = dimensionProvider().pixelSize;
 
     return {
         width: frame[0].length * pixelSize,
@@ -33,8 +31,13 @@ export function getFrameDimensions(frame: Frame, pixelSize?: number): GameSize {
     };
 }
 
-export function getMaximumFrameDimensions(frames: Frame[], pixelSize?: number): GameSize {
-    const allFrameDimensions = frames.map((f) => getFrameDimensions(f, pixelSize));
+/**
+ * Returns the maximum width and height for an array of frames.
+ * @param {Frame[]} frames. Fram array.
+ * @param {number?} pixelSize. Optional.
+ */
+export function getMaximumFrameDimensions(frames: Frame[]): GameSize {
+    const allFrameDimensions = frames.map((f) => getFrameDimensions(f));
 
     const allWidths = allFrameDimensions.map((af) => af.width);
     const allHeights = allFrameDimensions.map((af) => af.width);
@@ -51,8 +54,8 @@ export function getMaximumFrameDimensions(frames: Frame[], pixelSize?: number): 
  * @param {number} top. Top coordinate.
  * @param {frame} frame.
  */
-export function getFrameCenter(left: number, top: number, frame: Frame, pixelSize: number): GameLocation {
-    const dimensions = getFrameDimensions(frame, pixelSize);
+export function getFrameCenter(left: number, top: number, frame: Frame): GameLocation {
+    const dimensions = getFrameDimensions(frame);
 
     return {
         left: left + dimensions.width / 2,
@@ -97,8 +100,8 @@ export function getFrameByIndex(frames: Frame[], index: number): Frame {
  * @param {number} bottomOffset.
  * @returns {GameRectangle}. The frame's hitbox.
  */
-export function getFrameHitbox(left: number, top: number, frame: Frame, topOffset: number = 0, bottomOffset: number = 0, pixelSize?: number): GameRectangle {
-    const { width, height } = getFrameDimensions(frame, pixelSize);
+export function getFrameHitbox(left: number, top: number, frame: Frame, topOffset: number = 0, bottomOffset: number = 0): GameRectangle {
+    const { width, height } = getFrameDimensions(frame);
 
     return {
         top: top + topOffset,

@@ -20,6 +20,10 @@ export const angles = {
     rightdown: 45,
 };
 
+/**
+ * Returns all angles as numbers.
+ * @returns {number[]}.
+ */
 export function getAngles(): number[] {
     return Object.keys(angles).map((k) => (angles as any)[k] as number);
 }

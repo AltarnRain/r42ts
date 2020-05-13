@@ -6,13 +6,12 @@
 
 import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
-import CGAColors from "../../Constants/CGAColors";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
 import Mutators from "../../Utility/FrameMutators";
 
 /**
- * Module:          BaloonEnemey
+ * Module:          BalloonEnemey
  * Responsibility:  Handles the Baloon enemny.
  */
 
@@ -37,7 +36,7 @@ export default class BalloonEnemy extends BaseEnemy {
 
     /**
      * Update the Spinner state.
-     * @param tick
+     * @param {number} tick. Current tick.
      */
     public updateState(tick: number): void {
         super.updateState(tick);

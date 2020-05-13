@@ -5,7 +5,6 @@
  */
 
 import { angles } from "../Constants/Angles";
-import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import KeyboardState from "../State/Keyboard/KeyboardState";
 import { Angle } from "../Types";
@@ -67,9 +66,9 @@ export function getAngle(state: KeyboardState): number {
 
 /**
  * Returns true if two hitboxes overlap.
- * @param {GameRectangle} hitbox1.
- * @param {GameRectangle} hitbox2.
- * @returns {boolean}. True if overlap.
+ * @param {GameRectangle | undefined} hitbox1.
+ * @param {GameRectangle | undefined} hitbox2.
+ * @returns {boolean}. True if overlap. If either hibox is undefined, returns false.
  */
 export function overlaps(hitbox1: GameRectangle | undefined, hitbox2: GameRectangle | undefined): boolean {
 

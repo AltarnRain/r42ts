@@ -7,12 +7,10 @@
 import { Locations } from "../../Constants/Constants";
 import { GameLocation } from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
-import { getFrameDimensions } from "../../Utility/Frame";
-import getOrbOffsetFrames from "./GetOrbOffsetFrames";
 
 /**
- * Module:          RobotSpawnLocations
- * Responsibility:  Returns the robot spawn locations.
+ * Module:          OrbSpawnLocations
+ * Responsibility:  Returns the orb spawn locations.
  */
 
 const {

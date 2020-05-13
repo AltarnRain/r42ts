@@ -58,9 +58,7 @@ Mutators.Frame.convertHexToCGA(phaserFrame);
 
 // Lives constants.
 const livesSpacing = 2 * pixelSize;
-const livesStartPostion = scoreBackgroundWidth + phaserBackgroundWidth;
-const lifeFrameWidth = getFrameDimensions(lifeFrame, pixelSize).width;
-const livesBackgroundWidth = pixelSize * 54;
+const lifeFrameWidth = getFrameDimensions(lifeFrame).width;
 
 // Level number constants.
 const leftNumberLeft = pixelSize * 148;
@@ -91,7 +89,7 @@ function drawScore(): void {
         const frame = getFrameByIndex(numberFrames, parseInt(n, 10));
 
         const actualSpacing = cnt === 0 ? 0 : scoreSpacing;
-        let left = cnt * (getFrameDimensions(frame, pixelSize).width + actualSpacing);
+        let left = cnt * (getFrameDimensions(frame).width + actualSpacing);
         left = scoreStartPosition + left;
         renderFrame(left, 0, frame);
         cnt++;

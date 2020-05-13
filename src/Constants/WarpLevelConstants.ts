@@ -7,7 +7,7 @@
 import dimensionProvider from "../Providers/DimensionProvider";
 
 /**
- * Module:          WarpLevels
+ * Module:          WarpLevelConstants
  * Responsibility:  Constants for the warp level.
  */
 

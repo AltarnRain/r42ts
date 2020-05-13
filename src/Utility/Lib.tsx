@@ -29,6 +29,11 @@ export function calculateTimeSpeedIncrease(time: number, factor: number): number
     return time * 1 / factor;
 }
 
+/**
+ * Splits a URI that uses ? to pass stuff into key value pairs. Only used in playground to debug.
+ * @param {string} query.
+ * @returns {KeyValuePair}. An array of keys and valyes.
+ */
 export function getURLQueryKVPs(query: string): KeyValuePair[] {
     const kvps = query.split("?");
     return kvps.map((item) => {

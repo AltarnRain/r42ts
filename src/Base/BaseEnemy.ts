@@ -219,7 +219,7 @@ export default abstract class BaseEnemy {
      */
     private getCenterLocation(): GameLocation {
         if (this.currentFrame !== undefined) {
-            return getFrameCenter(this.offsetLeft, this.offsetTop, this.currentFrame, pixelSize);
+            return getFrameCenter(this.offsetLeft, this.offsetTop, this.currentFrame);
         } else {
             // Return a non existing location. This simply means the enemy is not on the screen
             // and it saves a billion undefined checks.

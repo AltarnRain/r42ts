@@ -8,6 +8,7 @@ import { GameLocation } from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
 import speedProvider from "../Providers/SpeedProvider";
 import { getLeftOrRightFromAngle, getNextX, getNextY } from "./Geometry";
+import { Angle } from "../Types";
 
 /**
  * Module:          Location utilities
@@ -43,6 +44,7 @@ export function calculateDistance(left1: number, top1: number, left2: number, to
  * @param {number} outerBottom. Bottom of the area.
  * @param {number} outerLeft. Left of the area.
  * @param {number} outerRight. Right of the area.
+ * @returns {boolean}. Returns true if the given coordinates fall within the given limits.
  */
 export function fallsWithin(left: number, right: number, top: number, bottom: number, outerLeft: number, outerRight: number, outerTop: number, outerBottom: number): boolean {
 
@@ -54,6 +56,14 @@ export function fallsWithin(left: number, right: number, top: number, bottom: nu
     return res;
 }
 
+/**
+ * fallsWithinGameField. Returns true if the location falls within the game field
+ * @param {number} left. Left coordinate.
+ * @param {number} right. Right coordinate.
+ * @param {number} top. Top coordinate.
+ * @param {number} bottom. Bottom coordinate.
+ * @returns {boolean}. True if the given coordinates fall within the game field
+ */
 export function fallsWithinGameField(left: number, right: number, top: number, bottom: number): boolean {
     const res = fallsWithin(left, right, top, bottom, gameField.left, gameField.right, gameField.top, gameField.bottom - pixelSize);
 
@@ -64,11 +74,11 @@ export function fallsWithinGameField(left: number, right: number, top: number, b
  * Calculates a location.
  * @param {number} left. Left coordinate.
  * @param {number} top. Top coordinate.
- * @param {number | undefined} angle. The angle of the object.
+ * @param {Angle} angle. The angle of the object.
  * @param {number} speed. The speed the of the object
- * @returns {{left: number, top: number}}. The location of the object. If angle is undefined the original location is returns as a new object.
+ * @returns {GameLocation}. The location of the object. If angle is undefined the original location is returns as a new object.
  */
-export function getLocation(left: number, top: number, angle: number | undefined, speed: number): GameLocation {
+export function getLocation(left: number, top: number, angle: Angle, speed: number): GameLocation {
 
     if (angle === undefined) {
         return {
@@ -94,7 +104,6 @@ export function getLocation(left: number, top: number, angle: number | undefined
  * @param {number} top. Top coordinate.
  * @param {number} leftOffset. Left offset in real pixels.
  * @param {number} topOffset. Top offset in real pixels.
- * @param {number} pixelSize. Pixel size used to calculate the actual location.
  * @returns {location}. A new location offset to animation overlap.
  */
 export function getOffsetLocation(left: number, top: number, leftOffset: number, topOffset: number): GameLocation {
@@ -104,6 +113,17 @@ export function getOffsetLocation(left: number, top: number, leftOffset: number,
     };
 }
 
+/**
+ * getNextLocationWithinBoundaries. Returns the next location that falls within the given boundaries.
+ * This function will reset the left and right positions.
+ * @param {number} currentLeft. Current left position of the object.
+ * @param {number} currentTop. Current top position of the object
+ * @param {number} width. Width of the object.
+ * @param {number} angle. Travel angle.
+ * @param {number} speed. Speed of travel.
+ * @param {number} maxTop. Maximum top position before the object must go down.
+ * @param {number} maxBottom. Maximum bottom position before the object must go up.
+ */
 export function getNextLocationWithinBoundaries(
     currentLeft: number,
     currentTop: number,
@@ -138,6 +158,19 @@ export function getNextLocationWithinBoundaries(
     return { left, top };
 }
 
+/**
+ * getNextLocationAndAngle. Returns a new location and angle (if required). This function will also flip angles to ensure
+ * an object bounces off the outer limits. The left and right limit are the gameField.left and right coordinate
+ * Top and bottom are passed as a parameter.
+ * @param {number} currentLeft. Current left position of the object.
+ * @param {number} currentTop. Current top position of the object.
+ * @param {number} angle. Current angle of the object.
+ * @param {number} speed. Speed of the object.
+ * @param {number} width. Width o the object.
+ * @param {number} height. Height of the object.
+ * @param {number} topLimit. top limit. This is as high as the top coordiante can go.
+ * @param {number} bottomLimit. bottom limit. This is as high as the bottom limit can go.
+ */
 export function getNextLocationAndAngle(currentLeft: number, currentTop: number, angle: number, speed: number, width: number, height: number, topLimit: number, bottomLimit: number): { location: GameLocation, angle: number } {
     const nextLocation = getLocation(currentLeft, currentTop, angle, speed);
 

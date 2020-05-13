@@ -8,8 +8,8 @@ import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import { Frame } from "../../Types";
 
 /**
- * Module:          FrameProvider
- * Responsibility:  Provide frames for animations.
+ * Module:          BackAndForthFrameProvider
+ * Responsibility:  Provides frames. But when the last frame is given it will return the previous one until it hits the first frame.
  */
 
 export default class BackAndForthFrameProvider extends BaseFrameProvider {

@@ -18,6 +18,9 @@ import Mutators from "../../Utility/FrameMutators";
 
 export class AsteroidEnemy extends BaseEnemy {
 
+    /**
+     * The astroid is the only enem that uses hitpoints. It starts with 4.
+     */
     private hitpoints = 4;
 
     constructor(
@@ -36,12 +39,20 @@ export class AsteroidEnemy extends BaseEnemy {
         this.explosion.particleFrames.forEach((pf) => Mutators.Frame.setColor(pf, CGAColors.lightRed));
     }
 
+    /**
+     * Update state.
+     * @param {number} tick. Current tick. 
+     */
     public updateState(tick: number): void {
         super.updateState(tick);
 
         this.dispatchCurrentState();
     }
 
+    /**
+     * Returns points for this enemy.
+     * @returns {number}. Points.
+     */
     public getPoints(): number {
         return 300;
     }

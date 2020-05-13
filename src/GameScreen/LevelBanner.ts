@@ -40,7 +40,7 @@ const roundCharacters = [
 
 const {
     width
-} = getFrameDimensions(roundCharacters[0], pixelSize);
+} = getFrameDimensions(roundCharacters[0]);
 
 const top = gameField.bottom * 0.33;
 const left = pixelSize * 26;
