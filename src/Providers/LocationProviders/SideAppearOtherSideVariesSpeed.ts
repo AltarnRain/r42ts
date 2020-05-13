@@ -8,6 +8,7 @@ import ILocationProvider from "../../Interfaces/ILocationProvider";
 import { GameLocation } from "../../Models/GameLocation";
 import { getNextLocationWithinBoundaries } from "../../Utility/Location";
 import dimensionProvider from "../DimensionProvider";
+import IGetCurrentIndex from "../../Base/IGetCurrentFrame";
 
 /**
  * Module:          SideAppearOtherSideVariesSpeed
@@ -24,7 +25,7 @@ export default class SideAppearOtherSideVariesSpeed implements ILocationProvider
     /**
      * A function that returns the index of the frame currently being rendered.
      */
-    private getIndex: () => number;
+    private indexProvider: IGetCurrentIndex;
 
     /**
      * Left position.
@@ -95,7 +96,7 @@ export default class SideAppearOtherSideVariesSpeed implements ILocationProvider
         width: number,
         maxTop: number,
         maxBottom: number,
-        getIndex: () => number,
+        indexProvider: IGetCurrentIndex,
         slowSpeed: number,
         fastSpeed: number,
         slowFrames: number[],
@@ -107,7 +108,7 @@ export default class SideAppearOtherSideVariesSpeed implements ILocationProvider
         this.width = width;
         this.maxTop = maxTop;
         this.maxBottom = maxBottom;
-        this.getIndex = getIndex;
+        this.indexProvider = indexProvider;
 
         this.baseSlowSpeed = slowSpeed;
         this.baseFastSpeed = fastSpeed;
@@ -124,7 +125,7 @@ export default class SideAppearOtherSideVariesSpeed implements ILocationProvider
 
     }
     public updateState(tick?: number | undefined): void {
-        const currentFrameIndex = this.getIndex();
+        const currentFrameIndex = this.indexProvider.getCurrentIndex();
 
         let speed = 0;
         if (this.slowFrames.indexOf(currentFrameIndex) > -1) {

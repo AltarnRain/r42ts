@@ -146,7 +146,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 width,
                 gameField.top,
                 gameField.bottom,
-                frameProvider.getCurrentIndex,
+                frameProvider,
                 Speeds.Movement.Piston.slow,
                 Speeds.Movement.Piston.fast,
                 [0, 1, 2],

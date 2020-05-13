@@ -6,13 +6,14 @@
 
 import { Frame } from "../Types";
 import { copyFrame, copyFrames, getFrameByIndex } from "../Utility/Frame";
+import IGetCurrentIndex from "./IGetCurrentFrame";
 
 /**
  * Module:          IFrameProvider
  * Responsibility:  Contract for a FrameProvider
  */
 
-export default abstract class BaseFrameProvider {
+export default abstract class BaseFrameProvider implements IGetCurrentIndex {
     /**
      * Animation frames.
      */
@@ -41,10 +42,6 @@ export default abstract class BaseFrameProvider {
     constructor(startFrameIndex: number) {
         this.frameIndex = startFrameIndex;
         this.maxIndex = -1;
-
-                // Get Current index is passed into location provides so they can alter the next location
-        // based on the current frame. This requirs that this function is bound to THIS object.
-        this.getCurrentIndex = this.getCurrentIndex.bind(this);
     }
 
     public setFrames(frames: Frame[]): void {
