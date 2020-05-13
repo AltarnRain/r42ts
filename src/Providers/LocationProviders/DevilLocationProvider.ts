@@ -26,7 +26,6 @@ export default class DevilLocationProvider implements ILocationDirectionProvider
     private left: number;
     private top: number;
     private speed: number;
-    private allAngles: number[];
     private width: number;
     private height: number;
     private baseSpeed: number;
@@ -35,12 +34,10 @@ export default class DevilLocationProvider implements ILocationDirectionProvider
 
     private attacking: boolean;
     private recovering: boolean;
-
     constructor(
         left: number,
         top: number,
         speed: number,
-        allAngles: number[],
         sideAngles: number[],
         width: number,
         height: number,
@@ -51,11 +48,10 @@ export default class DevilLocationProvider implements ILocationDirectionProvider
         this.top = top;
         this.speed = speed;
         this.baseSpeed = speed;
-        this.allAngles = allAngles;
         this.sideAngles = sideAngles;
         this.width = width;
         this.height = height;
-        this.angle = getRandomArrayElement(allAngles);
+        this.angle = getRandomArrayElement(sideAngles);
         this.topLimit = topLimit;
         this.bottomLimit = bottomLimit;
 
@@ -102,7 +98,7 @@ export default class DevilLocationProvider implements ILocationDirectionProvider
                 this.recovering === false && this.attacking === false) {
                 this.angle = angles.down;
                 this.attacking = true;
-            } else if (this.top <= this.topLimit + this.height / 2 && this.recovering) {
+            } else if (this.top <= this.topLimit + this.height && this.recovering) {
 
                 // The enemy finished moving up so it's recovered from an attack.
                 this.recovering = false;

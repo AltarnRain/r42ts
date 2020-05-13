@@ -204,9 +204,8 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const locationProvider = new DevilLocationProvider(
                 location.left,
                 location.top,
-                Speeds.Movement.diabolo,
-                MovementAngles.Devil.allAngles,
-                MovementAngles.Devil.sideAngles,
+                Speeds.Movement.devil,
+                MovementAngles.devil,
                 width,
                 height,
                 gameField.top,

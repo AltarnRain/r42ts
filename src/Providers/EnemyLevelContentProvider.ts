@@ -17,6 +17,7 @@ import firstEnemyOccasionalDown from "./ShipsToFireProviders/FirstEnemyOccasiona
 import maxFiveDiagonal from "./ShipsToFireProviders/MaxFiveDiagonal";
 import maxThreeDown from "./ShipsToFireProviders/MaxThreeDown";
 import sevenSixSeverGridProvider from "./SpawnLocations/SevenSixSevenGridProvider";
+import devilShipsToFire from "./ShipsToFireProviders/DevilShipsToFire";
 
 /**
  * Module:          EnemyFactory
@@ -121,8 +122,11 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         case "devil": {
 
             const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory("devil", location));
+            const bulletRunner = new BulletRunner(CGAColors.lightGreen, Speeds.Bullets.devil, devilShipsToFire);
+
             return {
-                enemies: [enemies[0]]
+                enemies,
+                bulletRunner,
             };
         }
 
