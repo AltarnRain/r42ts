@@ -48,7 +48,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
             return {
                 enemies,
-                bulletRunner    
+                bulletRunner,
             };
         }
 

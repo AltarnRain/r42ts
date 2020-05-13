@@ -8,8 +8,6 @@ import { angles } from "../../Constants/Angles";
 import ShipToFire from "../../ShipsToFire";
 import { appState } from "../../State/Store";
 import { getRandomArrayElement } from "../../Utility/Array";
-import { EnemyState } from "../../State/EnemyLevel/EnemyState";
-import PistonEnemy from "../../Enemies/Piston/PistonEnemy";
 
 /**
  * Module:          MaxFiveDiagonal

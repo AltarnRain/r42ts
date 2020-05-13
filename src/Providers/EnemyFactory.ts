@@ -36,9 +36,9 @@ import AsteroidLocationProvider from "./LocationProviders/AsteroidLocationProvid
 import ImmobileLocationProvider from "./LocationProviders/ImmobileLocationProvider";
 import MoveDownAppearUpLocationProvider from "./LocationProviders/MoveDownAppearUpLocaionProvider";
 import SideAppearOtherSideLocationProvider from "./LocationProviders/SideAppearOtherSideLocationProvider";
+import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
 import Wobble from "./LocationProviders/Wobble";
-import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
 
 /**
  * Module:          EnemyFactory

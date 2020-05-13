@@ -16,7 +16,6 @@ import { EnemyState } from "../../State/EnemyLevel/EnemyState";
 import { appState } from "../../State/Store";
 import { Angle } from "../../Types";
 import { calculateAngle, calculateAngleDifference } from "../../Utility/Geometry";
-import { setTotalEnemies } from "../../State/EnemyLevel/EnemyLevelActions";
 
 const maxBullets = 5;
 
