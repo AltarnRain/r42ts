@@ -34,32 +34,36 @@ export default function maxFiveDiagonal(tick: number): ShipToFire[] {
 
     const bulletsToFire = maxBullets - bullets.length;
 
-    if (bulletsToFire > 0) {
-        const candidates = getBestCandiates(tick);
+    if (bulletsToFire === 0) {
+        return returnValue;
+    }
 
-        if (candidates.length > 0) {
-            for (let b = 0; b < bulletsToFire; b++) {
+    const candidates = getBestCandiates(tick);
 
-                let index = b;
+    if (candidates.length === 0) {
+        return returnValue;
+    }
 
-                // If the number of bullets is more than the candidates the best
-                // Candidate gets to fire.
-                if (candidates.length <= b) {
-                    index = 0;
-                }
+    for (let b = 0; b < bulletsToFire; b++) {
 
-                const candiate = candidates[index];
+        let index = b;
 
-                const { enemy, angle } = candiate;
+        // If the number of bullets is more than the candidates the best
+        // Candidate gets to fire.
+        if (candidates.length <= b) {
+            index = 0;
+        }
 
-                // Each orb can only have a single bullet on screen.
-                const hasBulletOnScreen = bullets.some((bullet) => bullet.owner === enemy.enemyId);
+        const candiate = candidates[index];
 
-                // When there's less then 5 enemies, fire away
-                if (!hasBulletOnScreen || enemies.length < maxBullets) {
-                    returnValue.push({ enemy, angle });
-                }
-            }
+        const { enemy, angle } = candiate;
+
+        // Each orb can only have a single bullet on screen.
+        const hasBulletOnScreen = bullets.some((bullet) => bullet.owner === enemy.enemyId);
+
+        // When there's less then 5 enemies, fire away
+        if (!hasBulletOnScreen || enemies.length < maxBullets) {
+            returnValue.push({ enemy, angle });
         }
     }
 
