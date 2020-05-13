@@ -8,18 +8,18 @@
 import Explosion from "../Models/Explosion";
 
 /**
- * Module:          Explosion04
+ * Module:          Explosion05
  */
 
-export default function getExplosion04(): Explosion {
+export default function getExplosion05(): Explosion {
     const explosion: Explosion = {
         explosionCenterFrame: [
-            ["V", "V", "0", "V", "V"],
-            ["V", "V", "0", "V", "V"],
+            ["V", "0", "0", "0", "V"],
+            ["V", "0", "0", "0", "V"],
         ],
         particleFrames: [
             [
-                ["V", "V"],
+                ["V"],
             ]
         ],
         angles: [160, 150, 20, 30],

@@ -34,12 +34,14 @@ import dimensionProvider from "./DimensionProvider";
 import BackAndForthFrameProvider from "./FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "./FrameProviders/CircleFrameProvider";
 import AsteroidLocationProvider from "./LocationProviders/AsteroidLocationProvider";
-import ImmobileLocationProvider from "./LocationProviders/ImmobileLocationProvider";
 import MoveDownAppearUpLocationProvider from "./LocationProviders/MoveDownAppearUpLocaionProvider";
 import SideAppearOtherSideLocationProvider from "./LocationProviders/SideAppearOtherSideLocationProvider";
 import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
 import Wobble from "./LocationProviders/Wobble";
+import { getSpaceMonsterOffsetFrames } from "../Enemies/SpaceMonster/SpaceMonster";
+import { SpaceMonster as SpaceMonsterEnemy } from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
+import getExplosion05 from "../SharedFrames/Explosion05";
 
 /**
  * Module:          EnemyFactory
@@ -65,9 +67,6 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(resource.frames));
             const randomMovementAngle = getRandomArrayElement(MovementAngles.bird);
             const locationProvider = new SideToSideUpAndDown(location.left, location.top, Speeds.Movement.bird, randomMovementAngle, width, height, gameField.top, gameField.bottom);
-
-            // This may deviate from te original game but I do not care. Each birds will
-            // begin to move in a random direction determined by the function below
 
             return new BirdEnemy(FrameTimes.bird, getBirdResource, getExplosion01, locationProvider, frameProvider);
         }
@@ -176,10 +175,16 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 gameField.bottom
             );
 
-            const immobile = new ImmobileLocationProvider(location.left, location.top);
-
             return new PistonEnemy(FrameTimes.piston, getDiaboloOffsetFrames, getExplosion01, locationProvider, frameProvider);
         }
+
+        case "spacemonster-down": {
+            const { maxSizes: { width, height } } = getSpaceMonsterOffsetFrames();
+            const frameProvider = new CircleFrameProvider(0);
+            const locationProvider = new AsteroidLocationProvider(width, height, [angles.down], Speeds.Movement.asteroid);
+            return new SpaceMonsterEnemy(0, getSpaceMonsterOffsetFrames, getExplosion05, locationProvider, frameProvider);
+        }
+
         default:
             throw new Error("Unknown enemy " + enemy);
     }

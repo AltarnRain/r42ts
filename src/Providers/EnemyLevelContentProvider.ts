@@ -106,6 +106,18 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             };
         }
 
+        case "spacemonster-down": {
+            const enemies: BaseEnemy[] = [];
+
+            for (let i = 0; i < 7; i++) {
+                enemies.push(enemyFactory("spacemonster-down"));
+            }
+
+            return {
+                enemies
+            };
+        }
+
         default:
             throw new Error(`Unknown enemy ${enemy}`);
     }
