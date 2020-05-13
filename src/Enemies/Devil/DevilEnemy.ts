@@ -49,7 +49,7 @@ export default class DevilEnemy extends BaseEnemy {
      * Called when a frame change is required. The Devil frames are all colored at initialisation so we can keep this simple.
      */
     protected onFrameChange(): void {
-        const nextFrame = this.frameProvider.getNextFrame();
+        const nextFrame = this.frameProvider.getCurrentFrame();
         Mutators.Frame.convertHexToCGA(nextFrame);
         this.currentFrame = nextFrame;
     }

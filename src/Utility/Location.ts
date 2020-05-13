@@ -136,5 +136,24 @@ export function getNextLocationWithinBoundaries(
     }
 
     return { left, top };
+}
 
+export function getNextLocationAndAngle(currentLeft: number, currentTop: number, angle: number, speed: number, width: number, height: number, topLimit: number, bottomLimit: number): { location: GameLocation, angle: number } {
+    const nextLocation = getLocation(currentLeft, currentTop, angle, speed);
+
+    if (nextLocation.left <= gameField.left || nextLocation.left + width >= gameField.right) {
+        angle = 180 - angle;
+    }
+
+    if (nextLocation.top <= topLimit || nextLocation.top >= bottomLimit - height) {
+        angle *= -1;
+    }
+
+    // Grab in a fresh location in case the angle was changed.
+    const location = getLocation(nextLocation.left, nextLocation.top, angle, speed);
+
+    return {
+        location,
+        angle
+    };
 }

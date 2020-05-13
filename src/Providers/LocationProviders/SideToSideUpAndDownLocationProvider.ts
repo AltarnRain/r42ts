@@ -6,7 +6,7 @@
 
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
-import { getLocation } from "../../Utility/Location";
+import { getLocation, getNextLocationAndAngle } from "../../Utility/Location";
 import dimensionProvider from "../DimensionProvider";
 
 /**
@@ -30,18 +30,16 @@ export default class SideToSideUpAndDownLocationProvider extends BaseLocationPro
     }
 
     public updateState(tick: number): void {
-        const newLocation = getLocation(this.left, this.top, this.angle, this.speed);
-
-        if (newLocation.left <= gameField.left || newLocation.left + this.width >= gameField.right) {
-            this.angle = 180 - this.angle;
-        }
-
-        if (newLocation.top <= this.topLimit || newLocation.top >= this.bottomLimit - this.height) {
-            this.angle *= -1;
-        }
-
-        // Grab in a fresh location in case the angle was changed.
-        const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
+        const { location: { left, top}, angle} = getNextLocationAndAngle(
+            this.left,
+            this.top,
+            this.angle,
+            this.speed,
+            this.width,
+            this.height,
+            this.topLimit,
+            this.bottomLimit
+        );
 
         this.left = left;
         this.top = top;

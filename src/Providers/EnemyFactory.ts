@@ -45,6 +45,7 @@ import SideAppearOtherSideLocationProvider from "./LocationProviders/SideAppearO
 import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
 import Wobble from "./LocationProviders/Wobble";
+import DevilLocationProvider from "./LocationProviders/DevilLocationProvider";
 
 /**
  * Module:          EnemyFactory
@@ -131,6 +132,8 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const { maxSizes: { width, height } } = getAsteroidOffsetFrames();
             const frameProvider = new CircleFrameProvider(0);
             const locationProvider = new AsteroidLocationProvider(width, height, [angles.down], Speeds.Movement.asteroid);
+
+            // Astroids don't change frames over time, they change frames when they're hit.
             return new AsteroidEnemy(0, getAsteroidOffsetFrames, getExplosion04, locationProvider, frameProvider);
         }
 
@@ -185,6 +188,8 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const { maxSizes: { width, height } } = getSpaceMonsterOffsetFrames();
             const frameProvider = new CircleFrameProvider(0);
             const locationProvider = new AsteroidLocationProvider(width, height, [angles.down], Speeds.Movement.asteroid);
+
+            // Space monsters do not change frames over time, they change frame depending on their position on the screen.
             return new SpaceMonsterEnemy(0, getSpaceMonsterOffsetFrames, getExplosion05, locationProvider, frameProvider);
         }
 
@@ -196,22 +201,19 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const { maxSizes: { width, height }, frames } = getDevilOffsetFrames();
             const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
 
-            const randomAngle = getRandomArrayElement(MovementAngles.diabolo);
-
-            const locationProvider = new SideToSideUpAndDown(
+            const locationProvider = new DevilLocationProvider(
                 location.left,
                 location.top,
                 Speeds.Movement.diabolo,
-                randomAngle,
+                MovementAngles.devil,
                 width,
                 height,
                 gameField.top,
                 gameField.bottom
             );
 
-            const immobile = new ImmobileLocationProvider(location?.left, location?.top);
-
-            return new DevilEnemy(FrameTimes.piston, getDevilOffsetFrames, getExplosion01, immobile, frameProvider);
+            // Frames have no time, the frame of the devil is determined by where it is headed.
+            return new DevilEnemy(0, getDevilOffsetFrames, getExplosion01, locationProvider, frameProvider);
         }
 
         default:
