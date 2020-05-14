@@ -199,7 +199,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 anglesToUse = [angles.down];
                 speedsToUse = Speeds.Movement.Asteroid.down;
             } else {
-                anglesToUse = [extraAngles.leftleftdown, angles.leftdown, angles.down, angles.rightdown, extraAngles.rightrightdown];
+                anglesToUse = [angles.leftdown, angles.down, angles.rightdown];
                 speedsToUse = Speeds.Movement.Asteroid.diagonal;
             }
 
@@ -270,10 +270,21 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 { explosionColor: CGAColors.white, explosionParticleColor: CGAColors.white });
         }
 
-        case "spacemonster-down": {
+        case "spacemonster-down":
+        case "spacemonster-diagonal": {
+            let anglesToUse: number[];
+            let speedsToUse: number[];
+            if (enemy === "spacemonster-down") {
+                anglesToUse = [angles.down];
+                speedsToUse = Speeds.Movement.SpaceMonster.down;
+            } else {
+                anglesToUse = [angles.leftdown, angles.down, angles.rightdown];
+                speedsToUse = Speeds.Movement.SpaceMonster.diagonal;
+            }
+
             const { maxSizes: { width, height } } = getSpaceMonsterOffsetFrames();
             const frameProvider = new CircleFrameProvider(0);
-            const locationProvider = new RandomReapperance(width, height, [angles.down], Speeds.Movement.SpaceMonster.down);
+            const locationProvider = new RandomReapperance(width, height, anglesToUse, speedsToUse);
 
             // Space monsters do not change frames over time, they change frame depending on their position on the screen.
             return new SpaceMonster(0, getSpaceMonsterOffsetFrames, getExplosion05, locationProvider, frameProvider);

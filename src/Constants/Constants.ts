@@ -32,12 +32,11 @@ export namespace Speeds {
         export const bat = 1.3;
         export namespace Asteroid {
             export const down = [2, 4, 6, 8, 10];
-            export const diagonal = [3, 5, 7, 10, 12];
+            export const diagonal = [4, 5, 7, 10, 12];
         }
         export namespace SpaceMonster {
             export const down = [2, 4, 6, 8, 10];
-            export const diagonal = [3, 54, 7, 10, 12];
-
+            export const diagonal = [4, 4, 7, 10, 12];
         }
         export const diabolo = 1.3;
         export const devil = 1.3;

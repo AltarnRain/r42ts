@@ -108,11 +108,12 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             };
         }
 
-        case "spacemonster-down": {
+        case "spacemonster-down":
+        case "spacemonster-diagonal": {
             const enemies: BaseEnemy[] = [];
 
             for (let i = 0; i < 7; i++) {
-                enemies.push(enemyFactory("spacemonster-down"));
+                enemies.push(enemyFactory(enemy));
             }
 
             return {

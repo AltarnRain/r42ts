@@ -67,6 +67,7 @@ export type Enemies =
     "piston" |
     "diabolo" |
     "spacemonster-down" |
+    "spacemonster-diagonal" |
     "devil" |
     "crab" |
     "bat";
