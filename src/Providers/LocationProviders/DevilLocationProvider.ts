@@ -11,7 +11,8 @@ import { GameLocation } from "../../Models/GameLocation";
 import { appState } from "../../State/Store";
 import { getRandomArrayElement } from "../../Utility/Array";
 import { getLeftOrRightFromAngle } from "../../Utility/Geometry";
-import { getNextLocationAndAngle } from "../../Utility/Location";
+import { getNextLocationAndAngle, getLocation } from "../../Utility/Location";
+import TickHandler from "../../Handlers/TickHandler";
 
 /**
  * Module:          DevilLocationProvider
@@ -94,25 +95,29 @@ export default class DevilLocationProvider implements ILocationDirectionProvider
 
             // When the player moves underneath this enemy it moves down to attcck except when it is going up after an attack or if it is still attacking.
             if (this.left > playerBottomHixbox.left &&
-                this.left - this.width < playerBottomHixbox.right &&
+                this.left < playerBottomHixbox.right &&
                 this.recovering === false && this.attacking === false) {
                 this.angle = angles.down;
                 this.attacking = true;
-            } else if (this.top <= this.topLimit + this.height && this.recovering) {
+
+            } else if (this.top - this.height <= this.topLimit && this.recovering) {
 
                 // The enemy finished moving up so it's recovered from an attack.
                 this.recovering = false;
                 this.angle = getRandomArrayElement(this.sideAngles);
 
-            } else if (this.top + this.height * 2 >= this.bottomLimit && this.attacking) {
+            } else if (this.top >= this.bottomLimit && this.attacking) {
                 // The enemy has hit the bottom limit while doing an attack, now it must recover.
                 this.recovering = true;
 
                 // Attack done. Time  to recover.
                 this.attacking = false;
-
+                this.angle = angles.up;
             }
+        }
 
+        // Regular movement.
+        if (!this.attacking && !this.recovering) {
             const { location: { left, top }, angle } = getNextLocationAndAngle(
                 this.left,
                 this.top,
@@ -127,6 +132,11 @@ export default class DevilLocationProvider implements ILocationDirectionProvider
             this.left = left;
             this.top = top;
             this.angle = angle;
+        } else {
+            // On the attack or on recovert.
+            const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
+            this.left = left;
+            this.top = top;
         }
     }
 }

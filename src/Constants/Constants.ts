@@ -28,7 +28,7 @@ export namespace Speeds {
         export const balloon = 1.5;
         export const asteroid = [2, 4, 6, 8, 10];
         export const diabolo = 2.5;
-        export const devil = 1.5;
+        export const devil = 2.5;
 
         export namespace Piston {
             export const slow = 2;
