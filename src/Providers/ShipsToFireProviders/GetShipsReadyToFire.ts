@@ -17,5 +17,5 @@ export function GetShipsReadyToFire(tick: number): EnemyState[] {
         enemyLevelState: { enemies }
     } = appState();
 
-    return enemies.filter((enemy) => enemy.lastFiretick === undefined || enemy.lastFiretick + 200 < tick);
+    return enemies.filter((enemy) => enemy.lastFiretick === undefined || enemy.lastFiretick + 50 < tick);
 }

@@ -61,7 +61,10 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
             case Constants.addOrUpdateEnemy:
                 const index = state.enemies.findIndex((es) => es.enemyId === action.enemyState.enemyId);
                 if (index > -1) {
-                    draft.enemies[index] = action.enemyState;
+                    const currentEnemy = draft.enemies[index];
+
+                    // BaseEnemy does not dispatch a lastFireTick.
+                    draft.enemies[index] = {...currentEnemy, ...action.enemyState};
                 } else {
                     draft.enemies.push(action.enemyState);
                 }
