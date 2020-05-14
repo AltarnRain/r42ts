@@ -13,7 +13,7 @@ import Mutators from "../Utility/FrameMutators";
  */
 
 export default function getExplosion01(centerColor?: string, shrapnellColor?: string): Explosion {
-    const explosion01: Explosion = {
+    const explosion: Explosion = {
         explosionCenterFrame: [
             ["V", "0", "V", "0"],
             ["V", "V", "V", "V"],
@@ -31,18 +31,18 @@ export default function getExplosion01(centerColor?: string, shrapnellColor?: st
         particleFrameIndexes: [0, 1, 0, 0, 1, 0],
         speed: 17,
         acceleration: 1.05,
-        explosionCenterDelay: 30,
+        explosionCenterDelay: 50,
         speeds: [], // not used, all particles travel at the same speed
         useSpeed: true,
     };
 
     if (centerColor) {
-        Mutators.Frame.setColor(explosion01.explosionCenterFrame, centerColor);
+        Mutators.Frame.setColor(explosion.explosionCenterFrame, centerColor);
     }
 
     if (shrapnellColor) {
-        Mutators.Frames.setColor(explosion01.particleFrames, shrapnellColor);
+        Mutators.Frames.setColor(explosion.particleFrames, shrapnellColor);
     }
 
-    return explosion01;
+    return explosion;
 }

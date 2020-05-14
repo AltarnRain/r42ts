@@ -11,7 +11,7 @@ import Explosion from "../Models/Explosion";
  */
 
 export default function getExplosion02(): Explosion {
-    const Explosion02: Explosion = {
+    const explosion: Explosion = {
         explosionCenterFrame: [
             ["V", "V", "V", "V"],
             ["0", "0", "0", "0"],
@@ -28,10 +28,10 @@ export default function getExplosion02(): Explosion {
         particleFrameIndexes: [0, 0, 0, 0, 0, 0],
         speed: 12,
         acceleration: 1.05,
-        explosionCenterDelay: 40,
+        explosionCenterDelay: 0,
         speeds: [], // not used, all particles travel at the same speed
         useSpeed: true,
     };
 
-    return Explosion02;
+    return explosion;
 }

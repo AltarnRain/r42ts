@@ -13,7 +13,7 @@ import Mutators from "../Utility/FrameMutators";
  */
 
 export default function getExplosion03(): Explosion {
-    const explosion01: Explosion = {
+    const explosion: Explosion = {
         explosionCenterFrame: [
             ["E", "A", "A", "E"],
             ["E", "E", "E", "E"],
@@ -39,5 +39,5 @@ export default function getExplosion03(): Explosion {
         useSpeed: true,
     };
 
-    return explosion01;
+    return explosion;
 }
