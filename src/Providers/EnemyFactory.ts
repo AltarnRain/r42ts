@@ -6,10 +6,10 @@
 
 import BaseEnemy from "../Base/BaseEnemy";
 import { angles } from "../Constants/Angles";
+import CGAColors from "../Constants/CGAColors";
 import { FrameTimes, Locations, MovementAngles, Speeds } from "../Constants/Constants";
 import { AsteroidEnemy } from "../Enemies/Asteroid/AsteroidEnemy";
 import { getAsteroidOffsetFrames } from "../Enemies/Asteroid/GetAsteroidOffsetFrames";
-import BalloonEnemy from "../Enemies/Balloon/BalloonEnemy";
 import getBalloonOffsetFrames from "../Enemies/Balloon/GetBalloonOffsetFrames";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import { default as getBirdOffsetFrames, default as getBirdResource } from "../Enemies/Bird/GetBirdOffsetFrames";
@@ -19,14 +19,14 @@ import getDiaboloOffsetFrames from "../Enemies/Diabolo/GetDiaboloOffsetFrames";
 import getOrbResource from "../Enemies/Orb/GetOrbOffsetFrames";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import getPistonOffsetFrames from "../Enemies/Piston/GetPistonOffsetFrames";
-import PistonEnemy from "../Enemies/Piston/PistonEnemy";
 import getRobotResource from "../Enemies/Robot/GetRobotOffsetFrames";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import { getSpaceMonsterOffsetFrames } from "../Enemies/SpaceMonster/SpaceMonster";
 import { SpaceMonster as SpaceMonsterEnemy } from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
 import getSpinnerOffsetFrames from "../Enemies/Spinner/GetSpinnerOffsetFrames";
-import SpinnerEnemy from "../Enemies/Spinner/SpinnerEnemy";
+import StaticColoredFrameAnimated from "../Enemies/StaticColorFrameAnimated/StaticColoredFrameAnimated";
 import { GameLocation } from "../Models/GameLocation";
+import getDevilExplosion from "../SharedFrames/DevilExplosion";
 import getExplosion01 from "../SharedFrames/Explosion01";
 import getExplosion02 from "../SharedFrames/Explosion02";
 import getExplosion03 from "../SharedFrames/Explosion03";
@@ -45,8 +45,6 @@ import SideAppearOtherSideLocationProvider from "./LocationProviders/SideAppearO
 import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
 import Wobble from "./LocationProviders/Wobble";
-import getDevilExplosion from "../SharedFrames/DevilExplosion";
-import DiaboloEnemy from "../Enemies/Diabolo/DiaboloEnemy";
 
 /**
  * Module:          EnemyFactory
@@ -115,7 +113,8 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
             const randomAngle = getRandomArrayElement(MovementAngles.spinner);
             const locationProvider = new SideToSideUpAndDown(location.left, location.top, Speeds.Movement.spinner, randomAngle, width, height, maxTop, maxBottom);
-            return new SpinnerEnemy(FrameTimes.spinner, getSpinnerOffsetFrames, getExplosion01, locationProvider, frameProvider);
+
+            return new StaticColoredFrameAnimated(CGAColors.white, CGAColors.white, 200, FrameTimes.spinner, getSpinnerOffsetFrames, getExplosion01, locationProvider, frameProvider);
         }
 
         case "balloon": {
@@ -126,8 +125,8 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const { frames, maxSizes: { width, height } } = getBalloonOffsetFrames();
             const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
             const locationProvider = new Wobble(location.left, location.top, Speeds.Movement.balloon, 0, width, height, 200);
-            return new BalloonEnemy(FrameTimes.balloon, getBalloonOffsetFrames, getExplosion03, locationProvider, frameProvider);
 
+            return new StaticColoredFrameAnimated(undefined, undefined, 200, FrameTimes.balloon, getBalloonOffsetFrames, getExplosion03, locationProvider, frameProvider);
         }
         case "asteroid-down": {
             const { maxSizes: { width, height } } = getAsteroidOffsetFrames();
@@ -159,7 +158,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 [0, 1, 2],
                 [3, 4]);
 
-            return new PistonEnemy(FrameTimes.piston, getPistonOffsetFrames, getExplosion02, locationProvider, frameProvider);
+            return new StaticColoredFrameAnimated(CGAColors.magenta, CGAColors.magenta, 200, FrameTimes.piston, getPistonOffsetFrames, getExplosion02, locationProvider, frameProvider);
         }
 
         case "diabolo": {
@@ -182,7 +181,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 gameField.bottom
             );
 
-            return new DiaboloEnemy(FrameTimes.diabolo, getDiaboloOffsetFrames, getExplosion01, locationProvider, frameProvider);
+            return new StaticColoredFrameAnimated(CGAColors.white, CGAColors.white, 200, FrameTimes.diabolo, getDiaboloOffsetFrames, getExplosion01, locationProvider, frameProvider);
         }
 
         case "spacemonster-down": {
