@@ -7,8 +7,8 @@
 import { GameLocation } from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
 import speedProvider from "../Providers/SpeedProvider";
-import { getLeftOrRightFromAngle, getNextX, getNextY } from "./Geometry";
 import { Angle } from "../Types";
+import { getLeftOrRightFromAngle, getNextX, getNextY } from "./Geometry";
 
 /**
  * Module:          Location utilities

@@ -10,10 +10,10 @@
  */
 
 import ILevel from "../Interfaces/ILevel";
-import { setWarpGamteComplexity } from "../State/Game/GameActions";
-import { appState, dispatch } from "../State/Store";
-import { TimeLimitLevel } from "./TimeLimitLevel";
+import { setLevel, setWarpGamteComplexity as setWarpGameComplexity } from "../State/Game/GameActions";
+import { dispatch } from "../State/Store";
 import EnemyLevel from "./EnemyLevel";
+import { TimeLimitLevel } from "./TimeLimitLevel";
 import WarpLevel from "./WarpLevel";
 
 /**
@@ -21,7 +21,7 @@ import WarpLevel from "./WarpLevel";
  * @param {number} level. The desired level.
  * @returns {BaseEnemyLevel}. A level.
  */
-export function levelFactory(level: number): ILevel {
+export function levelFactory(level: number): ILevel | undefined {
     switch (level) {
         case 0:
             // Test level
@@ -33,7 +33,7 @@ export function levelFactory(level: number): ILevel {
         case 3:
             return new EnemyLevel("orb");
         case 4:
-            dispatch(setWarpGamteComplexity(0));
+            dispatch(setWarpGameComplexity(0));
             return new WarpLevel();
         case 5:
             return new EnemyLevel("spinner");
@@ -42,7 +42,7 @@ export function levelFactory(level: number): ILevel {
         case 7:
             return new TimeLimitLevel("asteroid-down");
         case 8:
-            dispatch(setWarpGamteComplexity(1));
+            dispatch(setWarpGameComplexity(1));
             return new WarpLevel();
         case 9:
             return new EnemyLevel("piston");
@@ -51,22 +51,19 @@ export function levelFactory(level: number): ILevel {
         case 11:
             return new TimeLimitLevel("spacemonster-down");
         case 12:
-            dispatch(setWarpGamteComplexity(2));
+            dispatch(setWarpGameComplexity(2));
             return new WarpLevel();
         case 13:
             return new EnemyLevel("devil");
         case 14:
             return new EnemyLevel("balloon");
+        case 15:
+            return new EnemyLevel("asteroid-diagonal");
+        case 16:
+            dispatch(setWarpGameComplexity(2));
+            return new WarpLevel();
         default:
-            return new EnemyLevel("bird");
+            // Reset to first level.
+            dispatch(setLevel(1));
     }
-}
-
-/**
- * clearedEnemies.
- * @returns {boolean}. Returns true if all enemies (and particles) have been removed from the ApplicationState.
- */
-
-function time(): boolean {
-    return false;
 }

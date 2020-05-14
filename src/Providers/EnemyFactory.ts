@@ -38,9 +38,9 @@ import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import dimensionProvider from "./DimensionProvider";
 import BackAndForthFrameProvider from "./FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "./FrameProviders/CircleFrameProvider";
-import AsteroidLocationProvider from "./LocationProviders/AsteroidLocationProvider";
 import DevilLocationProvider from "./LocationProviders/DevilLocationProvider";
 import MoveDownAppearUpLocationProvider from "./LocationProviders/MoveDownAppearUpLocaionProvider";
+import AsteroidLocationProvider from "./LocationProviders/RandomReapperance";
 import SideAppearOtherSideLocationProvider from "./LocationProviders/SideAppearOtherSideLocationProvider";
 import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
@@ -128,10 +128,22 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
 
             return new StaticColoredFrameAnimated(undefined, undefined, 200, FrameTimes.balloon, getBalloonOffsetFrames, getExplosion03, locationProvider, frameProvider);
         }
-        case "asteroid-down": {
+        case "asteroid-down":
+        case "asteroid-diagonal": {
             const { maxSizes: { width, height } } = getAsteroidOffsetFrames();
             const frameProvider = new CircleFrameProvider(0);
-            const locationProvider = new AsteroidLocationProvider(width, height, [angles.down], Speeds.Movement.asteroid);
+
+            let anglesToUse: number[];
+            let speedsToUse: number[];
+            if (enemy === "asteroid-down") {
+                anglesToUse = [angles.down];
+                speedsToUse = Speeds.Movement.Asteroid.down;
+            } else {
+                anglesToUse = [angles.leftleftdown, angles.leftdown, angles.down, angles.rightdown, angles.rightrightdown];
+                speedsToUse = Speeds.Movement.Asteroid.diagonal;
+            }
+
+            const locationProvider = new AsteroidLocationProvider(width, height, anglesToUse, speedsToUse);
 
             // Astroids don't change frames over time, they change frames when they're hit.
             return new AsteroidEnemy(0, getAsteroidOffsetFrames, getExplosion04, locationProvider, frameProvider);
@@ -187,7 +199,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
         case "spacemonster-down": {
             const { maxSizes: { width, height } } = getSpaceMonsterOffsetFrames();
             const frameProvider = new CircleFrameProvider(0);
-            const locationProvider = new AsteroidLocationProvider(width, height, [angles.down], Speeds.Movement.asteroid);
+            const locationProvider = new AsteroidLocationProvider(width, height, [angles.down], Speeds.Movement.SpaceMonster.down);
 
             // Space monsters do not change frames over time, they change frame depending on their position on the screen.
             return new SpaceMonsterEnemy(0, getSpaceMonsterOffsetFrames, getExplosion05, locationProvider, frameProvider);

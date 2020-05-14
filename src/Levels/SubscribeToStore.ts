@@ -19,7 +19,7 @@ import { levelFactory } from "./LevelFactory";
 let levelNumber: number;
 
 // Current level object.
-let currentLevel: ILevel;
+let currentLevel: ILevel | undefined;
 
 // Used to track changes in score to award ships and phasers.
 let currentScore = 0;
@@ -37,7 +37,7 @@ export default function subscribeToStoreChanges(): void {
         if (gameState.level !== undefined && levelNumber !== gameState.level) {
             levelNumber = gameState.level;
 
-            if (currentLevel) {
+            if (currentLevel !== undefined) {
                 currentLevel.dispose();
             }
 

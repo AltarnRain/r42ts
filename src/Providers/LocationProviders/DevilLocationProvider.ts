@@ -11,8 +11,7 @@ import { GameLocation } from "../../Models/GameLocation";
 import { appState } from "../../State/Store";
 import { getRandomArrayElement } from "../../Utility/Array";
 import { getLeftOrRightFromAngle } from "../../Utility/Geometry";
-import { getNextLocationAndAngle, getLocation } from "../../Utility/Location";
-import TickHandler from "../../Handlers/TickHandler";
+import { getLocation, getNextLocationAndAngle } from "../../Utility/Location";
 
 /**
  * Module:          DevilLocationProvider

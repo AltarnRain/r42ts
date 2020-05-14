@@ -26,7 +26,17 @@ export namespace Speeds {
         export const orb = 0.1;
         export const spinner = 1.5;
         export const balloon = 1.5;
-        export const asteroid = [2, 4, 6, 8, 10];
+
+        export namespace Asteroid {
+            export const down = [2, 4, 6, 8, 10];
+            export const diagonal = [3, 5, 7, 10, 12];
+        }
+
+        export namespace SpaceMonster {
+            export const down = [2, 4, 6, 8, 10];
+            export const diagonal = [3, 54, 7, 10, 12   ];
+
+        }
         export const diabolo = 2.5;
         export const devil = 2.5;
 

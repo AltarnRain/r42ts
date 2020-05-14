@@ -27,14 +27,14 @@ import sevenSixSeverGridProvider from "./SpawnLocations/SevenSixSevenGridProvide
 export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: BulletRunner, enemies: BaseEnemy[] } {
     switch (enemy) {
         case "bird": {
-            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory("bird", location));
+            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory(enemy, location));
             return {
                 enemies,
             };
         }
 
         case "robot": {
-            const enemies = robotSpawnLocations.map((location) => enemyFactory("robot", location));
+            const enemies = robotSpawnLocations.map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.lightRed, Speeds.Bullets.robot, firstEnemyOccasionalDown);
 
             return {
@@ -44,7 +44,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "orb": {
-            const enemies = orbSpawnLocations.map((location) => enemyFactory("orb", location));
+            const enemies = orbSpawnLocations.map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.magenta, Speeds.Bullets.orb, maxFiveDiagonal);
 
             return {
@@ -55,7 +55,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "spinner": {
 
-            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory("spinner", location));
+            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.white, Speeds.Bullets.spinner, maxFiveDiagonal);
 
             return {
@@ -66,7 +66,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "balloon": {
 
-            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory("balloon", location));
+            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxFiveDiagonal);
 
             return {
@@ -75,11 +75,12 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             };
         }
 
-        case "asteroid-down": {
+        case "asteroid-down":
+        case "asteroid-diagonal": {
             const enemies: BaseEnemy[] = [];
 
             for (let i = 0; i < 7; i++) {
-                enemies.push(enemyFactory("asteroid-down"));
+                enemies.push(enemyFactory(enemy));
             }
 
             return {
