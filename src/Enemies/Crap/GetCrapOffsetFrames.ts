@@ -46,12 +46,16 @@ export default function getCrapOffsetFrames(): OffsetFrames {
         ],
         offSets: [
             {
-                left: -1,
+                left: -2,
                 top: 0,
             },
             {
                 left: 0,
                 top: 0
+            },
+            {
+                left: 2,
+                top: 0,
             },
             {
                 left: 1,

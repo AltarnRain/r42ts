@@ -55,7 +55,10 @@ export default class DevilLocationProvider implements ILocationDirectionProvider
      * @returns {GameLocation}. The location.
      */
     public getCurrentLocation(): GameLocation {
-        return { left: this.left, top: this.top };
+        return {
+            left: this.left,
+            top: this.top
+        };
     }
 
     /**

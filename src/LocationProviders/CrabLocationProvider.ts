@@ -24,6 +24,7 @@ export default class MoveUpBitDownThenUpReappearDown implements ILocationProvide
      * Used to calculate speed increases.
      */
     private baseSpeed: number;
+    private angle: any;
 
     constructor(
         private left: number,
@@ -33,6 +34,7 @@ export default class MoveUpBitDownThenUpReappearDown implements ILocationProvide
         private indexProvider: IGetCurrentIndex) {
 
         this.baseSpeed = speed;
+        this.angle = angles.up;
     }
 
     /**
@@ -44,17 +46,14 @@ export default class MoveUpBitDownThenUpReappearDown implements ILocationProvide
     }
 
     /**
-     * Returns the current location. Note. Current is not 100% accurate here. If the enemy has passed the maxButtom, it's
-     * top will be set to maxTop.
+     * Returns the current location.
      * @returns {GameLocation}. Current game location.
      */
     public getCurrentLocation(): GameLocation {
-
-        if (this.top < gameField.top - this.height) {
-            this.top = gameField.bottom + this.height;
-        }
-
-        return getLocation(this.left, this.top, angles.up, this.speed);
+        return {
+            left: this.left,
+            top: this.top,
+        };
     }
 
     /**
@@ -62,8 +61,20 @@ export default class MoveUpBitDownThenUpReappearDown implements ILocationProvide
      * @param {number} tick. Current game tick.
      */
     public updateState(tick: number): void {
-        const { left, top } = getLocation(this.left, this.top, angles.up, this.speed);
+        const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
         this.left = left;
-        this.top = top;
+
+        if (top < gameField.top - this.height) {
+            this.top = gameField.bottom + this.height;
+        } else {
+            this.top = top;
+        }
+
+        // 4/6 move up. 2/6 frames move down.
+        if (this.indexProvider.getCurrentIndex() < 5 || this.top > gameField.bottom) {
+            this.angle = angles.up;
+        } else {
+            this.angle = angles.down;
+        }
     }
 }

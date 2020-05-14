@@ -35,6 +35,9 @@ export default class ImmobileLocationProvider implements ILocationProvider {
      * Returns the given location.
      */
     public getCurrentLocation(): GameLocation {
-        return { left: this.left, top: this.top };
+        return {
+            left: this.left,
+            top: this.top
+        };
     }
 }

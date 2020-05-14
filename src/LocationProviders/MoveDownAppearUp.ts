@@ -34,17 +34,14 @@ export default class MoveDownAppearUp extends BaseLocationProvider {
     }
 
     /**
-     * Returns the current location. Note. Current is not 100% accurate here. If the enemy has passed the maxButtom, it's
-     * top will be set to maxTop.
+     * Returns the current location.
      * @returns {GameLocation}. Current game location.
      */
     public getCurrentLocation(): GameLocation {
-
-        if (this.top + this.height > this.maxBottom) {
-            this.top = this.maxTop;
-        }
-
-        return getLocation(this.left, this.top, this.angle, this.speed);
+        return {
+            left: this.left,
+            top: this.top,
+        };
     }
 
     /**
@@ -53,7 +50,12 @@ export default class MoveDownAppearUp extends BaseLocationProvider {
      */
     public updateState(tick: number): void {
         const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
+
         this.left = left;
-        this.top = top;
+        if (top + this.height > this.maxBottom) {
+            this.top = this.maxTop;
+        } else {
+            this.top = top;
+        }
     }
 }

@@ -43,8 +43,15 @@ export default class SideAppearOtherSideVariesSpeed implements ILocationProvider
         this.baseFastSpeed = fastSpeed;
     }
 
+    /**
+     * Retusn the current location
+     * @returns {GameLocation}. Current location.
+     */
     public getCurrentLocation(): GameLocation {
-        return { left: this.left, top: this.top };
+        return {
+            left: this.left,
+            top: this.top
+        };
 
     }
     public updateState(tick?: number | undefined): void {
