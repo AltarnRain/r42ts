@@ -26,6 +26,7 @@ export namespace Speeds {
         export const orb = 0.1;
         export const spinner = 1.5;
         export const balloon = 1.5;
+        export const crab = 1.5;
 
         export namespace Asteroid {
             export const down = [2, 4, 6, 8, 10];

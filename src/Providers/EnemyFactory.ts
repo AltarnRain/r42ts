@@ -47,6 +47,7 @@ import SideAppearOtherSide from "../LocationProviders/SideAppearOtherSide";
 import SideAppearOtherSideVariesSpeed from "../LocationProviders/SideAppearOtherSideVariesSpeed";
 import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
 import Wobble from "../LocationProviders/Wobble";
+import MoveUpBitDownThenUpReappearDown from "../LocationProviders/CrabLocationProvider";
 
 
 /**
@@ -72,7 +73,15 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
 
             const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(resource.frames));
             const randomMovementAngle = getRandomArrayElement(MovementAngles.bird);
-            const locationProvider = new SideToSideUpAndDown(location.left, location.top, Speeds.Movement.bird, randomMovementAngle, width, height, gameField.top, gameField.bottom);
+            const locationProvider = new SideToSideUpAndDown(
+                location.left,
+                location.top,
+                Speeds.Movement.bird,
+                randomMovementAngle,
+                width,
+                height,
+                gameField.top,
+                gameField.bottom);
 
             return new BirdEnemy(FrameTimes.bird, getBirdOffsetFrames, getExplosion01, locationProvider, frameProvider);
         }
@@ -87,7 +96,16 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const { maxSizes: { width, height } } = getRobotResource();
 
             const frameProvider = new BackAndForthFrameProvider(0);
-            const locationProvider = new SideAppearOtherSide(location.left, location.top, Speeds.Movement.robot, MovementAngles.robot, width, height, gameField.top, maxBottom);
+            const locationProvider = new SideAppearOtherSide(
+                location.left,
+                location.top,
+                Speeds.Movement.robot,
+                MovementAngles.robot,
+                width,
+                height,
+                gameField.top,
+                maxBottom);
+
             return new RobotEnemy(FrameTimes.robot, locationProvider, frameProvider, getExplosion02, getRobotResource);
         }
 
@@ -100,7 +118,16 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const { maxTop, maxBottom } = Locations.Enemies.Orb;
 
             const frameProvider = new CircleFrameProvider(0);
-            const locationProvider = new MoveDownAppearUp(location.left, location.top, Speeds.Movement.orb, MovementAngles.orb, width, height, maxTop, maxBottom);
+            const locationProvider = new MoveDownAppearUp(
+                location.left,
+                location.top,
+                Speeds.Movement.orb,
+                MovementAngles.orb,
+                width,
+                height,
+                maxTop,
+                maxBottom);
+
             return new OrbEnemy(FrameTimes.orb, getOrbResource, getExplosion02, locationProvider, frameProvider);
         }
         case "spinner": {
@@ -115,9 +142,25 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
 
             const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
             const randomAngle = getRandomArrayElement(MovementAngles.spinner);
-            const locationProvider = new SideToSideUpAndDown(location.left, location.top, Speeds.Movement.spinner, randomAngle, width, height, maxTop, maxBottom);
+            const locationProvider = new SideToSideUpAndDown(
+                location.left,
+                location.top,
+                Speeds.Movement.spinner,
+                randomAngle,
+                width,
+                height,
+                maxTop,
+                maxBottom);
 
-            return new DefaultEnemy(CGAColors.white, CGAColors.white, Points.spinner, FrameTimes.spinner, getSpinnerOffsetFrames, getExplosion01, locationProvider, frameProvider);
+            return new DefaultEnemy(
+                CGAColors.white,
+                CGAColors.white,
+                Points.spinner,
+                FrameTimes.spinner,
+                getSpinnerOffsetFrames,
+                getExplosion01,
+                locationProvider,
+                frameProvider);
         }
 
         case "balloon": {
@@ -129,7 +172,15 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
             const locationProvider = new Wobble(location.left, location.top, Speeds.Movement.balloon, 0, width, height, 200);
 
-            return new DefaultEnemy(undefined, undefined, Points.balloon, FrameTimes.balloon, getBalloonOffsetFrames, getExplosion03, locationProvider, frameProvider);
+            return new DefaultEnemy(
+                undefined,
+                undefined,
+                Points.balloon,
+                FrameTimes.balloon,
+                getBalloonOffsetFrames,
+                getExplosion03,
+                locationProvider,
+                frameProvider);
         }
         case "asteroid-down":
         case "asteroid-diagonal": {
@@ -173,7 +224,15 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 [0, 1, 2],
                 [3, 4]);
 
-            return new DefaultEnemy(CGAColors.magenta, CGAColors.magenta, Points.piston, FrameTimes.piston, getPistonOffsetFrames, getExplosion02, locationProvider, frameProvider);
+            return new DefaultEnemy(
+                CGAColors.magenta,
+                CGAColors.magenta,
+                Points.piston,
+                FrameTimes.piston,
+                getPistonOffsetFrames,
+                getExplosion02,
+                locationProvider,
+                frameProvider);
         }
 
         case "diabolo": {
@@ -196,7 +255,15 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 gameField.bottom
             );
 
-            return new DefaultEnemy(CGAColors.white, CGAColors.white, Points.diabolo, FrameTimes.diabolo, getDiaboloOffsetFrames, getExplosion01, locationProvider, frameProvider);
+            return new DefaultEnemy(
+                CGAColors.white,
+                CGAColors.white,
+                Points.diabolo,
+                FrameTimes.diabolo,
+                getDiaboloOffsetFrames,
+                getExplosion01,
+                locationProvider,
+                frameProvider);
         }
 
         case "spacemonster-down": {
@@ -240,20 +307,23 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const frameProvider = new BackAndForthFrameProvider(0);
 
             const randomAngle = getRandomArrayElement(MovementAngles.diabolo);
-            const locationProvider = new SideToSideUpAndDown(
+            const locationProvider = new MoveUpBitDownThenUpReappearDown(
                 location.left,
                 location.top,
-                Speeds.Movement.diabolo,
-                randomAngle,
-                width,
-                height,
-                gameField.top,
-                gameField.bottom
-            );
+                Speeds.Movement.crab,
+                height);
 
-            const lp = new ImmobileLocationProvider(location.left, location.top);
+            // const lp = new ImmobileLocationProvider(location.left, location.top);
 
-            return new DefaultEnemy(CGAColors.magenta, CGAColors.magenta, Points.crab, FrameTimes.crab, getCrapOffsetFrames, getExplosion02, lp, frameProvider);
+            return new DefaultEnemy(
+                CGAColors.magenta,
+                CGAColors.magenta,
+                Points.crab,
+                FrameTimes.crab,
+                getCrapOffsetFrames,
+                getExplosion02,
+                locationProvider,
+                frameProvider);
         }
 
         default:
