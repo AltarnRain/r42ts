@@ -8,17 +8,17 @@ import BaseEnemy from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
 import { Speeds, Locations } from "../Constants/Constants";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
-import pistonSpawnLocations from "./SpawnLocations/ElevennInALine";
+import pistonSpawnLocations from "../SpawnLocations/ElevennInALine";
 import robotSpawnLocations from "../Enemies/Robot/RobotSpawnLocations";
 import BulletRunner from "../Runners/BulletRunner";
 import { Enemies } from "../Types";
 import enemyFactory from "./EnemyFactory";
-import devilShipsToFire from "./ShipsToFireProviders/DevilShipsToFire";
-import firstEnemyOccasionalDown from "./ShipsToFireProviders/FirstEnemyOccasionalDown";
-import maxFiveDiagonal from "./ShipsToFireProviders/MaxFiveDiagonal";
-import maxThreeDown from "./ShipsToFireProviders/MaxThreeDown";
-import sevenSixSeverGridProvider from "./SpawnLocations/SevenSixSevenGridProvider";
-import elevenInALine from "./SpawnLocations/ElevennInALine";
+import devilShipsToFire from "../ShipsToFireProviders/DevilShipsToFire";
+import firstEnemyOccasionalDown from "../ShipsToFireProviders/FirstEnemyOccasionalDown";
+import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
+import maxThreeDown from "../ShipsToFireProviders/MaxThreeDown";
+import sevenSixSeverGridProvider from "../SpawnLocations/SevenSixSevenGridProvider";
+import elevenInALine from "../SpawnLocations/ElevennInALine";
 
 /**
  * Module:          EnemyFactory

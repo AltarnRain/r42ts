@@ -4,8 +4,8 @@
  * See LICENSE.MD.
  */
 
-import BaseFrameProvider from "../../Base/BaseFrameProvider";
-import { Frame } from "../../Types";
+import BaseFrameProvider from "../Base/BaseFrameProvider";
+import { Frame } from "../Types";
 
 /**
  * Module:          OneFrameProvider

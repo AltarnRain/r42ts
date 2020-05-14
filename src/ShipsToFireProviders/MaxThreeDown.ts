@@ -4,10 +4,10 @@
  * See LICENSE.MD.
  */
 
-import { angles } from "../../Constants/Angles";
-import ShipToFire from "../../ShipsToFire";
-import { appState } from "../../State/Store";
-import { getRandomArrayElement } from "../../Utility/Array";
+import { angles } from "../Constants/Angles";
+import ShipToFire from "../ShipsToFire";
+import { appState } from "../State/Store";
+import { getRandomArrayElement } from "../Utility/Array";
 import { GetShipsReadyToFire } from "./GetShipsReadyToFire";
 
 /**

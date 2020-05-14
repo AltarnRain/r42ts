@@ -4,8 +4,8 @@
  * See LICENSE.MD.
  */
 
-import { GameLocation } from "../../Models/GameLocation";
-import dimensionProvider from "../DimensionProvider";
+import { GameLocation } from "../Models/GameLocation";
+import dimensionProvider from "../Providers/DimensionProvider";
 
 /**
  * Module:          PistonSpawnLocations

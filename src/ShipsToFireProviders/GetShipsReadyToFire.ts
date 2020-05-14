@@ -4,8 +4,8 @@
  * See LICENSE.MD.
  */
 
-import { EnemyState } from "../../State/EnemyLevel/EnemyState";
-import { appState } from "../../State/Store";
+import { EnemyState } from "../State/EnemyLevel/EnemyState";
+import { appState } from "../State/Store";
 
 /**
  * Module:          GetShipsReadyToFire

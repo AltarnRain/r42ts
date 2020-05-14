@@ -4,13 +4,13 @@
  * See LICENSE.MD.
  */
 
-import ILocationProvider from "../../Interfaces/ILocationProvider";
-import { GameLocation } from "../../Models/GameLocation";
-import { Angle } from "../../Types";
-import { getRandomArrayElement } from "../../Utility/Array";
-import { randomNumberInRange } from "../../Utility/Lib";
-import { getLocation } from "../../Utility/Location";
-import dimensionProvider from "../DimensionProvider";
+import ILocationProvider from "../Interfaces/ILocationProvider";
+import { GameLocation } from "../Models/GameLocation";
+import { Angle } from "../Types";
+import { getRandomArrayElement } from "../Utility/Array";
+import { randomNumberInRange } from "../Utility/Lib";
+import { getLocation } from "../Utility/Location";
+import dimensionProvider from "../Providers/DimensionProvider";
 
 /**
  * Module:          AsteroidLocationProvider

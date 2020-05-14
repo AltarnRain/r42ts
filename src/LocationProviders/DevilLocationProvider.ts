@@ -4,14 +4,14 @@
  * See LICENSE.MD.
  */
 
-import { angles } from "../../Constants/Angles";
-import Guard from "../../Guard";
-import ILocationDirectionProvider from "../../Interfaces/ILocationDirectionProvider";
-import { GameLocation } from "../../Models/GameLocation";
-import { appState } from "../../State/Store";
-import { getRandomArrayElement } from "../../Utility/Array";
-import { getLeftOrRightFromAngle } from "../../Utility/Geometry";
-import { getLocation, getNextLocationAndAngle } from "../../Utility/Location";
+import { angles } from "../Constants/Angles";
+import Guard from "../Guard";
+import ILocationDirectionProvider from "../Interfaces/ILocationDirectionProvider";
+import { GameLocation } from "../Models/GameLocation";
+import { appState } from "../State/Store";
+import { getRandomArrayElement } from "../Utility/Array";
+import { getLeftOrRightFromAngle } from "../Utility/Geometry";
+import { getLocation, getNextLocationAndAngle } from "../Utility/Location";
 
 /**
  * Module:          DevilLocationProvider

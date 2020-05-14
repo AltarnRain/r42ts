@@ -4,11 +4,11 @@
  * See LICENSE.MD.
  */
 
-import IGetCurrentIndex from "../../Interfaces/IGetCurrentFrame";
-import ILocationProvider from "../../Interfaces/ILocationProvider";
-import { GameLocation } from "../../Models/GameLocation";
-import { getNextLocationWithinBoundaries } from "../../Utility/Location";
-import dimensionProvider from "../DimensionProvider";
+import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
+import ILocationProvider from "../Interfaces/ILocationProvider";
+import { GameLocation } from "../Models/GameLocation";
+import { getNextLocationWithinBoundaries } from "../Utility/Location";
+import dimensionProvider from "../Providers/DimensionProvider";
 
 /**
  * Module:          SideAppearOtherSideVariesSpeed

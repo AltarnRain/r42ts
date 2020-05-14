@@ -4,10 +4,10 @@
  * See LICENSE.MD.
  */
 
-import BaseLocationProvider from "../../Base/BaseLocationProvider";
-import { getLeftOrRightFromAngle } from "../../Utility/Geometry";
-import { getLocation, getNextLocationWithinBoundaries } from "../../Utility/Location";
-import dimensionProvider from "../DimensionProvider";
+import BaseLocationProvider from "../Base/BaseLocationProvider";
+import { getLeftOrRightFromAngle } from "../Utility/Geometry";
+import { getLocation, getNextLocationWithinBoundaries } from "../Utility/Location";
+import dimensionProvider from "../Providers/DimensionProvider";
 
 /**
  * Module:          Left to right, then left.

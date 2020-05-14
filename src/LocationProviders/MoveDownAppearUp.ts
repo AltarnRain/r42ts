@@ -4,9 +4,9 @@
  * See LICENSE.MD.
  */
 
-import BaseLocationProvider from "../../Base/BaseLocationProvider";
-import { GameLocation } from "../../Models/GameLocation";
-import { getLocation } from "../../Utility/Location";
+import BaseLocationProvider from "../Base/BaseLocationProvider";
+import { GameLocation } from "../Models/GameLocation";
+import { getLocation } from "../Utility/Location";
 
 /**
  * Module:          MoveDownAppearUp

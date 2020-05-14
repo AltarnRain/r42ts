@@ -6,7 +6,7 @@
 
 import { validColors } from "../Constants/CGAColors";
 import dimensionProvider from "../Providers/DimensionProvider";
-import ctxProvider from "../Providers/Render/CtxProvider";
+import ctxProvider from "./CtxProvider";
 import { Frame } from "../Types";
 
 /**

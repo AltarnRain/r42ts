@@ -37,16 +37,16 @@ import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import dimensionProvider from "./DimensionProvider";
-import BackAndForthFrameProvider from "./FrameProviders/BackAndForthFrameProvider";
-import CircleFrameProvider from "./FrameProviders/CircleFrameProvider";
-import DevilLocationProvider from "./LocationProviders/DevilLocationProvider";
-import ImmobileLocationProvider from "./LocationProviders/ImmobileLocationProvider";
-import MoveDownAppearUp from "./LocationProviders/MoveDownAppearUp";
-import RandomReapperance from "./LocationProviders/RandomReapperance";
-import SideAppearOtherSide from "./LocationProviders/SideAppearOtherSide";
-import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
-import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDown";
-import Wobble from "./LocationProviders/Wobble";
+import BackAndForthFrameProvider from "../FrameProviders/BackAndForthFrameProvider";
+import CircleFrameProvider from "../FrameProviders/CircleFrameProvider";
+import DevilLocationProvider from "../LocationProviders/DevilLocationProvider";
+import ImmobileLocationProvider from "../LocationProviders/ImmobileLocationProvider";
+import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
+import RandomReapperance from "../LocationProviders/RandomReapperance";
+import SideAppearOtherSide from "../LocationProviders/SideAppearOtherSide";
+import SideAppearOtherSideVariesSpeed from "../LocationProviders/SideAppearOtherSideVariesSpeed";
+import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
+import Wobble from "../LocationProviders/Wobble";
 
 
 /**

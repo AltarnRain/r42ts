@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
-import { angles } from "../../Constants/Angles";
-import Guard from "../../Guard";
-import ShipToFire from "../../ShipsToFire";
-import { EnemyState } from "../../State/EnemyLevel/EnemyState";
-import { appState } from "../../State/Store";
-import dimensionProvider from "../DimensionProvider";
+import { angles } from "../Constants/Angles";
+import Guard from "../Guard";
+import ShipToFire from "../ShipsToFire";
+import { EnemyState } from "../State/EnemyLevel/EnemyState";
+import { appState } from "../State/Store";
+import dimensionProvider from "../Providers/DimensionProvider";
 import { GetShipsReadyToFire } from "./GetShipsReadyToFire";
 
 /**

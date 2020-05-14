@@ -10,7 +10,7 @@ import { drawStatusBar } from "./GameScreen/StatusBar";
 import subscribeToStoreChanges from "./Levels/SubscribeToStore";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
 import dimensionProvider from "./Providers/DimensionProvider";
-import ctxProvider from "./Providers/Render/CtxProvider";
+import ctxProvider from "./Render/CtxProvider";
 import genericRunner from "./Runners/GenericRunner";
 import playerRunner from "./Runners/PlayerRunner";
 import { setDebuggingState } from "./State/Debugging/DebuggingActions";

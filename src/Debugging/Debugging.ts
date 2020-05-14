@@ -1,7 +1,7 @@
 import CGAColors from "../Constants/CGAColors";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
-import ctxProvider from "../Providers/Render/CtxProvider";
+import ctxProvider from "../Render/CtxProvider";
 import { appState } from "../State/Store";
 
 const {

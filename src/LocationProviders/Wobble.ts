@@ -1,8 +1,8 @@
-import BaseLocationProvider from "../../Base/BaseLocationProvider";
-import { getAngles } from "../../Constants/Angles";
-import { getRandomArrayElement } from "../../Utility/Array";
-import { getLocation } from "../../Utility/Location";
-import dimensionProvider from "../DimensionProvider";
+import BaseLocationProvider from "../Base/BaseLocationProvider";
+import { getAngles } from "../Constants/Angles";
+import { getRandomArrayElement } from "../Utility/Array";
+import { getLocation } from "../Utility/Location";
+import dimensionProvider from "../Providers/DimensionProvider";
 
 const {
     gameField
