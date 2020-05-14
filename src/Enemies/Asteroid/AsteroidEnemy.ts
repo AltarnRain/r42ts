@@ -41,7 +41,7 @@ export class AsteroidEnemy extends BaseEnemy {
 
     /**
      * Update state.
-     * @param {number} tick. Current tick. 
+     * @param {number} tick. Current tick.
      */
     public updateState(tick: number): void {
         super.updateState(tick);

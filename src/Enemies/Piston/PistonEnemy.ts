@@ -31,8 +31,7 @@ export default class PistonEnemy extends BaseEnemy {
             frameProvider);
 
         Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.white);
-        Mutators.Frame.setColor(this.explosion.particleFrames[0], CGAColors.white);
-        Mutators.Frame.setColor(this.explosion.particleFrames[1], CGAColors.white);
+        this.explosion.particleFrames.forEach((pf) => Mutators.Frame.setColor(pf, CGAColors.white));
     }
 
     /**

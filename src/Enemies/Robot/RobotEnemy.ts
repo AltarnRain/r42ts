@@ -46,7 +46,7 @@ export default class RobotEnemy extends BaseEnemy {
         this.color = getRandomArrayElement(colors);
 
         Mutators.Frame.setColor(this.explosion.explosionCenterFrame, this.color);
-        Mutators.Frame.setColor(this.explosion.particleFrames[0], this.color);
+        this.explosion.particleFrames.forEach((pf) => Mutators.Frame.setColor(pf, this.color));
     }
 
     /**

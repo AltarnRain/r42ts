@@ -46,8 +46,7 @@ export default class BirdEnemy extends BaseEnemy {
         this.colorTickHandler = new TickHandler(40, () => this.onColorChange());
 
         Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.white);
-        Mutators.Frame.setColor(this.explosion.particleFrames[0], CGAColors.white);
-        Mutators.Frame.setColor(this.explosion.particleFrames[1], CGAColors.white);
+        this.explosion.particleFrames.forEach((pf) => Mutators.Frame.setColor(pf, CGAColors.white));
     }
 
     /**
