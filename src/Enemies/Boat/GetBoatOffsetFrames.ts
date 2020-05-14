@@ -31,17 +31,45 @@ export default function getBoatOffsetFrames(): OffsetFrames {
             ]
 
         ],
-        offSets: [],
+        offSets: [
+            {
+                left: 0,
+                top: 0,
+            },
+            {
+                left: 0,
+                top: -1,
+            },
+            {
+                left: 0,
+                top: -2,
+            },
+            {
+                left: 0,
+                top: -3,
+            },
+            {
+                left: 0,
+                top: -2,
+            },
+            {
+                left: 0,
+                top: -1
+            },
+            {
+                left: 0,
+                top: 0
+            }
+        ],
         maxSizes: { width: 0, height: 0 }
     };
 
-    resource.maxSizes = getMaximumFrameDimensions(resource.frames);
-
-    // Double the frames. The first frames wobble, the last frames do not.
     resource.frames = [
         ...resource.frames,
-        ...resource.frames.reverse(),
+        ...resource.frames,
+        ...resource.frames,
     ];
 
+    resource.maxSizes = getMaximumFrameDimensions(resource.frames);
     return resource;
 }

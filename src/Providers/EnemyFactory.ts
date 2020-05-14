@@ -377,12 +377,12 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             }
 
             const { maxSizes: { width, height } } = getBoatOffsetFrames();
-            const frameProvider = new BackAndForthFrameProvider(0);
+            const frameProvider = new CircleFrameProvider(0);
 
             const locationProvider = new SideAppearOtherSideVariesSpeed(
                 location.left,
                 location.top,
-                angles.rightdown,
+                extraAngles.rightrightdown,
                 height,
                 width,
                 gameField.top,
@@ -390,17 +390,15 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 frameProvider,
                 Speeds.Movement.Boat.slow,
                 Speeds.Movement.Boat.fast,
-                [0],
-                [1]);
-
-            const lp = new ImmobileLocationProvider(location.left, location.top);
+                [0, 1, 5],
+                [2, 3, 4]);
 
             return new DefaultEnemy(
                 Points.boat,
                 FrameTimes.boat,
                 getBoatOffsetFrames,
                 getExplosion02,
-                lp,
+                locationProvider,
                 frameProvider,
                 { explosionColor: CGAColors.magenta, explosionParticleColor: CGAColors.magenta });
         }
