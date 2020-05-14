@@ -5,8 +5,7 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
-import { Locations } from "../Constants/Constants";
-import WarpLevelConstants from "../Constants/WarpLevelConstants";
+import { Locations, WarpLevelConstants } from "../Constants/Constants";
 import { DEBUGGING_drawGameRect } from "../Debugging/Debugging";
 import GameLoop from "../GameLoop";
 import { drawLevelBanner } from "../GameScreen/LevelBanner";

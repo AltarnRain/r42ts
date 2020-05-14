@@ -6,7 +6,7 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
-import WarpLevelConstants from "../Constants/WarpLevelConstants";
+import { WarpLevelConstants } from "../Constants/Constants";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import ctxProvider from "../Render/CtxProvider";

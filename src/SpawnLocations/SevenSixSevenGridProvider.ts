@@ -19,10 +19,10 @@ const {
 const topStart = pixelSize * 9;
 const verticalSpacing = pixelSize * 8;
 
-export const firstAndThirdRowLeftStart = 30;
-export const secondRowLeftStart = 40;
-export const firstAndSecondRowSpacing = 16;
-export const secondRowSpacing = 16;
+const firstAndThirdRowLeftStart = 30;
+const secondRowLeftStart = 40;
+const firstAndSecondRowSpacing = 16;
+const secondRowSpacing = 16;
 
 export default function sevenSixSeverGridProvider(): GameLocation[] {
     const returnValue: GameLocation[] = [];

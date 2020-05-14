@@ -129,3 +129,13 @@ export namespace Points {
     export const crab = 200;
 
 }
+
+export namespace WarpLevelConstants {
+    export const heightPixelCount = 72;
+    export const top = pixelSize * 8;
+    export const height = heightPixelCount * pixelSize;
+    export const left = gameField.left + pixelSize;
+    export const right = gameField.right - pixelSize * 2;
+    export const bottom = top + height;
+    export const width = pixelSize * 16;
+}
