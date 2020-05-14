@@ -73,8 +73,13 @@ export default class Wobble extends BaseLocationProvider {
             this.angle = 180 - this.angle;
         }
 
-        if (newLocation.top <= gameField.top || newLocation.top >= gameField.bottom - this.height) {
+        if (newLocation.top <= gameField.top) {
             this.angle *= -1;
+        }
+
+        // When a wobbling enemy gets stuck on the bottom, their position is roughtly set to 2/3 of the gamefield
+        if (newLocation.top >= gameField.bottom - this.height * 1.5) {
+            this.top = gameField.top * (2 / 3);
         }
 
         const nextLocation = getLocation(this.left, this.top, this.angle, this.speed);

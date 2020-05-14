@@ -140,6 +140,16 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             };
         }
 
+        case "bat": {
+            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory(enemy, location));
+            const bulletRunner = new BulletRunner(CGAColors.yellow, Speeds.Bullets.bat, maxFiveDiagonal);
+
+            return {
+                enemies,
+                bulletRunner,
+            };
+        }
+
         default:
             throw new Error(`Unknown enemy ${enemy}`);
     }

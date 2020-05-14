@@ -11,7 +11,7 @@ import { FrameTimes, Locations, MovementAngles, Points, Speeds, ColorSchemes } f
 import { AsteroidEnemy } from "../Enemies/Asteroid/AsteroidEnemy";
 import { getAsteroidOffsetFrames } from "../Enemies/Asteroid/GetAsteroidOffsetFrames";
 import getBalloonOffsetFrames from "../Enemies/Balloon/GetBalloonOffsetFrames";
-import getBatOffsetFrames from "../Enemies/Bats/BatOffsetFrames";
+import getBatOffsetFrames from "../Enemies/Bats/GetBatOffsetFrames";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import getBirdOffsetFrames from "../Enemies/Bird/GetBirdOffsetFrames";
 import getCrapOffsetFrames from "../Enemies/Crap/GetCrapOffsetFrames";
@@ -48,6 +48,7 @@ import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import dimensionProvider from "./DimensionProvider";
 import EnemyColorOptions from "../Models/EnemyColorOptions";
+import { coinFlip } from "../Utility/Lib";
 
 /**
  * Module:          EnemyFactory
@@ -344,6 +345,8 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 height,
                 200);
 
+            const color = coinFlip() ? CGAColors.lightGreen : CGAColors.lightBlue;
+
             return new DefaultEnemy(
                 Points.bat,
                 FrameTimes.bat,
@@ -351,7 +354,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 getExplosion02,
                 locationProvider,
                 frameProvider,
-                { explosionColor: CGAColors.magenta, explosionParticleColor: CGAColors.magenta });
+                { explosionColor: CGAColors.magenta, explosionParticleColor: CGAColors.magenta, varyingEnemyColor: color });
         }
 
         default:

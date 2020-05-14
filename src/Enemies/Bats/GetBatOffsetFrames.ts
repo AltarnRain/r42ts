@@ -16,28 +16,23 @@ export default function getBatOffsetFrames(): OffsetFrames {
     const resource = {
         frames: [
             [
-                ["0", "A", "0"],
-                ["0", "C", "0"],
-                ["0", "A", "0"],
+                ["V", "0", "0", "0", "0", "0", "V"],
+                ["0", "V", "0", "0", "0", "V", "0"],
+                ["0", "0", "V", "V", "V", "0", "0"],
             ],
             [
-                ["0", "0", "A"],
-                ["0", "C", "0"],
-                ["A", "0", "0"],
+                ["0", "0", "V", "V", "V", "0", "0"],
+                ["0", "V", "0", "0", "0", "V", "0"],
+                ["V", "0", "0", "0", "0", "0", "V"],
             ],
-            [
-                ["0", "0", "0"],
-                ["A", "C", "A"],
-                ["0", "0", "0"],
-            ],
-            [
-                ["A", "0", "0"],
-                ["0", "C", "0"],
-                ["0", "0", "A"],
-            ]
         ],
-        offSets: [],
-        maxSizes: { width: 0, height: 0}
+        offSets: [
+            {
+                top: -2,
+                left: 0
+            }
+        ],
+        maxSizes: { width: 0, height: 0 }
     };
 
     resource.maxSizes = getMaximumFrameDimensions(resource.frames);
