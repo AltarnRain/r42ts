@@ -67,6 +67,5 @@ export function levelFactory(level: number): ILevel | undefined {
         default:
             // Reset to first level.
             return new EnemyLevel("crab");
-            
     }
 }

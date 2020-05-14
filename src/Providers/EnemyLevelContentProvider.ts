@@ -6,9 +6,9 @@
 
 import BaseEnemy from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
-import { Speeds } from "../Constants/Constants";
+import { Speeds, Locations } from "../Constants/Constants";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
-import pistonSpawnLocations from "../Enemies/Piston/PistonSpawnLocations";
+import pistonSpawnLocations from "./SpawnLocations/ElevennInALine";
 import robotSpawnLocations from "../Enemies/Robot/RobotSpawnLocations";
 import BulletRunner from "../Runners/BulletRunner";
 import { Enemies } from "../Types";
@@ -18,6 +18,7 @@ import firstEnemyOccasionalDown from "./ShipsToFireProviders/FirstEnemyOccasiona
 import maxFiveDiagonal from "./ShipsToFireProviders/MaxFiveDiagonal";
 import maxThreeDown from "./ShipsToFireProviders/MaxThreeDown";
 import sevenSixSeverGridProvider from "./SpawnLocations/SevenSixSevenGridProvider";
+import elevenInALine from "./SpawnLocations/ElevennInALine";
 
 /**
  * Module:          EnemyFactory
@@ -89,7 +90,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "piston": {
-            const enemies = pistonSpawnLocations.map((location) => enemyFactory(enemy, location));
+            const enemies = elevenInALine(Locations.Enemies.Piston.topStart).map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxThreeDown);
 
             return {
@@ -131,7 +132,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             };
         }
         case "crab": {
-            const enemies = pistonSpawnLocations.map((location) => enemyFactory(enemy, location));
+            const enemies = elevenInALine(Locations.Enemies.Crab.topStart).map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxThreeDown);
 
             return {

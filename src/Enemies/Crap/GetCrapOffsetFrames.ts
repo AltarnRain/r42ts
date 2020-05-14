@@ -44,11 +44,30 @@ export default function getCrapOffsetFrames(): OffsetFrames {
                 ["0", "E", "E", "E", "0"],
             ],
         ],
-        offSets: [],
+        offSets: [
+            {
+                left: -1,
+                top: 0,
+            },
+            {
+                left: 0,
+                top: 0
+            },
+            {
+                left: 1,
+                top: 0,
+            }
+        ],
         maxSizes: { width: 0, height: 0 }
     };
 
     resource.maxSizes = getMaximumFrameDimensions(resource.frames);
+
+    // Double the frames. The first frames wobble, the last frames do not.
+    resource.frames = [
+        ...resource.frames,
+        ...resource.frames.reverse(),
+    ];
 
     return resource;
 }

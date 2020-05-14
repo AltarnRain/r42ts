@@ -74,11 +74,13 @@ export namespace Locations {
         }
         export namespace Piston {
             export const topStart = gameField.top + pixelSize * 18;
-            export const maxTop = gameField.top + pixelSize * 5;
-            export const maxBottom = gameField.top + pixelSize * 55;
         }
         export namespace Devil {
             export const maxBottom = gameField.top + pixelSize * 60;
+        }
+
+        export namespace Crab {
+            export const topStart = gameField.top + pixelSize * 18;
         }
     }
 }
