@@ -13,11 +13,11 @@ import BulletRunner from "../Runners/BulletRunner";
 import devilShipsToFire from "../ShipsToFireProviders/DevilShipsToFire";
 import firstEnemyOccasionalDown from "../ShipsToFireProviders/FirstEnemyOccasionalDown";
 import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
-import maxThreeDown from "../ShipsToFireProviders/MaxThreeDown";
 import elevenInALine from "../SpawnLocations/ElevennInALine";
 import sevenSixSeverGridProvider from "../SpawnLocations/SevenSixSevenGridProvider";
 import { Enemies } from "../Types";
 import enemyFactory from "./EnemyFactory";
+import { maxThreeDown, maxFiveDown } from "../ShipsToFireProviders/MaxThreeDown";
 
 /**
  * Module:          EnemyFactory
@@ -148,6 +148,16 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             return {
                 enemies,
                 bulletRunner,
+            };
+        }
+
+        case "boat": {
+            const enemies = elevenInALine(Locations.Piston.topStart).map((location) => enemyFactory(enemy, location));
+            const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxFiveDown);
+
+            return {
+                enemies,
+                bulletRunner
             };
         }
 

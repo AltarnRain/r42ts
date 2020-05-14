@@ -9,10 +9,9 @@ import { GameLocation } from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { Angle } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
+import { getLeftOrRightFromAngle } from "../Utility/Geometry";
 import { randomNumberInRange } from "../Utility/Lib";
 import { getLocation } from "../Utility/Location";
-import { angles } from "../Constants/Angles";
-import { getLeftOrRightFromAngle } from "../Utility/Geometry";
 
 /**
  * Module:          AsteroidLocationProvider

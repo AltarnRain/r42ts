@@ -70,4 +70,5 @@ export type Enemies =
     "spacemonster-diagonal" |
     "devil" |
     "crab" |
-    "bat";
+    "bat" |
+    "boat";

@@ -45,6 +45,12 @@ export namespace Speeds {
             export const slow = 1.3;
             export const fast = 3;
         }
+
+        export namespace Boat {
+            export const slow = 1.3;
+            export const fast = 3;
+
+        }
         export namespace Player {
             export const aliveSpeed = 9;
             export const formingSpeed = 4;
@@ -116,6 +122,7 @@ export namespace FrameTimes {
     export const diabolo = 200;
     export const crab = 100;
     export const bat = 100;
+    export const boat = 200;
 }
 
 export namespace Points {
@@ -131,6 +138,7 @@ export namespace Points {
     export const devil = 100;
     export const crab = 200;
     export const bat = 200;
+    export const boat = 200;
 
 }
 

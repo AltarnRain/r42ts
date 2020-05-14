@@ -15,6 +15,7 @@ import getBatExplosiom from "../Enemies/Bats/BatExplosion";
 import getBatOffsetFrames from "../Enemies/Bats/GetBatOffsetFrames";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import getBirdOffsetFrames from "../Enemies/Bird/GetBirdOffsetFrames";
+import getBoatOffsetFrames from "../Enemies/Boat/GetBoatOffsetFrames";
 import getCrapOffsetFrames from "../Enemies/Crap/GetCrapOffsetFrames";
 import DefaultEnemy from "../Enemies/DefaultEnemy";
 import DevilEnemy from "../Enemies/Devil/DevilEnemy";
@@ -366,6 +367,37 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 locationProvider,
                 frameProvider,
                 { explosionColor: CGAColors.lightGray, explosionParticleColor: CGAColors.lightGray, varyingEnemyColor: color });
+        }
+
+        case "boat": {
+            if (location === undefined) {
+                throw new Error("Boat enemy requires a starting location");
+            }
+
+            const { maxSizes: { width, height } } = getBoatOffsetFrames();
+            const frameProvider = new BackAndForthFrameProvider(0);
+
+            const locationProvider = new SideAppearOtherSideVariesSpeed(
+                location.left,
+                location.top,
+                angles.rightdown,
+                width,
+                gameField.top,
+                gameField.bottom,
+                frameProvider,
+                Speeds.Movement.Boat.slow,
+                Speeds.Movement.Boat.fast,
+                [0],
+                [1]);
+
+            return new DefaultEnemy(
+                Points.boat,
+                FrameTimes.boat,
+                getBatOffsetFrames,
+                getExplosion02,
+                locationProvider,
+                frameProvider,
+                { explosionColor: CGAColors.magenta, explosionParticleColor: CGAColors.magenta });
         }
 
         default:

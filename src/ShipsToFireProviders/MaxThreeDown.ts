@@ -15,13 +15,19 @@ import { GetShipsReadyToFire } from "./GetShipsReadyToFire";
  * Responsibility:  Provides 5 enemies to fire.
  */
 
-const maxBullets = 3;
+export function maxThreeDown(tick: number): ShipToFire[] {
+    return randomDown(tick, 3);
+}
+
+export function maxFiveDown(tick: number): ShipToFire[] {
+    return randomDown(tick, 5);
+}
 
 /**
  * A function that selects the orbs that should fire.
  * @param {number} tick. Current tick
  */
-export default function maxThreeDown(tick: number): ShipToFire[] {
+function randomDown(tick: number, maxBullets: number): ShipToFire[] {
 
     const {
         enemyLevelState: { bullets }
