@@ -8,6 +8,7 @@ import { angles } from "../../Constants/Angles";
 import ShipToFire from "../../ShipsToFire";
 import { appState } from "../../State/Store";
 import { getRandomArrayElement } from "../../Utility/Array";
+import { GetShipsReadyToFire } from "./GetShipsReadyToFire";
 
 /**
  * Module:          MaxFiveDiagonal
@@ -23,7 +24,7 @@ const maxBullets = 3;
 export default function maxThreeDown(tick: number): ShipToFire[] {
 
     const {
-        enemyLevelState: { bullets, enemies }
+        enemyLevelState: { bullets }
     } = appState();
     const returnValue: ShipToFire[] = [];
 
@@ -32,6 +33,8 @@ export default function maxThreeDown(tick: number): ShipToFire[] {
     if (remainingBullets === 0) {
         return returnValue;
     }
+
+    const enemies = GetShipsReadyToFire(tick);
 
     const enemyToFire = getRandomArrayElement(enemies);
 

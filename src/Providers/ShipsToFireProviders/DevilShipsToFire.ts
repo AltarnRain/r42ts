@@ -10,6 +10,7 @@ import ShipToFire from "../../ShipsToFire";
 import { EnemyState } from "../../State/EnemyLevel/EnemyState";
 import { appState } from "../../State/Store";
 import dimensionProvider from "../DimensionProvider";
+import { GetShipsReadyToFire } from "./GetShipsReadyToFire";
 
 /**
  * Module:          Devil
@@ -39,7 +40,7 @@ export default function devilShipsToFire(tick: number): ShipToFire[] {
         return returnValue;
     }
 
-    const candidates = getCandidates();
+    const candidates = getCandidates(tick);
 
     if (candidates.length === 0) {
         return returnValue;
@@ -58,17 +59,17 @@ export default function devilShipsToFire(tick: number): ShipToFire[] {
     return returnValue;
 }
 
-function getCandidates(): EnemyState[] {
+function getCandidates(tick: number): EnemyState[] {
 
     const {
-        enemyLevelState: { enemies },
         playerState
     } = appState();
+
     if (!Guard.isPlayerAlive(playerState)) {
         return [];
     }
 
     const { hitboxes: { bottom: bottomhitbox } } = playerState;
 
-    return enemies.filter((enemy) => enemy.hitbox.left + pixelSize2x >= bottomhitbox.left && enemy.hitbox.right <= bottomhitbox.right + pixelSize2x);
+    return GetShipsReadyToFire(tick).filter((enemy) => enemy.hitbox.left + pixelSize2x >= bottomhitbox.left && enemy.hitbox.right <= bottomhitbox.right + pixelSize2x);
 }

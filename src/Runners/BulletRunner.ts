@@ -11,6 +11,7 @@ import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { Frame, ShipsToFireFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
+import { EnemyState } from "../State/EnemyLevel/EnemyState";
 
 /**
  * Module:          StraightDownBulletProvider
@@ -108,6 +109,8 @@ export default class BulletRunner {
                 );
 
                 dispatch(addBullet(bullet));
+                const enemyWithTick: EnemyState = {...enemy, lastFiretick: tick};
+                dispatch(addOrUpdateEnemy(enemyWithTick));
             }
         }
     }
