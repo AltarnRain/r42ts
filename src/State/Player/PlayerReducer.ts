@@ -5,9 +5,9 @@
  */
 
 import produce from "immer";
+import { Locations } from "../../Constants/Constants";
 import getPlayerExplosion from "../../Player/PlayerExplosion";
 import { getPlayerFrame } from "../../Player/PlayerFrames";
-import getShipSpawnLocation from "../../Providers/PlayerSpawnLocationProvider";
 import Mutators from "../../Utility/FrameMutators";
 import Constants from "./PlayerConstants";
 import PlayerState from "./PlayerState";
@@ -56,7 +56,7 @@ function initState(): PlayerState {
 
     playerExplosion.particleFrames.forEach((p) => Mutators.Frame.convertHexToCGA(p));
 
-    const spawnLocation = getShipSpawnLocation();
+    const spawnLocation = Locations.Player.spawnLocation;
 
     const playerFrame = getPlayerFrame();
     Mutators.Frame.convertHexToCGA(playerFrame);

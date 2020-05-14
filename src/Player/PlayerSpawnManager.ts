@@ -4,10 +4,10 @@
  * See LICENSE.MD.
  */
 
+import { Locations } from "../Constants/Constants";
 import GameLoop from "../GameLoop";
 import { playerMovementHandler } from "../Handlers/PlayerMovementHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
-import getPlayerSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { setPlayerIsAlive, setPlayerLocationData, setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types";
@@ -134,8 +134,7 @@ function setup(speed: "fast" | "slow", limit: MoveLimits): void {
     // Store the current movement limit so we can restore it once the player has formed.
     currentMovementLimit = appState().playerState.moveLimit;
 
-    const  {left, top }  = getPlayerSpawnLocation();
-    dispatch(setPlayerLocationData(left, top));
+    dispatch(setPlayerLocationData(Locations.Player.spawnLocation.left, Locations.Player.spawnLocation.top));
     createParticles();
 
     if (speed === "fast") {

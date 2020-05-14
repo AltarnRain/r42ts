@@ -5,6 +5,7 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
+import { Locations } from "../Constants/Constants";
 import WarpLevelConstants from "../Constants/WarpLevelConstants";
 import { DEBUGGING_drawGameRect } from "../Debugging/Debugging";
 import GameLoop from "../GameLoop";
@@ -14,7 +15,6 @@ import Guard from "../Guard";
 import ILevel from "../Interfaces/ILevel";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
-import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { increaseScore } from "../State/Game/GameActions";
 import { setPlayerLocationData, setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
@@ -59,9 +59,7 @@ export default class WarpLevel implements ILevel {
      */
     public begin(): void {
         dispatch(setPlayerMovementLimit("immobile"));
-
-        const spawnLocation = getShipSpawnLocation();
-        dispatch(setPlayerLocationData(spawnLocation.left, spawnLocation.top));
+        dispatch(setPlayerLocationData(Locations.Player.spawnLocation.left, Locations.Player.spawnLocation.top));
 
         // Register the background draw function so it runs in the game loop.
         this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(drawBackground));
@@ -249,8 +247,7 @@ export default class WarpLevel implements ILevel {
 
             // Reset the player to the spawn location after a warp level or they'll appear
             // in the top of the screen right in the middle of enemies.
-            const spawnLocation = getShipSpawnLocation();
-            dispatch(setPlayerLocationData(spawnLocation.left, spawnLocation.top));
+            dispatch(setPlayerLocationData(Locations.Player.spawnLocation.left, Locations.Player.spawnLocation.top));
         }
     }
 

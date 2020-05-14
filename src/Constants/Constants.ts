@@ -5,6 +5,7 @@
  */
 
 import dimensionProvider from "../Providers/DimensionProvider";
+import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { angles } from "./Angles";
 
 /**
@@ -44,6 +45,11 @@ export namespace Speeds {
         export namespace Piston {
             export const slow = 2;
             export const fast = 4;
+        }
+        export namespace Player {
+            export const aliveSpeed = 10;
+            export const formingSpeed = 5;
+            export const warpUpSpeed = 4;
         }
     }
 
@@ -85,6 +91,9 @@ export namespace Locations {
         export namespace Crab {
             export const topStart = gameField.top + pixelSize * 18;
         }
+    }
+    export namespace Player {
+        export const spawnLocation = getShipSpawnLocation();
     }
 }
 
