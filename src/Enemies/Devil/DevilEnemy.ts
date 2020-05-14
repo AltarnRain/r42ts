@@ -39,9 +39,8 @@ export default class DevilEnemy extends BaseEnemy {
             locationProvider,
             frameProvider);
 
-        Mutators.Frame.setColor(this.explosion.explosionCenterFrame, CGAColors.white);
-        Mutators.Frame.setColor(this.explosion.particleFrames[0], CGAColors.white);
-        Mutators.Frame.setColor(this.explosion.particleFrames[1], CGAColors.white);
+        Mutators.Frame.convertHexToCGA(this.explosion.explosionCenterFrame);
+        this.explosion.particleFrames.forEach((pf) => Mutators.Frame.convertHexToCGA(pf));
 
         this.locationDirecntionProvider = locationProvider;
     }

@@ -45,6 +45,8 @@ import SideAppearOtherSideLocationProvider from "./LocationProviders/SideAppearO
 import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
 import Wobble from "./LocationProviders/Wobble";
+import getDevilExplosion from "../SharedFrames/DevilExplosion";
+import DiaboloEnemy from "../Enemies/Diabolo/DiaboloEnemy";
 
 /**
  * Module:          EnemyFactory
@@ -180,7 +182,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 gameField.bottom
             );
 
-            return new PistonEnemy(FrameTimes.piston, getDiaboloOffsetFrames, getExplosion01, locationProvider, frameProvider);
+            return new DiaboloEnemy(FrameTimes.diabolo, getDiaboloOffsetFrames, getExplosion01, locationProvider, frameProvider);
         }
 
         case "spacemonster-down": {
@@ -212,7 +214,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             );
 
             // Frames have no time, the frame of the devil is determined by where it is headed.
-            return new DevilEnemy(0, getDevilOffsetFrames, getExplosion01, locationProvider, frameProvider);
+            return new DevilEnemy(0, getDevilOffsetFrames, getDevilExplosion, locationProvider, frameProvider);
         }
 
         default:
