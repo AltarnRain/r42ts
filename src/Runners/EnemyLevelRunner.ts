@@ -205,7 +205,7 @@ function handleSelfDestruct(tick: number): void {
 
     if (playerState.alive && appState().keyboardState.selfDestruct) {
         handlePlayerDeath(tick);
-        enemyLevelState.enemies.forEach((es) => handleEnemyDestruction(tick, es));
+        enemyLevelState.enemies.forEach((es) => handleEnemyDestruction(tick, es, false));
         localState.enemies = [];
     }
 }
@@ -214,7 +214,7 @@ function handleSelfDestruct(tick: number): void {
  * handles the destruction of an enemy.
  * @param {BaseEnemy} enemy.
  */
-function handleEnemyDestruction(tick: number, enemy: EnemyState): void {
+function handleEnemyDestruction(tick: number, enemy: EnemyState, awardPoints = true): void {
     const { enemyLevelState } = appState();
 
     localState.enemies = localState.enemies.filter((e) => {
@@ -228,7 +228,11 @@ function handleEnemyDestruction(tick: number, enemy: EnemyState): void {
 
     dispatchExplosion(enemy.offsetLeft, enemy.offsetTop, enemy.coloredExplosion, tick);
     dispatch(removeEnemy(enemy.enemyId));
-    dispatch(increaseScore(enemy.points));
+
+    // True by default but self destruct gives no points.
+    if (awardPoints) {
+        dispatch(increaseScore(enemy.points));
+    }
 }
 
 /**
