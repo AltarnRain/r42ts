@@ -43,7 +43,7 @@ export namespace Speeds {
 
         export namespace Piston {
             export const slow = 1.3;
-            export const fast = 2;
+            export const fast = 3;
         }
         export namespace Player {
             export const aliveSpeed = 9;
@@ -100,7 +100,7 @@ export namespace MovementAngles {
     export const robot = 5;
     export const orb = 90;
     export const spinner = [2, 358, 178, 182];
-    export const piston = 175;
+    export const piston = 170;
     export const diabolo = [2, 358, 178, 182];
     export const devil = [angles.leftdown, angles.rightdown];
 }
