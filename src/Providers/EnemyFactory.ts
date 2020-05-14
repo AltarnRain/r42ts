@@ -7,10 +7,11 @@
 import BaseEnemy from "../Base/BaseEnemy";
 import { angles, extraAngles, getAngles } from "../Constants/Angles";
 import CGAColors from "../Constants/CGAColors";
-import { FrameTimes, Locations, MovementAngles, Points, Speeds, ColorSchemes } from "../Constants/Constants";
+import { ColorSchemes, FrameTimes, Locations, MovementAngles, Points, Speeds } from "../Constants/Constants";
 import { AsteroidEnemy } from "../Enemies/Asteroid/AsteroidEnemy";
 import { getAsteroidOffsetFrames } from "../Enemies/Asteroid/GetAsteroidOffsetFrames";
 import getBalloonOffsetFrames from "../Enemies/Balloon/GetBalloonOffsetFrames";
+import getBatExplosiom from "../Enemies/Bats/BatExplosion";
 import getBatOffsetFrames from "../Enemies/Bats/GetBatOffsetFrames";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import getBirdOffsetFrames from "../Enemies/Bird/GetBirdOffsetFrames";
@@ -46,9 +47,8 @@ import getExplosion05 from "../SharedFrames/Explosion05";
 import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
-import dimensionProvider from "./DimensionProvider";
-import EnemyColorOptions from "../Models/EnemyColorOptions";
 import { coinFlip } from "../Utility/Lib";
+import dimensionProvider from "./DimensionProvider";
 
 /**
  * Module:          EnemyFactory
@@ -351,10 +351,10 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 Points.bat,
                 FrameTimes.bat,
                 getBatOffsetFrames,
-                getExplosion02,
+                getBatExplosiom,
                 locationProvider,
                 frameProvider,
-                { explosionColor: CGAColors.magenta, explosionParticleColor: CGAColors.magenta, varyingEnemyColor: color });
+                { explosionColor: CGAColors.lightGray, explosionParticleColor: CGAColors.lightGray, varyingEnemyColor: color });
         }
 
         default:
