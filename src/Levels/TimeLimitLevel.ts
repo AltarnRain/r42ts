@@ -7,26 +7,32 @@
 import GameLoop from "../GameLoop";
 import enemyFactory from "../Providers/EnemyFactory";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
-import { resetLevelState } from "../State/EnemyLevel/EnemyLevelActions";
-import { appState, dispatch } from "../State/Store";
+import { appState } from "../State/Store";
 import handleLevelWon from "../StateHandlers/HandleLevelWon";
 import { Enemies } from "../Types";
 import EnemyLevel from "./EnemyLevel";
 
 /**
- * Module:          AsteroidLevel
+ * Module:          TimeLimitLevel
  * Responsibility:  Level with asteroids
  */
 
-export class AsteroidLevel extends EnemyLevel {
+export class TimeLimitLevel extends EnemyLevel {
 
     /**
      * When true the time is up and the level is won.
      */
     private timeUp = false;
 
-    constructor(enemies: Enemies) {
-        super(enemies);
+    /**
+     * current enemy of the level.
+     */
+    private enemy: Enemies;
+
+    constructor(enemy: Enemies) {
+        super(enemy);
+
+        this.enemy = enemy;
     }
 
     public begin(): void {
@@ -48,7 +54,7 @@ export class AsteroidLevel extends EnemyLevel {
         } = appState();
 
         if (enemies.length < 8) {
-            const newEnemy = enemyFactory("asteroid-down");
+            const newEnemy = enemyFactory(this.enemy);
             EnemyLevelRunner.addEnemy(newEnemy);
         }
     }
