@@ -252,7 +252,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
 
             const lp = new ImmobileLocationProvider(location.left, location.top);
 
-            return new StaticColoredFrameAnimated(CGAColors.white, CGAColors.white, 200, FrameTimes.diabolo, getCrapOffsetFrames, getExplosion01, lp, frameProvider);
+            return new StaticColoredFrameAnimated(CGAColors.magenta, CGAColors.magenta, 200, FrameTimes.diabolo, getCrapOffsetFrames, getExplosion02, lp, frameProvider);
         }
 
         default:

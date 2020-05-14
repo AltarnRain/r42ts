@@ -55,6 +55,8 @@ export namespace Speeds {
         export const piston = 12;
         export const diabolo = 12;
         export const devil = 12;
+        export const crab = 12;
+
     }
 }
 

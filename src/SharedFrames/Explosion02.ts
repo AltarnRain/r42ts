@@ -28,7 +28,7 @@ export default function getExplosion02(): Explosion {
         particleFrameIndexes: [0, 0, 0, 0, 0, 0],
         speed: 12,
         acceleration: 1.05,
-        explosionCenterDelay: 20,
+        explosionCenterDelay: 40,
         speeds: [], // not used, all particles travel at the same speed
         useSpeed: true,
     };
