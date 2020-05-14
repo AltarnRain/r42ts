@@ -4,29 +4,41 @@
  * See LICENSE.MD.
  */
 
+import { angles } from "../Constants/Angles";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
+import dimensionProvider from "../Providers/DimensionProvider";
 import { getLocation } from "../Utility/Location";
 
 /**
- * Module:          CrabLocationProvider. 
+ * Module:          CrabLocationProvider.
  * Responsibility:  A location provider where the enemy moves up by '3' then moves down '1'. Once the top is reached, the enemy appears down.
  */
 
+const {
+    gameField
+} = dimensionProvider();
 export default class MoveUpBitDownThenUpReappearDown implements ILocationProvider {
+    /**
+     * Used to calculate speed increases.
+     */
+    private baseSpeed: number;
 
     constructor(
         private left: number,
         private top: number,
         private speed: number,
-        private angle: number,
-        private height: number,
-        private maxTop: number,
-        private maxBottom: number) {
+        private height: number) {
 
+        this.baseSpeed = speed;
     }
+
+    /**
+     * Increase the speed of the enemy.
+     * @param {number} factor. Speed increase factor.
+     */
     public increaseSpeed(factor: number): void {
-        throw new Error("Method not implemented.");
+        this.speed = this.baseSpeed * factor;
     }
 
     /**
@@ -36,11 +48,11 @@ export default class MoveUpBitDownThenUpReappearDown implements ILocationProvide
      */
     public getCurrentLocation(): GameLocation {
 
-        if (this.top + this.height > this.maxBottom) {
-            this.top = this.maxTop;
+        if (this.top < gameField.top - this.height) {
+            this.top = gameField.bottom + this.height;
         }
 
-        return getLocation(this.left, this.top, this.angle, this.speed);
+        return getLocation(this.left, this.top, angles.up, this.speed);
     }
 
     /**
@@ -48,7 +60,7 @@ export default class MoveUpBitDownThenUpReappearDown implements ILocationProvide
      * @param {number} tick. Current game tick.
      */
     public updateState(tick: number): void {
-        const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
+        const { left, top } = getLocation(this.left, this.top, angles.up, this.speed);
         this.left = left;
         this.top = top;
     }
