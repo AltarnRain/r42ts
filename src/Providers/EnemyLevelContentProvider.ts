@@ -89,7 +89,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "piston": {
-            const enemies = elevenInALine(Locations.Enemies.Piston.topStart).map((location) => enemyFactory(enemy, location));
+            const enemies = elevenInALine(Locations.Piston.topStart).map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxThreeDown);
 
             return {
@@ -131,7 +131,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             };
         }
         case "crab": {
-            const enemies = elevenInALine(Locations.Enemies.Crab.topStart).map((location) => enemyFactory(enemy, location));
+            const enemies = elevenInALine(Locations.Crab.topStart).map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.lightRed, Speeds.Bullets.crab, maxFiveDiagonal);
 
             return {

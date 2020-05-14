@@ -21,7 +21,7 @@ import getDiaboloOffsetFrames from "../Enemies/Diabolo/GetDiaboloOffsetFrames";
 import getOrbResource from "../Enemies/Orb/GetOrbOffsetFrames";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import getPistonOffsetFrames from "../Enemies/Piston/GetPistonOffsetFrames";
-import getRobotResource from "../Enemies/Robot/GetRobotOffsetFrames";
+import getRobotOffsetFrames from "../Enemies/Robot/GetRobotOffsetFrames";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import getSpaceMonsterOffsetFrames from "../Enemies/SpaceMonster/SpaceMonster";
 import SpaceMonster from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
@@ -90,8 +90,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 throw new Error("Robot enemy requires a starting position");
             }
 
-            const { maxBottom } = Locations.Enemies.robot;
-            const { maxSizes: { width, height } } = getRobotResource();
+            const { maxSizes: { width, height } } = getRobotOffsetFrames();
 
             const frameProvider = new BackAndForthFrameProvider(0);
             const locationProvider = new SideAppearOtherSide(
@@ -102,9 +101,9 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 width,
                 height,
                 gameField.top,
-                maxBottom);
+                Locations.robot.maxBottom);
 
-            return new RobotEnemy(FrameTimes.robot, locationProvider, frameProvider, getExplosion02, getRobotResource);
+            return new RobotEnemy(FrameTimes.robot, locationProvider, frameProvider, getExplosion02, getRobotOffsetFrames);
         }
 
         case "orb": {
@@ -113,7 +112,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             }
 
             const { maxSizes: { width, height } } = getOrbResource();
-            const { maxTop, maxBottom } = Locations.Enemies.Orb;
+            const { maxTop, maxBottom } = Locations.Orb;
 
             const frameProvider = new CircleFrameProvider(0);
             const locationProvider = new MoveDownAppearUp(
@@ -289,7 +288,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 width,
                 height,
                 gameField.top,
-                Locations.Enemies.Devil.maxBottom,
+                Locations.Devil.maxBottom,
             );
 
             // Frames have no time, the frame of the devil is determined by where it is headed.

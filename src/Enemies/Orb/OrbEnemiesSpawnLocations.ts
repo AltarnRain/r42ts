@@ -18,7 +18,7 @@ const {
 } = dimensionProvider();
 
 const orbSpawnLocations: GameLocation[] = [];
-const top = Locations.Enemies.Orb.topStart;
+const top = Locations.Orb.topStart;
 let left = pixelSize * 16;
 const spacing = pixelSize * 6;
 

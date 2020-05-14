@@ -21,7 +21,7 @@ const {
 
 const robotSpawnLocations: GameLocation[] = [];
 
-const top = Locations.Enemies.robot.topStart;
+const top = Locations.robot.topStart;
 let left = pixelSize * 12;
 const spacing = pixelSize * 8;
 

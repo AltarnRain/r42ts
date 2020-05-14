@@ -118,8 +118,8 @@ export default class OrbEnemy extends BaseEnemy {
             const offset = top - this.offsetTop;
 
             if (this.offsetTop < gameField.top) {
-                this.offsetTop = Locations.Enemies.Orb.maxBottom - offset;
-            } else if (this.offsetTop + height > Locations.Enemies.Orb.maxBottom) {
+                this.offsetTop = Locations.Orb.maxBottom - offset;
+            } else if (this.offsetTop + height > Locations.Orb.maxBottom) {
                 this.offsetTop = gameField.top + offset;
             }
         }

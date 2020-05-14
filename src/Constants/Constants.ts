@@ -28,12 +28,10 @@ export namespace Speeds {
         export const spinner = 1.5;
         export const balloon = 1.5;
         export const crab = 1.5;
-
         export namespace Asteroid {
             export const down = [2, 4, 6, 8, 10];
             export const diagonal = [3, 5, 7, 10, 12];
         }
-
         export namespace SpaceMonster {
             export const down = [2, 4, 6, 8, 10];
             export const diagonal = [3, 54, 7, 10, 12];
@@ -68,29 +66,26 @@ export namespace Speeds {
 }
 
 export namespace Locations {
-    export namespace Enemies {
+    // All locations were determined by drawing a grid over screenshot.
+    export namespace robot {
+        export const topStart = gameField.top + pixelSize * 18;
+        export const maxBottom = gameField.top + pixelSize * 65;
+    }
 
-        // All locations were determined by drawing a grid over screenshot.
-        export namespace robot {
-            export const topStart = gameField.top + pixelSize * 18;
-            export const maxBottom = gameField.top + pixelSize * 65;
-        }
+    export namespace Orb {
+        export const topStart = gameField.top + pixelSize * 18;
+        export const maxTop = gameField.top + pixelSize * 5;
+        export const maxBottom = gameField.top + pixelSize * 55;
+    }
+    export namespace Piston {
+        export const topStart = gameField.top + pixelSize * 18;
+    }
+    export namespace Devil {
+        export const maxBottom = gameField.top + pixelSize * 60;
+    }
 
-        export namespace Orb {
-            export const topStart = gameField.top + pixelSize * 18;
-            export const maxTop = gameField.top + pixelSize * 5;
-            export const maxBottom = gameField.top + pixelSize * 55;
-        }
-        export namespace Piston {
-            export const topStart = gameField.top + pixelSize * 18;
-        }
-        export namespace Devil {
-            export const maxBottom = gameField.top + pixelSize * 60;
-        }
-
-        export namespace Crab {
-            export const topStart = gameField.top + pixelSize * 18;
-        }
+    export namespace Crab {
+        export const topStart = gameField.top + pixelSize * 18;
     }
     export namespace Player {
         export const spawnLocation = getShipSpawnLocation();
