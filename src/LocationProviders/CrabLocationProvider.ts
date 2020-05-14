@@ -5,6 +5,7 @@
  */
 
 import { angles } from "../Constants/Angles";
+import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
@@ -28,7 +29,8 @@ export default class MoveUpBitDownThenUpReappearDown implements ILocationProvide
         private left: number,
         private top: number,
         private speed: number,
-        private height: number) {
+        private height: number,
+        private indexProvider: IGetCurrentIndex) {
 
         this.baseSpeed = speed;
     }

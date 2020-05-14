@@ -5,9 +5,9 @@
  */
 
 import BaseEnemy from "../Base/BaseEnemy";
-import { angles } from "../Constants/Angles";
+import { angles, extraAngles } from "../Constants/Angles";
 import CGAColors from "../Constants/CGAColors";
-import { FrameTimes, Locations, MovementAngles, Speeds, Points } from "../Constants/Constants";
+import { FrameTimes, Locations, MovementAngles, Points, Speeds } from "../Constants/Constants";
 import { AsteroidEnemy } from "../Enemies/Asteroid/AsteroidEnemy";
 import { getAsteroidOffsetFrames } from "../Enemies/Asteroid/GetAsteroidOffsetFrames";
 import getBalloonOffsetFrames from "../Enemies/Balloon/GetBalloonOffsetFrames";
@@ -26,6 +26,16 @@ import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import getSpaceMonsterOffsetFrames from "../Enemies/SpaceMonster/SpaceMonster";
 import SpaceMonster from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
 import getSpinnerOffsetFrames from "../Enemies/Spinner/GetSpinnerOffsetFrames";
+import BackAndForthFrameProvider from "../FrameProviders/BackAndForthFrameProvider";
+import CircleFrameProvider from "../FrameProviders/CircleFrameProvider";
+import MoveUpBitDownThenUpReappearDown from "../LocationProviders/CrabLocationProvider";
+import DevilLocationProvider from "../LocationProviders/DevilLocationProvider";
+import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
+import RandomReapperance from "../LocationProviders/RandomReapperance";
+import SideAppearOtherSide from "../LocationProviders/SideAppearOtherSide";
+import SideAppearOtherSideVariesSpeed from "../LocationProviders/SideAppearOtherSideVariesSpeed";
+import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
+import Wobble from "../LocationProviders/Wobble";
 import { GameLocation } from "../Models/GameLocation";
 import getDevilExplosion from "../SharedFrames/DevilExplosion";
 import getExplosion01 from "../SharedFrames/Explosion01";
@@ -37,18 +47,6 @@ import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import dimensionProvider from "./DimensionProvider";
-import BackAndForthFrameProvider from "../FrameProviders/BackAndForthFrameProvider";
-import CircleFrameProvider from "../FrameProviders/CircleFrameProvider";
-import DevilLocationProvider from "../LocationProviders/DevilLocationProvider";
-import ImmobileLocationProvider from "../LocationProviders/ImmobileLocationProvider";
-import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
-import RandomReapperance from "../LocationProviders/RandomReapperance";
-import SideAppearOtherSide from "../LocationProviders/SideAppearOtherSide";
-import SideAppearOtherSideVariesSpeed from "../LocationProviders/SideAppearOtherSideVariesSpeed";
-import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
-import Wobble from "../LocationProviders/Wobble";
-import MoveUpBitDownThenUpReappearDown from "../LocationProviders/CrabLocationProvider";
-
 
 /**
  * Module:          EnemyFactory
@@ -193,7 +191,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 anglesToUse = [angles.down];
                 speedsToUse = Speeds.Movement.Asteroid.down;
             } else {
-                anglesToUse = [angles.leftleftdown, angles.leftdown, angles.down, angles.rightdown, angles.rightrightdown];
+                anglesToUse = [extraAngles.leftleftdown, angles.leftdown, angles.down, angles.rightdown, extraAngles.rightrightdown];
                 speedsToUse = Speeds.Movement.Asteroid.diagonal;
             }
 
@@ -303,15 +301,15 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 throw new Error("Crap enemy requires a starting location");
             }
 
-            const { maxSizes: { width, height }, frames } = getCrapOffsetFrames();
+            const { maxSizes: { height } } = getCrapOffsetFrames();
             const frameProvider = new BackAndForthFrameProvider(0);
 
-            const randomAngle = getRandomArrayElement(MovementAngles.diabolo);
             const locationProvider = new MoveUpBitDownThenUpReappearDown(
                 location.left,
                 location.top,
                 Speeds.Movement.crab,
-                height);
+                height,
+                frameProvider);
 
             // const lp = new ImmobileLocationProvider(location.left, location.top);
 

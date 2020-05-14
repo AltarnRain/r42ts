@@ -1,8 +1,19 @@
+/**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
+/**
+ * Module:          Wobble
+ * Responsibility:  A location provider that makes an enemy wobble. This is done by constantly picking a random angle
+ */
+
 import BaseLocationProvider from "../Base/BaseLocationProvider";
 import { getAngles } from "../Constants/Angles";
+import dimensionProvider from "../Providers/DimensionProvider";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getLocation } from "../Utility/Location";
-import dimensionProvider from "../Providers/DimensionProvider";
 
 const {
     gameField
@@ -10,19 +21,45 @@ const {
 
 export default class Wobble extends BaseLocationProvider {
 
+    /**
+     * Time between switching angles.
+     */
     private angleSwitchTimeout: number;
 
+    /**
+     * Last tick an angle was changed.
+     */
     private lastTick: number = 0;
+
+    /**
+     * Angles to pick from.
+     */
     private angles: number[];
 
-    constructor(left: number, top: number, speed: number, angle: number, width: number, height: number, angleSwitchTimeout: number) {
-        super(left, top, speed, angle, width, height);
+    constructor(
+        left: number,
+        top: number,
+        speed: number,
+        angle: number,
+        width: number,
+        height: number,
+        angleSwitchTimeout: number) {
+        super(left,
+            top,
+            speed,
+            angle,
+            width,
+            height);
 
         this.angleSwitchTimeout = angleSwitchTimeout;
 
         this.angles = getAngles();
     }
 
+    /**
+     * Update the state of the location provider.
+     * @param {number} tick. Current game tick.
+     */
     public updateState(tick: number): void {
 
         if (tick > this.angleSwitchTimeout + this.lastTick) {

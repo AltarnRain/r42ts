@@ -17,8 +17,11 @@ export const angles = {
     leftup: 235,
     rightup: 325,
     leftdown: 135,
-    leftleftdown: 155,
     rightdown: 45,
+};
+
+export const extraAngles = {
+    leftleftdown: 155,
     rightrightdown: 25
 };
 

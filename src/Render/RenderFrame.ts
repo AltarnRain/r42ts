@@ -6,8 +6,8 @@
 
 import { validColors } from "../Constants/CGAColors";
 import dimensionProvider from "../Providers/DimensionProvider";
-import ctxProvider from "./CtxProvider";
 import { Frame } from "../Types";
+import ctxProvider from "./CtxProvider";
 
 /**
  * Module:          RenderFrame
