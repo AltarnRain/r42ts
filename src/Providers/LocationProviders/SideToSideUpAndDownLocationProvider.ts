@@ -6,7 +6,7 @@
 
 import BaseLocationProvider from "../../Base/BaseLocationProvider";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
-import { getLocation, getNextLocationAndAngle } from "../../Utility/Location";
+import { getNextLocationAndAngle } from "../../Utility/Location";
 import dimensionProvider from "../DimensionProvider";
 
 /**
@@ -43,5 +43,6 @@ export default class SideToSideUpAndDownLocationProvider extends BaseLocationPro
 
         this.left = left;
         this.top = top;
+        this.angle = angle;
     }
 }
