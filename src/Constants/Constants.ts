@@ -7,6 +7,7 @@
 import dimensionProvider from "../Providers/DimensionProvider";
 import getShipSpawnLocation from "../Providers/PlayerSpawnLocationProvider";
 import { angles } from "./Angles";
+import CGAColors from "./CGAColors";
 
 /**
  * Module:          All speeds for all objects
@@ -62,6 +63,7 @@ export namespace Speeds {
         export const diabolo = 11;
         export const devil = 11;
         export const crab = 11;
+        export const bat = 11;
 
     }
 }
@@ -141,4 +143,16 @@ export namespace WarpLevelConstants {
     export const right = gameField.right - pixelSize * 2;
     export const bottom = top + height;
     export const width = pixelSize * 16;
+}
+
+export namespace ColorSchemes {
+    export const robot = [
+        CGAColors.lightBlue,
+        CGAColors.lightCyan,
+        CGAColors.lightRed,
+        CGAColors.lightGreen,
+        CGAColors.lightBlue,
+        CGAColors.lightMagenta,
+        CGAColors.lightCyan,
+    ];
 }

@@ -7,6 +7,7 @@
 import BaseEnemy from "../Base/BaseEnemy";
 import BaseFrameProvider from "../Base/BaseFrameProvider";
 import ILocationProvider from "../Interfaces/ILocationProvider";
+import EnemyColorOptions from "../Models/EnemyColorOptions";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
@@ -22,15 +23,20 @@ export default class StaticColoredFrameAnimated extends BaseEnemy {
      */
     private points: number;
 
+    /**
+     * The enemy's color. Only used if the frame has 'V' colors and the colors do not change.
+     * e.g. the robot enemy.
+     */
+    private color?: string;
+
     constructor(
-        explosionColor: string | undefined,
-        particleColor: string | undefined,
         points: number,
         frameChangeTime: number,
         getFrames: OffsetFramesProviderFunction,
         getExplosion: ExplosionProviderFunction,
         locationProvider: ILocationProvider,
-        frameProvider: BaseFrameProvider) {
+        frameProvider: BaseFrameProvider,
+        colorOptions?: EnemyColorOptions) {
         super(
             frameChangeTime,
             getFrames,
@@ -41,17 +47,22 @@ export default class StaticColoredFrameAnimated extends BaseEnemy {
         this.points = points;
 
         // Explosions CAN be different in coloring. If a color is passed, we update the color, if not we'll convert from hex to CGA
-        if (explosionColor) {
-            Mutators.Frame.setColor(this.explosion.explosionCenterFrame, explosionColor);
+        if (colorOptions !== undefined && colorOptions.explosionColor !== undefined) {
+            Mutators.Frame.setColor(this.explosion.explosionCenterFrame, colorOptions.explosionColor);
         } else {
             Mutators.Frame.convertHexToCGA(this.explosion.explosionCenterFrame);
         }
 
         // Same for particles.
-        if (particleColor) {
-            this.explosion.particleFrames.forEach((pf) => Mutators.Frame.setColor(pf, particleColor));
+        if (colorOptions !== undefined && colorOptions.explosionParticleColor !== undefined) {
+            const color = colorOptions.explosionParticleColor;
+            this.explosion.particleFrames.forEach((pf) => Mutators.Frame.setColor(pf, color));
         } else {
             this.explosion.particleFrames.forEach((pf) => Mutators.Frame.convertHexToCGA(pf));
+        }
+
+        if (colorOptions !== undefined && colorOptions.varyingEnemyColor) {
+            this.color = colorOptions.varyingEnemyColor;
         }
     }
 
@@ -70,7 +81,14 @@ export default class StaticColoredFrameAnimated extends BaseEnemy {
      */
     protected onFrameChange(): void {
         const newFrame = this.frameProvider.getNextFrame();
-        Mutators.Frame.convertHexToCGA(newFrame);
+
+        // Allow the default enemy to handle enemies that come in varying colors.
+        if (this.color === undefined) {
+            Mutators.Frame.convertHexToCGA(newFrame);
+        } else {
+            Mutators.Frame.setColor(newFrame, this.color);
+        }
+
         this.currentFrame = newFrame;
     }
 

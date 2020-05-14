@@ -7,10 +7,11 @@
 import BaseEnemy from "../Base/BaseEnemy";
 import { angles, extraAngles, getAngles } from "../Constants/Angles";
 import CGAColors from "../Constants/CGAColors";
-import { FrameTimes, Locations, MovementAngles, Points, Speeds } from "../Constants/Constants";
+import { FrameTimes, Locations, MovementAngles, Points, Speeds, ColorSchemes } from "../Constants/Constants";
 import { AsteroidEnemy } from "../Enemies/Asteroid/AsteroidEnemy";
 import { getAsteroidOffsetFrames } from "../Enemies/Asteroid/GetAsteroidOffsetFrames";
 import getBalloonOffsetFrames from "../Enemies/Balloon/GetBalloonOffsetFrames";
+import getBatOffsetFrames from "../Enemies/Bats/BatOffsetFrames";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import getBirdOffsetFrames from "../Enemies/Bird/GetBirdOffsetFrames";
 import getCrapOffsetFrames from "../Enemies/Crap/GetCrapOffsetFrames";
@@ -22,7 +23,6 @@ import getOrbResource from "../Enemies/Orb/GetOrbOffsetFrames";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import getPistonOffsetFrames from "../Enemies/Piston/GetPistonOffsetFrames";
 import getRobotOffsetFrames from "../Enemies/Robot/GetRobotOffsetFrames";
-import RobotEnemy from "../Enemies/Robot/RobotEnemy";
 import getSpaceMonsterOffsetFrames from "../Enemies/SpaceMonster/SpaceMonster";
 import SpaceMonster from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
 import getSpinnerOffsetFrames from "../Enemies/Spinner/GetSpinnerOffsetFrames";
@@ -47,7 +47,7 @@ import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import dimensionProvider from "./DimensionProvider";
-import getBatOffsetFrames from "../Enemies/Bats/BatOffsetFrames";
+import EnemyColorOptions from "../Models/EnemyColorOptions";
 
 /**
  * Module:          EnemyFactory
@@ -104,7 +104,17 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 gameField.top,
                 Locations.robot.maxBottom);
 
-            return new RobotEnemy(FrameTimes.robot, locationProvider, frameProvider, getExplosion02, getRobotOffsetFrames);
+            const robotColor = getRandomArrayElement(ColorSchemes.robot);
+
+            return new DefaultEnemy(
+                Points.robot,
+                FrameTimes.robot,
+                getRobotOffsetFrames,
+                getExplosion02,
+                locationProvider,
+                frameProvider,
+                { explosionColor: robotColor, explosionParticleColor: robotColor, varyingEnemyColor: robotColor }
+            );
         }
 
         case "orb": {
@@ -151,14 +161,13 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 maxBottom);
 
             return new DefaultEnemy(
-                CGAColors.white,
-                CGAColors.white,
                 Points.spinner,
                 FrameTimes.spinner,
                 getSpinnerOffsetFrames,
                 getExplosion01,
                 locationProvider,
-                frameProvider);
+                frameProvider,
+                { explosionColor: CGAColors.white, explosionParticleColor: CGAColors.white });
         }
 
         case "balloon": {
@@ -171,8 +180,6 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const locationProvider = new Wobble(location.left, location.top, Speeds.Movement.balloon, 0, width, height, 200);
 
             return new DefaultEnemy(
-                undefined,
-                undefined,
                 Points.balloon,
                 FrameTimes.balloon,
                 getBalloonOffsetFrames,
@@ -223,14 +230,13 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 [3, 4]);
 
             return new DefaultEnemy(
-                CGAColors.magenta,
-                CGAColors.magenta,
                 Points.piston,
                 FrameTimes.piston,
                 getPistonOffsetFrames,
                 getExplosion02,
                 locationProvider,
-                frameProvider);
+                frameProvider,
+                { explosionColor: CGAColors.magenta, explosionParticleColor: CGAColors.magenta });
         }
 
         case "diabolo": {
@@ -254,14 +260,13 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             );
 
             return new DefaultEnemy(
-                CGAColors.white,
-                CGAColors.white,
                 Points.diabolo,
                 FrameTimes.diabolo,
                 getDiaboloOffsetFrames,
                 getExplosion01,
                 locationProvider,
-                frameProvider);
+                frameProvider,
+                { explosionColor: CGAColors.white, explosionParticleColor: CGAColors.white });
         }
 
         case "spacemonster-down": {
@@ -311,17 +316,14 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 height,
                 frameProvider);
 
-            // const lp = new ImmobileLocationProvider(location.left, location.top);
-
             return new DefaultEnemy(
-                CGAColors.magenta,
-                CGAColors.magenta,
                 Points.crab,
                 FrameTimes.crab,
                 getCrapOffsetFrames,
                 getExplosion02,
                 locationProvider,
-                frameProvider);
+                frameProvider,
+                { explosionColor: CGAColors.magenta, explosionParticleColor: CGAColors.magenta });
         }
 
         case "bat": {
@@ -343,14 +345,13 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 200);
 
             return new DefaultEnemy(
-                CGAColors.magenta,
-                CGAColors.magenta,
                 Points.bat,
                 FrameTimes.bat,
                 getBatOffsetFrames,
                 getExplosion02,
                 locationProvider,
-                frameProvider);
+                frameProvider,
+                { explosionColor: CGAColors.magenta, explosionParticleColor: CGAColors.magenta });
         }
 
         default:
