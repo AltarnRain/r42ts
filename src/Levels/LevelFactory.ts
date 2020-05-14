@@ -73,6 +73,8 @@ export function levelFactory(level: number): ILevel | undefined {
             return new WarpLevel();
         case 21:
             return new EnemyLevel("piston");
+        case 22:
+            return new EnemyLevel("boat");
         default:
             // Reset to first level.
             return new EnemyLevel("crab");

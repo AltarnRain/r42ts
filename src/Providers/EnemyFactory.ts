@@ -50,6 +50,7 @@ import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import { coinFlip } from "../Utility/Lib";
 import dimensionProvider from "./DimensionProvider";
+import ImmobileLocationProvider from "../LocationProviders/ImmobileLocationProvider";
 
 /**
  * Module:          EnemyFactory
@@ -215,13 +216,14 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 throw new Error("Balloon enemy requires a starting location");
             }
 
-            const { maxSizes: { width } } = getPistonOffsetFrames();
+            const { maxSizes: { width, height } } = getPistonOffsetFrames();
             const frameProvider = new BackAndForthFrameProvider(0);
 
             const locationProvider = new SideAppearOtherSideVariesSpeed(
                 location.left,
                 location.top,
                 MovementAngles.piston,
+                height,
                 width,
                 gameField.top,
                 gameField.bottom,
@@ -381,6 +383,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 location.left,
                 location.top,
                 angles.rightdown,
+                height,
                 width,
                 gameField.top,
                 gameField.bottom,
@@ -390,12 +393,14 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 [0],
                 [1]);
 
+            const lp = new ImmobileLocationProvider(location.left, location.top);
+
             return new DefaultEnemy(
                 Points.boat,
                 FrameTimes.boat,
-                getBatOffsetFrames,
+                getBoatOffsetFrames,
                 getExplosion02,
-                locationProvider,
+                lp,
                 frameProvider,
                 { explosionColor: CGAColors.magenta, explosionParticleColor: CGAColors.magenta });
         }

@@ -7,7 +7,6 @@
 import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
-import dimensionProvider from "../Providers/DimensionProvider";
 import { getNextLocationWithinBoundaries } from "../Utility/Location";
 
 /**
@@ -31,6 +30,7 @@ export default class SideAppearOtherSideVariesSpeed implements ILocationProvider
         private top: number,
         private angle: number,
         private width: number,
+        private height: number,
         private maxTop: number,
         private maxBottom: number,
         private indexProvider: IGetCurrentIndex,
@@ -72,8 +72,8 @@ export default class SideAppearOtherSideVariesSpeed implements ILocationProvider
             this.width,
             this.angle,
             speed,
-            this.maxTop,
-            this.maxBottom
+            this.maxTop - this.height,
+            this.maxBottom + this.height
         );
 
         this.left = left;
