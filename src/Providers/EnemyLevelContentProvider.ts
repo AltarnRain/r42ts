@@ -48,7 +48,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             const bulletRunner = new BulletRunner(CGAColors.magenta, Speeds.Bullets.orb, maxFiveDiagonal);
 
             return {
-                enemies: [enemies[0]],
+                enemies,
                 bulletRunner,
             };
         }

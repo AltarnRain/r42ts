@@ -204,9 +204,8 @@ function handleSelfDestruct(tick: number): void {
     const { playerState, enemyLevelState } = appState();
 
     if (playerState.alive && appState().keyboardState.selfDestruct) {
-        enemyLevelState.enemies.forEach((es) => dispatchExplosion(es.offsetLeft, es.offsetTop, es.coloredExplosion, tick));
-        dispatchExplosion(playerState.left, playerState.top, playerState.coloredExplosion, tick);
         handlePlayerDeath(tick);
+        enemyLevelState.enemies.forEach((es) => handleEnemyDestruction(tick, es));
         localState.enemies = [];
     }
 }
