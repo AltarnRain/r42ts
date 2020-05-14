@@ -98,6 +98,10 @@ export namespace Locations {
     export namespace Player {
         export const spawnLocation = getShipSpawnLocation();
     }
+
+    export namespace Boat {
+        export const topStart = pixelSize * 18;
+    }
 }
 
 // Collective namespace for all movement angles.

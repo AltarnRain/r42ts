@@ -18,6 +18,7 @@ import sevenSixSeverGridProvider from "../SpawnLocations/SevenSixSevenGridProvid
 import { Enemies } from "../Types";
 import enemyFactory from "./EnemyFactory";
 import { maxThreeDown, maxFiveDown } from "../ShipsToFireProviders/MaxThreeDown";
+import getBoatSpawnLocations from "../Enemies/Boat/GetBoatSpawnLocations";
 
 /**
  * Module:          EnemyFactory
@@ -152,7 +153,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "boat": {
-            const enemies = elevenInALine(Locations.Piston.topStart).map((location) => enemyFactory(enemy, location));
+            const enemies = getBoatSpawnLocations().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxFiveDown);
 
             return {
