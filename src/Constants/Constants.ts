@@ -114,6 +114,7 @@ export namespace FrameTimes {
     export const piston = 200;
     export const diabolo = 200;
     export const crab = 100;
+    export const bat = 100;
 }
 
 export namespace Points {
@@ -128,6 +129,7 @@ export namespace Points {
     export const spaceMonster = 200;
     export const devil = 100;
     export const crab = 200;
+    export const bat = 200;
 
 }
 

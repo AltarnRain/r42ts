@@ -5,7 +5,7 @@
  */
 
 import BaseEnemy from "../Base/BaseEnemy";
-import { angles, extraAngles } from "../Constants/Angles";
+import { angles, extraAngles, getAngles } from "../Constants/Angles";
 import CGAColors from "../Constants/CGAColors";
 import { FrameTimes, Locations, MovementAngles, Points, Speeds } from "../Constants/Constants";
 import { AsteroidEnemy } from "../Enemies/Asteroid/AsteroidEnemy";
@@ -47,6 +47,7 @@ import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import dimensionProvider from "./DimensionProvider";
+import getBatOffsetFrames from "../Enemies/Bats/BatOffsetFrames";
 
 /**
  * Module:          EnemyFactory
@@ -318,6 +319,35 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 Points.crab,
                 FrameTimes.crab,
                 getCrapOffsetFrames,
+                getExplosion02,
+                locationProvider,
+                frameProvider);
+        }
+
+        case "bat": {
+            if (location === undefined) {
+                throw new Error("Bats enemy requires a starting location");
+            }
+
+            const { maxSizes: { width, height } } = getBatOffsetFrames();
+            const frameProvider = new BackAndForthFrameProvider(0);
+
+            const randomAngle = getRandomArrayElement(getAngles());
+            const locationProvider = new Wobble(
+                location.left,
+                location.top,
+                Speeds.Movement.bat,
+                randomAngle,
+                width,
+                height,
+                200);
+
+            return new DefaultEnemy(
+                CGAColors.magenta,
+                CGAColors.magenta,
+                Points.bat,
+                FrameTimes.bat,
+                getBatOffsetFrames,
                 getExplosion02,
                 locationProvider,
                 frameProvider);
