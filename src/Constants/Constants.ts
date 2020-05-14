@@ -34,7 +34,7 @@ export namespace Speeds {
 
         export namespace SpaceMonster {
             export const down = [2, 4, 6, 8, 10];
-            export const diagonal = [3, 54, 7, 10, 12   ];
+            export const diagonal = [3, 54, 7, 10, 12];
 
         }
         export const diabolo = 2.5;
@@ -107,4 +107,20 @@ export namespace FrameTimes {
     export const balloon = 100;
     export const piston = 200;
     export const diabolo = 200;
+    export const crab = 100;
+}
+
+export namespace Points {
+    export const bird = 200;
+    export const robot = 200;
+    export const orb = 300;
+    export const spinner = 200;
+    export const balloon = 200;
+    export const asteroid = 300;
+    export const piston = 200;
+    export const diabolo = 200;
+    export const spaceMonster = 200;
+    export const devil = 100;
+    export const crab = 200;
+
 }

@@ -12,6 +12,7 @@ import dimensionProvider from "../../Providers/DimensionProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
 import { getRandomArrayElement } from "../../Utility/Array";
 import Mutators from "../../Utility/FrameMutators";
+import { Points } from "../../Constants/Constants";
 
 /**
  * Module:          SpaceMonster
@@ -30,7 +31,7 @@ const explosionColors = [
     CGAColors.lightBlue,
 ];
 
-export class SpaceMonster extends BaseEnemy {
+export default class SpaceMonster extends BaseEnemy {
 
     /**
      * Flag used to track if the jaws of the Space Monster are open or not.
@@ -69,8 +70,11 @@ export class SpaceMonster extends BaseEnemy {
         this.dispatchCurrentState();
     }
 
+    /**
+     * Returns the points of the space monster.
+     */
     public getPoints(): number {
-        return 300;
+        return Points.spaceMonster;
     }
 
     /**

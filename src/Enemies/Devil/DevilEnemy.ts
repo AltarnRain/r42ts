@@ -10,6 +10,7 @@ import CGAColors from "../../Constants/CGAColors";
 import ILocationDirectionProvider from "../../Interfaces/ILocationDirectionProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
 import Mutators from "../../Utility/FrameMutators";
+import { Points } from "../../Constants/Constants";
 
 /**
  * Module:          DevilEnemey
@@ -83,6 +84,6 @@ export default class DevilEnemy extends BaseEnemy {
      * @returns {number}.
      */
     public getPoints(): number {
-        return 100;
+        return Points.devil;
     }
 }

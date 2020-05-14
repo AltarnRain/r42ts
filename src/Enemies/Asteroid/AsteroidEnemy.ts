@@ -10,6 +10,7 @@ import CGAColors from "../../Constants/CGAColors";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
 import Mutators from "../../Utility/FrameMutators";
+import { Points } from "../../Constants/Constants";
 
 /**
  * Module:          AsteroidEnemy
@@ -54,13 +55,22 @@ export class AsteroidEnemy extends BaseEnemy {
      * @returns {number}. Points.
      */
     public getPoints(): number {
-        return 300;
+        return Points.asteroid;
     }
+
+    /**
+     * Returns the remaining hitpoints of the asteroid.
+     * @returns {number}. Remaining hitpoints.
+     */
 
     public getHitpoints(): number {
         return this.hitpoints;
     }
 
+    /**
+     * Reduces the remaining hitpoints by 1. Also sets the next frame to
+     * make it appear as if the asteroid is getting damager.
+     */
     public recudeHitpoints(): void {
         this.hitpoints--;
         // A reduction in hitpoints shows the next frame. This makes it

@@ -18,13 +18,16 @@ const {
     gameField
 } = dimensionProvider();
 
-export default class SideAppearOtherSideLocationProvider extends BaseLocationProvider {
+export default class SideAppearOtherSide extends BaseLocationProvider {
+    /**
+     * Maximum top position.
+     */
     private maxTop: number;
-    private maxBottom: number;
 
     /**
-     *
+     * Maximum bottom position.
      */
+    private maxBottom: number;
     constructor(
         left: number,
         top: number,
@@ -40,6 +43,10 @@ export default class SideAppearOtherSideLocationProvider extends BaseLocationPro
         this.maxBottom = maxBottom;
     }
 
+    /**
+     * Update the state of the location provider.
+     * @param {number} tick. Current tick.
+     */
     public updateState(tick: number): void {
         const { left, top } = getNextLocationWithinBoundaries(
             this.left,

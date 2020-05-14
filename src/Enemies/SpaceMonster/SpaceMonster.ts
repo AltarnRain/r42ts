@@ -12,7 +12,7 @@ import { getMaximumFrameDimensions } from "../../Utility/Frame";
  * Responsibility:  Returns the requires
  */
 
-export function getSpaceMonsterOffsetFrames(): OffsetFrames {
+export default function getSpaceMonsterOffsetFrames(): OffsetFrames {
     const resource = {
         frames: [
             [

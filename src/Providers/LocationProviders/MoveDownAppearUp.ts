@@ -14,13 +14,18 @@ import { getLocation } from "../../Utility/Location";
  *                  Enemies will bounce from up to down a few times just like the original game.
  */
 
-export default class MoveDownAppearUpLocationProvider extends BaseLocationProvider {
-    private maxTop: number;
-    private maxBottom: number;
+export default class MoveDownAppearUp extends BaseLocationProvider {
 
     /**
-     * Constructs the immobile location provider.
+     * Maximum top.
      */
+    private maxTop: number;
+
+    /**
+     * Maximum bottom.
+     */
+    private maxBottom: number;
+
     constructor(left: number, top: number, speed: number, angle: number, width: number, height: number, maxTop: number, maxBottom: number) {
         super(left, top, speed, angle, width, height);
 
@@ -29,7 +34,9 @@ export default class MoveDownAppearUpLocationProvider extends BaseLocationProvid
     }
 
     /**
-     * Returns the given location.
+     * Returns the current location. Note. Current is not 100% accurate here. If the enemy has passed the maxButtom, it's
+     * top will be set to maxTop.
+     * @returns {GameLocation}. Current game location.
      */
     public getCurrentLocation(): GameLocation {
 
@@ -40,6 +47,10 @@ export default class MoveDownAppearUpLocationProvider extends BaseLocationProvid
         return getLocation(this.left, this.top, this.angle, this.speed);
     }
 
+    /**
+     * Update the state of the location provider.
+     * @param {number} tick. Current game tick.
+     */
     public updateState(tick: number): void {
         const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
         this.left = left;

@@ -21,16 +21,55 @@ const {
     gameField
 } = dimensionProvider();
 
-export default class AsteroidLocationProvider implements ILocationProvider {
+export default class RandomReapperance implements ILocationProvider {
+    /**
+     * Object width.
+     */
     private width: number;
+
+    /**
+     * Object height
+     */
     private height: number;
+
+    /**
+     * Movement angles to pick from.
+     */
     private angles: any[];
+
+    /**
+     * Current top.
+     */
     private top: number;
+
+    /**
+     * Current bottom.
+     */
     private left: number;
+
+    /**
+     * Current angle.
+     */
     private angle: Angle;
+
+    /**
+     * Speeds to pick from.
+     */
     private speeds: number[];
+
+    /**
+     * Current speed.
+     */
     private speed: number;
+
+    /**
+     * Maximum bottom position.
+     */
     private maxBottom: number;
+
+    /**
+     * Initial top position.
+     */
     private startTop: number;
 
     constructor(width: number, height: number, angles: Angle[], speeds: number[]) {
@@ -49,6 +88,10 @@ export default class AsteroidLocationProvider implements ILocationProvider {
         this.startTop = gameField.top - doubleHeight;
     }
 
+    /**
+     * Returns the current location
+     * @returns {GameLocation}. Current location.
+     */
     public getCurrentLocation(): GameLocation {
         return {
             left: this.left,
@@ -56,6 +99,10 @@ export default class AsteroidLocationProvider implements ILocationProvider {
         };
     }
 
+    /**
+     * Updates the state of the location provider.
+     * @param {number} tick. Current game tick
+     */
     public updateState(tick: number): void {
         const nextLocation = getLocation(this.left, this.top, this.angle, this.speed);
 
@@ -71,11 +118,18 @@ export default class AsteroidLocationProvider implements ILocationProvider {
         }
     }
 
-    public increaseSpeed(factor: number): void {
-        // Does nothing.
-    }
-
+    /**
+     * Returns a random number between the left and right of the game field compensating for the object width
+     * @returns {number}. Random nummber.
+     */
     private getRandomLeft(): number {
         return randomNumberInRange(gameField.right - this.width, this.width);
+    }
+
+    /**
+     * Not implemented.
+     */
+    public increaseSpeed(factor: number): void {
+        // Does nothing.
     }
 }

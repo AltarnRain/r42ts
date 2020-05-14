@@ -12,6 +12,7 @@ import ILocationProvider from "../../Interfaces/ILocationProvider";
 import { ExplosionProviderFunction, Frame, OffsetFramesProviderFunction } from "../../Types";
 import { getRandomArrayElement } from "../../Utility/Array";
 import Mutators from "../../Utility/FrameMutators";
+import { Points } from "../../Constants/Constants";
 
 /**
  * Module:          Bird enemy
@@ -65,7 +66,7 @@ export default class BirdEnemy extends BaseEnemy {
      * @returns {number}. Points rewarded when the BirdEnemy is destroyed.
      */
     public getPoints(): number {
-        return 200;
+        return Points.bird;
     }
 
     /**

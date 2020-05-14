@@ -11,6 +11,7 @@ import ILocationProvider from "../../Interfaces/ILocationProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
 import { getRandomArrayElement } from "../../Utility/Array";
 import Mutators from "../../Utility/FrameMutators";
+import { Points } from "../../Constants/Constants";
 
 /**
  * Module:          RobotEnemey
@@ -73,6 +74,6 @@ export default class RobotEnemy extends BaseEnemy {
      * @returns {number}.
      */
     public getPoints(): number {
-        return 100;
+        return Points.robot;
     }
 }

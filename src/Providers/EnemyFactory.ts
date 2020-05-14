@@ -7,12 +7,14 @@
 import BaseEnemy from "../Base/BaseEnemy";
 import { angles } from "../Constants/Angles";
 import CGAColors from "../Constants/CGAColors";
-import { FrameTimes, Locations, MovementAngles, Speeds } from "../Constants/Constants";
+import { FrameTimes, Locations, MovementAngles, Speeds, Points } from "../Constants/Constants";
 import { AsteroidEnemy } from "../Enemies/Asteroid/AsteroidEnemy";
 import { getAsteroidOffsetFrames } from "../Enemies/Asteroid/GetAsteroidOffsetFrames";
 import getBalloonOffsetFrames from "../Enemies/Balloon/GetBalloonOffsetFrames";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
-import { default as getBirdOffsetFrames, default as getBirdResource } from "../Enemies/Bird/GetBirdOffsetFrames";
+import getBirdOffsetFrames from "../Enemies/Bird/GetBirdOffsetFrames";
+import getCrapOffsetFrames from "../Enemies/Crap/GetCrapOffsetFrames";
+import DefaultEnemy from "../Enemies/DefaultEnemy";
 import DevilEnemy from "../Enemies/Devil/DevilEnemy";
 import getDevilOffsetFrames from "../Enemies/Devil/GetDevilOffsetFrames";
 import getDiaboloOffsetFrames from "../Enemies/Diabolo/GetDiaboloOffsetFrames";
@@ -21,10 +23,9 @@ import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import getPistonOffsetFrames from "../Enemies/Piston/GetPistonOffsetFrames";
 import getRobotResource from "../Enemies/Robot/GetRobotOffsetFrames";
 import RobotEnemy from "../Enemies/Robot/RobotEnemy";
-import { getSpaceMonsterOffsetFrames } from "../Enemies/SpaceMonster/SpaceMonster";
-import { SpaceMonster as SpaceMonsterEnemy } from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
+import getSpaceMonsterOffsetFrames from "../Enemies/SpaceMonster/SpaceMonster";
+import SpaceMonster from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
 import getSpinnerOffsetFrames from "../Enemies/Spinner/GetSpinnerOffsetFrames";
-import StaticColoredFrameAnimated from "../Enemies/StaticColorFrameAnimated/StaticColoredFrameAnimated";
 import { GameLocation } from "../Models/GameLocation";
 import getDevilExplosion from "../SharedFrames/DevilExplosion";
 import getExplosion01 from "../SharedFrames/Explosion01";
@@ -39,14 +40,14 @@ import dimensionProvider from "./DimensionProvider";
 import BackAndForthFrameProvider from "./FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "./FrameProviders/CircleFrameProvider";
 import DevilLocationProvider from "./LocationProviders/DevilLocationProvider";
-import MoveDownAppearUpLocationProvider from "./LocationProviders/MoveDownAppearUpLocaionProvider";
-import AsteroidLocationProvider from "./LocationProviders/RandomReapperance";
-import SideAppearOtherSideLocationProvider from "./LocationProviders/SideAppearOtherSideLocationProvider";
-import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
-import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
-import Wobble from "./LocationProviders/Wobble";
-import getCrapOffsetFrames from "../Enemies/Crap/GetCrapOffsetFrames";
 import ImmobileLocationProvider from "./LocationProviders/ImmobileLocationProvider";
+import MoveDownAppearUp from "./LocationProviders/MoveDownAppearUp";
+import RandomReapperance from "./LocationProviders/RandomReapperance";
+import SideAppearOtherSide from "./LocationProviders/SideAppearOtherSide";
+import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
+import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDown";
+import Wobble from "./LocationProviders/Wobble";
+
 
 /**
  * Module:          EnemyFactory
@@ -73,7 +74,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const randomMovementAngle = getRandomArrayElement(MovementAngles.bird);
             const locationProvider = new SideToSideUpAndDown(location.left, location.top, Speeds.Movement.bird, randomMovementAngle, width, height, gameField.top, gameField.bottom);
 
-            return new BirdEnemy(FrameTimes.bird, getBirdResource, getExplosion01, locationProvider, frameProvider);
+            return new BirdEnemy(FrameTimes.bird, getBirdOffsetFrames, getExplosion01, locationProvider, frameProvider);
         }
 
         case "robot": {
@@ -86,7 +87,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const { maxSizes: { width, height } } = getRobotResource();
 
             const frameProvider = new BackAndForthFrameProvider(0);
-            const locationProvider = new SideAppearOtherSideLocationProvider(location.left, location.top, Speeds.Movement.robot, MovementAngles.robot, width, height, gameField.top, maxBottom);
+            const locationProvider = new SideAppearOtherSide(location.left, location.top, Speeds.Movement.robot, MovementAngles.robot, width, height, gameField.top, maxBottom);
             return new RobotEnemy(FrameTimes.robot, locationProvider, frameProvider, getExplosion02, getRobotResource);
         }
 
@@ -99,7 +100,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const { maxTop, maxBottom } = Locations.Enemies.Orb;
 
             const frameProvider = new CircleFrameProvider(0);
-            const locationProvider = new MoveDownAppearUpLocationProvider(location.left, location.top, Speeds.Movement.orb, MovementAngles.orb, width, height, maxTop, maxBottom);
+            const locationProvider = new MoveDownAppearUp(location.left, location.top, Speeds.Movement.orb, MovementAngles.orb, width, height, maxTop, maxBottom);
             return new OrbEnemy(FrameTimes.orb, getOrbResource, getExplosion02, locationProvider, frameProvider);
         }
         case "spinner": {
@@ -116,7 +117,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const randomAngle = getRandomArrayElement(MovementAngles.spinner);
             const locationProvider = new SideToSideUpAndDown(location.left, location.top, Speeds.Movement.spinner, randomAngle, width, height, maxTop, maxBottom);
 
-            return new StaticColoredFrameAnimated(CGAColors.white, CGAColors.white, 200, FrameTimes.spinner, getSpinnerOffsetFrames, getExplosion01, locationProvider, frameProvider);
+            return new DefaultEnemy(CGAColors.white, CGAColors.white, Points.spinner, FrameTimes.spinner, getSpinnerOffsetFrames, getExplosion01, locationProvider, frameProvider);
         }
 
         case "balloon": {
@@ -128,7 +129,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
             const locationProvider = new Wobble(location.left, location.top, Speeds.Movement.balloon, 0, width, height, 200);
 
-            return new StaticColoredFrameAnimated(undefined, undefined, 200, FrameTimes.balloon, getBalloonOffsetFrames, getExplosion03, locationProvider, frameProvider);
+            return new DefaultEnemy(undefined, undefined, Points.balloon, FrameTimes.balloon, getBalloonOffsetFrames, getExplosion03, locationProvider, frameProvider);
         }
         case "asteroid-down":
         case "asteroid-diagonal": {
@@ -145,7 +146,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 speedsToUse = Speeds.Movement.Asteroid.diagonal;
             }
 
-            const locationProvider = new AsteroidLocationProvider(width, height, anglesToUse, speedsToUse);
+            const locationProvider = new RandomReapperance(width, height, anglesToUse, speedsToUse);
 
             // Astroids don't change frames over time, they change frames when they're hit.
             return new AsteroidEnemy(0, getAsteroidOffsetFrames, getExplosion04, locationProvider, frameProvider);
@@ -172,7 +173,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 [0, 1, 2],
                 [3, 4]);
 
-            return new StaticColoredFrameAnimated(CGAColors.magenta, CGAColors.magenta, 200, FrameTimes.piston, getPistonOffsetFrames, getExplosion02, locationProvider, frameProvider);
+            return new DefaultEnemy(CGAColors.magenta, CGAColors.magenta, Points.piston, FrameTimes.piston, getPistonOffsetFrames, getExplosion02, locationProvider, frameProvider);
         }
 
         case "diabolo": {
@@ -195,16 +196,16 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 gameField.bottom
             );
 
-            return new StaticColoredFrameAnimated(CGAColors.white, CGAColors.white, 200, FrameTimes.diabolo, getDiaboloOffsetFrames, getExplosion01, locationProvider, frameProvider);
+            return new DefaultEnemy(CGAColors.white, CGAColors.white, Points.diabolo, FrameTimes.diabolo, getDiaboloOffsetFrames, getExplosion01, locationProvider, frameProvider);
         }
 
         case "spacemonster-down": {
             const { maxSizes: { width, height } } = getSpaceMonsterOffsetFrames();
             const frameProvider = new CircleFrameProvider(0);
-            const locationProvider = new AsteroidLocationProvider(width, height, [angles.down], Speeds.Movement.SpaceMonster.down);
+            const locationProvider = new RandomReapperance(width, height, [angles.down], Speeds.Movement.SpaceMonster.down);
 
             // Space monsters do not change frames over time, they change frame depending on their position on the screen.
-            return new SpaceMonsterEnemy(0, getSpaceMonsterOffsetFrames, getExplosion05, locationProvider, frameProvider);
+            return new SpaceMonster(0, getSpaceMonsterOffsetFrames, getExplosion05, locationProvider, frameProvider);
         }
 
         case "devil": {
@@ -252,7 +253,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
 
             const lp = new ImmobileLocationProvider(location.left, location.top);
 
-            return new StaticColoredFrameAnimated(CGAColors.magenta, CGAColors.magenta, 200, FrameTimes.diabolo, getCrapOffsetFrames, getExplosion02, lp, frameProvider);
+            return new DefaultEnemy(CGAColors.magenta, CGAColors.magenta, Points.crab, FrameTimes.crab, getCrapOffsetFrames, getExplosion02, lp, frameProvider);
         }
 
         default:

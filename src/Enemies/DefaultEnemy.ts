@@ -4,11 +4,11 @@
  * See LICENSE.MD.
  */
 
-import BaseEnemy from "../../Base/BaseEnemy";
-import BaseFrameProvider from "../../Base/BaseFrameProvider";
-import ILocationProvider from "../../Interfaces/ILocationProvider";
-import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
-import Mutators from "../../Utility/FrameMutators";
+import BaseEnemy from "../Base/BaseEnemy";
+import BaseFrameProvider from "../Base/BaseFrameProvider";
+import ILocationProvider from "../Interfaces/ILocationProvider";
+import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../Types";
+import Mutators from "../Utility/FrameMutators";
 
 /**
  * Module:          StaticColoredFrameAnimated
