@@ -199,7 +199,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 anglesToUse = [angles.down];
                 speedsToUse = Speeds.Movement.Asteroid.down;
             } else {
-                anglesToUse = [angles.leftdown, angles.down, angles.rightdown];
+                anglesToUse = [extraAngles.leftleftdown, angles.leftdown, angles.down, angles.rightdown, extraAngles.rightrightdown];
                 speedsToUse = Speeds.Movement.Asteroid.diagonal;
             }
 
@@ -278,7 +278,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 anglesToUse = [angles.down];
                 speedsToUse = Speeds.Movement.SpaceMonster.down;
             } else {
-                anglesToUse = [angles.leftdown, angles.down, angles.rightdown];
+                anglesToUse = [extraAngles.leftleftdown, angles.leftdown, angles.down, angles.rightdown, extraAngles.rightrightdown];
                 speedsToUse = Speeds.Movement.SpaceMonster.diagonal;
             }
 

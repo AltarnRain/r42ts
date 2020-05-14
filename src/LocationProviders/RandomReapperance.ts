@@ -11,6 +11,8 @@ import { Angle } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { randomNumberInRange } from "../Utility/Lib";
 import { getLocation } from "../Utility/Location";
+import { angles } from "../Constants/Angles";
+import { getLeftOrRightFromAngle } from "../Utility/Geometry";
 
 /**
  * Module:          AsteroidLocationProvider
@@ -91,10 +93,21 @@ export default class RandomReapperance implements ILocationProvider {
 
         if (this.top > this.maxBottom) {
             // Reduce top by 2x height for a nice and smooth reapperance of the asteroid
-            this.top = this.startTop;
             this.left = this.getRandomLeft();
             this.angle = getRandomArrayElement(this.angles);
             this.speed = getRandomArrayElement(this.speeds);
+
+            const direction = getLeftOrRightFromAngle(this.angle);
+
+            if (direction === "left") {
+                this.left = gameField.right;
+                this.top = randomNumberInRange(gameField.bottom / 2, gameField.top);
+            } else if (direction === "right") {
+                this.left = gameField.left;
+                this.top = randomNumberInRange(gameField.bottom / 2, gameField.top);
+            } else {
+                this.top = this.startTop;
+            }
         }
     }
 
