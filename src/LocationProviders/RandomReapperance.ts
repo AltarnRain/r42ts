@@ -23,21 +23,6 @@ const {
 
 export default class RandomReapperance implements ILocationProvider {
     /**
-     * Object width.
-     */
-    private width: number;
-
-    /**
-     * Object height
-     */
-    private height: number;
-
-    /**
-     * Movement angles to pick from.
-     */
-    private angles: any[];
-
-    /**
      * Current top.
      */
     private top: number;
@@ -51,11 +36,6 @@ export default class RandomReapperance implements ILocationProvider {
      * Current angle.
      */
     private angle: Angle;
-
-    /**
-     * Speeds to pick from.
-     */
-    private speeds: number[];
 
     /**
      * Current speed.
@@ -72,17 +52,17 @@ export default class RandomReapperance implements ILocationProvider {
      */
     private startTop: number;
 
-    constructor(width: number, height: number, angles: Angle[], speeds: number[]) {
-        this.width = width;
-        this.height = height;
-        this.angles = angles;
-        this.speeds = speeds;
+    constructor(
+        private width: number,
+        private height: number,
+        private angles: Angle[],
+        private speeds: number[]) {
 
-        const doubleHeight =  this.height * 2;
+        const doubleHeight = this.height * 2;
         this.top = gameField.top - doubleHeight;
         this.left = this.getRandomLeft();
         this.angle = getRandomArrayElement(angles);
-        this.speed =  getRandomArrayElement(speeds);
+        this.speed = getRandomArrayElement(speeds);
 
         this.maxBottom = gameField.bottom + doubleHeight;
         this.startTop = gameField.top - doubleHeight;

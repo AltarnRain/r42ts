@@ -19,15 +19,6 @@ const {
 } = dimensionProvider();
 
 export default class SideAppearOtherSide extends BaseLocationProvider {
-    /**
-     * Maximum top position.
-     */
-    private maxTop: number;
-
-    /**
-     * Maximum bottom position.
-     */
-    private maxBottom: number;
     constructor(
         left: number,
         top: number,
@@ -35,12 +26,9 @@ export default class SideAppearOtherSide extends BaseLocationProvider {
         angle: number,
         width: number,
         height: number,
-        maxTop: number,
-        maxBottom: number) {
+        private maxTop: number,
+        private maxBottom: number) {
         super(left, top, speed, angle, width, height);
-
-        this.maxTop = maxTop;
-        this.maxBottom = maxBottom;
     }
 
     /**

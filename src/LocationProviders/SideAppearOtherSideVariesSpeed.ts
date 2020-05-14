@@ -7,8 +7,8 @@
 import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
-import { getNextLocationWithinBoundaries } from "../Utility/Location";
 import dimensionProvider from "../Providers/DimensionProvider";
+import { getNextLocationWithinBoundaries } from "../Utility/Location";
 
 /**
  * Module:          SideAppearOtherSideVariesSpeed
@@ -16,108 +16,31 @@ import dimensionProvider from "../Providers/DimensionProvider";
  *                  speeds
  */
 
-const {
-    gameField
-} = dimensionProvider();
-
 export default class SideAppearOtherSideVariesSpeed implements ILocationProvider {
-
     /**
-     * A function that returns the index of the frame currently being rendered.
-     */
-    private indexProvider: IGetCurrentIndex;
-
-    /**
-     * Left position.
-     */
-    private left: number;
-
-    /**
-     * Top position\.
-     */
-    private top: number;
-
-    /**
-     * Movement angle.
-     */
-    private angle: number;
-
-    /**
-     * Object width.
-     */
-    private width: number;
-
-    /**
-     * Maximum top position.
-     */
-    private maxTop: number;
-
-    /**
-     * Maximum bottom position.
-     */
-    private maxBottom: number;
-
-    /**
-     * Initial slow speed.
+     * Used to calculate a speed increase for the slow speed.
      */
     private baseSlowSpeed: number;
 
     /**
-     * Initial fast speed.
+     * Used to calculate a speed increase for the fast speed.
      */
     private baseFastSpeed: number;
-
-    /**
-     * Current slow speed.
-     */
-    private slowSpeed: number;
-
-    /**
-     * Current fast speed.
-     */
-    private fastSpeed: number;
-
-    /**
-     * Frame indexes where to use the slow speed.
-     */
-    private slowFrames: number[];
-
-    /**
-     * Frame indexes where to use the fast speed.
-     */
-    private fastFrames: number[];
-    /**
-     *
-     */
     constructor(
-        left: number,
-        top: number,
-        angle: number,
-        width: number,
-        maxTop: number,
-        maxBottom: number,
-        indexProvider: IGetCurrentIndex,
-        slowSpeed: number,
-        fastSpeed: number,
-        slowFrames: number[],
-        fastFrames: number[]) {
-
-        this.left = left;
-        this.top = top;
-        this.angle = angle;
-        this.width = width;
-        this.maxTop = maxTop;
-        this.maxBottom = maxBottom;
-        this.indexProvider = indexProvider;
+        private left: number,
+        private top: number,
+        private angle: number,
+        private width: number,
+        private maxTop: number,
+        private maxBottom: number,
+        private indexProvider: IGetCurrentIndex,
+        private slowSpeed: number,
+        private fastSpeed: number,
+        private slowFrames: number[],
+        private fastFrames: number[]) {
 
         this.baseSlowSpeed = slowSpeed;
         this.baseFastSpeed = fastSpeed;
-
-        this.slowSpeed = slowSpeed;
-        this.fastSpeed = fastSpeed;
-
-        this.slowFrames = slowFrames;
-        this.fastFrames = fastFrames;
     }
 
     public getCurrentLocation(): GameLocation {

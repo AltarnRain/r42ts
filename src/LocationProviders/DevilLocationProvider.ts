@@ -21,43 +21,31 @@ import { getLocation, getNextLocationAndAngle } from "../Utility/Location";
  */
 
 export default class DevilLocationProvider implements ILocationDirectionProvider {
-    private bottomLimit: number;
-    private topLimit: number;
-    private left: number;
-    private top: number;
-    private speed: number;
-    private width: number;
-    private height: number;
     private baseSpeed: number;
     private angle: number;
-    private sideAngles: number[];
-
     private attacking: boolean;
     private recovering: boolean;
     constructor(
-        left: number,
-        top: number,
-        speed: number,
-        sideAngles: number[],
-        width: number,
-        height: number,
-        topLimit: number,
-        bottomLimit: number) {
+        private left: number,
+        private top: number,
+        private speed: number,
+        private sideAngles: number[],
+        private width: number,
+        private height: number,
+        private topLimit: number,
+        private bottomLimit: number) {
 
-        this.left = left;
-        this.top = top;
-        this.speed = speed;
         this.baseSpeed = speed;
-        this.sideAngles = sideAngles;
-        this.width = width;
-        this.height = height;
-        this.angle = getRandomArrayElement(sideAngles);
-        this.topLimit = topLimit;
-        this.bottomLimit = bottomLimit;
 
+        this.angle = getRandomArrayElement(sideAngles);
         this.attacking = false;
         this.recovering = false;
     }
+
+    /**
+     * Returns the direction the enemy is heading. User to show the moving left or right frame.
+     * @returns {"left" | "right" | undefined}. Can be undefined. An straight up or down angle is not going left or right.
+     */
     public getDirection(): "left" | "right" | undefined {
         return getLeftOrRightFromAngle(this.angle);
     }

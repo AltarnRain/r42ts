@@ -6,8 +6,8 @@
 
 import BaseLocationProvider from "../Base/BaseLocationProvider";
 import ILocationProvider from "../Interfaces/ILocationProvider";
-import { getNextLocationAndAngle } from "../Utility/Location";
 import dimensionProvider from "../Providers/DimensionProvider";
+import { getNextLocationAndAngle } from "../Utility/Location";
 
 /**
  * Module:          SideToSideUpAndDown
@@ -19,18 +19,25 @@ const {
 } = dimensionProvider();
 
 export default class SideToSideUpAndDownLocationProvider extends BaseLocationProvider implements ILocationProvider {
-    private bottomLimit: number;
-    private topLimit: number;
 
-    constructor(left: number, top: number, speed: number, angle: number, width: number, height: number, topLimit: number, bottomLimit: number) {
+    constructor(
+        left: number,
+        top: number,
+        speed: number,
+        angle: number,
+        width: number,
+        height: number,
+        private topLimit: number,
+        private bottomLimit: number) {
         super(left, top, speed, angle, width, height);
-
-        this.topLimit = topLimit;
-        this.bottomLimit = bottomLimit;
     }
 
+    /**
+     * Update the location provider's state.
+     * @param {number} tick. Current tick
+     */
     public updateState(tick: number): void {
-        const { location: { left, top}, angle} = getNextLocationAndAngle(
+        const { location: { left, top }, angle } = getNextLocationAndAngle(
             this.left,
             this.top,
             this.angle,
