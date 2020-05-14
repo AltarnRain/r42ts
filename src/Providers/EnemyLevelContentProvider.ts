@@ -89,7 +89,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "piston": {
-            const enemies = pistonSpawnLocations.map((rl) => enemyFactory("piston", rl));
+            const enemies = pistonSpawnLocations.map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxThreeDown);
 
             return {
@@ -99,7 +99,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "diabolo": {
-            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory("diabolo", location));
+            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.yellow, Speeds.Bullets.diabolo, maxFiveDiagonal);
 
             return {
@@ -122,12 +122,21 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "devil": {
 
-            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory("devil", location));
+            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.lightGreen, Speeds.Bullets.devil, devilShipsToFire);
 
             return {
                 enemies,
                 bulletRunner,
+            };
+        }
+        case "crab": {
+            const enemies = pistonSpawnLocations.map((location) => enemyFactory(enemy, location));
+            const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxThreeDown);
+
+            return {
+                enemies,
+                bulletRunner
             };
         }
 

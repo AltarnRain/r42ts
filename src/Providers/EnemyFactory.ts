@@ -45,6 +45,8 @@ import SideAppearOtherSideLocationProvider from "./LocationProviders/SideAppearO
 import SideAppearOtherSideVariesSpeed from "./LocationProviders/SideAppearOtherSideVariesSpeed";
 import SideToSideUpAndDown from "./LocationProviders/SideToSideUpAndDownLocationProvider";
 import Wobble from "./LocationProviders/Wobble";
+import getCrapOffsetFrames from "../Enemies/Crap/GetCrapOffsetFrames";
+import ImmobileLocationProvider from "./LocationProviders/ImmobileLocationProvider";
 
 /**
  * Module:          EnemyFactory
@@ -226,6 +228,31 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
 
             // Frames have no time, the frame of the devil is determined by where it is headed.
             return new DevilEnemy(0, getDevilOffsetFrames, getDevilExplosion, locationProvider, frameProvider);
+        }
+
+        case "crab": {
+            if (location === undefined) {
+                throw new Error("Crap enemy requires a starting location");
+            }
+
+            const { maxSizes: { width, height }, frames } = getCrapOffsetFrames();
+            const frameProvider = new BackAndForthFrameProvider(0);
+
+            const randomAngle = getRandomArrayElement(MovementAngles.diabolo);
+            const locationProvider = new SideToSideUpAndDown(
+                location.left,
+                location.top,
+                Speeds.Movement.diabolo,
+                randomAngle,
+                width,
+                height,
+                gameField.top,
+                gameField.bottom
+            );
+
+            const lp = new ImmobileLocationProvider(location.left, location.top);
+
+            return new StaticColoredFrameAnimated(CGAColors.white, CGAColors.white, 200, FrameTimes.diabolo, getCrapOffsetFrames, getExplosion01, lp, frameProvider);
         }
 
         default:

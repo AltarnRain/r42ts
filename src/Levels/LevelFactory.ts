@@ -62,8 +62,11 @@ export function levelFactory(level: number): ILevel | undefined {
         case 16:
             dispatch(setWarpGameComplexity(2));
             return new WarpLevel();
+        case 17:
+            return new EnemyLevel("crab");
         default:
             // Reset to first level.
-            dispatch(setLevel(1));
+            return new EnemyLevel("crab");
+            
     }
 }
