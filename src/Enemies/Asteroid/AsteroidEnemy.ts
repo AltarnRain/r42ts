@@ -41,16 +41,6 @@ export class AsteroidEnemy extends BaseEnemy {
     }
 
     /**
-     * Update state.
-     * @param {number} tick. Current tick.
-     */
-    public updateState(tick: number): void {
-        super.updateState(tick);
-
-        this.dispatchCurrentState();
-    }
-
-    /**
      * Returns points for this enemy.
      * @returns {number}. Points.
      */
@@ -89,5 +79,12 @@ export class AsteroidEnemy extends BaseEnemy {
         const newFrame = this.frameProvider.getCurrentFrame();
         Mutators.Frame.convertHexToCGA(newFrame);
         this.currentFrame = newFrame;
+    }
+
+    /**
+     * Not implemented.
+     */
+    public beforeDispatch(): void {
+        // Not needed
     }
 }

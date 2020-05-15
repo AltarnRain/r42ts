@@ -43,9 +43,6 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
             case Constants.clearPhaserLocations:
                 draft.phaserLocations = [];
                 break;
-            case Constants.setFireInterval:
-                draft.fireInterval = action.payload;
-                break;
             case Constants.setExplosionCenters:
                 draft.explosionCenters = action.explosionCenters;
                 break;
@@ -58,21 +55,26 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
             case Constants.setTotalEnemies:
                 draft.totalNumberOfEnemies = action.totalEnemies;
                 break;
-            case Constants.addOrUpdateEnemy:
+            case Constants.addOrUpdateEnemy: {
+                // IMPORTANT. This action is solely dispatched from Enemies.
                 const index = state.enemies.findIndex((es) => es.enemyId === action.enemyState.enemyId);
                 if (index > -1) {
-                    const currentEnemy = draft.enemies[index];
-
-                    // BaseEnemy does not dispatch a lastFireTick. Directly setting the action's enemyState will
-                    // reset this number.
-                    draft.enemies[index] = {...currentEnemy, ...action.enemyState};
+                    draft.enemies[index] = { ...draft.enemies[index], ...action.enemyState };
                 } else {
                     draft.enemies.push(action.enemyState);
                 }
+
                 break;
+            }
             case Constants.removeEnemy:
                 draft.enemies = draft.enemies.filter((es) => es.enemyId !== action.enemyId);
                 break;
+            case Constants.setEnemyLastFireTick: {
+                const index = state.enemies.findIndex((es) => es.enemyId === action.payload.enemyId);
+                if (index > -1) {
+                    draft.enemies[index].lastFiretick = action.payload.tick;
+                }
+            }
         }
     });
 
@@ -87,7 +89,6 @@ function initState(): EnemyLevelState {
     return {
         shrapnells: [],
         phaserLocations: [],
-        fireInterval: 0,
         explosionCenters: [],
         bullets: [],
         totalNumberOfEnemies: 0,

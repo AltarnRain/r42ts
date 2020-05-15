@@ -51,14 +51,12 @@ export default class BirdEnemy extends BaseEnemy {
     }
 
     /**
-     * Updates the objects state.
-     * @param {tick: number} tick. Current tick.
+     * change the birds color before dispatch.
+     * @param {number} tick. Current tick
      */
-    public updateState(tick: number): void {
-        super.updateState(tick);
+    public beforeDispatch(tick: number): void {
 
         this.colorTickHandler.tick(tick);
-        this.dispatchCurrentState();
     }
 
     /**

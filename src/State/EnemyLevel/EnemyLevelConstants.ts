@@ -23,6 +23,7 @@ namespace Constants {
     export const setTotalEnemies = "setTotalEnemies";
     export const addOrUpdateEnemy = "addOrUpdateEnemy";
     export const removeEnemy = "removeEnemy";
+    export const setEnemyLastFireTick = "setEnemyLastFireTick";
 }
 
 export default Constants;

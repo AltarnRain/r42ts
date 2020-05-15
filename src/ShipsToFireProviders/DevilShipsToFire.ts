@@ -17,8 +17,6 @@ import { GetShipsReadyToFire } from "./GetShipsReadyToFire";
  * Responsibility:  Ships to fire function for the devil enemy.
  */
 
-const maxBullets = 3;
-
 const {
     pixelSize2x
 } = dimensionProvider();
@@ -27,7 +25,7 @@ const {
  * A function that selects the orbs that should fire.
  * @param {number} tick. Current tick
  */
-export default function devilShipsToFire(tick: number): ShipToFire[] {
+export default function fireDown(tick: number, maxBullets: number): ShipToFire[] {
 
     const {
         enemyLevelState: { bullets, enemies },

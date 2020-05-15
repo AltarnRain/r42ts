@@ -12,7 +12,7 @@
 import { GameLocation } from "../../Models/GameLocation";
 import { ParticleState } from "../Player/ParticleState";
 import Constants from "./EnemyLevelConstants";
-import { AddBullet, AddExplosionCenter, AddOrUpdateEnemy, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetBulletState, SetFireInterval, SetPhaserLocations, SetShrapnellState, SetTotalEnemies } from "./EnemyLevelTypes";
+import { AddBullet, AddExplosionCenter, AddOrUpdateEnemy, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetBulletState, SetPhaserLocations, SetShrapnellState, SetTotalEnemies, UpdateEnemyLastFireTick as SetEnemyLastFireTick } from "./EnemyLevelTypes";
 import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 
@@ -64,13 +64,6 @@ export function clearPhaserLocations(): ClearPhaserLocations {
     };
 }
 
-export function setFireInterval(interval: number): SetFireInterval {
-    return {
-        type: Constants.setFireInterval,
-        payload: interval,
-    };
-}
-
 export function setExplosionCenters(explosionCenters: ExplosionCenterState[]) {
     return {
         type: Constants.setExplosionCenters,
@@ -110,5 +103,15 @@ export function removeEnemy(enemyId: number): RemoveEnemy {
     return {
         type: Constants.removeEnemy,
         enemyId,
+    };
+}
+
+export function setEnemyLastFireTick(enemyId: number, tick: number): SetEnemyLastFireTick {
+    return {
+        type: Constants.setEnemyLastFireTick,
+        payload: {
+            enemyId,
+            tick,
+        }
     };
 }

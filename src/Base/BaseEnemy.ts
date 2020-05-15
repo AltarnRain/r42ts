@@ -157,8 +157,21 @@ export default abstract class BaseEnemy {
         this.offsetTop = offsetLocation.top;
 
         this.locationProvider.updateState(tick);
+
+        this.beforeDispatch(tick);
+
+        this.dispatchCurrentState();
     }
 
+    /**
+     * Do some last moment changes here for additional custom behaviour.
+     * @param {number} tick. Current game tick.
+     */
+    public abstract beforeDispatch(tick: number): void;
+
+    /**
+     * Dispatches the current state of the enemy.
+     */
     protected dispatchCurrentState(): void {
         dispatch(addOrUpdateEnemy({
             enemyId: this.getId(),
@@ -170,6 +183,7 @@ export default abstract class BaseEnemy {
             hitbox: this.getHitbox(),
             centerLocation: this.getCenterLocation(),
             points: this.getPoints(),
+            currentFrameIndex: this.frameProvider.getCurrentIndex(),
         }));
     }
 

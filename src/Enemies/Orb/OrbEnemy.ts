@@ -104,12 +104,10 @@ export default class OrbEnemy extends BaseEnemy {
     }
 
     /**
-     * Updates the objects state.
-     * @param {number} tick. Current tick.
+     * Handle some color changes and animation stuff.
+     * @param {number} tick;
      */
-    public updateState(tick: number): void {
-        super.updateState(tick);
-
+    public beforeDispatch(tick: number): void {
         this.colorTickHandler.tick(tick);
 
         if (this.currentFrame) {
@@ -123,8 +121,6 @@ export default class OrbEnemy extends BaseEnemy {
                 this.offsetTop = gameField.top + offset;
             }
         }
-
-        this.dispatchCurrentState();
     }
 
     /**

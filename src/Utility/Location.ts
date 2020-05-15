@@ -9,6 +9,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import speedProvider from "../Providers/SpeedProvider";
 import { Angle } from "../Types";
 import { getLeftOrRightFromAngle, getNextX, getNextY } from "./Geometry";
+import { randomNumberInRange } from "./Lib";
 
 /**
  * Module:          Location utilities
@@ -188,5 +189,23 @@ export function getNextLocationAndAngle(currentLeft: number, currentTop: number,
     return {
         location,
         angle
+    };
+}
+
+/**
+ * Returns a random location within passed limits.
+ * @param {number} maxLeft. Maximum left position.
+ * @param {number} maxRight. Maximum right position.
+ * @param {number} maxTop. Maximum top position.
+ * @param {number} maxBottom. Maximum bottom position.
+ * @returns {GameLocation}. A random location.
+ */
+export function getRandomLocation(maxLeft: number, maxRight: number, maxTop: number, maxBottom: number): GameLocation {
+    const left = randomNumberInRange(maxRight, maxLeft);
+    const top = randomNumberInRange(maxBottom, maxTop);
+
+    return {
+        left,
+        top
     };
 }

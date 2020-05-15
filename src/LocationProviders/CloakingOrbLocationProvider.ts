@@ -4,37 +4,31 @@
  * See LICENSE.MD.
  */
 
-import { angles } from "../Constants/Angles";
 import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { getLocation } from "../Utility/Location";
+import { getRandomLocation } from "../Utility/Location";
+import { Locations } from "../Constants/Constants";
 
 /**
- * Module:          CrabLocationProvider.
- * Responsibility:  A location provider where the enemy moves up by '3' then moves down '1'. Once the top is reached, the enemy appears down.
+ * Module:          CloakingOrbLocationProvider
+ * Responsibility:  Location provider for the Cloaking orb enemy. This enemy disappears and reappears at a random location.
  */
 
 const {
-    gameField
+    gameField,
+    pixelSize
 } = dimensionProvider();
-export default class CrabLocationProvider implements ILocationProvider {
-    /**
-     * Used to calculate speed increases.
-     */
-    private baseSpeed: number;
-    private angle: any;
 
+const outerLeft = gameField.left;
+const right = gameField.right - pixelSize * 3;
+
+export default class CloakingOrbLocationProvider implements ILocationProvider {
     constructor(
         private left: number,
         private top: number,
-        private speed: number,
-        private height: number,
         private indexProvider: IGetCurrentIndex) {
-
-        this.baseSpeed = speed;
-        this.angle = angles.up;
     }
 
     /**
@@ -42,7 +36,7 @@ export default class CrabLocationProvider implements ILocationProvider {
      * @param {number} factor. Speed increase factor.
      */
     public increaseSpeed(factor: number): void {
-        this.speed = this.baseSpeed * factor;
+        // Does not work here.
     }
 
     /**
@@ -61,20 +55,10 @@ export default class CrabLocationProvider implements ILocationProvider {
      * @param {number} tick. Current game tick.
      */
     public updateState(tick: number): void {
-        const { left, top } = getLocation(this.left, this.top, this.angle, this.speed);
-        this.left = left;
-
-        if (top < gameField.top - this.height) {
-            this.top = gameField.bottom + this.height;
-        } else {
+        if (this.indexProvider.getCurrentIndex() === 4) {
+            const { left, top } = getRandomLocation(right, outerLeft, Locations.CloakingOrb.maxBottom, gameField.top);
+            this.left = left;
             this.top = top;
-        }
-
-        // 4/6 move up. 2/6 frames move down.
-        if (this.indexProvider.getCurrentIndex() < 5 || this.top > gameField.bottom) {
-            this.angle = angles.up;
-        } else {
-            this.angle = angles.down;
         }
     }
 }

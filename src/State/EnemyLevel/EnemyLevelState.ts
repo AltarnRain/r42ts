@@ -36,11 +36,6 @@ export default interface EnemyLevelState {
     phaserLocations: GameLocation[];
 
     /**
-     * Fire interval
-     */
-    fireInterval: number;
-
-    /**
      * Current state of explosions.
      */
     explosionCenters: ExplosionCenterState[];

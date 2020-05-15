@@ -18,6 +18,7 @@ import Mutators from "../Utility/FrameMutators";
  */
 
 export default class DefaultEnemy extends BaseEnemy {
+
     /**
      * Enemy point worth.
      */
@@ -67,16 +68,6 @@ export default class DefaultEnemy extends BaseEnemy {
     }
 
     /**
-     * Update the Piston state.
-     * @param tick
-     */
-    public updateState(tick: number): void {
-        super.updateState(tick);
-
-        this.dispatchCurrentState();
-    }
-
-    /**
      * Called when a frame change is required. The Piston frames are all colored at initialisation so we can keep this simple.
      */
     protected onFrameChange(): void {
@@ -99,4 +90,12 @@ export default class DefaultEnemy extends BaseEnemy {
     public getPoints(): number {
         return this.points;
     }
+
+    /**
+     * Not implemented.
+     */
+    public beforeDispatch(tick: number): void {
+        // Does nothing here.
+    }
+
 }

@@ -6,11 +6,10 @@
 
 import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
-import CGAColors from "../../Constants/CGAColors";
+import { Points } from "../../Constants/Constants";
 import ILocationDirectionProvider from "../../Interfaces/ILocationDirectionProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
 import Mutators from "../../Utility/FrameMutators";
-import { Points } from "../../Constants/Constants";
 
 /**
  * Module:          DevilEnemey
@@ -46,13 +45,7 @@ export default class DevilEnemy extends BaseEnemy {
         this.locationDirecntionProvider = locationProvider;
     }
 
-    /**
-     * Update the Devil state.
-     * @param {number} tick. Current tick
-     */
-    public updateState(tick: number): void {
-        super.updateState(tick);
-
+    public beforeDispatch(): void {
         if (this.locationDirecntionProvider.getDirection() === "left") {
             // Frame going left is index 0, there's two frames so a get next frames switches to the
             // frame of the devil heading right.
@@ -66,8 +59,6 @@ export default class DevilEnemy extends BaseEnemy {
                 this.frameProvider.getNextFrame();
             }
         }
-
-        this.dispatchCurrentState();
     }
 
     /**

@@ -14,4 +14,5 @@ export interface EnemyState {
     centerLocation: GameLocation;
     points: number;
     lastFiretick?: number;
+    currentFrameIndex?: number;
 }

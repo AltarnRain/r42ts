@@ -103,6 +103,9 @@ export namespace Locations {
     export namespace Boat {
         export const topStart = pixelSize * 18;
     }
+    export namespace CloakingOrb {
+        export const maxBottom = pixelSize * 55;
+    }
 }
 
 // Collective namespace for all movement angles.
@@ -131,7 +134,7 @@ export namespace FrameTimes {
 
     export namespace CloakingOrb {
         export const fullyVisible = 500;
-        export const cloaking = 150;
+        export const cloaking = 500;
     }
 }
 
@@ -149,6 +152,7 @@ export namespace Points {
     export const crab = 200;
     export const bat = 200;
     export const boat = 200;
+    export const cloakingOrb = 200;
 
 }
 

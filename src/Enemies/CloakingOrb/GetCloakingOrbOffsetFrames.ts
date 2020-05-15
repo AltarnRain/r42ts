@@ -46,7 +46,7 @@ export default function getCloakingOrbOffsetFrames(): OffsetFrames {
             { left: 0, top: 0 },
             { left: 0, top: 0 },
             { left: 1, top: 0 },
-            { left: 1, top: 0 },
+            { left: 1, top: 1 },
         ],
         maxSizes: { width: 0, height: 0 }
     };

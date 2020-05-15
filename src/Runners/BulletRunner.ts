@@ -6,7 +6,7 @@
 
 import dimensionProvider from "../Providers/DimensionProvider";
 import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
-import { addBullet, addOrUpdateEnemy } from "../State/EnemyLevel/EnemyLevelActions";
+import { addBullet, addOrUpdateEnemy, setEnemyLastFireTick } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
@@ -109,8 +109,7 @@ export default class BulletRunner {
                 );
 
                 dispatch(addBullet(bullet));
-                const enemyWithTick: EnemyState = {...enemy, lastFiretick: tick};
-                dispatch(addOrUpdateEnemy(enemyWithTick));
+                dispatch(setEnemyLastFireTick(shipToFire.enemy.enemyId, tick));
             }
         }
     }

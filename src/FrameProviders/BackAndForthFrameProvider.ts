@@ -29,6 +29,6 @@ export default class BackAndForthFrameProvider extends BaseFrameProvider {
             this.add *= -1;
         }
 
-        return  this.getCurrentFrame();
+        return this.getCurrentFrame();
     }
 }

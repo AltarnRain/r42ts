@@ -55,8 +55,10 @@ export default class SpaceMonster extends BaseEnemy {
         this.explosion.particleFrames.forEach((pf) => Mutators.Frame.setColor(pf, color));
     }
 
-    public updateState(tick: number): void {
-        super.updateState(tick);
+    /**
+     * Handle jaw open closed behaviour.
+     */
+    public beforeDispatch(): void {
 
         // When the Space monster gets close to the bottom it opens its jaws.
         if (this.offsetTop >= jawsOpenTop && this.jawsClosed) {
@@ -66,8 +68,6 @@ export default class SpaceMonster extends BaseEnemy {
             this.frameProvider.getNextFrame();
             this.jawsClosed = true;
         }
-
-        this.dispatchCurrentState();
     }
 
     /**

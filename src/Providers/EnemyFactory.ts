@@ -31,7 +31,7 @@ import SpaceMonster from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
 import getSpinnerOffsetFrames from "../Enemies/Spinner/GetSpinnerOffsetFrames";
 import BackAndForthFrameProvider from "../FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "../FrameProviders/CircleFrameProvider";
-import MoveUpBitDownThenUpReappearDown from "../LocationProviders/CrabLocationProvider";
+import CrabLocationProvider from "../LocationProviders/CrabLocationProvider";
 import DevilLocationProvider from "../LocationProviders/DevilLocationProvider";
 import ImmobileLocationProvider from "../LocationProviders/ImmobileLocationProvider";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
@@ -52,11 +52,15 @@ import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import { coinFlip } from "../Utility/Lib";
 import dimensionProvider from "./DimensionProvider";
+import CloakingOrbLocationProvider from "../LocationProviders/CloakingOrbLocationProvider";
+import OneFrameProvider from "../FrameProviders/OneFrameProvider";
 
 /**
  * Module:          EnemyFactory
  * Responsibility:  Creates an enemy.
  */
+
+let f = 0;
 
 const {
     pixelSize,
@@ -325,7 +329,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const { maxSizes: { height } } = getCrapOffsetFrames();
             const frameProvider = new BackAndForthFrameProvider(0);
 
-            const locationProvider = new MoveUpBitDownThenUpReappearDown(
+            const locationProvider = new CrabLocationProvider(
                 location.left,
                 location.top,
                 Speeds.Movement.crab,
@@ -410,9 +414,12 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             }
 
             const { maxSizes: { width, height }, frames } = getCloakingOrbOffsetFrames();
-            const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(frames));
+            // const frameProvider = new BackAndForthFrameProvider(0);
+            const frameProvider = new BackAndForthFrameProvider(0);
+            // const frameProvider = new OneFrameProvider(f);
 
-            const lp = new ImmobileLocationProvider(location.left, location.top);
+            const locationProvider = new ImmobileLocationProvider(location.left, location.top);
+            // const locationProvider = new CloakingOrbLocationProvider(location.left, location.top, frameProvider);
 
             const color = getRandomArrayElement(ColorSchemes.cloakingOrb);
 
@@ -421,7 +428,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 FrameTimes.CloakingOrb.cloaking,
                 getCloakingOrbOffsetFrames,
                 getExplosion02,
-                lp,
+                locationProvider,
                 frameProvider,
                 { explosionColor: color, explosionParticleColor: color, varyingEnemyColor: color });
         }

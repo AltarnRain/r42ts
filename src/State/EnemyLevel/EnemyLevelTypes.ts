@@ -49,11 +49,6 @@ export interface ClearPhaserLocations {
     type: typeof Constants.clearPhaserLocations;
 }
 
-export interface SetFireInterval {
-    type: typeof Constants.setFireInterval;
-    payload: number;
-}
-
 export interface SetExplosionCenters {
     type: typeof Constants.setExplosionCenters;
     explosionCenters: ExplosionCenterState[];
@@ -84,6 +79,14 @@ export interface RemoveEnemy {
     enemyId: number;
 }
 
+export interface UpdateEnemyLastFireTick {
+    type: typeof Constants.setEnemyLastFireTick;
+    payload: {
+        enemyId: number,
+        tick: number,
+    };
+}
+
 export type EnemyLevelTypes =
     ResetLevelState |
     AddParticle |
@@ -92,11 +95,11 @@ export type EnemyLevelTypes =
     AddExplosionCenter |
     SetPhaserLocations |
     ClearPhaserLocations |
-    SetFireInterval |
     SetExplosionCenters |
     AddBullet |
     SetBulletState |
     SetTotalEnemies |
     AddOrUpdateEnemy |
-    RemoveEnemy
+    RemoveEnemy |
+    UpdateEnemyLastFireTick
     ;
