@@ -45,8 +45,9 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             };
         }
 
-        case "orb": {
-            const enemies = orbSpawnLocations.map((location) => enemyFactory(enemy, location));
+        case "orb":
+        case "orb-up-down": {
+            const enemies = orbSpawnLocations.map((location, index) => enemyFactory(enemy, location, index));
             const bulletRunner = new BulletRunner(CGAColors.magenta, Speeds.Bullets.orb, maxFiveDiagonal);
 
             return {

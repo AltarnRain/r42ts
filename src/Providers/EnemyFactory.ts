@@ -31,10 +31,10 @@ import SpaceMonster from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
 import getSpinnerOffsetFrames from "../Enemies/Spinner/GetSpinnerOffsetFrames";
 import BackAndForthFrameProvider from "../FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "../FrameProviders/CircleFrameProvider";
+import CloakingOrbLocationProvider from "../LocationProviders/CloakingOrbLocationProvider";
 import CrabLocationProvider from "../LocationProviders/CrabLocationProvider";
 import DevilLocationProvider from "../LocationProviders/DevilLocationProvider";
-import ImmobileLocationProvider from "../LocationProviders/ImmobileLocationProvider";
-import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
+import MoveToUpDownMaxThenReset from "../LocationProviders/MoveToMaxThenReset";
 import RandomReapperance from "../LocationProviders/RandomReapperance";
 import SideAppearOtherSide from "../LocationProviders/SideAppearOtherSide";
 import SideAppearOtherSideVariesSpeed from "../LocationProviders/SideAppearOtherSideVariesSpeed";
@@ -52,8 +52,6 @@ import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import { coinFlip } from "../Utility/Lib";
 import dimensionProvider from "./DimensionProvider";
-import CloakingOrbLocationProvider from "../LocationProviders/CloakingOrbLocationProvider";
-import OneFrameProvider from "../FrameProviders/OneFrameProvider";
 
 /**
  * Module:          EnemyFactory
@@ -67,7 +65,7 @@ const {
     gameField
 } = dimensionProvider();
 
-export default function enemyFactory(enemy: Enemies, location?: GameLocation): BaseEnemy {
+export default function enemyFactory(enemy: Enemies, location?: GameLocation, index?: number): BaseEnemy {
     switch (enemy) {
         case "bird": {
 
@@ -134,15 +132,15 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
             const { maxTop, maxBottom } = Locations.Orb;
 
             const frameProvider = new CircleFrameProvider(0);
-            const locationProvider = new MoveDownAppearUp(
+            const locationProvider = new MoveToUpDownMaxThenReset(
                 location.left,
                 location.top,
                 Speeds.Movement.orb,
-                MovementAngles.orb,
+                angles.down,
                 width,
                 height,
-                maxTop,
-                maxBottom);
+                maxBottom,
+                maxTop)
 
             return new OrbEnemy(FrameTimes.orb, getOrbResource, getExplosion02, locationProvider, frameProvider);
         }
@@ -431,6 +429,33 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 locationProvider,
                 frameProvider,
                 { explosionColor: color, explosionParticleColor: color, varyingEnemyColor: color });
+        }
+
+        case "orb-up-down": {
+            if (location === undefined) {
+                throw new Error("Orb-up-down enemy requires a starting location");
+            }
+
+            if (index === undefined) {
+                throw new Error("Orb-up-down requires an index");
+            }
+
+            const { maxSizes: { width, height } } = getOrbResource();
+            const { maxTop, maxBottom } = Locations.Orb;
+
+            const frameProvider = new CircleFrameProvider(0);
+
+            const locationProvider = new MoveToUpDownMaxThenReset(
+                location.left,
+                location.top,
+                Speeds.Movement.orb,
+                index % 2 === 0 ? angles.up : angles.down,
+                width,
+                height,
+                index % 2 === 0 ? maxTop : maxBottom,
+                index % 2 === 0 ? maxBottom : maxTop);
+
+            return new OrbEnemy(FrameTimes.orb, getOrbResource, getExplosion02, locationProvider, frameProvider);
         }
 
         default:

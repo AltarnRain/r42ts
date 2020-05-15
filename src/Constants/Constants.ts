@@ -112,7 +112,6 @@ export namespace Locations {
 export namespace MovementAngles {
     export const bird = [2, 358, 178, 182];
     export const robot = 5;
-    export const orb = 90;
     export const spinner = [2, 358, 178, 182];
     export const piston = 170;
     export const diabolo = [2, 358, 178, 182];

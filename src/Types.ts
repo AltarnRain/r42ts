@@ -72,4 +72,5 @@ export type Enemies =
     "crab" |
     "bat" |
     "boat" |
-    "cloaking-orb";
+    "cloaking-orb" |
+    "orb-up-down";
