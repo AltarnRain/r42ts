@@ -22,6 +22,7 @@ import DefaultEnemy from "../Enemies/DefaultEnemy";
 import DevilEnemy from "../Enemies/Devil/DevilEnemy";
 import getDevilOffsetFrames from "../Enemies/Devil/GetDevilOffsetFrames";
 import getDiaboloOffsetFrames from "../Enemies/Diabolo/GetDiaboloOffsetFrames";
+import getFishOffsetFrames from "../Enemies/Fish/GetFishOffsetFrames";
 import { default as getOrbOffsetFrames, default as getOrbResource } from "../Enemies/Orb/GetOrbOffsetFrames";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import getPistonOffsetFrames from "../Enemies/Piston/GetPistonOffsetFrames";
@@ -31,10 +32,12 @@ import SpaceMonster from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
 import getSpinnerOffsetFrames from "../Enemies/Spinner/GetSpinnerOffsetFrames";
 import BackAndForthFrameProvider from "../FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "../FrameProviders/CircleFrameProvider";
+import OneFrameProvider from "../FrameProviders/OneFrameProvider";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import CloakingOrbLocationProvider from "../LocationProviders/CloakingOrbLocationProvider";
 import CrabLocationProvider from "../LocationProviders/CrabLocationProvider";
 import DevilLocationProvider from "../LocationProviders/DevilLocationProvider";
+import ImmobileLocationProvider from "../LocationProviders/ImmobileLocationProvider";
 import MoveToUpDownMaxThenReset from "../LocationProviders/MoveToMaxThenReset";
 import RandomReapperance from "../LocationProviders/RandomReapperance";
 import SideAppearOtherSide from "../LocationProviders/SideAppearOtherSide";
@@ -451,6 +454,32 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
                 locationProvider,
                 frameProvider,
                 { explosionColor: color, explosionParticleColor: color, varyingEnemyColor: color });
+        }
+
+        case "fish": {
+            if (location === undefined) {
+                throw new Error("Fishb enemy requires a starting location");
+            }
+
+            const { frames } = getCloakingOrbOffsetFrames();
+            // const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(frames));
+            const frameProvider = new OneFrameProvider(0);
+
+            // 2nd to last frame is completely invisible. That's when the orb can switch location
+            // It will appear 'invisible' on its new location and reappear.
+            // It can still be hit while it is 'invisible' (because hitboxes are generated and, meh, its fine).
+            // const locationProvider = new CloakingOrbLocationProvider(location.left, location.top, frames.length - 2, frameProvider);
+            const locationProvider = new ImmobileLocationProvider(location.left, location.top);
+
+            const color = getRandomArrayElement(ColorSchemes.cloakingOrb);
+
+            return new DefaultEnemy(
+                Points.boat,
+                FrameTimes.cloakingOrb,
+                getFishOffsetFrames,
+                getExplosion02,
+                locationProvider,
+                frameProvider);
         }
 
         default:
