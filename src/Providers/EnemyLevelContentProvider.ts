@@ -12,9 +12,10 @@ import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import robotSpawnLocations from "../Enemies/Robot/RobotSpawnLocations";
 import BulletRunner from "../Runners/BulletRunner";
 import devilShipsToFire from "../ShipsToFireProviders/DevilShipsToFire";
+import DownSingleEnemy from "../ShipsToFireProviders/DownSingleEnemy";
+import { maxFiveDown, maxThreeDown } from "../ShipsToFireProviders/FireDown";
 import firstEnemyOccasionalDown from "../ShipsToFireProviders/FirstEnemyOccasionalDown";
 import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
-import { maxFiveDown, maxThreeDown } from "../ShipsToFireProviders/MaxThreeDown";
 import elevenInALine from "../SpawnLocations/ElevennInALine";
 import sevenSixSeverGridProvider from "../SpawnLocations/SevenSixSevenGridProvider";
 import { Enemies } from "../Types";
@@ -164,7 +165,10 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "cloaking-orb": {
             const enemies = getBoatSpawnLocations().map((location) => enemyFactory(enemy, location));
-            const bulletRunner = new BulletRunner(CGAColors.lightRed, Speeds.Bullets.cloakingOrb, maxFiveDown);
+
+            const fireManager = new DownSingleEnemy(5);
+
+            const bulletRunner = new BulletRunner(CGAColors.lightRed, Speeds.Bullets.cloakingOrb, (tick) => fireManager.downSingleEnemy(tick));
 
             return {
                 enemies,

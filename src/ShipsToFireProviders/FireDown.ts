@@ -11,8 +11,8 @@ import { getRandomArrayElement } from "../Utility/Array";
 import { GetShipsReadyToFire } from "./GetShipsReadyToFire";
 
 /**
- * Module:          MaxFiveDiagonal
- * Responsibility:  Provides 5 enemies to fire.
+ * Module:          FireDown
+ * Responsibility:  Provides functions for enemies that fire downwards.
  */
 
 export function maxThreeDown(tick: number): ShipToFire[] {
@@ -32,6 +32,7 @@ function randomDown(tick: number, maxBullets: number): ShipToFire[] {
     const {
         enemyLevelState: { bullets }
     } = appState();
+
     const returnValue: ShipToFire[] = [];
 
     const remainingBullets = maxBullets - bullets.length;
