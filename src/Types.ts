@@ -75,4 +75,5 @@ export type Enemies =
     "boat" |
     "cloaking-orb" |
     "orb-up-down" |
-    "robots-random";
+    "robots-random" |
+    "fish";

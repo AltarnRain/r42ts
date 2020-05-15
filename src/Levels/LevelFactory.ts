@@ -103,6 +103,19 @@ export function levelFactory(level: number): ILevel | undefined {
             return new EnemyLevel("piston");
         case 34:
             return new EnemyLevel("bird-fire");
+        case 35:
+            // Max complexity
+            dispatch(setWarpGameComplexity(8));
+            return new WarpLevel();
+        case 36:
+        case 37:
+            return new WarpLevel();
+        case 38:
+            return new EnemyLevel("spinner");
+        case 39:
+        case 40:
+        case 41:
+            return new WarpLevel();
         default:
             // Reset to first level.
             return new EnemyLevel("crab");
