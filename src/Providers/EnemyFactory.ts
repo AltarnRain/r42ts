@@ -31,6 +31,7 @@ import SpaceMonster from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
 import getSpinnerOffsetFrames from "../Enemies/Spinner/GetSpinnerOffsetFrames";
 import BackAndForthFrameProvider from "../FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "../FrameProviders/CircleFrameProvider";
+import ILocationProvider from "../Interfaces/ILocationProvider";
 import CloakingOrbLocationProvider from "../LocationProviders/CloakingOrbLocationProvider";
 import CrabLocationProvider from "../LocationProviders/CrabLocationProvider";
 import DevilLocationProvider from "../LocationProviders/DevilLocationProvider";
@@ -91,20 +92,23 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             return new BirdEnemy(FrameTimes.bird, getBirdOffsetFrames, getExplosion01, locationProvider, frameProvider);
         }
 
-        case "robot": {
+        case "robot":
+        case "robots-random": {
 
             if (location === undefined) {
                 throw new Error("Robot enemy requires a starting position");
             }
 
-            const { maxSizes: { width, height } } = getRobotOffsetFrames();
+            const { maxSizes: { width, height }, frames } = getRobotOffsetFrames();
 
-            const frameProvider = new BackAndForthFrameProvider(0);
-            const locationProvider = new SideAppearOtherSide(
+            let locationProvider: ILocationProvider;
+
+            const frameProvider = new BackAndForthFrameProvider(enemy === "robot" ? 0 : getRandomFrameKeyIndex(frames));
+            locationProvider = new SideAppearOtherSide(
                 location.left,
                 location.top,
                 Speeds.Movement.robot,
-                MovementAngles.robot,
+                enemy === "robot" ? MovementAngles.robot : angles.right,
                 width,
                 height,
                 gameField.top,

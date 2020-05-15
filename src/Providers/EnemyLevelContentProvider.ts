@@ -8,7 +8,6 @@ import BaseEnemy from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
 import { Locations, Speeds } from "../Constants/Constants";
 import getBoatSpawnLocations from "../Enemies/Boat/GetBoatSpawnLocations";
-import GetCloakingOrbSpawnLocations from "../Enemies/CloakingOrb/GetOrbSpawnLocations";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import robotSpawnLocations from "../Enemies/Robot/RobotSpawnLocations";
 import BulletRunner from "../Runners/BulletRunner";
@@ -17,8 +16,10 @@ import { fiveDownRandom, threeDownRandom } from "../ShipsToFireProviders/FireDow
 import firstEnemyOccasionalDown from "../ShipsToFireProviders/FirstEnemyOccasionalDown";
 import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
 import elevenInALine from "../SpawnLocations/ElevennInALine";
-import sevenSixSeverGridProvider from "../SpawnLocations/SevenSixSevenGridProvider";
+import getRandomSpawnLocations from "../SpawnLocations/GetRandomSpawnLocations";
+import sevenSixSevnrGridProvider from "../SpawnLocations/SevenSixSevenGridProvider";
 import { Enemies } from "../Types";
+import dimensionProvider from "./DimensionProvider";
 import enemyFactory from "./EnemyFactory";
 
 /**
@@ -26,18 +27,34 @@ import enemyFactory from "./EnemyFactory";
  * Responsibility:  Create enemy objects
  */
 
+const {
+    gameField
+} = dimensionProvider();
+
 export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: BulletRunner, enemies: BaseEnemy[] } {
     switch (enemy) {
         case "bird": {
-            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory(enemy, location));
+            const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
             return {
                 enemies,
             };
         }
 
-        case "robot": {
-            const enemies = robotSpawnLocations.map((location) => enemyFactory(enemy, location));
-            const bulletRunner = new BulletRunner(CGAColors.lightRed, Speeds.Bullets.robot, firstEnemyOccasionalDown);
+        case "robot":
+        case "robots-random": {
+
+            let bulletRunner: BulletRunner;
+            let enemies: BaseEnemy[];
+
+            if (enemy === "robot") {
+                bulletRunner = new BulletRunner(CGAColors.lightRed, Speeds.Bullets.robot, firstEnemyOccasionalDown);
+                enemies = robotSpawnLocations.map((location) => enemyFactory(enemy, location));
+            } else if (enemy === "robots-random") {
+                bulletRunner = new BulletRunner(CGAColors.lightRed, Speeds.Bullets.robot, maxFiveDiagonal);
+                enemies = getRandomSpawnLocations(14, gameField.top, Locations.robot.scatteredMaxBottom).map((location) => enemyFactory(enemy, location));
+            } else {
+                throw new Error("Unhandled level creation");
+            }
 
             return {
                 enemies,
@@ -58,7 +75,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "spinner": {
 
-            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory(enemy, location));
+            const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.white, Speeds.Bullets.spinner, maxFiveDiagonal);
 
             return {
@@ -69,7 +86,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "balloon": {
 
-            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory(enemy, location));
+            const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxFiveDiagonal);
 
             return {
@@ -102,7 +119,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "diabolo": {
-            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory(enemy, location));
+            const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.yellow, Speeds.Bullets.diabolo, maxFiveDiagonal);
 
             return {
@@ -126,7 +143,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "devil": {
 
-            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory(enemy, location));
+            const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.lightGreen, Speeds.Bullets.devil, (tick) => fireDownAimed(tick, 3));
 
             return {
@@ -145,7 +162,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "bat": {
-            const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory(enemy, location));
+            const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.yellow, Speeds.Bullets.bat, maxFiveDiagonal);
 
             return {
@@ -165,11 +182,11 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "cloaking-orb": {
-            const enemies = GetCloakingOrbSpawnLocations().map((location) => enemyFactory(enemy, location));
+            const enemies = getRandomSpawnLocations(15, gameField.top, Locations.CloakingOrb.maxBottom).map((location) => enemyFactory(enemy, location));
 
             // Frames 0, 1, 2 are when the orb is fully vibisble. This is the only time this enemy is allowed to fire.
             // After all, it's going to look pretty weird when bullets appear out of thin air.
-            const bulletRunner = new BulletRunner(CGAColors.lightRed, Speeds.Bullets.cloakingOrb, (tick) => fireDownAimed(tick, 5, [0, 1, 3] ));
+            const bulletRunner = new BulletRunner(CGAColors.lightRed, Speeds.Bullets.cloakingOrb, (tick) => fireDownAimed(tick, 5, [0, 1, 3]));
 
             return {
                 enemies,

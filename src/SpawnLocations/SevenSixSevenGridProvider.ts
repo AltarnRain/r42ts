@@ -24,7 +24,7 @@ const secondRowLeftStart = 40;
 const firstAndSecondRowSpacing = 16;
 const secondRowSpacing = 16;
 
-export default function sevenSixSeverGridProvider(): GameLocation[] {
+export default function sevenSixSevnrGridProvider(): GameLocation[] {
     const returnValue: GameLocation[] = [];
 
     let top = topStart;

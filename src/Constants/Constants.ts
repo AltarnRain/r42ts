@@ -79,6 +79,7 @@ export namespace Locations {
     export namespace robot {
         export const topStart = gameField.top + pixelSize * 18;
         export const maxBottom = gameField.top + pixelSize * 65;
+        export const scatteredMaxBottom = gameField.top + pixelSize * 45;
     }
 
     export namespace Orb {

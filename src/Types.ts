@@ -73,4 +73,5 @@ export type Enemies =
     "bat" |
     "boat" |
     "cloaking-orb" |
-    "orb-up-down";
+    "orb-up-down" |
+    "robots-random";

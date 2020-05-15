@@ -82,6 +82,15 @@ export function levelFactory(level: number): ILevel | undefined {
             return new WarpLevel();
         case 25:
             return new EnemyLevel("orb-up-down");
+        case 26:
+            return new EnemyLevel("asteroid-diagonal");
+        case 27:
+            return new TimeLimitLevel("spacemonster-diagonal");
+        case 28:
+            dispatch(setWarpGameComplexity(6));
+            return new WarpLevel();
+        case 29:
+            return new EnemyLevel("robots-random");
         default:
             // Reset to first level.
             return new EnemyLevel("crab");
