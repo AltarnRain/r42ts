@@ -48,7 +48,7 @@ export default class CloakingOrbLocationProvider implements ILocationProvider {
      * @param {number} factor. Speed increase factor.
      */
     public increaseSpeed(factor: number): void {
-        // Does not work here.
+        // Not used here.
     }
 
     /**
