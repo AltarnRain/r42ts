@@ -22,7 +22,7 @@ import DefaultEnemy from "../Enemies/DefaultEnemy";
 import DevilEnemy from "../Enemies/Devil/DevilEnemy";
 import getDevilOffsetFrames from "../Enemies/Devil/GetDevilOffsetFrames";
 import getDiaboloOffsetFrames from "../Enemies/Diabolo/GetDiaboloOffsetFrames";
-import getOrbResource from "../Enemies/Orb/GetOrbOffsetFrames";
+import { default as getOrbOffsetFrames, default as getOrbResource } from "../Enemies/Orb/GetOrbOffsetFrames";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import getPistonOffsetFrames from "../Enemies/Piston/GetPistonOffsetFrames";
 import getRobotOffsetFrames from "../Enemies/Robot/GetRobotOffsetFrames";
@@ -127,27 +127,44 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             );
         }
 
-        case "orb": {
+        case "orb": 
+        case "orb-up-down" : {
             if (location === undefined) {
                 throw new Error("Orb enemy requires a starting location");
             }
 
-            const { maxSizes: { width, height } } = getOrbResource();
-            const { maxTop, maxBottom } = Locations.Orb;
+            if (index === undefined && enemy === "orb-up-down") {
+                throw new Error("Orb-up-down requires an index");
+            }
+
+            const { maxSizes: { width, height } } = getOrbOffsetFrames();
 
             const frameProvider = new CircleFrameProvider(0);
+
+            let angle = angles.down;
+            let target = Locations.Orb.maxBottom;
+            let reset = Locations.Orb.maxTop;
+
+            if (enemy === "orb-up-down" && index !== undefined) {
+                const even = index % 2 === 0;
+                angle = even ?  angles.down : angles.up;
+                target = even ? gameField.bottom : gameField.top;
+                reset  = even ? gameField.top : gameField.bottom;
+            }
+
             const locationProvider = new MoveToUpDownMaxThenReset(
                 location.left,
                 location.top,
                 Speeds.Movement.orb,
-                angles.down,
+                angle,
                 width,
                 height,
-                maxBottom,
-                maxTop)
+                target,
+                reset);
 
             return new OrbEnemy(FrameTimes.orb, getOrbResource, getExplosion02, locationProvider, frameProvider);
         }
+
         case "spinner": {
             if (location === undefined) {
                 throw new Error("Spinner enemy requires a starting location");
@@ -433,33 +450,6 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
                 locationProvider,
                 frameProvider,
                 { explosionColor: color, explosionParticleColor: color, varyingEnemyColor: color });
-        }
-
-        case "orb-up-down": {
-            if (location === undefined) {
-                throw new Error("Orb-up-down enemy requires a starting location");
-            }
-
-            if (index === undefined) {
-                throw new Error("Orb-up-down requires an index");
-            }
-
-            const { maxSizes: { width, height } } = getOrbResource();
-            const { maxTop, maxBottom } = Locations.Orb;
-
-            const frameProvider = new CircleFrameProvider(0);
-
-            const locationProvider = new MoveToUpDownMaxThenReset(
-                location.left,
-                location.top,
-                Speeds.Movement.orb,
-                index % 2 === 0 ? angles.up : angles.down,
-                width,
-                height,
-                index % 2 === 0 ? maxTop : maxBottom,
-                index % 2 === 0 ? maxBottom : maxTop);
-
-            return new OrbEnemy(FrameTimes.orb, getOrbResource, getExplosion02, locationProvider, frameProvider);
         }
 
         default:
