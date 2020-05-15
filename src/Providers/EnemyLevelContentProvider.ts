@@ -33,10 +33,19 @@ const {
 
 export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: BulletRunner, enemies: BaseEnemy[] } {
     switch (enemy) {
-        case "bird": {
+        case "bird":
+        case "bird-fire": {
             const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
+
+            let bulletRunner: BulletRunner | undefined;
+
+            if (enemy === "bird-fire") {
+                bulletRunner = new BulletRunner(CGAColors.brown, Speeds.Bullets.bird, maxFiveDiagonal);
+            }
+
             return {
                 enemies,
+                bulletRunner,
             };
         }
 

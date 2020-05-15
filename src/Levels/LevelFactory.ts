@@ -15,6 +15,7 @@ import { dispatch } from "../State/Store";
 import EnemyLevel from "./EnemyLevel";
 import { TimeLimitLevel } from "./TimeLimitLevel";
 import WarpLevel from "./WarpLevel";
+import { setEnemyLastFireTick } from "../State/EnemyLevel/EnemyLevelActions";
 
 /**
  * LevelFactory. Provides level objects
@@ -91,6 +92,17 @@ export function levelFactory(level: number): ILevel | undefined {
             return new WarpLevel();
         case 29:
             return new EnemyLevel("robots-random");
+        case 30:
+            return new EnemyLevel("boat");
+        case 31:
+            return new EnemyLevel("orb-up-down");
+        case 32:
+            dispatch(setWarpGameComplexity(7));
+            return new WarpLevel();
+        case 33:
+            return new EnemyLevel("piston");
+        case 34:
+            return new EnemyLevel("bird-fire");
         default:
             // Reset to first level.
             return new EnemyLevel("crab");

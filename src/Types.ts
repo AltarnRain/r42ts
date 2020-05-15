@@ -58,6 +58,7 @@ export type Angle = number | undefined;
  */
 export type Enemies =
     "bird" |
+    "bird-fire" |
     "robot" |
     "orb" |
     "spinner" |

@@ -70,6 +70,7 @@ export namespace Speeds {
         export const crab = 11;
         export const bat = 11;
         export const cloakingOrb = 11;
+        export const bird = 11;
 
     }
 }

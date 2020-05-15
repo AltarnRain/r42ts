@@ -68,7 +68,8 @@ const {
 
 export default function enemyFactory(enemy: Enemies, location?: GameLocation, index?: number): BaseEnemy {
     switch (enemy) {
-        case "bird": {
+        case "bird":
+        case "bird-fire": {
 
             if (location === undefined) {
                 throw new Error("Bird enemy requires a location");
@@ -127,8 +128,8 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             );
         }
 
-        case "orb": 
-        case "orb-up-down" : {
+        case "orb":
+        case "orb-up-down": {
             if (location === undefined) {
                 throw new Error("Orb enemy requires a starting location");
             }
@@ -147,9 +148,9 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
 
             if (enemy === "orb-up-down" && index !== undefined) {
                 const even = index % 2 === 0;
-                angle = even ?  angles.down : angles.up;
+                angle = even ? angles.down : angles.up;
                 target = even ? gameField.bottom : gameField.top;
-                reset  = even ? gameField.top : gameField.bottom;
+                reset = even ? gameField.top : gameField.bottom;
             }
 
             const locationProvider = new MoveToUpDownMaxThenReset(
