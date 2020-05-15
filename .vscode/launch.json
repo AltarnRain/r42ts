@@ -20,12 +20,12 @@
                 "meteor://💻app/*": "${webRoot}/*",
                 "webpack:///./src/*": "${webRoot}/*",
             }
-        }
+        },
         {
             "type": "chrome",
             "request": "launch",
             "name": "Play ground",
-            "url": "http://localhost:8080/?playground?level=22?god",
+            "url": "http://localhost:8080/?playground?level=23?god",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
             "sourceMaps": true,
@@ -37,7 +37,7 @@
                 "meteor://💻app/*": "${webRoot}/*",
                 "webpack:///./src/*": "${webRoot}/*",
             }
-        }
+        },
         {
             "type": "node",
             "request": "launch",

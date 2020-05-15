@@ -69,6 +69,7 @@ export namespace Speeds {
         export const devil = 11;
         export const crab = 11;
         export const bat = 11;
+        export const cloakingOrb = 11;
 
     }
 }
@@ -127,6 +128,11 @@ export namespace FrameTimes {
     export const crab = 100;
     export const bat = 100;
     export const boat = 200;
+
+    export namespace CloakingOrb {
+        export const fullyVisible = 500;
+        export const cloaking = 150;
+    }
 }
 
 export namespace Points {
@@ -164,6 +170,14 @@ export namespace ColorSchemes {
         CGAColors.lightGreen,
         CGAColors.lightBlue,
         CGAColors.lightMagenta,
+    ];
+
+    export const cloakingOrb = [
+        CGAColors.lightBlue,
         CGAColors.lightCyan,
+        CGAColors.lightRed,
+        CGAColors.lightGreen,
+        CGAColors.lightBlue,
+        CGAColors.lightMagenta,
     ];
 }

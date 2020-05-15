@@ -7,18 +7,18 @@
 import BaseEnemy from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
 import { Locations, Speeds } from "../Constants/Constants";
+import getBoatSpawnLocations from "../Enemies/Boat/GetBoatSpawnLocations";
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import robotSpawnLocations from "../Enemies/Robot/RobotSpawnLocations";
 import BulletRunner from "../Runners/BulletRunner";
 import devilShipsToFire from "../ShipsToFireProviders/DevilShipsToFire";
 import firstEnemyOccasionalDown from "../ShipsToFireProviders/FirstEnemyOccasionalDown";
 import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
+import { maxFiveDown, maxThreeDown } from "../ShipsToFireProviders/MaxThreeDown";
 import elevenInALine from "../SpawnLocations/ElevennInALine";
 import sevenSixSeverGridProvider from "../SpawnLocations/SevenSixSevenGridProvider";
 import { Enemies } from "../Types";
 import enemyFactory from "./EnemyFactory";
-import { maxThreeDown, maxFiveDown } from "../ShipsToFireProviders/MaxThreeDown";
-import getBoatSpawnLocations from "../Enemies/Boat/GetBoatSpawnLocations";
 
 /**
  * Module:          EnemyFactory
@@ -155,6 +155,16 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         case "boat": {
             const enemies = getBoatSpawnLocations().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxFiveDown);
+
+            return {
+                enemies,
+                bulletRunner
+            };
+        }
+
+        case "cloaking-orb": {
+            const enemies = getBoatSpawnLocations().map((location) => enemyFactory(enemy, location));
+            const bulletRunner = new BulletRunner(CGAColors.lightRed, Speeds.Bullets.cloakingOrb, maxFiveDown);
 
             return {
                 enemies,

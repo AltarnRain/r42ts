@@ -12,12 +12,12 @@ import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../Type
 import Mutators from "../Utility/FrameMutators";
 
 /**
- * Module:          StaticColoredFrameAnimated
+ * Module:          DefaultEnemy
  * Responsibility:  Generic enemy class for enemies that have static colors and completely rely on a frame provider
  *                  for animation.
  */
 
-export default class StaticColoredFrameAnimated extends BaseEnemy {
+export default class DefaultEnemy extends BaseEnemy {
     /**
      * Enemy point worth.
      */

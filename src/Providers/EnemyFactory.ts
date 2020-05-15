@@ -16,6 +16,7 @@ import getBatOffsetFrames from "../Enemies/Bats/GetBatOffsetFrames";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import getBirdOffsetFrames from "../Enemies/Bird/GetBirdOffsetFrames";
 import getBoatOffsetFrames from "../Enemies/Boat/GetBoatOffsetFrames";
+import getCloakingOrbOffsetFrames from "../Enemies/CloakingOrb/GetCloakingOrbOffsetFrames";
 import getCrapOffsetFrames from "../Enemies/Crap/GetCrapOffsetFrames";
 import DefaultEnemy from "../Enemies/DefaultEnemy";
 import DevilEnemy from "../Enemies/Devil/DevilEnemy";
@@ -32,6 +33,7 @@ import BackAndForthFrameProvider from "../FrameProviders/BackAndForthFrameProvid
 import CircleFrameProvider from "../FrameProviders/CircleFrameProvider";
 import MoveUpBitDownThenUpReappearDown from "../LocationProviders/CrabLocationProvider";
 import DevilLocationProvider from "../LocationProviders/DevilLocationProvider";
+import ImmobileLocationProvider from "../LocationProviders/ImmobileLocationProvider";
 import MoveDownAppearUp from "../LocationProviders/MoveDownAppearUp";
 import RandomReapperance from "../LocationProviders/RandomReapperance";
 import SideAppearOtherSide from "../LocationProviders/SideAppearOtherSide";
@@ -50,7 +52,6 @@ import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import { coinFlip } from "../Utility/Lib";
 import dimensionProvider from "./DimensionProvider";
-import ImmobileLocationProvider from "../LocationProviders/ImmobileLocationProvider";
 
 /**
  * Module:          EnemyFactory
@@ -401,6 +402,28 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 locationProvider,
                 frameProvider,
                 { explosionColor: CGAColors.magenta, explosionParticleColor: CGAColors.magenta });
+        }
+
+        case "cloaking-orb": {
+            if (location === undefined) {
+                throw new Error("Cloaking Orb enemy requires a starting location");
+            }
+
+            const { maxSizes: { width, height }, frames } = getCloakingOrbOffsetFrames();
+            const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(frames));
+
+            const lp = new ImmobileLocationProvider(location.left, location.top);
+
+            const color = getRandomArrayElement(ColorSchemes.cloakingOrb);
+
+            return new DefaultEnemy(
+                Points.boat,
+                FrameTimes.CloakingOrb.cloaking,
+                getCloakingOrbOffsetFrames,
+                getExplosion02,
+                lp,
+                frameProvider,
+                { explosionColor: color, explosionParticleColor: color, varyingEnemyColor: color });
         }
 
         default:

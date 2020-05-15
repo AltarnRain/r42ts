@@ -75,6 +75,8 @@ export function levelFactory(level: number): ILevel | undefined {
             return new EnemyLevel("piston");
         case 22:
             return new EnemyLevel("boat");
+        case 23:
+            return new EnemyLevel("cloaking-orb");
         default:
             // Reset to first level.
             return new EnemyLevel("crab");
