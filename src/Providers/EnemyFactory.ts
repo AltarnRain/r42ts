@@ -413,19 +413,19 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation): B
                 throw new Error("Cloaking Orb enemy requires a starting location");
             }
 
-            const { maxSizes: { width, height }, frames } = getCloakingOrbOffsetFrames();
-            // const frameProvider = new BackAndForthFrameProvider(0);
-            const frameProvider = new BackAndForthFrameProvider(0);
-            // const frameProvider = new OneFrameProvider(f);
+            const { frames } = getCloakingOrbOffsetFrames();
+            const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(frames));
 
-            const locationProvider = new ImmobileLocationProvider(location.left, location.top);
-            // const locationProvider = new CloakingOrbLocationProvider(location.left, location.top, frameProvider);
+            // 2nd to last frame is completely invisible. That's when the orb can switch location
+            // It will appear 'invisible' on its new location and reappear.
+            // It can still be hit while it is 'invisible' (because hitboxes are generated and, meh, its fine).
+            const locationProvider = new CloakingOrbLocationProvider(location.left, location.top, frames.length - 2, frameProvider);
 
             const color = getRandomArrayElement(ColorSchemes.cloakingOrb);
 
             return new DefaultEnemy(
                 Points.boat,
-                FrameTimes.CloakingOrb.cloaking,
+                FrameTimes.cloakingOrb,
                 getCloakingOrbOffsetFrames,
                 getExplosion02,
                 locationProvider,

@@ -5,31 +5,44 @@
  */
 
 import { angles } from "../Constants/Angles";
-import Guard from "../Guard";
-import dimensionProvider from "../Providers/DimensionProvider";
 import ShipToFire from "../ShipsToFire";
-import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { appState } from "../State/Store";
+import { getRandomArrayElement } from "../Utility/Array";
 import { GetShipsReadyToFire } from "./GetShipsReadyToFire";
 
 /**
- * Module:          Devil
- * Responsibility:  Ships to fire function for the devil enemy.
+ * Module:          FireDown
+ * Responsibility:  Provides functions for enemies that fire downwards.
  */
 
-const {
-    pixelSize2x
-} = dimensionProvider();
+ /**
+  * Three randomly picked enemies fire each fire a bullet.
+  * @param {number} tick. Current game tick
+  * @returns {ShipsToFire[]}. Ships that will fire.
+  */
+export function threeDownRandom(tick: number): ShipToFire[] {
+    return randomDown(tick, 3);
+}
+
+/**
+ * Five randomly picked enemies fire each fire a bullet.
+ * @param {number} tick. Current tick
+ * @returns {ShipToFire[]}. Ships that will fire.
+ */
+export function fiveDownRandom(tick: number): ShipToFire[] {
+    return randomDown(tick, 5);
+}
 
 /**
  * A function that selects the orbs that should fire.
  * @param {number} tick. Current tick
  */
-export default function fireDown(tick: number, maxBullets: number): ShipToFire[] {
+function randomDown(tick: number, maxBullets: number): ShipToFire[] {
 
     const {
-        enemyLevelState: { bullets, enemies },
+        enemyLevelState: { bullets }
     } = appState();
+
     const returnValue: ShipToFire[] = [];
 
     const remainingBullets = maxBullets - bullets.length;
@@ -38,13 +51,9 @@ export default function fireDown(tick: number, maxBullets: number): ShipToFire[]
         return returnValue;
     }
 
-    const candidates = getCandidates(tick);
+    const enemies = GetShipsReadyToFire(tick);
 
-    if (candidates.length === 0) {
-        return returnValue;
-    }
-
-    const enemyToFire = candidates[0];
+    const enemyToFire = getRandomArrayElement(enemies);
 
     if (enemyToFire !== undefined) {
         const queuedTofire = returnValue.find((e) => e.enemy.enemyId === enemyToFire.enemyId) !== undefined;
@@ -55,19 +64,4 @@ export default function fireDown(tick: number, maxBullets: number): ShipToFire[]
     }
 
     return returnValue;
-}
-
-function getCandidates(tick: number): EnemyState[] {
-
-    const {
-        playerState
-    } = appState();
-
-    if (!Guard.isPlayerAlive(playerState)) {
-        return [];
-    }
-
-    const { hitboxes: { bottom: bottomhitbox } } = playerState;
-
-    return GetShipsReadyToFire(tick).filter((enemy) => enemy.hitbox.left + pixelSize2x >= bottomhitbox.left && enemy.hitbox.right <= bottomhitbox.right + pixelSize2x);
 }

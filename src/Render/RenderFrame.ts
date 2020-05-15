@@ -36,6 +36,7 @@ export default function renderFrame(left: number, top: number, frame: Frame): vo
             const x = Math.round(left + columnIndex * pixelSize);
             const y = Math.round(top + rowIndex * pixelSize);
 
+            // 0 is black. No point in drawing it since the back ground is black.
             if (color !== "0") {
 
                 // DEBUGGING.

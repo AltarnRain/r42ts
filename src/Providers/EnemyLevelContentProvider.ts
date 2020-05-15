@@ -12,8 +12,8 @@ import GetCloakingOrbSpawnLocations from "../Enemies/CloakingOrb/GetOrbSpawnLoca
 import orbSpawnLocations from "../Enemies/Orb/OrbEnemiesSpawnLocations";
 import robotSpawnLocations from "../Enemies/Robot/RobotSpawnLocations";
 import BulletRunner from "../Runners/BulletRunner";
-import fireDown from "../ShipsToFireProviders/DevilShipsToFire";
-import { maxFiveDown, maxThreeDown } from "../ShipsToFireProviders/FireDown";
+import fireDownAimed from "../ShipsToFireProviders/FireDownAimed";
+import { fiveDownRandom, threeDownRandom } from "../ShipsToFireProviders/FireDownRandom";
 import firstEnemyOccasionalDown from "../ShipsToFireProviders/FirstEnemyOccasionalDown";
 import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
 import elevenInALine from "../SpawnLocations/ElevennInALine";
@@ -92,7 +92,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "piston": {
             const enemies = elevenInALine(Locations.Piston.topStart).map((location) => enemyFactory(enemy, location));
-            const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxThreeDown);
+            const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, threeDownRandom);
 
             return {
                 enemies,
@@ -126,7 +126,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         case "devil": {
 
             const enemies = sevenSixSeverGridProvider().map((location) => enemyFactory(enemy, location));
-            const bulletRunner = new BulletRunner(CGAColors.lightGreen, Speeds.Bullets.devil, (tick) => fireDown(tick, 3));
+            const bulletRunner = new BulletRunner(CGAColors.lightGreen, Speeds.Bullets.devil, (tick) => fireDownAimed(tick, 3));
 
             return {
                 enemies,
@@ -155,7 +155,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "boat": {
             const enemies = getBoatSpawnLocations().map((location) => enemyFactory(enemy, location));
-            const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxFiveDown);
+            const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, fiveDownRandom);
 
             return {
                 enemies,
@@ -165,7 +165,10 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "cloaking-orb": {
             const enemies = GetCloakingOrbSpawnLocations().map((location) => enemyFactory(enemy, location));
-            const bulletRunner = new BulletRunner(CGAColors.lightRed, Speeds.Bullets.cloakingOrb, (tick) => fireDown(tick, 5));
+
+            // Frames 0, 1, 2 are when the orb is fully vibisble. This is the only time this enemy is allowed to fire.
+            // After all, it's going to look pretty weird when bullets appear out of thin air.
+            const bulletRunner = new BulletRunner(CGAColors.lightRed, Speeds.Bullets.cloakingOrb, (tick) => fireDownAimed(tick, 5, [0, 1, 3] ));
 
             return {
                 enemies,

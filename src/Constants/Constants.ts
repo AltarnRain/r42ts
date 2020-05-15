@@ -131,11 +131,7 @@ export namespace FrameTimes {
     export const crab = 100;
     export const bat = 100;
     export const boat = 200;
-
-    export namespace CloakingOrb {
-        export const fullyVisible = 500;
-        export const cloaking = 500;
-    }
+    export  const cloakingOrb = 150;
 }
 
 export namespace Points {

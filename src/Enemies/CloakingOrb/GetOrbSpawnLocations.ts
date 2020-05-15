@@ -7,7 +7,6 @@
 import { Locations } from "../../Constants/Constants";
 import { GameLocation } from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
-import { randomNumberInRange } from "../../Utility/Lib";
 import { getRandomLocation } from "../../Utility/Location";
 
 /**
@@ -25,7 +24,7 @@ export default function GetCloakingOrbSpawnLocations(): GameLocation[] {
     const outerLeft = gameField.left;
     const right = gameField.right - pixelSize * 3;
 
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 15; i++) {
         const newLocation = getRandomLocation(right, outerLeft, Locations.CloakingOrb.maxBottom, gameField.top);
         locations.push(newLocation);
     }
