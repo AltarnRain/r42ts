@@ -9,7 +9,7 @@
  * Responsibility:  Performs the required dispatches when the player dies.
  */
 
-import { removeLife } from "../State/Game/GameActions";
+import { removeLife, setPhasers } from "../State/Game/GameActions";
 import { setPlayerBulletState, setPlayerIsAlive } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { dispatchExplosion } from "./DispatchExplosion";
@@ -32,4 +32,5 @@ export function handlePlayerDeath(tick: number): void {
     dispatch(removeLife());
     dispatch(setPlayerIsAlive(false));
     dispatch(setPlayerBulletState(undefined));
+    dispatch(setPhasers(1));
 }
