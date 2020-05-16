@@ -7,7 +7,7 @@
 import produce from "immer";
 import { Locations } from "../../Constants/Constants";
 import getPlayerExplosion from "../../Player/PlayerExplosion";
-import { getPlayerFrame } from "../../Player/PlayerFrames";
+import { getPlayerFrame as getColoredPlayerFrame } from "../../Player/PlayerFrames";
 import Mutators from "../../Utility/FrameMutators";
 import Constants from "./PlayerConstants";
 import PlayerState from "./PlayerState";
@@ -58,8 +58,7 @@ function initState(): PlayerState {
 
     const spawnLocation = Locations.Player.spawnLocation;
 
-    const playerFrame = getPlayerFrame();
-    Mutators.Frame.convertHexToCGA(playerFrame);
+    const playerFrame = getColoredPlayerFrame();
 
     return {
         alive: false,
