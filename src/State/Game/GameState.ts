@@ -66,4 +66,10 @@ export default interface GameState {
      * Time level time limit
      */
     timeLevelTimeLimit: number;
+
+    /**
+     * Only true when the player has finished all 42 levels.
+     * Triggers enemies at their hardest.
+     */
+    hardMode: boolean;
 }

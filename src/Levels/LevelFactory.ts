@@ -11,7 +11,7 @@
 
 import ILevel from "../Interfaces/ILevel";
 import { setWarpGamteComplexity as setWarpGameComplexity } from "../State/Game/GameActions";
-import { dispatch } from "../State/Store";
+import { dispatch, appState } from "../State/Store";
 import EnemyLevel from "./EnemyLevel";
 import { TimeLimitLevel } from "./TimeLimitLevel";
 import WarpLevel from "./WarpLevel";
@@ -22,36 +22,76 @@ import WarpLevel from "./WarpLevel";
  * @returns {BaseEnemyLevel}. A level.
  */
 export function levelFactory(level: number): ILevel {
+
+    const {
+        gameState: { hardMode }
+    } = appState();
     switch (level) {
         case 0:
             // Test level
             return new WarpLevel();
         case 1:
-            return new EnemyLevel("bird");
+            if (hardMode) {
+                return new EnemyLevel("bird-fire");
+            } else {
+                return new EnemyLevel("bird");
+            }
         case 2:
-            return new EnemyLevel("robot");
+            if (hardMode) {
+                return new EnemyLevel("robots-random");
+            } else {
+                return new EnemyLevel("robot");
+            }
         case 3:
-            return new EnemyLevel("orb");
+            if (hardMode) {
+                return new EnemyLevel("orb-up-down");
+            } else {
+                return new EnemyLevel("orb");
+            }
         case 4:
-            dispatch(setWarpGameComplexity(0));
+            if (hardMode) {
+                dispatch(setWarpGameComplexity(8));
+            } else {
+                dispatch(setWarpGameComplexity(0));
+            }
+
             return new WarpLevel();
         case 5:
             return new EnemyLevel("spinner");
         case 6:
             return new EnemyLevel("balloon");
         case 7:
-            return new TimeLimitLevel("asteroid-down");
+            if (hardMode) {
+                return new TimeLimitLevel("asteroid-diagonal");
+            } else {
+                return new TimeLimitLevel("asteroid-down");
+            }
         case 8:
-            dispatch(setWarpGameComplexity(1));
+            if (hardMode) {
+                dispatch(setWarpGameComplexity(8));
+            } else {
+                dispatch(setWarpGameComplexity(1));
+            }
+
             return new WarpLevel();
         case 9:
             return new EnemyLevel("piston");
         case 10:
+            // TODO: On hard mode the diabolo enemy also moves down and up.
             return new EnemyLevel("diabolo");
         case 11:
-            return new TimeLimitLevel("spacemonster-down");
+            if (hardMode) {
+                return new TimeLimitLevel("spacemonster-diagonal");
+            } else {
+                return new TimeLimitLevel("spacemonster-down");
+            }
         case 12:
-            dispatch(setWarpGameComplexity(2));
+            if (hardMode) {
+                dispatch(setWarpGameComplexity(8));
+            } else {
+                dispatch(setWarpGameComplexity(2));
+            }
+
             return new WarpLevel();
         case 13:
             return new EnemyLevel("devil");
@@ -60,7 +100,12 @@ export function levelFactory(level: number): ILevel {
         case 15:
             return new TimeLimitLevel("asteroid-diagonal");
         case 16:
-            dispatch(setWarpGameComplexity(3));
+            if (hardMode) {
+                dispatch(setWarpGameComplexity(8));
+            } else {
+                dispatch(setWarpGameComplexity(3));
+            }
+
             return new WarpLevel();
         case 17:
             return new EnemyLevel("crab");
@@ -69,7 +114,12 @@ export function levelFactory(level: number): ILevel {
         case 19:
             return new TimeLimitLevel("spacemonster-diagonal");
         case 20:
-            dispatch(setWarpGameComplexity(5));
+            if (hardMode) {
+                dispatch(setWarpGameComplexity(8));
+            } else {
+                dispatch(setWarpGameComplexity(4));
+            }
+
             return new WarpLevel();
         case 21:
             return new EnemyLevel("piston");
@@ -78,7 +128,12 @@ export function levelFactory(level: number): ILevel {
         case 23:
             return new EnemyLevel("cloaking-orb");
         case 24:
-            dispatch(setWarpGameComplexity(5));
+            if (hardMode) {
+                dispatch(setWarpGameComplexity(8));
+            } else {
+                dispatch(setWarpGameComplexity(5));
+            }
+
             return new WarpLevel();
         case 25:
             return new EnemyLevel("orb-up-down");
@@ -87,7 +142,12 @@ export function levelFactory(level: number): ILevel {
         case 27:
             return new TimeLimitLevel("spacemonster-diagonal");
         case 28:
-            dispatch(setWarpGameComplexity(6));
+            if (hardMode) {
+                dispatch(setWarpGameComplexity(8));
+            } else {
+                dispatch(setWarpGameComplexity(6));
+            }
+
             return new WarpLevel();
         case 29:
             return new EnemyLevel("robots-random");
@@ -96,7 +156,12 @@ export function levelFactory(level: number): ILevel {
         case 31:
             return new EnemyLevel("orb-up-down");
         case 32:
-            dispatch(setWarpGameComplexity(7));
+            if (hardMode) {
+                dispatch(setWarpGameComplexity(8));
+            } else {
+                dispatch(setWarpGameComplexity(7));
+            }
+
             return new WarpLevel();
         case 33:
             return new EnemyLevel("piston");

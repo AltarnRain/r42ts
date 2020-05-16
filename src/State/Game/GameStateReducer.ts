@@ -55,6 +55,7 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 break;
             case Constants.nextLevel:
                 if (draft.level === 42) {
+                    draft.hardMode = true;
                     draft.level = 1;
                 } else if (draft.level !== undefined) {
                     draft.level++;
@@ -116,6 +117,7 @@ function initState(): GameState {
         bulletsFired: 0,
         enemiesHit: 0,
         phasersFired: 0,
-        timeLevelTimeLimit: 20000 // 20 seconds
+        timeLevelTimeLimit: 20000, // 20 seconds
+        hardMode: false,
     };
 }

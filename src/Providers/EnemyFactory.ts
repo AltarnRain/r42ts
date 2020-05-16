@@ -24,6 +24,7 @@ import getDevilOffsetFrames from "../Enemies/Devil/GetDevilOffsetFrames";
 import getDiaboloOffsetFrames from "../Enemies/Diabolo/GetDiaboloOffsetFrames";
 import DirectionFrameEnemy from "../Enemies/DirectionFrameEnemy";
 import { FishEnemy } from "../Enemies/Fish/FishEnemy";
+import getFishExplosiom from "../Enemies/Fish/GetFishExplosion";
 import getFishOffsetFrames from "../Enemies/Fish/GetFishOffsetFrames";
 import { default as getOrbOffsetFrames, default as getOrbResource } from "../Enemies/Orb/GetOrbOffsetFrames";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
@@ -475,7 +476,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             return new FishEnemy(
                 Points.fish,
                 getFishOffsetFrames,
-                getExplosion02,
+                getFishExplosiom,
                 locationProvider,
                 frameProvider);
         }
