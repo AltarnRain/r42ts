@@ -10,7 +10,7 @@
  */
 
 import Constants from "./GameConstants";
-import { AddLevel, AddLife, AddLifeAndPhaser, AddPhaser, BulletFired, EnemyHit, GameOver, GameStart, IncreaseScore, NextLevel, PhaserFired, RemoveLife, RemovePhaser, SetLevel, SetLives, SetPause, SetPhasers, SetWarpGateComplexity } from "./GameTypes";
+import { AddLevel, AddLife, AddLifeAndPhaser, AddPhaser, BulletFired, EnemyHit, GameOver, GameStart, IncreaseScore, NextLevel, PhaserFired, RemoveLife, RemovePhaser, SetLevel, SetLives, SetPause, SetPhasers, SetWarpGateComplexity, SetTimeLevelTimeLimit } from "./GameTypes";
 import { WarpLevelComplexity } from "./WarpLevelTypes";
 
 export function increaseScore(score: number): IncreaseScore {
@@ -108,5 +108,12 @@ export function phaserFired(): PhaserFired {
 export function bulletFired(): BulletFired {
     return {
         type: Constants.bulletFired,
+    };
+}
+
+export function setTimeLevelTimeLimit(limit: number): SetTimeLevelTimeLimit {
+    return {
+        type: Constants.setTimeLevelTimeLimit,
+        limit,
     };
 }

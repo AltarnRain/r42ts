@@ -92,6 +92,10 @@ export default function gameStateReducer(state: GameState = initState(), action:
             case Constants.bulletFired:
                 draft.bulletsFired++;
                 break;
+            case Constants.setTimeLevelTimeLimit:
+                // Used to debug the game and not spend 20 seconds waiting
+                draft.timeLevelTimeLimit = action.limit;
+                break;
         }
     });
 }
@@ -111,6 +115,7 @@ function initState(): GameState {
         gameOver: false,
         bulletsFired: 0,
         enemiesHit: 0,
-        phasersFired: 0
+        phasersFired: 0,
+        timeLevelTimeLimit: 20000 // 20 seconds
     };
 }

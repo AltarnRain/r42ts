@@ -36,14 +36,19 @@ export class TimeLimitLevel extends EnemyLevel {
     }
 
     public begin(): Promise<void> {
+
         // Use the optional callback to register handleRespawn when the level is ready to begin.
         return super.begin(() => {
+            const {
+                gameState
+            } = appState();
+
             this.registerSubscription(GameLoop.registerUpdateState(() => this.handleRespawn()));
 
             // After 20 seconds the player wins.
             window.setTimeout(() => {
                 this.timeUp = true;
-            }, 20000);
+            }, gameState.timeLevelTimeLimit);
         });
     }
 

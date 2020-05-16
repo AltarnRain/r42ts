@@ -90,6 +90,11 @@ export interface EnemyHit {
     type: typeof Constants.enemyHit;
 }
 
+export interface SetTimeLevelTimeLimit {
+    type: typeof Constants.setTimeLevelTimeLimit;
+    limit: number;
+}
+
 export type GameStateTypes =
     IncreaseScore |
     SetLives |
@@ -108,5 +113,6 @@ export type GameStateTypes =
     GameStart |
     BulletFired |
     PhaserFired |
-    EnemyHit
+    EnemyHit |
+    SetTimeLevelTimeLimit
     ;

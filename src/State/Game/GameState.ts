@@ -61,4 +61,9 @@ export default interface GameState {
      * The number of enemies the player hit in total.
      */
     enemiesHit: number;
+
+    /**
+     * Time level time limit
+     */
+    timeLevelTimeLimit: number;
 }

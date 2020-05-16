@@ -9,7 +9,7 @@ import dimensionProvider from "./Providers/DimensionProvider";
 import ctxProvider from "./Render/CtxProvider";
 import { setDebuggingState } from "./State/Debugging/DebuggingActions";
 import DebuggingState from "./State/Debugging/DebuggingState";
-import { addPhaser, gameStart, increaseScore, nextLevel, setLevel, setLives, setPhasers, setWarpGamteComplexity } from "./State/Game/GameActions";
+import { addPhaser, gameStart, increaseScore, nextLevel, setLevel, setLives, setPhasers, setWarpGamteComplexity, setTimeLevelTimeLimit } from "./State/Game/GameActions";
 import { WarpLevelComplexity } from "./State/Game/WarpLevelTypes";
 import { dispatch } from "./State/Store";
 import { getURLQueryKVPs } from "./Utility/Lib";
@@ -47,6 +47,7 @@ window.onload = () => {
 
             dispatch(setLives(900));
             dispatch(setPhasers(900));
+            dispatch(setTimeLevelTimeLimit(2000)); // 5 seconds for a time limit level to debug.
 
             if (level) {
                 dispatch(setLevel(parseInt(level, 10)));

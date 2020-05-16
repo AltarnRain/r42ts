@@ -58,7 +58,7 @@ export function levelFactory(level: number): ILevel {
         case 14:
             return new EnemyLevel("balloon");
         case 15:
-            return new EnemyLevel("asteroid-diagonal");
+            return new TimeLimitLevel("asteroid-diagonal");
         case 16:
             dispatch(setWarpGameComplexity(3));
             return new WarpLevel();

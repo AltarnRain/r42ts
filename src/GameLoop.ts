@@ -234,6 +234,11 @@ export namespace GameLoop {
         // Update the states. This will also register draw function (if required).
         updateStateFunctions.forEach((f) => f(tick));
 
+        // Now we check if changes to the state means the player has won the level
+        // this HAS to be done in a new function because mixing then with regular state
+        // update function has... interesting effects. 
+        levelWonFunctions.forEach((f) => f());
+
         // Draw the back ground, other stuff is drawn over this so we render it first.
         backgroundDrawFunctions.forEach((f) => f());
 
@@ -244,8 +249,6 @@ export namespace GameLoop {
         // Finally we finish with drawing foreground stuff. The status bar for one, and the game border
         // are both foreground and render over anything.
         foregroundDrawFunctions.forEach((f) => f());
-
-        levelWonFunctions.forEach((f) => f());
 
         // Some debugging functions.
         const { debuggingState } = appState();
