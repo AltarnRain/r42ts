@@ -23,6 +23,7 @@ import getDevilExplosion from "../Enemies/Devil/DevilExplosion";
 import getDevilOffsetFrames from "../Enemies/Devil/GetDevilOffsetFrames";
 import getDiaboloOffsetFrames from "../Enemies/Diabolo/GetDiaboloOffsetFrames";
 import DirectionFrameEnemy from "../Enemies/DirectionFrameEnemy";
+import { FishEnemy } from "../Enemies/Fish/FishEnemy";
 import getFishOffsetFrames from "../Enemies/Fish/GetFishOffsetFrames";
 import { default as getOrbOffsetFrames, default as getOrbResource } from "../Enemies/Orb/GetOrbOffsetFrames";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
@@ -34,14 +35,14 @@ import getSpinnerOffsetFrames from "../Enemies/Spinner/GetSpinnerOffsetFrames";
 import BackAndForthFrameProvider from "../FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "../FrameProviders/CircleFrameProvider";
 import ILocationProvider from "../Interfaces/ILocationProvider";
+import SideToSideUpAndDown from "../LocationProviders/AngleBounceLocationProvider";
+import DevilLocationProvider from "../LocationProviders/AttackerLocationProvider";
 import CloakingOrbLocationProvider from "../LocationProviders/CloakingOrbLocationProvider";
 import CrabLocationProvider from "../LocationProviders/CrabLocationProvider";
-import DevilLocationProvider from "../LocationProviders/AttackerLocationProvider";
 import MoveToUpDownMaxThenReset from "../LocationProviders/MoveToMaxThenReset";
 import RandomReapperance from "../LocationProviders/RandomReapperance";
 import SideAppearOtherSide from "../LocationProviders/SideAppearOtherSide";
 import SideAppearOtherSideVariesSpeed from "../LocationProviders/SideAppearOtherSideVariesSpeed";
-import SideToSideUpAndDown from "../LocationProviders/AngleBounceLocationProvider";
 import Wobble from "../LocationProviders/Wobble";
 import { GameLocation } from "../Models/GameLocation";
 import getExplosion01 from "../SharedFrames/GetExplosion01";
@@ -54,7 +55,6 @@ import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import { coinFlip } from "../Utility/Lib";
 import dimensionProvider from "./DimensionProvider";
-import { FishEnemy } from "../Enemies/Fish/FishEnemy";
 
 /**
  * Module:          EnemyFactory

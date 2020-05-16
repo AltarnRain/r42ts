@@ -9,7 +9,7 @@
  * Responsibility:  Performs the required dispatches when the player dies.
  */
 
-import { removeLife, setPhasers, gameOver } from "../State/Game/GameActions";
+import { gameOver, removeLife, setPhasers } from "../State/Game/GameActions";
 import { setPlayerBulletState, setPlayerIsAlive } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { dispatchExplosion } from "./DispatchExplosion";

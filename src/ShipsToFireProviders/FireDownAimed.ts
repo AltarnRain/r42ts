@@ -25,7 +25,7 @@ const {
  * A function that selects the orbs that should fire.
  * @param {number} tick. Current tick
  * @param {number} maxBullets. Maximum amount of bullets the enemies can collectivy fire.
- * @param {number} fireOnFrame. Optional. When provided, enemies will only be eligable to fire when their current frame is equal to the fireOnFrame. 
+ * @param {number} fireOnFrame. Optional. When provided, enemies will only be eligable to fire when their current frame is equal to the fireOnFrame.
  */
 export default function fireDownAimed(tick: number, maxBullets: number, fireOnFrames?: number[]): ShipToFire[] {
 

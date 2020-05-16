@@ -7,12 +7,12 @@
 import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import CGAColors from "../../Constants/CGAColors";
+import { Points } from "../../Constants/Constants";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
 import { getRandomArrayElement } from "../../Utility/Array";
 import Mutators from "../../Utility/FrameMutators";
-import { Points } from "../../Constants/Constants";
 
 /**
  * Module:          SpaceMonster

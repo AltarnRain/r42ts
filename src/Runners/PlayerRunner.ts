@@ -12,13 +12,13 @@ import { playerMovementHandler } from "../Handlers/PlayerMovementHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import getTwoPixelBullet from "../SharedFrames/GetTwoPixelBullet";
+import { bulletFired } from "../State/Game/GameActions";
 import { ParticleState } from "../State/Player/ParticleState";
 import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { getFrameHitbox } from "../Utility/Frame";
 import { fallsWithinGameField, getLocation } from "../Utility/Location";
-import { bulletFired } from "../State/Game/GameActions";
 
 /**
  * Module:          PlayerRunner
