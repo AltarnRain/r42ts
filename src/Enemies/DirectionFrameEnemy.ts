@@ -4,19 +4,19 @@
  * See LICENSE.MD.
  */
 
-import BaseEnemy from "../../Base/BaseEnemy";
-import BaseFrameProvider from "../../Base/BaseFrameProvider";
-import { Points } from "../../Constants/Constants";
-import ILocationDirectionProvider from "../../Interfaces/ILocationDirectionProvider";
-import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
-import Mutators from "../../Utility/FrameMutators";
+import BaseEnemy from "../Base/BaseEnemy";
+import BaseFrameProvider from "../Base/BaseFrameProvider";
+import { Points } from "../Constants/Constants";
+import ILocationDirectionProvider from "../Interfaces/ILocationDirectionProvider";
+import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../Types";
+import Mutators from "../Utility/FrameMutators";
 
 /**
- * Module:          DevilEnemey
- * Responsibility:  Handles the Devil enemny.
+ * Module:          An enemy that picks its frame based on where it is heading. Otherwise a normal enemy.
+ * Responsibility:  Handles an enemy that picks a frame based on its direction. Devil and Fish enemies do this..
  */
 
-export default class DevilEnemy extends BaseEnemy {
+export default class DirectionFrameEnemy extends BaseEnemy {
 
     /**
      * A location provider than also provides a method that gives the general direction: left or right.
@@ -27,13 +27,13 @@ export default class DevilEnemy extends BaseEnemy {
      * Constuct the devil.
      */
     constructor(
-        frameChangeTime: number,
+        private points: number,
         getFrames: OffsetFramesProviderFunction,
         getExplosion: ExplosionProviderFunction,
         locationProvider: ILocationDirectionProvider,
         frameProvider: BaseFrameProvider) {
         super(
-            frameChangeTime,
+            0,
             getFrames,
             getExplosion,
             locationProvider,
@@ -75,6 +75,6 @@ export default class DevilEnemy extends BaseEnemy {
      * @returns {number}.
      */
     public getPoints(): number {
-        return Points.devil;
+        return this.points;
     }
 }

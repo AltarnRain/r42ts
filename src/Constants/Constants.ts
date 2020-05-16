@@ -133,6 +133,7 @@ export namespace FrameTimes {
     export const bat = 100;
     export const boat = 200;
     export  const cloakingOrb = 150;
+    export  const fish = 150;
 }
 
 export namespace Points {
@@ -150,6 +151,7 @@ export namespace Points {
     export const bat = 200;
     export const boat = 200;
     export const cloakingOrb = 200;
+    export const fish = 200;
 
 }
 

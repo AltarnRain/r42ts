@@ -5,7 +5,7 @@
  * See LICENSE.MD.
  */
 
-import Explosion from "../Models/Explosion";
+import Explosion from "../../Models/Explosion";
 
 /**
  * Module:          Explosion01.

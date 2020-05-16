@@ -19,9 +19,10 @@ import getBoatOffsetFrames from "../Enemies/Boat/GetBoatOffsetFrames";
 import getCloakingOrbOffsetFrames from "../Enemies/CloakingOrb/GetCloakingOrbOffsetFrames";
 import getCrapOffsetFrames from "../Enemies/Crap/GetCrapOffsetFrames";
 import DefaultEnemy from "../Enemies/DefaultEnemy";
-import DevilEnemy from "../Enemies/Devil/DevilEnemy";
+import getDevilExplosion from "../Enemies/Devil/DevilExplosion";
 import getDevilOffsetFrames from "../Enemies/Devil/GetDevilOffsetFrames";
 import getDiaboloOffsetFrames from "../Enemies/Diabolo/GetDiaboloOffsetFrames";
+import DirectionFrameEnemy from "../Enemies/DirectionFrameEnemy";
 import getFishOffsetFrames from "../Enemies/Fish/GetFishOffsetFrames";
 import { default as getOrbOffsetFrames, default as getOrbResource } from "../Enemies/Orb/GetOrbOffsetFrames";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
@@ -32,12 +33,10 @@ import SpaceMonster from "../Enemies/SpaceMonster/SpaceMonsterEnemy";
 import getSpinnerOffsetFrames from "../Enemies/Spinner/GetSpinnerOffsetFrames";
 import BackAndForthFrameProvider from "../FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "../FrameProviders/CircleFrameProvider";
-import OneFrameProvider from "../FrameProviders/OneFrameProvider";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import CloakingOrbLocationProvider from "../LocationProviders/CloakingOrbLocationProvider";
 import CrabLocationProvider from "../LocationProviders/CrabLocationProvider";
 import DevilLocationProvider from "../LocationProviders/DevilLocationProvider";
-import ImmobileLocationProvider from "../LocationProviders/ImmobileLocationProvider";
 import MoveToUpDownMaxThenReset from "../LocationProviders/MoveToMaxThenReset";
 import RandomReapperance from "../LocationProviders/RandomReapperance";
 import SideAppearOtherSide from "../LocationProviders/SideAppearOtherSide";
@@ -45,7 +44,6 @@ import SideAppearOtherSideVariesSpeed from "../LocationProviders/SideAppearOther
 import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
 import Wobble from "../LocationProviders/Wobble";
 import { GameLocation } from "../Models/GameLocation";
-import getDevilExplosion from "../SharedFrames/DevilExplosion";
 import getExplosion01 from "../SharedFrames/Explosion01";
 import getExplosion02 from "../SharedFrames/Explosion02";
 import getExplosion03 from "../SharedFrames/Explosion03";
@@ -339,7 +337,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             );
 
             // Frames have no time, the frame of the devil is determined by where it is headed.
-            return new DevilEnemy(0, getDevilOffsetFrames, getDevilExplosion, locationProvider, frameProvider);
+            return new DirectionFrameEnemy(Points.devil,  getDevilOffsetFrames, getDevilExplosion, locationProvider, frameProvider);
         }
 
         case "crab": {
@@ -445,7 +443,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             const color = getRandomArrayElement(ColorSchemes.cloakingOrb);
 
             return new DefaultEnemy(
-                Points.boat,
+                Points.cloakingOrb,
                 FrameTimes.cloakingOrb,
                 getCloakingOrbOffsetFrames,
                 getExplosion02,
@@ -459,19 +457,22 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
                 throw new Error("Fishb enemy requires a starting location");
             }
 
-            // const { frames } = getCloakingOrbOffsetFrames();
-            // const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(frames));
-            const frameProvider = new OneFrameProvider(2);
+            const { maxSizes: { width, height }, frames } = getFishOffsetFrames();
+            const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
 
-            // 2nd to last frame is completely invisible. That's when the orb can switch location
-            // It will appear 'invisible' on its new location and reappear.
-            // It can still be hit while it is 'invisible' (because hitboxes are generated and, meh, its fine).
-            // const locationProvider = new CloakingOrbLocationProvider(location.left, location.top, frames.length - 2, frameProvider);
-            const locationProvider = new ImmobileLocationProvider(location.left, location.top);
+            const locationProvider = new DevilLocationProvider(
+                location.left,
+                location.top,
+                Speeds.Movement.devil,
+                MovementAngles.devil,
+                width,
+                height,
+                gameField.top,
+                Locations.Devil.maxBottom);
 
-            return new DefaultEnemy(
-                Points.boat,
-                FrameTimes.cloakingOrb,
+            // fish enemy doesn't have frame times, it picks its frame based on where it is heading.
+            return new DirectionFrameEnemy(
+                Points.fish,
                 getFishOffsetFrames,
                 getExplosion02,
                 locationProvider,
