@@ -9,12 +9,22 @@ import ILocationProvider from "../Interfaces/ILocationProvider";
 import { getNextLocationAndAngle } from "../Utility/Location";
 
 /**
- * Module:          SideToSideUpAndDown
- * Responsibility:  Location provider for enemies that move from left to right and up then down.
+ * Module:          AngleBounceLocationProvider
+ * Responsibility:  Location provider for enemies that move within provided boundaries and 'bounce' when they hit a side.
  */
 
-export default class SideToSideUpAndDownLocationProvider extends BaseLocationProvider implements ILocationProvider {
-
+export default class AngleBounceLocationProvider extends BaseLocationProvider implements ILocationProvider {
+    /**
+     * Construct the object.
+     * @param {number} left. Initilal left.
+     * @param {number} top.  Initial top.
+     * @param {number} speed. Initial speed.
+     * @param {number} angle. Initial angle.
+     * @param {number} width. Object width
+     * @param {number} height. Object height.
+     * @param {number} topLimit. Top boundary limit.
+     * @param {number} bottomLimit. Bottom boundary limit.
+     */
     constructor(
         left: number,
         top: number,

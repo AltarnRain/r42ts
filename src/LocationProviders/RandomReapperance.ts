@@ -14,8 +14,8 @@ import { randomNumberInRange } from "../Utility/Lib";
 import { getLocation } from "../Utility/Location";
 
 /**
- * Module:          AsteroidLocationProvider
- * Responsibility:  Provides movement for asteroids.
+ * Module:          RandomReapperance
+ * Responsibility:  Provides movement for asteroids and space monsters. The enenmies pop-up all over the place.
  */
 
 const {

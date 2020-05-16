@@ -9,6 +9,7 @@ import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
+import { Angle } from "../Types";
 import { getLocation } from "../Utility/Location";
 
 /**
@@ -24,7 +25,20 @@ export default class CrabLocationProvider implements ILocationProvider {
      * Used to calculate speed increases.
      */
     private baseSpeed: number;
-    private angle: any;
+
+    /**
+     * Current angle. Can be up or down, depending on the frame.
+     */
+    private angle: Angle;
+
+    /**
+     * Construct the object.
+     * @param {number} left. Initial left position.
+     * @param {number} top. Initial top position.
+     * @param {number} speed. Initial speed.
+     * @param {number} height. Height of the enemy.
+     * @param {IGetCurrentIndex} indexProvider. Returns the current animation frame index.
+     */
 
     constructor(
         private left: number,

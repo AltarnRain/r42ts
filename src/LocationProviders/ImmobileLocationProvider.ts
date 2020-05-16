@@ -9,7 +9,7 @@ import { GameLocation } from "../Models/GameLocation";
 
 /**
  * Module:          Immobile
- * Responsibility:  A location provides that simply returns the location it was given.
+ * Responsibility:  A location provides that simply returns the location it was given. Used to debug.
  */
 
 export default class ImmobileLocationProvider implements ILocationProvider {
@@ -18,17 +18,6 @@ export default class ImmobileLocationProvider implements ILocationProvider {
      * Constructs the immobile location provider.
      */
     constructor(private left: number, private top: number) {
-    }
-    public getCurrentIndex(): number {
-        return 0;
-    }
-
-    public updateState(tick: number): void {
-        // does nothing.
-    }
-
-    public increaseSpeed(factor: number): void {
-        // Does nothing.
     }
 
     /**
@@ -40,4 +29,29 @@ export default class ImmobileLocationProvider implements ILocationProvider {
             top: this.top
         };
     }
+
+//#region Not implemented
+
+    /**
+     * Always returns 0
+     */
+    public getCurrentIndex(): number {
+        return 0;
+    }
+
+    /**
+     * Not implemented.
+     */
+    public updateState(tick: number): void {
+        // does nothing.
+    }
+
+    /**
+     * Not implemented
+     */
+    public increaseSpeed(factor: number): void {
+        // Does nothing.
+    }
+
+//#endregion
 }

@@ -25,6 +25,22 @@ export default class SideAppearOtherSideVariesSpeed implements ILocationProvider
      * Used to calculate a speed increase for the fast speed.
      */
     private baseFastSpeed: number;
+
+    /**
+     * Construct the object
+     * @param {number} left. Initial left.
+     * @param {number} top. Initial top.
+     * @param {number} angle. Initial angle.
+     * @param {number} width. Object width.
+     * @param {number} height. Object height
+     * @param {number} maxTop. Maximum top position.
+     * @param {number} maxBottom. Maximum bottom position.
+     * @param {IGetCurrentIndex} indexProvider. Provides the current frame index.
+     * @param {number} slowSpeed. Movement speed for slow frames.
+     * @param {number} fastSpeed. Movement speed for fast frames.
+     * @param {number[]} slowFrames. Which frame indexes to use the slowSpeed for.
+     * @param {number[]} fastFrames. Which frame indexes to use the fast speed for.
+     */
     constructor(
         private left: number,
         private top: number,
@@ -54,7 +70,12 @@ export default class SideAppearOtherSideVariesSpeed implements ILocationProvider
         };
 
     }
-    public updateState(tick?: number | undefined): void {
+
+    /**
+     * Update the state of the location provides.
+     * @param {number} tick. Current tick
+     */
+    public updateState(tick?: number): void {
         const currentFrameIndex = this.indexProvider.getCurrentIndex();
 
         let speed = 0;

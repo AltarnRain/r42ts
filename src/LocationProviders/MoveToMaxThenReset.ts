@@ -6,8 +6,8 @@
 
 import BaseLocationProvider from "../Base/BaseLocationProvider";
 import { GameLocation } from "../Models/GameLocation";
-import { getLocation } from "../Utility/Location";
 import { getUpOrDownFromAngle } from "../Utility/Geometry";
+import { getLocation } from "../Utility/Location";
 
 /**
  * Module:          MoveToMaxThenReset
@@ -16,6 +16,17 @@ import { getUpOrDownFromAngle } from "../Utility/Geometry";
 
 export default class MoveToUpDownMaxThenReset extends BaseLocationProvider {
 
+    /**
+     * Construct the object.
+     * @param {number} left. Initial left.
+     * @param {number} top. Initial top.
+     * @param {number} speed. Initial speed.
+     * @param {number} angle. Initial angle.
+     * @param {number} width. Enemy width.
+     * @param {number} height. Enemy height.
+     * @param {number} target. Target top or bottom.
+     * @param {number} reset. Reset location for the top of bottom.
+     */
     constructor(
         left: number,
         top: number,

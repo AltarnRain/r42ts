@@ -36,6 +36,16 @@ export default class Wobble extends BaseLocationProvider {
      */
     private angles: number[];
 
+    /**
+     * Construct the object.
+     * @param {number} left. Initial left.
+     * @param {number} top. Initial top.
+     * @param {number} speed. Initial speed.
+     * @param {number} angle. Initial angle.
+     * @param {number} width. Object width.
+     * @param {number} height. Object height
+     * @param {number} angleSwitchTimeout. Time in ticks between switching angles.
+     */
     constructor(
         left: number,
         top: number,

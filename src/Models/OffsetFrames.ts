@@ -20,7 +20,7 @@ export interface OffsetFrames {
     frames: Frame[];
 
     /**
-     * Offsets user to render the object on screen.
+     * Offsets used to render the object on screen.
      */
     offSets: GameLocation[];
 

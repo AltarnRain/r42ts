@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Locations, FrameTimes } from "../Constants/Constants";
+import { FrameTimes, Locations } from "../Constants/Constants";
 import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
@@ -36,6 +36,13 @@ export default class CloakingOrbLocationProvider implements ILocationProvider {
      */
     private canChangeLocation: boolean = true;
 
+    /**
+     * Constuct the class.
+     * @param {number} left. Initial left position.
+     * @param {number} top. Initial top position.
+     * @param {number} maxIndex. Max frame index.
+     * @param indexProvider. Provides the current index.
+     */
     constructor(
         private left: number,
         private top: number,

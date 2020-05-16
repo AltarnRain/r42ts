@@ -14,17 +14,45 @@ import { getLeftOrRightFromAngle, getUpOrDownFromAngle } from "../Utility/Geomet
 import { getLocation, getNextLocationAndAngle } from "../Utility/Location";
 
 /**
- * Module:          DevilLocationProvider
- * Responsibility:  Location provider for the devil enemy.
+ * Module:          AttackerLocationProvider
+ * Responsibility:  Location provider for an enemy that moves down to attack.
  *                  This enemy moves in diagonal lines but moves down when it can fire. Then, it moves up. Also
  *                  It picks a random angle when it hits the top screen.
  */
 
 export default class DevilLocationProvider implements ILocationDirectionProvider {
+
+    /**
+     * Base speed. Set to the inital speed. Used to calculate speed increase.
+     */
     private baseSpeed: number;
+
+    /**
+     * Current angle of the devil.
+     */
     private angle: number;
+
+    /**
+     * When true the devil is moving down for an attack.
+     */
     private attacking: boolean;
+
+    /**
+     * When true the devil has moved as far down as it can and is moving up again.
+     */
     private recovering: boolean;
+
+    /**
+     * Construct the object.
+     * @param {number} left. Initial left.
+     * @param {number} top. Initial top.
+     * @param {number} speed. Initial speed.
+     * @param {number[]} sideAngles. Angles the devil will use to go left or right when it reaches it maximum top position.
+     * @param {number} width. Width of the enemy.
+     * @param {number} height. Height of the enemy.
+     * @param {number} topLimit. Maximum top. Used to reset recovery or to bounce with a new angle.
+     * @param {number} bottomLimit. Maximum bottom. User to reset attack or to bounce with a new angle.
+     */
     constructor(
         private left: number,
         private top: number,

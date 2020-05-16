@@ -32,6 +32,8 @@ export default function keyboardStateReducer(state: KeyboardState = initState(),
         }
 
         if (action.type === Constants.resetKeyboardState) {
+            // Reset the state. Required when the game is over, otherwise the player will spawn in
+            // and move in the last registered direction.
             draft.left = false;
             draft.right = false;
             draft.up = false;

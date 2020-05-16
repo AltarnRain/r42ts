@@ -10,6 +10,13 @@
  */
 
 export default interface KeyValuePair {
+    /**
+     * The key
+     */
     key: string;
+
+    /**
+     * The value.
+     */
     value: string;
 }

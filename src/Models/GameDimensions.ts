@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { GameRectangle } from "./GameRectangle";
+import { GameField } from "./GameField";
 
 /**
  * Module:          GameDimensions
@@ -38,10 +38,9 @@ export interface GameDimensions {
      */
     pixelSize2x: number;
 
+    /**
+     * Dimension of the game field. This is where the action takes place
+     * So it is very handy to know exactly where it actually is.
+     */
     gameField: GameField;
-}
-
-export interface GameField extends GameRectangle {
-    width: number;
-    height: number;
 }
