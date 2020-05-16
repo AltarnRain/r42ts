@@ -92,13 +92,11 @@ export default class BulletRunner {
         // can actually fire.
         for (const shipToFire of shipsToFire) {
 
-            const { angle, enemy: { hitbox, enemyId }, enemy } = shipToFire;
+            const { angle, enemy: { nozzleLocation, enemyId } } = shipToFire;
 
-            if (angle !== undefined) {
+            if (angle !== undefined && nozzleLocation !== undefined) {
 
-                const left = hitbox.left + ((hitbox.right - hitbox.left) / 2) - pixelSize;
-                const top = hitbox.bottom + pixelSize;
-
+                const { left, top } = nozzleLocation;
                 const bullet = StateProviders.getBulletParticleState(
                     left,
                     top,

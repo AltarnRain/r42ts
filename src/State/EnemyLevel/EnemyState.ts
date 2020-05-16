@@ -11,8 +11,9 @@ export interface EnemyState {
     currentFrame?: Frame;
     hitpoints: number;
     hitbox: GameRectangle;
-    centerLocation: GameLocation;
+    centerLocation?: GameLocation;
     points: number;
     lastFiretick?: number;
     currentFrameIndex?: number;
+    nozzleLocation?: GameLocation;
 }

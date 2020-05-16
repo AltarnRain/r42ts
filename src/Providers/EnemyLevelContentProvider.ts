@@ -211,7 +211,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
             const bulletRunner = new BulletRunner(CGAColors.lightGreen, Speeds.Bullets.fish, (tick) => fireDownAimed(tick, 5, [0, 1]));
 
             return {
-                enemies,
+                enemies: [enemies[0]],
                 bulletRunner,
             };
 

@@ -13,7 +13,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import { addOrUpdateEnemy } from "../State/EnemyLevel/EnemyLevelActions";
 import { dispatch } from "../State/Store";
 import { ExplosionProviderFunction, Frame, OffsetFramesProviderFunction } from "../Types";
-import { getFrameCenter, getFrameHitbox } from "../Utility/Frame";
+import { getFrameCenter, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { getOffsetLocation } from "../Utility/Location";
 import BaseFrameProvider from "./BaseFrameProvider";
 
@@ -184,6 +184,7 @@ export default abstract class BaseEnemy {
             centerLocation: this.getCenterLocation(),
             points: this.getPoints(),
             currentFrameIndex: this.frameProvider.getCurrentIndex(),
+            nozzleLocation: this.getNozzleLocation(),
         }));
     }
 
@@ -231,16 +232,11 @@ export default abstract class BaseEnemy {
      * Returns the center location of the object.
      * @returns {GameLocation}. Location located at the center of the object.
      */
-    private getCenterLocation(): GameLocation {
+    private getCenterLocation(): GameLocation | undefined {
         if (this.currentFrame !== undefined) {
             return getFrameCenter(this.offsetLeft, this.offsetTop, this.currentFrame);
         } else {
-            // Return a non existing location. This simply means the enemy is not on the screen
-            // and it saves a billion undefined checks.
-            return {
-                top: -100,
-                left: -100,
-            };
+            return undefined;
         }
     }
 
@@ -259,6 +255,28 @@ export default abstract class BaseEnemy {
                 right: 0,
                 bottom: 0,
             };
+        }
+    }
+
+    /**
+     * Returns the nozzle location of the enemey. This is where the bullets appear if the enemy fires.
+     * @returns {GameLocation | undefined}. The nozzle location if one could be determined.
+     */
+    protected getNozzleLocation(): GameLocation | undefined {
+
+        if (this.currentFrame !== undefined) {
+            const { width, height } = getFrameDimensions(this.currentFrame);
+
+            const middle = this.offsetLeft + width / 2 - pixelSize / 2;
+            const bottom = this.offsetTop + height + pixelSize;
+
+            return {
+                left: middle,
+                top: bottom,
+            };
+
+        } else {
+            return undefined;
         }
     }
 }

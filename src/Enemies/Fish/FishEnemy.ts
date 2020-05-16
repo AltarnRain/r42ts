@@ -4,6 +4,8 @@
  * See LICENSE.MD.
  */
 
+import { GameLocation } from "../../Models/GameLocation";
+import dimensionProvider from "../../Providers/DimensionProvider";
 import Mutators from "../../Utility/FrameMutators";
 import DirectionFrameEnemy from "../DirectionFrameEnemy";
 import { getFishFireFrame } from "./GetFishOffsetFrames";
@@ -12,6 +14,13 @@ import { getFishFireFrame } from "./GetFishOffsetFrames";
  * Module:          FishEnemy
  * Responsibility:  Handle the fish enemy. This enemy is unique in that it has a specific frame it uses when it firs bullets.
  */
+
+const {
+    pixelSize,
+} = dimensionProvider();
+
+const nozzleLeftOffset = pixelSize * -2.5;
+const nozzzleTopOffset = pixelSize * -6;
 
 export class FishEnemy extends DirectionFrameEnemy {
 
@@ -37,5 +46,25 @@ export class FishEnemy extends DirectionFrameEnemy {
     protected onFrameChange(): void {
         // Cannot use the frame provider directly for this enemy.
         // We'll set the frame in the beforeDispatch method.
+    }
+
+    /**
+     * Returns the nozzle location for the fish enemey. This enemy doesn't fire
+     * its bullets from its' 'bottom', instead it fires them from its life size rought from the middle
+     * of the frame.
+     * @returns {GameLocation | undefined}. The nozzle location if one could be determined.
+     */
+    protected getNozzleLocation(): GameLocation | undefined {
+
+        // Get the offical nozzle location.
+        const nozzleLocation = super.getNozzleLocation();
+
+        // If defined, adjust it for the fish enemy so its bullets appear on its left side.
+        if (nozzleLocation !== undefined) {
+            nozzleLocation.left += nozzleLeftOffset;
+            nozzleLocation.top += nozzzleTopOffset;
+        }
+
+        return nozzleLocation;
     }
 }
