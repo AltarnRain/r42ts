@@ -5,7 +5,7 @@
  */
 
 /**
- * Module:          Types
+ * Module:          KeyboardTypes
  * Responsibility:  Action typing for the Keyboard State.
  */
 

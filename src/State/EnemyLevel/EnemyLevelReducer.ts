@@ -5,8 +5,8 @@
  */
 
 /**
- * Module:          LevelReducuer
- * Responsibility:  LevelReducer.
+ * Module:          EnemyLevelReducuer
+ * Responsibility:  Jandle state updates to the EnemyLevelState.
  */
 
 import produce from "immer";
@@ -17,7 +17,7 @@ import { EnemyLevelTypes } from "./EnemyLevelTypes";
 /**
  * enemyLevelReducer
  * @param {EnemyLevelState} state. The current state.
- * @param {ActionPayload<any>} action. The desired action with optional paylood.
+ * @param {EnemyLevelTypes} action. The desired action with optional paylood.
  * @returns {EnemyLevelState}. New state.
  */
 export default function enemyLevelReducer(state: EnemyLevelState = initState(), action: EnemyLevelTypes): EnemyLevelState {

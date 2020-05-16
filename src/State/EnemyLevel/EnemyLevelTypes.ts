@@ -5,12 +5,12 @@
  */
 
 /**
- * Module:          Types
- * Responsibility:  Action types for the EnemyLevel state
+ * Module:          EnemyLevelTypes
+ * Responsibility:  Action types for EnemyLevelState changes.
  */
 
 import { GameLocation } from "../../Models/GameLocation";
-import { ParticleState } from "../Player/ParticleState";
+import { ParticleState } from "../ParticleState";
 import Constants from "./EnemyLevelConstants";
 import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";

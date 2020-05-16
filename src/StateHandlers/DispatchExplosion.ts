@@ -10,16 +10,10 @@
  */
 
 import Explosion from "../Models/Explosion";
-import dimensionProvider from "../Providers/DimensionProvider";
 import { addExplosionCenter } from "../State/EnemyLevel/EnemyLevelActions";
 import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
 import { StateProviders } from "../State/StateProviders";
 import { dispatch } from "../State/Store";
-import { getFrameHitbox } from "../Utility/Frame";
-
-const {
-    pixelSize
-} = dimensionProvider();
 
 /**
  * Handles the dispatches to add an explosion with shrapnell to the state.
@@ -31,13 +25,11 @@ const {
 export function dispatchExplosion(left: number, top: number, coloredExplosion: Explosion, tick: number): void {
 
     const newShrapnell = StateProviders.explosionShrapnellProvider(left, top, coloredExplosion);
-    const explosionHitbox = getFrameHitbox(left, top, coloredExplosion.explosionCenterFrame, pixelSize);
 
     const newExplosion: ExplosionCenterState = {
         left,
         top,
         startTick: tick,
-        hitbox: explosionHitbox,
         coloredFrame: coloredExplosion.explosionCenterFrame,
         explosionCenterDelay: coloredExplosion.explosionCenterDelay,
     };

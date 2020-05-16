@@ -5,7 +5,7 @@
  */
 
 /**
- * Module:          Constants for enemy level actions and reducer.
+ * Module:          EnemyLevelConstants for enemy level actions and reducer.
  */
 
 namespace Constants {

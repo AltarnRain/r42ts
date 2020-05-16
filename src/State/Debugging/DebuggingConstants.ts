@@ -5,7 +5,7 @@
  */
 
 /**
- * Module:          Constants
+ * Module:          DebuggingConstants
  * Responsibility:  Constants for the debugging state
  */
 

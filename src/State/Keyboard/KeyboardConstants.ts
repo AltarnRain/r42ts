@@ -7,7 +7,7 @@
 import { GameKeys } from "../../Utility/KeyboardEvents";
 
 /**
- * Module:          Constants
+ * Module:          KeyboardConstants
  * Responsibility:  Constants for valid keys used by the GameState
  */
 

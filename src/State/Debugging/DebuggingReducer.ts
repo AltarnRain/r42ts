@@ -9,7 +9,7 @@ import DebuggingState from "./DebuggingState";
 import { DebuggingTypes } from "./DebuggingTypes";
 
 /**
- * Module:          debuggingReducer
+ * Module:          DebuggingReducer
  * Responsibility:  Handles the debugging state.
  */
 

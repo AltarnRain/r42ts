@@ -5,7 +5,7 @@
  */
 
 /**
- * Module:          Actions
+ * Module:          DebugginActions
  * Responsibility:  Actions for Debugging state.
  */
 

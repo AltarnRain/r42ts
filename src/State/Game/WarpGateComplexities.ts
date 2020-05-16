@@ -1,4 +1,15 @@
+/**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
 import { WarpLevelComplexity, WarpLevelComplexitySteps, WarpLevelSteps } from "./WarpLevelTypes";
+
+/**
+ * Module:          WarpGateComplexities
+ * Responsibility:  Defines the complexity levels for warp gates.
+ */
 
 /**
  * Typed constants that defined the warp gate complexities.

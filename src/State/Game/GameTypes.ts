@@ -5,7 +5,7 @@
  */
 
 /**
- * Module:          Types
+ * Module:          GameTypes
  * Responsibility:  Action return types for the GameState
  */
 

@@ -8,7 +8,7 @@ import produce from "immer";
 import Constants from "./GameConstants";
 import GameState from "./GameState";
 import { GameStateTypes } from "./GameTypes";
-import getWarpGateComplexity from "./WarpGameComplexities";
+import getWarpGateComplexity from "./WarpGateComplexities";
 
 /**
  * Module:          GameStateReducer
@@ -18,7 +18,7 @@ import getWarpGateComplexity from "./WarpGameComplexities";
 /**
  * gameStateReducer
  * @param {DebuggingState} state. The current state.
- * @param {ActionPayload<any>} action. The desired action with optional paylood.
+ * @param {GameStateTypes} action. The desired action with optional paylood.
  * @returns {GameState}. New state.
  */
 export default function gameStateReducer(state: GameState = initState(), action: GameStateTypes): GameState {

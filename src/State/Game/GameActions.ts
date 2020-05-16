@@ -5,7 +5,7 @@
  */
 
 /**
- * Module:          Actions
+ * Module:          GameActions
  * Responsibility:  Action creator functions for the GameState
  */
 

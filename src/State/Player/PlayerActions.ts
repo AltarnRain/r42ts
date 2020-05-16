@@ -11,7 +11,7 @@
 
 import { GameLocation } from "../../Models/GameLocation";
 import { MoveLimits } from "../../Types";
-import { ParticleState } from "./ParticleState";
+import { ParticleState } from "../ParticleState";
 import Constants from "./PlayerConstants";
 import { PlayerHitboxes } from "./PlayerState";
 import { SetPlayerBulletState, SetPlayerIsAlive, SetPlayerLocationData, SetPlayerMovementLimit } from "./PlayerTypes";

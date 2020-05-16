@@ -13,7 +13,7 @@ import renderFrame from "../Render/RenderFrame";
 import { clearPhaserLocations, removeEnemy, setPhaserLocations, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { enemeyHit as enemyHit, increaseScore, phaserFired, removePhaser, setPause } from "../State/Game/GameActions";
-import { ParticleState } from "../State/Player/ParticleState";
+import { ParticleState } from "../State/ParticleState";
 import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { dispatchExplosion } from "../StateHandlers/DispatchExplosion";

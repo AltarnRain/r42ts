@@ -5,7 +5,7 @@
  */
 
 /**
- * Module:          Actions
+ * Module:          KeyboardActions
  * Responsibility:  Action definitions for the Keyboard State
  */
 

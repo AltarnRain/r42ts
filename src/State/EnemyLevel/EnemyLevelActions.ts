@@ -5,12 +5,12 @@
  */
 
 /**
- * Module:          Actions
+ * Module:          EnemyLevelActions
  * Responsibility:  Action creators for the EnemyLevelState
  */
 
 import { GameLocation } from "../../Models/GameLocation";
-import { ParticleState } from "../Player/ParticleState";
+import { ParticleState } from "../ParticleState";
 import Constants from "./EnemyLevelConstants";
 import { AddBullet, AddExplosionCenter, AddOrUpdateEnemy, AddParticle, AddParticles, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetBulletState, SetPhaserLocations, SetShrapnellState, SetTotalEnemies, UpdateEnemyLastFireTick as SetEnemyLastFireTick } from "./EnemyLevelTypes";
 import { EnemyState } from "./EnemyState";

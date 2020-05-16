@@ -16,7 +16,7 @@ import { Frame } from "../Types";
 import { getFrameHitbox } from "../Utility/Frame";
 import { fallsWithinGameField, getLocation } from "../Utility/Location";
 import { EnemyState } from "./EnemyLevel/EnemyState";
-import { ParticleState } from "./Player/ParticleState";
+import { ParticleState } from "./ParticleState";
 import { appState } from "./Store";
 
 export namespace StateProviders {

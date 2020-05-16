@@ -5,7 +5,7 @@
  */
 
 /**
- * Module:          Constants
+ * Module:          GameConstants
  * Responsibility:  Constants used by the GameState reducer and by the Action creator functions
  */
 

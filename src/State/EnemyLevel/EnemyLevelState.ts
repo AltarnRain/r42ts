@@ -5,13 +5,13 @@
  */
 
 import { GameLocation } from "../../Models/GameLocation";
-import { ParticleState } from "../Player/ParticleState";
+import { ParticleState } from "../ParticleState";
 import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 
 /**
  * Module:          EnemyLevelState
- * Responsibility:  Holds the entire state of the game.
+ * Responsibility:  Holds the state for levels that contain enemies.
  */
 
 export default interface EnemyLevelState {

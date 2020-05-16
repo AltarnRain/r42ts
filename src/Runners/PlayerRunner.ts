@@ -13,7 +13,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import getTwoPixelBullet from "../SharedFrames/GetTwoPixelBullet";
 import { bulletFired } from "../State/Game/GameActions";
-import { ParticleState } from "../State/Player/ParticleState";
+import { ParticleState } from "../State/ParticleState";
 import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";

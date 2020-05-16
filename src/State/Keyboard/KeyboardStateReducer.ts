@@ -17,7 +17,7 @@ import { KeyboardTypes } from "./KeyboardTypes";
 /**
  * keyboardStateReducer
  * @param {DebuggingState} state. The current state.
- * @param {ActionPayload<any>} action. The desired action with optional paylood.
+ * @param {KeyboardTypes} action. The desired action with optional paylood.
  * @returns {KeyboardState}. New state.
  */
 export default function keyboardStateReducer(state: KeyboardState = initState(), action: KeyboardTypes): KeyboardState {
