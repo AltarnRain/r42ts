@@ -8,7 +8,6 @@ import speedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
 import { Frame } from "../Types";
-import Mutators from "../Utility/FrameMutators";
 import { calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
 
@@ -32,27 +31,6 @@ export default class PlayerFormationPart {
     private currentTopLocation: number;
 
     /**
-     * Particle speed.
-     */
-
-    private speed: number;
-
-    /**
-     * The current frame.
-     */
-    private currentFrame: Frame;
-
-    /**
-     * Offset to add to the left.
-     */
-    private leftOffset: number;
-
-    /**
-     * Offset to add to the top.
-     */
-    private topOffset: number;
-
-    /**
      * Construct the object.
      * @param {number} left. Left coordinate.
      * @param {number} top. Top coordinate
@@ -61,17 +39,16 @@ export default class PlayerFormationPart {
      * @param {number} leftOffset. Number of pixels to add to the initial left position and the target left position.
      * @param {number} topOffset. Number of pixels to add to the initial top position and the target top position.
      */
-    constructor(left: number, top: number, frame: Frame, speed: number, leftOffset: number, topOffset: number) {
-
-        this.currentFrame = frame;
-        Mutators.Frame.convertHexToCGA(this.currentFrame);
+    constructor(
+        left: number,
+        top: number,
+        private frame: Frame,
+        private speed: number,
+        private leftOffset: number,
+        private topOffset: number) {
 
         this.currentLeftLocation = left + leftOffset;
         this.currentTopLocation = top + topOffset;
-        this.leftOffset = leftOffset;
-        this.topOffset = topOffset;
-
-        this.speed = speed;
     }
 
     /**
@@ -103,7 +80,7 @@ export default class PlayerFormationPart {
      * Draw the particle.
      */
     public draw(): void {
-        renderFrame(this.currentLeftLocation, this.currentTopLocation, this.currentFrame);
+        renderFrame(this.currentLeftLocation, this.currentTopLocation, this.frame);
     }
 
     /**

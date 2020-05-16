@@ -22,7 +22,6 @@ let showInstructions = true;
  */
 
 window.onload = () => {
-
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     if (canvas) {
         // Initialize the dimentions of the canvas.
@@ -105,18 +104,18 @@ function begin(): void {
 
     if (showInstructions) {
         alert(`
-            Press F1 to fire a bullet
-            Press F2 to fire a phaser.
-              You only have limited charges so use them wisely.
-            Press Backspace to self destruct and ship a level.
-            Use the arrow keys to move.
+                Press F1 to fire a bullet
+                Press F2 to fire a phaser.
+                  You only have limited charges so use them wisely.
+                Press Backspace to self destruct and ship a level.
+                Use the arrow keys to move.
 
-            A life and phaser is awared every 7500 points.
-            When you die you'll lose your phaser charges.
-            When you die you can hold Space to pause your formation
-            When there's enemies on the screen you can move
-            left and right while your ship is warping in.
-        `);
+                A life and phaser is awared every 7500 points.
+                When you die you'll lose your phaser charges.
+                When you die you can hold Space to pause your formation
+                When there's enemies on the screen you can move
+                left and right while your ship is warping in.
+            `);
 
         showInstructions = false;
     }
