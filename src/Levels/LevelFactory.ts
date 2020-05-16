@@ -83,7 +83,7 @@ export function levelFactory(level: number): ILevel {
         case 25:
             return new EnemyLevel("orb-up-down");
         case 26:
-            return new EnemyLevel("asteroid-diagonal");
+            return new TimeLimitLevel("asteroid-diagonal");
         case 27:
             return new TimeLimitLevel("spacemonster-diagonal");
         case 28:

@@ -99,6 +99,10 @@ export default class EnemyLevel implements ILevel {
      */
     public dispose(): void {
 
+        // Remove remaining enemies from the enemy level runner so they do not get
+        // a chance to push their state to redux.
+        EnemyLevelRunner.setEnemies([]);
+
         // Reset is required for levels where there is a time limit on the level and the
         // player does clear the state by destroying enemies.
         dispatch(resetLevelState());
