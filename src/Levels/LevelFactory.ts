@@ -21,7 +21,7 @@ import WarpLevel from "./WarpLevel";
  * @param {number} level. The desired level.
  * @returns {BaseEnemyLevel}. A level.
  */
-export function levelFactory(level: number): ILevel | undefined {
+export function levelFactory(level: number): ILevel {
     switch (level) {
         case 0:
             // Test level

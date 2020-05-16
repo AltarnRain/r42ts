@@ -24,6 +24,9 @@ let currentLevel: ILevel | undefined;
 // Used to track changes in score to award ships and phasers.
 let currentScore = 0;
 
+// When true a level is loading.
+let levelLoading = false;
+
 /**
  * Lazy load a subscription to the redux store.
  */
@@ -31,20 +34,26 @@ let currentScore = 0;
 export default function levelProgressionRunner() {
     const { gameState } = appState();
 
-    // Handle level change acting on a change in level.
-    if (!gameState.gameOver && gameState.level !== undefined && levelNumber !== gameState.level) {
+    // Handle level change acting on a change in level but only if no current level is loading.
+    if (levelNumber !== gameState.level && levelLoading === false) {
+        // Level transition.
+        levelLoading = true;
+
+        // New level. Assign level number
         levelNumber = gameState.level;
 
+        // Dispose of previous level
         if (currentLevel !== undefined) {
             currentLevel.dispose();
         }
 
         // Get new level
-        currentLevel = levelFactory(levelNumber);
-
-        if (currentLevel !== undefined) {
-            currentLevel.begin();
-        }
+        currentLevel = levelFactory(gameState.level);
+        currentLevel.begin().then(() => {
+            // Level loading is async due to the delayed level banner so we'll use a promise
+            // to reset the level loading flag.
+            levelLoading = false;
+        });
     }
 
     if (gameState.score - currentScore >= 7500) {

@@ -49,45 +49,48 @@ export default class EnemyLevel implements ILevel {
      * Begin this level.
      * @param {() => void} levelReady. Optional callback that is called when the level is ready to begin.
      */
-    public begin(levelReady?: () => void): void {
+    public begin(levelReady?: () => void): Promise<void> {
+        return new Promise((resolve) => {
+            const { enemies, bulletRunner } = enemyLevelContentFactory(this.enemies);
 
-        const { enemies, bulletRunner } = enemyLevelContentFactory(this.enemies);
+            const {
+                gameState
+            } = appState();
 
-        const {
-            gameState
-        } = appState();
+            dispatch(setPlayerMovementLimit("immobile"));
 
-        dispatch(setPlayerMovementLimit("immobile"));
+            // Register the background draw function so it runs in the game loop.
+            this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
 
-        // Register the background draw function so it runs in the game loop.
-        this.registerSubscription(GameLoop.registerBackgroundDrawing(drawBackground));
-
-        // Draw the level banner to show which round we're at.
-        let level = 0;
-        if (gameState.level !== undefined) {
-            level = gameState.level;
-        }
-
-        // Draw the level banner, then start the level.
-        drawLevelBanner(level, () => {
-            // Register the stateManager so it can act on state changes in the level.
-            this.registerSubscription(GameLoop.registerUpdateState(EnemyLevelRunner.run));
-
-            if (bulletRunner !== undefined) {
-                this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletRunner.updateState(tick)));
+            // Draw the level banner to show which round we're at.
+            let level = 0;
+            if (gameState.level !== undefined) {
+                level = gameState.level;
             }
 
-            // Add the enemies to the enemy level runner. The registered stateManager will take it from here.
-            EnemyLevelRunner.setEnemies(enemies);
+            // Draw the level banner, then start the level.
+            drawLevelBanner(level, () => {
+                // Register the stateManager so it can act on state changes in the level.
+                this.registerSubscription(GameLoop.registerUpdateState(EnemyLevelRunner.run));
 
-            // Add a function to the GameLoop that will check if a level has been won.
-            this.registerSubscription(GameLoop.registerUpdateState(() => this.monitorLevelWonRun()));
+                if (bulletRunner !== undefined) {
+                    this.registerSubscription(GameLoop.registerUpdateState((tick) => bulletRunner.updateState(tick)));
+                }
 
-            dispatch(setPlayerMovementLimit("none"));
+                // Add the enemies to the enemy level runner. The registered stateManager will take it from here.
+                EnemyLevelRunner.setEnemies(enemies);
 
-            if (levelReady !== undefined) {
-                levelReady();
-            }
+                // Add a function to the GameLoop that will check if a level has been won.
+                this.registerSubscription(GameLoop.registerLevelWonMonitor(() => this.monitorLevelWonRun()));
+
+                dispatch(setPlayerMovementLimit("none"));
+
+                if (levelReady !== undefined) {
+                    levelReady();
+                }
+
+                resolve();
+            });
         });
     }
 
@@ -103,6 +106,7 @@ export default class EnemyLevel implements ILevel {
         // The subscription array contains functions that remove themselves
         // from the GameLoop. Call all of them to remove them from the GameLoop.
         this.subscriptions.forEach((s) => s());
+        this.subscriptions = [];
     }
 
     /**

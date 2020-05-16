@@ -56,40 +56,44 @@ export default class WarpLevel implements ILevel {
     /**
      * Start the level. Required by contract.
      */
-    public begin(): void {
-        dispatch(setPlayerMovementLimit("immobile"));
-        dispatch(setPlayerLocationData(Locations.Player.spawnLocation.left, Locations.Player.spawnLocation.top));
+    public begin(): Promise<void> {
 
-        // Register the background draw function so it runs in the game loop.
-        this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(drawBackground));
+        return new Promise((resolve) => {
+            dispatch(setPlayerMovementLimit("immobile"));
+            dispatch(setPlayerLocationData(Locations.Player.spawnLocation.left, Locations.Player.spawnLocation.top));
 
-        // Determine which additional color next to white the warp background will have.
-        const colorIndex = Math.ceil(Math.random() * backgroundColor.length - 1);
-        const additionalColor = backgroundColor[colorIndex];
+            // Register the background draw function so it runs in the game loop.
+            this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(drawBackground));
 
-        const {
-            gameState
-        } = appState();
+            // Determine which additional color next to white the warp background will have.
+            const colorIndex = Math.ceil(Math.random() * backgroundColor.length - 1);
+            const additionalColor = backgroundColor[colorIndex];
 
-        // Show the level banner for this warp gate levels. Warp gates show the level banner BEFORE the back ground
-        // is drawn otherwise the level banner is impossible to read.
-        drawLevelBanner(gameState.level, () => {
-            // Generate the warpgate so we can draw a path and calculate the hitboxes of the adjecent walls. The complexity of the
-            // warp gate is taken from the GameState, the WarpGate class hasn't a clue how complicated the gate will be.
-            const warpGate = this.calculateWarpGate(gameField.left, gameField.right, gameState.warpLevelSteps.stepsX, gameState.warpLevelSteps.stepsY);
-            const badSpace = this.getWallHitboxes(warpGate);
+            const {
+                gameState
+            } = appState();
 
-            // Banner is gone, time to draw the background of the warp gate background and path.
-            this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, warpGate)));
+            // Show the level banner for this warp gate levels. Warp gates show the level banner BEFORE the back ground
+            // is drawn otherwise the level banner is impossible to read.
+            drawLevelBanner(gameState.level, () => {
+                // Generate the warpgate so we can draw a path and calculate the hitboxes of the adjecent walls. The complexity of the
+                // warp gate is taken from the GameState, the WarpGate class hasn't a clue how complicated the gate will be.
+                const warpGate = this.calculateWarpGate(gameField.left, gameField.right, gameState.warpLevelSteps.stepsX, gameState.warpLevelSteps.stepsY);
+                const badSpace = this.getWallHitboxes(warpGate);
 
-            // Add a function to the GameLoop that will check if a level has been won.
-            this.gameLoopSubscriptions.push(GameLoop.registerUpdateState(() => this.monitorLevelWon()));
+                // Banner is gone, time to draw the background of the warp gate background and path.
+                this.gameLoopSubscriptions.push(GameLoop.registerBackgroundDrawing(() => drawWarpBackground(additionalColor, warpGate)));
 
-            // Add a function to the GameLoop that checks if the player has reached the end of the warp gate. This will
-            // trigger progression to the next level.
-            this.gameLoopSubscriptions.push(GameLoop.registerUpdateState((tick) => this.hitDetection(tick, badSpace)));
+                // Add a function to the GameLoop that will check if a level has been won.
+                this.gameLoopSubscriptions.push(GameLoop.registerLevelWonMonitor(() => this.monitorLevelWon()));
 
-            dispatch(setPlayerMovementLimit("forceup"));
+                // Add a function to the GameLoop that checks if the player has reached the end of the warp gate. This will
+                // trigger progression to the next level.
+                this.gameLoopSubscriptions.push(GameLoop.registerUpdateState((tick) => this.hitDetection(tick, badSpace)));
+
+                dispatch(setPlayerMovementLimit("forceup"));
+                resolve();
+            });
         });
     }
 

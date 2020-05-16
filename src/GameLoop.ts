@@ -46,6 +46,8 @@ let backgroundDrawFunctions: Array<() => void> = [];
  */
 let foregroundDrawFunctions: Array<() => void> = [];
 
+let levelWonFunctions: Array<() => void> = [];
+
 /**
  * Functions that draw.
  */
@@ -100,6 +102,7 @@ export namespace GameLoop {
         backgroundDrawFunctions = [];
         drawFunctions = [];
         foregroundDrawFunctions = [];
+        levelWonFunctions = [];
 
         unregisterListeners();
     }
@@ -140,6 +143,21 @@ export namespace GameLoop {
 
         return () => {
             foregroundDrawFunctions = foregroundDrawFunctions.filter((d) => d !== f);
+        };
+    }
+
+    /**
+     * Used to monitor if a level is won. Requires a seperate array to ensure level won functions for won
+     * levels are not execute when the level IS won, the current level is loading and the state has not been
+     * updated yet so it triggers an instant win. I found this out the hard way.
+     * @param {function} f. draw function
+     * @returns {function}. Function to remove the draw function from the queue.
+     */
+    export function registerLevelWonMonitor(f: () => void): () => void {
+        levelWonFunctions.push(f);
+
+        return () => {
+            levelWonFunctions = levelWonFunctions.filter((d) => d !== f);
         };
     }
 
@@ -226,6 +244,8 @@ export namespace GameLoop {
         // Finally we finish with drawing foreground stuff. The status bar for one, and the game border
         // are both foreground and render over anything.
         foregroundDrawFunctions.forEach((f) => f());
+
+        levelWonFunctions.forEach((f) => f());
 
         // Some debugging functions.
         const { debuggingState } = appState();

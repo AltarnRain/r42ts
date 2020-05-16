@@ -20,7 +20,7 @@ export default interface GameState {
     /**
      * Current level
      */
-    level?: number;
+    level: number;
 
     /**
      * The player's remaining lives.

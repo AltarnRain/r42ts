@@ -13,7 +13,7 @@ export default interface ILevel {
     /**
      * Every level has a start method that sets up the level.
      */
-    begin(): void;
+    begin(): Promise<void>;
 
     /**
      * Every level has a dispose method where it can remove GameLoop subscriptions.
