@@ -22,10 +22,12 @@ import { registerListeners, unregisterListeners } from "./Utility/KeyboardEvents
 /**
  * Module:          GameLoop
  * Responsibility:  Handles all functions that should be called within the GameLoop.
+ *                  Is also responsible for registering required 'Runners' and disposing them
+ *                  When the game resets after game over.
  */
 
 /**
- * A handle for the main loop.
+ * A handle for the main loop. Used to cancel the animation loop;
  */
 let mainHandle: number | undefined;
 
@@ -39,6 +41,9 @@ let updateStateFunctions: TickFunction[] = [];
  */
 let backgroundDrawFunctions: Array<() => void> = [];
 
+/**
+ * Functions that perform foreground drawing.
+ */
 let foregroundDrawFunctions: Array<() => void> = [];
 
 /**
@@ -52,14 +57,33 @@ export namespace GameLoop {
      */
     export function start(): void {
 
+        // Register the statusBar runner. This render's lives, phasers, score, etc.
+        // This is a foreground draw process. Enemies will appear to pass under it.
         GameLoop.registerForegroundDrawing(drawStatusBar);
+
+        // Register the game field border. This is blue rectangle that surrounds every level
+        // Also a foreground drawing processess for the same reasons as the status bar.
         GameLoop.registerForegroundDrawing(drawGameFieldBorder);
+
+        // Register the player runner. The player runner keeps track of things the player does like shooting, moving, etc.
         GameLoop.registerUpdateState(playerRunner);
+
+        // Register the player spawn manager. The player spawn manager checks if the player has dies and
+        // which kind of warp in should occur.
         GameLoop.registerUpdateState(playerSpawnManager);
+
+        // Register the genericRunner. This runner handle explosion centers, shrapnell and bullet rending
+        // This can occur in any level which is why it is a seperate runner.
         GameLoop.registerUpdateState(genericRunner);
+
+        // Register the level progression runner. Keeps track if the next level should be
+        // started. Also keeps track of score increases that rewards a life and/or phaser.
         GameLoop.registerUpdateState(levelProgressionRunner);
+
+        // Register keyboard event listeners. Required for player movement.
         registerListeners();
 
+        // Everything is setup, lets begin the game loop.
         mainHandle = window.requestAnimationFrame(run);
     }
 
@@ -75,6 +99,7 @@ export namespace GameLoop {
         updateStateFunctions = [];
         backgroundDrawFunctions = [];
         drawFunctions = [];
+        foregroundDrawFunctions = [];
 
         unregisterListeners();
     }
@@ -94,8 +119,8 @@ export namespace GameLoop {
 
     /**
      * Register a function that draws the background.
-     * @param {function} f. Background draw function
-     * @returns {function}. Function to remove the background draw from the queue.
+     * @param {function} f. draw function
+     * @returns {function}. Function to remove the draw from the queue.
      */
     export function registerBackgroundDrawing(f: () => void): () => void {
         backgroundDrawFunctions.push(f);
@@ -106,9 +131,9 @@ export namespace GameLoop {
     }
 
     /**
-     * Register a function that draws the background.
-     * @param {function} f. Background draw function
-     * @returns {function}. Function to remove the background draw from the queue.
+     * Register a function that draws one the foreground.
+     * @param {function} f. draw function
+     * @returns {function}. Function to remove the draw function from the queue.
      */
     export function registerForegroundDrawing(f: () => void): () => void {
         foregroundDrawFunctions.push(f);
@@ -119,7 +144,7 @@ export namespace GameLoop {
     }
 
     /**
-     * Registers a function that is called once, but only if there is currently no render in progress.
+     * Registers a function that is called once.
      * @param {function} f. A function.
      */
     export function registerDraw(f: () => void): void {
@@ -131,24 +156,35 @@ export namespace GameLoop {
      * @param {number} tick. Current animation tick.
      */
     function run(tick: number): void {
+        // Requeue animation loop.
         mainHandle = window.requestAnimationFrame(run);
 
         const {
             gameState: { pause, gameOver, enemiesHit, bulletsFired, score, phasersFired }
         } = appState();
 
+        // Pausing means no state updates. Drawing will also stop but the CANVAS will not reset it self
+        // so it shows the last rendered image.
         if (pause) {
             return;
         }
 
+        // Player ran out of lives triggering a game over event.
         if (gameOver) {
 
-            // Stop the game loop.
+            // Stop everything.
             stop();
 
+            // Rester the state of the levelProgressionRunner.
             resetLevelProgression();
 
-            const hitPercentage = Math.round((enemiesHit / bulletsFired) * 100);
+            // Calculate how often the player hit an enemy.
+            let hitPercentage = Math.round((enemiesHit / bulletsFired) * 100);
+
+            // Don't show 'NaN' show 0.
+            if (isNaN(hitPercentage)) {
+                hitPercentage = 0;
+            }
 
             // Display some statistics.
             alert(`
@@ -157,24 +193,33 @@ export namespace GameLoop {
             Bullets fired: ${bulletsFired}.
             Phasers fired: ${phasersFired}.
             Enemies hit: ${enemiesHit}.
-            $ Hit: ${hitPercentage}
+            %Hit: ${hitPercentage}
             Click OK to restart from level 1`);
 
             // Reset the entire game.
+            // Player goes to its original spawn location.
             dispatch(setPlayerLocationData(Locations.Player.spawnLocation.left, Locations.Player.spawnLocation.top));
+
+            // Reset keyboard state so the player doesn't fly off when the game starts
             dispatch(resetKeyboardState());
+
+            // Player is no longer alive. This will trigger the PlayerSpawnManager to handle a formation.
             dispatch(setPlayerIsAlive(false));
-            start();
+
+            // Set the game state back to its starting values.
             dispatch(gameStart());
+
+            // Ok. all setup again, lets start the game loop.
+            start();
         }
 
-        // Always update the states. This will also register draw function (if required).
+        // Update the states. This will also register draw function (if required).
         updateStateFunctions.forEach((f) => f(tick));
 
         // Draw the back ground, other stuff is drawn over this so we render it first.
         backgroundDrawFunctions.forEach((f) => f());
 
-        // Now we go over the register draw functions
+        // Now we go over the registered draw functions drawing over the background.
         drawFunctions.forEach((f) => f());
         drawFunctions = [];
 
@@ -182,6 +227,7 @@ export namespace GameLoop {
         // are both foreground and render over anything.
         foregroundDrawFunctions.forEach((f) => f());
 
+        // Some debugging functions.
         const { debuggingState } = appState();
 
         if (debuggingState.drawHitboxes) {
