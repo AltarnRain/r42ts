@@ -53,8 +53,12 @@ export namespace EnemyLevelRunner {
         localState.enemies = newEnemies;
         dispatch(setTotalEnemies(newEnemies.length));
 
+        // Precoution. Ensure each enemy dispatches its state to the store
+        // This is not strictly required since the enemy level runner will
+        // activate while the player is forming an call update state
+        // for all enemies. However, when the game is over
+        // this can cause some 'issues'.
         newEnemies.forEach((e) => e.updateState(0));
-
     }
 
     export function addEnemy(newEnemy: BaseEnemy): void {
