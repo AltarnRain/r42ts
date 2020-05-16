@@ -51,67 +51,7 @@ When I finally made the transition the real work began.
 I decided I would not render the game to match the 160x120 resolution of the original game. My remake uses as 'game pixel' internally and attempts to render the animations as closely to the original as possible but in this version but there is a limit as far as I'm willing to go.
 
 
-# Level 01
-I'm happy about how the birds look and fly around. I did a frame by frame comparison and I think I got the animation right. I also setup the birds starting position to match the ones from the original game as close as I could.
-
-However, I'm not sure if the birds their movement angles are set at the beginning of the level or not. I initially thought they were random and that's how I implemented them. But when I compared two of my playthroughs I noticed the birds start in exactly the same position every time. This I added but I'm leaving the random directions. It's not a huge impact I think.
-
-# Level 02
-Ah, the robot enemies. I like the animation I managed to produce. It looks like the original game moved the robots down a pixel after they finished an animation sequence but I'm not doing that.
-
-My robots move down at a fixed angle and the animation you see is a location deviation from their actual position. As soon as their 'real' position goes below a certain threshhold they go to the top of the screen.
-
-In the original game the robots (and other enemies) would bounce up and down a few times before continuing downwards. I tried to mimic this effect but for these enemies it proved rather problematic because their downward movement is slow and if you're not careful you'll pop up and down all over the place.
-
-# Level 03
-Now this level I am happy about. This was the level I reallllllyy got stuck on as a kid. Not surprising as this these enemies (Orbs) shoot to kill. Yes, they aim.
-
-At no point are there more than 5 bullets on screen but the original game picks the 5 most likely orbs to hit you and has them fire a bullet.
-
-Now that was fun to figure out :)
-
-In my version the orbs will shoot to kill. Also, there's a slight change that they will shoot directly at you. This chance goes up as you kill them. I am not sure how the original game handled this but I am happy with the result.
-
-# Level 04 - The first warp level
-Wow, now this was cool to code but now that I'm finished I'm litteraly finished with every warp level in the game.
-
-One thing I didn't do (but might) is the random starting point. I didn't see the value of it so warp levels in the remake will have you spawn center screen.
-
-# Level 05 - Spinners
-They move from left to right nicely and use the same bullet shooting behaviour of the obs.
-
-# Level 06 - Balloons
-These enemies always reminded me of balloons! They jiggle around but you can clearly tell the game runs at a much higher rez then the original.
-Still, their shooting behaviour looks good, animation is spot on and.
-
-# Level 07 - First asteroids
-Very happy about the result. You'll have 7 ish asteroids to content with. If you damage and enemy it will reappear for you to kill later just like the original game. Though, it might have a new angle and speed. I can live with that. This level takes 20 seconds to complete. Seems about the right time when I look at the original.
-
-# Level 08 - Warp
-The nice this about algorithms is that if they work right they do the work for you. Easy level :)
-
-# Level 09 - Pistons
-These enemies remind me of a piston. I still need to do their movement right and write some code to make them shoot like the OG. Other than that, looking good.
-
-# Done
-1. Adding and removing lives
-1. Phaser hits a random target and pauses the game for a second so you can revel in its awsomenes.
-1. When the player warps in and there's enemies on screen you can alter your warp in location
-1. When the player warps in and there's no enemies on screen you warp in instantly.
-1. You can win a level and transition to the next.
-1. A phaser is awarded when you complete a level
-1. A life and phaser is awarded each 7500 points.
-1. Level 01 with birds
-1. Level 02 with robots
-1. Level 03 with orbs.
-1. Level 04, warp and all warps.
-
 # TODO
-* Lots more levels
-  * This also means a lot of 'bitmaps' but they're pretty simple.
-* Game over. Seriously, you can die but you never lose the game.
-* Keeping track of bullets shot by the player. Original game did this
-* Keeping track of hits.
 * Sounds
   * Plan on using original sounds but...
     * I might try my hand at the AudioContext's API for generating beeps and bops.
