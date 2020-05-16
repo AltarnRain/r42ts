@@ -463,7 +463,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
 
             const { frames } = getCloakingOrbOffsetFrames();
             // const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(frames));
-            const frameProvider = new OneFrameProvider(0);
+            const frameProvider = new OneFrameProvider(1);
 
             // 2nd to last frame is completely invisible. That's when the orb can switch location
             // It will appear 'invisible' on its new location and reappear.
