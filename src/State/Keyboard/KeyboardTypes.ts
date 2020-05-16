@@ -22,4 +22,8 @@ export interface KeyDown {
     payload: GameKeys;
 }
 
-export type KeyboardTypes = KeyUp | KeyDown;
+export interface Reset {
+    type: typeof Constants.resetKeyboardState;
+}
+
+export type KeyboardTypes = KeyUp | KeyDown | Reset;

@@ -11,7 +11,7 @@
 
 import { GameKeys } from "../../Utility/KeyboardEvents";
 import Constants from "./KeyboardConstants";
-import { KeyDown, KeyUp } from "./KeyboardTypes";
+import { KeyDown, KeyUp, Reset } from "./KeyboardTypes";
 
 export function keyDown(key: GameKeys): KeyDown {
     return {
@@ -24,5 +24,11 @@ export function keyUp(key: GameKeys): KeyUp {
     return {
         type: Constants.keyup,
         payload: key
+    };
+}
+
+export function resetKeyboardState(): Reset {
+    return {
+        type: Constants.resetKeyboardState,
     };
 }

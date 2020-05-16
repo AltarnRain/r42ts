@@ -41,4 +41,24 @@ export default interface GameState {
      * The complexity of a warp level.
      */
     warpLevelSteps: WarpLevelSteps;
+
+    /**
+     * Flag that triggers the game over event.
+     */
+    gameOver: boolean;
+
+    /**
+     * The number of bullets the player fired of the course of the game
+     */
+    bulletsFired: number;
+
+    /**
+     * Number of phasers the player used/.
+     */
+    phasersFired: number;
+
+    /**
+     * The number of enemies the player hit in total.
+     */
+    enemiesHit: number;
 }

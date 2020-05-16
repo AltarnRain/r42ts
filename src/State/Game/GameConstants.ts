@@ -23,6 +23,11 @@ namespace Constants {
     export const removePhaser = "removePhaser";
     export const setPause = "setPause";
     export const setWarpLevelComplexity = "setWarpLevelComplexity";
+    export const gameOver = "gameOver";
+    export const gameStart = "gameStart";
+    export const bulletFired = "bulletFired";
+    export const phasersFired = "phasersFired";
+    export const enemyHit = "enemyHit";
 }
 
 export default Constants;

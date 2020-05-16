@@ -16,7 +16,7 @@ import { appState, appStore, dispatch } from "../State/Store";
 import { levelFactory } from "./LevelFactory";
 
 // Used to track changes in level
-let levelNumber: number;
+let levelNumber: number | undefined;
 
 // Current level object.
 let currentLevel: ILevel | undefined;
@@ -27,11 +27,17 @@ let currentScore = 0;
 /**
  * Lazy load a subscription to the redux store.
  */
-export default function subscribeToStoreChanges(): void {
+export default function subscribeToStoreChanges(): () => void {
 
     // We'll monitor changes in the state on which we ant to act.
-    appStore().subscribe(() => {
+    return appStore().subscribe(() => {
         const { gameState } = appState();
+
+        if (gameState.gameOver) {
+            currentScore = 0;
+            levelNumber = undefined;
+            return;
+        }
 
         // Handle level change acting on a change in level.
         if (gameState.level !== undefined && levelNumber !== gameState.level) {

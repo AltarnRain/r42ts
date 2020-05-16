@@ -10,7 +10,6 @@ import { drawBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
 import { enemyLevelContentFactory } from "../Providers/EnemyLevelContentProvider";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
-import { resetLevelState } from "../State/EnemyLevel/EnemyLevelActions";
 import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import handleLevelWon from "../StateHandlers/HandleLevelWon";
@@ -95,7 +94,6 @@ export default class EnemyLevel implements ILevel {
      * Disposes subscriptions
      */
     public dispose(): void {
-        dispatch(resetLevelState());
         // The subscription array contains functions that remove themselves
         // from the GameLoop. Call all of them to remove them from the GameLoop.
         this.subscriptions.forEach((s) => s());

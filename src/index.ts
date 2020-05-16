@@ -5,20 +5,13 @@
  */
 
 import GameLoop from "./GameLoop";
-import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
-import { drawStatusBar } from "./GameScreen/StatusBar";
-import subscribeToStoreChanges from "./Levels/SubscribeToStore";
-import playerSpawnManager from "./Player/PlayerSpawnManager";
 import dimensionProvider from "./Providers/DimensionProvider";
 import ctxProvider from "./Render/CtxProvider";
-import genericRunner from "./Runners/GenericRunner";
-import playerRunner from "./Runners/PlayerRunner";
 import { setDebuggingState } from "./State/Debugging/DebuggingActions";
 import DebuggingState from "./State/Debugging/DebuggingState";
-import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers, setWarpGamteComplexity } from "./State/Game/GameActions";
+import { addPhaser, gameStart, increaseScore, nextLevel, setLevel, setLives, setPhasers, setWarpGamteComplexity } from "./State/Game/GameActions";
 import { WarpLevelComplexity } from "./State/Game/WarpLevelTypes";
 import { dispatch } from "./State/Store";
-import { registerListeners } from "./Utility/KeyboardEvents";
 import { getURLQueryKVPs } from "./Utility/Lib";
 
 /**
@@ -51,8 +44,6 @@ window.onload = () => {
                 level = "0";
             }
 
-            startEssential();
-
             dispatch(setLives(900));
             dispatch(setPhasers(900));
 
@@ -60,7 +51,7 @@ window.onload = () => {
                 dispatch(setLevel(parseInt(level, 10)));
             }
 
-            GameLoop.Start();
+            GameLoop.start();
 
             if (immortal) {
                 debuggingState.playerIsImmortal = true;
@@ -102,28 +93,12 @@ window.onload = () => {
 
             (window as any).r42 = ctx;
         } else {
-            startGame();
+            begin();
         }
     }
 };
 
-function startGame(): void {
-
-    startEssential();
-    dispatch(setPhasers(1));
-    dispatch(setLives(2));
-
-    dispatch(setLevel(1));
-    GameLoop.Start();
-}
-
-function startEssential() {
-    subscribeToStoreChanges();
-    registerListeners();
-
-    GameLoop.registerForegroundDrawing(drawStatusBar);
-    GameLoop.registerForegroundDrawing(drawGameFieldBorder);
-    GameLoop.registerUpdateState(playerRunner);
-    GameLoop.registerUpdateState(playerSpawnManager);
-    GameLoop.registerUpdateState(genericRunner);
+function begin(): void {
+    dispatch(gameStart());
+    GameLoop.start();
 }

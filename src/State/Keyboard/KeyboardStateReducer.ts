@@ -31,33 +31,43 @@ export default function keyboardStateReducer(state: KeyboardState = initState(),
             keyDown = false;
         }
 
-        switch (action.payload) {
-            case undefined:
-                break;
-            case Constants.arrowUp:
-                draft.up = keyDown;
-                break;
-            case Constants.arrowDown:
-                draft.down = keyDown;
-                break;
-            case Constants.arrowLeft:
-                draft.left = keyDown;
-                break;
-            case Constants.arrowRight:
-                draft.right = keyDown;
-                break;
-            case Constants.backspace:
-                draft.selfDestruct = keyDown;
-                break;
-            case Constants.f1:
-                draft.fire = keyDown;
-                break;
-            case Constants.f2:
-                draft.phraser = keyDown;
-                break;
-            case Constants.space:
-                draft.space = keyDown;
-                break;
+        if (action.type === Constants.resetKeyboardState) {
+            draft.left = false;
+            draft.right = false;
+            draft.up = false;
+            draft.down = false;
+            draft.fire = false;
+            draft.selfDestruct = false;
+            draft.phraser = false;
+        } else {
+            switch (action.payload) {
+                case undefined:
+                    break;
+                case Constants.arrowUp:
+                    draft.up = keyDown;
+                    break;
+                case Constants.arrowDown:
+                    draft.down = keyDown;
+                    break;
+                case Constants.arrowLeft:
+                    draft.left = keyDown;
+                    break;
+                case Constants.arrowRight:
+                    draft.right = keyDown;
+                    break;
+                case Constants.backspace:
+                    draft.selfDestruct = keyDown;
+                    break;
+                case Constants.f1:
+                    draft.fire = keyDown;
+                    break;
+                case Constants.f2:
+                    draft.phraser = keyDown;
+                    break;
+                case Constants.space:
+                    draft.space = keyDown;
+                    break;
+            }
         }
     });
 }

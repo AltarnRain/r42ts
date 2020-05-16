@@ -70,6 +70,26 @@ export interface SetWarpGateComplexity {
     complexity: WarpLevelComplexity;
 }
 
+export interface GameOver {
+    type: typeof Constants.gameOver;
+}
+
+export interface GameStart {
+    type: typeof Constants.gameStart;
+}
+
+export interface BulletFired {
+    type: typeof Constants.bulletFired;
+}
+
+export interface PhaserFired {
+    type: typeof Constants.phasersFired;
+}
+
+export interface EnemyHit {
+    type: typeof Constants.enemyHit;
+}
+
 export type GameStateTypes =
     IncreaseScore |
     SetLives |
@@ -83,5 +103,10 @@ export type GameStateTypes =
     NextLevel |
     AddLifeAndPhaser |
     SetPause |
-    SetWarpGateComplexity
+    SetWarpGateComplexity |
+    GameOver |
+    GameStart |
+    BulletFired |
+    PhaserFired |
+    EnemyHit
     ;

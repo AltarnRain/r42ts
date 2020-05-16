@@ -71,6 +71,27 @@ export default function gameStateReducer(state: GameState = initState(), action:
             case Constants.setWarpLevelComplexity:
                 draft.warpLevelSteps = getWarpGateComplexity(action.complexity);
                 break;
+            case Constants.gameOver:
+                draft.gameOver = true;
+                break;
+            case Constants.gameStart:
+                draft.gameOver = false;
+                draft.phasers = 1;
+                draft.lives = 0;
+                draft.level = 1;
+                draft.bulletsFired = 0;
+                draft.enemiesHit = 0;
+                draft.phasersFired = 0;
+                break;
+            case Constants.enemyHit:
+                draft.enemiesHit++;
+                break;
+            case Constants.phasersFired:
+                draft.phasersFired++;
+                break;
+            case Constants.bulletFired:
+                draft.bulletsFired++;
+                break;
         }
     });
 }
@@ -87,5 +108,9 @@ function initState(): GameState {
         phasers: 0,
         pause: false,
         warpLevelSteps: getWarpGateComplexity(0),
+        gameOver: false,
+        bulletsFired: 0,
+        enemiesHit: 0,
+        phasersFired: 0
     };
 }

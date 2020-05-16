@@ -12,7 +12,7 @@ import { playerIsHit } from "../Player/PlayerHelper";
 import renderFrame from "../Render/RenderFrame";
 import { clearPhaserLocations, removeEnemy, setPhaserLocations, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
-import { increaseScore, removePhaser, setPause } from "../State/Game/GameActions";
+import { increaseScore, phaserFired, removePhaser, setPause, enemeyHit as enemyHit } from "../State/Game/GameActions";
 import { ParticleState } from "../State/Player/ParticleState";
 import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
@@ -52,6 +52,9 @@ export namespace EnemyLevelRunner {
     export function setEnemies(newEnemies: BaseEnemy[]): void {
         localState.enemies = newEnemies;
         dispatch(setTotalEnemies(newEnemies.length));
+
+        newEnemies.forEach((e) => e.updateState(0));
+
     }
 
     export function addEnemy(newEnemy: BaseEnemy): void {
@@ -145,6 +148,9 @@ function handleEnemyHitByplayer(tick: number, hitEnemy: EnemyState): void {
     } else {
         const enemy = localState.enemies.find((e) => e.getId() === hitEnemy.enemyId);
         if (enemy) {
+            // Keep track how often the player hits an enemy.
+            // A hit is a hit, even if the enemy is not detroyed.
+            dispatch(enemyHit());
             enemy.recudeHitpoints();
         }
     }
@@ -228,6 +234,9 @@ function handleEnemyDestruction(tick: number, enemy: EnemyState, awardPoints = t
     if (awardPoints) {
         dispatch(increaseScore(enemy.points));
     }
+
+    // Keep track how often the player hits an enemy.
+    dispatch(enemyHit());
 }
 
 /**
@@ -251,6 +260,9 @@ function handlePhaser(tick: number): void {
             dispatch(removePhaser());
             const phaserLocations = getPhaserLocations(playerNozzleLocation.left, playerNozzleLocation.top, randomEnemyCenter.left, randomEnemyCenter.top);
             dispatch(setPhaserLocations(phaserLocations));
+
+            // Keep track how often the player used the phaser.
+            dispatch(phaserFired());
 
             // Pause the game for a very brief period. This is what the original game did
             // when you fired a phasor shot.

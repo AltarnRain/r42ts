@@ -18,6 +18,7 @@ import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { getFrameHitbox } from "../Utility/Frame";
 import { fallsWithinGameField, getLocation } from "../Utility/Location";
+import { bulletFired } from "../State/Game/GameActions";
 
 /**
  * Module:          PlayerRunner
@@ -64,6 +65,9 @@ function handlePlayerBulletFiring(): void {
         const nozzleLocation = playerState.nozzleLocation;
         const bullet = getPlayerBullet(nozzleLocation.left, nozzleLocation.top);
         dispatch(setPlayerBulletState(bullet));
+
+        // Keep track how many bullets the player fired.
+        dispatch(bulletFired());
     }
 }
 

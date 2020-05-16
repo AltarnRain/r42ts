@@ -22,6 +22,7 @@ namespace Constants {
     export const space: GameKeys = "Space";
     export const keyup = "KeyUp";
     export const keydown = "KeyDown";
+    export const resetKeyboardState = "resetKeyboardState";
 }
 
 export default Constants;

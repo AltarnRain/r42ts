@@ -9,7 +9,7 @@
  * Responsibility:  Performs the required dispatches when the player dies.
  */
 
-import { removeLife, setPhasers } from "../State/Game/GameActions";
+import { removeLife, setPhasers, gameOver } from "../State/Game/GameActions";
 import { setPlayerBulletState, setPlayerIsAlive } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { dispatchExplosion } from "./DispatchExplosion";
@@ -20,7 +20,12 @@ import { dispatchExplosion } from "./DispatchExplosion";
  */
 export function handlePlayerDeath(tick: number): void {
 
-    const { playerState: { left, top, coloredExplosion }, debuggingState, enemyLevelState: {enemies, totalNumberOfEnemies} } = appState();
+    const {
+        gameState: { lives },
+        playerState: { left, top, coloredExplosion },
+        debuggingState,
+        enemyLevelState: { enemies, totalNumberOfEnemies }
+    } = appState();
 
     // Don't let the player die once they've killed all enemies.
     if (debuggingState.playerIsImmortal || enemies.length === 0 && totalNumberOfEnemies > 0) {
@@ -29,8 +34,12 @@ export function handlePlayerDeath(tick: number): void {
 
     dispatchExplosion(left, top, coloredExplosion, tick);
 
-    dispatch(removeLife());
-    dispatch(setPlayerIsAlive(false));
-    dispatch(setPlayerBulletState(undefined));
-    dispatch(setPhasers(1));
+    if (lives === 0) {
+        dispatch(gameOver());
+    } else {
+        dispatch(removeLife());
+        dispatch(setPlayerIsAlive(false));
+        dispatch(setPlayerBulletState(undefined));
+        dispatch(setPhasers(1));
+    }
 }
