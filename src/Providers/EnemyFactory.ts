@@ -54,6 +54,7 @@ import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import { coinFlip } from "../Utility/Lib";
 import dimensionProvider from "./DimensionProvider";
+import { FishEnemy } from "../Enemies/Fish/FishEnemy";
 
 /**
  * Module:          EnemyFactory
@@ -471,7 +472,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
                 Locations.Devil.maxBottom);
 
             // fish enemy doesn't have frame times, it picks its frame based on where it is heading.
-            return new DirectionFrameEnemy(
+            return new FishEnemy(
                 Points.fish,
                 getFishOffsetFrames,
                 getExplosion02,

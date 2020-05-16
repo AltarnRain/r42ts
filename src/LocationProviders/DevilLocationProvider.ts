@@ -10,7 +10,7 @@ import ILocationDirectionProvider from "../Interfaces/ILocationDirectionProvider
 import { GameLocation } from "../Models/GameLocation";
 import { appState } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
-import { getLeftOrRightFromAngle } from "../Utility/Geometry";
+import { getLeftOrRightFromAngle, getUpOrDownFromAngle } from "../Utility/Geometry";
 import { getLocation, getNextLocationAndAngle } from "../Utility/Location";
 
 /**
@@ -43,11 +43,25 @@ export default class DevilLocationProvider implements ILocationDirectionProvider
     }
 
     /**
+     * Returns true if the enemy is attacking or recovering. Used to determine if the enemy should
+     * @returns {boolean}.
+     */
+    public isAttacking(): boolean {
+        return this.attacking || this.recovering;
+    }
+
+    /**
      * Returns the direction the enemy is heading. User to show the moving left or right frame.
      * @returns {"left" | "right" | undefined}. Can be undefined. An straight up or down angle is not going left or right.
      */
-    public getDirection(): "left" | "right" | undefined {
-        return getLeftOrRightFromAngle(this.angle);
+    public getDirection(): "left" | "right" | "up" | "down" | undefined {
+        let direction: "left" | "right" | "up" | "down" | undefined = getLeftOrRightFromAngle(this.angle);
+
+        if (direction === undefined) {
+            direction = getUpOrDownFromAngle(this.angle);
+        }
+
+        return direction;
     }
 
     /**

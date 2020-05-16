@@ -6,7 +6,6 @@
 
 import BaseEnemy from "../Base/BaseEnemy";
 import BaseFrameProvider from "../Base/BaseFrameProvider";
-import { Points } from "../Constants/Constants";
 import ILocationDirectionProvider from "../Interfaces/ILocationDirectionProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
@@ -21,7 +20,7 @@ export default class DirectionFrameEnemy extends BaseEnemy {
     /**
      * A location provider than also provides a method that gives the general direction: left or right.
      */
-    private locationDirecntionProvider: ILocationDirectionProvider;
+    protected locationDirectionProvider: ILocationDirectionProvider;
 
     /**
      * Constuct the devil.
@@ -42,17 +41,17 @@ export default class DirectionFrameEnemy extends BaseEnemy {
         Mutators.Frame.convertHexToCGA(this.explosion.explosionCenterFrame);
         this.explosion.particleFrames.forEach((pf) => Mutators.Frame.convertHexToCGA(pf));
 
-        this.locationDirecntionProvider = locationProvider;
+        this.locationDirectionProvider = locationProvider;
     }
 
     public beforeDispatch(): void {
-        if (this.locationDirecntionProvider.getDirection() === "left") {
+        if (this.locationDirectionProvider.getDirection() === "left") {
             // Frame going left is index 0, there's two frames so a get next frames switches to the
             // frame of the devil heading right.
             if (this.frameProvider.getCurrentIndex() !== 0) {
                 this.frameProvider.getNextFrame();
             }
-        } else if (this.locationDirecntionProvider.getDirection() === "right") {
+        } else if (this.locationDirectionProvider.getDirection() === "right") {
             // Frame going left is index 0, there's two frames so a get next frames switches to the
             // frame of the devil heading right.
             if (this.frameProvider.getCurrentIndex() !== 1) {

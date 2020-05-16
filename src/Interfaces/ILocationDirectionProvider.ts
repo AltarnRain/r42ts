@@ -12,5 +12,7 @@ import ILocationProvider from "./ILocationProvider";
  */
 
 export default interface ILocationDirectionProvider extends ILocationProvider {
-    getDirection(): "left" | "right" | undefined;
+    getDirection(): "left" | "right" | "up" | "down" | undefined;
+
+    isAttacking(): boolean;
 }
