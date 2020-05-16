@@ -5,17 +5,12 @@
  */
 
 import BaseLocationProvider from "../Base/BaseLocationProvider";
-import dimensionProvider from "../Providers/DimensionProvider";
 import { getNextLocationWithinBoundaries } from "../Utility/Location";
 
 /**
  * Module:          Left to right, then left.
  * Responsibility:  Location provider for enemies that move from left to right and up then down.
  */
-
-const {
-    gameField
-} = dimensionProvider();
 
 export default class SideAppearOtherSide extends BaseLocationProvider {
     constructor(

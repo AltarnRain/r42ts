@@ -17,7 +17,7 @@ import firstEnemyOccasionalDown from "../ShipsToFireProviders/FirstEnemyOccasion
 import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
 import elevenInALine from "../SpawnLocations/ElevennInALine";
 import getRandomSpawnLocations from "../SpawnLocations/GetRandomSpawnLocations";
-import sevenSixSevnrGridProvider from "../SpawnLocations/SevenSixSevenGridProvider";
+import sevenSixSevenGridProvider from "../SpawnLocations/SevenSixSevenGridProvider";
 import { Enemies } from "../Types";
 import dimensionProvider from "./DimensionProvider";
 import enemyFactory from "./EnemyFactory";
@@ -35,7 +35,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
     switch (enemy) {
         case "bird":
         case "bird-fire": {
-            const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
+            const enemies = sevenSixSevenGridProvider().map((location) => enemyFactory(enemy, location));
 
             let bulletRunner: BulletRunner | undefined;
 
@@ -84,7 +84,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "spinner": {
 
-            const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
+            const enemies = sevenSixSevenGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.white, Speeds.Bullets.spinner, maxFiveDiagonal);
 
             return {
@@ -95,7 +95,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "balloon": {
 
-            const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
+            const enemies = sevenSixSevenGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.blue, Speeds.Bullets.balloon, maxFiveDiagonal);
 
             return {
@@ -128,7 +128,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "diabolo": {
-            const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
+            const enemies = sevenSixSevenGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.yellow, Speeds.Bullets.diabolo, maxFiveDiagonal);
 
             return {
@@ -152,7 +152,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
 
         case "devil": {
 
-            const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
+            const enemies = sevenSixSevenGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.lightGreen, Speeds.Bullets.devil, (tick) => fireDownAimed(tick, 3));
 
             return {
@@ -171,7 +171,7 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "bat": {
-            const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
+            const enemies = sevenSixSevenGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.yellow, Speeds.Bullets.bat, maxFiveDiagonal);
 
             return {
@@ -204,17 +204,16 @@ export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: Bulle
         }
 
         case "fish": {
-            const enemies = sevenSixSevnrGridProvider().map((location) => enemyFactory(enemy, location));
+            const enemies = sevenSixSevenGridProvider().map((location) => enemyFactory(enemy, location));
 
             // Frames 0, 1, 2 are when the orb is fully vibisble. This is the only time this enemy is allowed to fire.
             // After all, it's going to look pretty weird when bullets appear out of thin air.
             const bulletRunner = new BulletRunner(CGAColors.lightGreen, Speeds.Bullets.fish, (tick) => fireDownAimed(tick, 5, [0, 1]));
 
             return {
-                enemies: [enemies[0]],
+                enemies,
                 bulletRunner,
             };
-
         }
 
         default:

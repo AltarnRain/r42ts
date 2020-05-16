@@ -24,7 +24,6 @@ import { padLeft } from "../Utility/String";
 const ctx = ctxProvider();
 
 const {
-    statusBarBottom,
     pixelSize,
     fullGameWidth
 } = dimensionProvider();

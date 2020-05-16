@@ -6,7 +6,6 @@
  */
 
 import Explosion from "../Models/Explosion";
-import Mutators from "../Utility/FrameMutators";
 
 /**
  * Module:          Explosion03.

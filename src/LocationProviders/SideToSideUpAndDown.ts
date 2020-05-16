@@ -6,17 +6,12 @@
 
 import BaseLocationProvider from "../Base/BaseLocationProvider";
 import ILocationProvider from "../Interfaces/ILocationProvider";
-import dimensionProvider from "../Providers/DimensionProvider";
 import { getNextLocationAndAngle } from "../Utility/Location";
 
 /**
  * Module:          SideToSideUpAndDown
  * Responsibility:  Location provider for enemies that move from left to right and up then down.
  */
-
-const {
-    gameField,
-} = dimensionProvider();
 
 export default class SideToSideUpAndDownLocationProvider extends BaseLocationProvider implements ILocationProvider {
 

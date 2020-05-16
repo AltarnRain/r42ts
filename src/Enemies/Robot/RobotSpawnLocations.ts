@@ -7,8 +7,6 @@
 import { Locations } from "../../Constants/Constants";
 import { GameLocation } from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
-import { getFrameDimensions } from "../../Utility/Frame";
-import getRobotOffsetFrames from "./GetRobotOffsetFrames";
 
 /**
  * Module:          RobotSpawnLocations

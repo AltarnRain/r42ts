@@ -9,7 +9,6 @@ import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import getPhaserLocations from "../Player/GetPhaserLocations";
 import { playerIsHit } from "../Player/PlayerHelper";
-import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import { clearPhaserLocations, removeEnemy, setPhaserLocations, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
@@ -39,10 +38,6 @@ const localState: { enemies: BaseEnemy[] } = {
 const phaserFrame: Frame = [
     [CGAColors.yellow, CGAColors.yellow]
 ];
-
-const {
-    pixelSize
-} = dimensionProvider();
 
 export namespace EnemyLevelRunner {
     /**

@@ -4,10 +4,8 @@
  * See LICENSE.MD.
  */
 
-import dimensionProvider from "../Providers/DimensionProvider";
 import getTwoPixelBullet from "../SharedFrames/GetTwoPixelBullet";
-import { addBullet, addOrUpdateEnemy, setEnemyLastFireTick } from "../State/EnemyLevel/EnemyLevelActions";
-import { EnemyState } from "../State/EnemyLevel/EnemyState";
+import { addBullet, setEnemyLastFireTick } from "../State/EnemyLevel/EnemyLevelActions";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { Frame, ShipsToFireFunction } from "../Types";
@@ -17,10 +15,6 @@ import Mutators from "../Utility/FrameMutators";
  * Module:          StraightDownBulletProvider
  * Responsibility:  Shoots a bullet straight down
  */
-
-const {
-    pixelSize
-} = dimensionProvider();
 
 /**
  * Class the handles al bullet business.
