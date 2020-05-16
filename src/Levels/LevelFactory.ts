@@ -11,7 +11,7 @@
 
 import ILevel from "../Interfaces/ILevel";
 import { setWarpGamteComplexity as setWarpGameComplexity } from "../State/Game/GameActions";
-import { dispatch, appState } from "../State/Store";
+import { appState, dispatch } from "../State/Store";
 import EnemyLevel from "./EnemyLevel";
 import { TimeLimitLevel } from "./TimeLimitLevel";
 import WarpLevel from "./WarpLevel";

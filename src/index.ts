@@ -9,7 +9,7 @@ import dimensionProvider from "./Providers/DimensionProvider";
 import ctxProvider from "./Render/CtxProvider";
 import { setDebuggingState } from "./State/Debugging/DebuggingActions";
 import DebuggingState from "./State/Debugging/DebuggingState";
-import { addPhaser, gameStart, increaseScore, nextLevel, setLevel, setLives, setPhasers, setWarpGamteComplexity, setTimeLevelTimeLimit } from "./State/Game/GameActions";
+import { addPhaser, gameStart, increaseScore, nextLevel, setLevel, setLives, setPhasers, setTimeLevelTimeLimit, setWarpGamteComplexity } from "./State/Game/GameActions";
 import { WarpLevelComplexity } from "./State/Game/WarpLevelTypes";
 import { dispatch } from "./State/Store";
 import { getURLQueryKVPs } from "./Utility/Lib";

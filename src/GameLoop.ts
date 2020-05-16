@@ -236,7 +236,7 @@ export namespace GameLoop {
 
         // Now we check if changes to the state means the player has won the level
         // this HAS to be done in a new function because mixing then with regular state
-        // update function has... interesting effects. 
+        // update function has... interesting effects.
         levelWonFunctions.forEach((f) => f());
 
         // Draw the back ground, other stuff is drawn over this so we render it first.
