@@ -9,7 +9,7 @@ import { getPlayerFrame } from "../Player/PlayerFrames";
 import dimensionProvider from "../Providers/DimensionProvider";
 import ctxProvider from "../Render/CtxProvider";
 import renderFrame from "../Render/RenderFrame";
-import getNumbers from "../SharedFrames/Numbers";
+import getNumbers from "../SharedFrames/GetNumbers";
 import { appState } from "../State/Store";
 import { Frame } from "../Types";
 import { getFrameByIndex, getFrameDimensions } from "../Utility/Frame";

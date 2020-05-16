@@ -44,11 +44,11 @@ import SideAppearOtherSideVariesSpeed from "../LocationProviders/SideAppearOther
 import SideToSideUpAndDown from "../LocationProviders/SideToSideUpAndDown";
 import Wobble from "../LocationProviders/Wobble";
 import { GameLocation } from "../Models/GameLocation";
-import getExplosion01 from "../SharedFrames/Explosion01";
-import getExplosion02 from "../SharedFrames/Explosion02";
-import getExplosion03 from "../SharedFrames/Explosion03";
-import getExplosion04 from "../SharedFrames/Explosion04";
-import getExplosion05 from "../SharedFrames/Explosion05";
+import getExplosion01 from "../SharedFrames/GetExplosion01";
+import getExplosion02 from "../SharedFrames/GetExplosion02";
+import getExplosion03 from "../SharedFrames/GetExplosion03";
+import getExplosion04 from "../SharedFrames/GetExplosion04";
+import getExplosion05 from "../SharedFrames/GetExplosion05";
 import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";

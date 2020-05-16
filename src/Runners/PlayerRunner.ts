@@ -11,7 +11,7 @@ import GameLoop from "../GameLoop";
 import { playerMovementHandler } from "../Handlers/PlayerMovementHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
-import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
+import getTwoPixelBullet from "../SharedFrames/GetTwoPixelBullet";
 import { ParticleState } from "../State/Player/ParticleState";
 import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { StateProviders } from "../State/StateProviders";

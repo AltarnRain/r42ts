@@ -5,7 +5,7 @@
  */
 
 import dimensionProvider from "../Providers/DimensionProvider";
-import getTwoPixelBullet from "../SharedFrames/twoPXBullet";
+import getTwoPixelBullet from "../SharedFrames/GetTwoPixelBullet";
 import { addBullet, addOrUpdateEnemy, setEnemyLastFireTick } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { StateProviders } from "../State/StateProviders";
