@@ -26,6 +26,7 @@ export function levelFactory(level: number): ILevel {
     const {
         gameState: { hardMode }
     } = appState();
+
     switch (level) {
         case 0:
             // Test level
