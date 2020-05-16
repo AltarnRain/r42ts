@@ -36,7 +36,7 @@ import BackAndForthFrameProvider from "../FrameProviders/BackAndForthFrameProvid
 import CircleFrameProvider from "../FrameProviders/CircleFrameProvider";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import SideToSideUpAndDown from "../LocationProviders/AngleBounceLocationProvider";
-import DevilLocationProvider from "../LocationProviders/AttackerLocationProvider";
+import AttackerLocationProvider from "../LocationProviders/AttackerLocationProvider";
 import CloakingOrbLocationProvider from "../LocationProviders/CloakingOrbLocationProvider";
 import CrabLocationProvider from "../LocationProviders/CrabLocationProvider";
 import MoveToUpDownMaxThenReset from "../LocationProviders/MoveToMaxThenReset";
@@ -326,7 +326,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             const { maxSizes: { width, height }, frames } = getDevilOffsetFrames();
             const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
 
-            const locationProvider = new DevilLocationProvider(
+            const locationProvider = new AttackerLocationProvider(
                 location.left,
                 location.top,
                 Speeds.Movement.devil,
@@ -461,7 +461,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             const { maxSizes: { width, height }, frames } = getFishOffsetFrames();
             const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
 
-            const locationProvider = new DevilLocationProvider(
+            const locationProvider = new AttackerLocationProvider(
                 location.left,
                 location.top,
                 Speeds.Movement.devil,

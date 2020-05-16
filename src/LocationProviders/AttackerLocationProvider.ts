@@ -20,7 +20,7 @@ import { getLocation, getNextLocationAndAngle } from "../Utility/Location";
  *                  It picks a random angle when it hits the top screen.
  */
 
-export default class DevilLocationProvider implements ILocationDirectionProvider {
+export default class AttackerLocationProvider implements ILocationDirectionProvider {
 
     /**
      * Base speed. Set to the inital speed. Used to calculate speed increase.
