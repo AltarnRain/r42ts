@@ -108,12 +108,14 @@ export function levelFactory(level: number): ILevel | undefined {
             return new WarpLevel();
         case 36:
         case 37:
+            dispatch(setWarpGameComplexity(8));
             return new WarpLevel();
         case 38:
             return new EnemyLevel("spinner");
         case 39:
         case 40:
         case 41:
+            dispatch(setWarpGameComplexity(8));
             return new WarpLevel();
         case 42:
             return new EnemyLevel("fish");

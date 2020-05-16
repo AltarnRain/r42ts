@@ -27,7 +27,7 @@ const {
 const doublePixel = pixelSize * 2;
 
 // The player's hitbox is a bit smaller than the actual ship. This feels better when playing the game.
-const playerHitboxAdjustment = pixelSize * 0.3;
+const playerHitboxAdjustment = pixelSize * 0.5;
 
 const {
     width: playerWidth,

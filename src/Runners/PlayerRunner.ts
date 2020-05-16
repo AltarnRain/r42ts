@@ -50,7 +50,7 @@ function updateState(): void {
         return;
     }
 
-    playerMovementHandler(10);
+    playerMovementHandler(Speeds.Movement.Player.aliveSpeed);
 
     handlePlayerBulletMovement();
     handlePlayerBulletFiring();

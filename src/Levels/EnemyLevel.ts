@@ -14,6 +14,7 @@ import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import handleLevelWon from "../StateHandlers/HandleLevelWon";
 import { Enemies } from "../Types";
+import { resetLevelState } from "../State/EnemyLevel/EnemyLevelActions";
 
 export default class EnemyLevel implements ILevel {
 
@@ -94,6 +95,11 @@ export default class EnemyLevel implements ILevel {
      * Disposes subscriptions
      */
     public dispose(): void {
+
+        // Reset is required for levels where there is a time limit on the level and the
+        // player does clear the state by destroying enemies.
+        dispatch(resetLevelState());
+
         // The subscription array contains functions that remove themselves
         // from the GameLoop. Call all of them to remove them from the GameLoop.
         this.subscriptions.forEach((s) => s());

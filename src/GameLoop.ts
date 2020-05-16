@@ -8,14 +8,13 @@ import { Locations } from "./Constants/Constants";
 import { DEBUGGING_drawGrid, DEBUGGING_renderHitboxes } from "./Debugging/Debugging";
 import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
-import subscribeToStoreChanges from "./Levels/SubscribeToStore";
 import playerSpawnManager from "./Player/PlayerSpawnManager";
 import genericRunner from "./Runners/GenericRunner";
+import levelProgressionRunner, { resetLevelProgression } from "./Runners/LevelProgressionRunner";
 import playerRunner from "./Runners/PlayerRunner";
-import { resetLevelState } from "./State/EnemyLevel/EnemyLevelActions";
 import { gameStart } from "./State/Game/GameActions";
 import { resetKeyboardState } from "./State/Keyboard/KeyboardActions";
-import { setPlayerLocationData } from "./State/Player/PlayerActions";
+import { setPlayerIsAlive, setPlayerLocationData } from "./State/Player/PlayerActions";
 import { appState, dispatch } from "./State/Store";
 import { TickFunction } from "./Types";
 import { registerListeners, unregisterListeners } from "./Utility/KeyboardEvents";
@@ -47,8 +46,6 @@ let foregroundDrawFunctions: Array<() => void> = [];
  */
 let drawFunctions: Array<() => void> = [];
 
-let sub: () => void;
-
 export namespace GameLoop {
     /**
      * Start game loop
@@ -60,8 +57,8 @@ export namespace GameLoop {
         GameLoop.registerUpdateState(playerRunner);
         GameLoop.registerUpdateState(playerSpawnManager);
         GameLoop.registerUpdateState(genericRunner);
+        GameLoop.registerUpdateState(levelProgressionRunner);
         registerListeners();
-        sub = subscribeToStoreChanges();
 
         mainHandle = window.requestAnimationFrame(run);
     }
@@ -79,7 +76,6 @@ export namespace GameLoop {
         backgroundDrawFunctions = [];
         drawFunctions = [];
 
-        sub();
         unregisterListeners();
     }
 
@@ -150,6 +146,8 @@ export namespace GameLoop {
             // Stop the game loop.
             stop();
 
+            resetLevelProgression();
+
             const hitPercentage = Math.round((enemiesHit / bulletsFired) * 100);
 
             // Display some statistics.
@@ -163,9 +161,9 @@ export namespace GameLoop {
             Click OK to restart from level 1`);
 
             // Reset the entire game.
-            dispatch(resetLevelState());
             dispatch(setPlayerLocationData(Locations.Player.spawnLocation.left, Locations.Player.spawnLocation.top));
             dispatch(resetKeyboardState());
+            dispatch(setPlayerIsAlive(false));
             start();
             dispatch(gameStart());
         }

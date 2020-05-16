@@ -77,7 +77,7 @@ export default function gameStateReducer(state: GameState = initState(), action:
             case Constants.gameStart:
                 draft.gameOver = false;
                 draft.phasers = 1;
-                draft.lives = 0;
+                draft.lives = 2;
                 draft.level = 1;
                 draft.bulletsFired = 0;
                 draft.enemiesHit = 0;

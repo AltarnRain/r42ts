@@ -39,6 +39,23 @@
             }
         },
         {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Play ground - Warplevel 41",
+            "url": "http://localhost:8080/?playground?level=41",
+            "webRoot": "${workspaceFolder}/src",
+            "breakOnLoad": true,
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${webRoot}/*",
+                "webpack:///src/*": "${webRoot}/*",
+                "webpack:///*": "*",
+                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "meteor://💻app/*": "${webRoot}/*",
+                "webpack:///./src/*": "${webRoot}/*",
+            }
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "Jest All",
