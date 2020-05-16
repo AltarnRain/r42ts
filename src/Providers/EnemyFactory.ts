@@ -62,8 +62,6 @@ import dimensionProvider from "./DimensionProvider";
  * Responsibility:  Creates an enemy.
  */
 
-let f = 0;
-
 const {
     pixelSize,
     gameField
@@ -461,17 +459,15 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
                 throw new Error("Fishb enemy requires a starting location");
             }
 
-            const { frames } = getCloakingOrbOffsetFrames();
+            // const { frames } = getCloakingOrbOffsetFrames();
             // const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(frames));
-            const frameProvider = new OneFrameProvider(1);
+            const frameProvider = new OneFrameProvider(2);
 
             // 2nd to last frame is completely invisible. That's when the orb can switch location
             // It will appear 'invisible' on its new location and reappear.
             // It can still be hit while it is 'invisible' (because hitboxes are generated and, meh, its fine).
             // const locationProvider = new CloakingOrbLocationProvider(location.left, location.top, frames.length - 2, frameProvider);
             const locationProvider = new ImmobileLocationProvider(location.left, location.top);
-
-            const color = getRandomArrayElement(ColorSchemes.cloakingOrb);
 
             return new DefaultEnemy(
                 Points.boat,

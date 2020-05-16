@@ -10,12 +10,11 @@
  */
 
 import ILevel from "../Interfaces/ILevel";
-import { setLevel, setWarpGamteComplexity as setWarpGameComplexity } from "../State/Game/GameActions";
+import { setWarpGamteComplexity as setWarpGameComplexity } from "../State/Game/GameActions";
 import { dispatch } from "../State/Store";
 import EnemyLevel from "./EnemyLevel";
 import { TimeLimitLevel } from "./TimeLimitLevel";
 import WarpLevel from "./WarpLevel";
-import { setEnemyLastFireTick } from "../State/EnemyLevel/EnemyLevelActions";
 
 /**
  * LevelFactory. Provides level objects
