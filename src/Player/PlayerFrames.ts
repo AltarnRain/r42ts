@@ -5,6 +5,7 @@
  */
 
 import { Frame } from "../Types";
+import Mutators from "../Utility/FrameMutators";
 
 /**
  * Module:          PlayerFrames
@@ -18,6 +19,8 @@ export function getPlayerFrame(): Frame {
         ["A", "B", "F", "F", "B", "A"],
         ["B", "F", "0", "0", "F", "B"],
     ];
+
+    Mutators.Frame.convertHexToCGA(playerFrame);
 
     return playerFrame;
 }
@@ -35,6 +38,8 @@ export function getPlayerFormationFrames(): Frame[] {
             ["F", "B"]
         ],
     ];
+
+    playerFormationFrames.forEach((pf) => Mutators.Frame.convertHexToCGA(pf));
 
     return playerFormationFrames;
 }

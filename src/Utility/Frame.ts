@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import Explosion from "../Models/Explosion";
 import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import { GameSize } from "../Models/GameSize";
@@ -141,24 +140,4 @@ export function copyFrames(frames: Frame[]): Frame[] {
     }
 
     return newFrames;
-}
-
-export function getFrameReturner(frame: Frame): () => Frame {
-    const frameCopy = copyFrame(frame);
-
-    return () => frameCopy;
-}
-
-export function copyExplosion(explosion: Explosion): Explosion {
-    const newExplosion = { ...explosion };
-    newExplosion.particleFrames = copyFrames(explosion.particleFrames);
-    newExplosion.explosionCenterFrame = copyFrame(explosion.explosionCenterFrame);
-
-    return explosion;
-}
-
-export function getExplosionReturner(explosion: Explosion): () => Explosion {
-    const newExplosion = copyExplosion(explosion);
-
-    return () => newExplosion;
 }

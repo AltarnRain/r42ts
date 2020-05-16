@@ -11,7 +11,6 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import { setPlayerIsAlive, setPlayerLocationData, setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types";
-import { getFrameReturner } from "../Utility/Frame";
 import { getLocation } from "../Utility/Location";
 import PlayerFormationPart from "./PlayerFormationPart";
 import { getPlayerFormationFrames } from "./PlayerFrames";
@@ -90,7 +89,7 @@ function createParticles(): void {
     nozzleTopPart = new PlayerFormationPart(
         nozzleTip.left,
         nozzleTip.top,
-        getFrameReturner(playerFormationFrames[0]),
+        playerFormationFrames[0],
         0,
         pixelSize * 2,
         0);
@@ -98,7 +97,7 @@ function createParticles(): void {
     nozzleBottomPart = new PlayerFormationPart(
         nozzleBottom.left,
         nozzleBottom.top,
-        getFrameReturner(playerFormationFrames[1]),
+        playerFormationFrames[1],
         0,
         pixelSize * 2,
         pixelSize);
@@ -106,7 +105,7 @@ function createParticles(): void {
     leftWingPart = new PlayerFormationPart(
         leftWing.left,
         leftWing.top,
-        getFrameReturner(playerFormationFrames[2]),
+        playerFormationFrames[2],
         0,
         0,
         pixelSize);
@@ -114,7 +113,7 @@ function createParticles(): void {
     rightWingPart = new PlayerFormationPart(
         rightWing.left,
         rightWing.top,
-        getFrameReturner(playerFormationFrames[3]),
+        playerFormationFrames[3],
         0,
         pixelSize * 4,
         pixelSize);

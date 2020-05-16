@@ -7,7 +7,7 @@
 import speedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
-import { Frame, FrameProviderFunction } from "../Types";
+import { Frame } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 import { calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
@@ -61,9 +61,9 @@ export default class PlayerFormationPart {
      * @param {number} leftOffset. Number of pixels to add to the initial left position and the target left position.
      * @param {number} topOffset. Number of pixels to add to the initial top position and the target top position.
      */
-    constructor(left: number, top: number, getFrame: FrameProviderFunction, speed: number, leftOffset: number, topOffset: number) {
+    constructor(left: number, top: number, frame: Frame, speed: number, leftOffset: number, topOffset: number) {
 
-        this.currentFrame = getFrame();
+        this.currentFrame = frame;
         Mutators.Frame.convertHexToCGA(this.currentFrame);
 
         this.currentLeftLocation = left + leftOffset;
