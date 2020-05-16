@@ -11,7 +11,7 @@ import { ColorSchemes, FrameTimes, Locations, MovementAngles, Points, Speeds } f
 import { AsteroidEnemy } from "../Enemies/Asteroid/AsteroidEnemy";
 import { getAsteroidOffsetFrames } from "../Enemies/Asteroid/GetAsteroidOffsetFrames";
 import getBalloonOffsetFrames from "../Enemies/Balloon/GetBalloonOffsetFrames";
-import getBatExplosiom from "../Enemies/Bats/BatExplosion";
+import getBatExplosiom from "../Enemies/Bats/GetBatExplosion";
 import getBatOffsetFrames from "../Enemies/Bats/GetBatOffsetFrames";
 import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import getBirdOffsetFrames from "../Enemies/Bird/GetBirdOffsetFrames";
