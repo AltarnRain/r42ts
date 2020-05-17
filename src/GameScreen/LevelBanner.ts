@@ -48,7 +48,7 @@ const barwidth = pixelSize * 30;
 const roundWidth = 76 * pixelSize;
 const charSpacing = pixelSize * 2;
 
-export function drawLevelBanner(level: number | undefined, start: () => void): void {
+export default function drawLevelBanner(level: number | undefined, start: () => void): void {
 
     let levelNumber = 0;
     if (level !== undefined) {

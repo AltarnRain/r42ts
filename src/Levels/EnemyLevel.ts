@@ -5,7 +5,7 @@
  */
 
 import GameLoop from "../GameLoop";
-import { drawLevelBanner } from "../GameScreen/LevelBanner";
+import drawLevelBanner from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
 import { enemyLevelContentFactory } from "../Providers/EnemyLevelContentProvider";

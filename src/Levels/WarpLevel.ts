@@ -8,7 +8,7 @@ import CGAColors from "../Constants/CGAColors";
 import { Locations, WarpLevelConstants } from "../Constants/Constants";
 import { DEBUGGING_drawGameRect } from "../Debugging/Debugging";
 import GameLoop from "../GameLoop";
-import { drawLevelBanner } from "../GameScreen/LevelBanner";
+import drawLevelBanner from "../GameScreen/LevelBanner";
 import { drawBackground, drawWarpBackground } from "../GameScreen/StaticRenders";
 import Guard from "../Guard";
 import ILevel from "../Interfaces/ILevel";
