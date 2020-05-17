@@ -7,13 +7,13 @@
 import GameLoop from "./GameLoop";
 import dimensionProvider from "./Providers/DimensionProvider";
 import ctxProvider from "./Render/CtxProvider";
+import { SoundProvider } from "./Sound/SoundProvider";
 import { setDebuggingState } from "./State/Debugging/DebuggingActions";
 import DebuggingState from "./State/Debugging/DebuggingState";
 import { addPhaser, gameStart, increaseScore, nextLevel, setLevel, setLives, setPhasers, setTimeLevelTimeLimit, setWarpGamteComplexity } from "./State/Game/GameActions";
 import { WarpLevelComplexity } from "./State/Game/WarpLevelTypes";
 import { dispatch } from "./State/Store";
 import { getURLQueryKVPs } from "./Utility/Lib";
-import { SoundProvider } from "./Sound/SoundProvider";
 
 let showInstructions = true;
 
@@ -47,16 +47,15 @@ window.onload = () => {
                 level = "0";
             }
 
-            dispatch(setLives(900));
-            dispatch(setPhasers(900));
-            dispatch(setTimeLevelTimeLimit(2000)); // 5 seconds for a time limit level to debug.
-
             if (level) {
                 dispatch(setLevel(parseInt(level, 10)));
             }
 
             GameLoop.start();
 
+            dispatch(setLives(900));
+            dispatch(setPhasers(900));
+            dispatch(setTimeLevelTimeLimit(2000)); // 5 seconds for a time limit level to debug.
             if (immortal) {
                 debuggingState.playerIsImmortal = true;
             }

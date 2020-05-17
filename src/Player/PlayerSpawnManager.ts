@@ -8,6 +8,7 @@ import { Locations } from "../Constants/Constants";
 import GameLoop from "../GameLoop";
 import { playerMovementHandler } from "../Handlers/PlayerMovementHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
+import { SoundProvider } from "../Sound/SoundProvider";
 import { setPlayerIsAlive, setPlayerLocationData, setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types";
@@ -128,6 +129,12 @@ function createParticles(): void {
  * @param {MoveLimits} limit. Movement limit impaired on the player while the ship is forming.
  */
 function setup(speed: "fast" | "slow", limit: MoveLimits): void {
+    if (speed === "fast") {
+        SoundProvider.playPlayerFormationFast();
+    } else {
+        SoundProvider.playPlayerFormationSlow();
+    }
+
     formationSpeed = speed;
 
     // Store the current movement limit so we can restore it once the player has formed.

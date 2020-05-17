@@ -241,6 +241,7 @@ function handleEnemyDestruction(tick: number, enemy: EnemyState, awardPoints = t
         }
     });
 
+    SoundProvider.playEnemyExplosion();
     dispatchExplosion(enemy.offsetLeft, enemy.offsetTop, enemy.coloredExplosion, tick);
     dispatch(removeEnemy(enemy.enemyId));
 

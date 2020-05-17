@@ -9,6 +9,7 @@
  * Responsibility:  Performs the required dispatches when the player dies. Used in all level types.
  */
 
+import { SoundProvider } from "../Sound/SoundProvider";
 import { gameOver, removeLife, setPhasers } from "../State/Game/GameActions";
 import { setPlayerBulletState, setPlayerIsAlive } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
@@ -31,6 +32,8 @@ export default function handlePlayerDeath(tick: number): void {
     if (debuggingState.playerIsImmortal || enemies.length === 0 && totalNumberOfEnemies > 0) {
         return;
     }
+
+    SoundProvider.playPlayerExplosion();
 
     dispatchExplosion(left, top, coloredExplosion, tick);
 
