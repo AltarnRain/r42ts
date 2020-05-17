@@ -5,8 +5,8 @@
  */
 
 /**
- * Module:          handlePlayerDeath
- * Responsibility:  Performs the required dispatches when the player dies.
+ * Module:          HandlePlayerDeath
+ * Responsibility:  Performs the required dispatches when the player dies. Used in all level types.
  */
 
 import { gameOver, removeLife, setPhasers } from "../State/Game/GameActions";
@@ -16,9 +16,9 @@ import { dispatchExplosion } from "./DispatchExplosion";
 
 /**
  * Handles a the player's death.
- * @param {number} tick
+ * @param {number} tick. Current tick
  */
-export function handlePlayerDeath(tick: number): void {
+export default function handlePlayerDeath(tick: number): void {
 
     const {
         gameState: { lives },

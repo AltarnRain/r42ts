@@ -6,18 +6,15 @@
 
 /**
  * Module:          StateProviders
- * Responsibility:  Functions that provide a state object.
+ * Responsibility:  Functions that provide a state object. Used in multiple places.
  */
 
 import { produce } from "immer";
-import BaseEnemy from "../Base/BaseEnemy";
 import Explosion from "../Models/Explosion";
 import { Frame } from "../Types";
 import { getFrameHitbox } from "../Utility/Frame";
 import { fallsWithinGameField, getLocation } from "../Utility/Location";
-import { EnemyState } from "./EnemyLevel/EnemyState";
 import { ParticleState } from "./ParticleState";
-import { appState } from "./Store";
 
 export namespace StateProviders {
     /**
@@ -140,21 +137,5 @@ export namespace StateProviders {
         }
 
         return nextState;
-    }
-
-    /**
-     * Gets the enemy's ship's state. Throws an exception if the enemy could not be found.
-     * @export
-     * @param {BaseEnemy} enemy
-     * @returns {EnemyState}
-     */
-    export function getEnemyState(enemy: BaseEnemy): EnemyState {
-        const state = appState().enemyLevelState.enemies.find((e) => e.enemyId === enemy.getId());
-
-        if (state === undefined) {
-            throw new Error("Could not retrive state for enemy " + enemy.getId());
-        }
-
-        return state;
     }
 }

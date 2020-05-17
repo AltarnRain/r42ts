@@ -25,20 +25,20 @@ const allReducers = combineReducers({
     keyboardState: keyboardStateReducer
 });
 
+// Create the store when this module is loaded.
 const store = createReduxStore();
 
-export function createReduxStore(): Store<ApplicationState> {
-    return createStore(
-        allReducers,
-        (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__());
-}
-
 /**
- * Returns the store
- * @returns {Store}. The redux store.
+ * Creates the store.
+ * @returns {Store<ApplicationState>}. The redux store.
  */
-export function appStore(): Store<ApplicationState> {
-    return store;
+export function createReduxStore(): Store<ApplicationState> {
+    // Uncomment he linees below to return a store you can monotir with the Redux Chrome extention.
+    // return createStore(
+    //     allReducers,
+    //     (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__());
+
+    return createStore(allReducers);
 }
 
 /**
@@ -46,9 +46,13 @@ export function appStore(): Store<ApplicationState> {
  * @returns {ApplicationState}. The application state.
  */
 export function appState(): ApplicationState {
-    return appStore().getState();
+    return store.getState();
 }
 
+/**
+ * Shorthand for store.Dispatch.
+ * @param {Action} action. An action.
+ */
 export function dispatch(action: Action): void {
     store.dispatch(action);
 }
