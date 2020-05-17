@@ -18,7 +18,7 @@ import { increaseScore } from "../State/Game/GameActions";
 import { setPlayerLocationData, setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import handleLevelWon from "../StateHandlers/HandleLevelWon";
-import { handlePlayerDeath } from "../StateHandlers/HandlePlayerDeath";
+import handlePlayerDeath from "../StateHandlers/HandlePlayerDeath";
 import { getRandomArrayElement } from "../Utility/Array";
 import { coinFlip } from "../Utility/Lib";
 import { fallsWithin } from "../Utility/Location";
