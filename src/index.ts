@@ -7,6 +7,7 @@
 import GameLoop from "./GameLoop";
 import dimensionProvider from "./Providers/DimensionProvider";
 import ctxProvider from "./Render/CtxProvider";
+import SoundProvider from "./Sound/SoundProvider";
 import { setDebuggingState } from "./State/Debugging/DebuggingActions";
 import DebuggingState from "./State/Debugging/DebuggingState";
 import { addPhaser, gameStart, increaseScore, nextLevel, setLevel, setLives, setPhasers, setTimeLevelTimeLimit, setWarpGamteComplexity } from "./State/Game/GameActions";
@@ -32,6 +33,7 @@ window.onload = () => {
 
         const showPlayGround = queryKeyValuePairs.some((kvp) => kvp.key === "playground");
         const showCanvas = queryKeyValuePairs.some((kvp) => kvp.key === "canvas");
+        const sound = queryKeyValuePairs.some((kvp) => kvp.key === "sound");
         let level = queryKeyValuePairs.find((kvp) => kvp.key === "level")?.value;
         const drawGrid = queryKeyValuePairs.find((kvp) => kvp.key === "grid");
         const showhitboxes = queryKeyValuePairs.find((kvp) => kvp.key === "hitboxes");
@@ -94,6 +96,9 @@ window.onload = () => {
             ctx.fillStyle = "#00AA00";
 
             (window as any).r42 = ctx;
+        } else if (sound) {
+            const s = new SoundProvider();
+            s.playPlayerShoot();
         } else {
             begin();
         }
