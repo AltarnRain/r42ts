@@ -20,6 +20,7 @@ import dispatchExplosion from "../StateHandlers/DispatchExplosion";
 import handlePlayerDeath from "../StateHandlers/HandlePlayerDeath";
 import { getRandomArrayElement } from "../Utility/Array";
 import { overlaps } from "../Utility/Geometry";
+import { SoundProvider } from "../Sound/SoundProvider";
 
 /**
  * Module:          EnemyLevelRunner
@@ -273,6 +274,8 @@ function handlePhaser(tick: number): void {
         if (randomEnemyCenter !== undefined) {
             // Remove one phaser.
             dispatch(removePhaser());
+
+            SoundProvider.playPhaser();
 
             // Calculate the locations aka pixels where the phaser beam should appear.
             const phaserLocations = getPhaserLocations(playerNozzleLocation.left, playerNozzleLocation.top, randomEnemyCenter.left, randomEnemyCenter.top);

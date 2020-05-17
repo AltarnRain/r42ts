@@ -10,6 +10,7 @@
  */
 
 import Explosion from "../Models/Explosion";
+import { SoundProvider } from "../Sound/SoundProvider";
 import { addExplosionCenter } from "../State/EnemyLevel/EnemyLevelActions";
 import { ExplosionCenterState } from "../State/EnemyLevel/ExplosionCenterState";
 import { StateProviders } from "../State/StateProviders";
@@ -33,6 +34,8 @@ export default function dispatchExplosion(left: number, top: number, coloredExpl
         coloredFrame: coloredExplosion.explosionCenterFrame,
         explosionCenterDelay: coloredExplosion.explosionCenterDelay,
     };
+
+    SoundProvider.playEnemyExplosion();
 
     dispatch(addExplosionCenter(newExplosion, newShrapnell));
 }
