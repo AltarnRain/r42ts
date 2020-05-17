@@ -17,8 +17,7 @@ import { ParticleState } from "../State/ParticleState";
 import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { dispatchExplosion } from "../StateHandlers/DispatchExplosion";
-import { handlePlayerDeath } from "../StateHandlers/HandlePlayerDeath";
-import { Frame } from "../Types";
+import handlePlayerDeath from "../StateHandlers/HandlePlayerDeath";
 import { getRandomArrayElement } from "../Utility/Array";
 import { overlaps } from "../Utility/Geometry";
 
@@ -28,16 +27,11 @@ import { overlaps } from "../Utility/Geometry";
  */
 
 /**
- * Array of current game objects on screen.
+ * Array of current game objects on screen. This is the only array in the entire game thar holds BaseEnemy objects.
  */
-
 const localState: { enemies: BaseEnemy[] } = {
     enemies: [],
 };
-
-const phaserFrame: Frame = [
-    [CGAColors.yellow, CGAColors.yellow]
-];
 
 export namespace EnemyLevelRunner {
     /**
@@ -70,7 +64,7 @@ export namespace EnemyLevelRunner {
 export default EnemyLevelRunner;
 
 /**
- * Handles all level state changes.
+ * Handles all enemy level state changes.
  * @param {number} tick. Current tick.
  */
 function updateState(tick: number) {
@@ -81,8 +75,8 @@ function updateState(tick: number) {
 }
 
 /**
- * Draws all objects part of the level but not the player.
- * @param {number} tick. Tick.
+ * Draws all enemies and enemy bullets. Also draws the phaser. Since the phaser can only be used in a level with Enemies.
+ * @param {number} tick. Current game Tick.
  */
 function draw(): void {
     const { enemies, bullets, phaserLocations } = appState().enemyLevelState;
@@ -98,11 +92,12 @@ function draw(): void {
         renderFrame(bullet.left, bullet.top, bullet.coloredFrame);
     }
 
-    phaserLocations.forEach((pf) => renderFrame(pf.left, pf.top, phaserFrame));
+    phaserLocations.forEach((pf) => renderFrame(pf.left, pf.top, [[CGAColors.yellow, CGAColors.yellow]]));
 }
 
 /**
  * Handles all hit detection.
+ * @param {number} tick. Current game tick
  */
 function handleHitDetection(tick: number) {
 
@@ -198,16 +193,23 @@ function playerHitByParticle(tick: number, particles: ParticleState[]): void {
  * @param {number} tick. Current tick
  */
 function handleEnemies(tick: number): void {
+
+    // Use a map to update the state and then return the enemy state.
+    // This way we can iterate over the enemies once and get their updated state
+    // in one go.
     const newEnemiesState = localState.enemies.map((e) => {
         e.updateState(tick);
         return e.getCurrentEnemyState();
     });
 
+    // Update the enemy level state with the current enemies. This
+    // will automatically remove any enemies that were destroyed.
     dispatch(setEnemiesState(newEnemiesState));
 }
 
 /**
  * Handle self destruct.
+ * @param {number} tick. Current tick.
  */
 function handleSelfDestruct(tick: number): void {
     const { playerState, enemyLevelState } = appState();
@@ -222,10 +224,13 @@ function handleSelfDestruct(tick: number): void {
 /**
  * handles the destruction of an enemy.
  * @param {BaseEnemy} enemy.
+ * @param {EnemyState} enemy. The enemy that got hit.
+ * @param {boolean} awardPoints. True by default. When false does not award points for destroyed enemies. Used when using self destruct.
  */
 function handleEnemyDestruction(tick: number, enemy: EnemyState, awardPoints = true): void {
     const { enemyLevelState } = appState();
 
+    // Get the enemies that are not destroyed and increase the remaining enemies speed in one go.
     localState.enemies = localState.enemies.filter((e) => {
         if (e.getId() !== enemy.enemyId) {
             e.increaseSpeed(enemyLevelState.totalNumberOfEnemies / (localState.enemies.length - 1));
@@ -243,22 +248,24 @@ function handleEnemyDestruction(tick: number, enemy: EnemyState, awardPoints = t
         dispatch(increaseScore(enemy.points));
     }
 
-    // Keep track how often the player hits an enemy.
+    // Keep track how often the player hits an enemy. This is a different dispatch because
+    // tracking hits is registered in the GameState, not the EnemyLevelState.
     dispatch(enemyHit());
 }
 
 /**
  * Handles the firing of a phaser charge.
+ * @param {number} tick. Current tick
  */
 function handlePhaser(tick: number): void {
     const { enemyLevelState, playerState, gameState, keyboardState } = appState();
 
-    if (playerState.alive &&
-        playerState.nozzleLocation &&
-        keyboardState.phraser &&
-        enemyLevelState.enemies.length > 0 &&
-        gameState.phasers > 0 &&
-        enemyLevelState.phaserLocations.length === 0) {
+    if (playerState.alive && // cant fire when dead
+        keyboardState.phraser && // Fire phaser key was pressed.
+        enemyLevelState.enemies.length > 0 && // The phaser cannot hit a random enemy if there are none.
+        gameState.phasers > 0 && // You need phaser charged to firel
+        enemyLevelState.phaserLocations.length === 0 && // You cannot fire a phaser while one is still on screen
+        playerState.nozzleLocation) { // nozzle location can be undefined so we need a truthy check.
 
         const randomEnemy = getRandomArrayElement(enemyLevelState.enemies);
         const playerNozzleLocation = playerState.nozzleLocation;
@@ -266,24 +273,33 @@ function handlePhaser(tick: number): void {
         if (randomEnemyCenter !== undefined) {
             // Remove one phaser.
             dispatch(removePhaser());
+
+            // Calculate the locations aka pixels where the phaser beam should appear.
             const phaserLocations = getPhaserLocations(playerNozzleLocation.left, playerNozzleLocation.top, randomEnemyCenter.left, randomEnemyCenter.top);
+
+            // Dispatch to render the phaser
             dispatch(setPhaserLocations(phaserLocations));
 
-            // Keep track how often the player used the phaser.
+            // Keep track how often the player used the phaser. This is registered in the GameState, not the EnemyLevelState
+            // hence, it's a different dispatch.
             dispatch(phaserFired());
 
             // Pause the game for a very brief period. This is what the original game did
-            // when you fired a phasor shot.
+            // when you fired a phasor shot. This also makes it look 'good' because eveything will pause
+            // for a brief time showing the phaser. When the game resumes, the phaser is gone.
             dispatch(setPause(true));
+
+            // We need a timeout to resume the game here.
             window.setTimeout(() => {
                 // Unpause the game to let rendering continue.
                 dispatch(setPause(false));
 
                 // Deal the with the enemy that got hit.
-
                 handleEnemyHitByplayer(tick, randomEnemy);
+
+                // Remove the phaser locations from the state so it is no longer rendered.
                 dispatch(clearPhaserLocations());
-            }, 100);
+            }, 100); // 100 ms speends like a right amount of time to pause
         }
     }
 }
