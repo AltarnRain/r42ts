@@ -24,8 +24,8 @@ const nozzzleTopOffset = pixelSize * -6;
 
 export class FishEnemy extends DirectionFrameEnemy {
 
-    public beforeDispatch(): void {
-        super.beforeDispatch();
+    public alterState(): void {
+        super.alterState();
 
         // If the fish is moving up or down it is attacking or recovering.
         // Regardless, it should show it fire frame.

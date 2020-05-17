@@ -10,8 +10,7 @@ import Explosion from "../Models/Explosion";
 import { GameLocation } from "../Models/GameLocation";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { addOrUpdateEnemy } from "../State/EnemyLevel/EnemyLevelActions";
-import { dispatch } from "../State/Store";
+import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { ExplosionProviderFunction, Frame, OffsetFramesProviderFunction } from "../Types";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { getOffsetLocation } from "../Utility/Location";
@@ -158,22 +157,23 @@ export default abstract class BaseEnemy {
 
         this.locationProvider.updateState(tick);
 
-        this.beforeDispatch(tick);
-
-        this.dispatchCurrentState();
+        // Implemented in a child class to alter the
+        // enemy state before its is send to redux.
+        this.alterState(tick);
     }
 
     /**
      * Do some last moment changes here for additional custom behaviour.
      * @param {number} tick. Current game tick.
      */
-    public abstract beforeDispatch(tick: number): void;
+    public abstract alterState(tick: number): void;
 
     /**
-     * Dispatches the current state of the enemy.
+     * Returns the current state of the enemy.
+     * @returns {EnemyState}. An EnemyState object.
      */
-    protected dispatchCurrentState(): void {
-        dispatch(addOrUpdateEnemy({
+    public getCurrentEnemyState(): EnemyState {
+        return {
             enemyId: this.getId(),
             coloredExplosion: this.explosion,
             offsetLeft: this.offsetLeft,
@@ -185,7 +185,7 @@ export default abstract class BaseEnemy {
             points: this.getPoints(),
             currentFrameIndex: this.frameProvider.getCurrentIndex(),
             nozzleLocation: this.getNozzleLocation(),
-        }));
+        };
     }
 
     /**

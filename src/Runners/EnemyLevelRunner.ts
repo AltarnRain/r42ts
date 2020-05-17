@@ -10,7 +10,7 @@ import GameLoop from "../GameLoop";
 import getPhaserLocations from "../Player/GetPhaserLocations";
 import { playerIsHit } from "../Player/PlayerHelper";
 import renderFrame from "../Render/RenderFrame";
-import { clearPhaserLocations, removeEnemy, setPhaserLocations, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
+import { clearPhaserLocations, removeEnemy, setEnemiesState, setPhaserLocations, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { enemeyHit as enemyHit, increaseScore, phaserFired, removePhaser, setPause } from "../State/Game/GameActions";
 import { ParticleState } from "../State/ParticleState";
@@ -58,7 +58,8 @@ export namespace EnemyLevelRunner {
         // activate while the player is forming an call update state
         // for all enemies. However, when the game is over
         // this can cause some 'issues'.
-        newEnemies.forEach((e) => e.updateState(0));
+        const enemyStates = newEnemies.map((e) => e.getCurrentEnemyState());
+        dispatch(setEnemiesState(enemyStates));
     }
 
     export function addEnemy(newEnemy: BaseEnemy): void {
@@ -197,9 +198,12 @@ function playerHitByParticle(tick: number, particles: ParticleState[]): void {
  * @param {number} tick. Current tick
  */
 function handleEnemies(tick: number): void {
-    localState.enemies.forEach((e) => {
+    const newEnemiesState = localState.enemies.map((e) => {
         e.updateState(tick);
+        return e.getCurrentEnemyState();
     });
+
+    dispatch(setEnemiesState(newEnemiesState));
 }
 
 /**

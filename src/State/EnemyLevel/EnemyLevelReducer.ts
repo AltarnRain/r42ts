@@ -55,17 +55,6 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
             case Constants.setTotalEnemies:
                 draft.totalNumberOfEnemies = action.totalEnemies;
                 break;
-            case Constants.addOrUpdateEnemy: {
-                // IMPORTANT. This action is solely dispatched from Enemies.
-                const index = state.enemies.findIndex((es) => es.enemyId === action.enemyState.enemyId);
-                if (index > -1) {
-                    draft.enemies[index] = { ...draft.enemies[index], ...action.enemyState };
-                } else {
-                    draft.enemies.push(action.enemyState);
-                }
-
-                break;
-            }
             case Constants.removeEnemy:
                 draft.enemies = draft.enemies.filter((es) => es.enemyId !== action.enemyId);
                 break;
@@ -74,6 +63,13 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
                 if (index > -1) {
                     draft.enemies[index].lastFiretick = action.payload.tick;
                 }
+
+                break;
+            }
+
+            case Constants.setEnemies: {
+                draft.enemies = action.enemies;
+                break;
             }
         }
     });

@@ -69,11 +69,6 @@ export interface SetTotalEnemies {
     totalEnemies: number;
 }
 
-export interface AddOrUpdateEnemy {
-    type: typeof Constants.addOrUpdateEnemy;
-    enemyState: EnemyState;
-}
-
 export interface RemoveEnemy {
     type: typeof Constants.removeEnemy;
     enemyId: number;
@@ -87,6 +82,10 @@ export interface UpdateEnemyLastFireTick {
     };
 }
 
+export interface SetEnemies {
+    type: typeof Constants.setEnemies;
+    enemies: EnemyState[];
+}
 export type EnemyLevelTypes =
     ResetLevelState |
     AddParticle |
@@ -99,7 +98,7 @@ export type EnemyLevelTypes =
     AddBullet |
     SetBulletState |
     SetTotalEnemies |
-    AddOrUpdateEnemy |
     RemoveEnemy |
-    UpdateEnemyLastFireTick
+    UpdateEnemyLastFireTick |
+    SetEnemies
     ;

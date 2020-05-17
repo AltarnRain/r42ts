@@ -107,7 +107,7 @@ export default class OrbEnemy extends BaseEnemy {
      * Handle some color changes and animation stuff.
      * @param {number} tick;
      */
-    public beforeDispatch(tick: number): void {
+    public alterState(tick: number): void {
         this.colorTickHandler.tick(tick);
 
         if (this.currentFrame) {

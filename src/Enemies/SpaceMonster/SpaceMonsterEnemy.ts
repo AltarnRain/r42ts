@@ -58,7 +58,7 @@ export default class SpaceMonster extends BaseEnemy {
     /**
      * Handle jaw open closed behaviour.
      */
-    public beforeDispatch(): void {
+    public alterState(): void {
 
         // When the Space monster gets close to the bottom it opens its jaws.
         if (this.offsetTop >= jawsOpenTop && this.jawsClosed) {

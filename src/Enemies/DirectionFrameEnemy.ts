@@ -44,7 +44,10 @@ export default class DirectionFrameEnemy extends BaseEnemy {
         this.locationDirectionProvider = locationProvider;
     }
 
-    public beforeDispatch(): void {
+    /**
+     * Alter the state
+     */
+    public alterState(): void {
         if (this.locationDirectionProvider.getDirection() === "left") {
             // Frame going left is index 0, there's two frames so a get next frames switches to the
             // frame of the devil heading right.

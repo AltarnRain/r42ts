@@ -94,8 +94,7 @@ export default class DefaultEnemy extends BaseEnemy {
     /**
      * Not implemented.
      */
-    public beforeDispatch(tick: number): void {
+    public alterState(tick: number): void {
         // Does nothing here.
     }
-
 }

@@ -84,7 +84,7 @@ export class AsteroidEnemy extends BaseEnemy {
     /**
      * Not implemented.
      */
-    public beforeDispatch(): void {
+    public alterState(): void {
         // Not needed
     }
 }
