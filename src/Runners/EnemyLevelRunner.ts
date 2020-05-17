@@ -8,7 +8,7 @@ import BaseEnemy from "../Base/BaseEnemy";
 import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import getPhaserLocations from "../Player/GetPhaserLocations";
-import { playerIsHit } from "../Player/PlayerHelper";
+import playerIsHit from "../Player/PlayerHelper";
 import renderFrame from "../Render/RenderFrame";
 import { clearPhaserLocations, removeEnemy, setEnemiesState, setPhaserLocations, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
@@ -16,7 +16,7 @@ import { enemeyHit as enemyHit, increaseScore, phaserFired, removePhaser, setPau
 import { ParticleState } from "../State/ParticleState";
 import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
-import { dispatchExplosion } from "../StateHandlers/DispatchExplosion";
+import dispatchExplosion from "../StateHandlers/DispatchExplosion";
 import handlePlayerDeath from "../StateHandlers/HandlePlayerDeath";
 import { getRandomArrayElement } from "../Utility/Array";
 import { overlaps } from "../Utility/Geometry";

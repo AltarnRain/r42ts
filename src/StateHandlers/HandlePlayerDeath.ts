@@ -12,7 +12,7 @@
 import { gameOver, removeLife, setPhasers } from "../State/Game/GameActions";
 import { setPlayerBulletState, setPlayerIsAlive } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
-import { dispatchExplosion } from "./DispatchExplosion";
+import dispatchExplosion from "./DispatchExplosion";
 
 /**
  * Handles a the player's death.

@@ -22,7 +22,7 @@ import { dispatch } from "../State/Store";
  * @param {Explosion} explosion. An explosion asset.
  * @param {Particle[]} targetParticleArray. The array where the particles will be pushed into. Helps keep track of particles belonging to the player or an enemy.
  */
-export function dispatchExplosion(left: number, top: number, coloredExplosion: Explosion, tick: number): void {
+export default function dispatchExplosion(left: number, top: number, coloredExplosion: Explosion, tick: number): void {
 
     const newShrapnell = StateProviders.explosionShrapnellProvider(left, top, coloredExplosion);
 

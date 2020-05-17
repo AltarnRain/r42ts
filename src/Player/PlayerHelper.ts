@@ -20,7 +20,7 @@ import { overlaps } from "../Utility/Geometry";
  * @param {GameRectangle} hitbox. Another hitbox.
  * @returns {boolean}. True if there's overlap. False other or if any of the hitboxes is undefined.
  */
-export function playerIsHit(playerHitboxes: PlayerHitboxes | undefined, hitbox: GameRectangle | undefined): boolean {
+export default function playerIsHit(playerHitboxes: PlayerHitboxes | undefined, hitbox: GameRectangle | undefined): boolean {
     if (playerHitboxes === undefined) {
         return false;
     }
