@@ -31,7 +31,7 @@ const {
     gameField
 } = dimensionProvider();
 
-export function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: BulletRunner, enemies: BaseEnemy[] } {
+export default function enemyLevelContentFactory(enemy: Enemies): { bulletRunner?: BulletRunner, enemies: BaseEnemy[] } {
     switch (enemy) {
         case "bird":
         case "bird-fire": {

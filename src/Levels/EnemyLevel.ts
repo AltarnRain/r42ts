@@ -8,7 +8,7 @@ import GameLoop from "../GameLoop";
 import drawLevelBanner from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
-import { enemyLevelContentFactory } from "../Providers/EnemyLevelContentProvider";
+import enemyLevelContentFactory from "../Providers/EnemyLevelContentProvider";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { resetLevelState } from "../State/EnemyLevel/EnemyLevelActions";
 import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
