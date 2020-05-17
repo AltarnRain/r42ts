@@ -17,6 +17,8 @@ const {
     pixelSize,
 } = dimensionProvider();
 
+const ctx = ctxProvider();
+
 /**
  * Renders a single frame to the canvas.
  * @param {left} left. Left coordinate.
@@ -24,10 +26,8 @@ const {
  * @param {Frame} frame. A 2d string array.
  */
 export default function renderFrame(left: number, top: number, frame: Frame): void {
-    const ctx = ctxProvider();
 
     for (let rowIndex = 0; rowIndex < frame.length; rowIndex++) {
-
         const columns = frame[rowIndex];
 
         for (let columnIndex = 0; columnIndex < columns.length; columnIndex++) {
