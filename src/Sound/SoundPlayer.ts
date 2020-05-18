@@ -5,9 +5,9 @@
  */
 
 import { Howl } from "howler";
+import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { Sounds } from "./Sounds";
-import { Enemies } from "../Types";
 
 /**
  * Module:          SoundPlayer
@@ -18,67 +18,57 @@ export namespace SoundPlayer {
     /**
      * Howl objects for explosion.
      */
-    const enemyExplosions = Sounds.EnemyExplosions.map((ex) => new Howl({ src: ex.data }));
+    const enemyExplosions = Sounds.EnemyExplosions.map((ex) => new Howl({ src: ex }));
 
     /**
      * Howl for the player bullet
      */
-    const playerBullet = new Howl({ src: Sounds.Player.shoot.data });
+    const playerBullet = new Howl({ src: Sounds.Player.shoot });
 
     /**
      * Howl objects for phasers.
      */
-    const phasers = Sounds.Phasers.map((p) => new Howl({ src: p.data }));
+    const phasers = Sounds.Phasers.map((p) => new Howl({ src: p }));
 
     /**
      * Sound for the player's explosion.
      */
-    const playerExplosion = new Howl({ src: Sounds.Player.explosion.data });
+    const playerExplosions = Sounds.PlayerExplosions.map((x) => new Howl({ src: x }));
 
     /**
      * Sound for a fast formation.
      */
-    const playerFormationFast = new Howl({ src: Sounds.Player.formationfast.data });
+    const playerFormationFast = new Howl({ src: Sounds.Player.formationfast });
 
     /**
      * Sound for a slow formation.
      */
-    const playerFormationSlow = new Howl({ src: Sounds.Player.formationslow.data });
+    const playerFormationSlow = new Howl({ src: Sounds.Player.formationslow });
 
     /**
      * Sounds while travelin through a warp gate.
      */
-    const warpGateTraveling = new Howl({
-        src: [Sounds.Player.warpgate.data], loop: true,
-        sprite: {
-            sound: [60, Sounds.Player.warpgate.duration - 100]
-        }
-    });
+    const warpGateTraveling = new Howl({ src: [Sounds.Player.warpgate], loop: true });
 
     /**
      * Sounds while travelin through a warp gate.
      */
-    const falling = new Howl({
-        src: [Sounds.Falling.falling.data], loop: true,
-        sprite: {
-            sound: [60, Sounds.Falling.falling.duration - 100]
-        }
-    });
+    const falling = new Howl({ src: [Sounds.Falling.falling], loop: true });
 
     /**
      * Sounds for birds, spinners, diabolo's, etc.
      */
-    const tjirping = Sounds.Tjirping.map((t) => new Howl({ src: t.data, loop: true, sprite: { sound: [60, t.duration - 60] } }));
+    const tjirping = Sounds.Tjirping.map((t) => new Howl({ src: t, loop: true }));
 
     /**
      * Sounds for orbs, robots, etc.
      */
-    const whoping = Sounds.Whoping.map((w) => new Howl({ src: w.data, loop: true, sprite: { sound: [60, w.duration - 60] } }));
+    const whoping = Sounds.Whoping.map((w) => new Howl({ src: w, loop: true }));
 
     /**
      * Sounds for balloons, bats, etc.
      */
-    const wizzing = Sounds.Wizzing.map((w) => new Howl({ src: w.data, loop: true, sprite: { sound: [60, w.duration - 60] } }));
+    const wizzing = Sounds.Wizzing.map((w) => new Howl({ src: w, loop: true }));
 
     /**
      * Current running background sound.
@@ -112,6 +102,7 @@ export namespace SoundPlayer {
      * Plays the player explosion.
      */
     export function playPlayerExplosion(): void {
+        const playerExplosion = getRandomArrayElement(playerExplosions);
         playerExplosion.play();
     }
 
