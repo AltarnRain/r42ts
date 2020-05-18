@@ -1,29 +1,44 @@
 <Query Kind="Program">
-  <Reference Relative="..\Experiments\packages\NAudio.1.10.0\lib\net35\NAudio.dll">D:\Reps\Experiments\packages\NAudio.1.10.0\lib\net35\NAudio.dll</Reference>
+  <Reference Relative="..\..\Experiments\packages\NAudio.1.10.0\lib\net35\NAudio.dll">D:\Reps\Experiments\packages\NAudio.1.10.0\lib\net35\NAudio.dll</Reference>
   <Namespace>NAudio.Wave</Namespace>
 </Query>
 
 void Main()
 {
-	const bool debug = true;
-	const string fourSpaces = "    ";
-	var sourceFolder = @"D:\Reps\r42ts\Round42Sound\";
-	var allMP3 = Directory.GetFiles(sourceFolder, "*.mp3", SearchOption.AllDirectories);
-	
-	var asArray = Directory.GetFiles(sourceFolder, "01.mp3", SearchOption.AllDirectories)
-		.Select(s => s.Replace(sourceFolder,""))
-		.Select(s => s.Replace("\\01.mp3", ""));
-		
-	// asArray.Dump();
+	// Set to true to add an 'A' instead of the full base 64 string. Makes the output easier to read.
+	const bool debug = false;
 
-	var nameSpaceAndFiles = new Dictionary<string, List<MP3FileData>>();
-	foreach (var file in allMP3)
+	const string mediaType = "ogg";
+	var mediaTypeExtention = $".{mediaType}";
+	var mediaFilter = $"*.{mediaType}";
+	
+	// Folder that contains the media files to be converted to base 64 and a TS file.
+	var soundSourceFolder = @"D:\Reps\r42ts\Round42Sound\";
+	
+	// Folders that contain a 01.ABC file are converted to a TS array.
+	var arrayIdentifier = $"01{mediaTypeExtention}";
+	
+	// I use 4 spaces to indent.
+	const string fourSpaces = "    ";
+	
+	var allMedia = Directory.GetFiles(soundSourceFolder, mediaFilter, SearchOption.AllDirectories);
+	
+	
+	allMedia.Dump();
+	
+	var asArray = Directory.GetFiles(soundSourceFolder, arrayIdentifier, SearchOption.AllDirectories)
+		.Select(s => s.Replace(soundSourceFolder, ""))
+		.Select(s => s.Replace($"\\{arrayIdentifier}", ""));
+		
+
+	var nameSpaceAndFiles = new Dictionary<string, List<FileData>>();
+	foreach (var file in allMedia)
 	{
-		var subNamespace = file.Replace(sourceFolder, "");
+		var subNamespace = file.Replace(soundSourceFolder, "");
 		subNamespace = subNamespace.Substring(0, subNamespace.IndexOf("\\"));
 
 		var fileName = Path.GetFileName(file);
-		List<MP3FileData> files;
+		List<FileData> files;
 
 		if (nameSpaceAndFiles.ContainsKey(subNamespace))
 		{
@@ -31,19 +46,16 @@ void Main()
 		}
 		else
 		{
-			files = new List<MP3FileData>();
+			files = new List<FileData>();
 			nameSpaceAndFiles.Add(subNamespace, files);
 		}
 
 		var fileData = File.ReadAllBytes(file);
-		var reader = new Mp3FileReader(file);
-		var duration = reader.TotalTime;
 
-		var fileNameAndData = new MP3FileData
+		var fileNameAndData = new FileData
 		{
-			FileName = fileName.Replace(".mp3", "").ToLower(),
+			FileName = fileName.Replace($"{mediaTypeExtention}", "").ToLower(),
 			Data = debug ? "A" : Convert.ToBase64String(fileData),
-			Duration = duration.TotalMilliseconds,
 		};
 
 		files.Add(fileNameAndData);
@@ -82,7 +94,7 @@ void Main()
 
 		foreach (var value in kvp.Value)
 		{
-			var data = "data:audio/mp3;base64," + value.Data;
+			var data = $"data:audio/{mediaType};base64," + value.Data;
 			if (arrayFormat)
 			{
 				sb.AppendLine($"{fourSpaces}{fourSpaces}\"{data}\",");
@@ -110,10 +122,10 @@ void Main()
 	File.WriteAllText(@"D:\Reps\r42ts\src\Sound\Sounds.ts", sb.ToString());
 
 }
-
-class MP3FileData
+	
+class FileData
 {
 	public string FileName { get; set; }
 	public string Data { get; set; }
-	public double Duration {get;set;}
+//	public double Duration {get;set;}
 }

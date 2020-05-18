@@ -82,7 +82,7 @@ void Main()
 
 		foreach (var value in kvp.Value)
 		{
-			var data = "data:audio/mp3;base64," + value.Data;
+			var data = "\"data:audio/mp3;base64," + value.Data;
 			
 			var content = $"{{ duration: {value.Duration}, data: {data}\"}},";
 			if (arrayFormat)
