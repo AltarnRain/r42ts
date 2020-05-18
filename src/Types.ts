@@ -54,6 +54,11 @@ export type FrameProviderFunction = () => Frame;
 export type Angle = number | undefined;
 
 /**
+ * Background sound for levels.
+ */
+export type BackgroundSound = "tjirp" | "whop" | "whiz" | "falling";
+
+/**
  * All enemies and variations.
  */
 export type Enemies =

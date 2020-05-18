@@ -96,7 +96,7 @@ window.onload = () => {
 
             (window as any).r42 = ctx;
         } else if (sound) {
-            SoundProvider.playWhop(19);
+            SoundProvider.playTravelingWarpGate();
         } else {
             begin();
         }

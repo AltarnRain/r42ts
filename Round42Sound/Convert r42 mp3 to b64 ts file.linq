@@ -1,20 +1,29 @@
-<Query Kind="Program" />
+<Query Kind="Program">
+  <Reference Relative="..\Experiments\packages\NAudio.1.10.0\lib\net35\NAudio.dll">D:\Reps\Experiments\packages\NAudio.1.10.0\lib\net35\NAudio.dll</Reference>
+  <Namespace>NAudio.Wave</Namespace>
+</Query>
 
 void Main()
 {
-
+	const bool debug = true;
 	const string fourSpaces = "    ";
-	var sourceFolder = @"D:Reps\r42ts\Round42Sound\";
+	var sourceFolder = @"D:\Reps\r42ts\Round42Sound\";
 	var allMP3 = Directory.GetFiles(sourceFolder, "*.mp3", SearchOption.AllDirectories);
+	
+	var asArray = Directory.GetFiles(sourceFolder, "01.mp3", SearchOption.AllDirectories)
+		.Select(s => s.Replace(sourceFolder,""))
+		.Select(s => s.Replace("\\01.mp3", ""));
+		
+	// asArray.Dump();
 
-	var nameSpaceAndFiles = new Dictionary<string, List<FileNameAndData>>();
+	var nameSpaceAndFiles = new Dictionary<string, List<MP3FileData>>();
 	foreach (var file in allMP3)
 	{
 		var subNamespace = file.Replace(sourceFolder, "");
 		subNamespace = subNamespace.Substring(0, subNamespace.IndexOf("\\"));
 
 		var fileName = Path.GetFileName(file);
-		List<FileNameAndData> files;
+		List<MP3FileData> files;
 
 		if (nameSpaceAndFiles.ContainsKey(subNamespace))
 		{
@@ -22,22 +31,23 @@ void Main()
 		}
 		else
 		{
-			files = new List<FileNameAndData>();
+			files = new List<MP3FileData>();
 			nameSpaceAndFiles.Add(subNamespace, files);
 		}
 
 		var fileData = File.ReadAllBytes(file);
+		var reader = new Mp3FileReader(file);
+		var duration = reader.TotalTime;
 
-		var fileNameAndData = new FileNameAndData
+		var fileNameAndData = new MP3FileData
 		{
 			FileName = fileName.Replace(".mp3", "").ToLower(),
-			data = Convert.ToBase64String(fileData),
+			Data = debug ? "A" : Convert.ToBase64String(fileData),
+			Duration = duration.TotalMilliseconds,
 		};
 
 		files.Add(fileNameAndData);
 	}
-
-	var asArray = new string[] { "Wizzing", "Whoping", "Tjirping", "Explosions" };
 
 	var sb = new StringBuilder();
 	sb.AppendLine("/**");
@@ -72,7 +82,7 @@ void Main()
 
 		foreach (var value in kvp.Value)
 		{
-			var data = value.data;
+			var data = "data:audio/mp3;base64," + value.Data;
 			if (arrayFormat)
 			{
 				sb.AppendLine($"{fourSpaces}{fourSpaces}\"{data}\",");
@@ -82,7 +92,6 @@ void Main()
 				sb.AppendLine($"{fourSpaces}{fourSpaces}{value.FileName}: \"{data}\",");
 			}
 		}
-
 
 		if (arrayFormat)
 		{
@@ -94,7 +103,6 @@ void Main()
 		}
 	}
 
-
 	sb.AppendLine("}");
 
 	sb.ToString().Dump();
@@ -103,9 +111,9 @@ void Main()
 
 }
 
-class FileNameAndData
+class MP3FileData
 {
 	public string FileName { get; set; }
-	public string data { get; set; }
+	public string Data { get; set; }
+	public double Duration {get;set;}
 }
-

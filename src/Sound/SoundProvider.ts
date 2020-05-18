@@ -5,6 +5,7 @@
  */
 
 import { Howl } from "howler";
+import { BackgroundSound } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { Sounds } from "./Sounds";
 
@@ -47,12 +48,13 @@ export namespace SoundProvider {
     /**
      * Sounds while travelin through a warp gate.
      */
-    const warpGateTraveling = new Howl({ src: Sounds.Player.warpgate, loop: true });
+    const warpGateTraveling = new Howl({ src: [Sounds.Player.warpgate], loop: true,
+        sprite: {
+            warp: [0, 950]
+         }});
 
     const tjirping = Sounds.Tjirping.map((t) => new Howl({ src: t, loop: true }));
-
     const whoping = Sounds.Whoping.map((w) => new Howl({ src: w, loop: true }));
-
     const wizzing = Sounds.Wizzing.map((w) => new Howl({ src: w, loop: true }));
 
     let currentTjirp: Howl | undefined;
@@ -86,7 +88,7 @@ export namespace SoundProvider {
     }
 
     export function playTravelingWarpGate(): void {
-        warpGateTraveling.loop();
+        warpGateTraveling.play("warp");
     }
 
     export function stopPlayingTravelingWarpGate(): void {
@@ -114,12 +116,25 @@ export namespace SoundProvider {
     }
 
     export function playWhop(whop: number): void {
-
         if (currentWhoping) {
             currentWhoping.stop();
         }
 
         currentWhoping = whoping[whop];
         currentWhoping.play();
+    }
+
+    export function playBackGround(sound: BackgroundSound, enemyCount: number): void {
+        switch (sound) {
+            case "tjirp":
+                playTjirp(enemyCount);
+                break;
+            case "whiz":
+                playWizzing(enemyCount);
+                break;
+            case "whop":
+                playWhop(enemyCount);
+                break;
+        }
     }
 }

@@ -10,6 +10,7 @@ import GameLoop from "../GameLoop";
 import getPhaserLocations from "../Player/GetPhaserLocations";
 import playerIsHit from "../Player/PlayerHelper";
 import renderFrame from "../Render/RenderFrame";
+import { SoundProvider } from "../Sound/SoundProvider";
 import { clearPhaserLocations, removeEnemy, setEnemiesState, setPhaserLocations, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { enemeyHit as enemyHit, increaseScore, phaserFired, removePhaser, setPause } from "../State/Game/GameActions";
@@ -20,7 +21,6 @@ import dispatchExplosion from "../StateHandlers/DispatchExplosion";
 import handlePlayerDeath from "../StateHandlers/HandlePlayerDeath";
 import { getRandomArrayElement } from "../Utility/Array";
 import { overlaps } from "../Utility/Geometry";
-import { SoundProvider } from "../Sound/SoundProvider";
 
 /**
  * Module:          EnemyLevelRunner
@@ -46,6 +46,7 @@ export namespace EnemyLevelRunner {
 
     export function setEnemies(newEnemies: BaseEnemy[]): void {
         localState.enemies = newEnemies;
+
         dispatch(setTotalEnemies(newEnemies.length));
 
         // Precoution. Ensure each enemy dispatches its state to the store

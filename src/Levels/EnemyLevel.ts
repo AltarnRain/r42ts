@@ -33,8 +33,8 @@ export default class EnemyLevel implements ILevel {
      * @param {TickFunction} stateManager. A function that will handle the state for the level.
      * @param {() => boolean} monitorLevelWon. A function that checks fort he win condition of a level.
      */
-    constructor(enemies: Enemies) {
-        this.enemies = enemies;
+    constructor(enemy: Enemies) {
+        this.enemies = enemy;
     }
 
     /**

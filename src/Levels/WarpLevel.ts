@@ -22,6 +22,7 @@ import handlePlayerDeath from "../StateHandlers/HandlePlayerDeath";
 import { getRandomArrayElement } from "../Utility/Array";
 import { coinFlip } from "../Utility/Lib";
 import { fallsWithin } from "../Utility/Location";
+import { SoundProvider } from "../Sound/SoundProvider";
 
 /**
  * Module:          WarpLevel
@@ -92,6 +93,9 @@ export default class WarpLevel implements ILevel {
                 this.gameLoopSubscriptions.push(GameLoop.registerUpdateState((tick) => this.hitDetection(tick, badSpace)));
 
                 dispatch(setPlayerMovementLimit("forceup"));
+
+                SoundProvider.playTravelingWarpGate();
+
                 resolve();
             });
         });
@@ -243,6 +247,7 @@ export default class WarpLevel implements ILevel {
         } = appState();
 
         if (top < gameField.top + pixelSize * 3) {
+            SoundProvider.stopPlayingTravelingWarpGate();
             handleLevelWon();
 
             // Warp levels reward 1400 points when you make it.
