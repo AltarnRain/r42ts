@@ -1,7 +1,4 @@
-<Query Kind="Program">
-  <Reference Relative="..\..\Experiments\packages\NAudio.1.10.0\lib\net35\NAudio.dll">D:\Reps\Experiments\packages\NAudio.1.10.0\lib\net35\NAudio.dll</Reference>
-  <Namespace>NAudio.Wave</Namespace>
-</Query>
+<Query Kind="Program" />
 
 void Main()
 {
