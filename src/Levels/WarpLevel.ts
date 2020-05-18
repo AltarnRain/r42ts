@@ -148,6 +148,7 @@ export default class WarpLevel implements ILevel {
 
             if (hitside && alive) {
                 handlePlayerDeath(tick);
+                SoundPlayer.stopBackgroundPlaying();
             }
         }
 

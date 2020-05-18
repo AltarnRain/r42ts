@@ -71,6 +71,11 @@ export namespace SoundPlayer {
     const wizzing = Sounds.Wizzing.map((w) => new Howl({ src: w, loop: true }));
 
     /**
+     * Music. Player on round 13 and round 42.
+     */
+    const music = new Howl({ src: Sounds.Music.music, loop: true });
+
+    /**
      * Current running background sound.
      */
     let currentBackground: Howl | undefined;
@@ -173,7 +178,7 @@ export namespace SoundPlayer {
                 break;
             case "devil":
             case "fish":
-                // todo
+                playBackground([music], 0);
                 break;
             default:
                 throw new Error("No sound available for enemy " + enemy);
@@ -197,6 +202,6 @@ export namespace SoundPlayer {
             currentBackground = sounds[index];
         }
 
-        currentBackground.play("sound");
+        currentBackground.play();
     }
 }
