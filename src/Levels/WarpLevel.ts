@@ -247,7 +247,7 @@ export default class WarpLevel implements ILevel {
         } = appState();
 
         if (top < gameField.top + pixelSize * 3) {
-            SoundPlayer.stopPlayingTravelingWarpGate();
+            SoundPlayer.stopBackgroundPlaying();
             handleLevelWon();
 
             // Warp levels reward 1400 points when you make it.

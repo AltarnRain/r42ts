@@ -7,6 +7,7 @@
 import { Howl } from "howler";
 import { getRandomArrayElement } from "../Utility/Array";
 import { Sounds } from "./Sounds";
+import { Enemies } from "../Types";
 
 /**
  * Module:          SoundPlayer
@@ -51,6 +52,16 @@ export namespace SoundPlayer {
         src: [Sounds.Player.warpgate.data], loop: true,
         sprite: {
             sound: [60, Sounds.Player.warpgate.duration - 100]
+        }
+    });
+
+    /**
+     * Sounds while travelin through a warp gate.
+     */
+    const falling = new Howl({
+        src: [Sounds.Falling.falling.data], loop: true,
+        sprite: {
+            sound: [60, Sounds.Falling.falling.duration - 100]
         }
     });
 
@@ -122,14 +133,14 @@ export namespace SoundPlayer {
      * Plays the warp gate travel sound in a loop.
      */
     export function playTravelingWarpGate(): void {
-        warpGateTraveling.play("sound");
+        playBackground([warpGateTraveling], 0);
     }
 
     /**
-     * Stops playing the warpgate loop.
+     * Plays the warp gate travel sound in a loop.
      */
-    export function stopPlayingTravelingWarpGate(): void {
-        warpGateTraveling.stop();
+    export function playFalling(): void {
+        playBackground([falling], 0);
     }
 
     /**
@@ -141,28 +152,41 @@ export namespace SoundPlayer {
         }
     }
 
-    /**
-     * Play a tjirp in a loop.
-     * @param {number} index. Index of the sound in the tjirping array.
-     */
-    export function playTjirp(index: number): void {
-        playBackground(tjirping, index);
-    }
-
-    /**
-     * Play a wizzing in a loop.
-     * @param {number} index. Index of the sound in the wizzing array.
-     */
-    export function playWizzing(index: number): void {
-        playBackground(wizzing, index);
-    }
-
-    /**
-     * Play a whop in a loop.
-     * @param {number} index. Index of the sound in the whop array.
-     */
-    export function playWhop(index: number): void {
-        playBackground(whoping, index);
+    export function playEnemyBackgroundSound(enemy: Enemies, index: number): void {
+        switch (enemy) {
+            case "bird-fire":
+            case "bird":
+            case "spinner":
+            case "diabolo":
+            case "bat":
+                playBackground(tjirping, index);
+                break;
+            case "orb":
+            case "orb-up-down":
+            case "cloaking-orb":
+            case "robot":
+            case "robots-random":
+            case "crab":
+            case "piston":
+            case "boat":
+                playBackground(whoping, index);
+                break;
+            case "balloon":
+                playBackground(wizzing, index);
+                break;
+            case "asteroid-down":
+            case "asteroid-diagonal":
+            case "spacemonster-down":
+            case "spacemonster-diagonal":
+                playFalling();
+                break;
+            case "devil":
+            case "fish":
+                // todo
+                break;
+            default:
+                throw new Error("No sound available for enemy " + enemy);
+        }
     }
 
     /**

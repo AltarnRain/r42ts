@@ -46,12 +46,21 @@ let backgroundDrawFunctions: Array<() => void> = [];
  */
 let foregroundDrawFunctions: Array<() => void> = [];
 
+/**
+ * Array of functions that check if a level is won. Technically, this is a single method but
+ * I am not setting functions.
+ */
 let levelWonFunctions: Array<() => void> = [];
 
 /**
  * Functions that draw.
  */
 let drawFunctions: Array<() => void> = [];
+
+/**
+ * Functions that monitor state to pick which background sound to play
+ */
+let backgroundSoundMonitor: Array<() => void> = [];
 
 export namespace GameLoop {
     /**
@@ -170,6 +179,18 @@ export namespace GameLoop {
     }
 
     /**
+     * Register a function that checks which background sound to play based on the current state.
+     * @param {() => void} f. A function.
+     */
+    export function registerBackgroundSoundMonitor(f: () => void) {
+        backgroundSoundMonitor.push(f);
+
+        return () => {
+            backgroundSoundMonitor = backgroundSoundMonitor.filter((d) => d !== f);
+        };
+    }
+
+    /**
      * Runner function. Calls all functions that subscribed to the game loop.
      * @param {number} tick. Current animation tick.
      */
@@ -249,6 +270,9 @@ export namespace GameLoop {
         // Finally we finish with drawing foreground stuff. The status bar for one, and the game border
         // are both foreground and render over anything.
         foregroundDrawFunctions.forEach((f) => f());
+
+        // Play background sound(s).
+        backgroundSoundMonitor.forEach((f) => f());
 
         // Some debugging functions.
         const { debuggingState } = appState();

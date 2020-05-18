@@ -15,6 +15,7 @@ import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import handleLevelWon from "../StateHandlers/HandleLevelWon";
 import { Enemies } from "../Types";
+import { SoundPlayer } from "../Sound/SoundPlayer";
 
 export default class EnemyLevel implements ILevel {
 
@@ -27,6 +28,8 @@ export default class EnemyLevel implements ILevel {
      * Enemies of the level.
      */
     private enemies: Enemies;
+
+    private currentEnemyCount: number | undefined;
 
     /**
      * Constructs the base level
@@ -83,6 +86,9 @@ export default class EnemyLevel implements ILevel {
                 // Add a function to the GameLoop that will check if a level has been won.
                 this.registerSubscription(GameLoop.registerLevelWonMonitor(() => this.monitorLevelWonRun()));
 
+                // Register back ground sound monitor.
+                this.registerSubscription(GameLoop.registerBackgroundSoundMonitor(() => this.playbackgroundSound()));
+
                 dispatch(setPlayerMovementLimit("none"));
 
                 if (levelReady !== undefined) {
@@ -111,6 +117,8 @@ export default class EnemyLevel implements ILevel {
         // from the GameLoop. Call all of them to remove them from the GameLoop.
         this.subscriptions.forEach((s) => s());
         this.subscriptions = [];
+
+        SoundPlayer.stopBackgroundPlaying();
     }
 
     /**
@@ -135,5 +143,23 @@ export default class EnemyLevel implements ILevel {
         }
 
         return false;
+    }
+
+    /**
+     * Play background sound playing.
+     */
+    private playbackgroundSound(): void {
+        const {
+            enemyLevelState: { enemies }
+        } = appState();
+
+        if (this.currentEnemyCount === undefined) {
+            SoundPlayer.playEnemyBackgroundSound(this.enemies, enemies.length - 1) ;
+            this.currentEnemyCount = enemies.length;
+        } else if (this.currentEnemyCount !== enemies.length) {
+            SoundPlayer.stopBackgroundPlaying();
+            SoundPlayer.playEnemyBackgroundSound(this.enemies, this.currentEnemyCount - 1);
+            this.currentEnemyCount = enemies.length;
+        }
     }
 }
