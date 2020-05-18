@@ -9,7 +9,7 @@
  * Responsibility:  Performs the required dispatches when the player dies. Used in all level types.
  */
 
-import { SoundProvider } from "../Sound/SoundProvider";
+import { SoundPlayer } from "../Sound/SoundPlayer";
 import { gameOver, removeLife, setPhasers } from "../State/Game/GameActions";
 import { setPlayerBulletState, setPlayerIsAlive } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
@@ -33,7 +33,7 @@ export default function handlePlayerDeath(tick: number): void {
         return;
     }
 
-    SoundProvider.playPlayerExplosion();
+    SoundPlayer.playPlayerExplosion();
 
     dispatchExplosion(left, top, coloredExplosion, tick);
 

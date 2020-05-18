@@ -7,7 +7,7 @@
 import GameLoop from "./GameLoop";
 import dimensionProvider from "./Providers/DimensionProvider";
 import ctxProvider from "./Render/CtxProvider";
-import { SoundProvider } from "./Sound/SoundProvider";
+import { SoundPlayer } from "./Sound/SoundPlayer";
 import { setDebuggingState } from "./State/Debugging/DebuggingActions";
 import DebuggingState from "./State/Debugging/DebuggingState";
 import { addPhaser, gameStart, increaseScore, nextLevel, setLevel, setLives, setPhasers, setTimeLevelTimeLimit, setWarpGamteComplexity } from "./State/Game/GameActions";
@@ -96,7 +96,8 @@ window.onload = () => {
 
             (window as any).r42 = ctx;
         } else if (sound) {
-            SoundProvider.playTravelingWarpGate();
+            // SoundProvider.playTravelingWarpGate();
+            SoundPlayer.playWhop(20);
         } else {
             begin();
         }

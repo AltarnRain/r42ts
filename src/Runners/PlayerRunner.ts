@@ -12,7 +12,7 @@ import { playerMovementHandler } from "../Handlers/PlayerMovementHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
 import renderFrame from "../Render/RenderFrame";
 import getTwoPixelBullet from "../SharedFrames/GetTwoPixelBullet";
-import { SoundProvider } from "../Sound/SoundProvider";
+import { SoundPlayer } from "../Sound/SoundPlayer";
 import { bulletFired } from "../State/Game/GameActions";
 import { ParticleState } from "../State/ParticleState";
 import { setPlayerBulletState } from "../State/Player/PlayerActions";
@@ -66,7 +66,7 @@ function handlePlayerBulletFiring(): void {
         const nozzleLocation = playerState.nozzleLocation;
         const bullet = getPlayerBullet(nozzleLocation.left, nozzleLocation.top);
         dispatch(setPlayerBulletState(bullet));
-        SoundProvider.playPlayerShoot();
+        SoundPlayer.playPlayerShoot();
 
         // Keep track how many bullets the player fired.
         dispatch(bulletFired());

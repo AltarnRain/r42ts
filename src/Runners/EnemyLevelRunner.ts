@@ -10,7 +10,7 @@ import GameLoop from "../GameLoop";
 import getPhaserLocations from "../Player/GetPhaserLocations";
 import playerIsHit from "../Player/PlayerHelper";
 import renderFrame from "../Render/RenderFrame";
-import { SoundProvider } from "../Sound/SoundProvider";
+import { SoundPlayer } from "../Sound/SoundPlayer";
 import { clearPhaserLocations, removeEnemy, setEnemiesState, setPhaserLocations, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { enemeyHit as enemyHit, increaseScore, phaserFired, removePhaser, setPause } from "../State/Game/GameActions";
@@ -242,7 +242,7 @@ function handleEnemyDestruction(tick: number, enemy: EnemyState, awardPoints = t
         }
     });
 
-    SoundProvider.playEnemyExplosion();
+    SoundPlayer.playEnemyExplosion();
     dispatchExplosion(enemy.offsetLeft, enemy.offsetTop, enemy.coloredExplosion, tick);
     dispatch(removeEnemy(enemy.enemyId));
 
@@ -277,7 +277,7 @@ function handlePhaser(tick: number): void {
             // Remove one phaser.
             dispatch(removePhaser());
 
-            SoundProvider.playPhaser();
+            SoundPlayer.playPhaser();
 
             // Calculate the locations aka pixels where the phaser beam should appear.
             const phaserLocations = getPhaserLocations(playerNozzleLocation.left, playerNozzleLocation.top, randomEnemyCenter.left, randomEnemyCenter.top);

@@ -8,7 +8,7 @@ import { Locations } from "../Constants/Constants";
 import GameLoop from "../GameLoop";
 import { playerMovementHandler } from "../Handlers/PlayerMovementHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { SoundProvider } from "../Sound/SoundProvider";
+import { SoundPlayer } from "../Sound/SoundPlayer";
 import { setPlayerIsAlive, setPlayerLocationData, setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { MoveLimits } from "../Types";
@@ -130,9 +130,9 @@ function createParticles(): void {
  */
 function setup(speed: "fast" | "slow", limit: MoveLimits): void {
     if (speed === "fast") {
-        SoundProvider.playPlayerFormationFast();
+        SoundPlayer.playPlayerFormationFast();
     } else {
-        SoundProvider.playPlayerFormationSlow();
+        SoundPlayer.playPlayerFormationSlow();
     }
 
     formationSpeed = speed;
