@@ -29,6 +29,7 @@ namespace Constants {
     export const phasersFired = "phasersFired";
     export const enemyHit = "enemyHit";
     export const setTimeLevelTimeLimit = "setTimeLevelTimeLimit";
+    export const resetScore = "resetScore";
 }
 
 export default Constants;

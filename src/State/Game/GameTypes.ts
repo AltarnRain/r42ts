@@ -95,6 +95,9 @@ export interface SetTimeLevelTimeLimit {
     limit: number;
 }
 
+export interface ResetScore {
+    type: typeof Constants.resetScore;
+}
 export type GameStateTypes =
     IncreaseScore |
     SetLives |
@@ -114,5 +117,6 @@ export type GameStateTypes =
     BulletFired |
     PhaserFired |
     EnemyHit |
-    SetTimeLevelTimeLimit
+    SetTimeLevelTimeLimit |
+    ResetScore
     ;

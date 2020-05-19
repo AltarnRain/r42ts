@@ -97,6 +97,10 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 // Used to debug the game and not spend 20 seconds waiting
                 draft.timeLevelTimeLimit = action.limit;
                 break;
+            case Constants.resetScore:
+                // Score is reset when the player self destructs.
+                draft.score = 0;
+                break;
         }
     });
 }
