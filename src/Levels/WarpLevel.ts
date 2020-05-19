@@ -97,6 +97,7 @@ export default class WarpLevel implements ILevel {
 
                 dispatch(setPlayerMovementLimit("forceup"));
 
+                // Initialize the warp level background sound.
                 SoundPlayer.playTravelingWarpGate();
 
                 resolve();
@@ -112,13 +113,11 @@ export default class WarpLevel implements ILevel {
             playerState: { alive }
         } = appState();
 
-        if (!alive || this.reachedEnd()) {
-            // Sound does not play when the player is dead.
-            // Stop playing the warp level sound when the player had reached the end.
-            SoundPlayer.stopBackground();
-        } else {
-            // Otherwise keep playing sound.
+        // Only play the warp travel sound when the player is alive.
+        if (alive) {
             SoundPlayer.ensureBackground();
+        } else {
+            SoundPlayer.stopBackground();
         }
     }
 
@@ -172,9 +171,6 @@ export default class WarpLevel implements ILevel {
         if (hitside && alive) {
             // You dead bro.
             handlePlayerDeath(tick);
-
-            // Dead = not traveling = no sound.
-            SoundPlayer.stopBackground();
         }
 
         if (debuggingState.drawHitboxes) {
@@ -295,6 +291,10 @@ export default class WarpLevel implements ILevel {
      * Dispose stuff.
      */
     public dispose(): void {
+
+        // Kill the background sound.
+        SoundPlayer.stopBackground();
+
         // Dispose all game loop subscriptions.
         this.gameLoopSubscriptions.forEach((s) => s());
     }
