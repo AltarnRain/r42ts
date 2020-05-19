@@ -7,7 +7,7 @@
 import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import CGAColors from "../../Constants/CGAColors";
-import { Locations } from "../../Constants/Constants";
+import { Locations, ColorSchemes } from "../../Constants/Constants";
 import TickHandler from "../../Handlers/TickHandler";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
@@ -21,12 +21,6 @@ import Mutators from "../../Utility/FrameMutators";
  */
 
 // The orb constantly varies between a specific set of color combinations. This array is used to set them.
-const colors: string[][] = [
-    [CGAColors.lightGreen, CGAColors.lightBlue],
-    [CGAColors.brown, CGAColors.lightGreen],
-    [CGAColors.lightBlue, CGAColors.white],
-    [CGAColors.white, CGAColors.brown],
-];
 
 const {
     gameField
@@ -74,7 +68,7 @@ export default class OrbEnemy extends BaseEnemy {
      */
     private onColorChange(): void {
         this.currentColorIndex++;
-        if (this.currentColorIndex >= colors.length) {
+        if (this.currentColorIndex >= ColorSchemes.Enemies.orb.length) {
             this.currentColorIndex = 0;
         }
 
@@ -86,7 +80,7 @@ export default class OrbEnemy extends BaseEnemy {
      * @param {Frame} frame. A frame.
      */
     private updateCurrentFrameAndColor(frame: Frame): void {
-        const currentColor = colors[this.currentColorIndex];
+        const currentColor = ColorSchemes.Enemies.orb[this.currentColorIndex];
         if (currentColor === undefined) {
             throw new Error("Color cannot be undefined.");
         }

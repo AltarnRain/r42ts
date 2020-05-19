@@ -116,7 +116,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
                 gameField.top,
                 Locations.robot.maxBottom);
 
-            const robotColor = getRandomArrayElement(ColorSchemes.robot);
+            const robotColor = getRandomArrayElement(ColorSchemes.Enemies.robot);
 
             return new DefaultEnemy(
                 Points.robot,
@@ -442,7 +442,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             // It can still be hit while it is 'invisible' (because hitboxes are generated and, meh, its fine).
             const locationProvider = new CloakingOrbLocationProvider(location.left, location.top, frames.length - 2, frameProvider);
 
-            const color = getRandomArrayElement(ColorSchemes.cloakingOrb);
+            const color = getRandomArrayElement(ColorSchemes.Enemies.cloakingOrb);
 
             return new DefaultEnemy(
                 Points.cloakingOrb,

@@ -6,8 +6,7 @@
 
 import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
-import CGAColors from "../../Constants/CGAColors";
-import { Points } from "../../Constants/Constants";
+import { Points, ColorSchemes } from "../../Constants/Constants";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
@@ -25,12 +24,6 @@ const {
 
 const jawsOpenTop = pixelSize * 55;
 
-const explosionColors = [
-    CGAColors.yellow,
-    CGAColors.lightGreen,
-    CGAColors.lightBlue,
-];
-
 export default class SpaceMonster extends BaseEnemy {
 
     /**
@@ -38,6 +31,14 @@ export default class SpaceMonster extends BaseEnemy {
      */
     private jawsClosed = true;
 
+    /**
+     * Construct the object.
+     * @param {number} frameChangeTime. Time between changing frames.
+     * @param {number} getOffsetFrames. Frames of the orb enemy.
+     * @param {number} getExplosion. Get the exposion.
+     * @param {number} locationProvider. Location provider.
+     * @param {number} frameProvider. Frame provider.
+     */
     constructor(
         frameChangeTime: number,
         getOffsetFrames: OffsetFramesProviderFunction,
@@ -50,7 +51,7 @@ export default class SpaceMonster extends BaseEnemy {
             locationProvider,
             frameProvider);
 
-        const color = getRandomArrayElement(explosionColors);
+        const color = getRandomArrayElement(ColorSchemes.Explosions.spaceMonster);
         Mutators.Frame.setColor(this.explosion.explosionCenterFrame, color);
         this.explosion.particleFrames.forEach((pf) => Mutators.Frame.setColor(pf, color));
     }

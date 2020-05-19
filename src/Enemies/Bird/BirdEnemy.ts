@@ -7,7 +7,7 @@
 import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import CGAColors from "../../Constants/CGAColors";
-import { Points } from "../../Constants/Constants";
+import { ColorSchemes, Points } from "../../Constants/Constants";
 import TickHandler from "../../Handlers/TickHandler";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import { ExplosionProviderFunction, Frame, OffsetFramesProviderFunction } from "../../Types";
@@ -18,8 +18,6 @@ import Mutators from "../../Utility/FrameMutators";
  * Module:          Bird enemy
  * Responsibility:  Defines the behaviour of the bird enemy first seen in level 1.
  */
-
-const colors = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 
 export default class BirdEnemy extends BaseEnemy {
 
@@ -79,7 +77,7 @@ export default class BirdEnemy extends BaseEnemy {
      * @param {Frame} frame. Frame to set the color on.
      */
     private setCurrentFrameColor(frame: Frame) {
-        Mutators.Frame.setColor(frame, getRandomArrayElement(colors));
+        Mutators.Frame.setColor(frame, getRandomArrayElement(ColorSchemes.birds));
         this.currentFrame = frame;
     }
 

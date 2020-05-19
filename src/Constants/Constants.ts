@@ -132,8 +132,8 @@ export namespace FrameTimes {
     export const crab = 100;
     export const bat = 100;
     export const boat = 200;
-    export  const cloakingOrb = 150;
-    export  const fish = 150;
+    export const cloakingOrb = 150;
+    export const fish = 150;
 }
 
 export namespace Points {
@@ -165,22 +165,44 @@ export namespace WarpLevelConstants {
     export const width = pixelSize * 16;
 }
 
+/**
+ * Colors used by enemies. These are either picked randomly or picked at the beginning of a level.
+ */
 export namespace ColorSchemes {
-    export const robot = [
-        CGAColors.lightBlue,
-        CGAColors.lightCyan,
-        CGAColors.lightRed,
-        CGAColors.lightGreen,
-        CGAColors.lightBlue,
-        CGAColors.lightMagenta,
-    ];
+    export namespace Enemies {
+        export const robot = [
+            CGAColors.lightBlue,
+            CGAColors.lightCyan,
+            CGAColors.lightRed,
+            CGAColors.lightGreen,
+            CGAColors.lightBlue,
+            CGAColors.lightMagenta,
+        ];
 
-    export const cloakingOrb = [
-        CGAColors.lightBlue,
-        CGAColors.lightCyan,
-        CGAColors.lightRed,
-        CGAColors.lightGreen,
-        CGAColors.lightBlue,
-        CGAColors.lightMagenta,
-    ];
+        export const cloakingOrb = [
+            CGAColors.lightBlue,
+            CGAColors.lightCyan,
+            CGAColors.lightRed,
+            CGAColors.lightGreen,
+            CGAColors.lightBlue,
+            CGAColors.lightMagenta,
+        ];
+
+        export const orb: string[][] = [
+            [CGAColors.lightGreen, CGAColors.lightBlue],
+            [CGAColors.brown, CGAColors.lightGreen],
+            [CGAColors.lightBlue, CGAColors.white],
+            [CGAColors.white, CGAColors.brown],
+        ];
+    }
+
+    export namespace Explosions {
+        export const spaceMonster = [
+            CGAColors.yellow,
+            CGAColors.lightGreen,
+            CGAColors.lightBlue,
+        ];
+    }
+
+    export const birds = [CGAColors.lightMagenta, CGAColors.yellow, CGAColors.lightCyan, CGAColors.lightRed];
 }
