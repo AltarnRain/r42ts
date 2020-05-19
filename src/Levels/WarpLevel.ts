@@ -92,6 +92,9 @@ export default class WarpLevel implements ILevel {
                 // trigger progression to the next level.
                 this.gameLoopSubscriptions.push(GameLoop.registerUpdateState((tick) => this.hitDetection(tick, badSpace)));
 
+                // Register a sound runner.
+                this.gameLoopSubscriptions.push(GameLoop.registerSoundRunner(() => this.soundRunner()));
+
                 dispatch(setPlayerMovementLimit("forceup"));
 
                 SoundPlayer.playTravelingWarpGate();
@@ -99,6 +102,24 @@ export default class WarpLevel implements ILevel {
                 resolve();
             });
         });
+    }
+
+    /**
+     * Monitors if the warp travel should should be played or not.
+     */
+    private soundRunner(): void {
+        const {
+            playerState: { alive }
+        } = appState();
+
+        if (!alive || this.reachedEnd()) {
+            // Sound does not play when the player is dead.
+            // Stop playing the warp level sound when the player had reached the end.
+            SoundPlayer.stopBackground();
+        } else {
+            // Otherwise keep playing sound.
+            SoundPlayer.ensureBackground();
+        }
     }
 
     /**
@@ -132,32 +153,28 @@ export default class WarpLevel implements ILevel {
      */
     private hitDetection(tick: number, badSpace: Array<{ left: GameRectangle; right: GameRectangle }>): void {
         const { playerState, debuggingState } = appState();
-        if (Guard.isPlayerAlive(playerState)) {
+        if (!Guard.isPlayerAlive(playerState)) {
+            return;
+        }
 
-            // This is an odd place to trigger a sound but it's the only part of the warp level that actively checks if
-            // the player is alive and to create another GameLoop function just to ensure the warp level
-            // travel sounds plays is overkill.
-            SoundPlayer.ensureBackground();
+        const { hitboxes, alive } = playerState;
 
-            const { hitboxes, alive } = playerState;
+        const hitside = badSpace.some((sb) => {
+            const { left: leftDanger, right: rightDanger } = sb;
+            const { middle, bottom } = hitboxes;
 
-            const hitside = badSpace.some((sb) => {
-                const { left: leftDanger, right: rightDanger } = sb;
-                const { middle, bottom } = hitboxes;
+            return fallsWithin(bottom.left, bottom.right, bottom.top, bottom.bottom, leftDanger.left, leftDanger.right, leftDanger.top, leftDanger.bottom) ||
+                fallsWithin(bottom.left, bottom.right, bottom.top, bottom.bottom, rightDanger.left, rightDanger.right, rightDanger.top, rightDanger.bottom) ||
+                fallsWithin(middle.left, middle.right, middle.top, middle.bottom, leftDanger.left, leftDanger.right, leftDanger.top, leftDanger.bottom) ||
+                fallsWithin(middle.left, middle.right, middle.top, middle.bottom, rightDanger.left, rightDanger.right, rightDanger.top, rightDanger.bottom);
+        });
 
-                return fallsWithin(bottom.left, bottom.right, bottom.top, bottom.bottom, leftDanger.left, leftDanger.right, leftDanger.top, leftDanger.bottom) ||
-                    fallsWithin(bottom.left, bottom.right, bottom.top, bottom.bottom, rightDanger.left, rightDanger.right, rightDanger.top, rightDanger.bottom) ||
-                    fallsWithin(middle.left, middle.right, middle.top, middle.bottom, leftDanger.left, leftDanger.right, leftDanger.top, leftDanger.bottom) ||
-                    fallsWithin(middle.left, middle.right, middle.top, middle.bottom, rightDanger.left, rightDanger.right, rightDanger.top, rightDanger.bottom);
-            });
+        if (hitside && alive) {
+            // You dead bro.
+            handlePlayerDeath(tick);
 
-            if (hitside && alive) {
-                // You dead bro.
-                handlePlayerDeath(tick);
-
-                // Dead = not traveling = no sound.
-                SoundPlayer.stopBackground();
-            }
+            // Dead = not traveling = no sound.
+            SoundPlayer.stopBackground();
         }
 
         if (debuggingState.drawHitboxes) {
@@ -166,6 +183,34 @@ export default class WarpLevel implements ILevel {
                 GameLoop.registerDraw(() => DEBUGGING_drawGameRect(bs.right, "red"));
             });
         }
+    }
+
+    /**
+     * Checks if the level is won whe the player reaches the end of the warp gate.
+     */
+    private monitorLevelWon(): void {
+
+        if (this.reachedEnd()) {
+            handleLevelWon();
+
+            // Warp levels reward 1400 points when you make it.
+            dispatch(increaseScore(1400));
+
+            // Reset the player to the spawn location after a warp level or they'll appear
+            // in the top of the screen right in the middle of enemies.
+            dispatch(setPlayerLocationData(Locations.Player.spawnLocation.left, Locations.Player.spawnLocation.top));
+        }
+    }
+
+    /**
+     * True when the player reached the end of the warp level.
+     */
+    private reachedEnd(): boolean {
+        const {
+            playerState: { top },
+        } = appState();
+
+        return top < gameField.top + pixelSize * 3;
     }
 
     /**
@@ -244,28 +289,6 @@ export default class WarpLevel implements ILevel {
         }
 
         return safeZone;
-    }
-
-    /**
-     * Checks if the level is won whe the player reaches the end of the warp gate.
-     */
-    private monitorLevelWon(): void {
-
-        const {
-            playerState: { top },
-        } = appState();
-
-        if (top < gameField.top + pixelSize * 3) {
-            SoundPlayer.stopBackground();
-            handleLevelWon();
-
-            // Warp levels reward 1400 points when you make it.
-            dispatch(increaseScore(1400));
-
-            // Reset the player to the spawn location after a warp level or they'll appear
-            // in the top of the screen right in the middle of enemies.
-            dispatch(setPlayerLocationData(Locations.Player.spawnLocation.left, Locations.Player.spawnLocation.top));
-        }
     }
 
     /**

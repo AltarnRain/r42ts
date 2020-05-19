@@ -4,6 +4,7 @@
  * See LICENSE.MD.
  */
 
+import { Howl } from "howler";
 import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { Sounds } from "./Sounds";
@@ -83,6 +84,8 @@ export namespace SoundPlayer {
         if (currentBackground) {
             currentBackground.stop();
         }
+
+        Howls.music.stop();
     }
 
     /**
@@ -121,7 +124,11 @@ export namespace SoundPlayer {
             case "devil":
             case "fish":
                 // The devil and fish levels are odd ducks when it comes to background sound. They do not change
-                // if the number of enemies diminishes. So, we ignore it.
+                // if the number of enemies diminishes.
+                if (!Howls.music.playing()) {
+                    Howls.music.play();
+                }
+
                 break;
             default:
                 throw new Error("No sound available for enemy " + enemy);
@@ -156,29 +163,6 @@ export namespace SoundPlayer {
         if (currentBackground && !currentBackground.playing()) {
             currentBackground.play();
         }
-    }
-
-    /**
-     * Pause the background
-     */
-    export function pauseBackground(): void {
-        if (currentBackground) {
-            currentBackground.pause();
-        }
-    }
-
-    /**
-     * Plays the music. Level 13 and level 42.
-     */
-    export function playMusic(): void {
-        Howls.music.play();
-    }
-
-    /**
-     * Stops the music. Done when level 13 or 42 is won.
-     */
-    export function stopMusic(): void {
-        Howls.music.stop();
     }
 }
 

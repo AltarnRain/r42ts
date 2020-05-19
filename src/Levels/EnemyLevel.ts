@@ -85,11 +85,7 @@ export default class EnemyLevel implements ILevel {
                 this.registerSubscription(GameLoop.registerLevelWonMonitor(() => this.monitorLevelWonRun()));
 
                 // Register back ground sound monitor.
-                if (this.enemy === "devil" || this.enemy === "fish") {
-                    SoundPlayer.playMusic();
-                } else {
-                    this.registerSubscription(GameLoop.registerBackgroundSoundMonitor(() => this.playbackgroundSound()));
-                }
+                this.registerSubscription(GameLoop.registerSoundRunner(() => this.soundRunner()));
 
                 dispatch(setPlayerMovementLimit("none"));
 
@@ -121,7 +117,6 @@ export default class EnemyLevel implements ILevel {
         this.subscriptions = [];
 
         SoundPlayer.stopBackground();
-        SoundPlayer.stopMusic();
     }
 
     /**
@@ -151,7 +146,7 @@ export default class EnemyLevel implements ILevel {
     /**
      * Play background sound playing.
      */
-    private playbackgroundSound(): void {
+    private soundRunner(): void {
         const {
             enemyLevelState: { enemies }
         } = appState();

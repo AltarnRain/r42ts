@@ -182,7 +182,7 @@ export namespace GameLoop {
      * Register a function that checks which background sound to play based on the current state.
      * @param {() => void} f. A function.
      */
-    export function registerBackgroundSoundMonitor(f: () => void) {
+    export function registerSoundRunner(f: () => void) {
         backgroundSoundMonitor.push(f);
 
         return () => {
