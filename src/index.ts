@@ -14,6 +14,7 @@ import { addPhaser, gameStart, increaseScore, nextLevel, setLevel, setLives, set
 import { WarpLevelComplexity } from "./State/Game/WarpLevelTypes";
 import { dispatch } from "./State/Store";
 import { getURLQueryKVPs } from "./Utility/Lib";
+import { TimeLimitLevel } from "./Levels/TimeLimitLevel";
 
 let showInstructions = true;
 
@@ -38,6 +39,9 @@ window.onload = () => {
         const drawGrid = queryKeyValuePairs.find((kvp) => kvp.key === "grid");
         const showhitboxes = queryKeyValuePairs.find((kvp) => kvp.key === "hitboxes");
         const immortal = queryKeyValuePairs.find((kvp) => kvp.key === "god");
+        const lives = queryKeyValuePairs.find((kvp) => kvp.key === "lives");
+        const phasers = queryKeyValuePairs.find((kvp) => kvp.key === "phasers");
+        const timelevelTimeLimit = queryKeyValuePairs.find((kvp) => kvp.key === "timelevelTimeLimit");
 
         if (showPlayGround) {
 
@@ -53,9 +57,24 @@ window.onload = () => {
 
             GameLoop.start();
 
-            dispatch(setLives(900));
-            dispatch(setPhasers(900));
-            dispatch(setTimeLevelTimeLimit(2000)); // 5 seconds for a time limit level to debug.
+            if (lives) {
+                dispatch(setLives(parseInt(lives.value, 10)));
+            } else {
+                dispatch(setLives(900));
+            }
+
+            if (phasers) {
+                dispatch(setPhasers(parseInt(phasers.value, 10)));
+            } else {
+                dispatch(setPhasers(900));
+            }
+
+            if(timelevelTimeLimit) {
+                dispatch(setTimeLevelTimeLimit(parseInt(timelevelTimeLimit.value, 10)));
+            } else {
+                dispatch(setTimeLevelTimeLimit(2000));
+            }
+
             if (immortal) {
                 debuggingState.playerIsImmortal = true;
             }
@@ -73,6 +92,8 @@ window.onload = () => {
             if (showhitboxes) {
                 debuggingState.drawHitboxes = true;
             }
+
+            dispatch(increaseScore(7400));
 
             dispatch(setDebuggingState(debuggingState));
 

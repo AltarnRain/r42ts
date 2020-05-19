@@ -18,6 +18,11 @@ export default interface GameState {
     score: number;
 
     /**
+     * Last score when a life and phaser was awarded.
+     */
+    lastAwardScore: number;
+
+    /**
      * Current level
      */
     level: number;

@@ -136,6 +136,7 @@ export namespace FrameTimes {
     export const fish = 150;
 }
 
+// Colletive namespace for all ememy points. Enemy points are award per enemy. Doesn't matter which level they appear.
 export namespace Points {
     export const bird = 200;
     export const robot = 100;

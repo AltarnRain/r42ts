@@ -21,11 +21,11 @@ let levelNumber: number | undefined;
 // Current level object.
 let currentLevel: ILevel | undefined;
 
-// Used to track changes in score to award ships and phasers.
-let currentScore = 0;
-
 // When true a level is loading.
 let levelLoading = false;
+
+// Amount of points when a life and level is awarded.
+const awardLifeAndLevelPoints = 7000;
 
 /**
  * Lazy load a subscription to the redux store.
@@ -56,10 +56,7 @@ export default function levelProgressionRunner() {
         });
     }
 
-    if (gameState.score - currentScore >= 7500) {
-        // Each 7500 points the player is given an extra life and phaser. This
-        // can be done in a single dispatch.
-        currentScore = gameState.score;
+    if (gameState.score - gameState.lastAwardScore >= awardLifeAndLevelPoints) {
         dispatch(addLifeAndPhaser());
     }
 }
@@ -72,5 +69,4 @@ export function resetLevelProgression(): void {
     if (currentLevel !== undefined) {
         currentLevel.dispose();
     }
-    currentScore = 0;
 }

@@ -65,6 +65,7 @@ export default function gameStateReducer(state: GameState = initState(), action:
             case Constants.addLifeAndPhaser:
                 draft.lives++;
                 draft.phasers++;
+                draft.lastAwardScore = draft.score;
                 break;
             case Constants.setPause:
                 draft.pause = action.payload;
@@ -83,6 +84,7 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 draft.bulletsFired = 0;
                 draft.enemiesHit = 0;
                 draft.phasersFired = 0;
+                draft.lastAwardScore = 0;
                 break;
             case Constants.enemyHit:
                 draft.enemiesHit++;
@@ -100,6 +102,7 @@ export default function gameStateReducer(state: GameState = initState(), action:
             case Constants.resetScore:
                 // Score is reset when the player self destructs.
                 draft.score = 0;
+                draft.lastAwardScore = 0;
                 break;
         }
     });
@@ -114,6 +117,7 @@ function initState(): GameState {
         level: 0,
         lives: 0,
         score: 0,
+        lastAwardScore: 0,
         phasers: 0,
         pause: false,
         warpLevelSteps: getWarpGateComplexity(0),
