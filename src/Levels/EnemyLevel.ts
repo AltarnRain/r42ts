@@ -10,12 +10,12 @@ import { drawBackground } from "../GameScreen/StaticRenders";
 import ILevel from "../Interfaces/ILevel";
 import enemyLevelContentFactory from "../Providers/EnemyLevelContentProvider";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
+import { SoundPlayer } from "../Sound/SoundPlayer";
 import { resetLevelState } from "../State/EnemyLevel/EnemyLevelActions";
 import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import handleLevelWon from "../StateHandlers/HandleLevelWon";
 import { Enemies } from "../Types";
-import { SoundPlayer } from "../Sound/SoundPlayer";
 
 export default class EnemyLevel implements ILevel {
 
@@ -25,10 +25,8 @@ export default class EnemyLevel implements ILevel {
     private subscriptions: Array<() => void> = [];
 
     /**
-     * Enemies of the level.
+     * Number of enemies in the level.
      */
-    private enemies: Enemies;
-
     private currentEnemyCount: number | undefined;
 
     /**
@@ -36,8 +34,8 @@ export default class EnemyLevel implements ILevel {
      * @param {TickFunction} stateManager. A function that will handle the state for the level.
      * @param {() => boolean} monitorLevelWon. A function that checks fort he win condition of a level.
      */
-    constructor(enemy: Enemies) {
-        this.enemies = enemy;
+    constructor(protected enemy: Enemies) {
+        this.enemy = enemy;
     }
 
     /**
@@ -54,7 +52,7 @@ export default class EnemyLevel implements ILevel {
      */
     public begin(levelReady?: () => void): Promise<void> {
         return new Promise((resolve) => {
-            const { enemies, bulletRunner } = enemyLevelContentFactory(this.enemies);
+            const { enemies, bulletRunner } = enemyLevelContentFactory(this.enemy);
 
             const {
                 gameState
@@ -87,7 +85,11 @@ export default class EnemyLevel implements ILevel {
                 this.registerSubscription(GameLoop.registerLevelWonMonitor(() => this.monitorLevelWonRun()));
 
                 // Register back ground sound monitor.
-                this.registerSubscription(GameLoop.registerBackgroundSoundMonitor(() => this.playbackgroundSound()));
+                if (this.enemy === "devil" || this.enemy === "fish") {
+                    SoundPlayer.playMusic();
+                } else {
+                    this.registerSubscription(GameLoop.registerBackgroundSoundMonitor(() => this.playbackgroundSound()));
+                }
 
                 dispatch(setPlayerMovementLimit("none"));
 
@@ -118,7 +120,8 @@ export default class EnemyLevel implements ILevel {
         this.subscriptions.forEach((s) => s());
         this.subscriptions = [];
 
-        SoundPlayer.stopBackgroundPlaying();
+        SoundPlayer.stopBackground();
+        SoundPlayer.stopMusic();
     }
 
     /**
@@ -154,11 +157,10 @@ export default class EnemyLevel implements ILevel {
         } = appState();
 
         if (this.currentEnemyCount === undefined) {
-            SoundPlayer.playEnemyBackgroundSound(this.enemies, enemies.length - 1) ;
+            SoundPlayer.playEnemyBackgroundSound(this.enemy, enemies.length - 1);
             this.currentEnemyCount = enemies.length;
         } else if (this.currentEnemyCount !== enemies.length) {
-            SoundPlayer.stopBackgroundPlaying();
-            SoundPlayer.playEnemyBackgroundSound(this.enemies, this.currentEnemyCount - 1);
+            SoundPlayer.playEnemyBackgroundSound(this.enemy, this.currentEnemyCount - 1);
             this.currentEnemyCount = enemies.length;
         }
     }

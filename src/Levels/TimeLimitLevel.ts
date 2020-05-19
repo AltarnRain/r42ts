@@ -9,7 +9,6 @@ import enemyFactory from "../Providers/EnemyFactory";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { appState } from "../State/Store";
 import handleLevelWon from "../StateHandlers/HandleLevelWon";
-import { Enemies } from "../Types";
 import EnemyLevel from "./EnemyLevel";
 
 /**
@@ -23,17 +22,6 @@ export class TimeLimitLevel extends EnemyLevel {
      * When true the time is up and the level is won.
      */
     private timeUp = false;
-
-    /**
-     * current enemy of the level.
-     */
-    private enemy: Enemies;
-
-    constructor(enemy: Enemies) {
-        super(enemy);
-
-        this.enemy = enemy;
-    }
 
     public begin(): Promise<void> {
 
@@ -52,6 +40,9 @@ export class TimeLimitLevel extends EnemyLevel {
         });
     }
 
+    /**
+     * Runs in the game loop and creates a new enemy if the number of enemies falls below 8.
+     */
     public handleRespawn(): void {
         const {
             enemyLevelState: { enemies }
@@ -78,9 +69,5 @@ export class TimeLimitLevel extends EnemyLevel {
         if (this.timeUp && alive) {
             handleLevelWon();
         }
-    }
-
-    public dispose(): void {
-        super.dispose();
     }
 }

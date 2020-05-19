@@ -130,7 +130,7 @@ function createParticles(): void {
  */
 function setup(speed: "fast" | "slow", limit: MoveLimits): void {
     if (speed === "fast") {
-        SoundPlayer.playPlayerFormationFast();
+        SoundPlayer.playerFormationFast();
     } else {
         SoundPlayer.playPlayerFormationSlow();
     }

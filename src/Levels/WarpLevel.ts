@@ -14,6 +14,7 @@ import Guard from "../Guard";
 import ILevel from "../Interfaces/ILevel";
 import { GameRectangle } from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
+import { SoundPlayer } from "../Sound/SoundPlayer";
 import { increaseScore } from "../State/Game/GameActions";
 import { setPlayerLocationData, setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
@@ -22,7 +23,6 @@ import handlePlayerDeath from "../StateHandlers/HandlePlayerDeath";
 import { getRandomArrayElement } from "../Utility/Array";
 import { coinFlip } from "../Utility/Lib";
 import { fallsWithin } from "../Utility/Location";
-import { SoundPlayer } from "../Sound/SoundPlayer";
 
 /**
  * Module:          WarpLevel
@@ -134,6 +134,11 @@ export default class WarpLevel implements ILevel {
         const { playerState, debuggingState } = appState();
         if (Guard.isPlayerAlive(playerState)) {
 
+            // This is an odd place to trigger a sound but it's the only part of the warp level that actively checks if
+            // the player is alive and to create another GameLoop function just to ensure the warp level
+            // travel sounds plays is overkill.
+            SoundPlayer.ensureBackground();
+
             const { hitboxes, alive } = playerState;
 
             const hitside = badSpace.some((sb) => {
@@ -147,8 +152,11 @@ export default class WarpLevel implements ILevel {
             });
 
             if (hitside && alive) {
+                // You dead bro.
                 handlePlayerDeath(tick);
-                SoundPlayer.stopBackgroundPlaying();
+
+                // Dead = not traveling = no sound.
+                SoundPlayer.stopBackground();
             }
         }
 
@@ -248,7 +256,7 @@ export default class WarpLevel implements ILevel {
         } = appState();
 
         if (top < gameField.top + pixelSize * 3) {
-            SoundPlayer.stopBackgroundPlaying();
+            SoundPlayer.stopBackground();
             handleLevelWon();
 
             // Warp levels reward 1400 points when you make it.

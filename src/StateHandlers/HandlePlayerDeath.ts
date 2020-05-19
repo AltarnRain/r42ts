@@ -33,7 +33,7 @@ export default function handlePlayerDeath(tick: number): void {
         return;
     }
 
-    SoundPlayer.playPlayerExplosion();
+    SoundPlayer.playerExplosion();
 
     dispatchExplosion(left, top, coloredExplosion, tick);
 

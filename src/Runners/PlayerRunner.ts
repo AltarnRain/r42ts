@@ -66,7 +66,7 @@ function handlePlayerBulletFiring(): void {
         const nozzleLocation = playerState.nozzleLocation;
         const bullet = getPlayerBullet(nozzleLocation.left, nozzleLocation.top);
         dispatch(setPlayerBulletState(bullet));
-        SoundPlayer.playPlayerShoot();
+        SoundPlayer.playerShoot();
 
         // Keep track how many bullets the player fired.
         dispatch(bulletFired());

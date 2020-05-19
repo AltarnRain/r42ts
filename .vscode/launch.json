@@ -42,6 +42,23 @@
         {
             "type": "chrome",
             "request": "launch",
+            "name": "Play ground level 13 - Godmode",
+            "url": "http://localhost:8080/?playground?level=13?god",
+            "webRoot": "${workspaceFolder}/src",
+            "breakOnLoad": true,
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${webRoot}/*",
+                "webpack:///src/*": "${webRoot}/*",
+                "webpack:///*": "*",
+                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "meteor://💻app/*": "${webRoot}/*",
+                "webpack:///./src/*": "${webRoot}/*",
+            }
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
             "name": "Play ground - Warplevel 41",
             "url": "http://localhost:8080/?playground?level=41",
             "webRoot": "${workspaceFolder}/src",

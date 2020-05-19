@@ -242,7 +242,7 @@ function handleEnemyDestruction(tick: number, enemy: EnemyState, awardPoints = t
         }
     });
 
-    SoundPlayer.playEnemyExplosion();
+    SoundPlayer.enemyExplosion();
     dispatchExplosion(enemy.offsetLeft, enemy.offsetTop, enemy.coloredExplosion, tick);
     dispatch(removeEnemy(enemy.enemyId));
 
@@ -277,7 +277,7 @@ function handlePhaser(tick: number): void {
             // Remove one phaser.
             dispatch(removePhaser());
 
-            SoundPlayer.playPhaser();
+            SoundPlayer.phaser();
 
             // Calculate the locations aka pixels where the phaser beam should appear.
             const phaserLocations = getPhaserLocations(playerNozzleLocation.left, playerNozzleLocation.top, randomEnemyCenter.left, randomEnemyCenter.top);
