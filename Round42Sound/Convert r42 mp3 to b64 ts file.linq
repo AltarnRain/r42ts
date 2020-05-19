@@ -20,14 +20,10 @@ void Main()
 	
 	var allMedia = Directory.GetFiles(soundSourceFolder, mediaFilter, SearchOption.AllDirectories);
 	
-	
-	allMedia.Dump();
-	
 	var asArray = Directory.GetFiles(soundSourceFolder, arrayIdentifier, SearchOption.AllDirectories)
 		.Select(s => s.Replace(soundSourceFolder, ""))
 		.Select(s => s.Replace($"\\{arrayIdentifier}", ""));
 		
-
 	var nameSpaceAndFiles = new Dictionary<string, List<FileData>>();
 	foreach (var file in allMedia)
 	{
