@@ -5,7 +5,7 @@
  */
 
 import CGAColors from "../Constants/CGAColors";
-import { Locations, WarpLevelConstants } from "../Constants/Constants";
+import { Locations, Points, WarpLevelConstants } from "../Constants/Constants";
 import { DEBUGGING_drawGameRect } from "../Debugging/Debugging";
 import GameLoop from "../GameLoop";
 import drawLevelBanner from "../GameScreen/LevelBanner";
@@ -189,8 +189,8 @@ export default class WarpLevel implements ILevel {
         if (this.reachedEnd()) {
             handleLevelWon();
 
-            // Warp levels reward 1400 points when you make it.
-            dispatch(increaseScore(1400));
+            // Warp levels reward a random amount of points.
+            dispatch(increaseScore(getRandomArrayElement(Points.warpLevel)));
 
             // Reset the player to the spawn location after a warp level or they'll appear
             // in the top of the screen right in the middle of enemies.

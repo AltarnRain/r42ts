@@ -152,6 +152,13 @@ export namespace Points {
     export const boat = 200;
     export const cloakingOrb = 100;
     export const fish = 100;
+    export const warpLevel = [
+        1300,
+        1400,
+        1500,
+        1600,
+        1700,
+    ]
 
 }
 
