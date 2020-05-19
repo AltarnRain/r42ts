@@ -138,20 +138,20 @@ export namespace FrameTimes {
 
 export namespace Points {
     export const bird = 200;
-    export const robot = 200;
-    export const orb = 300;
+    export const robot = 100;
+    export const orb = 200;
     export const spinner = 200;
     export const balloon = 200;
     export const asteroid = 300;
     export const piston = 200;
     export const diabolo = 200;
-    export const spaceMonster = 200;
+    export const spaceMonster = 300;
     export const devil = 100;
     export const crab = 200;
     export const bat = 200;
     export const boat = 200;
-    export const cloakingOrb = 200;
-    export const fish = 200;
+    export const cloakingOrb = 100;
+    export const fish = 100;
 
 }
 
