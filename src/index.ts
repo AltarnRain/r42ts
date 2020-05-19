@@ -14,7 +14,6 @@ import { addPhaser, gameStart, increaseScore, nextLevel, setLevel, setLives, set
 import { WarpLevelComplexity } from "./State/Game/WarpLevelTypes";
 import { dispatch } from "./State/Store";
 import { getURLQueryKVPs } from "./Utility/Lib";
-import { TimeLimitLevel } from "./Levels/TimeLimitLevel";
 
 let showInstructions = true;
 

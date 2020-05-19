@@ -79,10 +79,6 @@ export namespace GameLoop {
         // Register the player runner. The player runner keeps track of things the player does like shooting, moving, etc.
         GameLoop.registerUpdateState(playerRunner);
 
-        // Register the player spawn manager. The player spawn manager checks if the player has dies and
-        // which kind of warp in should occur.
-        GameLoop.registerUpdateState(playerSpawnManager);
-
         // Register the genericRunner. This runner handle explosion centers, shrapnell and bullet rending
         // This can occur in any level which is why it is a seperate runner.
         GameLoop.registerUpdateState(genericRunner);
@@ -90,6 +86,12 @@ export namespace GameLoop {
         // Register the level progression runner. Keeps track if the next level should be
         // started. Also keeps track of score increases that rewards a life and/or phaser.
         GameLoop.registerUpdateState(levelProgressionRunner);
+
+        // Register the player spawn manager. The player spawn manager checks if the player has dies and
+        // which kind of warp in should occur. This runner relies on a derived state so it is one
+        // of the last runners we add to the queue. It also relies on the level progression
+        // runner because it load levels and changes movement limits for the player
+        GameLoop.registerUpdateState(playerSpawnManager);
 
         // Register keyboard event listeners. Required for player movement.
         registerListeners();

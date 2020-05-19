@@ -62,7 +62,7 @@ function updateState(): void {
  */
 function handlePlayerBulletFiring(): void {
     const { playerState, keyboardState } = appState();
-    if (playerState.nozzleLocation !== undefined && keyboardState.fire && playerState.bulletState === undefined) {
+    if (playerState.nozzleLocation !== undefined && keyboardState.fire && playerState.bulletState === undefined && playerState.moveLimit !== "immobile") {
         const nozzleLocation = playerState.nozzleLocation;
         const bullet = getPlayerBullet(nozzleLocation.left, nozzleLocation.top);
         dispatch(setPlayerBulletState(bullet));
