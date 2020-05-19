@@ -95,12 +95,15 @@ export default class WarpLevel implements ILevel {
                 // Register a sound runner.
                 this.gameLoopSubscriptions.push(GameLoop.registerSoundRunner(() => this.soundRunner()));
 
-                dispatch(setPlayerMovementLimit("forceup"));
+                // Allow the player to see the warp level for 1 second before forcing thm to travel it.
+                window.setTimeout(() => {
+                    dispatch(setPlayerMovementLimit("forceup"));
 
-                // Initialize the warp level background sound.
-                SoundPlayer.playTravelingWarpGate();
+                    // Initialize the warp level background sound.
+                    SoundPlayer.playTravelingWarpGate();
 
-                resolve();
+                    resolve();
+                }, 1000)
             });
         });
     }
