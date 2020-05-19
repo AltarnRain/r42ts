@@ -110,7 +110,6 @@ export default class EnemyLevel implements ILevel {
         // Reset is required for levels where there is a time limit on the level and the
         // player does clear the state by destroying enemies.
         dispatch(resetLevelState());
-        dispatch(   )
 
         // The subscription array contains functions that remove themselves
         // from the GameLoop. Call all of them to remove them from the GameLoop.

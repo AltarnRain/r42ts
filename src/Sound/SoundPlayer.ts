@@ -164,6 +164,13 @@ export namespace SoundPlayer {
             currentBackground.play();
         }
     }
+
+    /**
+     * Plays the victoty sound when the player reaches the end of the warp gate.
+     */
+    export function warpLeveEnd(): void {
+        Howls.warpLevelEnd.play();
+    }
 }
 
 /**
@@ -205,6 +212,11 @@ namespace Howls {
      * Sounds while travelin through a warp gate.
      */
     export const warpGateTraveling = new Howl({ src: [Sounds.Player.warpgate], loop: true });
+
+    /**
+     * Sound played the player reached the end of a warp level.
+     */
+    export const warpLevelEnd = new Howl({ src: [Sounds.Player.warplevelend] });
 
     /**
      * Sounds while travelin through a warp gate.

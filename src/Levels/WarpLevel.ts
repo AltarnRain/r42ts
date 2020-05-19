@@ -187,6 +187,10 @@ export default class WarpLevel implements ILevel {
     private monitorLevelWon(): void {
 
         if (this.reachedEnd()) {
+
+            // Play victory sound.
+            SoundPlayer.warpLeveEnd();
+
             handleLevelWon();
 
             // Warp levels reward a random amount of points.
