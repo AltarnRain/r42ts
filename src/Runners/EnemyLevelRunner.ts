@@ -13,7 +13,7 @@ import renderFrame from "../Render/RenderFrame";
 import { SoundPlayer } from "../Sound/SoundPlayer";
 import { clearPhaserLocations, removeEnemy, setEnemiesState, setPhaserLocations, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
-import { enemeyHit as enemyHit, increaseScore, phaserFired, removePhaser, setPause, resetScore } from "../State/Game/GameActions";
+import { enemeyHit as enemyHit, increaseScore, phaserFired, removePhaser, resetScore, setPause } from "../State/Game/GameActions";
 import { ParticleState } from "../State/ParticleState";
 import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";

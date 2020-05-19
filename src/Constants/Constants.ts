@@ -159,8 +159,7 @@ export namespace Points {
         1500,
         1600,
         1700,
-    ]
-
+    ];
 }
 
 export namespace WarpLevelConstants {

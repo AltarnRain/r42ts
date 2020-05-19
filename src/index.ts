@@ -68,7 +68,7 @@ window.onload = () => {
                 dispatch(setPhasers(900));
             }
 
-            if(timelevelTimeLimit) {
+            if (timelevelTimeLimit) {
                 dispatch(setTimeLevelTimeLimit(parseInt(timelevelTimeLimit.value, 10)));
             } else {
                 dispatch(setTimeLevelTimeLimit(2000));

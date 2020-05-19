@@ -103,7 +103,7 @@ export default class WarpLevel implements ILevel {
                     SoundPlayer.playTravelingWarpGate();
 
                     resolve();
-                }, 1000)
+                }, 1000);
             });
         });
     }

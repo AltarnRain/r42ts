@@ -6,7 +6,7 @@
 
 import BaseEnemy from "../../Base/BaseEnemy";
 import BaseFrameProvider from "../../Base/BaseFrameProvider";
-import { Points, ColorSchemes } from "../../Constants/Constants";
+import { ColorSchemes, Points } from "../../Constants/Constants";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
