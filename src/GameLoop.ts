@@ -12,13 +12,13 @@ import playerSpawnManager from "./Player/PlayerSpawnManager";
 import genericRunner from "./Runners/GenericRunner";
 import levelProgressionRunner, { resetLevelProgression } from "./Runners/LevelProgressionRunner";
 import playerRunner from "./Runners/PlayerRunner";
+import { SoundPlayer } from "./Sound/SoundPlayer";
 import { gameStart } from "./State/Game/GameActions";
 import { resetKeyboardState } from "./State/Keyboard/KeyboardActions";
 import { setPlayerIsAlive, setPlayerLocationData } from "./State/Player/PlayerActions";
 import { appState, dispatch } from "./State/Store";
 import { TickFunction } from "./Types";
 import { registerListeners, unregisterListeners } from "./Utility/KeyboardEvents";
-import { SoundPlayer } from "./Sound/SoundPlayer";
 
 /**
  * Module:          GameLoop
