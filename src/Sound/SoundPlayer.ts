@@ -5,6 +5,7 @@
  */
 
 import { Howl } from "howler";
+import { appState } from "../State/Store";
 import { Enemies } from "../Types";
 import { getRandomArrayElement } from "../Utility/Array";
 import { Sounds } from "./Sounds";
@@ -83,6 +84,7 @@ export namespace SoundPlayer {
     export function stopBackground(): void {
         if (currentBackground) {
             currentBackground.stop();
+            currentBackground = undefined;
         }
 
         Howls.music.stop();
@@ -151,8 +153,6 @@ export namespace SoundPlayer {
         } else {
             currentBackground = sounds[index];
         }
-
-        currentBackground.play();
     }
 
     /**
@@ -160,6 +160,12 @@ export namespace SoundPlayer {
      * or if the background sound is already playing.
      */
     export function ensureBackground(): void {
+
+        if (appState().gameState.pause) {
+            currentBackground?.pause();
+            return;
+        }
+
         if (currentBackground && !currentBackground.playing()) {
             currentBackground.play();
         }

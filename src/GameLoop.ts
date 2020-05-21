@@ -60,7 +60,7 @@ let drawFunctions: Array<() => void> = [];
 /**
  * Functions that monitor state to pick which background sound to play
  */
-let backgroundSoundMonitor: Array<() => void> = [];
+let soundRunners: Array<() => void> = [];
 
 export namespace GameLoop {
     /**
@@ -114,6 +114,7 @@ export namespace GameLoop {
         drawFunctions = [];
         foregroundDrawFunctions = [];
         levelWonFunctions = [];
+        soundRunners = [];
 
         unregisterListeners();
     }
@@ -185,10 +186,10 @@ export namespace GameLoop {
      * @param {() => void} f. A function.
      */
     export function registerSoundRunner(f: () => void) {
-        backgroundSoundMonitor.push(f);
+        soundRunners.push(f);
 
         return () => {
-            backgroundSoundMonitor = backgroundSoundMonitor.filter((d) => d !== f);
+            soundRunners = soundRunners.filter((d) => d !== f);
         };
     }
 
@@ -203,6 +204,9 @@ export namespace GameLoop {
         const {
             gameState: { pause, gameOver, enemiesHit, bulletsFired, score, phasersFired }
         } = appState();
+
+        // Play background sound(s).
+        soundRunners.forEach((f) => f());
 
         // Pausing means no state updates. Drawing will also stop but the CANVAS will not reset it self
         // so it shows the last rendered image.
@@ -272,9 +276,6 @@ export namespace GameLoop {
         // Finally we finish with drawing foreground stuff. The status bar for one, and the game border
         // are both foreground and render over anything.
         foregroundDrawFunctions.forEach((f) => f());
-
-        // Play background sound(s).
-        backgroundSoundMonitor.forEach((f) => f());
 
         // Some debugging functions.
         const { debuggingState } = appState();

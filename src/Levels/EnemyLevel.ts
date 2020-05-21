@@ -84,8 +84,10 @@ export default class EnemyLevel implements ILevel {
                 // Add a function to the GameLoop that will check if a level has been won.
                 this.registerSubscription(GameLoop.registerLevelWonMonitor(() => this.monitorLevelWonRun()));
 
-                // Register back ground sound monitor.
-                this.registerSubscription(GameLoop.registerSoundRunner(() => this.soundRunner()));
+                // Register back ground sound runner.
+                this.registerSubscription(GameLoop.registerSoundRunner(() => this.updateSound()));
+
+                this.registerSubscription(GameLoop.registerSoundRunner(() => SoundPlayer.ensureBackground()));
 
                 if (levelReady !== undefined) {
                     levelReady();
@@ -146,12 +148,13 @@ export default class EnemyLevel implements ILevel {
     /**
      * Play background sound playing.
      */
-    private soundRunner(): void {
+    private updateSound(): void {
         const {
             enemyLevelState: { enemies }
         } = appState();
 
         if (this.currentEnemyCount === undefined) {
+
             SoundPlayer.playEnemyBackgroundSound(this.enemy, enemies.length - 1);
             this.currentEnemyCount = enemies.length;
         } else if (this.currentEnemyCount !== enemies.length) {

@@ -113,8 +113,12 @@ export default class WarpLevel implements ILevel {
      */
     private soundRunner(): void {
         const {
-            playerState: { alive }
+            playerState: { alive }, gameState: { pause }
         } = appState();
+
+        if (pause) {
+            return;
+        }
 
         // Only play the warp travel sound when the player is alive.
         if (alive) {
