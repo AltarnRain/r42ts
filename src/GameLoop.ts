@@ -18,6 +18,7 @@ import { setPlayerIsAlive, setPlayerLocationData } from "./State/Player/PlayerAc
 import { appState, dispatch } from "./State/Store";
 import { TickFunction } from "./Types";
 import { registerListeners, unregisterListeners } from "./Utility/KeyboardEvents";
+import { SoundPlayer } from "./Sound/SoundPlayer";
 
 /**
  * Module:          GameLoop
@@ -109,6 +110,10 @@ export namespace GameLoop {
             window.cancelAnimationFrame(mainHandle);
         }
 
+        // Kill the background sounds. Other sounds like explosions will not play
+        // because the state is no longer updated and nothing will trigger them
+        SoundPlayer.stopBackground();
+
         updateStateFunctions = [];
         backgroundDrawFunctions = [];
         drawFunctions = [];
@@ -160,7 +165,7 @@ export namespace GameLoop {
 
     /**
      * Used to monitor if a level is won. Requires a seperate array to ensure level won functions for won
-     * levels are not execute when the level IS won, the current level is loading and the state has not been
+     * levels are not executed when the level IS won, the current level is loading and the state has not been
      * updated yet so it triggers an instant win. I found this out the hard way.
      * @param {function} f. draw function
      * @returns {function}. Function to remove the draw function from the queue.
@@ -205,7 +210,8 @@ export namespace GameLoop {
             gameState: { pause, gameOver, enemiesHit, bulletsFired, score, phasersFired }
         } = appState();
 
-        // Play background sound(s).
+        // Play background sound(s) or stop them when the game is paused. this is why the
+        // GameLoop will keep running the sound runners. Sounds keep playing otherwise.
         soundRunners.forEach((f) => f());
 
         // Pausing means no state updates. Drawing will also stop but the CANVAS will not reset it self
