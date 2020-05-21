@@ -211,7 +211,7 @@ namespace Howls {
     /**
      * Sounds while travelin through a warp gate.
      */
-    export const warpGateTraveling = new Howl({ src: [Sounds.Player.warpgate], loop: true });
+    export const warpGateTraveling = new Howl({ src: [Sounds.Player.warpgate]});
 
     /**
      * Sound played the player reached the end of a warp level.
@@ -221,25 +221,25 @@ namespace Howls {
     /**
      * Sounds while travelin through a warp gate.
      */
-    export const falling = new Howl({ src: [Sounds.Falling.falling], loop: true });
+    export const falling = new Howl({ src: [Sounds.Falling.falling]});
 
     /**
      * Sounds for birds, spinners, diabolo's, etc.
      */
-    export const tjirping = Sounds.Tjirping.map((t) => new Howl({ src: t, loop: true }));
+    export const tjirping = Sounds.Tjirping.map((t) => new Howl({ src: t}));
 
     /**
      * Sounds for orbs, robots, etc.
      */
-    export const whoping = Sounds.Whoping.map((w) => new Howl({ src: w, loop: true }));
+    export const whoping = Sounds.Whoping.map((w) => new Howl({ src: w}));
 
     /**
      * Sounds for balloons, bats, etc.
      */
-    export const wizzing = Sounds.Wizzing.map((w) => new Howl({ src: w, loop: true }));
+    export const wizzing = Sounds.Wizzing.map((w) => new Howl({ src: w}));
 
     /**
      * Music. Player on round 13 and round 42.
      */
-    export const music = new Howl({ src: Sounds.Music.music, loop: true });
+    export const music = new Howl({ src: Sounds.Music.music});
 }
