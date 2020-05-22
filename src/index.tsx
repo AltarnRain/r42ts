@@ -14,7 +14,9 @@ import MainMenu from "./UI/MainMenu";
  */
 
 if (window.location.search.indexOf("?") > -1) {
+    // If the url contains ? we'll start in debug mode.
     import("./Debug").then((m) => m.start());
 } else {
+    // Otherwise load the UI.
     ReactDOM.render(<MainMenu />, document.getElementById("root"));
 }
