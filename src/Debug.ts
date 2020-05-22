@@ -99,6 +99,6 @@ export function start(): void {
 
         (window as any).r42 = ctx;
     } else {
-        GameLoop.start();
+        throw new Error("No Debugging info given");
     }
 }

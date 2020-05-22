@@ -26,7 +26,7 @@ export default function MainMenu(): JSX.Element {
         // Lazy load the game. When the game starts it sets dimension constants all though the game
         // before this is done we want to make sure the game is either running in full screee
         // or windows mode.
-        import("../Start").then((m) => m.start());
+        import("../GameLoop").then((m) => m.GameLoop.start());
     }
 
     /**

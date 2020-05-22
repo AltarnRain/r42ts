@@ -13,4 +13,8 @@ import MainMenu from "./UI/MainMenu";
  * Responsibility:  Entry point for the game
  */
 
-ReactDOM.render(<MainMenu />, document.getElementById("root"));
+if (window.location.search.indexOf("?") > -1) {
+    import("./Debug").then((m) => m.start());
+} else {
+    ReactDOM.render(<MainMenu />, document.getElementById("root"));
+}
