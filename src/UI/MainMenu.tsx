@@ -5,10 +5,6 @@
  */
 
 import * as React from "react";
-import GameLoop from "../GameLoop";
-import dimensionProvider from "../Providers/DimensionProvider";
-import { gameStart } from "../State/Game/GameActions";
-import { dispatch } from "../State/Store";
 import { Styles } from "./Styles";
 
 /**
@@ -20,17 +16,36 @@ export default function MainMenu(): JSX.Element {
 
     const [gameRunning, setGameRunning] = React.useState(false);
 
+    /**
+     * Starts the game
+     */
     function startGame(): void {
+        // Remove the UI from screen.
         setGameRunning(true);
-        const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-        if (canvas) {
-            // Initialize the dimentions of the canvas.
-            canvas.width = dimensionProvider().fullGameWidth;
-            canvas.height = dimensionProvider().fullGameHeight;
-        }
 
-        dispatch(gameStart());
-        GameLoop.start();
+        // Lazy load the gameloop. When this module is pulled in
+        // and module that uses constants will immediately set them.
+        // This includes game dimensions so we REALLY don't want
+        // to load the game until the dimensions are set in store aka. fullscreen or window model
+        const gameloop = import("../GameLoop");
+        gameloop.then((m) => m.GameLoop.start());
+    }
+
+    /**
+     * Request full screen
+     */
+    function requestFullscreen(): void {
+        // We'll use the body element to place the entire application
+        // in fullscreen. The body element is used by the game itself
+        // to determine the game's dimensions.
+
+        // No, this is not how you're supposed to use React but
+        // all I'm using it for is a simple UI so I don't care.
+        const body = document.getElementById("body");
+
+        if (body) {
+            body.requestFullscreen();
+        }
     }
 
     return (
@@ -57,7 +72,7 @@ export default function MainMenu(): JSX.Element {
                         </div>
                         <br />
                         <div style={Styles.buttonContainer}>
-                            {/* <button style={Styles.buttonSize} onClick={() => requestFullscreen()}>Fullscreen</button> */}
+                            <button style={Styles.buttonSize} onClick={() => requestFullscreen()}>Fullscreen</button>
                             <br />
                             <button style={Styles.buttonSize} onClick={startGame} >Play game</button>
                         </div>

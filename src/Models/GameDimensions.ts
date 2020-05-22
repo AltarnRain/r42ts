@@ -43,4 +43,8 @@ export interface GameDimensions {
      * So it is very handy to know exactly where it actually is.
      */
     gameField: GameField;
+
+    canvasLeft: number;
+
+    canvasTop: number;
 }

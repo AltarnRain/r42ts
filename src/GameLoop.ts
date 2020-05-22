@@ -13,12 +13,13 @@ import genericRunner from "./Runners/GenericRunner";
 import levelProgressionRunner, { resetLevelProgression } from "./Runners/LevelProgressionRunner";
 import playerRunner from "./Runners/PlayerRunner";
 import { SoundPlayer } from "./Sound/SoundPlayer";
-import { gameStart } from "./State/Game/GameActions";
+import { gameStart, resetScore } from "./State/Game/GameActions";
 import { resetKeyboardState } from "./State/Keyboard/KeyboardActions";
 import { setPlayerIsAlive, setPlayerLocationData } from "./State/Player/PlayerActions";
 import { appState, dispatch } from "./State/Store";
 import { TickFunction } from "./Types";
 import { registerListeners, unregisterListeners } from "./Utility/KeyboardEvents";
+import dimensionProvider from "./Providers/DimensionProvider";
 
 /**
  * Module:          GameLoop
@@ -68,6 +69,19 @@ export namespace GameLoop {
      * Start game loop
      */
     export function start(): void {
+
+        // Set canvas dimensions.
+        const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+        if (canvas) {
+            // Initialize the dimentions of the canvas.
+            canvas.width = dimensionProvider().fullGameWidth;
+            canvas.height = dimensionProvider().fullGameHeight;
+
+            canvas.style.left = `${dimensionProvider().canvasLeft}px`;
+            canvas.style.top = `${dimensionProvider().canvasTop}px`;
+        }
+
+        dispatch(gameStart());
 
         // Register the statusBar runner. This render's lives, phasers, score, etc.
         // This is a foreground draw process. Enemies will appear to pass under it.
@@ -122,6 +136,7 @@ export namespace GameLoop {
         soundRunners = [];
 
         unregisterListeners();
+        dispatch(resetScore());
     }
 
     /**
