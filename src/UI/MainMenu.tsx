@@ -23,12 +23,10 @@ export default function MainMenu(): JSX.Element {
         // Remove the UI from screen.
         setGameRunning(true);
 
-        // Lazy load the gameloop. When this module is pulled in
-        // and module that uses constants will immediately set them.
-        // This includes game dimensions so we REALLY don't want
-        // to load the game until the dimensions are set in store aka. fullscreen or window model
-        const gameloop = import("../GameLoop");
-        gameloop.then((m) => m.GameLoop.start());
+        // Lazy load the game. When the game starts it sets dimension constants all though the game
+        // before this is done we want to make sure the game is either running in full screee
+        // or windows mode.
+        import("../Start").then((m) => m.start());
     }
 
     /**
