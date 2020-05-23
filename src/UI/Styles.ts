@@ -35,7 +35,7 @@ export namespace Styles {
         fontSize: 50
     };
 
-    export const instructionContainer: CSSProperties = {
+    export const defaultContainer: CSSProperties = {
         ...alignCenter
     };
 
@@ -62,7 +62,7 @@ export namespace Styles {
         color: "black",
     };
 
-    export const instructionsText: CSSProperties = {
+    export const textStyle: CSSProperties = {
         ...defaultFont,
         backgroundColor: "black",
         color: CGAColors.yellow,

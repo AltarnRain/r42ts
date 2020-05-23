@@ -79,6 +79,8 @@ export namespace GameLoop {
 
             canvas.style.left = `${dimensionProvider().canvasLeft}px`;
             canvas.style.top = `${dimensionProvider().canvasTop}px`;
+            canvas.style.width = `${canvas.width}px`;
+            canvas.style.height = `${canvas.height}px`;
         }
 
         dispatch(gameStart());
