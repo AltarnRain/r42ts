@@ -8,7 +8,7 @@ import { Locations } from "./Constants/Constants";
 import { DEBUGGING_drawGrid, DEBUGGING_renderHitboxes } from "./Debugging/Debugging";
 import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
-import playerSpawnManager from "./Player/PlayerSpawnManager";
+import playerSpawnRunner from "./Player/PlayerSpawnRunner";
 import genericRunner from "./Runners/GenericRunner";
 import levelProgressionRunner, { resetLevelProgression } from "./Runners/LevelProgressionRunner";
 import playerRunner from "./Runners/PlayerRunner";
@@ -106,7 +106,7 @@ export namespace GameLoop {
         // which kind of warp in should occur. This runner relies on a derived state so it is one
         // of the last runners we add to the queue. It also relies on the level progression
         // runner because it load levels and changes movement limits for the player
-        GameLoop.registerUpdateState(playerSpawnManager);
+        GameLoop.registerUpdateState(playerSpawnRunner);
 
         // Register keyboard event listeners. Required for player movement.
         registerListeners();

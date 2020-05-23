@@ -47,10 +47,10 @@ let formationInProgress = false;
 let currentMovementLimit: MoveLimits = "none";
 
 /**
- * playerSpawnManager. Once register in the GameLoop this function will check
- * the state if the player can and show respawn.
+ * PlayerSpawnRunner. Once registered in the GameLoop this function will check
+ * the state if the player can and should respawn.
  */
-export default function playerSpawnManager(): void {
+export default function playerSpawnRunner(): void {
     const { playerState, enemyLevelState: { enemies, shrapnells, bullets } } = appState();
 
     if (!playerState.alive && formationInProgress === false && shrapnells.length === 0) {

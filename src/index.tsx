@@ -15,6 +15,9 @@ import MainMenu from "./UI/MainMenu";
 
 if (window.location.search.indexOf("?") > -1) {
     // If the url contains ? we'll start in debug mode.
+    // This is done using dynamic module loading because the second the game
+    // starts it sets all its constants and the screensize is fixed. We do
+    // not want this.
     import("./Debug").then((m) => m.start());
 } else {
     // Otherwise load the UI.
