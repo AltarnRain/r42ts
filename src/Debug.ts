@@ -29,6 +29,8 @@ export function start(): void {
 
         const debuggingState: DebuggingState = {};
 
+        GameLoop.start();
+
         if (!level) {
             level = "0";
         }
@@ -36,8 +38,6 @@ export function start(): void {
         if (level) {
             dispatch(setLevel(parseInt(level, 10)));
         }
-
-        GameLoop.start();
 
         if (lives) {
             dispatch(setLives(parseInt(lives.value, 10)));
