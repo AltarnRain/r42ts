@@ -4,6 +4,7 @@
  * See LICENSE.MD.
  */
 
+import "react";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import MainMenu from "./UI/MainMenu";

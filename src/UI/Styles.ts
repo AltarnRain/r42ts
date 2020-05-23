@@ -35,10 +35,8 @@ export namespace Styles {
         fontSize: 50
     };
 
-    export const instructions: CSSProperties = {
-        ...alignCenter,
-        ...defaultFont,
-        whiteSpace: "pre-wrap"
+    export const instructionContainer: CSSProperties = {
+        ...alignCenter
     };
 
     export const buttonContainer: CSSProperties = {
@@ -49,16 +47,24 @@ export namespace Styles {
         alignItems: "center",
     };
 
-    export const buttonSize: CSSProperties = {
+    export const buttonStyle: CSSProperties = {
         ...alignCenter,
         ...defaultFont,
+        backgroundColor: "black",
+        color: "yellow",
         width: "100px",
+        borderColor: "yellow",
+    };
+
+    export const buttonHoverStyle: CSSProperties = {
+        ...buttonStyle,
+        backgroundColor: "yellow",
+        color: "black",
     };
 
     export const instructionsText: CSSProperties = {
+        ...defaultFont,
         backgroundColor: "black",
         color: CGAColors.yellow,
-        width: "400px",
-        height: "300px",
     };
 }

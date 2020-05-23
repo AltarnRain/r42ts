@@ -4,7 +4,8 @@
  * See LICENSE.MD.
  */
 
-import * as React from "react";
+import React, { useState } from "react";
+import { HoverButton } from "./HoverButton";
 import { Styles } from "./Styles";
 
 /**
@@ -14,7 +15,7 @@ import { Styles } from "./Styles";
 
 export default function MainMenu(): JSX.Element {
 
-    const [gameRunning, setGameRunning] = React.useState(false);
+    const [gameRunning, setGameRunning] = useState(false);
 
     /**
      * Starts the game
@@ -53,26 +54,35 @@ export default function MainMenu(): JSX.Element {
                     <>
                         <div style={Styles.round42Header}>Welcome to Round 42</div>
                         <br />
-                        <div style={Styles.instructions}>
-                            <textarea readOnly={true} style={Styles.instructionsText} rows={50}>
-                                Press F1 to fire a bullet.
-                                Press F2 to fire a phaser.
-                                You only have limited charges so use them wisely.
-                                Press Backspace to self destruct and ship a level.
-                                Use the arrow keys to move.
+                        <div style={Styles.instructionContainer}>
+                            <div style={{ flexDirection: "column" }}>
+                                <h2 style={Styles.instructionsText}>Instructions</h2>
+                                <ul style={Styles.instructionsText}>
+                                    <li>Use the arrow keys to move.</li>
+                                    <li>Press F1 to fire a bullet.</li>
+                                    <li>Press F2 to fire a phaser.
+                                        <ul>
+                                            <li>You only have limited charges so use them wisely.</li>
 
-                                A life and phaser is awared every 7500 points.
-                                When you die you'll lose your phaser charges.
-                                When you die you can hold Space to pause your formation
-                                When there's enemies on the screen you can move
-                                left and right while your ship is warping in.
-                </textarea>
+                                        </ul>
+                                    </li>
+                                    <li>Press Backspace to self destruct and skip a level.
+                                        <ul>
+                                            <li>Selfdestrucing will reset your score.</li>
+                                        </ul>
+                                    </li>
+                                    <li>A life and phaser is awared every 7500 points.</li>
+                                    <li>When you die you'll lose your phaser charges.</li>
+                                    <li>When you die you can hold Space to pause your formation</li>
+                                    <li>When there's enemies on the screen you can move left and right while your ship is warping in.</li>
+                                </ul>
+                            </div>
                         </div>
                         <br />
                         <div style={Styles.buttonContainer}>
-                            <button style={Styles.buttonSize} onClick={() => requestFullscreen()}>Fullscreen</button>
+                             <HoverButton onClick={requestFullscreen} text="Fullscreen" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                             <br />
-                            <button style={Styles.buttonSize} onClick={startGame} >Play game</button>
+                            <HoverButton onClick={startGame} text="Play" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                         </div>
                     </>
             }
