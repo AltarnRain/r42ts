@@ -45,7 +45,6 @@ export default function dimensionProvider(): GameDimensions {
         const canvasLeft = (rect.width - fullGameWidth) / 2;
         const canvasTop = (rect.height - fullGameHeight) / 2;
 
-
         const statusBarBottom = pixelSize * 6;
 
         const gameFieldLeft = pixelSize;

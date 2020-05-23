@@ -53,8 +53,6 @@ export function start(): void {
 
         if (timelevelTimeLimit) {
             dispatch(setTimeLevelTimeLimit(parseInt(timelevelTimeLimit.value, 10)));
-        } else {
-            dispatch(setTimeLevelTimeLimit(2000));
         }
 
         if (immortal) {

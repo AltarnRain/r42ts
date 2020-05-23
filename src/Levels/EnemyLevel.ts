@@ -50,7 +50,7 @@ export default class EnemyLevel implements ILevel {
      * Begin this level.
      * @param {() => void} levelReady. Optional callback that is called when the level is ready to begin.
      */
-    public begin(levelReady?: () => void): Promise<void> {
+    public begin(): Promise<void> {
         return new Promise((resolve) => {
             const { enemies, bulletRunner } = enemyLevelContentFactory(this.enemy);
 
@@ -88,10 +88,6 @@ export default class EnemyLevel implements ILevel {
                 this.registerSubscription(GameLoop.registerSoundRunner(() => this.updateSound()));
 
                 this.registerSubscription(GameLoop.registerSoundRunner(() => SoundPlayer.ensureBackground()));
-
-                if (levelReady !== undefined) {
-                    levelReady();
-                }
 
                 dispatch(setPlayerMovementLimit("none"));
 

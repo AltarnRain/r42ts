@@ -9,6 +9,7 @@ import { DEBUGGING_drawGrid, DEBUGGING_renderHitboxes } from "./Debugging/Debugg
 import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import playerSpawnRunner from "./Player/PlayerSpawnRunner";
+import dimensionProvider from "./Providers/DimensionProvider";
 import genericRunner from "./Runners/GenericRunner";
 import levelProgressionRunner, { resetLevelProgression } from "./Runners/LevelProgressionRunner";
 import playerRunner from "./Runners/PlayerRunner";
@@ -19,7 +20,6 @@ import { setPlayerIsAlive, setPlayerLocationData } from "./State/Player/PlayerAc
 import { appState, dispatch } from "./State/Store";
 import { TickFunction } from "./Types";
 import { registerListeners, unregisterListeners } from "./Utility/KeyboardEvents";
-import dimensionProvider from "./Providers/DimensionProvider";
 
 /**
  * Module:          GameLoop
