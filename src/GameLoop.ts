@@ -62,7 +62,7 @@ let drawFunctions: Array<() => void> = [];
 /**
  * Functions that monitor state to pick which background sound to play
  */
-let soundRunners: Array<() => void> = [];
+let soundRunners: Array<(pause: boolean) => void> = [];
 
 export namespace GameLoop {
     /**
@@ -207,7 +207,7 @@ export namespace GameLoop {
      * Register a function that checks which background sound to play based on the current state.
      * @param {() => void} f. A function.
      */
-    export function registerSoundRunner(f: () => void) {
+    export function registerSoundRunner(f: (pause: boolean) => void) {
         soundRunners.push(f);
 
         return () => {
@@ -229,7 +229,7 @@ export namespace GameLoop {
 
         // Play background sound(s) or stop them when the game is paused. this is why the
         // GameLoop will keep running the sound runners. Sounds keep playing otherwise.
-        soundRunners.forEach((f) => f());
+        soundRunners.forEach((f) => f(pause));
 
         // Pausing means no state updates. Drawing will also stop but the CANVAS will not reset it self
         // so it shows the last rendered image.

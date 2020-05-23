@@ -51,7 +51,7 @@ import getExplosion02 from "../SharedFrames/GetExplosion02";
 import getExplosion03 from "../SharedFrames/GetExplosion03";
 import getExplosion04 from "../SharedFrames/GetExplosion04";
 import getExplosion05 from "../SharedFrames/GetExplosion05";
-import { Enemies } from "../Types";
+import { Enemies } from "../Enemies";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import { coinFlip } from "../Utility/Lib";

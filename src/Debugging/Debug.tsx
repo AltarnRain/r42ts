@@ -1,11 +1,14 @@
-import GameLoop from "./GameLoop";
-import ctxProvider from "./Render/CtxProvider";
-import { setDebuggingState } from "./State/Debugging/DebuggingActions";
-import DebuggingState from "./State/Debugging/DebuggingState";
-import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers, setTimeLevelTimeLimit, setWarpGamteComplexity as setWarpGateComplexity } from "./State/Game/GameActions";
-import { WarpLevelComplexity } from "./State/Game/WarpLevelTypes";
-import { dispatch } from "./State/Store";
-import { getURLQueryKVPs } from "./Utility/Lib";
+import React from "react";
+import ReactDOM from "react-dom";
+import DebugSound from "./DebugSound";
+import GameLoop from "../GameLoop";
+import ctxProvider from "../Render/CtxProvider";
+import { setDebuggingState } from "../State/Debugging/DebuggingActions";
+import DebuggingState from "../State/Debugging/DebuggingState";
+import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers, setTimeLevelTimeLimit, setWarpGamteComplexity as setWarpGateComplexity } from "../State/Game/GameActions";
+import { WarpLevelComplexity } from "../State/Game/WarpLevelTypes";
+import { dispatch } from "../State/Store";
+import { getURLQueryKVPs } from "../Utility/Lib";
 
 /**
  * Start the game. If the URL contains certain query query's it will
@@ -24,7 +27,7 @@ export function start(): void {
     const lives = queryKeyValuePairs.find((kvp) => kvp.key === "lives");
     const phasers = queryKeyValuePairs.find((kvp) => kvp.key === "phasers");
     const timelevelTimeLimit = queryKeyValuePairs.find((kvp) => kvp.key === "timelevelTimeLimit");
-    const beep = queryKeyValuePairs.find((kvp) => kvp.key === "beep");
+    const sound = queryKeyValuePairs.find((kvp) => kvp.key === "sound");
 
     if (showPlayGround) {
 
@@ -97,8 +100,8 @@ export function start(): void {
         ctx.fillStyle = "#00AA00";
 
         (window as any).r42 = ctx;
-    } else if (beep) {
-
+    } else if (sound) {
+        ReactDOM.render(<DebugSound/>, document.getElementById("root"));
     } else {
         throw new Error("No Debugging info given");
     }

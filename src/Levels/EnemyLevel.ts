@@ -15,7 +15,7 @@ import { resetLevelState } from "../State/EnemyLevel/EnemyLevelActions";
 import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import handleLevelWon from "../StateHandlers/HandleLevelWon";
-import { Enemies } from "../Types";
+import { Enemies } from "../Enemies";
 
 export default class EnemyLevel implements ILevel {
 
@@ -87,7 +87,7 @@ export default class EnemyLevel implements ILevel {
                 // Register back ground sound runner.
                 this.registerSubscription(GameLoop.registerSoundRunner(() => this.updateSound()));
 
-                this.registerSubscription(GameLoop.registerSoundRunner(() => SoundPlayer.ensureBackground()));
+                this.registerSubscription(GameLoop.registerSoundRunner(SoundPlayer.ensureBackground));
 
                 dispatch(setPlayerMovementLimit("none"));
 

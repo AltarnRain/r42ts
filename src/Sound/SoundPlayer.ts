@@ -5,8 +5,7 @@
  */
 
 import { Howl } from "howler";
-import { appState } from "../State/Store";
-import { Enemies } from "../Types";
+import { Enemies } from "../Enemies";
 import { getRandomArrayElement } from "../Utility/Array";
 import { Sounds } from "./Sounds";
 
@@ -168,15 +167,15 @@ export namespace SoundPlayer {
      * Ensures the background sound is playing. Doesn't do anything if there is no background sound
      * or if the background sound is already playing.
      */
-    export function ensureBackground(): void {
+    export function ensureBackground(pause: boolean): void {
 
-        if (appState().gameState.pause) {
+        if (pause) {
             currentBackground?.pause();
             return;
         }
 
-        if (currentBackground && !currentBackground.playing()) {
-            currentBackground.play();
+        if (!currentBackground?.playing()) {
+            currentBackground?.play();
         }
     }
 

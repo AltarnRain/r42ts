@@ -18,7 +18,7 @@ import maxFiveDiagonal from "../ShipsToFireProviders/MaxFiveDiagonal";
 import elevenInALine from "../SpawnLocations/ElevennInALine";
 import getRandomSpawnLocations from "../SpawnLocations/GetRandomSpawnLocations";
 import sevenSixSevenGridProvider from "../SpawnLocations/SevenSixSevenGridProvider";
-import { Enemies } from "../Types";
+import { Enemies } from "../Enemies";
 import dimensionProvider from "./DimensionProvider";
 import enemyFactory from "./EnemyFactory";
 

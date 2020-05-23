@@ -57,28 +57,3 @@ export type Angle = number | undefined;
  * Background sound for levels.
  */
 export type BackgroundSound = "tjirp" | "whop" | "whiz" | "falling";
-
-/**
- * All enemies and variations.
- */
-export type Enemies =
-    "bird" |
-    "bird-fire" |
-    "robot" |
-    "orb" |
-    "spinner" |
-    "balloon" |
-    "asteroid-down" |
-    "asteroid-diagonal" |
-    "piston" |
-    "diabolo" |
-    "spacemonster-down" |
-    "spacemonster-diagonal" |
-    "devil" |
-    "crab" |
-    "bat" |
-    "boat" |
-    "cloaking-orb" |
-    "orb-up-down" |
-    "robots-random" |
-    "fish";
