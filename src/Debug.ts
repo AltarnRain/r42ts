@@ -24,6 +24,7 @@ export function start(): void {
     const lives = queryKeyValuePairs.find((kvp) => kvp.key === "lives");
     const phasers = queryKeyValuePairs.find((kvp) => kvp.key === "phasers");
     const timelevelTimeLimit = queryKeyValuePairs.find((kvp) => kvp.key === "timelevelTimeLimit");
+    const beep = queryKeyValuePairs.find((kvp) => kvp.key === "beep");
 
     if (showPlayGround) {
 
@@ -96,6 +97,8 @@ export function start(): void {
         ctx.fillStyle = "#00AA00";
 
         (window as any).r42 = ctx;
+    } else if (beep) {
+
     } else {
         throw new Error("No Debugging info given");
     }
