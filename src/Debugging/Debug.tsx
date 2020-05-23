@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import DebugSound from "./DebugSound";
 import GameLoop from "../GameLoop";
 import ctxProvider from "../Render/CtxProvider";
 import { setDebuggingState } from "../State/Debugging/DebuggingActions";
@@ -9,6 +8,7 @@ import { addPhaser, increaseScore, nextLevel, setLevel, setLives, setPhasers, se
 import { WarpLevelComplexity } from "../State/Game/WarpLevelTypes";
 import { dispatch } from "../State/Store";
 import { getURLQueryKVPs } from "../Utility/Lib";
+import DebugSound from "./DebugSound";
 
 /**
  * Start the game. If the URL contains certain query query's it will

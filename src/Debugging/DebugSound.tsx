@@ -1,7 +1,7 @@
 import React, { CSSProperties, useState } from "react";
 import { Sounds } from "../Sound/Sounds";
-import SoundButton from "./SoundButton";
 import { SoundSprites } from "../Sound/SoundSprites";
+import SoundButton from "./SoundButton";
 
 const style: CSSProperties = {
     color: "white"
@@ -29,6 +29,16 @@ export default function DebugSound(): JSX.Element {
             <h1>Sound tester app</h1>
             <div style={{ display: "flex", flexDirection: "column", width: "150px" }}>
                 <button onClick={() => howl?.stop()} >Stop</button>
+                {
+                    Sounds.Whoping.map((src, index) =>
+                        <SoundButton
+                            key={index}
+                            src={src}
+                            text={"Whoping " + index.toString()}
+                            onPlay={play}
+                            sprite={SoundSprites.Whoping[index]}
+                        />)
+                }
                 {
                     Sounds.Tjirping.map((src, index) =>
                         <SoundButton

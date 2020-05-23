@@ -21,4 +21,8 @@ export namespace SoundSprites {
         [0, 1155], // 18
         [0, 1155], // 19
     ];
+
+    export const Whoping = [
+
+    ];
 }
