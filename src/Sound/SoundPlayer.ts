@@ -91,6 +91,15 @@ export namespace SoundPlayer {
     }
 
     /**
+     * Pauses the background sound.
+     */
+    export function pauseBackground(): void {
+        if (currentBackground) {
+            currentBackground.pause();
+        }
+    }
+
+    /**
      * Plays the background sound for a specific enemy. Lots of enemies reuse background sound.
      * @param {Enemies} enemy. Enemy to play sound for.
      * @param {number} index. Index. Determines which sound to play. Usually linked to the number of enemies on screen.

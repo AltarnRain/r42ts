@@ -124,7 +124,7 @@ export default class WarpLevel implements ILevel {
         if (alive) {
             SoundPlayer.ensureBackground();
         } else {
-            SoundPlayer.stopBackground();
+            SoundPlayer.pauseBackground();
         }
     }
 
