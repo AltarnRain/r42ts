@@ -120,11 +120,12 @@ export default function MainMenu(): JSX.Element {
                                 </p>
                                 <h1 style={Styles.textStyle}>Technologies used</h1>
                                 <ul>
-                                    <li>TypeScript</li>
-                                    <li>WebPack</li>
-                                    <li>Redux</li>
-                                    <li>Immer</li>
+                                    <li>TypeScript for coding</li>
+                                    <li>WebPack for packaging</li>
+                                    <li>Redux for state</li>
+                                    <li>Immer for QoL state management.</li>
                                     <li>React (menu only)</li>
+                                    <li>Howler for playing sounds.</li>
                                 </ul>
                             </div>
                         </> : null
