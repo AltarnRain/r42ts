@@ -92,7 +92,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Play ground level 7 - god",
+            "name": "Play ground level 07 - Godmode",
             "url": "http://localhost:8080/?playground?level=7?god?timelevelTimeLimit=5000",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
@@ -143,8 +143,8 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Play ground - Warplevel 41",
-            "url": "http://localhost:8080/?playground?level=41",
+            "name": "Play ground level 41 - hitboxes",
+            "url": "http://localhost:8080/?playground?level=41?hitboxes",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
             "sourceMaps": true,
