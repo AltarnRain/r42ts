@@ -92,11 +92,13 @@ export default class WarpLevel implements ILevel {
                 // trigger progression to the next level.
                 this.gameLoopSubscriptions.push(GameLoop.registerUpdateState((tick) => this.hitDetection(tick, badSpace)));
 
-                // Register a sound runner.
-                this.gameLoopSubscriptions.push(GameLoop.registerSoundRunner(() => this.soundRunner()));
-
                 // Allow the player to see the warp level for 1 second before forcing thm to travel it.
                 window.setTimeout(() => {
+
+                    // Register a sound runner.
+                    this.gameLoopSubscriptions.push(GameLoop.registerSoundRunner(() => this.soundRunner()));
+
+                    // For the player the move up.
                     dispatch(setPlayerMovementLimit("forceup"));
 
                     // Initialize the warp level background sound.
