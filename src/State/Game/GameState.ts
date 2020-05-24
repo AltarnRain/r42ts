@@ -58,11 +58,6 @@ export default interface GameState {
     bulletsFired: number;
 
     /**
-     * Number of phasers the player used/.
-     */
-    phasersFired: number;
-
-    /**
      * The number of enemies the player hit in total.
      */
     enemiesHit: number;

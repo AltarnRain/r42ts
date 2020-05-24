@@ -30,9 +30,6 @@ export default function gameStateReducer(state: GameState = initState(), action:
             case Constants.setLives:
                 draft.lives = action.payload;
                 break;
-            case Constants.addLife:
-                draft.lives += 1;
-                break;
             case Constants.removeLife:
                 draft.lives -= 1;
                 break;
@@ -83,15 +80,12 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 draft.level = 1;
                 draft.bulletsFired = 0;
                 draft.enemiesHit = 0;
-                draft.phasersFired = 0;
                 draft.lastAwardScore = 0;
                 break;
             case Constants.enemyHit:
                 draft.enemiesHit++;
                 break;
-            case Constants.phasersFired:
-                draft.phasersFired++;
-                break;
+
             case Constants.bulletFired:
                 draft.bulletsFired++;
                 break;
@@ -124,7 +118,6 @@ function initState(): GameState {
         gameOver: false,
         bulletsFired: 0,
         enemiesHit: 0,
-        phasersFired: 0,
         timeLevelTimeLimit: 20000, // 20 seconds
         hardMode: false,
     };
