@@ -8,6 +8,7 @@ import { Locations } from "./Constants/Constants";
 import { DEBUGGING_drawGrid, DEBUGGING_renderHitboxes } from "./Debugging/Debugging";
 import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
+import GameResultModel from "./Models/GameResultModel";
 import playerSpawnRunner from "./Player/PlayerSpawnRunner";
 import dimensionProvider from "./Providers/DimensionProvider";
 import genericRunner from "./Runners/GenericRunner";
@@ -64,11 +65,21 @@ let drawFunctions: Array<() => void> = [];
  */
 let soundRunners: Array<(pause: boolean) => void> = [];
 
+/**
+ * A function passed from the outside that will handle the game over event
+ * If not defined the GameLoop will show a pop-up.
+ */
+let gameOverHandler: (result: GameResultModel) => void | undefined;
+
 export namespace GameLoop {
     /**
      * Start game loop
      */
-    export function start(): void {
+    export function start(gameOverCallback?: (result: GameResultModel) => void): void {
+
+        if (gameOverCallback) {
+            gameOverHandler = gameOverCallback;
+        }
 
         // Set canvas dimensions.
         const canvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -224,7 +235,7 @@ export namespace GameLoop {
         mainHandle = window.requestAnimationFrame(run);
 
         const {
-            gameState: { pause, gameOver, enemiesHit, bulletsFired, score, phasersFired }
+            gameState: { pause, gameOver, enemiesHit, bulletsFired, score }
         } = appState();
 
         // Play background sound(s) or stop them when the game is paused. this is why the
@@ -246,24 +257,6 @@ export namespace GameLoop {
             // Rester the state of the levelProgressionRunner.
             resetLevelProgression();
 
-            // Calculate how often the player hit an enemy.
-            let hitPercentage = Math.round((enemiesHit / bulletsFired) * 100);
-
-            // Don't show 'NaN' show 0.
-            if (isNaN(hitPercentage)) {
-                hitPercentage = 0;
-            }
-
-            // Display some statistics.
-            alert(`
-            Game over!
-            Total score: ${score}.
-            Bullets fired: ${bulletsFired}.
-            Phasers fired: ${phasersFired}.
-            Enemies hit: ${enemiesHit}.
-            %Hit: ${hitPercentage}
-            Click OK to restart from level 1`);
-
             // Reset the entire game.
             // Player goes to its original spawn location.
             dispatch(setPlayerLocationData(Locations.Player.spawnLocation.left, Locations.Player.spawnLocation.top));
@@ -276,6 +269,31 @@ export namespace GameLoop {
 
             // Set the game state back to its starting values.
             dispatch(gameStart());
+
+            // In normal mode showing game ending statistics is
+            // handled by the UI, not by showing a pop-up.
+            if (gameOverHandler !== undefined) {
+                const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+                if (canvas) {
+                    // Game over - reduce the canvas to nothing so the game over
+                    // screen displays properly.
+                    canvas.width = 0;
+                    canvas.height = 0;
+                    canvas.style.left = `0px`;
+                    canvas.style.top = `0px`;
+                    canvas.style.width = `0px`;
+                    canvas.style.height = `0px`;
+                }
+
+                const result: GameResultModel = {
+                    bulletsFired,
+                    score,
+                    enemiesHit,
+                };
+
+                gameOverHandler(result);
+                return;
+            }
 
             // Ok. all setup again, lets start the game loop.
             start();
