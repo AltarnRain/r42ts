@@ -27,27 +27,53 @@ export default function DebugSound(): JSX.Element {
     return (
         <div style={style} >
             <h1>Sound tester app</h1>
-            <div style={{ display: "flex", flexDirection: "column", width: "150px" }}>
-                <button onClick={() => howl?.stop()} >Stop</button>
+            <div style={{ display: "flex", flexDirection: "column", width: "250px" }}>
+                <p>Wizzing used by Balloons</p>
+                {
+                    Sounds.Wizzing.map((src, index) =>
+                        <div style={{ display: "flex", flexDirection: "row" }}>
+                            <SoundButton
+                                key={index}
+                                src={src}
+                                text={"Wizzing " + index.toString()}
+                                onPlay={play}
+                                sprite={SoundSprites.Wizzing[index]}
+
+                            />
+                            <button onClick={() => howl?.stop()} >Stop</button>
+                        </div>
+                    )
+                }
+                <p>Whoping used by orbs</p>
                 {
                     Sounds.Whoping.map((src, index) =>
-                        <SoundButton
-                            key={index}
-                            src={src}
-                            text={"Whoping " + index.toString()}
-                            onPlay={play}
-                            sprite={SoundSprites.Whoping[index]}
-                        />)
+                        <div style={{ display: "flex", flexDirection: "row" }}>
+                            <SoundButton
+                                key={index}
+                                src={src}
+                                text={"Whoping " + index.toString()}
+                                onPlay={play}
+                                sprite={SoundSprites.Whoping[index]}
+
+                            />
+                            <button onClick={() => howl?.stop()} >Stop</button>
+                        </div>
+                    )
                 }
+                <p>Tjirping, used by birds</p>
                 {
                     Sounds.Tjirping.map((src, index) =>
-                        <SoundButton
-                            key={index}
-                            src={src}
-                            text={"Tjirping " + index.toString()}
-                            onPlay={play}
-                            sprite={SoundSprites.Tjirping[index]}
-                        />)
+                        <div style={{ display: "flex", flexDirection: "row" }}>
+                            <SoundButton
+                                key={index}
+                                src={src}
+                                text={"Tjirping " + index.toString()}
+                                onPlay={play}
+                                sprite={SoundSprites.Tjirping[index]}
+                            />
+                            <button onClick={() => howl?.stop()} >Stop</button>
+                        </div>
+                    )
                 }
             </div>
         </div>

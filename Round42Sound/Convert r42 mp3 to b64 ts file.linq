@@ -1,8 +1,4 @@
-<Query Kind="Program">
-  <Reference Relative="Microsoft.WindowsAPICodePack.Shell.dll">D:\Reps\r42ts\Round42Sound\Microsoft.WindowsAPICodePack.Shell.dll</Reference>
-  <Namespace>Microsoft.WindowsAPICodePack.Shell</Namespace>
-  <Namespace>Microsoft.WindowsAPICodePack.Shell.PropertySystem</Namespace>
-</Query>
+<Query Kind="Program" />
 
 void Main()
 {
@@ -35,15 +31,6 @@ void Main()
 		subNamespace = subNamespace.Substring(0, subNamespace.IndexOf("\\"));
 
 		var fileName = Path.GetFileName(file);
-
-		double duration = 0;
-		using (var shell = ShellObject.FromParsingName(file))
-		{
-			IShellProperty prop = shell.Properties.System.Media.Duration;
-			var t = (ulong)prop.ValueAsObject;
-			duration = TimeSpan.FromTicks((long)t).TotalMilliseconds;
-		}
-	
 		List<FileData> files;
 
 		if (nameSpaceAndFiles.ContainsKey(subNamespace))
