@@ -10,7 +10,6 @@
 
 namespace Constants {
     export const resetLevelState = "resetLevelState";
-    export const addParticle = "addParticle";
     export const addParticles = "addParticles";
     export const setShrapnellState = "setShrapnellState";
     export const addExplosionCenter = "addExplosionCenter";

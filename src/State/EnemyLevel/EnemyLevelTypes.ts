@@ -19,11 +19,6 @@ export interface ResetLevelState {
     type: typeof Constants.resetLevelState;
 }
 
-export interface AddParticle {
-    type: typeof Constants.addParticle;
-    particle: ParticleState;
-}
-
 export interface AddParticles {
     type: typeof Constants.addParticles;
     particles: ParticleState[];
@@ -88,7 +83,6 @@ export interface SetEnemies {
 }
 export type EnemyLevelTypes =
     ResetLevelState |
-    AddParticle |
     AddParticles |
     SetShrapnellState |
     AddExplosionCenter |

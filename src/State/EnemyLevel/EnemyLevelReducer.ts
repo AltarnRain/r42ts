@@ -31,12 +31,6 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
             case Constants.setShrapnellState:
                 draft.shrapnells = action.shrapnell;
                 break;
-            case Constants.addParticle:
-                draft.shrapnells.push(action.particle);
-                break;
-            case Constants.addParticles:
-                draft.shrapnells.push(...action.particles);
-                break;
             case Constants.setPhaserLocations:
                 draft.phaserLocations = action.payload;
                 break;
