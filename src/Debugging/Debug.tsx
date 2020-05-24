@@ -1,3 +1,14 @@
+/**
+ * @preserve Copyright 2019-2020 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
+/**
+ * Module:          Debug
+ * Responsibility:  This module enables the game to be loaded at whatever lives, level, phaser count, etc.
+ */
+
 import React from "react";
 import ReactDOM from "react-dom";
 import GameLoop from "../GameLoop";
@@ -80,17 +91,6 @@ export function start(): void {
         dispatch(increaseScore(7400));
 
         dispatch(setDebuggingState(debuggingState));
-
-        (window as any).r42 = {
-            setLevel: (n: number) => dispatch(setLevel(n)),
-            nextLevel: () => dispatch(nextLevel()),
-            setPhasers: (n: number) => dispatch(setPhasers(n)),
-            setLives: (n: number) => dispatch(setLives(n)),
-            increaseScore: (n: number) => dispatch(increaseScore(n)),
-            addPhaser: () => dispatch(addPhaser()),
-            setWarpLevelComplexity: (n: WarpLevelComplexity) => dispatch(setWarpGateComplexity(n)),
-            setDebuggingState: (v: DebuggingState) => dispatch(setDebuggingState(v)),
-        };
 
     } else if (showCanvas) {
         // canvas testing
