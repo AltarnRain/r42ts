@@ -122,9 +122,9 @@ export default class WarpLevel implements ILevel {
 
         // Only play the warp travel sound when the player is alive.
         if (alive) {
-            SoundPlayer.ensureBackground(pause);
+            SoundPlayer.ensureWarpLevelBackground(pause);
         } else {
-            SoundPlayer.pauseBackground();
+            SoundPlayer.pauseWarpLevelTravellingSound();
         }
     }
 

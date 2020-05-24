@@ -6,13 +6,6 @@
 
 import React, { useEffect, useState } from "react";
 
-/**
- * Module:          SoundButton
- * Responsibility:  Component that plays a howl using a sprite.
- */
-
-type spriteArray = number | undefined;
-
 export default function SoundButton(props: {
     text: string,
     src: string,
@@ -20,7 +13,7 @@ export default function SoundButton(props: {
         src: string,
         begin: number,
         end: number) => void,
-    sprite?: spriteArray[]
+    sprite?: number[]
 }): JSX.Element {
 
     const [begin, setBegin] = useState("0");

@@ -4,6 +4,7 @@
  * See LICENSE.MD.
  */
 
+import Enemies from "../Enemies";
 import GameLoop from "../GameLoop";
 import drawLevelBanner from "../GameScreen/LevelBanner";
 import { drawBackground } from "../GameScreen/StaticRenders";
@@ -15,7 +16,6 @@ import { resetLevelState } from "../State/EnemyLevel/EnemyLevelActions";
 import { setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import handleLevelWon from "../StateHandlers/HandleLevelWon";
-import { Enemies } from "../Enemies";
 
 export default class EnemyLevel implements ILevel {
 

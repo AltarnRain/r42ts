@@ -5,9 +5,10 @@
  */
 
 import { Howl } from "howler";
-import { Enemies } from "../Enemies";
+import Enemies from "../Enemies";
 import { getRandomArrayElement } from "../Utility/Array";
 import { Sounds } from "./Sounds";
+import { SoundSprites } from "./SoundSprites";
 
 /**
  * Module:          SoundPlayer
@@ -67,14 +68,7 @@ export namespace SoundPlayer {
      * Plays the warp gate travel sound in a loop.
      */
     export function playTravelingWarpGate(): void {
-        setBackground([Howls.warpGateTraveling], 0);
-    }
-
-    /**
-     * Plays the warp gate travel sound in a loop.
-     */
-    function playFalling(): void {
-        setBackground([Howls.falling], 0);
+        setEnemyLevelBackground([Howls.warpGateTraveling], 0);
     }
 
     /**
@@ -90,12 +84,10 @@ export namespace SoundPlayer {
     }
 
     /**
-     * Pauses the background sound.
+     * Pauses warp level traveling sound. Used when the player dies.
      */
-    export function pauseBackground(): void {
-        if (currentBackground) {
-            currentBackground.pause();
-        }
+    export function pauseWarpLevelTravellingSound(): void {
+        Howls.warpGateTraveling.pause();
     }
 
     /**
@@ -110,7 +102,7 @@ export namespace SoundPlayer {
             case "spinner":
             case "diabolo":
             case "bat":
-                setBackground(Howls.tjirping, index);
+                setEnemyLevelBackground(Howls.tjirping, index);
                 break;
             case "orb":
             case "orb-up-down":
@@ -120,16 +112,18 @@ export namespace SoundPlayer {
             case "crab":
             case "piston":
             case "boat":
-                setBackground(Howls.whoping, index);
+                setEnemyLevelBackground(Howls.whoping, index);
                 break;
             case "balloon":
-                setBackground(Howls.wizzing, index);
+                setEnemyLevelBackground(Howls.wizzing, index);
                 break;
             case "asteroid-down":
             case "asteroid-diagonal":
             case "spacemonster-down":
             case "spacemonster-diagonal":
-                playFalling();
+                if (!Howls.falling.playing()) {
+                    Howls.falling.play();
+                }
                 break;
             case "devil":
             case "fish":
@@ -151,7 +145,7 @@ export namespace SoundPlayer {
      * @param {Howl[]} sounds. Array of Howls.
      * @param {number} index. Index of the sound.
      */
-    function setBackground(sounds: Howl[], index: number): void {
+    function setEnemyLevelBackground(sounds: Howl[], index: number): void {
         if (currentBackground) {
             currentBackground.stop();
         }
@@ -164,8 +158,8 @@ export namespace SoundPlayer {
     }
 
     /**
-     * Ensures the background sound is playing. Doesn't do anything if there is no background sound
-     * or if the background sound is already playing.
+     * Ensures the background sound is playing for a level with enemies.
+     * @param {boolean} pause. When true, pauses the current background sound.
      */
     export function ensureBackground(pause: boolean): void {
 
@@ -175,7 +169,23 @@ export namespace SoundPlayer {
         }
 
         if (!currentBackground?.playing()) {
-            currentBackground?.play();
+            currentBackground?.play("play");
+        }
+    }
+
+    /**
+     * Ensures the warp level traveling sound is playing.
+     * @param {boolean} pause. When true, pauses the warp level travelling sound howl.
+     */
+    export function ensureWarpLevelBackground(pause: boolean): void {
+
+        if (pause) {
+            Howls.warpGateTraveling.pause();
+            return;
+        }
+
+        if (!Howls.warpGateTraveling.playing()) {
+            Howls.warpGateTraveling.play();
         }
     }
 
@@ -195,7 +205,7 @@ namespace Howls {
     /**
      * Howl objects for explosion.
      */
-    export const enemyExplosions = Sounds.EnemyExplosions.map((ex) => new Howl({ src: ex }));
+    export const enemyExplosions = Sounds.EnemyExplosions.map((src) => new Howl({ src }));
 
     /**
      * Howl for the player bullet
@@ -205,12 +215,12 @@ namespace Howls {
     /**
      * Howl objects for phasers.
      */
-    export const phasers = Sounds.Phasers.map((p) => new Howl({ src: p }));
+    export const phasers = Sounds.Phasers.map((src) => new Howl({ src }));
 
     /**
      * Sound for the player's explosion.
      */
-    export const playerExplosions = Sounds.PlayerExplosions.map((x) => new Howl({ src: x }));
+    export const playerExplosions = Sounds.PlayerExplosions.map((src) => new Howl({ src }));
 
     /**
      * Sound for a fast formation.
@@ -225,7 +235,7 @@ namespace Howls {
     /**
      * Sounds while travelin through a warp gate.
      */
-    export const warpGateTraveling = new Howl({ src: [Sounds.Player.warpgate]});
+    export const warpGateTraveling = new Howl({ src: [Sounds.Player.warpgate] });
 
     /**
      * Sound played the player reached the end of a warp level.
@@ -233,27 +243,45 @@ namespace Howls {
     export const warpLevelEnd = new Howl({ src: [Sounds.Player.warplevelend] });
 
     /**
-     * Sounds while travelin through a warp gate.
+     * Sound while playing an astreroid or space monster level.
      */
-    export const falling = new Howl({ src: [Sounds.Falling.falling]});
+    export const falling = new Howl({ src: Sounds.Falling.falling, loop: true });
 
     /**
      * Sounds for birds, spinners, diabolo's, etc.
      */
-    export const tjirping = Sounds.Tjirping.map((t) => new Howl({ src: t}));
+    export const tjirping = Sounds.Tjirping.map((src, index) => createSpriteHowl(src, index, SoundSprites.Tjirping));
 
     /**
      * Sounds for orbs, robots, etc.
      */
-    export const whoping = Sounds.Whoping.map((w) => new Howl({ src: w}));
+    export const whoping = Sounds.Whoping.map((src, index) => createSpriteHowl(src, index, SoundSprites.Whoping));
 
     /**
      * Sounds for balloons, bats, etc.
      */
-    export const wizzing = Sounds.Wizzing.map((w) => new Howl({ src: w}));
+    export const wizzing = Sounds.Wizzing.map((src, index) => createSpriteHowl(src, index, SoundSprites.Wizzing));
 
     /**
      * Music. Player on round 13 and round 42.
      */
-    export const music = new Howl({ src: Sounds.Music.music});
+    export const music = new Howl({ src: Sounds.Music.music });
+}
+
+/**
+ * Create Sprite Howl.
+ * @param {string} src. Base 64 incoded ogg.
+ * @param {number} index. Index of the howl.
+ * @param {SoundSprite[][]} sprites. An array with SoundSprite arrays.
+ */
+function createSpriteHowl(src: string, index: number, sprites: number[][]): Howl {
+
+    const sprite = sprites[index];
+    return new Howl({
+        src,
+        sprite: {
+            play: [sprite[0], sprite[1]],
+        },
+        loop: true
+    });
 }
