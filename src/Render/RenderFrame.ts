@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import { validColors } from "../Constants/CGAColors";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { Frame } from "../Types";
 import ctxProvider from "./CtxProvider";
@@ -39,11 +38,11 @@ export default function renderFrame(left: number, top: number, frame: Frame): vo
             // 0 is black. No point in drawing it since the back ground is black.
             if (color !== "0") {
 
-                // DEBUGGING.
-                if (validColors.indexOf(color) === -1) {
-                    // tslint:disable-next-line: no-console
-                    throw new Error("Provided color is not a valid CGA color");
-                }
+                // DEBUGGING. Uncomment lines below if a color does not seem right.
+                // if (validColors.indexOf(color) === -1) {
+                //     // tslint:disable-next-line: no-console
+                //     throw new Error("Provided color is not a valid CGA color");
+                // }
 
                 ctx.fillStyle = color;
                 // But we use the max pixel size to draw a pixel. This ensures the pixels overlap slightly.
