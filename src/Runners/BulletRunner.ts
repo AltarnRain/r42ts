@@ -12,8 +12,8 @@ import { Frame, ShipsToFireFunction } from "../Types";
 import Mutators from "../Utility/FrameMutators";
 
 /**
- * Module:          StraightDownBulletProvider
- * Responsibility:  Shoots a bullet straight down
+ * Module:          BulletRunner
+ * Responsibility:  Handles all enemy bullet firing.
  */
 
 /**
@@ -23,7 +23,7 @@ import Mutators from "../Utility/FrameMutators";
  */
 export default class BulletRunner {
     /**
-     * The bullet frame that will be fired.
+     * The bullet frame that will be fired. Precolored.
      */
     private coloredBulletFrame: Frame;
 
@@ -42,14 +42,12 @@ export default class BulletRunner {
      */
     private shipsToFire: ShipsToFireFunction;
 
+
     /**
-     * Creates an instance of BulletRunner.
-     * @param {FrameProviderFunction} getBulletFrame. A function that returns a bullet frame.
-     * @param {string} bulletColor. The color of the bullet.
-     * @param {number} speed. The speed of the bullet.
-     * @param {ShipsToFireFunction} shipsToFire. A function that returns shits that can fire.
-     * @param {FireCheckFunction} fireCheck. A function that checks individual ships if they can fire.
-     * @memberof BulletRunner
+     * Construct the object.
+     * @param {string} bulletColor. Color of the bullet.
+     * @param {number} speed. Speed of the bullet.
+     * @param {ShipsToFireFunction}. A function that returns which ships fired.
      */
     constructor(
         bulletColor: string,

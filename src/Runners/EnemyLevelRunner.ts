@@ -28,7 +28,7 @@ import { overlaps } from "../Utility/Geometry";
  */
 
 /**
- * Array of current game objects on screen. This is the only array in the entire game thar holds BaseEnemy objects.
+ * Array of current game objects on screen. This is the only array in the entire game that holds BaseEnemy objects.
  */
 const localState: { enemies: BaseEnemy[] } = {
     enemies: [],
@@ -44,7 +44,12 @@ export namespace EnemyLevelRunner {
         GameLoop.registerDraw(draw);
     }
 
-    export function setEnemies(newEnemies: BaseEnemy[]): void {
+    /**
+     * setEnemies
+     * @param {BaseEnemy[]} newEnemies. Sets the local state to the new enemies and ensures the enemies
+     * global state is registered.
+     */
+    export function setNewEnemies(newEnemies: BaseEnemy[]): void {
         localState.enemies = newEnemies;
 
         dispatch(setTotalEnemies(newEnemies.length));

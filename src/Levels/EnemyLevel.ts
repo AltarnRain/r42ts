@@ -79,7 +79,7 @@ export default class EnemyLevel implements ILevel {
                 }
 
                 // Add the enemies to the enemy level runner. The registered stateManager will take it from here.
-                EnemyLevelRunner.setEnemies(enemies);
+                EnemyLevelRunner.setNewEnemies(enemies);
 
                 // Add a function to the GameLoop that will check if a level has been won.
                 this.registerSubscription(GameLoop.registerLevelWonMonitor(() => this.monitorLevelWonRun()));
@@ -103,7 +103,7 @@ export default class EnemyLevel implements ILevel {
 
         // Remove remaining enemies from the enemy level runner so they do not get
         // a chance to push their state to redux.
-        EnemyLevelRunner.setEnemies([]);
+        EnemyLevelRunner.setNewEnemies([]);
 
         // Reset is required for levels where there is a time limit on the level and the
         // player does clear the state by destroying enemies.
