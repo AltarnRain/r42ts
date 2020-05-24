@@ -39,10 +39,6 @@ export interface RemovePhaser {
     type: typeof Constants.removePhaser;
 }
 
-export interface AddLevel {
-    type: typeof Constants.addLevel;
-}
-
 export interface SetLevel {
     type: typeof Constants.setLevel;
     payload: number;
@@ -101,7 +97,6 @@ export type GameStateTypes =
     SetPhasers |
     AddPhaser |
     RemovePhaser |
-    AddLevel |
     SetLevel |
     NextLevel |
     AddLifeAndPhaser |

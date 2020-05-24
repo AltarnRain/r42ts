@@ -42,11 +42,6 @@ export default function gameStateReducer(state: GameState = initState(), action:
             case Constants.removePhaser:
                 draft.phasers--;
                 break;
-            case Constants.addLevel:
-                if (draft.level) {
-                    draft.level++;
-                }
-                break;
             case Constants.setLevel:
                 draft.level = action.payload;
                 break;
