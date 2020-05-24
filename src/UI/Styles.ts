@@ -31,7 +31,6 @@ export namespace Styles {
         ...alignCenter,
         ...defaultFont,
         color: CGAColors.yellow,
-        fontFamily: "consolas",
         fontSize: 50
     };
 
@@ -41,7 +40,7 @@ export namespace Styles {
 
     export const buttonContainer: CSSProperties = {
         ...alignCenter,
-        fontFamily: "consolas",
+        ...defaultFont,
         flexDirection: "column",
         flexGrow: 0,
         alignItems: "center",

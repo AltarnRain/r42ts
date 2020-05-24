@@ -11,7 +11,6 @@
 
 namespace Constants {
     export const setLives = "setLives";
-    export const addLife = "addLife";
     export const removeLife = "removeLife";
     export const increaseScore = "increaseScore";
     export const addLevel = "addLevel";

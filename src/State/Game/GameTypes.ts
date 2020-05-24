@@ -22,10 +22,6 @@ export interface SetLives {
     payload: number;
 }
 
-export interface AddLife {
-    type: typeof Constants.addLife;
-}
-
 export interface RemoveLife {
     type: typeof Constants.removeLife;
 }
@@ -101,7 +97,6 @@ export interface ResetScore {
 export type GameStateTypes =
     IncreaseScore |
     SetLives |
-    AddLife |
     RemoveLife |
     SetPhasers |
     AddPhaser |

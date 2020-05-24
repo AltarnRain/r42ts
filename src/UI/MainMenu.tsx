@@ -5,6 +5,7 @@
  */
 
 import React, { useState } from "react";
+import GameResultModel from "../Models/GameResultModel";
 import { HoverButton } from "./HoverButton";
 import { Styles } from "./Styles";
 
@@ -15,7 +16,8 @@ import { Styles } from "./Styles";
 
 export default function MainMenu(): JSX.Element {
 
-    const [screenState, setScreenState] = useState<"mainmenu" | "playing" | "about">("mainmenu");
+    const [screenState, setScreenState] = useState<"mainmenu" | "playing" | "about" | "gameover">("mainmenu");
+    const [gameResult, setGameResult] = useState<GameResultModel>();
 
     /**
      * Starts the game
@@ -25,9 +27,14 @@ export default function MainMenu(): JSX.Element {
         setScreenState("playing");
 
         // Lazy load the game. When the game starts it sets dimension constants all though the game
-        // before this is done we want to make sure the game is either running in full screee
+        // before this is done we want to make sure the game is either running in full screem
         // or windows mode.
-        import("../GameLoop").then((m) => m.GameLoop.start());
+        // Once loaded this module stays loaded. Thats why the game, when it ends, doesn't show the
+        // main menu as switching to full screen would have no effect at that point.
+        import("../GameLoop").then((m) => m.GameLoop.start((result) => {
+            setScreenState("gameover");
+            setGameResult(result);
+        }));
     }
 
     /**
@@ -56,10 +63,10 @@ export default function MainMenu(): JSX.Element {
                         <>
                             <div style={Styles.round42Header}>Welcome to Round 42</div>
                             <div style={Styles.defaultContainer}>
-                                <p style={Styles.textStyle} >
+                                <p style={Styles.textStyle}>
                                     Original game by Mike Pooler released in 1986 <br />
-                            Remake by Antonio Invernizzi 2020.
-                        </p>
+                                    Remake by Antonio Invernizzi 2020.
+                                </p>
                             </div>
                             <br />
                             <div style={Styles.defaultContainer}>
@@ -96,40 +103,107 @@ export default function MainMenu(): JSX.Element {
                             </div>
                         </> :
                         screenState === "about" ?
-                        <>
-                            <HoverButton onClick={() => setScreenState("mainmenu")} text="Back to main menu" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
-                            <div style={Styles.textStyle}>
-                                <h1 style={Styles.textStyle}>About me</h1>
-                                <p>
-                                    My name is Antonio Invernizzi. I've worked as a professional programmer for 20 years.<br/>
-                                    <br/>
-                                    Round 42 is a big reason why.<br/>
-                                    <br/>
+                            <>
+                                <HoverButton onClick={() => setScreenState("mainmenu")} text="Back to main menu" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
+                                <div style={Styles.textStyle}>
+                                    <h1 style={Styles.textStyle}>About me</h1>
+                                    <p>
+                                        My name is Antonio Invernizzi. I've worked as a professional programmer for 20 years.<br />
+                                        <br />
+                                    Round 42 is a big reason why.<br />
+                                        <br />
                                     It was 1990 and my parents bought our first PC. A 4 Mhz 8088 XT. It shipped with 3 games:
                                     <ul>
-                                        <li>Digger</li>
-                                        <li>A pinball machine</li>
-                                        <li>Round 42</li>
-                                    </ul>
-                                </p>
-                                <p>
-                                    It is fair to say I was instantly addicted to Round 42 and spend many, many hours trying to beat the game often with my mother watching. <br/>
-                                    Good times :) <br/>
-                                    Course, spending hour uppon hour behind a PC made me curious what else I could do with it and... well... now I'm a programmer. <br/>
+                                            <li>Digger</li>
+                                            <li>A pinball machine</li>
+                                            <li>Round 42</li>
+                                        </ul>
+                                    </p>
+                                    <p>
+                                        It is fair to say I was instantly addicted to Round 42 and spend many, many hours trying to beat the game often with my mother watching. <br />
+                                    Good times :) <br />
+                                    Course, spending hour uppon hour behind a PC made me curious what else I could do with it and... well... now I'm a programmer. <br />
                                     Though, I am not a game developer by trade I realy enjoyed the challenge of writing one.
                                 </p>
-                                <h1 style={Styles.textStyle}>Technologies used</h1>
-                                <ul>
-                                    <li>TypeScript for coding</li>
-                                    <li>WebPack for packaging</li>
-                                    <li>Redux for state</li>
-                                    <li>Immer for QoL state management.</li>
-                                    <li>React (menu only)</li>
-                                    <li>Howler for playing sounds.</li>
-                                </ul>
-                            </div>
-                        </> : null
+                                    <h1 style={Styles.textStyle}>Technologies used</h1>
+                                    <ul>
+                                        <li>TypeScript for coding</li>
+                                        <li>WebPack for packaging</li>
+                                        <li>Redux for state</li>
+                                        <li>Immer for QoL state management.</li>
+                                        <li>React (menu only)</li>
+                                        <li>Howler for playing sounds.</li>
+                                    </ul>
+                                </div>
+                            </> : screenState === "gameover" ?
+                                <div>
+                                    <h1 style={Styles.round42Header}>Game over</h1>
+                                    <br />
+                                    <div style={Styles.defaultContainer}>
+                                        <table style={{ ...Styles.textStyle, width: "20%" }}>
+                                            <tr>
+                                                <td>
+                                                    Score
+                                            </td>
+                                                <td>
+                                                    {gameResult?.score}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Bullets fired
+                                            </td>
+                                                <td>
+                                                    {gameResult?.bulletsFired}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Enemies hit
+                                            </td>
+                                                <td>
+                                                    {gameResult?.enemiesHit}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    % Hit
+                                                </td>
+                                                <td>
+                                                    {
+                                                        getHitPercentage(gameResult?.enemiesHit, gameResult?.bulletsFired)
+                                                    }
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <br />
+                                    <div style={Styles.buttonContainer}>
+                                        <HoverButton onClick={startGame} text="Play again?" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
+                                    </div>
+                                </div>
+                                : null
             }
         </div>
     );
+
+    /**
+     * Calculates the % hit to display when the game is over.
+     * @param {number | undefined} enemiesHit. Number of enememies hit.
+     * @param {number | undefined} bulletsFired. Number of bullets fired
+     * @returns {string}. Percentage value to show.
+     */
+    function getHitPercentage(enemiesHit: number | undefined, bulletsFired: number | undefined): string {
+        if (enemiesHit === undefined) {
+            return "0%";
+        }
+
+        if (bulletsFired === undefined) {
+            return "0%";
+        }
+
+        const percentageHit = (enemiesHit / bulletsFired) * 100;
+
+        return `${Math.round(percentageHit)}%`;
+    }
 }
