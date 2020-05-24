@@ -84,6 +84,13 @@ export namespace SoundPlayer {
     }
 
     /**
+     * Stops the 'falling' sound from playing.
+     */
+    export function stopFalling(): void {
+        Howls.falling.stop();
+    }
+
+    /**
      * Pauses warp level traveling sound. Used when the player dies.
      */
     export function pauseWarpLevelTravellingSound(): void {

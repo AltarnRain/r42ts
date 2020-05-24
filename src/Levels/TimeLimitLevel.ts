@@ -10,6 +10,7 @@ import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
 import { appState } from "../State/Store";
 import handleLevelWon from "../StateHandlers/HandleLevelWon";
 import EnemyLevel from "./EnemyLevel";
+import { SoundPlayer } from "../Sound/SoundPlayer";
 
 /**
  * Module:          TimeLimitLevel
@@ -97,6 +98,8 @@ export class TimeLimitLevel extends EnemyLevel {
      */
     public dispose(): void {
         super.dispose();
+
+        SoundPlayer.stopFalling();
 
         if (this.intervalHandle !== undefined) {
             window.clearInterval(this.intervalHandle);
