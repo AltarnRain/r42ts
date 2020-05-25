@@ -22,6 +22,7 @@ type Enemies = "bird" |
     "asteroid-diagonal" |
     "piston" |
     "diabolo" |
+    "diabolo-hard" |
     "spacemonster-down" |
     "spacemonster-diagonal" |
     "devil" |

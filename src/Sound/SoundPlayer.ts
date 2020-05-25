@@ -108,6 +108,7 @@ export namespace SoundPlayer {
             case "bird":
             case "spinner":
             case "diabolo":
+            case "diabolo-hard":
             case "bat":
                 setEnemyLevelBackground(Howls.tjirping, index);
                 break;

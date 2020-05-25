@@ -27,7 +27,7 @@ import DirectionFrameEnemy from "../Enemies/DirectionFrameEnemy";
 import { FishEnemy } from "../Enemies/Fish/FishEnemy";
 import getFishExplosiom from "../Enemies/Fish/GetFishExplosion";
 import getFishOffsetFrames from "../Enemies/Fish/GetFishOffsetFrames";
-import { default as getOrbOffsetFrames, default as getOrbResource } from "../Enemies/Orb/GetOrbOffsetFrames";
+import getOrbOffsetFrames from "../Enemies/Orb/GetOrbOffsetFrames";
 import OrbEnemy from "../Enemies/Orb/OrbEnemy";
 import getPistonOffsetFrames from "../Enemies/Piston/GetPistonOffsetFrames";
 import getRobotOffsetFrames from "../Enemies/Robot/GetRobotOffsetFrames";
@@ -37,7 +37,7 @@ import getSpinnerOffsetFrames from "../Enemies/Spinner/GetSpinnerOffsetFrames";
 import BackAndForthFrameProvider from "../FrameProviders/BackAndForthFrameProvider";
 import CircleFrameProvider from "../FrameProviders/CircleFrameProvider";
 import ILocationProvider from "../Interfaces/ILocationProvider";
-import SideToSideUpAndDown from "../LocationProviders/AngleBounceLocationProvider";
+import AngleBounceLocationProvider from "../LocationProviders/AngleBounceLocationProvider";
 import AttackerLocationProvider from "../LocationProviders/AttackerLocationProvider";
 import CloakingOrbLocationProvider from "../LocationProviders/CloakingOrbLocationProvider";
 import CrabLocationProvider from "../LocationProviders/CrabLocationProvider";
@@ -81,7 +81,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
 
             const frameProvider = new BackAndForthFrameProvider(getRandomFrameKeyIndex(resource.frames));
             const randomMovementAngle = getRandomArrayElement(MovementAngles.bird);
-            const locationProvider = new SideToSideUpAndDown(
+            const locationProvider = new AngleBounceLocationProvider(
                 location.left,
                 location.top,
                 Speeds.Movement.bird,
@@ -164,7 +164,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
                 target,
                 reset);
 
-            return new OrbEnemy(FrameTimes.orb, getOrbResource, getExplosion02, locationProvider, frameProvider);
+            return new OrbEnemy(FrameTimes.orb, getOrbOffsetFrames, getExplosion02, locationProvider, frameProvider);
         }
 
         case "spinner": {
@@ -179,7 +179,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
 
             const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
             const randomAngle = getRandomArrayElement(MovementAngles.spinner);
-            const locationProvider = new SideToSideUpAndDown(
+            const locationProvider = new AngleBounceLocationProvider(
                 location.left,
                 location.top,
                 Speeds.Movement.spinner,
@@ -269,7 +269,8 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
                 { explosionColor: CGAColors.magenta, explosionParticleColor: CGAColors.magenta });
         }
 
-        case "diabolo": {
+        case "diabolo":
+        case "diabolo-hard": {
             if (location === undefined) {
                 throw new Error("Diabolo enemy requires a starting location");
             }
@@ -277,17 +278,50 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             const { maxSizes: { width, height }, frames } = getDiaboloOffsetFrames();
             const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
 
-            const randomAngle = getRandomArrayElement(MovementAngles.diabolo);
-            const locationProvider = new SideToSideUpAndDown(
-                location.left,
-                location.top,
-                Speeds.Movement.diabolo,
-                randomAngle,
-                width,
-                height,
-                gameField.top,
-                gameField.bottom
-            );
+            let locationProvider: ILocationProvider;
+
+            if (enemy === "diabolo") {
+                const randomAngle = getRandomArrayElement(MovementAngles.diabolo);
+                locationProvider = new AngleBounceLocationProvider(
+                    location.left,
+                    location.top,
+                    Speeds.Movement.diabolo,
+                    randomAngle,
+                    width,
+                    height,
+                    gameField.top,
+                    gameField.bottom
+                );
+            } else {
+                const heads = coinFlip();
+                if (heads) {
+                    // Left or right
+                    const randomAngle = getRandomArrayElement(MovementAngles.diaboloHardLeftRight);
+
+                    locationProvider = new AngleBounceLocationProvider(
+                        location.left,
+                        location.top,
+                        Speeds.Movement.diabolo,
+                        randomAngle,
+                        width,
+                        height,
+                        gameField.top,
+                        gameField.bottom);
+                } else {
+                    // Up and down.
+                    const randomAngle = getRandomArrayElement(MovementAngles.diaboloHardUpDown);
+
+                    locationProvider = new AngleBounceLocationProvider(
+                        location.left,
+                        location.top,
+                        Speeds.Movement.diabolo,
+                        randomAngle,
+                        width,
+                        height,
+                        gameField.top,
+                        gameField.bottom);
+                }
+            }
 
             return new DefaultEnemy(
                 Points.diabolo,
@@ -339,7 +373,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             );
 
             // Frames have no time, the frame of the devil is determined by where it is headed.
-            return new DirectionFrameEnemy(Points.devil,  getDevilOffsetFrames, getDevilExplosion, locationProvider, frameProvider);
+            return new DirectionFrameEnemy(Points.devil, getDevilOffsetFrames, getDevilExplosion, locationProvider, frameProvider);
         }
 
         case "crab": {

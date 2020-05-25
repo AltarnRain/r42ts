@@ -117,6 +117,8 @@ export namespace MovementAngles {
     export const spinner = [2, 358, 178, 182];
     export const piston = 170;
     export const diabolo = [2, 358, 178, 182];
+    export const diaboloHardLeftRight = [0, 180];
+    export const diaboloHardUpDown = [90, 270];
     export const devil = [angles.leftdown, angles.rightdown];
 }
 

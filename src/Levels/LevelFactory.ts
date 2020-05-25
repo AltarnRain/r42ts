@@ -78,8 +78,11 @@ export function levelFactory(level: number): ILevel {
         case 9:
             return new EnemyLevel("piston");
         case 10:
-            // TODO: On hard mode the diabolo enemy also moves down and up.
-            return new EnemyLevel("diabolo");
+            if (hardMode) {
+                return new EnemyLevel("diabolo-hard");
+            } else {
+                return new EnemyLevel("diabolo");
+            }
         case 11:
             if (hardMode) {
                 return new TimeLimitLevel("spacemonster-diagonal");

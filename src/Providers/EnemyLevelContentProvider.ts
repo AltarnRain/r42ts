@@ -127,7 +127,8 @@ export default function enemyLevelContentFactory(enemy: Enemies): { bulletRunner
             };
         }
 
-        case "diabolo": {
+        case "diabolo": 
+        case "diabolo-hard": {
             const enemies = sevenSixSevenGridProvider().map((location) => enemyFactory(enemy, location));
             const bulletRunner = new BulletRunner(CGAColors.yellow, Speeds.Bullets.diabolo, maxFiveDiagonal);
 
