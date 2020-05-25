@@ -9,7 +9,6 @@ import { addBullet, setEnemyLastFireTick } from "../State/EnemyLevel/EnemyLevelA
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { Frame, ShipsToFireFunction } from "../Types";
-import Mutators from "../Utility/FrameMutators";
 
 /**
  * Module:          BulletRunner
@@ -33,11 +32,6 @@ export default class BulletRunner {
     private speed: number;
 
     /**
-     * The color of the bullet fired.
-     */
-    private bulletColor: string;
-
-    /**
      * A function that provides an array of ships that will fire and the angle at which they will fire.
      */
     private shipsToFire: ShipsToFireFunction;
@@ -54,11 +48,9 @@ export default class BulletRunner {
         shipsToFire: ShipsToFireFunction) {
 
         this.speed = speed;
-        this.bulletColor = bulletColor;
         this.shipsToFire = shipsToFire;
 
-        this.coloredBulletFrame = getTwoPixelBullet();
-        Mutators.Frame.setColor(this.coloredBulletFrame, this.bulletColor);
+        this.coloredBulletFrame = getTwoPixelBullet(bulletColor);
     }
 
     /**
