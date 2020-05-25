@@ -66,8 +66,8 @@ export interface GameOver {
     type: typeof Constants.gameOver;
 }
 
-export interface GameStart {
-    type: typeof Constants.gameStart;
+export interface ResetGameState {
+    type: typeof Constants.resetGameState;
 }
 
 export interface BulletFired {
@@ -103,7 +103,7 @@ export type GameStateTypes =
     SetPause |
     SetWarpGateComplexity |
     GameOver |
-    GameStart |
+    ResetGameState |
     BulletFired |
     PhaserFired |
     EnemyHit |

@@ -80,8 +80,6 @@ export namespace GameLoop {
             gameOverHandler = gameOverCallback;
         }
 
-        dispatch(gameStart());
-
         // Register the statusBar runner. This render's lives, phasers, score, etc.
         // This is a foreground draw process. Enemies will appear to pass under it.
         GameLoop.registerForegroundDrawing(drawStatusBar);

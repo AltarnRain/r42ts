@@ -68,7 +68,7 @@ export default function gameStateReducer(state: GameState = initState(), action:
             case Constants.gameOver:
                 draft.gameOver = true;
                 break;
-            case Constants.gameStart:
+            case Constants.resetGameState:
                 draft.gameOver = false;
                 draft.phasers = 1;
                 draft.lives = 2;
@@ -103,11 +103,11 @@ export default function gameStateReducer(state: GameState = initState(), action:
  */
 function initState(): GameState {
     return {
-        level: 0,
-        lives: 0,
+        level: 1,
+        lives: 2,
         score: 0,
         lastAwardScore: 0,
-        phasers: 0,
+        phasers: 1,
         pause: false,
         warpLevelSteps: getWarpGateComplexity(0),
         gameOver: false,
