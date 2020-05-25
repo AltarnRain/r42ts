@@ -38,27 +38,27 @@ export default function getBoatOffsetFrames(): OffsetFrames {
             },
             {
                 left: 0,
-                top: -1,
-            },
-            {
-                left: 0,
                 top: -2,
             },
             {
                 left: 0,
-                top: -3,
+                top: -4,
             },
             {
                 left: 0,
-                top: -2,
+                top: -6,
             },
             {
                 left: 0,
-                top: -1
+                top: -4,
             },
             {
                 left: 0,
-                top: 0
+                top: -2
+            },
+            {
+                left: 0,
+                top: 0g
             }
         ],
         maxSizes: { width: 0, height: 0 }

@@ -48,7 +48,7 @@ export namespace Speeds {
 
         export namespace Boat {
             export const slow = 1.3;
-            export const fast = 3;
+            export const fast = 3.5;
 
         }
         export namespace Player {
