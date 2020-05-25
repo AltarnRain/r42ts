@@ -22,7 +22,7 @@ namespace Constants {
     export const setPause = "setPause";
     export const setWarpLevelComplexity = "setWarpLevelComplexity";
     export const gameOver = "gameOver";
-    export const gameStart = "gameStart";
+    export const resetGameState = "resetGameState";
     export const bulletFired = "bulletFired";
     export const phasersFired = "phasersFired";
     export const enemyHit = "enemyHit";
