@@ -27,7 +27,7 @@ const defaultFont: CSSProperties = {
 };
 
 export namespace Styles {
-    export const round42Header: CSSProperties = {
+    export const header: CSSProperties = {
         ...alignCenter,
         ...defaultFont,
         margin: "0px",
