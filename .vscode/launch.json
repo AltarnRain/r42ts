@@ -92,6 +92,23 @@
         {
             "type": "chrome",
             "request": "launch",
+            "name": "Play ground level 06 - Godmode",
+            "url": "http://localhost:8080/?playground?level=6?god?timelevelTimeLimit=5000",
+            "webRoot": "${workspaceFolder}/src",
+            "breakOnLoad": true,
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${webRoot}/*",
+                "webpack:///src/*": "${webRoot}/*",
+                "webpack:///*": "*",
+                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "meteor://💻app/*": "${webRoot}/*",
+                "webpack:///./src/*": "${webRoot}/*",
+            }
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
             "name": "Play ground level 07 - Godmode",
             "url": "http://localhost:8080/?playground?level=7?god?timelevelTimeLimit=5000",
             "webRoot": "${workspaceFolder}/src",
