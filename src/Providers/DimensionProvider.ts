@@ -32,6 +32,8 @@ export default function dimensionProvider(): GameDimensions {
             rect = body.getBoundingClientRect();
         }
 
+        const fullscreen = rect.width === screen.width && rect.height === screen.height;
+
         let pixelSize = 0;
         if (rect.width < rect.height) {
             pixelSize = Math.floor(rect.width / 160);
@@ -70,7 +72,8 @@ export default function dimensionProvider(): GameDimensions {
                 height: gameFieldHeight,
             },
             canvasLeft,
-            canvasTop
+            canvasTop,
+            fullscreen,
         };
     }
 

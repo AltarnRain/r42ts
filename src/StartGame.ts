@@ -18,9 +18,9 @@ import setCanvasDimensions from "./Render/SetCanvasDimensions";
  * @param {boolean} fullscreen. When true, the canvas's style properties will be set to utilize fullscreen dimensions.
  * @param {(result: GameResultModel) => void} gameOverCallback. Callback used by the GameLoop module to trigger a game over event in the UI,
  */
-export function startGame(fullscreen: boolean, gameOverCallback: (result: GameResultModel) => void): void {
+export function startGame(gameOverCallback: (result: GameResultModel) => void): void {
 
-    setCanvasDimensions(fullscreen);
+    setCanvasDimensions();
 
     // Ok, screen's setup let start the game!
     GameLoop.start(gameOverCallback);

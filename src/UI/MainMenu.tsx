@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import GameResultModel from "../Models/GameResultModel";
 import { HoverButton } from "./HoverButton";
 import { Styles } from "./Styles";
@@ -18,15 +18,6 @@ export default function MainMenu(): JSX.Element {
 
     const [screenState, setScreenState] = useState<"mainmenu" | "playing" | "about" | "gameover">("mainmenu");
     const [gameResult, setGameResult] = useState<GameResultModel>();
-    const [fullscreen, setFullscreen] = useState(false);
-
-    useEffect(() => {
-        const body = document.getElementById("body");
-
-        if (body) {
-            body.onfullscreenchange = () => setFullscreen(!fullscreen);
-        }
-    }, []);
 
     /**
      * Starts the game
@@ -40,7 +31,7 @@ export default function MainMenu(): JSX.Element {
         // or windows mode.
         // Once loaded this module stays loaded. Thats why the game, when it ends, doesn't show the
         // main menu as switching to full screen would have no effect at that point.
-        import("../StartGame").then((m) => m.startGame(fullscreen, (result) => {
+        import("../StartGame").then((m) => m.startGame((result) => {
             setScreenState("gameover");
             setGameResult(result);
         }));
