@@ -25,7 +25,7 @@ import DebugSound from "./DebugSound";
  * begin in the playground or show th canvas. If nothing is specified (default) the
  * game will just start
  */
-export function start(): void {
+export function debug(): void {
     const queryKeyValuePairs = getURLQueryKVPs(window.location.search);
 
     const showPlayGround = queryKeyValuePairs.some((kvp) => kvp.key === "playground");
