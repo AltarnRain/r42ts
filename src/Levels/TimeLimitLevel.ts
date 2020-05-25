@@ -7,10 +7,10 @@
 import GameLoop from "../GameLoop";
 import enemyFactory from "../Providers/EnemyFactory";
 import EnemyLevelRunner from "../Runners/EnemyLevelRunner";
+import { SoundPlayer } from "../Sound/SoundPlayer";
 import { appState } from "../State/Store";
 import handleLevelWon from "../StateHandlers/HandleLevelWon";
 import EnemyLevel from "./EnemyLevel";
-import { SoundPlayer } from "../Sound/SoundPlayer";
 
 /**
  * Module:          TimeLimitLevel

@@ -42,7 +42,6 @@ export default class BulletRunner {
      */
     private shipsToFire: ShipsToFireFunction;
 
-
     /**
      * Construct the object.
      * @param {string} bulletColor. Color of the bullet.

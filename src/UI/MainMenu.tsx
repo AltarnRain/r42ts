@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import GameResultModel from "../Models/GameResultModel";
 import { HoverButton } from "./HoverButton";
 import { Styles } from "./Styles";
@@ -18,6 +18,15 @@ export default function MainMenu(): JSX.Element {
 
     const [screenState, setScreenState] = useState<"mainmenu" | "playing" | "about" | "gameover">("mainmenu");
     const [gameResult, setGameResult] = useState<GameResultModel>();
+    const [fullscreen, setFullscreen] = useState(false);
+
+    useEffect(() => {
+        const body = document.getElementById("body");
+
+        if (body) {
+            body.onfullscreenchange = () => setFullscreen(!fullscreen);
+        }
+    }, []);
 
     /**
      * Starts the game
@@ -31,7 +40,7 @@ export default function MainMenu(): JSX.Element {
         // or windows mode.
         // Once loaded this module stays loaded. Thats why the game, when it ends, doesn't show the
         // main menu as switching to full screen would have no effect at that point.
-        import("../GameLoop").then((m) => m.GameLoop.start((result) => {
+        import("../StartGame").then((m) => m.startGame(fullscreen, (result) => {
             setScreenState("gameover");
             setGameResult(result);
         }));
@@ -141,40 +150,12 @@ export default function MainMenu(): JSX.Element {
                                     <br />
                                     <div style={Styles.defaultContainer}>
                                         <table style={{ ...Styles.textStyle, width: "20%" }}>
-                                            <tr>
-                                                <td>
-                                                    Score
-                                            </td>
-                                                <td>
-                                                    {gameResult?.score}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Bullets fired
-                                            </td>
-                                                <td>
-                                                    {gameResult?.bulletsFired}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Enemies hit
-                                            </td>
-                                                <td>
-                                                    {gameResult?.enemiesHit}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    % Hit
-                                                </td>
-                                                <td>
-                                                    {
-                                                        getHitPercentage(gameResult?.enemiesHit, gameResult?.bulletsFired)
-                                                    }
-                                                </td>
-                                            </tr>
+                                            <tbody>
+                                                <tr><td>Score</td><td>{gameResult?.score}</td></tr>
+                                                <tr><td>Bullets fired</td><td>{gameResult?.bulletsFired}</td></tr>
+                                                <tr><td>Enemies hit</td><td>{gameResult?.enemiesHit}</td></tr>
+                                                <tr><td>% Hit</td><td>{getHitPercentage(gameResult?.enemiesHit, gameResult?.bulletsFired)}</td></tr>
+                                            </tbody>
                                         </table>
                                     </div>
                                     <br />
@@ -199,6 +180,10 @@ export default function MainMenu(): JSX.Element {
         }
 
         if (bulletsFired === undefined) {
+            return "0%";
+        }
+
+        if (bulletsFired === 0) {
             return "0%";
         }
 

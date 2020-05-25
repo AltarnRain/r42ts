@@ -10,7 +10,6 @@ import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import GameResultModel from "./Models/GameResultModel";
 import playerSpawnRunner from "./Player/PlayerSpawnRunner";
-import dimensionProvider from "./Providers/DimensionProvider";
 import genericRunner from "./Runners/GenericRunner";
 import levelProgressionRunner, { resetLevelProgression } from "./Runners/LevelProgressionRunner";
 import playerRunner from "./Runners/PlayerRunner";
@@ -79,19 +78,6 @@ export namespace GameLoop {
 
         if (gameOverCallback) {
             gameOverHandler = gameOverCallback;
-        }
-
-        // Set canvas dimensions.
-        const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-        if (canvas) {
-            // Initialize the dimentions of the canvas.
-            canvas.width = dimensionProvider().fullGameWidth;
-            canvas.height = dimensionProvider().fullGameHeight;
-
-            canvas.style.left = `${dimensionProvider().canvasLeft}px`;
-            canvas.style.top = `${dimensionProvider().canvasTop}px`;
-            canvas.style.width = `${canvas.width}px`;
-            canvas.style.height = `${canvas.height}px`;
         }
 
         dispatch(gameStart());
