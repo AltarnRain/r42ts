@@ -54,6 +54,13 @@ export default function MainMenu(): JSX.Element {
         }
     }
 
+    function goToSource(): void {
+        const win = window.open("https://github.com/AltarnRain/r42ts", "_blank");
+        if (win !== null) {
+            win.focus();
+        }
+    }
+
     return (
         <div>
             {
@@ -100,6 +107,8 @@ export default function MainMenu(): JSX.Element {
                                 <HoverButton onClick={startGame} text="Play" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                                 <br />
                                 <HoverButton onClick={() => setScreenState("about")} text="About" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
+                                <br />
+                                <HoverButton onClick={goToSource} text="Source code" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                             </div>
                         </> :
                         screenState === "about" ?
