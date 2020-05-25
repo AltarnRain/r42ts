@@ -66,11 +66,10 @@ export default function MainMenu(): JSX.Element {
     return (
         <div>
             {
-                screenState === "playing" ?
-                    null :
+                screenState === "playing" ? null :
                     screenState === "mainmenu" ?
                         <>
-                            <div style={Styles.round42Header}>Welcome to Round 42</div>
+                            <p style={Styles.round42Header}>Welcome to Round 42</p>
                             <div style={Styles.defaultContainer}>
                                 <p style={Styles.textStyle}>
                                     Original game by Mike Pooler released in 1986 <br />
@@ -146,8 +145,8 @@ export default function MainMenu(): JSX.Element {
                                     </ul>
                                 </div>
                             </> : screenState === "gameover" ?
-                                <div>
-                                    <h1 style={Styles.round42Header}>Game over</h1>
+                                <>
+                                    <p style={Styles.round42Header}>Game over</p>
                                     <br />
                                     <div style={Styles.defaultContainer}>
                                         <table style={{ ...Styles.textStyle, width: "20%" }}>
@@ -163,7 +162,7 @@ export default function MainMenu(): JSX.Element {
                                     <div style={Styles.buttonContainer}>
                                         <HoverButton onClick={startGame} text="Play again?" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                                     </div>
-                                </div>
+                                </>
                                 : null
             }
         </div>

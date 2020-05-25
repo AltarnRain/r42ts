@@ -30,6 +30,7 @@ export namespace Styles {
     export const round42Header: CSSProperties = {
         ...alignCenter,
         ...defaultFont,
+        margin: "0px",
         color: CGAColors.yellow,
         fontSize: 50
     };
