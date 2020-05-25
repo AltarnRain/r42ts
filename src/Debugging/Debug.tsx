@@ -19,6 +19,7 @@ import { increaseScore, setLevel, setLives, setPhasers, setTimeLevelTimeLimit } 
 import { dispatch } from "../State/Store";
 import { getURLQueryKVPs } from "../Utility/Lib";
 import DebugSound from "./DebugSound";
+import setCanvasDimensions from "../Render/SetCanvasDimensions";
 
 /**
  * Start the game. If the URL contains certain query query's it will
@@ -42,8 +43,6 @@ export function debug(): void {
     if (showPlayGround) {
 
         const debuggingState: DebuggingState = {};
-
-        GameLoop.start();
 
         if (!level) {
             level = "0";
@@ -90,6 +89,10 @@ export function debug(): void {
         dispatch(increaseScore(7400));
 
         dispatch(setDebuggingState(debuggingState));
+
+        setCanvasDimensions(false);
+
+        GameLoop.start();
 
     } else if (showCanvas) {
         // canvas testing
