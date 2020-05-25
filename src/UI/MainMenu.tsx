@@ -105,6 +105,7 @@ export default function MainMenu(): JSX.Element {
                             <br />
                             <div style={Styles.buttonContainer}>
                                 <HoverButton onClick={requestFullscreen} text="Fullscreen" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
+                                <p style={Styles.textStyle}>Note: Ensure this page's zoom level is set to 100% before playing fullscreen.</p>
                                 <br />
                                 <HoverButton onClick={startGame} text="Play" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                                 <br />
