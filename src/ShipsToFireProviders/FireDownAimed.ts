@@ -10,7 +10,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import ShipToFire from "../ShipsToFire";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { appState } from "../State/Store";
-import { GetShipsReadyToFire } from "./GetShipsReadyToFire";
+import { getShipsReadyToFire } from "./GetShipsReadyToFire";
 
 /**
  * Module:          Ships fire down when the player moves under neath this. Enemies can fire multiple bullets.
@@ -76,5 +76,5 @@ function getCandidates(tick: number): EnemyState[] {
 
     const { hitboxes: { bottom: bottomhitbox } } = playerState;
 
-    return GetShipsReadyToFire(tick).filter((enemy) => enemy.hitbox.left + pixelSize2x >= bottomhitbox.left && enemy.hitbox.right <= bottomhitbox.right + pixelSize2x);
+    return getShipsReadyToFire(tick).filter((enemy) => enemy.hitbox.left + pixelSize2x >= bottomhitbox.left && enemy.hitbox.right <= bottomhitbox.right + pixelSize2x);
 }

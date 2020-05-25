@@ -12,7 +12,7 @@ import { appState } from "../State/Store";
  * Responsibility:  Returns ships whose last fire tick time permits them to fire now.
  */
 
-export function GetShipsReadyToFire(tick: number): EnemyState[] {
+export function getShipsReadyToFire(tick: number): EnemyState[] {
     const {
         enemyLevelState: { enemies }
     } = appState();

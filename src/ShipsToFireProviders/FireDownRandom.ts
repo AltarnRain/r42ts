@@ -8,7 +8,7 @@ import { angles } from "../Constants/Angles";
 import ShipToFire from "../ShipsToFire";
 import { appState } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
-import { GetShipsReadyToFire } from "./GetShipsReadyToFire";
+import { getShipsReadyToFire } from "./GetShipsReadyToFire";
 
 /**
  * Module:          FireDown
@@ -51,7 +51,7 @@ function randomDown(tick: number, maxBullets: number): ShipToFire[] {
         return returnValue;
     }
 
-    const enemies = GetShipsReadyToFire(tick);
+    const enemies = getShipsReadyToFire(tick);
 
     const enemyToFire = getRandomArrayElement(enemies);
 

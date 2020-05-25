@@ -16,7 +16,7 @@ import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { appState } from "../State/Store";
 import { Angle } from "../Types";
 import { calculateAngle, calculateAngleDifference } from "../Utility/Geometry";
-import { GetShipsReadyToFire } from "./GetShipsReadyToFire";
+import { getShipsReadyToFire } from "./GetShipsReadyToFire";
 
 const maxBullets = 5;
 
@@ -83,7 +83,7 @@ function getBestCandiates(tick: number): Candidates {
     // enemy will fire vs the angle towards the player.
     const candidates: Candidates = [];
 
-    const enemies = GetShipsReadyToFire(tick);
+    const enemies = getShipsReadyToFire(tick);
 
     let above = 0;
     let below = 0;
