@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import SpeedProvider from "../Providers/SpeedCalculator";
+import SpeedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
 import { Frame } from "../Types";
@@ -15,8 +15,6 @@ import { calculateDistance, getLocation } from "../Utility/Location";
  * Module:          PlayerFormationPart
  * Responsibility:  A particle that travels a distance and then stops being drawn.
  */
-
-const minimumDistance = SpeedProvider.calculateSpeed(20);
 
 export default class PlayerFormationPart {
 
@@ -66,7 +64,7 @@ export default class PlayerFormationPart {
         const angle = calculateAngle(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
         const distance = calculateDistance(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
 
-        if (distance > minimumDistance) {
+        if (distance > SpeedProvider.get().minimumDistance) {
             const nextLocation = getLocation(this.currentLeftLocation, this.currentTopLocation, angle, this.speed);
             this.currentLeftLocation = nextLocation.left;
             this.currentTopLocation = nextLocation.top;
@@ -96,7 +94,7 @@ export default class PlayerFormationPart {
         const targetTopLocation = playerState.top + this.topOffset;
 
         const distance = calculateDistance(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
-        return distance > minimumDistance;
+        return distance > SpeedProvider.get().minimumDistance;
     }
 
     /**

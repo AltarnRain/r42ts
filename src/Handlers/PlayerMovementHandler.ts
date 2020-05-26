@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import { Speeds } from "../Constants/Constants";
 import { GameLocation } from "../Models/GameLocation";
 import { getPlayerFrame } from "../Player/PlayerFrames";
 import dimensionProvider from "../Providers/DimensionProvider";
@@ -12,6 +11,7 @@ import { setPlayerLocationData } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { getAngle, getNextX, getNextY } from "../Utility/Geometry";
+import SpeedProvider from "../Providers/SpeedProvider";
 
 /**
  * Module:          PlayerMovementHandler
@@ -60,7 +60,7 @@ export function playerMovementHandler(speed: number): void {
             // Used when the player travels through a warp gate.
             localKeyboardState.up = true;
             localKeyboardState.down = false;
-            speedY = Speeds.Movement.Player.warpUpSpeed;
+            speedY = SpeedProvider.get().movement.Player.warpUpSpeed;
             break;
         case "none":
         // Make not changes and allow 360 degrees of freedown

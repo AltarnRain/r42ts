@@ -19,62 +19,6 @@ const {
     pixelSize
 } = dimensionProvider();
 
-// Collective namespace for all speeds.
-export namespace Speeds {
-
-    export namespace Movement {
-        export const bird = 1.3;
-        export const robot = 1.3;
-        export const orb = 0.1;
-        export const spinner = 1.3;
-        export const balloon = 1.3;
-        export const crab = 1.3;
-        export const bat = 1.3;
-        export namespace Asteroid {
-            export const down = [2, 4, 6, 8, 10];
-            export const diagonal = [5, 7, 10, 10, 10, 12];
-        }
-        export namespace SpaceMonster {
-            export const down = [2, 4, 6, 8, 10];
-            export const diagonal = [6, 7, 10, 10, 12, 12];
-        }
-        export const diabolo = 1.3;
-        export const devil = 1.3;
-
-        export namespace Piston {
-            export const slow = 1.3;
-            export const fast = 3;
-        }
-
-        export namespace Boat {
-            export const slow = 1.3;
-            export const fast = 3.5;
-
-        }
-        export namespace Player {
-            export const aliveSpeed = 9;
-            export const formingSpeed = 4;
-            export const warpUpSpeed = 3.2;
-        }
-    }
-
-    export namespace Bullets {
-        export const player = 38;
-        export const robot = 11;
-        export const orb = 11;
-        export const spinner = 11;
-        export const balloon = 11;
-        export const piston = 11;
-        export const diabolo = 11;
-        export const devil = 11;
-        export const crab = 11;
-        export const bat = 11;
-        export const cloakingOrb = 11;
-        export const bird = 11;
-        export const fish = 11;
-    }
-}
-
 export namespace Locations {
     // All locations were determined by drawing a grid over screenshot.
     export namespace robot {

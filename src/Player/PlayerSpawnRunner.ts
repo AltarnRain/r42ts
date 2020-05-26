@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Locations, Speeds } from "../Constants/Constants";
+import { Locations } from "../Constants/Constants";
 import GameLoop from "../GameLoop";
 import { playerMovementHandler } from "../Handlers/PlayerMovementHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
@@ -15,6 +15,7 @@ import { MoveLimits } from "../Types";
 import { getLocation } from "../Utility/Location";
 import PlayerFormationPart from "./PlayerFormationPart";
 import { getPlayerFormationFrames } from "./PlayerFrames";
+import SpeedProvider from "../Providers/SpeedProvider";
 
 /**
  * Module:          PlayerSpawnManager
@@ -164,7 +165,7 @@ function updateState(): void {
             p.updateState();
         });
 
-        playerMovementHandler(Speeds.Movement.Player.formingSpeed);
+        playerMovementHandler(SpeedProvider.get().movement.Player.formingSpeed);
     } else if (formationSpeed === "fast") {
         allMovingParts.forEach((p) => {
             p.updateState();

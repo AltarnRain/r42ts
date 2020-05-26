@@ -5,7 +5,7 @@
  */
 
 import dimensionProvider from "../Providers/DimensionProvider";
-import SpeedProvider from "../Providers/SpeedCalculator";
+import SpeedProvider from "../Providers/SpeedProvider";
 import { calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
 
@@ -31,7 +31,7 @@ export default function getPhaserLocations(sourceLeft: number, sourceTop: number
 
     while (distance >= 0) {
         returnValue.push(getLocation(left, top, angle, pixelSize));
-        distance -= SpeedProvider.calculateSpeed(pixelSize);
+        distance -= SpeedProvider.get().phaserSpeed;
         const nextLocation = getLocation(left, top, angle, pixelSize);
         left = nextLocation.left;
         top = nextLocation.top;

@@ -6,7 +6,6 @@
 
 import { angles } from "../Constants/Angles";
 import CGAColors from "../Constants/CGAColors";
-import { Speeds } from "../Constants/Constants";
 import GameLoop from "../GameLoop";
 import { playerMovementHandler } from "../Handlers/PlayerMovementHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
@@ -20,6 +19,7 @@ import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { getFrameHitbox } from "../Utility/Frame";
 import { fallsWithinGameField, getLocation } from "../Utility/Location";
+import SpeedProvider from "../Providers/SpeedProvider";
 
 /**
  * Module:          PlayerRunner
@@ -51,7 +51,7 @@ function updateState(): void {
         return;
     }
 
-    playerMovementHandler(Speeds.Movement.Player.aliveSpeed);
+    playerMovementHandler(SpeedProvider.get().movement.Player.aliveSpeed);
 
     handlePlayerBulletMovement();
     handlePlayerBulletFiring();
@@ -100,7 +100,7 @@ function handlePlayerBulletMovement(): void {
  * @returns {ParticleState}
  */
 function getPlayerBullet(left: number, top: number): ParticleState {
-    return StateProviders.getParticleState(left, top, Speeds.Bullets.player, angles.up, playerBulletFrame, 1, -0.5 * pixelSize, -0.5 * pixelSize);
+    return StateProviders.getParticleState(left, top, SpeedProvider.get().bullets.player, angles.up, playerBulletFrame, 1, -0.5 * pixelSize, -0.5 * pixelSize);
 }
 
 /**
