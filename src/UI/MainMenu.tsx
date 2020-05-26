@@ -70,7 +70,7 @@ export default function MainMenu(props: { fps: number }): JSX.Element {
                             <p style={Styles.header}>Welcome to Round 42</p>
                             <div style={Styles.defaultContainer}>
                                 <p style={Styles.textStyle}>
-                                    Original game by Mike Pooler released in 1986 <br />
+                                    Original game by Mike Pooler released in 1986.<br />
                                     Remake by Antonio Invernizzi 2020.
                                 </p>
                             </div>
@@ -80,18 +80,16 @@ export default function MainMenu(props: { fps: number }): JSX.Element {
                                     <p style={Styles.textStyle}>Instructions</p>
                                     <ul style={Styles.textStyle}>
                                         <li>Use the arrow keys to move.</li>
-                                        <li>Press F1 to fire a bullet.</li>
-                                        <li>Press F2 to fire a phaser.
+                                        <li>Press F1 or Z to fire a bullet.</li>
+                                        <li>Press F2 or X to fire a Phaser.</li>
                                         <ul>
-                                                <li>You only have limited charges so use them wisely.</li>
-
-                                            </ul>
-                                        </li>
-                                        <li>Press Backspace to self destruct and skip a level.
+                                            <li>This is your super weapon. It kills a random enemy in one shot.</li>
+                                            <li>You only have limited charges so use them wisely.</li>
+                                        </ul>
+                                        <li>Press Backspace to self destruct and skip a level.</li>
                                         <ul>
-                                                <li>Selfdestrucing will reset your score.</li>
-                                            </ul>
-                                        </li>
+                                            <li>Selfdestrucing will reset your score.</li>
+                                        </ul>
                                         <li>A life and phaser is awared every 7500 points.</li>
                                         <li>When you die you'll lose your phaser charges.</li>
                                         <li>When you die you can hold Space to pause your formation</li>

@@ -24,7 +24,9 @@ export type GameKeys =
     "ArrowRight" |
     "Backspace" |
     "F1" |
+    "KeyZ" |
     "F2" |
+    "KeyX" |
     "Space";
 
 /**
@@ -37,7 +39,9 @@ export const allGameKeys: GameKeys[] = [
     "ArrowUp",
     "Backspace",
     "F1",
+    "KeyZ",
     "F2",
+    "KeyX",
     "Space",
 ];
 

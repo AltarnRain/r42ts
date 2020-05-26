@@ -7,11 +7,11 @@
 import { GameLocation } from "../Models/GameLocation";
 import { getPlayerFrame } from "../Player/PlayerFrames";
 import dimensionProvider from "../Providers/DimensionProvider";
+import SpeedProvider from "../Providers/SpeedProvider";
 import { setPlayerLocationData } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
 import { getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { getAngle, getNextX, getNextY } from "../Utility/Geometry";
-import SpeedProvider from "../Providers/SpeedProvider";
 
 /**
  * Module:          PlayerMovementHandler

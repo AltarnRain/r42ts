@@ -61,9 +61,11 @@ export default function keyboardStateReducer(state: KeyboardState = initState(),
                     draft.selfDestruct = keyDown;
                     break;
                 case Constants.f1:
+                case Constants.keyZ:
                     draft.fire = keyDown;
                     break;
                 case Constants.f2:
+                case Constants.keyX:
                     draft.phraser = keyDown;
                     break;
                 case Constants.space:
