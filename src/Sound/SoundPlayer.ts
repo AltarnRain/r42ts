@@ -165,6 +165,10 @@ export namespace SoundPlayer {
         const killedEnemies = totalNumberOfEnemies - enemyCount;
         const soundIndex = sounds.length - killedEnemies - 1;
 
+        if (soundIndex < 0) {
+            return;
+        }
+
         const sound = sounds[soundIndex];
 
         if (sound === undefined) {
