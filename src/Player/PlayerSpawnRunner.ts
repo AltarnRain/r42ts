@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Locations } from "../Constants/Constants";
+import { Locations, Speeds } from "../Constants/Constants";
 import GameLoop from "../GameLoop";
 import { playerMovementHandler } from "../Handlers/PlayerMovementHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
@@ -164,7 +164,7 @@ function updateState(): void {
             p.updateState();
         });
 
-        playerMovementHandler(5);
+        playerMovementHandler(Speeds.Movement.Player.formingSpeed);
     } else if (formationSpeed === "fast") {
         allMovingParts.forEach((p) => {
             p.updateState();

@@ -6,7 +6,7 @@
 
 import { GameLocation } from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
-import speedProvider from "../Providers/SpeedProvider";
+import speedCalculator from "../Providers/SpeedCalculator";
 import { Angle } from "../Types";
 import { getLeftOrRightFromAngle, getNextX, getNextY } from "./Geometry";
 import { randomNumberInRange } from "./Lib";
@@ -88,7 +88,7 @@ export function getLocation(left: number, top: number, angle: Angle, speed: numb
         };
     }
 
-    const relativeSpeed = speedProvider(speed);
+    const relativeSpeed = speedCalculator(speed);
 
     const nextLeft = getNextX(angle, relativeSpeed, left);
     const nextTop = getNextY(angle, relativeSpeed, top);

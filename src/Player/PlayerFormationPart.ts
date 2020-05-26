@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import speedProvider from "../Providers/SpeedProvider";
+import speedCalculator from "../Providers/SpeedCalculator";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
 import { Frame } from "../Types";
@@ -16,7 +16,7 @@ import { calculateDistance, getLocation } from "../Utility/Location";
  * Responsibility:  A particle that travels a distance and then stops being drawn.
  */
 
-const minimumDistance = speedProvider(20);
+const minimumDistance = speedCalculator(20);
 
 export default class PlayerFormationPart {
 
