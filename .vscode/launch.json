@@ -24,7 +24,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Play ground level 01 - Godmode",
+            "name": "01 - Birds - god",
             "url": "http://localhost:8080/?playground?level=1?god",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
@@ -41,24 +41,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Play ground level 01 - Normal start - Godmode",
-            "url": "http://localhost:8080/?playground?level=1?lives=2?phasers=1?timelevelTimeLimit=20000?god",
-            "webRoot": "${workspaceFolder}/src",
-            "breakOnLoad": true,
-            "sourceMaps": true,
-            "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
-                "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
-            }
-        },
-        {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Play ground level 03 - Godmode",
+            "name": "03 - orb - god",
             "url": "http://localhost:8080/?playground?level=3?god",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
@@ -75,7 +58,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Play ground level 04 - Mortal",
+            "name": "04 - warp level easy - Mortal",
             "url": "http://localhost:8080/?playground?level=4",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
@@ -92,7 +75,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Play ground level 06 - Godmode",
+            "name": "06 - balloons - god",
             "url": "http://localhost:8080/?playground?level=6?god?timelevelTimeLimit=5000",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
@@ -109,7 +92,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Play ground level 07 - Godmode",
+            "name": "07 - asteroids - 5 sec time - god",
             "url": "http://localhost:8080/?playground?level=7?god?timelevelTimeLimit=5000",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
@@ -126,7 +109,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Play ground level 10 - Godmode",
+            "name": "10 - diabolo normal - god",
             "url": "http://localhost:8080/?playground?level=10?god",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
@@ -143,7 +126,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Play ground level 13 - Godmode",
+            "name": "13 - devils - god",
             "url": "http://localhost:8080/?playground?level=13?god",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
@@ -160,8 +143,8 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Play ground level 13 - Godmode",
-            "url": "http://localhost:8080/?playground?level=13?god",
+            "name": "15 - asteroids diag - god",
+            "url": "http://localhost:8080/?playground?level=15?god",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
             "sourceMaps": true,
@@ -177,7 +160,24 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Play ground level 22 - Godmode",
+            "name": "19 - space monster diag - god",
+            "url": "http://localhost:8080/?playground?level=19?god",
+            "webRoot": "${workspaceFolder}/src",
+            "breakOnLoad": true,
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${webRoot}/*",
+                "webpack:///src/*": "${webRoot}/*",
+                "webpack:///*": "*",
+                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "meteor://💻app/*": "${webRoot}/*",
+                "webpack:///./src/*": "${webRoot}/*",
+            }
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "22 - boats - god",
             "url": "http://localhost:8080/?playground?level=22?god",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
@@ -194,7 +194,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Play ground level 41 - hitboxes",
+            "name": "41 - warp extreme - hitboxes",
             "url": "http://localhost:8080/?playground?level=41?hitboxes",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,

@@ -70,7 +70,9 @@ export class TimeLimitLevel extends EnemyLevel {
             enemyLevelState: { enemies }
         } = appState();
 
-        if (enemies.length < 8) {
+        const maxEnemies = this.enemy === "asteroid-diagonal" || this.enemy === "spacemonster-diagonal" ? 10 : 8;
+
+        if (enemies.length < maxEnemies) {
             const newEnemy = enemyFactory(this.enemy);
             EnemyLevelRunner.addEnemy(newEnemy);
         }
