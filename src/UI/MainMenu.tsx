@@ -139,7 +139,7 @@ export default function MainMenu(): JSX.Element {
                                     <li>Redux for state</li>
                                     <li>Immer for QoL state management.</li>
                                     <li>React (menu only)</li>
-                                    <li>Howler for playing sounds.</li>
+                                    <li>Howler for sound</li>
                                 </ul>
                                 <HoverButton onClick={() => setScreenState("mainmenu")} text="Back to main menu" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                             </>
