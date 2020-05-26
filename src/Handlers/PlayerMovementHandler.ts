@@ -20,14 +20,14 @@ import { getAngle, getNextX, getNextY } from "../Utility/Geometry";
 
 const {
     pixelSize,
-    gameField
+    gameField,
 } = dimensionProvider();
 
 // Used in player hitbox calculation, never changes so it can be a constant.
 const doublePixel = pixelSize * 2;
 
 // The player's hitbox is a bit smaller than the actual ship. This feels better when playing the game.
-const playerHitboxAdjustment = pixelSize * 0.5;
+const playerHitboxAdjustment = pixelSize * 0.6;
 
 const {
     width: playerWidth,
