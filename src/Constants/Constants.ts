@@ -54,7 +54,7 @@ export namespace Speeds {
         export namespace Player {
             export const aliveSpeed = 9;
             export const formingSpeed = 4;
-            export const warpUpSpeed = 3.5;
+            export const warpUpSpeed = 3.2;
         }
     }
 
