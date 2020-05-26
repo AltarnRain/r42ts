@@ -114,7 +114,6 @@ function initState(): GameState {
         bulletsFired: 0,
         enemiesHit: 0,
         timeLevelTimeLimit: 20000, // 20 seconds
-        hardMode: false,
-        fps: 60,
+        hardMode: false
     };
 }

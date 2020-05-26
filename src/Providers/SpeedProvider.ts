@@ -7,8 +7,8 @@
 import dimensionProvider from "./DimensionProvider";
 
 /**
- * Module:          speedProvider
- * Responsibility:  Calculate the relative speed based on the screensize.
+ * Module:          SpeedProvider
+ * Responsibility:  Provides all speeds used on game.
  */
 
 const {
@@ -17,17 +17,33 @@ const {
 
 export default class SpeedProvider {
 
+    /**
+     * Singleton class.
+     */
     private static instance: SpeedProvider;
+
+    /**
+     * Movemnt speeds.
+     */
     public movement: typeof BaseMovement;
 
+    /**
+     * Bullet speeds.
+     */
     public bullets: typeof Bullets;
 
+    /**
+     * Minimum distance
+     */
     public minimumDistance: number;
 
+    /**
+     * Phaser speed.
+     */
     public phaserSpeed: number;
 
     /**
-     *
+     * Construct the object.
      */
     private constructor(fps: number, width: number) {
         this.movement = convertSpeeds(BaseMovement, width, fps);
@@ -36,17 +52,36 @@ export default class SpeedProvider {
         this.phaserSpeed = calculateSpeed(pixelSize, width, fps);
     }
 
+    /**
+     * Creator function.
+     * @param {number} fps. Fps.
+     * @param {number} width. with.
+     */
     public static create(fps: number, width: number): void {
-        SpeedProvider.instance = new SpeedProvider(fps, width);
+        if (SpeedProvider.instance === undefined) {
+            SpeedProvider.instance = new SpeedProvider(fps, width);
+        }
     }
 
+    /**
+     * Returns an instance of the SpeedProvider
+     * @returns {SpeedProvider}.
+     */
     public static get(): SpeedProvider {
         return SpeedProvider.instance;
     }
 }
 
+/**
+ * Calculates a speed.
+ * @param {number} speed. Speed in pixels per tick.
+ * @param {number} width. Available width.
+ * @param {number} fps. Supported fps.
+ */
 export function calculateSpeed(speed: number, width: number, fps: number): number {
     // 1600 is the size of the canvas width when I was developing the game. All game speeds are based on this.
+    // 60 is the fps of Chrome on my laptop, but some screens have
+    // different refresh rates.
     return speed * (width / 1600 * (60 / fps));
 }
 

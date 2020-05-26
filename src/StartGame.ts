@@ -15,13 +15,14 @@ import setCanvasDimensions from "./Render/SetCanvasDimensions";
 
 /**
  * startGame. Initializes the canvas dimensions, then starts the game.
+ * @param {number} fps. Max fps provided by the browser.
  * @param {boolean} fullscreen. When true, the canvas's style properties will be set to utilize fullscreen dimensions.
  * @param {(result: GameResultModel) => void} gameOverCallback. Callback used by the GameLoop module to trigger a game over event in the UI,
  */
-export function startGame(gameOverCallback: (result: GameResultModel) => void): void {
+export function startGame(fps: number, gameOverCallback: (result: GameResultModel) => void): void {
 
     setCanvasDimensions();
 
     // Ok, screen's setup let start the game!
-    GameLoop.start(gameOverCallback);
+    GameLoop.init(fps, gameOverCallback);
 }

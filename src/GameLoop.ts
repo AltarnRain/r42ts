@@ -10,6 +10,8 @@ import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import GameResultModel from "./Models/GameResultModel";
 import playerSpawnRunner from "./Player/PlayerSpawnRunner";
+import dimensionProvider from "./Providers/DimensionProvider";
+import SpeedProvider from "./Providers/SpeedProvider";
 import genericRunner from "./Runners/GenericRunner";
 import levelProgressionRunner, { resetLevelProgression } from "./Runners/LevelProgressionRunner";
 import playerRunner from "./Runners/PlayerRunner";
@@ -70,15 +72,27 @@ let soundRunners: Array<(pause: boolean) => void> = [];
  */
 let gameOverHandler: (result: GameResultModel) => void | undefined;
 
+const {
+    gameField
+} = dimensionProvider();
+
 export namespace GameLoop {
     /**
      * Start game loop
      */
-    export function start(gameOverCallback?: (result: GameResultModel) => void): void {
+    export function init(fps: number, gameOverCallback?: (result: GameResultModel) => void): void {
+
+        // Singleton, only created once. Future create calls will not have any effect.
+        // Calculates all game speeds based on the passed frame rate. This is done exactly once.
+        SpeedProvider.create(fps, gameField.width);
 
         if (gameOverCallback) {
             gameOverHandler = gameOverCallback;
         }
+        start();
+    }
+
+    function start() {
 
         // Register the statusBar runner. This render's lives, phasers, score, etc.
         // This is a foreground draw process. Enemies will appear to pass under it.

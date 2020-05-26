@@ -90,6 +90,7 @@ export interface SetTimeLevelTimeLimit {
 export interface ResetScore {
     type: typeof Constants.resetScore;
 }
+
 export type GameStateTypes =
     IncreaseScore |
     SetLives |
