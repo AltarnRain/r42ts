@@ -99,6 +99,9 @@ export default function MainMenu(props: { fps: number }): JSX.Element {
                             </div>
                             <br />
                             <div style={Styles.buttonContainer}>
+                                <b><p style={Styles.textStyle}>Note 1: Ensure this page's zoom level is set to 100% before playing fullscreen.</p></b>
+                                <b><p style={Styles.textStyle}>Note 2: The game runs great in Chrome and Firefox but not in Edge. Looking into it.</p></b>
+
                                 <HoverButton onClick={requestFullscreen} text="Fullscreen" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                                 <p style={Styles.textStyle}>Note: Ensure this page's zoom level is set to 100% before playing fullscreen.</p>
                                 <br />
