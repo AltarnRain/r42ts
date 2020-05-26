@@ -119,6 +119,7 @@ export default class WarpLevel implements ILevel {
         } = appState();
 
         if (pause) {
+            SoundPlayer.pauseWarpLevelTravellingSound();
             return;
         }
 

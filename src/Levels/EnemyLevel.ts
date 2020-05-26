@@ -150,10 +150,10 @@ export default class EnemyLevel implements ILevel {
         } = appState();
 
         if (this.currentEnemyCount === undefined) {
-            SoundPlayer.playEnemyBackgroundSound(this.enemy, enemies.length - 1);
+            SoundPlayer.playEnemyBackgroundSound(this.enemy, enemies.length);
             this.currentEnemyCount = enemies.length;
         } else if (this.currentEnemyCount !== enemies.length) {
-            SoundPlayer.playEnemyBackgroundSound(this.enemy, enemies.length - 1);
+            SoundPlayer.playEnemyBackgroundSound(this.enemy, enemies.length);
             this.currentEnemyCount = enemies.length;
         }
     }

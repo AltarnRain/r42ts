@@ -6,6 +6,7 @@
 
 import { Howl } from "howler";
 import Enemies from "../Enemies";
+import { appState } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
 import { Sounds } from "./Sounds";
 import { SoundSprites } from "./SoundSprites";
@@ -102,7 +103,7 @@ export namespace SoundPlayer {
      * @param {Enemies} enemy. Enemy to play sound for.
      * @param {number} index. Index. Determines which sound to play. Usually linked to the number of enemies on screen.
      */
-    export function playEnemyBackgroundSound(enemy: Enemies, index: number): void {
+    export function playEnemyBackgroundSound(enemy: Enemies, enemyCount: number): void {
         switch (enemy) {
             case "bird-fire":
             case "bird":
@@ -110,7 +111,7 @@ export namespace SoundPlayer {
             case "diabolo":
             case "diabolo-hard":
             case "bat":
-                setEnemyLevelBackground(Howls.tjirping, index);
+                setEnemyLevelBackground(Howls.tjirping, enemyCount);
                 break;
             case "orb":
             case "orb-up-down":
@@ -120,10 +121,10 @@ export namespace SoundPlayer {
             case "crab":
             case "piston":
             case "boat":
-                setEnemyLevelBackground(Howls.whoping, index);
+                setEnemyLevelBackground(Howls.whoping, enemyCount);
                 break;
             case "balloon":
-                setEnemyLevelBackground(Howls.wizzing, index);
+                setEnemyLevelBackground(Howls.wizzing, enemyCount);
                 break;
             case "asteroid-down":
             case "asteroid-diagonal":
@@ -148,21 +149,29 @@ export namespace SoundPlayer {
     }
 
     /**
-     * Picks a background sound from the passed array. If the index is to high, the last
-     * sound in the array will be used.
+     * Picks a background sound from the passed array.
      * @param {Howl[]} sounds. Array of Howls.
-     * @param {number} index. Index of the sound.
+     * @param {number} enemyCount. Number of enemies currently on screen.
      */
-    function setEnemyLevelBackground(sounds: Howl[], index: number): void {
+    function setEnemyLevelBackground(sounds: Howl[], enemyCount: number): void {
         if (currentBackground) {
             currentBackground.stop();
         }
 
-        if (index > sounds.length - 1) {
-            currentBackground = sounds[sounds.length - 1];
-        } else {
-            currentBackground = sounds[index];
+        const {
+            enemyLevelState: { totalNumberOfEnemies }
+        } = appState();
+
+        const killedEnemies = totalNumberOfEnemies - enemyCount;
+        const soundIndex = sounds.length - killedEnemies - 1;
+
+        const sound = sounds[soundIndex];
+
+        if (sound === undefined) {
+            throw new Error("No sound");
         }
+
+        currentBackground = sound;
     }
 
     /**
@@ -243,7 +252,7 @@ namespace Howls {
     /**
      * Sounds while travelin through a warp gate.
      */
-    export const warpGateTraveling = new Howl({ src: [Sounds.Player.warpgate] });
+    export const warpGateTraveling = new Howl({ src: Sounds.Player.warpgate, loop: true });
 
     /**
      * Sound played the player reached the end of a warp level.
