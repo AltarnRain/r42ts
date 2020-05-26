@@ -72,4 +72,9 @@ export default interface GameState {
      * Triggers enemies at their hardest.
      */
     hardMode: boolean;
+
+    /**
+     * Number of FPS the game is running in.
+     */
+    fps: number;
 }
