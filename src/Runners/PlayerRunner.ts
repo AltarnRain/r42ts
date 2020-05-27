@@ -51,7 +51,11 @@ function updateState(): void {
         return;
     }
 
-    playerMovementHandler(SpeedProvider.get().movement.Player.aliveSpeed);
+    const {
+        aliveSpeed: { speedX, speedY }
+    } = SpeedProvider.get().movement.Player;
+
+    playerMovementHandler(speedX, speedY);
 
     handlePlayerBulletMovement();
     handlePlayerBulletFiring();

@@ -49,7 +49,7 @@ export default class SpeedProvider {
         this.movement = convertSpeeds(BaseMovement, width, fps);
         this.bullets = convertSpeeds(Bullets, width, fps);
         this.minimumDistance = calculateSpeed(20, width, fps);
-        
+
         this.phaserSpeed = calculateSpeed(pixelSize, width, fps);
     }
 
@@ -141,7 +141,10 @@ const BaseMovement = {
 
     },
     Player: {
-        aliveSpeed: 9,
+        aliveSpeed: {
+            speedX: 10,
+            speedY: 9,
+        },
         formingSpeed: 4,
         warpUpSpeed: 3.2,
     }

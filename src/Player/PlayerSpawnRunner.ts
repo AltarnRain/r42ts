@@ -165,7 +165,11 @@ function updateState(): void {
             p.updateState();
         });
 
-        playerMovementHandler(SpeedProvider.get().movement.Player.formingSpeed);
+        const {
+            formingSpeed
+        } = SpeedProvider.get().movement.Player;
+
+        playerMovementHandler(formingSpeed, formingSpeed);
     } else if (formationSpeed === "fast") {
         allMovingParts.forEach((p) => {
             p.updateState();

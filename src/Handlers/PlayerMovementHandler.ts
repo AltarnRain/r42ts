@@ -38,14 +38,10 @@ const {
  * Handles player movement.
  * @param {number} speed. Speed the ship can travel. Can vary depending on the level or if the player ship is forming.
  */
-export function playerMovementHandler(speed: number): void {
+export function playerMovementHandler(speedX: number, speedY: number): void {
     const { keyboardState, playerState } = appState();
 
     const localKeyboardState = { ...keyboardState };
-
-    // By default the speed for x and y is the speed passed to the movement
-    const speedX = speed;
-    let speedY = speed;
 
     // Certain levels limit the movement of the player.
     // We'll use a fresh keyboardState object and make some adjustments.
