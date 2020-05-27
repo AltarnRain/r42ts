@@ -5,7 +5,6 @@
  */
 
 import dimensionProvider from "../Providers/DimensionProvider";
-import SpeedProvider from "../Providers/SpeedProvider";
 import { calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
 
@@ -30,9 +29,9 @@ export default function getPhaserLocations(sourceLeft: number, sourceTop: number
     const returnValue: Array<{left: number, top: number}> = [];
 
     // Stop when the distance is one pixel size so the phaser ends just within the enemy.
-    while (distance >= pixelSize) {
+    while (distance >= 0) {
         returnValue.push(getLocation(left, top, angle, pixelSize));
-        distance -= SpeedProvider.get().phaserSpeed;
+        distance -= pixelSize;
         const nextLocation = getLocation(left, top, angle, pixelSize);
         left = nextLocation.left;
         top = nextLocation.top;
