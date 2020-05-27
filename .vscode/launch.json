@@ -109,8 +109,25 @@
         {
             "type": "chrome",
             "request": "launch",
+            "name": "06 - balloons",
+            "url": "http://localhost:8080/?playground?level=6?god?timelevelTimeLimit=5000",
+            "webRoot": "${workspaceFolder}/src",
+            "breakOnLoad": true,
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${webRoot}/*",
+                "webpack:///src/*": "${webRoot}/*",
+                "webpack:///*": "*",
+                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "meteor://💻app/*": "${webRoot}/*",
+                "webpack:///./src/*": "${webRoot}/*",
+            }
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
             "name": "07 - asteroids - 5 sec time - god",
-            "url": "http://localhost:8080/?playground?level=7?god?timelevelTimeLimit=5000",
+            "url": "http://localhost:8080/?playground?level=7?god?timelevelTimeLimit=60000",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
             "sourceMaps": true,

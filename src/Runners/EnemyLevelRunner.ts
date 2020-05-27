@@ -108,9 +108,6 @@ function draw(): void {
  */
 function handleHitDetection(tick: number) {
 
-    // Check if the player was hit.
-    enemyHitPlayerDetection(tick);
-
     // Check if the player hit anything
     playerHitEnemyDetection(tick);
 
@@ -119,6 +116,9 @@ function handleHitDetection(tick: number) {
 
     // Check if the player was hit by a bullet.
     playerHitByParticle(tick, appState().enemyLevelState.bullets);
+
+    // Check if the player was hit.
+    enemyHitPlayerDetection(tick);
 }
 
 /**
@@ -172,6 +172,8 @@ function enemyHitPlayerDetection(tick: number) {
     if (playerState.alive) {
         const hit = enemyLevelState.enemies.some((e) => playerIsHit(playerState.hitboxes, e.hitbox));
 
+        // Always check if there enemies on screen so the player does not get hit
+        // by stray bullets when the win the level.
         if (hit) {
             handlePlayerDeath(tick);
         }
@@ -185,11 +187,12 @@ function enemyHitPlayerDetection(tick: number) {
  */
 function playerHitByParticle(tick: number, particles: ParticleState[]): void {
 
-    const { playerState } = appState();
+    const { playerState, enemyLevelState: { enemies } } = appState();
     if (playerState.alive) {
         const hit = particles.some((e) => playerIsHit(playerState.hitboxes, e.hitbox));
 
-        if (hit) {
+        // Don't let the player die when they've cleared the level.
+        if (hit && enemies.length > 0) {
             handlePlayerDeath(tick);
         }
     }

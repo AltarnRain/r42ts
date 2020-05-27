@@ -97,7 +97,7 @@ function convertSpeeds(a: any, width: number, fps: number): any {
         if (typeof keyValue === "number") {
             base[key] = calculateSpeed(keyValue, width, fps);
         } else if (Array.isArray(keyValue)) {
-            base[key] = keyValue.map((v) => convertSpeeds(v, width, fps));
+            base[key] = keyValue.map((v) => calculateSpeed(v, width, fps));
         } else if (typeof keyValue === "object" && keyValue !== null) {
             base[key] = convertSpeeds(keyValue, width, fps);
         } else {

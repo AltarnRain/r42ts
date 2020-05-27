@@ -19,11 +19,12 @@ module.exports = {
             },
             {
                 enforce: "pre",
-                test: /\.js$/, loader: "source-map-loader"
+                test: /\.js$/,
+                loader: "source-map-loader"
             }
         ]
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js', '.tsx'],
+        extensions: ['.tsx', '.ts', '.js'],
     }
 };
