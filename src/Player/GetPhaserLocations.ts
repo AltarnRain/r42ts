@@ -29,7 +29,8 @@ export default function getPhaserLocations(sourceLeft: number, sourceTop: number
 
     const returnValue: Array<{left: number, top: number}> = [];
 
-    while (distance >= 0) {
+    // Stop when the distance is one pixel size so the phaser ends just within the enemy.
+    while (distance >= pixelSize) {
         returnValue.push(getLocation(left, top, angle, pixelSize));
         distance -= SpeedProvider.get().phaserSpeed;
         const nextLocation = getLocation(left, top, angle, pixelSize);

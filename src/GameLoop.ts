@@ -73,7 +73,7 @@ let soundRunners: Array<(pause: boolean) => void> = [];
 let gameOverHandler: (result: GameResultModel) => void | undefined;
 
 const {
-    gameField
+    fullGameWidth
 } = dimensionProvider();
 
 export namespace GameLoop {
@@ -84,7 +84,7 @@ export namespace GameLoop {
 
         // Singleton, only created once. Future create calls will not have any effect.
         // Calculates all game speeds based on the passed frame rate. This is done exactly once.
-        SpeedProvider.create(fps, gameField.width);
+        SpeedProvider.create(fps, fullGameWidth);
 
         if (gameOverCallback) {
             gameOverHandler = gameOverCallback;

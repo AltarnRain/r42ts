@@ -49,6 +49,7 @@ export default class SpeedProvider {
         this.movement = convertSpeeds(BaseMovement, width, fps);
         this.bullets = convertSpeeds(Bullets, width, fps);
         this.minimumDistance = calculateSpeed(20, width, fps);
+        
         this.phaserSpeed = calculateSpeed(pixelSize, width, fps);
     }
 
