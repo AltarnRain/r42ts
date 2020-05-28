@@ -14,10 +14,10 @@ export const angles = {
     right: 0,
     up: 270,
     down: 90,
-    leftup: 235,
-    rightup: 325,
-    leftdown: 135,
     rightdown: 45,
+    leftdown: 135,
+    leftup: 225,
+    rightup: 315,
 };
 
 export const extraAngles = {
