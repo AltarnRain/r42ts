@@ -13,7 +13,7 @@ import renderFrame from "../Render/RenderFrame";
 import { SoundPlayer } from "../Sound/SoundPlayer";
 import { clearPhaserLocations, removeEnemy, setEnemiesState, setPhaserLocations, setTotalEnemies } from "../State/EnemyLevel/EnemyLevelActions";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
-import { enemeyHit as enemyHit, increaseScore, phaserFired, removePhaser, resetScore, setPause } from "../State/Game/GameActions";
+import { enemeyHit as enemyHit, increaseScore, phaserFired, removePhaser, setPause } from "../State/Game/GameActions";
 import { ParticleState } from "../State/ParticleState";
 import { setPlayerBulletState } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
@@ -75,7 +75,7 @@ export default EnemyLevelRunner;
  * @param {number} tick. Current tick.
  */
 function updateState(tick: number) {
-    handleSelfDestruct(tick);
+    // handleSelfDestruct(tick);
     handlePhaser(tick);
     handleEnemies(tick);
     handleHitDetection(tick);
@@ -221,18 +221,18 @@ function handleEnemies(tick: number): void {
  * Handle self destruct.
  * @param {number} tick. Current tick.
  */
-function handleSelfDestruct(tick: number): void {
-    const { playerState, enemyLevelState } = appState();
+// function handleSelfDestruct(tick: number): void {
+//     const { playerState, enemyLevelState } = appState();
 
-    if (playerState.alive && appState().keyboardState.selfDestruct) {
-        handlePlayerDeath(tick);
-        enemyLevelState.enemies.forEach((es) => handleEnemyDestruction(tick, es, false));
-        localState.enemies = [];
+//     if (playerState.alive && appState().keyboardState.selfDestruct) {
+//         handlePlayerDeath(tick);
+//         enemyLevelState.enemies.forEach((es) => handleEnemyDestruction(tick, es, false));
+//         localState.enemies = [];
 
-        // Score is set to 0 when the player self destructs.
-        dispatch(resetScore());
-    }
-}
+//         // Score is set to 0 when the player self destructs.
+//         dispatch(resetScore());
+//     }
+// }
 
 /**
  * handles the destruction of an enemy.
