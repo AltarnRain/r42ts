@@ -105,7 +105,8 @@ void Main()
 			}
 			else
 			{
-				sb.AppendLine($"{fourSpaces}{fourSpaces}{value}: require(\"{requirePath}\").default,");
+				var propertName = value.Replace(mediaTypeExtention, "");
+				sb.AppendLine($"{fourSpaces}{fourSpaces}{propertName}: require(\"{requirePath}\").default,");
 			}
 		}
 
