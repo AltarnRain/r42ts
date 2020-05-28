@@ -24,7 +24,10 @@ module.exports = {
             },
             {
                 test: /\.ogg$/,
-                loader: "file-loader"
+                loader: "file-loader",
+                options: {
+                    outputPath: "sounds"
+                }
             }
         ]
     },
