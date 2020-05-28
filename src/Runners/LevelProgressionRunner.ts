@@ -12,8 +12,7 @@
 
 import ILevel from "../Interfaces/ILevel";
 import { levelFactory } from "../Levels/LevelFactory";
-import { addLifeAndPhaser } from "../State/Game/GameActions";
-import { appState, dispatch } from "../State/Store";
+import { appState } from "../State/Store";
 
 // Used to track changes in level
 let levelNumber: number | undefined;
@@ -23,9 +22,6 @@ let currentLevel: ILevel | undefined;
 
 // When true a level is loading.
 let levelLoading = false;
-
-// Amount of points when a life and level is awarded.
-const awardLifeAndLevelPoints = 7000;
 
 /**
  * Lazy load a subscription to the redux store.
@@ -54,10 +50,6 @@ export default function levelProgressionRunner() {
             // to reset the level loading flag.
             levelLoading = false;
         });
-    }
-
-    if (gameState.score - gameState.lastAwardScore >= awardLifeAndLevelPoints) {
-        dispatch(addLifeAndPhaser());
     }
 }
 

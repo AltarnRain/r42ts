@@ -12,9 +12,9 @@
 import GameLoop from "../GameLoop";
 import renderFrame from "../Render/RenderFrame";
 import { setBulletState, setExplosionCenters, setShrapnellState } from "../State/EnemyLevel/EnemyLevelActions";
+import { addLifeAndPhaser } from "../State/Game/GameActions";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
-import { addLifeAndPhaser } from "../State/Game/GameActions";
 
 export default function genericRunner(tick: number): void {
     handleExplosionCenters(tick);
