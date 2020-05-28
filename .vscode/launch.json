@@ -75,6 +75,23 @@
         {
             "type": "chrome",
             "request": "launch",
+            "name": "03 - orb",
+            "url": "http://localhost:8080/?playground?level=3",
+            "webRoot": "${workspaceFolder}/src",
+            "breakOnLoad": true,
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${webRoot}/*",
+                "webpack:///src/*": "${webRoot}/*",
+                "webpack:///*": "*",
+                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "meteor://💻app/*": "${webRoot}/*",
+                "webpack:///./src/*": "${webRoot}/*",
+            }
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
             "name": "04 - warp level easy - Mortal",
             "url": "http://localhost:8080/?playground?level=4",
             "webRoot": "${workspaceFolder}/src",
