@@ -17,17 +17,18 @@ import MainMenu from "./UI/MainMenu";
 // The first thing we do before we load ANYTIHNG. Is calculate the FPS of the requestAnimationFrame function.
 // We need to FPS to determine the speeds of objects.
 // Also, I could have done this within the game itself but I am wary of making methods async at this point.
-calcFPS().then((fps) => {
+Promise.all([calcFPS(), calcFPS(), calcFPS()]).then((fps) => {
+    const maxFps = [fps[0], fps[1], fps[2]].reduce((a, b) => a > b ? a : b);
 
     if (window.location.search.indexOf("?") > -1) {
         // If the url contains ? we'll start in debug mode.
         // This is done using dynamic module loading because the second the game
         // starts it sets all its constants and the screensize is fixed. We do
         // not want this.
-        import("./Debugging/Debug").then((m) => m.debug(fps));
+        import("./Debugging/Debug").then((m) => m.debug(maxFps));
     } else {
         // Otherwise load the UI.
-        ReactDOM.render(<MainMenu fps={fps}/>, document.getElementById("root"));
+        ReactDOM.render(<MainMenu fps={maxFps} />, document.getElementById("root"));
     }
 });
 
