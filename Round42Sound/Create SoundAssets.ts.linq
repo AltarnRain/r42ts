@@ -11,6 +11,7 @@ void Main()
 	
 	// Folder that contains the media files to be converted to base 64 and a TS file.
 	var soundSourceFolder = @"D:\Reps\r42ts\Round42Sound\";
+	var requireBasePath = @"../../Round42Sound/";
 	
 	// Folders that contain a 01.ABC file are converted to a TS array.
 	var arrayIdentifier = $"01{mediaTypeExtention}";
@@ -43,12 +44,9 @@ void Main()
 			nameSpaceAndFiles.Add(subNamespace, files);
 		}
 
-		var fileData = File.ReadAllBytes(file);
-
 		var fileNameAndData = new FileData
 		{
 			FileName = fileName.Replace($"{mediaTypeExtention}", "").ToLower(),
-			Data = debug ? "A" : Convert.ToBase64String(fileData),
 		};
 
 		files.Add(fileNameAndData);
@@ -87,14 +85,17 @@ void Main()
 
 		foreach (var value in kvp.Value)
 		{
-			var data = $"data:audio/{mediaType};base64," + value.Data;
+			var requirePath = $"{requireBasePath}{kvp.Key}/{value.FileName}.ogg";
 			if (arrayFormat)
 			{
-				sb.AppendLine($"{fourSpaces}{fourSpaces}\"{data}\",");
+
+				
+				sb.AppendLine($"{fourSpaces}{fourSpaces} require(\"{requirePath}\").default,");
 			}
 			else
 			{
-				sb.AppendLine($"{fourSpaces}{fourSpaces}{value.FileName}: \"{data}\",");
+//				var requirePath = $"{requireBasePath}{value.FileName}.ogg";
+				sb.AppendLine($"{fourSpaces}{fourSpaces}{value.FileName}: require(\"{requirePath}\").default,");
 			}
 		}
 
@@ -119,6 +120,5 @@ void Main()
 class FileData
 {
 	public string FileName { get; set; }
-	public string Data { get; set; }
-//	public double Duration {get;set;}
+	public string RequireStatement { get; set; }
 }

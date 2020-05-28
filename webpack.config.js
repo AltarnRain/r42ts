@@ -21,6 +21,10 @@ module.exports = {
                 enforce: "pre",
                 test: /\.js$/,
                 loader: "source-map-loader"
+            },
+            {
+                test: /\.ogg$/,
+                loader: "file-loader"
             }
         ]
     },
