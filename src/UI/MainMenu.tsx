@@ -86,10 +86,10 @@ export default function MainMenu(props: { fps: number }): JSX.Element {
                                             <li>This is your super weapon. It kills a random enemy in one shot.</li>
                                             <li>You only have limited charges so use them wisely.</li>
                                         </ul>
-                                        <li>Press Backspace to self destruct and skip a level.</li>
+                                        {/* <li>Press Backspace to self destruct and skip a level.</li>
                                         <ul>
                                             <li>Selfdestrucing will reset your score.</li>
-                                        </ul>
+                                        </ul> */}
                                         <li>A life and phaser is awared every 7500 points.</li>
                                         <li>When you die you'll lose your phaser charges.</li>
                                         <li>When you die you can hold Space to pause your formation</li>
