@@ -43,13 +43,13 @@ export default function DebugSound(): JSX.Element {
             <div style={{ display: "flex", flexDirection: "column", width: "250px" }}>
             <p>Player bullet</p>
                 <SoundButton
-                    src={Sounds.Player.shoot}
+                    src={Sounds.Player.Shoot}
                     text="Shoot"
                     onPlay={playOnce}
                 />
                 <p>WarpLevel loop. Played only during warp levels</p>
                 <SoundButton
-                    src={Sounds.Player.warpgate}
+                    src={Sounds.Player.WarpGate}
                     text="Warp level"
                     onPlay={playLoop}
                 />

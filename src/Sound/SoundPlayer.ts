@@ -231,7 +231,7 @@ namespace Howls {
     /**
      * Howl for the player bullet
      */
-    export const playerBullet = new Howl({ src: Sounds.Player.shoot });
+    export const playerBullet = new Howl({ src: Sounds.Player.Shoot });
 
     /**
      * Howl objects for phasers.
@@ -246,27 +246,27 @@ namespace Howls {
     /**
      * Sound for a fast formation.
      */
-    export const playerFormationFast = new Howl({ src: Sounds.Player.formationfast });
+    export const playerFormationFast = new Howl({ src: Sounds.Player.FormationFast });
 
     /**
      * Sound for a slow formation.
      */
-    export const playerFormationSlow = new Howl({ src: Sounds.Player.formationslow });
+    export const playerFormationSlow = new Howl({ src: Sounds.Player.FormationSlow });
 
     /**
      * Sounds while travelin through a warp gate.
      */
-    export const warpGateTraveling = new Howl({ src: Sounds.Player.warpgate, loop: true });
+    export const warpGateTraveling = new Howl({ src: Sounds.Player.WarpGate, loop: true });
 
     /**
      * Sound played the player reached the end of a warp level.
      */
-    export const warpLevelEnd = new Howl({ src: [Sounds.Player.warplevelend] });
+    export const warpLevelEnd = new Howl({ src: [Sounds.Player.WarpLevelEnd] });
 
     /**
      * Sound while playing an astreroid or space monster level.
      */
-    export const falling = new Howl({ src: Sounds.Falling.falling, loop: true });
+    export const falling = new Howl({ src: Sounds.Falling.Falling, loop: true });
 
     /**
      * Sounds for birds, spinners, diabolo's, etc.
@@ -286,7 +286,7 @@ namespace Howls {
     /**
      * Music. Player on round 13 and round 42.
      */
-    export const music = new Howl({ src: Sounds.Music.music });
+    export const music = new Howl({ src: Sounds.Music.Music });
 }
 
 /**

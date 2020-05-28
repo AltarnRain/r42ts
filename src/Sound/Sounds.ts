@@ -9,7 +9,7 @@
  * Responsibility:  Contain sound assets. This file is generated. Do not edit.
  */
 
-// Generated on: 2020-05-28 08:33
+// Generated on: 2020-05-28 08:55
 
 export namespace Sounds {
     export const EnemyExplosions = [
@@ -29,10 +29,10 @@ export namespace Sounds {
          require("../../Round42Sound/EnemyExplosions/14.ogg").default,
     ];
     export const Falling = {
-        falling: require("../../Round42Sound/Falling/falling.ogg").default,
+        Falling: require("../../Round42Sound/Falling/Falling.ogg").default,
     };
     export const Music = {
-        music: require("../../Round42Sound/Music/music.ogg").default,
+        Music: require("../../Round42Sound/Music/Music.ogg").default,
     };
     export const Phasers = [
          require("../../Round42Sound/Phasers/01.ogg").default,
@@ -47,11 +47,11 @@ export namespace Sounds {
          require("../../Round42Sound/Phasers/10.ogg").default,
     ];
     export const Player = {
-        formationfast: require("../../Round42Sound/Player/formationfast.ogg").default,
-        formationslow: require("../../Round42Sound/Player/formationslow.ogg").default,
-        shoot: require("../../Round42Sound/Player/shoot.ogg").default,
-        warpgate: require("../../Round42Sound/Player/warpgate.ogg").default,
-        warplevelend: require("../../Round42Sound/Player/warplevelend.ogg").default,
+        FormationFast: require("../../Round42Sound/Player/FormationFast.ogg").default,
+        FormationSlow: require("../../Round42Sound/Player/FormationSlow.ogg").default,
+        Shoot: require("../../Round42Sound/Player/Shoot.ogg").default,
+        WarpGate: require("../../Round42Sound/Player/WarpGate.ogg").default,
+        WarpLevelEnd: require("../../Round42Sound/Player/WarpLevelEnd.ogg").default,
     };
     export const PlayerExplosions = [
          require("../../Round42Sound/PlayerExplosions/01.ogg").default,
