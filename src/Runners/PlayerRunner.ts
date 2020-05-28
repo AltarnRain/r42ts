@@ -9,6 +9,7 @@ import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import { playerMovementHandler } from "../Handlers/PlayerMovementHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
+import SpeedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
 import getTwoPixelBullet from "../SharedFrames/GetTwoPixelBullet";
 import { SoundPlayer } from "../Sound/SoundPlayer";
@@ -19,7 +20,6 @@ import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
 import { getFrameHitbox } from "../Utility/Frame";
 import { fallsWithinGameField, getLocation } from "../Utility/Location";
-import SpeedProvider from "../Providers/SpeedProvider";
 
 /**
  * Module:          PlayerRunner

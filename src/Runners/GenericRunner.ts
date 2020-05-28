@@ -14,11 +14,13 @@ import renderFrame from "../Render/RenderFrame";
 import { setBulletState, setExplosionCenters, setShrapnellState } from "../State/EnemyLevel/EnemyLevelActions";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
+import { addLifeAndPhaser } from "../State/Game/GameActions";
 
 export default function genericRunner(tick: number): void {
     handleExplosionCenters(tick);
     handleBullets();
     handleShrapnell();
+    handleScoreAward();
     GameLoop.registerDraw(draw);
 }
 
@@ -50,6 +52,18 @@ function handleBullets(): void {
 function handleShrapnell(): void {
     const newState = StateProviders.getUpdatedParticleState(appState().enemyLevelState.shrapnells);
     dispatch(setShrapnellState(newState));
+}
+
+/**
+ * Awards a life and phaser each 7500 points
+ */
+function handleScoreAward(): void {
+    const {
+        gameState
+    } = appState();
+    if (gameState.score - gameState.lastAwardScore >= 7500) {
+        dispatch(addLifeAndPhaser());
+    }
 }
 
 function draw(): void {
