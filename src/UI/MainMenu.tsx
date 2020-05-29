@@ -92,7 +92,7 @@ export default function MainMenu(props: { fps: number }): JSX.Element {
                                         </ul> */}
                                         <li>A life and phaser is awared every 7500 points.</li>
                                         <li>When you die you'll lose your phaser charges.</li>
-                                        <li>When you die you can hold Space to pause your formation</li>
+                                        <li>When you die you can hold Space to pause your formation.</li>
                                         <li>When there's enemies on the screen you can move left and right while your ship is warping in.</li>
                                     </ul>
                                 </div>
