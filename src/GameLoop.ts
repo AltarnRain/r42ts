@@ -12,10 +12,12 @@ import GameResultModel from "./Models/GameResultModel";
 import playerSpawnRunner from "./Player/PlayerSpawnRunner";
 import dimensionProvider from "./Providers/DimensionProvider";
 import SpeedProvider from "./Providers/SpeedProvider";
+import EnemyLevelRunner from "./Runners/EnemyLevelRunner";
 import genericRunner from "./Runners/GenericRunner";
 import levelProgressionRunner, { resetLevelProgression } from "./Runners/LevelProgressionRunner";
 import playerRunner from "./Runners/PlayerRunner";
 import { SoundPlayer } from "./Sound/SoundPlayer";
+import { resetLevelState as resetEnemyLevelState } from "./State/EnemyLevel/EnemyLevelActions";
 import { gameStart, resetScore } from "./State/Game/GameActions";
 import { resetKeyboardState } from "./State/Keyboard/KeyboardActions";
 import { setPlayerIsAlive, setPlayerLocationData } from "./State/Player/PlayerActions";
@@ -141,9 +143,9 @@ export namespace GameLoop {
 
         updateStateFunctions = [];
         backgroundDrawFunctions = [];
-        drawFunctions = [];
         foregroundDrawFunctions = [];
         levelWonFunctions = [];
+        drawFunctions = [];
         soundRunners = [];
 
         unregisterListeners();
@@ -267,6 +269,12 @@ export namespace GameLoop {
 
             // Set the game state back to its starting values.
             dispatch(gameStart());
+
+            // Remove the remaining enemies.
+            EnemyLevelRunner.setNewEnemies([]);
+
+            // Clear any remaining particles, etc.
+            dispatch(resetEnemyLevelState());
 
             // In normal mode showing game ending statistics is
             // handled by the UI, not by showing a pop-up.

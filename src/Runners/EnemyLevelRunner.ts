@@ -75,7 +75,6 @@ export default EnemyLevelRunner;
  * @param {number} tick. Current tick.
  */
 function updateState(tick: number) {
-    // handleSelfDestruct(tick);
     handlePhaser(tick);
     handleEnemies(tick);
     handleHitDetection(tick);
@@ -216,23 +215,6 @@ function handleEnemies(tick: number): void {
     // will automatically remove any enemies that were destroyed.
     dispatch(setEnemiesState(newEnemiesState));
 }
-
-/**
- * Handle self destruct.
- * @param {number} tick. Current tick.
- */
-// function handleSelfDestruct(tick: number): void {
-//     const { playerState, enemyLevelState } = appState();
-
-//     if (playerState.alive && appState().keyboardState.selfDestruct) {
-//         handlePlayerDeath(tick);
-//         enemyLevelState.enemies.forEach((es) => handleEnemyDestruction(tick, es, false));
-//         localState.enemies = [];
-
-//         // Score is set to 0 when the player self destructs.
-//         dispatch(resetScore());
-//     }
-// }
 
 /**
  * handles the destruction of an enemy.
