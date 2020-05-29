@@ -27,6 +27,10 @@ export namespace SoundPlayer {
      * Play the player bullet sound.
      */
     export function playerShoot(): void {
+        if (muted()) {
+            return;
+        }
+
         Howls.playerBullet.play();
     }
 
@@ -34,6 +38,10 @@ export namespace SoundPlayer {
      * Plays a random enemy explosion.
      */
     export function enemyExplosion(): void {
+        if (muted()) {
+            return;
+        }
+
         getRandomArrayElement(Howls.enemyExplosions).play();
     }
 
@@ -41,6 +49,10 @@ export namespace SoundPlayer {
      * Plays a random phaser.
      */
     export function phaser(): void {
+        if (muted()) {
+            return;
+        }
+
         getRandomArrayElement(Howls.phasers).play();
     }
 
@@ -48,6 +60,10 @@ export namespace SoundPlayer {
      * Plays the player explosion.
      */
     export function playerExplosion(): void {
+        if (muted()) {
+            return;
+        }
+
         getRandomArrayElement(Howls.playerExplosions).play();
     }
 
@@ -55,6 +71,10 @@ export namespace SoundPlayer {
      * Plays the fast formation sound.
      */
     export function playerFormationFast(): void {
+        if (muted()) {
+            return;
+        }
+
         Howls.playerFormationFast.play();
     }
 
@@ -62,6 +82,10 @@ export namespace SoundPlayer {
      * Plays the slow formation sound.
      */
     export function playPlayerFormationSlow(): void {
+        if (muted()) {
+            return;
+        }
+
         Howls.playerFormationSlow.play();
     }
 
@@ -69,6 +93,10 @@ export namespace SoundPlayer {
      * Plays the warp gate travel sound in a loop.
      */
     export function playTravelingWarpGate(): void {
+        if (muted()) {
+            return;
+        }
+
         setEnemyLevelBackground([Howls.warpGateTraveling], 0);
     }
 
@@ -76,6 +104,10 @@ export namespace SoundPlayer {
      * Stops the current playing background sound (if available).
      */
     export function stopBackground(): void {
+        if (muted()) {
+            return;
+        }
+
         if (currentBackground) {
             currentBackground.stop();
             currentBackground = undefined;
@@ -88,6 +120,10 @@ export namespace SoundPlayer {
      * Stops the 'falling' sound from playing.
      */
     export function stopFalling(): void {
+        if (muted()) {
+            return;
+        }
+
         Howls.falling.stop();
     }
 
@@ -95,6 +131,10 @@ export namespace SoundPlayer {
      * Pauses warp level traveling sound. Used when the player dies.
      */
     export function pauseWarpLevelTravellingSound(): void {
+        if (muted()) {
+            return;
+        }
+
         Howls.warpGateTraveling.pause();
     }
 
@@ -104,6 +144,10 @@ export namespace SoundPlayer {
      * @param {number} index. Index. Determines which sound to play. Usually linked to the number of enemies on screen.
      */
     export function playEnemyBackgroundSound(enemy: Enemies, enemyCount: number): void {
+        if (muted()) {
+            return;
+        }
+
         switch (enemy) {
             case "bird-fire":
             case "bird":
@@ -183,6 +227,9 @@ export namespace SoundPlayer {
      * @param {boolean} pause. When true, pauses the current background sound.
      */
     export function ensureBackground(pause: boolean): void {
+        if (muted()) {
+            return;
+        }
 
         if (pause) {
             currentBackground?.pause();
@@ -199,6 +246,9 @@ export namespace SoundPlayer {
      * @param {boolean} pause. When true, pauses the warp level travelling sound howl.
      */
     export function ensureWarpLevelBackground(pause: boolean): void {
+        if (muted()) {
+            return;
+        }
 
         if (pause) {
             Howls.warpGateTraveling.pause();
@@ -214,6 +264,10 @@ export namespace SoundPlayer {
      * Plays the victoty sound when the player reaches the end of the warp gate.
      */
     export function warpLeveEnd(): void {
+        if (muted()) {
+            return;
+        }
+
         Howls.warpLevelEnd.play();
     }
 }
@@ -287,6 +341,13 @@ namespace Howls {
      * Music. Player on round 13 and round 42.
      */
     export const music = new Howl({ src: Sounds.Music.Music });
+}
+
+/**
+ * True if no sounds should be played.
+ */
+function muted(): boolean {
+    return !appState().gameState.playSounds;
 }
 
 /**

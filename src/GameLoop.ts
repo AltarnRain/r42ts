@@ -18,7 +18,7 @@ import levelProgressionRunner, { resetLevelProgression } from "./Runners/LevelPr
 import playerRunner from "./Runners/PlayerRunner";
 import { SoundPlayer } from "./Sound/SoundPlayer";
 import { resetLevelState as resetEnemyLevelState } from "./State/EnemyLevel/EnemyLevelActions";
-import { gameStart, resetScore } from "./State/Game/GameActions";
+import { gameStart, resetScore, setPlaySounds } from "./State/Game/GameActions";
 import { resetKeyboardState } from "./State/Keyboard/KeyboardActions";
 import { setPlayerIsAlive, setPlayerLocationData } from "./State/Player/PlayerActions";
 import { appState, dispatch } from "./State/Store";
@@ -82,7 +82,7 @@ export namespace GameLoop {
     /**
      * Start game loop
      */
-    export function init(fps: number, gameOverCallback?: (result: GameResultModel) => void): void {
+    export function init(fps: number, gameOverCallback?: (result: GameResultModel) => void, sound: boolean = true): void {
 
         // Singleton, only created once. Future create calls will not have any effect.
         // Calculates all game speeds based on the passed frame rate. This is done exactly once.
@@ -91,6 +91,9 @@ export namespace GameLoop {
         if (gameOverCallback) {
             gameOverHandler = gameOverCallback;
         }
+
+        dispatch(setPlaySounds(sound));
+
         start();
     }
 

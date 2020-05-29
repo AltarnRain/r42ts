@@ -22,7 +22,7 @@ export default function MainMenu(props: { fps: number }): JSX.Element {
     /**
      * Starts the game
      */
-    function startGame(): void {
+    function startGameWithSound(): void {
         // Remove the UI from screen.
         setScreenState("playing");
 
@@ -31,7 +31,19 @@ export default function MainMenu(props: { fps: number }): JSX.Element {
         // or windows mode.
         // Once loaded this module stays loaded. Thats why the game, when it ends, doesn't show the
         // main menu as switching to full screen would have no effect at that point.
-        import("../StartGame").then((m) => m.startGame(props.fps, (result) => {
+        import("../StartGame").then((m) => m.startGame(props.fps, true, (result) => {
+            setScreenState("gameover");
+            setGameResult(result);
+        }));
+    }
+
+    /**
+     * Starts the game
+     */
+    function startGameWithoutSound(): void {
+        // Remove the UI from screen.
+        setScreenState("playing");
+        import("../StartGame").then((m) => m.startGame(props.fps, false, (result) => {
             setScreenState("gameover");
             setGameResult(result);
         }));
@@ -105,10 +117,10 @@ export default function MainMenu(props: { fps: number }): JSX.Element {
                                 <HoverButton onClick={requestFullscreen} text="Fullscreen" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                                 <p style={Styles.textStyle}>Note: Ensure this page's zoom level is set to 100% before playing fullscreen.</p>
                                 <br />
-                                <HoverButton onClick={startGame} text="Play" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
+                                <HoverButton onClick={startGameWithSound} text="Play with sounds" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                                 <br />
-                                {/* <HoverButton onClick={() => setScreenState("about")} text="About" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
-                                <br /> */}
+                                <HoverButton onClick={startGameWithoutSound} text="Play without sounds" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
+                                <br />
                                 <HoverButton onClick={goToSource} text="Source code" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                             </div>
                         </> :
@@ -160,7 +172,7 @@ export default function MainMenu(props: { fps: number }): JSX.Element {
                                     </div>
                                     <br />
                                     <div style={Styles.buttonContainer}>
-                                        <HoverButton onClick={startGame} text="Play again?" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
+                                        <HoverButton onClick={startGameWithSound} text="Play again?" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                                     </div>
                                 </>
                                 : null

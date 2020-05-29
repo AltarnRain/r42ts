@@ -28,6 +28,7 @@ namespace Constants {
     export const enemyHit = "enemyHit";
     export const setTimeLevelTimeLimit = "setTimeLevelTimeLimit";
     export const resetScore = "resetScore";
+    export const playSounds = "playSounds";
 }
 
 export default Constants;

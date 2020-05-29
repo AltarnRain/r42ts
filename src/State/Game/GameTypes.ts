@@ -91,6 +91,11 @@ export interface ResetScore {
     type: typeof Constants.resetScore;
 }
 
+export interface SetPlaySounds{
+    type: typeof Constants.playSounds;
+    playSounds: boolean;
+}
+
 export type GameStateTypes =
     IncreaseScore |
     SetLives |
@@ -109,5 +114,6 @@ export type GameStateTypes =
     PhaserFired |
     EnemyHit |
     SetTimeLevelTimeLimit |
-    ResetScore
+    ResetScore |
+    SetPlaySounds
     ;

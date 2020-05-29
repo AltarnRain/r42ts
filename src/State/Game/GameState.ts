@@ -72,4 +72,9 @@ export default interface GameState {
      * Triggers enemies at their hardest.
      */
     hardMode: boolean;
+
+    /**
+     * Play sounds or not.
+     */
+    playSounds: boolean;
 }
