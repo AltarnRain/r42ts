@@ -13,7 +13,7 @@ import BaseLocationProvider from "../Base/BaseLocationProvider";
 import { getAngles } from "../Constants/Angles";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { getRandomArrayElement } from "../Utility/Array";
-import { getLocation } from "../Utility/Location";
+import { fallsWithinGameField, getLocation } from "../Utility/Location";
 
 const {
     gameField
@@ -89,7 +89,7 @@ export default class Wobble extends BaseLocationProvider {
 
         // When a wobbling enemy gets stuck on the bottom, their position is roughtly set to 2/3 of the gamefield
         if (newLocation.top >= gameField.bottom - this.height * 1.5) {
-            this.top = gameField.top * (2 / 3);
+            this.top = gameField.bottom * (0.3);
         }
 
         const nextLocation = getLocation(this.left, this.top, this.angle, this.speed);
