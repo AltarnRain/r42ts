@@ -93,7 +93,6 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 draft.score = 0;
                 draft.lastAwardScore = 0;
                 break;
-
             case Constants.playSounds:
                 draft.playSounds = action.playSounds;
                 break;

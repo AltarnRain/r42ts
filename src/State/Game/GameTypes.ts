@@ -91,7 +91,7 @@ export interface ResetScore {
     type: typeof Constants.resetScore;
 }
 
-export interface SetPlaySounds{
+export interface SetPlaySounds {
     type: typeof Constants.playSounds;
     playSounds: boolean;
 }
