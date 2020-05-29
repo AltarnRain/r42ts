@@ -13,7 +13,7 @@ import BaseLocationProvider from "../Base/BaseLocationProvider";
 import { getAngles } from "../Constants/Angles";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { getRandomArrayElement } from "../Utility/Array";
-import { fallsWithinGameField, getLocation } from "../Utility/Location";
+import { getLocation } from "../Utility/Location";
 
 const {
     gameField
