@@ -10,7 +10,7 @@
  */
 
 import produce from "immer";
-import Constants from "./EnemyLevelConstants";
+import EnemyLevelEnum from "./EnemyLevelEnum";
 import EnemyLevelState from "./EnemyLevelState";
 import { EnemyLevelTypes } from "./EnemyLevelTypes";
 
@@ -24,35 +24,35 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
 
     const newState = produce(state, (draft) => {
         switch (action.type) {
-            case Constants.addExplosionCenter:
+            case EnemyLevelEnum.addExplosionCenter:
                 draft.explosionCenters.push(action.explosionCenter);
                 draft.shrapnells.push(...action.shrapnell);
                 break;
-            case Constants.setShrapnellState:
+            case EnemyLevelEnum.setShrapnellState:
                 draft.shrapnells = action.shrapnell;
                 break;
-            case Constants.setPhaserLocations:
+            case EnemyLevelEnum.setPhaserLocations:
                 draft.phaserLocations = action.payload;
                 break;
-            case Constants.clearPhaserLocations:
+            case EnemyLevelEnum.clearPhaserLocations:
                 draft.phaserLocations = [];
                 break;
-            case Constants.setExplosionCenters:
+            case EnemyLevelEnum.setExplosionCenters:
                 draft.explosionCenters = action.explosionCenters;
                 break;
-            case Constants.addBullet:
+            case EnemyLevelEnum.addBullet:
                 draft.bullets.push(action.bullet);
                 break;
-            case Constants.setBulletState:
+            case EnemyLevelEnum.setBulletState:
                 draft.bullets = action.bullets;
                 break;
-            case Constants.setTotalEnemies:
+            case EnemyLevelEnum.setTotalEnemies:
                 draft.totalNumberOfEnemies = action.totalEnemies;
                 break;
-            case Constants.removeEnemy:
+            case EnemyLevelEnum.removeEnemy:
                 draft.enemies = draft.enemies.filter((es) => es.enemyId !== action.enemyId);
                 break;
-            case Constants.setEnemyLastFireTick: {
+            case EnemyLevelEnum.setEnemyLastFireTick: {
                 const index = state.enemies.findIndex((es) => es.enemyId === action.payload.enemyId);
                 if (index > -1) {
                     draft.enemies[index].lastFiretick = action.payload.tick;
@@ -61,14 +61,14 @@ export default function enemyLevelReducer(state: EnemyLevelState = initState(), 
                 break;
             }
 
-            case Constants.setEnemies: {
+            case EnemyLevelEnum.setEnemies: {
                 draft.enemies = action.enemies;
                 break;
             }
         }
     });
 
-    if (action.type === Constants.resetLevelState) {
+    if (action.type === EnemyLevelEnum.resetLevelState) {
         return initState();
     }
 

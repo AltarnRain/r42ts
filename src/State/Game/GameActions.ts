@@ -9,114 +9,114 @@
  * Responsibility:  Action creator functions for the GameState
  */
 
-import Constants from "./GameConstants";
+import GameStateEnum from "./GameEnum";
 import { AddLifeAndPhaser, AddPhaser, BulletFired, EnemyHit, GameOver, IncreaseScore, NextLevel, PhaserFired, RemoveLife, RemovePhaser, ResetGameState, ResetScore, SetLevel, SetLives, SetPause, SetPhasers, SetPlaySounds, SetTimeLevelTimeLimit, SetWarpGateComplexity } from "./GameTypes";
 import { WarpLevelComplexity } from "./WarpLevelTypes";
 
 export function increaseScore(score: number): IncreaseScore {
     return {
-        type: Constants.increaseScore,
+        type: GameStateEnum.increaseScore,
         payload: score
     };
 }
 
 export function setLives(lives: number): SetLives {
     return {
-        type: Constants.setLives,
+        type: GameStateEnum.setLives,
         payload: lives,
     };
 }
 
 export function removeLife(): RemoveLife {
     return {
-        type: Constants.removeLife,
+        type: GameStateEnum.removeLife,
     };
 }
 
 export function setPhasers(phasers: number): SetPhasers {
-    return { type: Constants.setPhasers, payload: phasers };
+    return { type: GameStateEnum.setPhasers, payload: phasers };
 }
 
 export function addPhaser(): AddPhaser {
-    return { type: Constants.addPhaser };
+    return { type: GameStateEnum.addPhaser };
 }
 
 export function removePhaser(): RemovePhaser {
-    return { type: Constants.removePhaser };
+    return { type: GameStateEnum.removePhaser };
 }
 
 export function setLevel(level: number): SetLevel {
-    return { type: Constants.setLevel, payload: level };
+    return { type: GameStateEnum.setLevel, payload: level };
 }
 
 export function nextLevel(): NextLevel {
-    return { type: Constants.nextLevel };
+    return { type: GameStateEnum.nextLevel };
 }
 
 export function addLifeAndPhaser(): AddLifeAndPhaser {
-    return { type: Constants.addLifeAndPhaser };
+    return { type: GameStateEnum.addLifeAndPhaser };
 }
 
 export function setPause(pause: boolean): SetPause {
     return {
-        type: Constants.setPause,
+        type: GameStateEnum.setPause,
         payload: pause,
     };
 }
 
 export function setWarpGamteComplexity(complexity: WarpLevelComplexity): SetWarpGateComplexity {
     return {
-        type: Constants.setWarpLevelComplexity,
+        type: GameStateEnum.setWarpLevelComplexity,
         complexity,
     };
 }
 
 export function gameOver(): GameOver {
     return {
-        type: Constants.gameOver,
+        type: GameStateEnum.gameOver,
     };
 }
 
 export function gameStart(): ResetGameState {
     return {
-        type: Constants.resetGameState,
+        type: GameStateEnum.resetGameState,
     };
 }
 
 export function enemeyHit(): EnemyHit {
     return {
-        type: Constants.enemyHit,
+        type: GameStateEnum.enemyHit,
     };
 }
 
 export function phaserFired(): PhaserFired {
     return {
-        type: Constants.phasersFired,
+        type: GameStateEnum.phasersFired,
     };
 }
 
 export function bulletFired(): BulletFired {
     return {
-        type: Constants.bulletFired,
+        type: GameStateEnum.bulletFired,
     };
 }
 
 export function setTimeLevelTimeLimit(limit: number): SetTimeLevelTimeLimit {
     return {
-        type: Constants.setTimeLevelTimeLimit,
+        type: GameStateEnum.setTimeLevelTimeLimit,
         limit,
     };
 }
 
 export function resetScore(): ResetScore {
     return {
-        type: Constants.resetScore,
+        type: GameStateEnum.resetScore,
     };
 }
 
 export function setPlaySounds(playSounds: boolean): SetPlaySounds {
     return {
-        type: Constants.playSounds,
+        type: GameStateEnum.playSounds,
         playSounds,
     };
 }

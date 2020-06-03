@@ -9,7 +9,7 @@
  * Responsibility:  Actions for Debugging state.
  */
 
-import Constants from "./DebuggingConstants";
+import Constants from "./DebuggingEnum";
 import DebuggingState from "./DebuggingState";
 import { SetDebuggingState } from "./DebuggingTypes";
 

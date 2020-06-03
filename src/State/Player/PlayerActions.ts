@@ -12,27 +12,27 @@
 import { GameLocation } from "../../Models/GameLocation";
 import { MoveLimits } from "../../Types";
 import { ParticleState } from "../ParticleState";
-import Constants from "./PlayerConstants";
+import PlayerEnum from "./PlayerEnum";
 import { PlayerHitboxes } from "./PlayerState";
 import { SetPlayerBulletState, SetPlayerIsAlive, SetPlayerLocationData, SetPlayerMovementLimit } from "./PlayerTypes";
 
 export function setPlayerIsAlive(playerAlive: boolean): SetPlayerIsAlive {
     return {
-        type: Constants.setPlayerIsAlive,
+        type: PlayerEnum.setPlayerIsAlive,
         playerIsAlive: playerAlive,
     };
 }
 
 export function setPlayerMovementLimit(moveLimit: MoveLimits): SetPlayerMovementLimit {
     return {
-        type: Constants.setPlayerMovementLimit,
+        type: PlayerEnum.setPlayerMovementLimit,
         payload: moveLimit
     };
 }
 
 export function setPlayerLocationData(left: number, top: number, hitboxes?: PlayerHitboxes, nozzleLocation?: GameLocation): SetPlayerLocationData {
     return {
-        type: Constants.setPlayerLocationData,
+        type: PlayerEnum.setPlayerLocationData,
         payload: {
             left,
             top,
@@ -44,7 +44,7 @@ export function setPlayerLocationData(left: number, top: number, hitboxes?: Play
 
 export function setPlayerBulletState(particleState: ParticleState | undefined): SetPlayerBulletState  {
     return {
-        type: Constants.setPlayerBulletState,
+        type: PlayerEnum.setPlayerBulletState,
         particleState,
     };
 }

@@ -11,20 +11,20 @@
 
 import { GameLocation } from "../../Models/GameLocation";
 import { ParticleState } from "../ParticleState";
-import Constants from "./EnemyLevelConstants";
+import EnemyLevelEnum from "./EnemyLevelEnum";
 import { AddBullet, AddExplosionCenter, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetBulletState, SetEnemies, SetPhaserLocations, SetShrapnellState, SetTotalEnemies, UpdateEnemyLastFireTick as SetEnemyLastFireTick } from "./EnemyLevelTypes";
 import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 
 export function resetLevelState(): ResetLevelState {
     return {
-        type: Constants.resetLevelState,
+        type: EnemyLevelEnum.resetLevelState,
     };
 }
 
 export function addExplosionCenter(explosionCenter: ExplosionCenterState, shrapnell: ParticleState[]): AddExplosionCenter {
     return {
-        type: Constants.addExplosionCenter,
+        type: EnemyLevelEnum.addExplosionCenter,
         explosionCenter,
         shrapnell,
     };
@@ -32,62 +32,62 @@ export function addExplosionCenter(explosionCenter: ExplosionCenterState, shrapn
 
 export function setShrapnellState(shrapnell: ParticleState[]): SetShrapnellState {
     return {
-        type: Constants.setShrapnellState,
+        type: EnemyLevelEnum.setShrapnellState,
         shrapnell,
     };
 }
 
 export function setPhaserLocations(locations: GameLocation[]): SetPhaserLocations {
     return {
-        type: Constants.setPhaserLocations,
+        type: EnemyLevelEnum.setPhaserLocations,
         payload: locations,
     };
 }
 
 export function clearPhaserLocations(): ClearPhaserLocations {
     return {
-        type: Constants.clearPhaserLocations,
+        type: EnemyLevelEnum.clearPhaserLocations,
     };
 }
 
 export function setExplosionCenters(explosionCenters: ExplosionCenterState[]) {
     return {
-        type: Constants.setExplosionCenters,
+        type: EnemyLevelEnum.setExplosionCenters,
         explosionCenters
     };
 }
 
 export function addBullet(bullet: ParticleState): AddBullet {
     return {
-        type: Constants.addBullet,
+        type: EnemyLevelEnum.addBullet,
         bullet,
     };
 }
 
 export function setBulletState(bullets: ParticleState[]): SetBulletState {
     return {
-        type: Constants.setBulletState,
+        type: EnemyLevelEnum.setBulletState,
         bullets,
     };
 }
 
 export function setTotalEnemies(totalEnemies: number): SetTotalEnemies {
     return {
-        type: Constants.setTotalEnemies,
+        type: EnemyLevelEnum.setTotalEnemies,
         totalEnemies,
     };
 }
 
 export function removeEnemy(enemyId: number): RemoveEnemy {
     return {
-        type: Constants.removeEnemy,
+        type: EnemyLevelEnum.removeEnemy,
         enemyId,
     };
 }
 
 export function setEnemyLastFireTick(enemyId: number, tick: number): SetEnemyLastFireTick {
     return {
-        type: Constants.setEnemyLastFireTick,
+        type: EnemyLevelEnum.setEnemyLastFireTick,
         payload: {
             enemyId,
             tick,
@@ -97,7 +97,7 @@ export function setEnemyLastFireTick(enemyId: number, tick: number): SetEnemyLas
 
 export function setEnemiesState(enemies: EnemyState[]): SetEnemies {
     return {
-        type: Constants.setEnemies,
+        type: EnemyLevelEnum.setEnemies,
         enemies,
     };
 }

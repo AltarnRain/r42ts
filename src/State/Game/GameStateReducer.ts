@@ -5,7 +5,7 @@
  */
 
 import produce from "immer";
-import Constants from "./GameConstants";
+import GameStateEnum from "./GameEnum";
 import GameState from "./GameState";
 import { GameStateTypes } from "./GameTypes";
 import getWarpGateComplexity from "./WarpGateComplexities";
@@ -24,28 +24,28 @@ import getWarpGateComplexity from "./WarpGateComplexities";
 export default function gameStateReducer(state: GameState = initState(), action: GameStateTypes): GameState {
     return produce(state, (draft) => {
         switch (action.type) {
-            case Constants.increaseScore:
+            case GameStateEnum.increaseScore:
                 draft.score += action.payload;
                 break;
-            case Constants.setLives:
+            case GameStateEnum.setLives:
                 draft.lives = action.payload;
                 break;
-            case Constants.removeLife:
+            case GameStateEnum.removeLife:
                 draft.lives -= 1;
                 break;
-            case Constants.setPhasers:
+            case GameStateEnum.setPhasers:
                 draft.phasers = action.payload;
                 break;
-            case Constants.addPhaser:
+            case GameStateEnum.addPhaser:
                 draft.phasers += 1;
                 break;
-            case Constants.removePhaser:
+            case GameStateEnum.removePhaser:
                 draft.phasers--;
                 break;
-            case Constants.setLevel:
+            case GameStateEnum.setLevel:
                 draft.level = action.payload;
                 break;
-            case Constants.nextLevel:
+            case GameStateEnum.nextLevel:
                 if (draft.level === 42) {
                     draft.hardMode = true;
                     draft.level = 1;
@@ -54,21 +54,21 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 }
 
                 break;
-            case Constants.addLifeAndPhaser:
+            case GameStateEnum.addLifeAndPhaser:
                 draft.lives++;
                 draft.phasers++;
                 draft.lastAwardScore = draft.score;
                 break;
-            case Constants.setPause:
+            case GameStateEnum.setPause:
                 draft.pause = action.payload;
                 break;
-            case Constants.setWarpLevelComplexity:
+            case GameStateEnum.setWarpLevelComplexity:
                 draft.warpLevelSteps = getWarpGateComplexity(action.complexity);
                 break;
-            case Constants.gameOver:
+            case GameStateEnum.gameOver:
                 draft.gameOver = true;
                 break;
-            case Constants.resetGameState:
+            case GameStateEnum.resetGameState:
                 draft.gameOver = false;
                 draft.phasers = 1;
                 draft.lives = 2;
@@ -77,23 +77,23 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 draft.enemiesHit = 0;
                 draft.lastAwardScore = 0;
                 break;
-            case Constants.enemyHit:
+            case GameStateEnum.enemyHit:
                 draft.enemiesHit++;
                 break;
 
-            case Constants.bulletFired:
+            case GameStateEnum.bulletFired:
                 draft.bulletsFired++;
                 break;
-            case Constants.setTimeLevelTimeLimit:
+            case GameStateEnum.setTimeLevelTimeLimit:
                 // Used to debug the game and not spend 20 seconds waiting
                 draft.timeLevelTimeLimit = action.limit;
                 break;
-            case Constants.resetScore:
+            case GameStateEnum.resetScore:
                 // Score is reset when the player self destructs.
                 draft.score = 0;
                 draft.lastAwardScore = 0;
                 break;
-            case Constants.playSounds:
+            case GameStateEnum.playSounds:
                 draft.playSounds = action.playSounds;
                 break;
         }

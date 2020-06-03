@@ -12,21 +12,21 @@
 import { GameLocation } from "../../Models/GameLocation";
 import { MoveLimits } from "../../Types";
 import { ParticleState } from "../ParticleState";
-import Constants from "./PlayerConstants";
+import PlayerEnum from "./PlayerEnum";
 import { PlayerHitboxes } from "./PlayerState";
 
 export interface SetPlayerIsAlive {
-    type: typeof Constants.setPlayerIsAlive;
+    type: typeof PlayerEnum.setPlayerIsAlive;
     playerIsAlive: boolean;
 }
 
 export interface SetPlayerMovementLimit {
-    type: typeof Constants.setPlayerMovementLimit;
+    type: typeof PlayerEnum.setPlayerMovementLimit;
     payload: MoveLimits;
 }
 
 export interface SetPlayerLocationData {
-    type: typeof Constants.setPlayerLocationData;
+    type: typeof PlayerEnum.setPlayerLocationData;
     payload: {
         left: number;
         top: number;
@@ -36,7 +36,7 @@ export interface SetPlayerLocationData {
 }
 
 export interface SetPlayerBulletState {
-    type: typeof Constants.setPlayerBulletState;
+    type: typeof PlayerEnum.setPlayerBulletState;
     particleState: ParticleState | undefined;
 }
 

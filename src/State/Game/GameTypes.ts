@@ -9,90 +9,90 @@
  * Responsibility:  Action return types for the GameState
  */
 
-import Constants from "./GameConstants";
+import GameStateEnum from "./GameEnum";
 import { WarpLevelComplexity } from "./WarpLevelTypes";
 
 export interface IncreaseScore {
-    type: typeof Constants.increaseScore;
+    type: typeof GameStateEnum.increaseScore;
     payload: number;
 }
 
 export interface SetLives {
-    type: typeof Constants.setLives;
+    type: typeof GameStateEnum.setLives;
     payload: number;
 }
 
 export interface RemoveLife {
-    type: typeof Constants.removeLife;
+    type: typeof GameStateEnum.removeLife;
 }
 
 export interface SetPhasers {
-    type: typeof Constants.setPhasers;
+    type: typeof GameStateEnum.setPhasers;
     payload: number;
 }
 
 export interface AddPhaser {
-    type: typeof Constants.addPhaser;
+    type: typeof GameStateEnum.addPhaser;
 }
 
 export interface RemovePhaser {
-    type: typeof Constants.removePhaser;
+    type: typeof GameStateEnum.removePhaser;
 }
 
 export interface SetLevel {
-    type: typeof Constants.setLevel;
+    type: typeof GameStateEnum.setLevel;
     payload: number;
 }
 
 export interface NextLevel {
-    type: typeof Constants.nextLevel;
+    type: typeof GameStateEnum.nextLevel;
 }
 
 export interface AddLifeAndPhaser {
-    type: typeof Constants.addLifeAndPhaser;
+    type: typeof GameStateEnum.addLifeAndPhaser;
 }
 
 export interface SetPause {
-    type: typeof Constants.setPause;
+    type: typeof GameStateEnum.setPause;
     payload: boolean;
 }
 
 export interface SetWarpGateComplexity {
-    type: typeof Constants.setWarpLevelComplexity;
+    type: typeof GameStateEnum.setWarpLevelComplexity;
     complexity: WarpLevelComplexity;
 }
 
 export interface GameOver {
-    type: typeof Constants.gameOver;
+    type: typeof GameStateEnum.gameOver;
 }
 
 export interface ResetGameState {
-    type: typeof Constants.resetGameState;
+    type: typeof GameStateEnum.resetGameState;
 }
 
 export interface BulletFired {
-    type: typeof Constants.bulletFired;
+    type: typeof GameStateEnum.bulletFired;
 }
 
 export interface PhaserFired {
-    type: typeof Constants.phasersFired;
+    type: typeof GameStateEnum.phasersFired;
 }
 
 export interface EnemyHit {
-    type: typeof Constants.enemyHit;
+    type: typeof GameStateEnum.enemyHit;
 }
 
 export interface SetTimeLevelTimeLimit {
-    type: typeof Constants.setTimeLevelTimeLimit;
+    type: typeof GameStateEnum.setTimeLevelTimeLimit;
     limit: number;
 }
 
 export interface ResetScore {
-    type: typeof Constants.resetScore;
+    type: typeof GameStateEnum.resetScore;
 }
 
 export interface SetPlaySounds {
-    type: typeof Constants.playSounds;
+    type: typeof GameStateEnum.playSounds;
     playSounds: boolean;
 }
 

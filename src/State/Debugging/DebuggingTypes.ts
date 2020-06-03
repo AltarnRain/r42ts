@@ -9,7 +9,7 @@
  * Responsibility:  Types for debugging state actions
  */
 
-import Constants from "./DebuggingConstants";
+import Constants from "./DebuggingEnum";
 import DebuggingState from "./DebuggingState";
 
 export interface SetDebuggingState {

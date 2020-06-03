@@ -9,7 +9,7 @@ import { Locations } from "../../Constants/Constants";
 import getPlayerExplosion from "../../Player/PlayerExplosion";
 import { getPlayerFrame as getColoredPlayerFrame } from "../../Player/PlayerFrames";
 import Mutators from "../../Utility/FrameMutators";
-import Constants from "./PlayerConstants";
+import PlayerEnum from "./PlayerEnum";
 import PlayerState from "./PlayerState";
 import { PlayerStateTypes } from "./PlayerTypes";
 
@@ -27,19 +27,19 @@ import { PlayerStateTypes } from "./PlayerTypes";
 export default function playerReducer(state: PlayerState = initState(), action: PlayerStateTypes): PlayerState {
     return produce(state, (draft) => {
         switch (action.type) {
-            case Constants.setPlayerIsAlive:
+            case PlayerEnum.setPlayerIsAlive:
                 draft.alive = action.playerIsAlive;
                 break;
-            case Constants.setPlayerMovementLimit:
+            case PlayerEnum.setPlayerMovementLimit:
                 draft.moveLimit = action.payload;
                 break;
-            case Constants.setPlayerLocationData:
+            case PlayerEnum.setPlayerLocationData:
                 draft.left = action.payload.left;
                 draft.top = action.payload.top;
                 draft.hitboxes = action.payload.hitboxes;
                 draft.nozzleLocation = action.payload.nozzleLocation;
                 break;
-            case Constants.setPlayerBulletState:
+            case PlayerEnum.setPlayerBulletState:
                 draft.bulletState = action.particleState;
                 break;
         }

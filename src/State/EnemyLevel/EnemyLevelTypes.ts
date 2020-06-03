@@ -11,61 +11,61 @@
 
 import { GameLocation } from "../../Models/GameLocation";
 import { ParticleState } from "../ParticleState";
-import Constants from "./EnemyLevelConstants";
+import EnemyLevelEnum from "./EnemyLevelEnum";
 import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";
 
 export interface ResetLevelState {
-    type: typeof Constants.resetLevelState;
+    type: typeof EnemyLevelEnum.resetLevelState;
 }
 
 export interface SetShrapnellState {
-    type: typeof Constants.setShrapnellState;
+    type: typeof EnemyLevelEnum.setShrapnellState;
     shrapnell: ParticleState[];
 }
 
 export interface AddExplosionCenter {
-    type: typeof Constants.addExplosionCenter;
+    type: typeof EnemyLevelEnum.addExplosionCenter;
     explosionCenter: ExplosionCenterState;
     shrapnell: ParticleState[];
 }
 
 export interface SetPhaserLocations {
-    type: typeof Constants.setPhaserLocations;
+    type: typeof EnemyLevelEnum.setPhaserLocations;
     payload: GameLocation[];
 }
 
 export interface ClearPhaserLocations {
-    type: typeof Constants.clearPhaserLocations;
+    type: typeof EnemyLevelEnum.clearPhaserLocations;
 }
 
 export interface SetExplosionCenters {
-    type: typeof Constants.setExplosionCenters;
+    type: typeof EnemyLevelEnum.setExplosionCenters;
     explosionCenters: ExplosionCenterState[];
 }
 
 export interface AddBullet {
-    type: typeof Constants.addBullet;
+    type: typeof EnemyLevelEnum.addBullet;
     bullet: ParticleState;
 }
 
 export interface SetBulletState {
-    type: typeof Constants.setBulletState;
+    type: typeof EnemyLevelEnum.setBulletState;
     bullets: ParticleState[];
 }
 
 export interface SetTotalEnemies {
-    type: typeof Constants.setTotalEnemies;
+    type: typeof EnemyLevelEnum.setTotalEnemies;
     totalEnemies: number;
 }
 
 export interface RemoveEnemy {
-    type: typeof Constants.removeEnemy;
+    type: typeof EnemyLevelEnum.removeEnemy;
     enemyId: number;
 }
 
 export interface UpdateEnemyLastFireTick {
-    type: typeof Constants.setEnemyLastFireTick;
+    type: typeof EnemyLevelEnum.setEnemyLastFireTick;
     payload: {
         enemyId: number,
         tick: number,
@@ -73,7 +73,7 @@ export interface UpdateEnemyLastFireTick {
 }
 
 export interface SetEnemies {
-    type: typeof Constants.setEnemies;
+    type: typeof EnemyLevelEnum.setEnemies;
     enemies: EnemyState[];
 }
 export type EnemyLevelTypes =

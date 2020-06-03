@@ -16,15 +16,15 @@
  */
 
 /**
- * Module:          Constants
- * Responsibility:  Provide constants for the player reducer and actions.
+ * Module:          PlayerEnum
+ * Responsibility:  An Enum that provides a unique number for each player action.
  */
 
-namespace Constants {
-    export const setPlayerIsAlive = "setPlayerIsAlive";
-    export const setPlayerMovementLimit = "setPlayerMovementLimit";
-    export const setPlayerLocationData = "setPlayerLocationData";
-    export const setPlayerBulletState = "setPlayerBulletState";
+enum PlayerEnum {
+    setPlayerIsAlive = 3000,
+    setPlayerMovementLimit,
+    setPlayerLocationData,
+    setPlayerBulletState,
 }
 
-export default Constants;
+export default PlayerEnum;

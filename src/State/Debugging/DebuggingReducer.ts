@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import Constants from "./DebuggingConstants";
+import Constants from "./DebuggingEnum";
 import DebuggingState from "./DebuggingState";
 import { DebuggingTypes } from "./DebuggingTypes";
 
