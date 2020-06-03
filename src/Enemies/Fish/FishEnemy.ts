@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { GameLocation } from "../../Models/GameLocation";
+import GameLocation from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
 import Mutators from "../../Utility/FrameMutators";
 import DirectionFrameEnemy from "../DirectionFrameEnemy";

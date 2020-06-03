@@ -12,7 +12,7 @@
 /**
  * Model for a hitbox.
  */
-export interface GameRectangle {
+export default interface GameRectangle {
     /**
      * Left coordinate
      */

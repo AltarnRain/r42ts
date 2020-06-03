@@ -7,8 +7,8 @@
 import BaseEnemy from "../Base/BaseEnemy";
 import BaseFrameProvider from "../Base/BaseFrameProvider";
 import ILocationDirectionProvider from "../Interfaces/ILocationDirectionProvider";
-import { OffsetFramesProviderFunction } from "../Types/OffsetFramesProviderFunction";
-import { ExplosionProviderFunction } from "../ShipsToFireProviders/ExplosionProviderFunction";
+import ExplosionProviderFunction from "../ShipsToFireProviders/ExplosionProviderFunction";
+import OffsetFramesProviderFunction from "../Types/OffsetFramesProviderFunction";
 import Mutators from "../Utility/FrameMutators";
 
 /**

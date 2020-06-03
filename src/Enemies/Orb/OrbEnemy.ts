@@ -11,9 +11,9 @@ import { ColorSchemes, Locations } from "../../Constants/Constants";
 import TickHandler from "../../Handlers/TickHandler";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
-import { OffsetFramesProviderFunction } from "../../Types/OffsetFramesProviderFunction";
-import { ExplosionProviderFunction } from "../../ShipsToFireProviders/ExplosionProviderFunction";
-import { Frame } from "../../Types/Frame";
+import ExplosionProviderFunction from "../../ShipsToFireProviders/ExplosionProviderFunction";
+import Frame from "../../Types/Frame";
+import OffsetFramesProviderFunction from "../../Types/OffsetFramesProviderFunction";
 import { getFrameDimensions } from "../../Utility/Frame";
 import Mutators from "../../Utility/FrameMutators";
 

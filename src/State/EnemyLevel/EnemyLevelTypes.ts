@@ -9,7 +9,7 @@
  * Responsibility:  Action types for EnemyLevelState changes.
  */
 
-import { GameLocation } from "../../Models/GameLocation";
+import GameLocation from "../../Models/GameLocation";
 import { ParticleState } from "../ParticleState";
 import EnemyLevelEnum from "./EnemyLevelEnum";
 import { EnemyState } from "./EnemyState";

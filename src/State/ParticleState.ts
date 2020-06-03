@@ -10,8 +10,8 @@
  *                  Essentially is a bunch of pixels that move and can hit something.
  */
 
-import { GameRectangle } from "../Models/GameRectangle";
-import { Frame } from "../Types/Frame";
+import GameRectangle from "../Models/GameRectangle";
+import Frame from "../Types/Frame";
 
 export interface ParticleState {
     /**

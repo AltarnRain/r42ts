@@ -12,4 +12,6 @@
 /**
  * A single frame.
  */
-export type Frame = string[][];
+type Frame = string[][];
+
+export default Frame;

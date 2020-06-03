@@ -14,7 +14,7 @@ import Guard from "../Guard";
 import ShipToFire from "../ShipsToFire";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
 import { appState } from "../State/Store";
-import { Angle } from "../Types/Angle";
+import Angle from "../Types/Angle";
 import { calculateAngle, calculateAngleDifference } from "../Utility/Geometry";
 import { getShipsReadyToFire } from "./GetShipsReadyToFire";
 

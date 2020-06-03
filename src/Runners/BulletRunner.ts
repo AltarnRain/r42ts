@@ -8,8 +8,8 @@ import getTwoPixelBullet from "../SharedFrames/GetTwoPixelBullet";
 import { addBullet, setEnemyLastFireTick } from "../State/EnemyLevel/EnemyLevelActions";
 import { StateProviders } from "../State/StateProviders";
 import { appState, dispatch } from "../State/Store";
-import { ShipsToFireFunction } from "../Types/ShipsToFireFunction";
-import { Frame } from "../Types/Frame";
+import Frame from "../Types/Frame";
+import ShipsToFireFunction from "../Types/ShipsToFireFunction";
 
 /**
  * Module:          BulletRunner

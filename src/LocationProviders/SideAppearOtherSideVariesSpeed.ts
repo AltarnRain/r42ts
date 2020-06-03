@@ -6,7 +6,7 @@
 
 import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
 import ILocationProvider from "../Interfaces/ILocationProvider";
-import { GameLocation } from "../Models/GameLocation";
+import GameLocation from "../Models/GameLocation";
 import { getNextLocationWithinBoundaries } from "../Utility/Location";
 
 /**

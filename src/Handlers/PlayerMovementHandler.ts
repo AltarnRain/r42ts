@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { GameLocation } from "../Models/GameLocation";
+import GameLocation from "../Models/GameLocation";
 import { getPlayerFrame } from "../Player/PlayerFrames";
 import dimensionProvider from "../Providers/DimensionProvider";
 import SpeedProvider from "../Providers/SpeedProvider";

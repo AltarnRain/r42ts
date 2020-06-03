@@ -5,7 +5,7 @@
  */
 
 import ILocationProvider from "../Interfaces/ILocationProvider";
-import { GameLocation } from "../Models/GameLocation";
+import GameLocation from "../Models/GameLocation";
 
 /**
  * Module:          Immobile

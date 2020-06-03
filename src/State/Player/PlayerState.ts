@@ -5,10 +5,10 @@
  */
 
 import Explosion from "../../Models/Explosion";
-import { GameLocation } from "../../Models/GameLocation";
-import { GameRectangle } from "../../Models/GameRectangle";
-import { MoveLimits } from "../../Types/MoveLimits";
-import { Frame } from "../../Types/Frame";
+import GameLocation from "../../Models/GameLocation";
+import GameRectangle from "../../Models/GameRectangle";
+import Frame from "../../Types/Frame";
+import MoveLimits from "../../Types/MoveLimits";
 import { ParticleState } from "../ParticleState";
 
 /**

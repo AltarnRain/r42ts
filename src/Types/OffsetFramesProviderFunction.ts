@@ -14,4 +14,6 @@ import { OffsetFrames } from "../Models/OffsetFrames";
 /**
  * Always provides a fresh OffsetFrame object.
  */
-export type OffsetFramesProviderFunction = () => OffsetFrames;
+type OffsetFramesProviderFunction = () => OffsetFrames;
+
+export default OffsetFramesProviderFunction;

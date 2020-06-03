@@ -9,7 +9,7 @@
  * Responsibility:  Define a bullet 2 pixels wide. Variant color allows it to be any color. Used as a bullet resource for anything that shoots.
  */
 
-import { Frame } from "../Types/Frame";
+import Frame from "../Types/Frame";
 import Mutators from "../Utility/FrameMutators";
 
 export default function getTwoPixelBullet(color?: string): Frame {

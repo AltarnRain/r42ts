@@ -7,7 +7,7 @@
 import SpeedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
-import { Frame } from "../Types/Frame";
+import Frame from "../Types/Frame";
 import { calculateAngle } from "../Utility/Geometry";
 import { calculateDistance, getLocation } from "../Utility/Location";
 

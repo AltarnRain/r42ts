@@ -12,4 +12,6 @@
 /**
  * Movement Limits for the player.
  */
-export type MoveLimits = "immobile" | "sideways" | "forceup" | "none";
+type MoveLimits = "immobile" | "sideways" | "forceup" | "none";
+
+export default MoveLimits;

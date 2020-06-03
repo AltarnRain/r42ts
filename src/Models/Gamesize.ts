@@ -9,7 +9,7 @@
  * Responsibility:  Model for a GameSize.
  */
 
-export interface GameSize {
+export default interface GameSize {
     /**
      * Width of something
      */

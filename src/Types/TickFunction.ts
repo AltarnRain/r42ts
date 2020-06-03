@@ -12,4 +12,6 @@
 /**
  * A function that accepts a 'tick' as a parameter.
  */
-export type TickFunction = (tick: number) => void;
+type TickFunction = (tick: number) => void;
+
+export default TickFunction;

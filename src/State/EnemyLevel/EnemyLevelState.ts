@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { GameLocation } from "../../Models/GameLocation";
+import GameLocation from "../../Models/GameLocation";
 import { ParticleState } from "../ParticleState";
 import { EnemyState } from "./EnemyState";
 import { ExplosionCenterState } from "./ExplosionCenterState";

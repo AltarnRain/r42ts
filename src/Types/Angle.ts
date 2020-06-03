@@ -12,4 +12,6 @@
 /**
  * An angle. An angle can be a number or undefined.
  */
-export type Angle = number | undefined;
+type Angle = number | undefined;
+
+export default Angle;

@@ -14,4 +14,6 @@ import ShipToFire from "../ShipsToFire";
 /**
  * A function that pulls in state to determine which ships should fire.
  */
-export type ShipsToFireFunction = (tick: number) => ShipToFire[];
+type ShipsToFireFunction = (tick: number) => ShipToFire[];
+
+export default ShipsToFireFunction;

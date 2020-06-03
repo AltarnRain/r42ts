@@ -9,7 +9,7 @@
  * Responsibility:  Define the GameField
  */
 
-import { GameRectangle } from "./GameRectangle";
+import GameRectangle from "./GameRectangle";
 export interface GameField extends GameRectangle {
 
     /**

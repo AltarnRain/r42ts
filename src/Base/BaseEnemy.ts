@@ -7,13 +7,13 @@
 import TickHandler from "../Handlers/TickHandler";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import Explosion from "../Models/Explosion";
-import { GameLocation } from "../Models/GameLocation";
-import { GameRectangle } from "../Models/GameRectangle";
+import GameLocation from "../Models/GameLocation";
+import GameRectangle from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
+import ExplosionProviderFunction from "../ShipsToFireProviders/ExplosionProviderFunction";
 import { EnemyState } from "../State/EnemyLevel/EnemyState";
-import { OffsetFramesProviderFunction } from "../Types/OffsetFramesProviderFunction";
-import { ExplosionProviderFunction } from "../ShipsToFireProviders/ExplosionProviderFunction";
-import { Frame } from "../Types/Frame";
+import Frame from "../Types/Frame";
+import OffsetFramesProviderFunction from "../Types/OffsetFramesProviderFunction";
 import { getFrameCenter, getFrameDimensions, getFrameHitbox } from "../Utility/Frame";
 import { getOffsetLocation } from "../Utility/Location";
 import BaseFrameProvider from "./BaseFrameProvider";

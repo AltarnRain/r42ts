@@ -9,8 +9,8 @@ import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import CGAColors from "../../Constants/CGAColors";
 import { Points } from "../../Constants/Constants";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
-import { OffsetFramesProviderFunction } from "../../Types/OffsetFramesProviderFunction";
-import { ExplosionProviderFunction } from "../../ShipsToFireProviders/ExplosionProviderFunction";
+import ExplosionProviderFunction from "../../ShipsToFireProviders/ExplosionProviderFunction";
+import OffsetFramesProviderFunction from "../../Types/OffsetFramesProviderFunction";
 import Mutators from "../../Utility/FrameMutators";
 
 /**

@@ -7,7 +7,7 @@
 import { FrameTimes, Locations } from "../Constants/Constants";
 import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
 import ILocationProvider from "../Interfaces/ILocationProvider";
-import { GameLocation } from "../Models/GameLocation";
+import GameLocation from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { getRandomLocation } from "../Utility/Location";
 

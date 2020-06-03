@@ -5,7 +5,7 @@
  */
 
 import { Locations } from "../../Constants/Constants";
-import { GameLocation } from "../../Models/GameLocation";
+import GameLocation from "../../Models/GameLocation";
 import dimensionProvider from "../../Providers/DimensionProvider";
 
 /**

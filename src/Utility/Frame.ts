@@ -4,11 +4,11 @@
  * See LICENSE.MD.
  */
 
-import { GameLocation } from "../Models/GameLocation";
-import { GameRectangle } from "../Models/GameRectangle";
-import { GameSize } from "../Models/GameSize";
+import GameLocation from "../Models/GameLocation";
+import GameRectangle from "../Models/GameRectangle";
+import GameSize from "../Models/GameSize";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { Frame } from "../Types/Frame";
+import Frame from "../Types/Frame";
 
 /**
  * Module:          Frame

@@ -4,9 +4,9 @@
  * See LICENSE.MD.
  */
 
-import { Frame } from "../Types/Frame";
-import { GameLocation } from "./GameLocation";
-import { GameSize } from "./GameSize";
+import Frame from "../Types/Frame";
+import GameLocation from "./GameLocation";
+import GameSize from "./GameSize";
 
 /**
  * Module:          OffsetFrames

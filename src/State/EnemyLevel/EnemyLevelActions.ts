@@ -9,7 +9,7 @@
  * Responsibility:  Action creators for the EnemyLevelState
  */
 
-import { GameLocation } from "../../Models/GameLocation";
+import GameLocation from "../../Models/GameLocation";
 import { ParticleState } from "../ParticleState";
 import EnemyLevelEnum from "./EnemyLevelEnum";
 import { AddBullet, AddExplosionCenter, ClearPhaserLocations, RemoveEnemy, ResetLevelState, SetBulletState, SetEnemies, SetPhaserLocations, SetShrapnellState, SetTotalEnemies, UpdateEnemyLastFireTick as SetEnemyLastFireTick } from "./EnemyLevelTypes";

@@ -9,8 +9,8 @@
  * Responsibility:  Type definitions for action creator functions return type.
  */
 
-import { GameLocation } from "../../Models/GameLocation";
-import { MoveLimits } from "../../Types/MoveLimits";
+import GameLocation from "../../Models/GameLocation";
+import MoveLimits from "../../Types/MoveLimits";
 import { ParticleState } from "../ParticleState";
 import PlayerEnum from "./PlayerEnum";
 import { PlayerHitboxes } from "./PlayerState";

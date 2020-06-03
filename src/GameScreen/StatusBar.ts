@@ -11,7 +11,7 @@ import ctxProvider from "../Render/CtxProvider";
 import renderFrame from "../Render/RenderFrame";
 import getNumbers from "../SharedFrames/GetNumbers";
 import { appState } from "../State/Store";
-import { Frame } from "../Types/Frame";
+import Frame from "../Types/Frame";
 import { getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
 import Mutators from "../Utility/FrameMutators";
 import { padLeft } from "../Utility/String";

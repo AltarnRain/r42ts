@@ -12,7 +12,7 @@ import drawLevelBanner from "../GameScreen/LevelBanner";
 import { drawBackground, drawWarpBackground } from "../GameScreen/StaticRenders";
 import Guard from "../Guard";
 import ILevel from "../Interfaces/ILevel";
-import { GameRectangle } from "../Models/GameRectangle";
+import GameRectangle from "../Models/GameRectangle";
 import dimensionProvider from "../Providers/DimensionProvider";
 import { SoundPlayer } from "../Sound/SoundPlayer";
 import { increaseScore } from "../State/Game/GameActions";

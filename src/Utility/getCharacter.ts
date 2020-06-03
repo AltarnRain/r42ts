@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frame } from "../Types/Frame";
+import Frame from "../Types/Frame";
 
 /**
  * Module:          getCharacter

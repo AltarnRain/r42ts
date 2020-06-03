@@ -5,7 +5,7 @@
  */
 
 import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
-import { Frame } from "../Types/Frame";
+import Frame from "../Types/Frame";
 import { copyFrame, copyFrames, getFrameByIndex } from "../Utility/Frame";
 
 /**

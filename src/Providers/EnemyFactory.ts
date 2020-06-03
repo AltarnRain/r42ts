@@ -46,7 +46,7 @@ import RandomReapperance from "../LocationProviders/RandomReapperance";
 import SideAppearOtherSide from "../LocationProviders/SideAppearOtherSide";
 import SideAppearOtherSideVariesSpeed from "../LocationProviders/SideAppearOtherSideVariesSpeed";
 import Wobble from "../LocationProviders/Wobble";
-import { GameLocation } from "../Models/GameLocation";
+import GameLocation from "../Models/GameLocation";
 import getExplosion01 from "../SharedFrames/GetExplosion01";
 import getExplosion02 from "../SharedFrames/GetExplosion02";
 import getExplosion03 from "../SharedFrames/GetExplosion03";

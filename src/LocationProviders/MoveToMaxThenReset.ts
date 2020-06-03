@@ -5,7 +5,7 @@
  */
 
 import BaseLocationProvider from "../Base/BaseLocationProvider";
-import { GameLocation } from "../Models/GameLocation";
+import GameLocation from "../Models/GameLocation";
 import { getUpOrDownFromAngle } from "../Utility/Geometry";
 import { getLocation } from "../Utility/Location";
 

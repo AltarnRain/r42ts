@@ -5,7 +5,7 @@
  */
 
 import BaseFrameProvider from "../Base/BaseFrameProvider";
-import { Frame } from "../Types/Frame";
+import Frame from "../Types/Frame";
 
 /**
  * Module:          OneFrameProvider

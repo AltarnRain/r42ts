@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { GameRectangle } from "../Models/GameRectangle";
+import GameRectangle from "../Models/GameRectangle";
 import { PlayerHitboxes } from "../State/Player/PlayerState";
 import { overlaps } from "../Utility/Geometry";
 
