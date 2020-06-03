@@ -11,7 +11,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 import { SoundPlayer } from "../Sound/SoundPlayer";
 import { setPlayerIsAlive, setPlayerLocationData, setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
-import { MoveLimits } from "../Types";
+import { MoveLimits } from "../Types/MoveLimits";
 import { getLocation } from "../Utility/Location";
 import PlayerFormationPart from "./PlayerFormationPart";
 import { getPlayerFormationFrames } from "./PlayerFrames";

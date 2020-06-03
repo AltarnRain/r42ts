@@ -7,7 +7,7 @@
 import Explosion from "../../Models/Explosion";
 import { GameLocation } from "../../Models/GameLocation";
 import { GameRectangle } from "../../Models/GameRectangle";
-import { Frame } from "../../Types";
+import { Frame } from "../../Types/Frame";
 
 /**
  * Module:          EnemyState

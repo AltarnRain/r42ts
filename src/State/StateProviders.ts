@@ -11,7 +11,7 @@
 
 import { produce } from "immer";
 import Explosion from "../Models/Explosion";
-import { Frame } from "../Types";
+import { Frame } from "../Types/Frame";
 import { getFrameHitbox } from "../Utility/Frame";
 import { fallsWithinGameField, getLocation } from "../Utility/Location";
 import { ParticleState } from "./ParticleState";

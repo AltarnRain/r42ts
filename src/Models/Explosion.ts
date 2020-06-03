@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { Frame } from "../Types";
+import { Frame } from "../Types/Frame";
 
 /**
  * Module:          Explosion.

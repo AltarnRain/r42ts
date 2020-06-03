@@ -7,7 +7,7 @@
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { Angle } from "../Types";
+import { Angle } from "../Types/Angle";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getLeftOrRightFromAngle } from "../Utility/Geometry";
 import { randomNumberInRange } from "../Utility/Lib";

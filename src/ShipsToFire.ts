@@ -5,7 +5,7 @@
  */
 
 import { EnemyState } from "./State/EnemyLevel/EnemyState";
-import { Angle } from "./Types";
+import { Angle } from "./Types/Angle";
 
 /**
  * Module:          ShipsToFire

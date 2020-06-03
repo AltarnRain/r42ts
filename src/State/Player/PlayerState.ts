@@ -7,7 +7,8 @@
 import Explosion from "../../Models/Explosion";
 import { GameLocation } from "../../Models/GameLocation";
 import { GameRectangle } from "../../Models/GameRectangle";
-import { Frame, MoveLimits } from "../../Types";
+import { MoveLimits } from "../../Types/MoveLimits";
+import { Frame } from "../../Types/Frame";
 import { ParticleState } from "../ParticleState";
 
 /**

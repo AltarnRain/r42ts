@@ -10,7 +10,9 @@ import CGAColors from "../../Constants/CGAColors";
 import { ColorSchemes, Points } from "../../Constants/Constants";
 import TickHandler from "../../Handlers/TickHandler";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
-import { ExplosionProviderFunction, Frame, OffsetFramesProviderFunction } from "../../Types";
+import { OffsetFramesProviderFunction } from "../../Types/OffsetFramesProviderFunction";
+import { ExplosionProviderFunction } from "../../ShipsToFireProviders/ExplosionProviderFunction";
+import { Frame } from "../../Types/Frame";
 import { getRandomArrayElement } from "../../Utility/Array";
 import Mutators from "../../Utility/FrameMutators";
 

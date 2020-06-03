@@ -5,7 +5,7 @@
  */
 
 import BaseFrameProvider from "../Base/BaseFrameProvider";
-import { Frame } from "../Types";
+import { Frame } from "../Types/Frame";
 
 /**
  * Module:          BackAndForthFrameProvider

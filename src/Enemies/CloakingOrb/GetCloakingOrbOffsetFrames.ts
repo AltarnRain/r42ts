@@ -5,7 +5,7 @@
  */
 
 import { OffsetFrames } from "../../Models/OffsetFrames";
-import { Frame } from "../../Types";
+import { Frame } from "../../Types/Frame";
 import { getMaximumFrameDimensions } from "../../Utility/Frame";
 
 /**

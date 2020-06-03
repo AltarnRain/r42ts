@@ -5,7 +5,7 @@
  */
 
 import dimensionProvider from "../Providers/DimensionProvider";
-import { Frame } from "../Types";
+import { Frame } from "../Types/Frame";
 import ctxProvider from "./CtxProvider";
 
 /**

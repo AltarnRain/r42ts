@@ -9,7 +9,8 @@ import BaseFrameProvider from "../../Base/BaseFrameProvider";
 import { ColorSchemes, Points } from "../../Constants/Constants";
 import ILocationProvider from "../../Interfaces/ILocationProvider";
 import dimensionProvider from "../../Providers/DimensionProvider";
-import { ExplosionProviderFunction, OffsetFramesProviderFunction } from "../../Types";
+import { OffsetFramesProviderFunction } from "../../Types/OffsetFramesProviderFunction";
+import { ExplosionProviderFunction } from "../../ShipsToFireProviders/ExplosionProviderFunction";
 import { getRandomArrayElement } from "../../Utility/Array";
 import Mutators from "../../Utility/FrameMutators";
 

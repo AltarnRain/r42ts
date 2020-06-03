@@ -11,7 +11,7 @@ import ctxProvider from "../Render/CtxProvider";
 import renderFrame from "../Render/RenderFrame";
 import getCharacters from "../SharedFrames/GetCharacters";
 import getNumbers from "../SharedFrames/GetNumbers";
-import { Frame } from "../Types";
+import { Frame } from "../Types/Frame";
 import { getFrameByIndex, getFrameDimensions } from "../Utility/Frame";
 import getCharacter from "../Utility/getCharacter";
 

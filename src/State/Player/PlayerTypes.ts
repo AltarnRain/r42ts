@@ -10,7 +10,7 @@
  */
 
 import { GameLocation } from "../../Models/GameLocation";
-import { MoveLimits } from "../../Types";
+import { MoveLimits } from "../../Types/MoveLimits";
 import { ParticleState } from "../ParticleState";
 import PlayerEnum from "./PlayerEnum";
 import { PlayerHitboxes } from "./PlayerState";

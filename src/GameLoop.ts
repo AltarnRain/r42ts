@@ -22,7 +22,7 @@ import { gameStart, resetScore, setPlaySounds } from "./State/Game/GameActions";
 import { resetKeyboardState } from "./State/Keyboard/KeyboardActions";
 import { setPlayerIsAlive, setPlayerLocationData } from "./State/Player/PlayerActions";
 import { appState, dispatch } from "./State/Store";
-import { TickFunction } from "./Types";
+import { TickFunction } from "./Types/TickFunction";
 import { registerListeners, unregisterListeners } from "./Utility/KeyboardEvents";
 
 /**

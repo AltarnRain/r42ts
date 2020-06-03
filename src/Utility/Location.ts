@@ -6,7 +6,7 @@
 
 import { GameLocation } from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { Angle } from "../Types";
+import { Angle } from "../Types/Angle";
 import { getLeftOrRightFromAngle, getNextX, getNextY } from "./Geometry";
 import { randomNumberInRange } from "./Lib";
 

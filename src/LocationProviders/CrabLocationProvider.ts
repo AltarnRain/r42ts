@@ -9,7 +9,7 @@ import IGetCurrentIndex from "../Interfaces/IGetCurrentFrame";
 import ILocationProvider from "../Interfaces/ILocationProvider";
 import { GameLocation } from "../Models/GameLocation";
 import dimensionProvider from "../Providers/DimensionProvider";
-import { Angle } from "../Types";
+import { Angle } from "../Types/Angle";
 import { getLocation } from "../Utility/Location";
 
 /**
