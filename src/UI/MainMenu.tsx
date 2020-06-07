@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import GameResultModel from "../Models/GameResultModel";
 import { HoverButton } from "./HoverButton";
 import { Styles } from "./Styles";
+import { startGame } from "../StartGame";
 
 /**
  * Module:          MainMenu
@@ -31,10 +32,10 @@ export default function MainMenu(props: { fps: number }): JSX.Element {
         // or windows mode.
         // Once loaded this module stays loaded. Thats why the game, when it ends, doesn't show the
         // main menu as switching to full screen would have no effect at that point.
-        import("../StartGame").then((m) => m.startGame(props.fps, true, (result) => {
+        startGame(props.fps, true, (result) => {
             setScreenState("gameover");
             setGameResult(result);
-        }));
+        });
     }
 
     /**
@@ -43,10 +44,10 @@ export default function MainMenu(props: { fps: number }): JSX.Element {
     function startGameWithoutSound(): void {
         // Remove the UI from screen.
         setScreenState("playing");
-        import("../StartGame").then((m) => m.startGame(props.fps, false, (result) => {
+        startGame(props.fps, false, (result) => {
             setScreenState("gameover");
             setGameResult(result);
-        }));
+        });
     }
 
     /**
