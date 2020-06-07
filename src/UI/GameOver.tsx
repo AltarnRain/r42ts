@@ -37,7 +37,7 @@ export default function GameOver(props: { setScreenState(screenState: ScreenStat
             </div>
             <br />
             <div style={Styles.buttonContainer}>
-                <HoverButton onClick={() => setScreenState("mainmenu")} text="Ok" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
+                <HoverButton onClick={() => setScreenState("mainmenu")} text="Ok" />
             </div>
         </>
     );

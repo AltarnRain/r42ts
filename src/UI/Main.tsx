@@ -7,6 +7,7 @@
 import React, { useState } from "react";
 import GameResultModel from "../Models/GameResultModel";
 import About from "./About";
+import { GameOptions } from "./GameOptions";
 import GameOver from "./GameOver";
 import MainMenu from "./MainMenu";
 import { ScreenState } from "./UITypes";
@@ -18,7 +19,7 @@ import { ScreenState } from "./UITypes";
 
 export default function Main(): JSX.Element {
 
-    const [screenState, setScreenState] = useState<ScreenState>("mainmenu");
+    const [screenState, setScreenState] = useState<ScreenState>("options");
     const [gameResult, setGameResult] = useState<GameResultModel>();
     const [gameSpeed, setGameSpeed] = useState(100);
 
@@ -27,7 +28,8 @@ export default function Main(): JSX.Element {
             {
                 screenState === "mainmenu" && <MainMenu setGameSpeed={setGameSpeed} setScreenState={setScreenState} setGameResult={setGameResult} gameSpeed={gameSpeed} /> ||
                 screenState === "about" && <About setScreenState={setScreenState} /> ||
-                screenState === "gameover" && <GameOver setScreenState={setScreenState} gameResult={gameResult} />
+                screenState === "gameover" && <GameOver setScreenState={setScreenState} gameResult={gameResult} /> ||
+                screenState === "options" && <GameOptions setGameSpeed={setGameSpeed} gameSpeed={gameSpeed} setScreenState={setScreenState} />
             }
         </div >
     );

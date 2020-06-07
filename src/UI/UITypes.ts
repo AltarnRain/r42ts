@@ -9,4 +9,4 @@
  * Responsibility:  Types used in the UI.
  */
 
-export type ScreenState = "mainmenu" | "playing" | "about" | "gameover";
+export type ScreenState = "mainmenu" | "playing" | "about" | "gameover" | "options";

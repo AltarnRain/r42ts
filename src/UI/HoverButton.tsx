@@ -4,14 +4,18 @@
  * See LICENSE.MD.
  */
 
-import React, { useState} from "react";
+import React, { useState } from "react";
+import { Styles } from "./Styles";
 
 /**
  * Module:          HoverButton
  * Responsibility:  Button that changes style when the mouse hovers over it.
  */
 
-export function HoverButton(props: { text: string, hoverStyle: React.CSSProperties, normalStyle: React.CSSProperties, onClick: () => void }): JSX.Element {
+export function HoverButton(props: {
+    text: string,
+    onClick: () => void
+}): JSX.Element {
 
     const [hover, setHover] = useState(false);
 
@@ -20,6 +24,6 @@ export function HoverButton(props: { text: string, hoverStyle: React.CSSProperti
     }
 
     return (
-        <button style={hover ? props.hoverStyle : props.normalStyle} onClick={props.onClick} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>{props.text}</button>
+        <button style={hover ? Styles.buttonHoverStyle : Styles.buttonStyle} onClick={props.onClick} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>{props.text}</button>
     );
 }

@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import React, { ChangeEvent } from "react";
+import React from "react";
 import GameResultModel from "../Models/GameResultModel";
 import { startGame } from "../StartGame";
 import { HoverButton } from "./HoverButton";
@@ -26,8 +26,6 @@ export default function MainMenu(props: {
     const {
         setScreenState,
         setGameResult,
-        gameSpeed,
-        setGameSpeed
     } = props;
 
     /**
@@ -87,14 +85,6 @@ export default function MainMenu(props: {
         });
     }
 
-    function onSpeedChange(e: ChangeEvent<HTMLInputElement>): void {
-        if (!e) {
-            return;
-        }
-
-        setGameSpeed(e.target.valueAsNumber);
-    }
-
     return (
         <>
             <p style={Styles.header}>Welcome to Round 42</p>
@@ -127,16 +117,15 @@ export default function MainMenu(props: {
             <div style={Styles.buttonContainer}>
                 <b><p style={Styles.textStyle}>Note 1: Ensure this page's zoom level is set to 100% before playing fullscreen.</p></b>
                 <b><p style={Styles.textStyle}>Note 2: The game runs great in Chrome and Firefox but not in Edge. Looking into it.</p></b>
-                <b><p style={Styles.textStyle} >Adjust game speed</p></b>
-                <input style={{ appearance: "none", width: "200px", color: "yellow", borderRadius: "0%"  }} type="range" min="50" max="200" step={1} value={gameSpeed} onChange={onSpeedChange}></input>
-                <p style={Styles.textStyle}>Current speed: {gameSpeed}%</p>
 
-                <HoverButton onClick={requestFullscreen} text="Fullscreen" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
+                <HoverButton onClick={requestFullscreen} text="Fullscreen" />
                 <p style={Styles.textStyle}>Note: Ensure this page's zoom level is set to 100% before playing fullscreen.</p>
-                <HoverButton onClick={startGameWithSound} text="Play with sounds" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
-                <HoverButton onClick={startGameWithoutSound} text="Play without sounds" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
-                <HoverButton onClick={goToSource} text="Source code" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
-                <HoverButton onClick={() => setScreenState("about")} text="About" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
+                <HoverButton onClick={startGameWithSound} text="Play with sounds" />
+                <HoverButton onClick={startGameWithoutSound} text="Play without sounds" />
+                <HoverButton onClick={goToSource} text="Source code" />
+                <HoverButton onClick={() => setScreenState("about")} text="About" />
+                <HoverButton onClick={() => setScreenState("options")} text={"Show options"} />
+
             </div>
         </>
     );

@@ -49,7 +49,7 @@ export default function About(props: { setScreenState(setScreenState: ScreenStat
                     </ul>
                 </p>
                 <div style={Styles.buttonContainer}>
-                    <HoverButton onClick={() => setScreenState("mainmenu")} text="Back to main menu" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
+                    <HoverButton onClick={() => setScreenState("mainmenu")} text="Back to main menu" />
                 </div>
             </div>
         </>
