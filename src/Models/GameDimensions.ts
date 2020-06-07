@@ -4,8 +4,8 @@
  * See LICENSE.MD.
  */
 
-import { GameField } from "./GameField";
 import { CanvasDimensions } from "./CanvasDimensions";
+import { GameField } from "./GameField";
 
 /**
  * Module:          GameDimensions
