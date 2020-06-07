@@ -5,6 +5,7 @@
  */
 
 import { GameField } from "./GameField";
+import { CanvasDimensions } from "./CanvasDimensions";
 
 /**
  * Module:          GameDimensions
@@ -44,22 +45,8 @@ export interface GameDimensions {
      */
     gameField: GameField;
 
+    /**
+     * Holds the canvas dimensions.
+     */
     canvasDimensions: CanvasDimensions;
-}
-
-interface CanvasDimensions {
-
-    /**
-     * Left position for the canvas
-     */
-    left: number;
-
-    /**
-     * Top position for the canvas.
-     */
-    top: number;
-
-    displayWidth: number;
-
-    displayHeight: number;
 }

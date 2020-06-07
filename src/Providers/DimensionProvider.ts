@@ -11,7 +11,7 @@ import { GameDimensions } from "../Models/GameDimensions";
  * Responsibility:  Provide dimensions for game objects. Not a part of the State because the entire game uses it.
  */
 
-let gameDimensions: GameDimensions;
+let gameDimensions: GameDimensions | undefined;
 
 /**
  * dimensionProvider. Single function responsible for all dimensions important to the game.
@@ -72,4 +72,12 @@ export default function dimensionProvider(): GameDimensions {
     }
 
     return gameDimensions;
+}
+
+/**
+ * Sets the gameDimension module variable to undefined.
+ * This triggers the dimension Provider to recalculate the game dimensions.
+ */
+export function resetGameDimensions(): void {
+    gameDimensions = undefined;
 }
