@@ -25,10 +25,10 @@ export type GameKeys =
     "ArrowRight" |
     "Backspace" |
     "F1" |
-    "KeyZ" |
+    "z" |
     "F2" |
-    "KeyX" |
-    "Space";
+    "x" |
+    " ";
 
 /**
  * Array of valid game keys.
@@ -40,10 +40,10 @@ export const allGameKeys: GameKeys[] = [
     "ArrowUp",
     "Backspace",
     "F1",
-    "KeyZ",
+    "z",
     "F2",
-    "KeyX",
-    "Space",
+    "x",
+    " ",
 ];
 
 /**
@@ -57,7 +57,7 @@ function onKeyDown(event: KeyboardEvent): void {
         gameState
     } = appState();
 
-    if (Guard.isValidGameKey(event.code)) {
+    if (Guard.isValidGameKey(event.key)) {
         // Only dispatch if the key is a game control key.
         event.stopPropagation();
         event.preventDefault();
@@ -71,7 +71,7 @@ function onKeyDown(event: KeyboardEvent): void {
                 dispatch(setPause(true));
             }
         } else {
-            dispatch(keyDown(event.code));
+            dispatch(keyDown(event.key));
         }
     }
 }
@@ -81,12 +81,12 @@ function onKeyDown(event: KeyboardEvent): void {
  * @param {KeyboardEvent} event. A keyboard event.
  */
 function onKeyUp(event: KeyboardEvent): void {
-    if (Guard.isValidGameKey(event.code)) {
+    if (Guard.isValidGameKey(event.key)) {
         // Only dispatch if the key is a game control key.
         event.stopPropagation();
         event.preventDefault();
 
-        dispatch(keyUp(event.code));
+        dispatch(keyUp(event.key));
     }
 }
 

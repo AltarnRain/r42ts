@@ -18,10 +18,10 @@ namespace Constants {
     export const arrowRight: GameKeys = "ArrowRight";
     export const backspace: GameKeys = "Backspace";
     export const f1: GameKeys = "F1";
-    export const keyZ: GameKeys = "KeyZ";
+    export const keyZ: GameKeys = "z";
     export const f2: GameKeys = "F2";
-    export const keyX: GameKeys = "KeyX";
-    export const space: GameKeys = "Space";
+    export const keyX: GameKeys = "x";
+    export const space: GameKeys = " ";
     export const keyup = "KeyUp";
     export const keydown = "KeyDown";
     export const resetKeyboardState = "resetKeyboardState";
