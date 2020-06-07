@@ -52,8 +52,9 @@ export namespace Styles {
         ...defaultFont,
         backgroundColor: "black",
         color: "yellow",
-        width: "100px",
+        width: "150px",
         borderColor: "yellow",
+        marginBottom: "10px"
     };
 
     export const buttonHoverStyle: CSSProperties = {

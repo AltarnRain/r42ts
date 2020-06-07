@@ -89,12 +89,12 @@ export default function MainMenu(props: {
             <p style={Styles.header}>Welcome to Round 42</p>
             <div style={Styles.defaultContainer}>
                 <p style={Styles.textStyle}>
-                    Original game by Mike Pooler released in 1986.<br />
-                                    Remake by Antonio Invernizzi 2020.
-                                </p>
+                    Original game by Mike Pooler released in 1986.
+                    <br />
+                    Remake by Antonio Invernizzi 2020.
+                </p>
             </div>
-            <br />
-            <div style={Styles.defaultContainer}>
+            <div style={{...Styles.defaultContainer}}>
                 <div style={{ flexDirection: "column" }}>
                     <p style={Styles.textStyle}>Instructions</p>
                     <ul style={Styles.textStyle}>
@@ -119,12 +119,10 @@ export default function MainMenu(props: {
 
                 <HoverButton onClick={requestFullscreen} text="Fullscreen" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                 <p style={Styles.textStyle}>Note: Ensure this page's zoom level is set to 100% before playing fullscreen.</p>
-                <br />
                 <HoverButton onClick={startGameWithSound} text="Play with sounds" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
-                <br />
                 <HoverButton onClick={startGameWithoutSound} text="Play without sounds" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
-                <br />
                 <HoverButton onClick={goToSource} text="Source code" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
+                <HoverButton onClick={() => setScreenState("about")} text="About" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
             </div>
         </>
     );
