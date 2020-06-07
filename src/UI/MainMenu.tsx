@@ -32,23 +32,6 @@ export default function MainMenu(props: {
     } = props;
 
     /**
-     * Request full screen
-     */
-    function requestFullscreen(): void {
-        // We'll use the body element to place the entire application
-        // in fullscreen. The body element is used by the game itself
-        // to determine the game's dimensions.
-
-        // No, this is not how you're supposed to use React but
-        // all I'm using it for is a simple UI so I don't care.
-        const body = document.getElementById("body");
-
-        if (body) {
-            body.requestFullscreen();
-        }
-    }
-
-    /**
      * Opens a tab to the github repo where the round 42's source can be downloaded.
      */
     function goToSource(): void {
@@ -79,17 +62,19 @@ export default function MainMenu(props: {
     return (
         <>
             <p style={Styles.header}>Welcome to Round 42</p>
-            <div style={Styles.defaultContainer}>
+            <div style={Styles.defaultTextContainer}>
                 <p style={Styles.textStyle}>
                     Original game by Mike Pooler released in 1986.
                     <br />
                     Remake by Antonio Invernizzi 2020.
                 </p>
+                <br />
             </div>
-            <div style={{ ...Styles.defaultContainer }}>
+            <div style={Styles.defaultTextContainer}>
                 <div style={{ flexDirection: "column" }}>
-                    <p style={Styles.textStyle}>Instructions</p>
-                    <ul style={Styles.textStyle}>
+                    <p>Instructions</p>
+                    <ul>
+                        <li><b>You can press F11 at any time to switch to and from fullscreen</b></li>
                         <li>Use the arrow keys to move.</li>
                         <li>Press F1 or Z to fire a bullet.</li>
                         <li>Press F2 or X to fire a Phaser.</li>
@@ -105,14 +90,13 @@ export default function MainMenu(props: {
                 </div>
             </div>
             <br />
-            <div style={Styles.buttonContainer}>
-                <b><p style={Styles.textStyle}>Note 1: Ensure this page's zoom level is set to 100% before playing fullscreen.</p></b>
-                <HoverButton onClick={requestFullscreen} text="Fullscreen" />
-                <p style={Styles.textStyle}>Note: Ensure this page's zoom level is set to 100% before playing fullscreen.</p>
+            <div style={{ ...Styles.buttonContainer, ...Styles.textStyle }}>
                 <HoverButton onClick={onStartGame} text="Play" />
-                <HoverButton onClick={goToSource} text="Source code" />
-                <HoverButton onClick={() => setScreenState("about")} text="About" />
                 <HoverButton onClick={() => setScreenState("options")} text={"Show options"} />
+                <p>Round 42 is open source. Feel free to take a look.</p>
+                <HoverButton onClick={goToSource} text="Source code" />
+                <p>Learn more? Click about.</p>
+                <HoverButton onClick={() => setScreenState("about")} text="About" />
             </div>
         </>
     );

@@ -39,6 +39,17 @@ export namespace Styles {
         ...alignCenter
     };
 
+    export const textStyle: CSSProperties = {
+        ...defaultFont,
+        backgroundColor: "black",
+        color: CGAColors.yellow,
+    };
+
+    export const defaultTextContainer: CSSProperties = {
+        ...defaultContainer,
+        ...textStyle,
+    };
+
     export const buttonContainer: CSSProperties = {
         ...alignCenter,
         ...defaultFont,
@@ -54,18 +65,13 @@ export namespace Styles {
         color: "yellow",
         width: "150px",
         borderColor: "yellow",
-        marginBottom: "10px"
+        marginBottom: "10px",
+        marginTop: "10px"
     };
 
     export const buttonHoverStyle: CSSProperties = {
         ...buttonStyle,
         backgroundColor: "yellow",
         color: "black",
-    };
-
-    export const textStyle: CSSProperties = {
-        ...defaultFont,
-        backgroundColor: "black",
-        color: CGAColors.yellow,
     };
 }
