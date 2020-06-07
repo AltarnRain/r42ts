@@ -9,6 +9,12 @@
  * Responsibility:  Types used in the UI.
  */
 
+/**
+ * Screen states of the UI.
+ */
 export type ScreenState = "mainmenu" | "playing" | "about" | "gameover" | "options";
 
+/**
+ * Supported game settings.
+ */
 export type Settings = "playsound" | "gamespeed";
