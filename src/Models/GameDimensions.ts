@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import { CanvasDimensions } from "./CanvasDimensions";
 import { GameField } from "./GameField";
 
 /**
@@ -44,9 +43,4 @@ export interface GameDimensions {
      * So it is very handy to know exactly where it actually is.
      */
     gameField: GameField;
-
-    /**
-     * Holds the canvas dimensions.
-     */
-    canvasDimensions: CanvasDimensions;
 }

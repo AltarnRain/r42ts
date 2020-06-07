@@ -21,26 +21,9 @@ let gameDimensions: GameDimensions | undefined;
 export default function dimensionProvider(): GameDimensions {
     if (!gameDimensions) {
 
-        const body = document.getElementById("body") as HTMLBodyElement;
-        if (!body) {
-            throw new Error("Could not find a body element");
-        }
-
-        const rect = body.getBoundingClientRect();
-
-        const fullscreen = rect.width === screen.width && rect.height === screen.height;
-
         const pixelSize = 10;
         const fullGameHeight = 1000;
         const fullGameWidth = 1600;
-
-        const resizeFactor = rect.height < rect.width ? rect.height / fullGameHeight : rect.width / fullGameWidth;
-
-        const canvasWidth = fullGameWidth * resizeFactor;
-        const canvasHeight = fullGameHeight * resizeFactor;
-
-        const canvasLeft = (rect.width - canvasWidth) / 2;
-        const canvasTop = fullscreen ? 0 : (rect.height - canvasHeight) / 2;
 
         const statusBarBottom = pixelSize * 6;
 
@@ -58,23 +41,9 @@ export default function dimensionProvider(): GameDimensions {
                 bottom: fullGameHeight - pixelSize,
                 width: fullGameWidth - pixelSize * 2,
                 height: fullGameHeight - statusBarBottom,
-            },
-            canvasDimensions: {
-                left: canvasLeft,
-                top: canvasTop,
-                displayWidth: canvasWidth,
-                displayHeight: canvasHeight,
             }
         };
     }
 
     return gameDimensions;
-}
-
-/**
- * Sets the gameDimension module variable to undefined.
- * This triggers the dimension Provider to recalculate the game dimensions.
- */
-export function resetGameDimensions(): void {
-    gameDimensions = undefined;
 }

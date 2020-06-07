@@ -10,7 +10,7 @@ import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import GameResultModel from "./Models/GameResultModel";
 import playerSpawnRunner from "./Player/PlayerSpawnRunner";
-import dimensionProvider, { resetGameDimensions } from "./Providers/DimensionProvider";
+import dimensionProvider from "./Providers/DimensionProvider";
 import SpeedProvider from "./Providers/SpeedProvider";
 import EnemyLevelRunner from "./Runners/EnemyLevelRunner";
 import genericRunner from "./Runners/GenericRunner";
@@ -24,6 +24,7 @@ import { setPlayerIsAlive, setPlayerLocationData } from "./State/Player/PlayerAc
 import { appState, dispatch } from "./State/Store";
 import TickFunction from "./Types/TickFunction";
 import { registerListeners, unregisterListeners } from "./Utility/KeyboardEvents";
+import setCanvasDimensions from "./Render/SetCanvasDimensions";
 
 /**
  * Module:          GameLoop
@@ -99,8 +100,10 @@ export namespace GameLoop {
             throw new Error("Could not find a body element");
         }
 
+        setCanvasDimensions();
+
         // Reset the game's dimensions each time the screen size changes.
-        body.onresize = () => resetGameDimensions();
+        body.onresize = () => setCanvasDimensions();
 
         start();
     }

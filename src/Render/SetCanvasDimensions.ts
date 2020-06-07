@@ -14,7 +14,6 @@ import dimensionProvider from "../Providers/DimensionProvider";
 const {
     fullGameHeight,
     fullGameWidth,
-    canvasDimensions,
 } = dimensionProvider();
 
 /**
@@ -25,17 +24,32 @@ const {
 export default function setCanvasDimensions(): void {
     // Set canvas dimensions.
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    if (canvas) {
-        const left = `${canvasDimensions.left}px`;
-        const top = `${canvasDimensions.top}px`;
-        const canvasDisplayWidth = `${canvasDimensions.displayWidth}px`;
-        const canvasDisplayHeight = `${canvasDimensions.displayHeight}px`;
 
-        canvas.style.left = left;
-        canvas.style.top = top;
-        canvas.style.width = canvasDisplayWidth;
-        canvas.style.height = canvasDisplayHeight;
-        canvas.width = fullGameWidth;
-        canvas.height = fullGameHeight;
+    if (!canvas) {
+        throw new Error("Could not find canvas element.");
     }
+
+    const body = document.getElementById("body") as HTMLBodyElement;
+
+    if (!body) {
+        throw new Error("Could not find body element");
+    }
+
+    const rect = body.getBoundingClientRect();
+
+    canvas.width = fullGameWidth;
+    canvas.height = fullGameHeight;
+
+    const resizeFactor = rect.width < rect.height ?  rect.width / fullGameWidth :  rect.height / fullGameHeight;
+
+    const displayWidth = fullGameWidth * resizeFactor;
+    const displayHeight = fullGameHeight * resizeFactor;
+
+    const displayLeft = (rect.width - displayWidth) / 2;
+    const displayTop = (rect.height - displayHeight) / 2;
+
+    canvas.style.left = `${Math.round(displayLeft)}px`;
+    canvas.style.top = `${Math.round(displayTop)}px`;
+    canvas.style.width = `${Math.round(displayWidth)}px`;
+    canvas.style.height = `${Math.round(displayHeight)}px`;
 }
