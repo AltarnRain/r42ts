@@ -44,18 +44,22 @@ export interface GameDimensions {
      */
     gameField: GameField;
 
+    canvasDimensions: CanvasDimensions;
+}
+
+interface CanvasDimensions {
+
     /**
      * Left position for the canvas
      */
-    canvasLeft: number;
+    left: number;
 
     /**
      * Top position for the canvas.
      */
-    canvasTop: number;
+    top: number;
 
-    /**
-     * When true the game is running in fullscreen.
-     */
-    fullscreen: boolean;
+    displayWidth: number;
+
+    displayHeight: number;
 }

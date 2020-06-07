@@ -34,28 +34,18 @@ export default function dimensionProvider(): GameDimensions {
 
         const fullscreen = rect.width === screen.width && rect.height === screen.height;
 
-        let pixelSize = 0;
-        if (rect.width < rect.height) {
-            pixelSize = Math.floor(rect.width / 160);
-        } else {
-            pixelSize = Math.floor(rect.height / 100);
-        }
+        const pixelSize = 10;
+        const fullGameHeight = 1000;
+        const fullGameWidth = 1600;
 
-        const fullGameHeight = pixelSize * 100;
-        const fullGameWidth = pixelSize * 160;
+        const resizeFactor = rect.height > rect.width ? rect.height / fullGameHeight : rect.width / fullGameWidth;
+        const canvasWidth = fullGameWidth * resizeFactor;
+        const canvasHeight = fullGameHeight * resizeFactor;
 
-        const canvasLeft = (rect.width - fullGameWidth) / 2;
-        const canvasTop = (rect.height - fullGameHeight) / 2;
+        const canvasLeft = (rect.width - canvasWidth) / 2;
+        const canvasTop = fullscreen ? 0 : (rect.height - canvasHeight) / 2;
 
         const statusBarBottom = pixelSize * 6;
-
-        const gameFieldLeft = pixelSize;
-        const gameFieldRight = fullGameWidth - pixelSize;
-        const gameFieldTop = statusBarBottom + pixelSize;
-        const gameFieldBottom = fullGameHeight - pixelSize;
-
-        const gameFieldWidth = gameFieldRight - gameFieldLeft;
-        const gameFieldHeight = gameFieldBottom - gameFieldTop;
 
         gameDimensions = {
             fullGameWidth,
@@ -63,17 +53,21 @@ export default function dimensionProvider(): GameDimensions {
             statusBarBottom,
             pixelSize,
             pixelSize2x: pixelSize * 2,
+            // The game field is bordered by a rectangle with a thickness of 1 pixelSize.
             gameField: {
-                left: gameFieldLeft,
-                top: gameFieldTop,
-                right: gameFieldRight,
-                bottom: gameFieldBottom,
-                width: gameFieldWidth,
-                height: gameFieldHeight,
+                left: pixelSize,
+                right: fullGameWidth - pixelSize,
+                top: statusBarBottom + pixelSize,
+                bottom: fullGameHeight - pixelSize,
+                width: fullGameWidth - pixelSize * 2,
+                height: fullGameHeight - statusBarBottom,
             },
-            canvasLeft,
-            canvasTop,
-            fullscreen,
+            canvasDimensions: {
+                left: canvasLeft,
+                top: canvasTop,
+                displayWidth: canvasWidth,
+                displayHeight: canvasHeight,
+            }
         };
     }
 

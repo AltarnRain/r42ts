@@ -14,9 +14,7 @@ import dimensionProvider from "../Providers/DimensionProvider";
 const {
     fullGameHeight,
     fullGameWidth,
-    fullscreen,
-    canvasLeft,
-    canvasTop,
+    canvasDimensions,
 } = dimensionProvider();
 
 /**
@@ -28,33 +26,10 @@ export default function setCanvasDimensions(): void {
     // Set canvas dimensions.
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     if (canvas) {
-
-        // Initialize windows mode by default.
-        let left = `${canvasLeft}px`;
-        let top = `${canvasTop}px`;
-        let canvasDisplayWidth = `${fullGameWidth}px`;
-        let canvasDisplayHeight = `${fullGameHeight}px`;
-
-        if (fullscreen) {
-            // Ok, the game is running in full screen. We'll set the canvas's style properties
-            // to optimize the available game. This will make things a bit fuzzy but the
-            // game completely relies on dimensions being an integer.
-            const resizeFactor = fullGameHeight / screen.height;
-
-            // Let do this on the assumtion someone is using a wide screen monitor so the width will
-            // be more than the height.
-            top = "0px";
-
-            // We'll use the available height.
-            canvasDisplayHeight = screen.height.toString() + "px";
-
-            // Now we'll calculate how much the width can be while maintaining
-            // the aspect ratio.
-            const fullscreenWidth = (screen.width * resizeFactor);
-            canvasDisplayWidth = fullscreenWidth.toString() + "px";
-
-            left = ((screen.width - fullscreenWidth) / 2).toString() + "px";
-        }
+        const left = `${canvasDimensions.left}px`;
+        const top = `${canvasDimensions.top}px`;
+        const canvasDisplayWidth = `${canvasDimensions.displayWidth}px`;
+        const canvasDisplayHeight = `${canvasDimensions.displayHeight}px`;
 
         canvas.style.left = left;
         canvas.style.top = top;
