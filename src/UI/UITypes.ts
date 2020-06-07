@@ -10,3 +10,5 @@
  */
 
 export type ScreenState = "mainmenu" | "playing" | "about" | "gameover" | "options";
+
+export type Settings = "playsound" | "gamespeed";

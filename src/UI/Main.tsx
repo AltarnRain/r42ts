@@ -10,6 +10,7 @@ import About from "./About";
 import { GameOptions } from "./GameOptions";
 import GameOver from "./GameOver";
 import MainMenu from "./MainMenu";
+import SettingsManager from "./SettingsManager";
 import { ScreenState } from "./UITypes";
 
 /**
@@ -17,12 +18,17 @@ import { ScreenState } from "./UITypes";
  * Responsibility:  Top level component for the UI.
  */
 
+const {
+    gameSpeed: gameSpeedSetting,
+    playSound: playSoundSetting,
+} = SettingsManager.getSettings();
+
 export default function Main(): JSX.Element {
 
     const [screenState, setScreenState] = useState<ScreenState>("mainmenu");
     const [gameResult, setGameResult] = useState<GameResultModel>();
-    const [gameSpeed, setGameSpeed] = useState(100);
-    const [playSound, setPlaySounds] = useState(true);
+    const [gameSpeed, setGameSpeed] = useState(gameSpeedSetting);
+    const [playSound, setPlaySounds] = useState(playSoundSetting);
 
     return (
         <div>
@@ -39,6 +45,6 @@ export default function Main(): JSX.Element {
                     setPlaySounds={setPlaySounds}
                 />
             }
-        </div >
+        </div>
     );
 }
