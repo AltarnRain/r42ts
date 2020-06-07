@@ -6,7 +6,7 @@
 
 import BaseEnemy from "./Base/BaseEnemy";
 import PlayerState, { AlivePlayer } from "./State/Player/PlayerState";
-import { allGameKeys, GameKeys } from "./Utility/KeyboardEvents";
+import { allGameKeys, GameKeys } from "./Utility/JSEvents";
 
 /**
  * Module:          Guard

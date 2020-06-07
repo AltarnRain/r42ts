@@ -9,7 +9,7 @@
  * Responsibility:  Action typing for the Keyboard State.
  */
 
-import { GameKeys } from "../../Utility/KeyboardEvents";
+import { GameKeys } from "../../Utility/JSEvents";
 import Constants from "./KeyboardConstants";
 
 export interface KeyUp {

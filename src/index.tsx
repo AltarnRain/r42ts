@@ -7,6 +7,7 @@
 import "react";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import debug from "./Debugging/Debug";
 import MainMenu from "./UI/MainMenu";
 
 /**
@@ -28,7 +29,7 @@ Promise.all([calcFPS(), calcFPS(), calcFPS()]).then((fps) => {
         // This is done using dynamic module loading because the second the game
         // starts it sets all its constants and the screensize is fixed. We do
         // not want this.
-        import("./Debugging/Debug").then((m) => m.debug(maxFps));
+        debug(maxFps);
     } else {
         // Otherwise load the UI.
         ReactDOM.render(<MainMenu fps={maxFps} />, document.getElementById("root"));

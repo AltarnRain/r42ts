@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import { GameKeys } from "../../Utility/KeyboardEvents";
+import { GameKeys } from "../../Utility/JSEvents";
 
 /**
  * Module:          KeyboardConstants

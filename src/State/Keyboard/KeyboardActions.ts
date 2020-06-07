@@ -9,7 +9,7 @@
  * Responsibility:  Action definitions for the Keyboard State
  */
 
-import { GameKeys } from "../../Utility/KeyboardEvents";
+import { GameKeys } from "../../Utility/JSEvents";
 import Constants from "./KeyboardConstants";
 import { KeyDown, KeyUp, Reset } from "./KeyboardTypes";
 

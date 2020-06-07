@@ -12,6 +12,7 @@ import GameResultModel from "./Models/GameResultModel";
 import playerSpawnRunner from "./Player/PlayerSpawnRunner";
 import dimensionProvider from "./Providers/DimensionProvider";
 import SpeedProvider from "./Providers/SpeedProvider";
+import setCanvasDimensions from "./Render/SetCanvasDimensions";
 import EnemyLevelRunner from "./Runners/EnemyLevelRunner";
 import genericRunner from "./Runners/GenericRunner";
 import levelProgressionRunner, { resetLevelProgression } from "./Runners/LevelProgressionRunner";
@@ -23,8 +24,7 @@ import { resetKeyboardState } from "./State/Keyboard/KeyboardActions";
 import { setPlayerIsAlive, setPlayerLocationData } from "./State/Player/PlayerActions";
 import { appState, dispatch } from "./State/Store";
 import TickFunction from "./Types/TickFunction";
-import { registerListeners, unregisterListeners } from "./Utility/KeyboardEvents";
-import setCanvasDimensions from "./Render/SetCanvasDimensions";
+import { registerListeners, unregisterListeners } from "./Utility/JSEvents";
 
 /**
  * Module:          GameLoop
@@ -101,9 +101,6 @@ export namespace GameLoop {
         }
 
         setCanvasDimensions();
-
-        // Reset the game's dimensions each time the screen size changes.
-        body.onresize = () => setCanvasDimensions();
 
         start();
     }
