@@ -66,6 +66,9 @@ export default function MainMenu(props: { fps: number }): JSX.Element {
         }
     }
 
+    /**
+     * Opens a tab to the github repo where the round 42's source can be downloaded.
+     */
     function goToSource(): void {
         const win = window.open("https://github.com/AltarnRain/r42ts", "_blank");
         if (win !== null) {

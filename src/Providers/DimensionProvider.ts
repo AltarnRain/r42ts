@@ -25,12 +25,10 @@ export default function dimensionProvider(): GameDimensions {
 
         let rect: DOMRect;
         if (!body) {
-            // Not a nice solution, but the dimensionProvider is called from within unit tests and I do not want
-            // to add elements.
-            rect = { height: 1024 } as DOMRect;
-        } else {
-            rect = body.getBoundingClientRect();
+            throw new Error("Could not find a body element");
         }
+
+        rect = body.getBoundingClientRect();
 
         const fullscreen = rect.width === screen.width && rect.height === screen.height;
 
