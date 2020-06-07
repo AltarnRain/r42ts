@@ -74,7 +74,6 @@ let soundRunners: Array<(pause: boolean) => void> = [];
  */
 let gameOverHandler: (result: GameResultModel) => void | undefined;
 
-
 export namespace GameLoop {
     /**
      * Start game loop

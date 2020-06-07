@@ -23,8 +23,8 @@ if (window.location.search.indexOf("?playground") > -1 ||
     // This is done using dynamic module loading because the second the game
     // starts it sets all its constants and the screensize is fixed. We do
     // not want this.
-    debug(100);
+    debug();
 } else {
     // Otherwise load the UI.
-    ReactDOM.render(<Main speed={100} />, document.getElementById("root"));
+    ReactDOM.render(<Main/>, document.getElementById("root"));
 }

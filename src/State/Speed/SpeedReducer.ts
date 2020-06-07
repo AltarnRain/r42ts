@@ -4,6 +4,7 @@
  * See LICENSE.MD.
  */
 
+import calculateSpeed from "../../Utility/CalculateSpeed";
 import baseBulletSpeeds from "./BaseBulletSpeeds";
 import baseMovementSpeeds from "./BaseMovementSpeeds";
 import SpeedEnum from "./SpeedEnum";
@@ -60,18 +61,4 @@ function convertSpeeds(a: any, gameSpeed: number): any {
     }
 
     return base;
-}
-
-/**
- * Calculates a speed.
- * @param {number} speed. Speed in pixels per tick.
- * @param {number} width. Available width.
- * @param {number} fps. Supported fps.
- */
-export function calculateSpeed(speed: number, gameSpeed: number): number {
-    // 1600 is the size of the canvas width when I was developing the game. All game speeds are based on this.
-    // 60 is the fps of Chrome on my laptop, but some screens have
-    // different refresh rates.
-    const speedFactor = (100 / gameSpeed) * 60;
-    return speed * (60 / speedFactor);
 }

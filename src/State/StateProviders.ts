@@ -12,9 +12,11 @@
 import { produce } from "immer";
 import Explosion from "../Models/Explosion";
 import Frame from "../Types/Frame";
+import calculateSpeed from "../Utility/CalculateSpeed";
 import { getFrameHitbox } from "../Utility/Frame";
 import { fallsWithinGameField, getLocation } from "../Utility/Location";
 import { ParticleState } from "./ParticleState";
+import { appState } from "./Store";
 
 export namespace StateProviders {
     /**
@@ -100,7 +102,7 @@ export namespace StateProviders {
             const particleFrame = explosion.particleFrames[particleFrameIndex];
 
             const angle = explosion.angles[i];
-            const speed = explosion.useSpeed ? explosion.speed : explosion.speeds[i];
+            const speed = calculateSpeed(explosion.useSpeed ? explosion.speed : explosion.speeds[i], appState().speedState.gameSpeed);
 
             const p = StateProviders.getParticleState(left, top, speed, angle, particleFrame, explosion.acceleration, 0, 0);
             particles.push(p);

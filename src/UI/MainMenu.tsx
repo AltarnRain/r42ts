@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import React from "react";
+import React, { ChangeEvent } from "react";
 import GameResultModel from "../Models/GameResultModel";
 import { startGame } from "../StartGame";
 import { HoverButton } from "./HoverButton";
@@ -18,13 +18,16 @@ import { ScreenState } from "./UITypes";
 
 export default function MainMenu(props: {
     setScreenState(screenState: ScreenState): void,
-    fps: number,
-    setGameResult(result: GameResultModel): void
+    gameSpeed: number,
+    setGameResult(result: GameResultModel): void,
+    setGameSpeed(speed: number): void,
 }): JSX.Element {
 
     const {
         setScreenState,
-        setGameResult
+        setGameResult,
+        gameSpeed,
+        setGameSpeed
     } = props;
 
     /**
@@ -33,7 +36,7 @@ export default function MainMenu(props: {
     function startGameWithoutSound(): void {
         // Remove the UI from screen.
         setScreenState("playing");
-        startGame(props.fps, false, (result) => {
+        startGame(props.gameSpeed, false, (result) => {
             setScreenState("gameover");
             setGameResult(result);
         });
@@ -78,10 +81,18 @@ export default function MainMenu(props: {
         // or windows mode.
         // Once loaded this module stays loaded. Thats why the game, when it ends, doesn't show the
         // main menu as switching to full screen would have no effect at that point.
-        startGame(props.fps, true, (result) => {
+        startGame(props.gameSpeed, true, (result) => {
             setScreenState("gameover");
             setGameResult(result);
         });
+    }
+
+    function onSpeedChange(e: ChangeEvent<HTMLInputElement>): void {
+        if (!e) {
+            return;
+        }
+
+        setGameSpeed(e.target.valueAsNumber);
     }
 
     return (
@@ -94,7 +105,7 @@ export default function MainMenu(props: {
                     Remake by Antonio Invernizzi 2020.
                 </p>
             </div>
-            <div style={{...Styles.defaultContainer}}>
+            <div style={{ ...Styles.defaultContainer }}>
                 <div style={{ flexDirection: "column" }}>
                     <p style={Styles.textStyle}>Instructions</p>
                     <ul style={Styles.textStyle}>
@@ -116,6 +127,9 @@ export default function MainMenu(props: {
             <div style={Styles.buttonContainer}>
                 <b><p style={Styles.textStyle}>Note 1: Ensure this page's zoom level is set to 100% before playing fullscreen.</p></b>
                 <b><p style={Styles.textStyle}>Note 2: The game runs great in Chrome and Firefox but not in Edge. Looking into it.</p></b>
+                <b><p style={Styles.textStyle} >Adjust game speed</p></b>
+                <input style={{ appearance: "none", width: "200px", color: "yellow", borderRadius: "0%"  }} type="range" min="50" max="200" step={1} value={gameSpeed} onChange={onSpeedChange}></input>
+                <p style={Styles.textStyle}>Current speed: {gameSpeed}%</p>
 
                 <HoverButton onClick={requestFullscreen} text="Fullscreen" hoverStyle={Styles.buttonHoverStyle} normalStyle={Styles.buttonStyle} />
                 <p style={Styles.textStyle}>Note: Ensure this page's zoom level is set to 100% before playing fullscreen.</p>

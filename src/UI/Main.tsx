@@ -16,15 +16,16 @@ import { ScreenState } from "./UITypes";
  * Responsibility:  Top level component for the UI.
  */
 
-export default function Main(props: { speed: number }): JSX.Element {
+export default function Main(): JSX.Element {
 
     const [screenState, setScreenState] = useState<ScreenState>("mainmenu");
     const [gameResult, setGameResult] = useState<GameResultModel>();
+    const [gameSpeed, setGameSpeed] = useState(100);
 
     return (
         <div>
             {
-                screenState === "mainmenu" && <MainMenu setScreenState={setScreenState} setGameResult={setGameResult} fps={props.speed} /> ||
+                screenState === "mainmenu" && <MainMenu setGameSpeed={setGameSpeed} setScreenState={setScreenState} setGameResult={setGameResult} gameSpeed={gameSpeed} /> ||
                 screenState === "about" && <About setScreenState={setScreenState} /> ||
                 screenState === "gameover" && <GameOver setScreenState={setScreenState} gameResult={gameResult} />
             }
