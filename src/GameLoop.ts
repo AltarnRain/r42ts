@@ -95,11 +95,8 @@ export namespace GameLoop {
 
         dispatch(setPlaySounds(sound));
 
-        const body = document.getElementById("body") as HTMLBodyElement;
-        if (!body) {
-            throw new Error("Could not find a body element");
-        }
-
+        // Initialize the canvas dimensions.
+        // Resized are handled by an event.
         setCanvasDimensions();
 
         start();
