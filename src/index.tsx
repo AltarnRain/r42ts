@@ -8,7 +8,7 @@ import "react";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import debug from "./Debugging/Debug";
-import MainMenu from "./UI/MainMenu";
+import Main from "./UI/Main";
 
 /**
  * Module:          Index
@@ -32,7 +32,7 @@ Promise.all([calcFPS(), calcFPS(), calcFPS()]).then((fps) => {
         debug(maxFps);
     } else {
         // Otherwise load the UI.
-        ReactDOM.render(<MainMenu fps={maxFps} />, document.getElementById("root"));
+        ReactDOM.render(<Main fps={maxFps} />, document.getElementById("root"));
     }
 });
 
