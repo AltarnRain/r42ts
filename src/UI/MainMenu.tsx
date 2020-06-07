@@ -6,6 +6,7 @@
 
 import React from "react";
 import GameResultModel from "../Models/GameResultModel";
+import requestFullScreen from "../Providers/RequestFullscreen";
 import { startGame } from "../StartGame";
 import { HoverButton } from "./HoverButton";
 import { Styles } from "./Styles";
@@ -54,13 +55,7 @@ export default function MainMenu(props: {
         const body = document.getElementById("body") as HTMLBodyElement;
 
         if (body) {
-            const anybody = body as any;
-
-            if (typeof anybody.requestFullscreen === "function") {
-                anybody.requestFullscreen();
-            } else if (typeof anybody.webkitRequestFullScreen === "function") {
-                anybody.webkitRequestFullScreen();
-            }
+            requestFullScreen(body);
         }
     }
 
@@ -114,7 +109,7 @@ export default function MainMenu(props: {
             <br />
             <div style={{ ...Styles.buttonContainer, ...Styles.textStyle }}>
                 <b>If you're playing via Kongregate press the Fullscreen button to switch to fullscreen.</b>
-                <HoverButton onClick={requestFullscreen} text="Fullscreen" />
+                <HoverButton onClick={() => requestFullscreen()} text="Fullscreen" />
                 <HoverButton onClick={onStartGame} text="Play" />
                 <HoverButton onClick={() => setScreenState("options")} text={"Show options"} />
                 <p>Round 42 is open source. Feel free to take a look.</p>
