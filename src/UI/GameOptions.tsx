@@ -15,15 +15,19 @@ import { ScreenState } from "./UITypes";
  */
 
 export function GameOptions(props: {
-    setGameSpeed(speed: number): void,
     gameSpeed: number,
-    setScreenState(screenState: ScreenState): void
+    playSound: boolean,
+    setGameSpeed(speed: number): void,
+    setScreenState(screenState: ScreenState): void,
+    setPlaySounds(playSound: boolean): void,
 }): JSX.Element {
 
     const {
         gameSpeed,
+        playSound,
         setGameSpeed,
         setScreenState,
+        setPlaySounds
     } = props;
 
     function onSpeedChange(e: ChangeEvent<HTMLInputElement>): void {
@@ -32,6 +36,14 @@ export function GameOptions(props: {
         }
 
         setGameSpeed(e.target.valueAsNumber);
+    }
+
+    function onPlaySoundChange(e: ChangeEvent<HTMLInputElement>): void {
+        if (!e) {
+            return;
+        }
+
+        setPlaySounds(e.target.checked);
     }
 
     return (
@@ -51,7 +63,7 @@ export function GameOptions(props: {
                         {gameSpeed}%
                         </div>
                         <div style={{flexDirection: "row"}}>
-                            <input type="checkbox"/>
+                            <input type="checkbox" checked={playSound} onChange={onPlaySoundChange}/>
                             <span style={Styles.textStyle}>Play sounds</span>
                         </div>
                 </div>

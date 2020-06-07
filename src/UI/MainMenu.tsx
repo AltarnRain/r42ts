@@ -17,28 +17,19 @@ import { ScreenState } from "./UITypes";
  */
 
 export default function MainMenu(props: {
-    setScreenState(screenState: ScreenState): void,
     gameSpeed: number,
+    soundsOn: boolean,
+    setScreenState(screenState: ScreenState): void,
     setGameResult(result: GameResultModel): void,
     setGameSpeed(speed: number): void,
 }): JSX.Element {
 
     const {
+        gameSpeed,
+        soundsOn: playSounds,
         setScreenState,
         setGameResult,
     } = props;
-
-    /**
-     * Starts the game
-     */
-    function startGameWithoutSound(): void {
-        // Remove the UI from screen.
-        setScreenState("playing");
-        startGame(props.gameSpeed, false, (result) => {
-            setScreenState("gameover");
-            setGameResult(result);
-        });
-    }
 
     /**
      * Request full screen
@@ -70,7 +61,7 @@ export default function MainMenu(props: {
     /**
      * Starts the game
      */
-    function startGameWithSound(): void {
+    function onStartGame(): void {
         // Remove the UI from screen.
         setScreenState("playing");
 
@@ -79,7 +70,7 @@ export default function MainMenu(props: {
         // or windows mode.
         // Once loaded this module stays loaded. Thats why the game, when it ends, doesn't show the
         // main menu as switching to full screen would have no effect at that point.
-        startGame(props.gameSpeed, true, (result) => {
+        startGame(gameSpeed, playSounds, (result) => {
             setScreenState("gameover");
             setGameResult(result);
         });
@@ -120,8 +111,7 @@ export default function MainMenu(props: {
 
                 <HoverButton onClick={requestFullscreen} text="Fullscreen" />
                 <p style={Styles.textStyle}>Note: Ensure this page's zoom level is set to 100% before playing fullscreen.</p>
-                <HoverButton onClick={startGameWithSound} text="Play with sounds" />
-                <HoverButton onClick={startGameWithoutSound} text="Play without sounds" />
+                <HoverButton onClick={onStartGame} text="Play" />
                 <HoverButton onClick={goToSource} text="Source code" />
                 <HoverButton onClick={() => setScreenState("about")} text="About" />
                 <HoverButton onClick={() => setScreenState("options")} text={"Show options"} />

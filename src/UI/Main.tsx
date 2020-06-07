@@ -19,17 +19,25 @@ import { ScreenState } from "./UITypes";
 
 export default function Main(): JSX.Element {
 
-    const [screenState, setScreenState] = useState<ScreenState>("options");
+    const [screenState, setScreenState] = useState<ScreenState>("mainmenu");
     const [gameResult, setGameResult] = useState<GameResultModel>();
     const [gameSpeed, setGameSpeed] = useState(100);
+    const [playSound, setPlaySounds] = useState(true);
 
     return (
         <div>
             {
-                screenState === "mainmenu" && <MainMenu setGameSpeed={setGameSpeed} setScreenState={setScreenState} setGameResult={setGameResult} gameSpeed={gameSpeed} /> ||
+                screenState === "mainmenu" && <MainMenu soundsOn={playSound} setGameSpeed={setGameSpeed} setScreenState={setScreenState} setGameResult={setGameResult} gameSpeed={gameSpeed} /> ||
                 screenState === "about" && <About setScreenState={setScreenState} /> ||
                 screenState === "gameover" && <GameOver setScreenState={setScreenState} gameResult={gameResult} /> ||
-                screenState === "options" && <GameOptions setGameSpeed={setGameSpeed} gameSpeed={gameSpeed} setScreenState={setScreenState} />
+                screenState === "options" &&
+                <GameOptions
+                    gameSpeed={gameSpeed}
+                    playSound={playSound}
+                    setGameSpeed={setGameSpeed}
+                    setScreenState={setScreenState}
+                    setPlaySounds={setPlaySounds}
+                />
             }
         </div >
     );
