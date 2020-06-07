@@ -11,6 +11,7 @@ import enemyLevelReducer from "./EnemyLevel/EnemyLevelReducer";
 import gameStateReducer from "./Game/GameStateReducer";
 import keyboardStateReducer from "./Keyboard/KeyboardStateReducer";
 import playerReducer from "./Player/PlayerReducer";
+import speedReducer from "./Speed/SpeedReducer";
 
 /**
  * Module:          Store
@@ -22,7 +23,8 @@ const allReducers = combineReducers({
     playerState: playerReducer,
     debuggingState: debuggingReducer,
     gameState: gameStateReducer,
-    keyboardState: keyboardStateReducer
+    keyboardState: keyboardStateReducer,
+    speedState: speedReducer,
 });
 
 // Create the store when this module is loaded.

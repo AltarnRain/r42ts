@@ -9,7 +9,6 @@ import CGAColors from "../Constants/CGAColors";
 import GameLoop from "../GameLoop";
 import { playerMovementHandler } from "../Handlers/PlayerMovementHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
-import SpeedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
 import getTwoPixelBullet from "../SharedFrames/GetTwoPixelBullet";
 import { SoundPlayer } from "../Sound/SoundPlayer";
@@ -42,7 +41,8 @@ const playerBulletFrame = getTwoPixelBullet(CGAColors.yellow);
  */
 function updateState(): void {
     const {
-        playerState
+        playerState,
+        speedState: { movement: { Player: { aliveSpeed: { speedX, speedY } } } }
     } = appState();
 
     // Important! The player runner is responsible for handling player action while the
@@ -50,10 +50,6 @@ function updateState(): void {
     if (!playerState.alive) {
         return;
     }
-
-    const {
-        aliveSpeed: { speedX, speedY }
-    } = SpeedProvider.get().movement.Player;
 
     playerMovementHandler(speedX, speedY);
 
@@ -104,7 +100,10 @@ function handlePlayerBulletMovement(): void {
  * @returns {ParticleState}
  */
 function getPlayerBullet(left: number, top: number): ParticleState {
-    return StateProviders.getParticleState(left, top, SpeedProvider.get().bullets.player, angles.up, playerBulletFrame, 1, -0.5 * pixelSize, -0.5 * pixelSize);
+    const {
+        speedState: { bullets }
+    } = appState();
+    return StateProviders.getParticleState(left, top, bullets.player, angles.up, playerBulletFrame, 1, -0.5 * pixelSize, -0.5 * pixelSize);
 }
 
 /**

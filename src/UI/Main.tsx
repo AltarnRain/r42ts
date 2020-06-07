@@ -16,7 +16,7 @@ import { ScreenState } from "./UITypes";
  * Responsibility:  Top level component for the UI.
  */
 
-export default function Main(props: { fps: number }): JSX.Element {
+export default function Main(props: { speed: number }): JSX.Element {
 
     const [screenState, setScreenState] = useState<ScreenState>("mainmenu");
     const [gameResult, setGameResult] = useState<GameResultModel>();
@@ -24,7 +24,7 @@ export default function Main(props: { fps: number }): JSX.Element {
     return (
         <div>
             {
-                screenState === "mainmenu" && <MainMenu setScreenState={setScreenState} setGameResult={setGameResult} fps={props.fps} /> ||
+                screenState === "mainmenu" && <MainMenu setScreenState={setScreenState} setGameResult={setGameResult} fps={props.speed} /> ||
                 screenState === "about" && <About setScreenState={setScreenState} /> ||
                 screenState === "gameover" && <GameOver setScreenState={setScreenState} gameResult={gameResult} />
             }

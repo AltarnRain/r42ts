@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-import SpeedProvider from "../Providers/SpeedProvider";
 import renderFrame from "../Render/RenderFrame";
 import { appState } from "../State/Store";
 import Frame from "../Types/Frame";
@@ -64,7 +63,7 @@ export default class PlayerFormationPart {
         const angle = calculateAngle(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
         const distance = calculateDistance(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
 
-        if (distance > SpeedProvider.get().minimumDistance) {
+        if (distance > appState().speedState.minimumDistance) {
             const nextLocation = getLocation(this.currentLeftLocation, this.currentTopLocation, angle, this.speed);
             this.currentLeftLocation = nextLocation.left;
             this.currentTopLocation = nextLocation.top;
@@ -94,7 +93,7 @@ export default class PlayerFormationPart {
         const targetTopLocation = playerState.top + this.topOffset;
 
         const distance = calculateDistance(this.currentLeftLocation, this.currentTopLocation, targetLeftLocation, targetTopLocation);
-        return distance > SpeedProvider.get().minimumDistance;
+        return distance > appState().speedState.minimumDistance;
     }
 
     /**

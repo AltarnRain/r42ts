@@ -10,8 +10,6 @@ import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import GameResultModel from "./Models/GameResultModel";
 import playerSpawnRunner from "./Player/PlayerSpawnRunner";
-import dimensionProvider from "./Providers/DimensionProvider";
-import SpeedProvider from "./Providers/SpeedProvider";
 import setCanvasDimensions from "./Render/SetCanvasDimensions";
 import EnemyLevelRunner from "./Runners/EnemyLevelRunner";
 import genericRunner from "./Runners/GenericRunner";
@@ -22,6 +20,7 @@ import { resetLevelState as resetEnemyLevelState } from "./State/EnemyLevel/Enem
 import { gameStart, resetScore, setPlaySounds } from "./State/Game/GameActions";
 import { resetKeyboardState } from "./State/Keyboard/KeyboardActions";
 import { setPlayerIsAlive, setPlayerLocationData } from "./State/Player/PlayerActions";
+import { setSpeed } from "./State/Speed/SpeedActions";
 import { appState, dispatch } from "./State/Store";
 import TickFunction from "./Types/TickFunction";
 import { registerListeners, unregisterListeners } from "./Utility/JSEvents";
@@ -75,19 +74,16 @@ let soundRunners: Array<(pause: boolean) => void> = [];
  */
 let gameOverHandler: (result: GameResultModel) => void | undefined;
 
-const {
-    fullGameWidth
-} = dimensionProvider();
 
 export namespace GameLoop {
     /**
      * Start game loop
      */
-    export function init(fps: number, gameOverCallback?: (result: GameResultModel) => void, sound: boolean = true): void {
+    export function init(speed: number, gameOverCallback?: (result: GameResultModel) => void, sound: boolean = true): void {
 
         // Singleton, only created once. Future create calls will not have any effect.
         // Calculates all game speeds based on the passed frame rate. This is done exactly once.
-        SpeedProvider.create(fps, fullGameWidth);
+        dispatch(setSpeed(speed));
 
         if (gameOverCallback) {
             gameOverHandler = gameOverCallback;

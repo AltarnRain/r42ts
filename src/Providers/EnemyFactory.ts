@@ -52,11 +52,11 @@ import getExplosion02 from "../SharedFrames/GetExplosion02";
 import getExplosion03 from "../SharedFrames/GetExplosion03";
 import getExplosion04 from "../SharedFrames/GetExplosion04";
 import getExplosion05 from "../SharedFrames/GetExplosion05";
+import { appState } from "../State/Store";
 import { getRandomArrayElement } from "../Utility/Array";
 import { getRandomFrameKeyIndex } from "../Utility/Frame";
 import { coinFlip } from "../Utility/Lib";
 import dimensionProvider from "./DimensionProvider";
-import SpeedProvider from "./SpeedProvider";
 
 /**
  * Module:          EnemyFactory
@@ -85,7 +85,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             const locationProvider = new AngleBounceLocationProvider(
                 location.left,
                 location.top,
-                SpeedProvider.get().movement.bird,
+                () => appState().speedState.movement.bird,
                 randomMovementAngle,
                 width,
                 height,
@@ -110,7 +110,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             locationProvider = new SideAppearOtherSide(
                 location.left,
                 location.top,
-                SpeedProvider.get().movement.robot,
+                () => appState().speedState.movement.robot,
                 enemy === "robot" ? MovementAngles.robot : angles.right,
                 width,
                 height,
@@ -158,7 +158,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             const locationProvider = new MoveToUpDownMaxThenReset(
                 location.left,
                 location.top,
-                SpeedProvider.get().movement.orb,
+                () => appState().speedState.movement.orb,
                 angle,
                 width,
                 height,
@@ -183,7 +183,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             const locationProvider = new AngleBounceLocationProvider(
                 location.left,
                 location.top,
-                SpeedProvider.get().movement.spinner,
+                () => appState().speedState.movement.spinner,
                 randomAngle,
                 width,
                 height,
@@ -207,7 +207,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
 
             const { frames, maxSizes: { width, height } } = getBalloonOffsetFrames();
             const frameProvider = new CircleFrameProvider(getRandomFrameKeyIndex(frames));
-            const locationProvider = new Wobble(location.left, location.top, SpeedProvider.get().movement.balloon, 0, width, height, 200);
+            const locationProvider = new Wobble(location.left, location.top, () => appState().speedState.movement.balloon, 0, width, height, 200);
 
             return new DefaultEnemy(
                 Points.balloon,
@@ -223,13 +223,13 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             const frameProvider = new CircleFrameProvider(0);
 
             let anglesToUse: number[];
-            let speedsToUse: number[];
+            let speedsToUse: () => number[];
             if (enemy === "asteroid-down") {
                 anglesToUse = [angles.down];
-                speedsToUse = SpeedProvider.get().movement.Asteroid.down;
+                speedsToUse = () => appState().speedState.movement.Asteroid.down;
             } else {
                 anglesToUse = [extraAngles.leftleftdown, angles.leftdown, angles.down, angles.rightdown, extraAngles.rightrightdown];
-                speedsToUse = SpeedProvider.get().movement.Asteroid.diagonal;
+                speedsToUse = () => appState().speedState.movement.Asteroid.diagonal;
             }
 
             const locationProvider = new RandomReapperance(width, height, anglesToUse, speedsToUse);
@@ -255,8 +255,8 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
                 gameField.top,
                 gameField.bottom,
                 frameProvider,
-                SpeedProvider.get().movement.Piston.slow,
-                SpeedProvider.get().movement.Piston.fast,
+                () => appState().speedState.movement.Piston.slow,
+                () => appState().speedState.movement.Piston.fast,
                 [0, 1, 2],
                 [3, 4]);
 
@@ -286,7 +286,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
                 locationProvider = new AngleBounceLocationProvider(
                     location.left,
                     location.top,
-                    SpeedProvider.get().movement.diabolo,
+                    () => appState().speedState.movement.diabolo,
                     randomAngle,
                     width,
                     height,
@@ -302,7 +302,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
                     locationProvider = new AngleBounceLocationProvider(
                         location.left,
                         location.top,
-                        SpeedProvider.get().movement.diabolo,
+                        () => appState().speedState.movement.diabolo,
                         randomAngle,
                         width,
                         height,
@@ -315,7 +315,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
                     locationProvider = new AngleBounceLocationProvider(
                         location.left,
                         location.top,
-                        SpeedProvider.get().movement.diabolo,
+                        () => appState().speedState.movement.diabolo,
                         randomAngle,
                         width,
                         height,
@@ -337,13 +337,13 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
         case "spacemonster-down":
         case "spacemonster-diagonal": {
             let anglesToUse: number[];
-            let speedsToUse: number[];
+            let speedsToUse: () => number[];
             if (enemy === "spacemonster-down") {
                 anglesToUse = [angles.down];
-                speedsToUse = SpeedProvider.get().movement.SpaceMonster.down;
+                speedsToUse = () => appState().speedState.movement.SpaceMonster.down;
             } else {
                 anglesToUse = [extraAngles.leftleftdown, angles.leftdown, angles.down, angles.rightdown, extraAngles.rightrightdown];
-                speedsToUse = SpeedProvider.get().movement.SpaceMonster.diagonal;
+                speedsToUse = () => appState().speedState.movement.SpaceMonster.diagonal;
             }
 
             const { maxSizes: { width, height } } = getSpaceMonsterOffsetFrames();
@@ -365,7 +365,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             const locationProvider = new AttackerLocationProvider(
                 location.left,
                 location.top,
-                SpeedProvider.get().movement.devil,
+                () => appState().speedState.movement.devil,
                 MovementAngles.devil,
                 width,
                 height,
@@ -388,7 +388,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             const locationProvider = new CrabLocationProvider(
                 location.left,
                 location.top,
-                SpeedProvider.get().movement.crab,
+                () => appState().speedState.movement.crab,
                 height,
                 frameProvider);
 
@@ -414,7 +414,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             const locationProvider = new Wobble(
                 location.left,
                 location.top,
-                SpeedProvider.get().movement.bat,
+                () => appState().speedState.movement.bat,
                 randomAngle,
                 width,
                 height,
@@ -449,8 +449,8 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
                 gameField.top,
                 gameField.bottom,
                 frameProvider,
-                SpeedProvider.get().movement.Boat.slow,
-                SpeedProvider.get().movement.Boat.fast,
+                () => appState().speedState.movement.Boat.slow,
+                () => appState().speedState.movement.Boat.fast,
                 [0, 1, 5],
                 [2, 3, 4]);
 
@@ -500,7 +500,7 @@ export default function enemyFactory(enemy: Enemies, location?: GameLocation, in
             const locationProvider = new AttackerLocationProvider(
                 location.left,
                 location.top,
-                SpeedProvider.get().movement.devil,
+                () => appState().speedState.movement.devil,
                 MovementAngles.devil,
                 width,
                 height,

@@ -28,7 +28,7 @@ export default class AngleBounceLocationProvider extends BaseLocationProvider im
     constructor(
         left: number,
         top: number,
-        speed: number,
+        speed: () => number,
         angle: number,
         width: number,
         height: number,

@@ -19,12 +19,14 @@ export default class SideAppearOtherSideVariesSpeed implements ILocationProvider
     /**
      * Used to calculate a speed increase for the slow speed.
      */
-    private baseSlowSpeed: number;
+    private baseSlowSpeed: () => number;
 
     /**
      * Used to calculate a speed increase for the fast speed.
      */
-    private baseFastSpeed: number;
+    private baseFastSpeed: () => number;
+    slowSpeed: number;
+    fastSpeed: number;
 
     /**
      * Construct the object
@@ -50,13 +52,15 @@ export default class SideAppearOtherSideVariesSpeed implements ILocationProvider
         private maxTop: number,
         private maxBottom: number,
         private indexProvider: IGetCurrentIndex,
-        private slowSpeed: number,
-        private fastSpeed: number,
+        slowSpeed: () => number,
+        fastSpeed: () => number,
         private slowFrames: number[],
         private fastFrames: number[]) {
 
         this.baseSlowSpeed = slowSpeed;
         this.baseFastSpeed = fastSpeed;
+        this.slowSpeed = slowSpeed();
+        this.fastSpeed = fastSpeed();
     }
 
     /**
@@ -106,7 +110,7 @@ export default class SideAppearOtherSideVariesSpeed implements ILocationProvider
      * @param {number} factor.
      */
     public increaseSpeed(factor: number): void {
-        this.slowSpeed = this.baseSlowSpeed * factor;
-        this.fastSpeed = this.baseFastSpeed * factor;
+        this.slowSpeed = this.baseSlowSpeed() * factor;
+        this.fastSpeed = this.baseFastSpeed() * factor;
     }
 }

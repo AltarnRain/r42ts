@@ -25,7 +25,7 @@ export default class AttackerLocationProvider implements ILocationDirectionProvi
     /**
      * Base speed. Set to the inital speed. Used to calculate speed increase.
      */
-    private baseSpeed: number;
+    private baseSpeed: () => number;
 
     /**
      * Current angle of the devil.
@@ -41,6 +41,7 @@ export default class AttackerLocationProvider implements ILocationDirectionProvi
      * When true the devil has moved as far down as it can and is moving up again.
      */
     private recovering: boolean;
+    speed: number;
 
     /**
      * Construct the object.
@@ -56,7 +57,8 @@ export default class AttackerLocationProvider implements ILocationDirectionProvi
     constructor(
         private left: number,
         private top: number,
-        private speed: number,
+
+        speed: () => number,
         private sideAngles: number[],
         private width: number,
         private height: number,
@@ -64,6 +66,8 @@ export default class AttackerLocationProvider implements ILocationDirectionProvi
         private bottomLimit: number) {
 
         this.baseSpeed = speed;
+
+        this.speed = speed();
 
         this.angle = getRandomArrayElement(sideAngles);
         this.attacking = false;
@@ -109,7 +113,7 @@ export default class AttackerLocationProvider implements ILocationDirectionProvi
      */
 
     public increaseSpeed(factor: number): void {
-        this.speed = this.baseSpeed * factor;
+        this.speed = this.baseSpeed() * factor;
     }
 
     /**

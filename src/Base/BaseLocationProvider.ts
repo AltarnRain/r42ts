@@ -16,15 +16,17 @@ export default abstract class BaseLocationProvider implements ILocationProvider 
     /**
      * Base speed. Used to calculate speed increaes.
      */
-    private baseSpeed: number;
+    private baseSpeed: () => number;
+    protected speed: number;
     constructor(
         protected left: number,
         protected top: number,
-        protected speed: number,
+        speed: () => number,
         protected angle: number,
         protected width: number,
         protected height: number) {
 
+        this.speed = speed();
         this.baseSpeed = speed;
     }
 
@@ -53,6 +55,6 @@ export default abstract class BaseLocationProvider implements ILocationProvider 
      * @param {number} factor.
      */
     public increaseSpeed(factor: number): void {
-        this.speed = this.baseSpeed * factor;
+        this.speed = this.baseSpeed() * factor;
     }
 }

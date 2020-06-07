@@ -57,13 +57,13 @@ export default class RandomReapperance implements ILocationProvider {
         private width: number,
         private height: number,
         private angles: Angle[],
-        private speeds: number[]) {
+        private speeds: () => number[]) {
 
         const doubleHeight = this.height * 2;
         this.top = gameField.top - doubleHeight;
         this.left = this.getRandomLeft();
         this.angle = getRandomArrayElement(angles);
-        this.speed = getRandomArrayElement(speeds);
+        this.speed = getRandomArrayElement(speeds());
 
         this.maxBottom = gameField.bottom + doubleHeight;
         this.startTop = gameField.top - doubleHeight;
@@ -94,7 +94,7 @@ export default class RandomReapperance implements ILocationProvider {
             // Reduce top by 2x height for a nice and smooth reapperance of the asteroid
             this.left = this.getRandomLeft();
             this.angle = getRandomArrayElement(this.angles);
-            this.speed = getRandomArrayElement(this.speeds);
+            this.speed = getRandomArrayElement(this.speeds());
 
             const direction = getLeftOrRightFromAngle(this.angle);
 

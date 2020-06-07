@@ -24,12 +24,13 @@ export default class CrabLocationProvider implements ILocationProvider {
     /**
      * Used to calculate speed increases.
      */
-    private baseSpeed: number;
+    private baseSpeed: () => number;
 
     /**
      * Current angle. Can be up or down, depending on the frame.
      */
     private angle: Angle;
+    private speed: number;
 
     /**
      * Construct the object.
@@ -43,12 +44,13 @@ export default class CrabLocationProvider implements ILocationProvider {
     constructor(
         private left: number,
         private top: number,
-        private speed: number,
+        speed: () => number,
         private height: number,
         private indexProvider: IGetCurrentIndex) {
 
         this.baseSpeed = speed;
         this.angle = angles.up;
+        this.speed = speed();
     }
 
     /**
@@ -56,7 +58,7 @@ export default class CrabLocationProvider implements ILocationProvider {
      * @param {number} factor. Speed increase factor.
      */
     public increaseSpeed(factor: number): void {
-        this.speed = this.baseSpeed * factor;
+        this.speed = this.baseSpeed() * factor;
     }
 
     /**

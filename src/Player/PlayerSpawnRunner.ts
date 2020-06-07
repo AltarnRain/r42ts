@@ -8,7 +8,6 @@ import { Locations } from "../Constants/Constants";
 import GameLoop from "../GameLoop";
 import { playerMovementHandler } from "../Handlers/PlayerMovementHandler";
 import dimensionProvider from "../Providers/DimensionProvider";
-import SpeedProvider from "../Providers/SpeedProvider";
 import { SoundPlayer } from "../Sound/SoundPlayer";
 import { setPlayerIsAlive, setPlayerLocationData, setPlayerMovementLimit } from "../State/Player/PlayerActions";
 import { appState, dispatch } from "../State/Store";
@@ -167,7 +166,7 @@ function updateState(): void {
 
         const {
             formingSpeed
-        } = SpeedProvider.get().movement.Player;
+        } = appState().speedState.movement.Player;
 
         playerMovementHandler(formingSpeed, formingSpeed);
     } else if (formationSpeed === "fast") {

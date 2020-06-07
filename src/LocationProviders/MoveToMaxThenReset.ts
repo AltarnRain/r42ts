@@ -30,7 +30,7 @@ export default class MoveToUpDownMaxThenReset extends BaseLocationProvider {
     constructor(
         left: number,
         top: number,
-        speed: number,
+        speed: () => number,
         angle: number,
         width: number,
         height: number,

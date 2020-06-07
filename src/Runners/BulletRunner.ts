@@ -30,7 +30,7 @@ export default class BulletRunner {
     /**
      * Speed of the bullets shot by the enemy.
      */
-    private speed: number;
+    private speed: () => number;
 
     /**
      * A function that provides an array of ships that will fire and the angle at which they will fire.
@@ -45,7 +45,7 @@ export default class BulletRunner {
      */
     constructor(
         bulletColor: string,
-        speed: number,
+        speed: () => number,
         shipsToFire: ShipsToFireFunction) {
 
         this.speed = speed;
@@ -84,7 +84,7 @@ export default class BulletRunner {
                 const bullet = StateProviders.getBulletParticleState(
                     left,
                     top,
-                    this.speed,
+                    this.speed(),
                     angle,
                     this.coloredBulletFrame,
                     enemyId,
