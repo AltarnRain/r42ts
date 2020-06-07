@@ -25,8 +25,16 @@ export default class SideAppearOtherSideVariesSpeed implements ILocationProvider
      * Used to calculate a speed increase for the fast speed.
      */
     private baseFastSpeed: () => number;
-    slowSpeed: number;
-    fastSpeed: number;
+
+    /**
+     * Current slow speed.
+     */
+    private slowSpeed: number;
+
+    /**
+     * Current fast speed.
+     */
+    private fastSpeed: number;
 
     /**
      * Construct the object

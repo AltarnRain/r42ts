@@ -41,7 +41,11 @@ export default class AttackerLocationProvider implements ILocationDirectionProvi
      * When true the devil has moved as far down as it can and is moving up again.
      */
     private recovering: boolean;
-    speed: number;
+
+    /**
+     * current speed
+     */
+    private speed: number;
 
     /**
      * Construct the object.
