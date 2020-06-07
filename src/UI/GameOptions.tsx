@@ -57,9 +57,12 @@ export function GameOptions(props: {
         SettingsManager.storeSetting("playsound", e.target.checked.toString());
     }
 
-    function clearSettings(): void {
+    function resetSettings(): void {
         SettingsManager.storeSetting("gamespeed", "100");
         SettingsManager.storeSetting("playsound", "true");
+
+        setGameSpeed(100);
+        setPlaySounds(true);
     }
 
     return (
@@ -83,7 +86,7 @@ export function GameOptions(props: {
                         <span style={Styles.textStyle}>Play sounds</span>
                     </div>
                 </div>
-                <HoverButton onClick={clearSettings} text="Clear settings" />
+                <HoverButton onClick={resetSettings} text="Reset settings" />
                 <HoverButton onClick={() => setScreenState("mainmenu")} text="Main menu" />
             </div>
         </div>
