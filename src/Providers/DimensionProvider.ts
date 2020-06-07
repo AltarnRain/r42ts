@@ -22,13 +22,11 @@ export default function dimensionProvider(): GameDimensions {
     if (!gameDimensions) {
 
         const body = document.getElementById("body") as HTMLBodyElement;
-
-        let rect: DOMRect;
         if (!body) {
             throw new Error("Could not find a body element");
         }
 
-        rect = body.getBoundingClientRect();
+        const rect = body.getBoundingClientRect();
 
         const fullscreen = rect.width === screen.width && rect.height === screen.height;
 
@@ -36,7 +34,9 @@ export default function dimensionProvider(): GameDimensions {
         const fullGameHeight = 1000;
         const fullGameWidth = 1600;
 
-        const resizeFactor = rect.height > rect.width ? rect.height / fullGameHeight : rect.width / fullGameWidth;
+        const resizeFactor = rect.height < rect.width ? rect.height / fullGameHeight : rect.width / fullGameWidth;
+
+
         const canvasWidth = fullGameWidth * resizeFactor;
         const canvasHeight = fullGameHeight * resizeFactor;
 

@@ -10,7 +10,7 @@ import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import GameResultModel from "./Models/GameResultModel";
 import playerSpawnRunner from "./Player/PlayerSpawnRunner";
-import dimensionProvider from "./Providers/DimensionProvider";
+import dimensionProvider, { resetGameDimensions } from "./Providers/DimensionProvider";
 import SpeedProvider from "./Providers/SpeedProvider";
 import EnemyLevelRunner from "./Runners/EnemyLevelRunner";
 import genericRunner from "./Runners/GenericRunner";
@@ -93,6 +93,14 @@ export namespace GameLoop {
         }
 
         dispatch(setPlaySounds(sound));
+
+        const body = document.getElementById("body") as HTMLBodyElement;
+        if (!body) {
+            throw new Error("Could not find a body element");
+        }
+
+        // Reset the game's dimensions each time the screen size changes.
+        body.onresize = () => resetGameDimensions();
 
         start();
     }
