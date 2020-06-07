@@ -29,14 +29,16 @@ export default function speedReducer(state: SpeedState = createSpeedState(baseSp
 
 /**
  * Create the speed state.
- * @param {number} speed. The speed to create a speed state with.
+ * @param {number} gameSpeed. The speed to create a speed state with.
  */
-function createSpeedState(speed: number): SpeedState {
+function createSpeedState(gameSpeed: number): SpeedState {
     return {
-        movement: convertSpeeds(baseMovementSpeeds, speed),
-        bullets: convertSpeeds(baseBulletSpeeds, speed),
-        gameSpeed: speed,
-        minimumDistance: calculateSpeed(20, speed),
+        movement: convertSpeeds(baseMovementSpeeds, gameSpeed),
+        bullets: convertSpeeds(baseBulletSpeeds, gameSpeed),
+        gameSpeed,
+        minimumDistance: calculateSpeed(20, gameSpeed),
+        slowParticleFormationSpeed: calculateSpeed(10, gameSpeed),
+        fastParticleFormationSpeed: calculateSpeed(30, gameSpeed)
     };
 }
 

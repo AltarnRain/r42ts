@@ -33,4 +33,14 @@ export default interface SpeedState {
      * The speed of the game.
      */
     gameSpeed: number;
+
+    /**
+     * The speed at which a player's ship is formed when the player can move.
+     */
+    slowParticleFormationSpeed: number;
+
+    /**
+     * The speed at which a player's ship is formed when the player cannot move.
+     */
+    fastParticleFormationSpeed: number;
 }

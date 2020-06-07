@@ -143,10 +143,14 @@ function setup(speed: "fast" | "slow", limit: MoveLimits): void {
     dispatch(setPlayerLocationData(Locations.Player.spawnLocation.left, Locations.Player.spawnLocation.top));
     createParticles();
 
+    const {
+        speedState: { slowParticleFormationSpeed, fastParticleFormationSpeed }
+    } = appState();
+
     if (speed === "fast") {
-        allMovingParts.forEach((p) => p.setSpeed(30));
+        allMovingParts.forEach((p) => p.setSpeed(fastParticleFormationSpeed));
     } else {
-        allMovingParts.forEach((p) => p.setSpeed(10));
+        allMovingParts.forEach((p) => p.setSpeed(slowParticleFormationSpeed));
     }
 
     dispatch(setPlayerMovementLimit(limit));
