@@ -42,6 +42,23 @@ export default function MainMenu(props: {
     }
 
     /**
+     * Request full screen
+     */
+    function requestFullscreen(): void {
+        // We'll use the body element to place the entire application
+        // in fullscreen. The body element is used by the game itself
+        // to determine the game's dimensions.
+
+        // No, this is not how you're supposed to use React but
+        // all I'm using it for is a simple UI so I don't care.
+        const body = document.getElementById("body");
+
+        if (body) {
+            body.requestFullscreen();
+        }
+    }
+
+    /**
      * Starts the game
      */
     function onStartGame(): void {
@@ -91,6 +108,7 @@ export default function MainMenu(props: {
             </div>
             <br />
             <div style={{ ...Styles.buttonContainer, ...Styles.textStyle }}>
+                <HoverButton onClick={requestFullscreen} text="Fullscreen" />
                 <HoverButton onClick={onStartGame} text="Play" />
                 <HoverButton onClick={() => setScreenState("options")} text={"Show options"} />
                 <p>Round 42 is open source. Feel free to take a look.</p>
