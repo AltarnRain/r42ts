@@ -51,10 +51,16 @@ export default function MainMenu(props: {
 
         // No, this is not how you're supposed to use React but
         // all I'm using it for is a simple UI so I don't care.
-        const body = document.getElementById("body");
+        const body = document.getElementById("body") as HTMLBodyElement;
 
         if (body) {
-            body.requestFullscreen();
+            const anybody = body as any;
+
+            if (typeof anybody.requestFullscreen === "function") {
+                anybody.requestFullscreen();
+            } else if (typeof anybody.webkitRequestFullScreen === "function") {
+                anybody.webkitRequestFullScreen();
+            }
         }
     }
 
@@ -91,7 +97,6 @@ export default function MainMenu(props: {
                 <div style={{ flexDirection: "column" }}>
                     <p>Instructions</p>
                     <ul>
-                        <li><b>You can press F11 at any time to switch to and from fullscreen</b></li>
                         <li>Use the arrow keys to move.</li>
                         <li>Press F1 or Z to fire a bullet.</li>
                         <li>Press F2 or X to fire a Phaser.</li>
@@ -108,6 +113,7 @@ export default function MainMenu(props: {
             </div>
             <br />
             <div style={{ ...Styles.buttonContainer, ...Styles.textStyle }}>
+                <b>If you're playing via Kongregate press the Fullscreen button to switch to fullscreen.</b>
                 <HoverButton onClick={requestFullscreen} text="Fullscreen" />
                 <HoverButton onClick={onStartGame} text="Play" />
                 <HoverButton onClick={() => setScreenState("options")} text={"Show options"} />
