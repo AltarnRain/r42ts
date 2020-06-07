@@ -36,7 +36,6 @@ export default function dimensionProvider(): GameDimensions {
 
         const resizeFactor = rect.height < rect.width ? rect.height / fullGameHeight : rect.width / fullGameWidth;
 
-
         const canvasWidth = fullGameWidth * resizeFactor;
         const canvasHeight = fullGameHeight * resizeFactor;
 
