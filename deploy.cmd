@@ -1,5 +1,5 @@
 @echo off
-echo cleaning folder
+echo Cleaning folder
 del /s /q ..\altarnrain.github.io\round42
 
 echo Cleaning old sound files
