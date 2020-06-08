@@ -63,6 +63,9 @@ export default function MainMenu(props: {
      * Starts the game
      */
     function onStartGame(): void {
+
+        requestFullscreen();
+
         // Remove the UI from screen.
         setScreenState("playing");
 
@@ -108,9 +111,7 @@ export default function MainMenu(props: {
             </div>
             <br />
             <div style={{ ...Styles.buttonContainer, ...Styles.textStyle }}>
-                <b>If you're playing via Kongregate press the Fullscreen button to switch to fullscreen.</b>
-                <HoverButton onClick={() => requestFullscreen()} text="Fullscreen" />
-                <HoverButton onClick={onStartGame} text="Play" />
+                <HoverButton onClick={() => onStartGame()} text="Play" />
                 <HoverButton onClick={() => setScreenState("options")} text={"Show options"} />
                 <p>Round 42 is open source. Feel free to take a look.</p>
                 <HoverButton onClick={goToSource} text="Source code" />
