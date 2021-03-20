@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ES2016",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "inlineSourceMap": true,
+        "jsx": "react",
+        "moduleResolution": "Node",
+        "outDir": "../dist",
+        "module": "CommonJs"
+    },
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*",
+        "CodeGeneration",
+    ]
+}

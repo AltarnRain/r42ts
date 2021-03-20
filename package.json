@@ -2,12 +2,15 @@
   "name": "r42ts",
   "version": "1.0.0",
   "description": "",
-  "main": "./js/index.js",
+  "main": "./dist/bundle.js",
   "scripts": {
     "build": "webpack -p",
     "start": "webpack-dev-server -d",
     "test": "jest --watch",
-    "lint": "tslint src/**/*.ts{,x}"
+    "lint": "tslint src/**/*.ts{,x}",
+    "startel": "electron ./dist/main.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "private": true,
   "keywords": [],
@@ -26,6 +29,8 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "awesome-typescript-loader": "^5.2.1",
+    "electron": "^12.0.1",
+    "electron-builder": "^22.10.5",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^25.1.0",
@@ -35,5 +40,14 @@
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.11.0"
+  },
+  "build": {
+    "appId": "round.42.electron",
+    "files": [
+      "./dist/sounds/**.*",
+      "./dist/bundle.js",
+      "./dist/index.html",
+      "./dist/main.js"
+    ]
   }
 }
