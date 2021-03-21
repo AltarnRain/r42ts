@@ -8,8 +8,8 @@ import { OffsetFrames } from "../../Models/OffsetFrames";
 import { getMaximumFrameDimensions } from "../../Utility/Frame";
 
 /**
- * Module:          GetCrapOffsetFrames
- * Responsibility:  Define the frames of the Crap enemy.
+ * Module:          GetCrabOffsetFrames
+ * Responsibility:  Define the frames of the Crab enemy.
  */
 
 export default function getCrapOffsetFrames(): OffsetFrames {

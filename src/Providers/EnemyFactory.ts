@@ -18,7 +18,7 @@ import BirdEnemy from "../Enemies/Bird/BirdEnemy";
 import getBirdOffsetFrames from "../Enemies/Bird/GetBirdOffsetFrames";
 import getBoatOffsetFrames from "../Enemies/Boat/GetBoatOffsetFrames";
 import getCloakingOrbOffsetFrames from "../Enemies/CloakingOrb/GetCloakingOrbOffsetFrames";
-import getCrapOffsetFrames from "../Enemies/Crap/GetCrapOffsetFrames";
+import getCrapOffsetFrames from "../Enemies/Crab/GetCrabOffsetFrames";
 import DefaultEnemy from "../Enemies/DefaultEnemy";
 import getDevilExplosion from "../Enemies/Devil/DevilExplosion";
 import getDevilOffsetFrames from "../Enemies/Devil/GetDevilOffsetFrames";
