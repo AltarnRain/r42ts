@@ -8,7 +8,7 @@
     "scripts": {
         "build": "webpack -p",
         "start": "webpack serve",
-        "test": "jest --watch",
+        "test": "jest --watch --rootDir=./src/Tests",
         "lint": "tslint src/**/*.ts{,x}",
         "startel": "electron .",
         "package": "electron-forge package",
