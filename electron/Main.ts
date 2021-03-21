@@ -14,7 +14,7 @@ import path from "path";
 
 async function createWindow(): Promise<void> {
 
-    const preload = path.join(app.getAppPath(), "../dist/Main.js");
+    const preload = path.join(__dirname, "./Main.js");
 
     const win = new BrowserWindow({
         fullscreen: true,
@@ -32,7 +32,7 @@ async function createWindow(): Promise<void> {
     // Uncomment line below to toggle the dev tools when the application starts.
     // win.webContents.toggleDevTools();
 
-    await win.loadFile("index.html");
+    await win.loadFile(path.join(__dirname, "index.html"));
 }
 
 // when the app is ready electron is in a position to create the window.

@@ -1,64 +1,80 @@
 {
-  "name": "r42ts",
-  "productName": "r42ts",
-  "version": "1.0.0",
-  "description": "Remake of round 42",
-  "license": "MIT",
-  "main": "./dist/main.js",
-  "scripts": {
-    "build": "webpack -p",
-    "start": "webpack-dev-server -d",
-    "test": "jest --watch",
-    "lint": "tslint src/**/*.ts{,x}",
-    "startel": "electron ./dist/main.js",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish"
-  },
-  "private": true,
-  "keywords": [],
-  "author": "Onno Invernizzi",
-  "dependencies": {
-    "howler": "^2.1.3",
-    "immer": "^5.0.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "redux": "^4.0.5"
-  },
-  "devDependencies": {
-    "@types/howler": "^2.1.2",
-    "@types/jest": "^25.1.4",
-    "@types/react": "^16.9.35",
-    "@types/react-dom": "^16.9.8",
-    "awesome-typescript-loader": "^5.2.1",
-    "electron": "^12.0.1",
-    "file-loader": "^6.0.0",
-    "html-webpack-plugin": "^3.2.0",
-    "jest": "^25.1.0",
-    "source-map-loader": "^0.2.4",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.2",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.11.0",
-    "@electron-forge/maker-deb": "^6.0.0-beta.54",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
-    "@electron-forge/maker-zip": "^6.0.0-beta.54"
-  },
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "asar": true
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "r42ts"
-          }
+    "name": "r42ts",
+    "productName": "Round 42",
+    "version": "1.0.0",
+    "description": "Remake of round 42",
+    "license": "MIT",
+    "main": "./dist/Main.js",
+    "scripts": {
+        "build": "webpack -p",
+        "start": "webpack-dev-server -d",
+        "test": "jest --watch",
+        "lint": "tslint src/**/*.ts{,x}",
+        "startel": "electron .",
+        "package": "electron-forge package",
+        "make": "electron-forge make",
+        "publish": "electron-forge publish"
+    },
+    "private": true,
+    "keywords": [],
+    "author": "Onno Invernizzi",
+    "dependencies": {
+        "howler": "^2.1.3",
+        "immer": "^5.0.0",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "redux": "^4.0.5"
+    },
+    "devDependencies": {
+        "@types/howler": "^2.1.2",
+        "@types/jest": "^25.1.4",
+        "@types/react": "^16.9.35",
+        "@types/react-dom": "^16.9.8",
+        "awesome-typescript-loader": "^5.2.1",
+        "electron": "^12.0.1",
+        "file-loader": "^6.0.0",
+        "html-webpack-plugin": "^3.2.0",
+        "jest": "^25.1.0",
+        "source-map-loader": "^0.2.4",
+        "tslint": "^5.20.1",
+        "typescript": "^3.7.2",
+        "webpack": "^4.41.5",
+        "webpack-cli": "^3.3.10",
+        "webpack-dev-server": "^3.11.0",
+        "@electron-forge/cli": "^6.0.0-beta.54",
+        "@electron-forge/maker-deb": "^6.0.0-beta.54",
+        "@electron-forge/maker-rpm": "^6.0.0-beta.54",
+        "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+        "@electron-forge/maker-zip": "^6.0.0-beta.54"
+    },
+    "config": {
+        "forge": {
+            "packagerConfig": {
+                "asar": true,
+                "ignore": ["Round42Sound", "SoundSource"]
+            },
+            "makers": [
+                {
+                    "name": "@electron-forge/maker-squirrel",
+                    "config": {
+                        "name": "myapp"
+                    }
+                },
+                {
+                    "name": "@electron-forge/maker-zip",
+                    "platforms": [
+                        "darwin"
+                    ]
+                },
+                {
+                    "name": "@electron-forge/maker-deb",
+                    "config": {}
+                },
+                {
+                    "name": "@electron-forge/maker-rpm",
+                    "config": {}
+                }
+            ]
         }
-      ]
     }
-  }
 }
