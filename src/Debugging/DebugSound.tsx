@@ -1,3 +1,10 @@
+/**
+ * @preserve Copyright 2019-2021 Onno Invernizzi.
+ * This source code is subject to terms and conditions.
+ * See LICENSE.MD.
+ */
+
+import { Howl } from "howler";
 import React, { CSSProperties, useState } from "react";
 import { Sounds } from "../Sound/Sounds";
 import { SoundSprites } from "../Sound/SoundSprites";

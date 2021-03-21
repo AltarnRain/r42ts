@@ -56,7 +56,7 @@ void Main()
 
 	var sb = new StringBuilder();
 	sb.AppendLine("/**");
-	sb.AppendLine(" * @preserve Copyright 2019-2020 Onno Invernizzi.");
+	sb.AppendLine(" * @preserve Copyright 2019-2021 Onno Invernizzi.");
 	sb.AppendLine(" * This source code is subject to terms and conditions.");
 	sb.AppendLine(" * See LICENSE.MD.");
 	sb.AppendLine(" */");
