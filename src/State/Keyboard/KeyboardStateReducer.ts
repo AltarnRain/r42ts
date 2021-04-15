@@ -23,7 +23,7 @@ const {
 
 const keyActions: {key: keyof KeybindingsModel, binding: string }[] = [];
 
-for (const key in Object.keys(keybindings)) {
+for (const key in keybindings) {
     const castKey = key as keyof KeybindingsModel;
     keyActions.push({
         key: castKey,
@@ -59,9 +59,11 @@ export default function keyboardStateReducer(state: KeyboardState = initState(),
             draft.selfDestruct = false;
             draft.phraser = false;
         } else {
+            if (action.type !== Constants.keydown && action.type !== Constants.keyup) {
+                return state;
+            }
             const playerAction = keyActions.find(v => v.binding === action.payload);
             switch (playerAction?.key) {
-
                 case undefined:
                     break;
                 case "upkey":

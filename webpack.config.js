@@ -2,8 +2,8 @@ const path = require('path');
 
 module.exports = {
     mode: "development",
-    entry: './js/index.js',
-    devtool: 'source-map',
+    entry: './src/index.tsx',
+    devtool: 'inline-source-map',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
@@ -15,13 +15,9 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.ts$/,
-                loader: "ts-loader"
-            },
-            {
-                enforce: "pre",
-                test: /\.js$/,
-                loader: "source-map-loader"
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
             },
             {
                 test: /\.ogg$/,

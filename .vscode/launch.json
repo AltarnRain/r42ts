@@ -13,12 +13,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -30,12 +30,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -47,12 +47,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -64,12 +64,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -81,12 +81,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -98,12 +98,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -115,12 +115,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -132,12 +132,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -149,12 +149,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -166,12 +166,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -183,12 +183,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -200,12 +200,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -217,12 +217,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -234,12 +234,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -251,12 +251,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
@@ -268,12 +268,12 @@
             "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "webpack:///./*": "${webRoot}/*",
-                "webpack:///src/*": "${webRoot}/*",
-                "webpack:///*": "*",
-                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack://r42ts/./*": "${webRoot}/*",
+                "webpack://r42ts/src/*": "${webRoot}/*",
+                "webpack://r42ts/*": "*",
+                "webpack://r42ts/./~/*": "${webRoot}/node_modules/*",
                 "meteor://💻app/*": "${webRoot}/*",
-                "webpack:///./src/*": "${webRoot}/*",
+                "webpack://r42ts/./src/*": "${webRoot}/*",
             }
         },
         {
