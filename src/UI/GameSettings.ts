@@ -4,6 +4,8 @@
  * See LICENSE.MD.
  */
 
+import { KeybindingsModel } from "./KeybindingsModel";
+
 /**
  * Module:          GameSettings
  * Responsibility:  Provide a definition for game settings
@@ -12,4 +14,5 @@
 export default interface GameSettings {
     playSound: boolean;
     gameSpeed: number;
+    keybindings: KeybindingsModel;
 }

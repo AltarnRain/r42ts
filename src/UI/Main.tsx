@@ -21,6 +21,7 @@ import { ScreenState } from "./UITypes";
 const {
     gameSpeed: gameSpeedSetting,
     playSound: playSoundSetting,
+    keybindings
 } = SettingsManager.getSettings();
 
 export default function Main(): JSX.Element {
@@ -43,6 +44,7 @@ export default function Main(): JSX.Element {
                     setGameSpeed={setGameSpeed}
                     setScreenState={setScreenState}
                     setPlaySounds={setPlaySounds}
+                    keybindings={keybindings}
                 />
             }
         </div>

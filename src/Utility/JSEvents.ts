@@ -9,6 +9,9 @@ import setCanvasDimensions from "../Render/SetCanvasDimensions";
 import { setPause } from "../State/Game/GameActions";
 import { keyDown, keyUp } from "../State/Keyboard/KeyboardActions";
 import { appState, dispatch } from "../State/Store";
+import { KeybindingsModel } from "../UI/KeybindingsModel";
+import SettingsManager from "../UI/SettingsManager";
+import { getKeyValue } from "./Lib";
 
 /**
  * Module:          JSEvents
@@ -18,33 +21,15 @@ import { appState, dispatch } from "../State/Store";
 /**
  * Valid game keys.
  */
-export type GameKeys =
-    "ArrowUp" |
-    "ArrowDown" |
-    "ArrowLeft" |
-    "ArrowRight" |
-    "Backspace" |
-    "F1" |
-    "z" |
-    "F2" |
-    "x" |
-    " ";
 
-/**
- * Array of valid game keys.
- */
-export const allGameKeys: GameKeys[] = [
-    "ArrowDown",
-    "ArrowLeft",
-    "ArrowRight",
-    "ArrowUp",
-    "Backspace",
-    "F1",
-    "z",
-    "F2",
-    "x",
-    " ",
-];
+const keybindings = SettingsManager.getSettings().keybindings;
+
+export const allGameKeys: string[] = [];
+for (const key in keybindings) {
+
+    const keyValue = getKeyValue<KeybindingsModel, keyof KeybindingsModel>(key as keyof KeybindingsModel, keybindings);
+    allGameKeys.push(keyValue);
+}
 
 /**
  * onKeyDown. Fired when a game control key is pushed down..

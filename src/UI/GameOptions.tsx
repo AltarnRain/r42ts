@@ -6,6 +6,7 @@
 
 import React, { ChangeEvent } from "react";
 import { HoverButton } from "./HoverButton";
+import { KeybindingsModel } from "./KeybindingsModel";
 import SettingsManager from "./SettingsManager";
 import { Styles } from "./Styles";
 import { ScreenState } from "./UITypes";
@@ -18,6 +19,7 @@ import { ScreenState } from "./UITypes";
 export function GameOptions(props: {
     gameSpeed: number,
     playSound: boolean,
+    keybindings: KeybindingsModel
     setGameSpeed(speed: number): void,
     setScreenState(screenState: ScreenState): void,
     setPlaySounds(playSound: boolean): void,
@@ -28,7 +30,8 @@ export function GameOptions(props: {
         playSound,
         setGameSpeed,
         setScreenState,
-        setPlaySounds
+        setPlaySounds,
+        keybindings
     } = props;
 
     /**
@@ -64,7 +67,7 @@ export function GameOptions(props: {
         setGameSpeed(100);
         setPlaySounds(true);
     }
-
+    
     return (
         <div style={Styles.defaultContainer}>
             <div style={{ flexDirection: "column" }}>
@@ -86,6 +89,42 @@ export function GameOptions(props: {
                         <span style={Styles.textStyle}>Play sounds</span>
                     </div>
                 </div>
+                <table>
+                    <thead>
+                        <th>Action</th>
+                        <th>Key</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Up</td>
+                            <td>{keybindings.upkey}</td>
+                        </tr>
+                        <tr>
+                            <td>Down</td>
+                            <td>{keybindings.downKey}</td>
+                        </tr>
+                        <tr>
+                            <td>Left</td>
+                            <td>{keybindings.leftKey}</td>
+                        </tr>
+                        <tr>
+                            <td>Right</td>
+                            <td>{keybindings.rightKey}</td>
+                        </tr>
+                        <tr>
+                            <td>Fire</td>
+                            <td>{keybindings.fireKey}</td>
+                        </tr>
+                        <tr>
+                            <td>Phaser</td>
+                            <td>{keybindings.phaserKey}</td>
+                        </tr>
+                        <tr>
+                            <td>Pause</td>
+                            <td>{keybindings.pauseKey}</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <HoverButton onClick={resetSettings} text="Reset settings" />
                 <HoverButton onClick={() => setScreenState("mainmenu")} text="Main menu" />
             </div>

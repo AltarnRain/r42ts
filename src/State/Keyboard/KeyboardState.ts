@@ -48,5 +48,5 @@ export default interface KeyboardState {
     /**
      * When true the space bar key is held down.
      */
-    space: boolean;
+    pause: boolean;
 }

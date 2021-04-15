@@ -4,22 +4,21 @@
  * See LICENSE.MD.
  */
 
+import Constants from "./KeyboardConstants";
+
 /**
  * Module:          KeyboardTypes
  * Responsibility:  Action typing for the Keyboard State.
  */
 
-import { GameKeys } from "../../Utility/JSEvents";
-import Constants from "./KeyboardConstants";
-
 export interface KeyUp {
     type: typeof Constants.keyup;
-    payload: GameKeys;
+    payload: string;
 }
 
 export interface KeyDown {
     type: typeof Constants.keydown;
-    payload: GameKeys;
+    payload: string;
 }
 
 export interface Reset {

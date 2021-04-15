@@ -9,18 +9,17 @@
  * Responsibility:  Action definitions for the Keyboard State
  */
 
-import { GameKeys } from "../../Utility/JSEvents";
 import Constants from "./KeyboardConstants";
 import { KeyDown, KeyUp, Reset } from "./KeyboardTypes";
 
-export function keyDown(key: GameKeys): KeyDown {
+export function keyDown(key: string): KeyDown {
     return {
         type: Constants.keydown,
         payload: key,
     };
 }
 
-export function keyUp(key: GameKeys): KeyUp {
+export function keyUp(key: string): KeyUp {
     return {
         type: Constants.keyup,
         payload: key

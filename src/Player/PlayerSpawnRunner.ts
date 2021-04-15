@@ -163,7 +163,7 @@ function setup(speed: "fast" | "slow", limit: MoveLimits): void {
 function updateState(): void {
     const { keyboardState } = appState();
 
-    if (keyboardState.space === false && formationSpeed === "slow" && allMovingParts.some((p) => p.traveling())) {
+    if (keyboardState.pause === false && formationSpeed === "slow" && allMovingParts.some((p) => p.traveling())) {
         allMovingParts.forEach((p) => {
             p.updateState();
         });

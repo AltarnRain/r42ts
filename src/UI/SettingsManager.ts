@@ -5,6 +5,7 @@
  */
 
 import GameSettings from "./GameSettings";
+import { KeybindingsModel } from "./KeybindingsModel";
 import StorageKeys from "./StorageKeys";
 import { Settings } from "./UITypes";
 
@@ -23,11 +24,26 @@ export namespace SettingsManager {
 
         const playSound = window.localStorage.getItem(StorageKeys.playSound);
         const gameSpeed = window.localStorage.getItem(StorageKeys.gameSpeed);
+        const keybindings = window.localStorage.getItem(StorageKeys.keybindings);
 
         return {
             gameSpeed: gameSpeed === null ? 100 : parseInt(gameSpeed, 10),
             playSound: playSound === null ? true : playSound === "true",
+            keybindings: keybindings === null ? getDefaultKeyBindings() : JSON.parse(keybindings),
         };
+    }
+
+    function getDefaultKeyBindings(): KeybindingsModel {
+        return {
+            upkey: "ArrowUp",
+            downKey: "ArrowDown",
+            leftKey: "ArrowLeft",
+            rightKey: "ArrowRight",
+            fireKey: "F1",
+            phaserKey: "F2",
+            pauseKey: " ",
+            selfDestruct: "Backspace",
+        }
     }
 
     /**

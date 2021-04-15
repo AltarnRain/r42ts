@@ -52,3 +52,12 @@ export function getURLQueryKVPs(query: string): KeyValuePair[] {
 export function coinFlip(): boolean {
     return Math.floor(Math.random() * 2) === 1;
 }
+
+/**
+ * Get the key value from an object.
+ * @param {string} key Object's key.
+ * @param {string} obj The object. 
+ */
+export function getKeyValue<T extends object, U extends keyof T>(key: U, obj: T) {
+    return obj[key];
+}

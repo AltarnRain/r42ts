@@ -10,9 +10,26 @@
  */
 
 import produce from "immer";
+import { KeybindingsModel } from "../../UI/KeybindingsModel";
+import SettingsManager from "../../UI/SettingsManager";
+import { getKeyValue } from "../../Utility/Lib";
 import Constants from "./KeyboardConstants";
 import KeyboardState from "./KeyboardState";
 import { KeyboardTypes } from "./KeyboardTypes";
+
+const { 
+    keybindings
+} = SettingsManager.getSettings();
+
+const keyActions: {key: keyof KeybindingsModel, binding: string }[] = [];
+
+for (const key in Object.keys(keybindings)) {
+    const castKey = key as keyof KeybindingsModel;
+    keyActions.push({
+        key: castKey,
+        binding: getKeyValue<KeybindingsModel, keyof KeybindingsModel>(castKey, keybindings),
+    })
+}
 
 /**
  * keyboardStateReducer
@@ -42,34 +59,34 @@ export default function keyboardStateReducer(state: KeyboardState = initState(),
             draft.selfDestruct = false;
             draft.phraser = false;
         } else {
-            switch (action.payload) {
+            const playerAction = keyActions.find(v => v.binding === action.payload);
+            switch (playerAction?.key) {
+
                 case undefined:
                     break;
-                case Constants.arrowUp:
+                case "upkey":
                     draft.up = keyDown;
                     break;
-                case Constants.arrowDown:
+                case "downKey":
                     draft.down = keyDown;
                     break;
-                case Constants.arrowLeft:
+                case "leftKey":
                     draft.left = keyDown;
                     break;
-                case Constants.arrowRight:
+                case "rightKey":
                     draft.right = keyDown;
                     break;
-                case Constants.backspace:
+                case "selfDestruct":
                     draft.selfDestruct = keyDown;
                     break;
-                case Constants.f1:
-                case Constants.keyZ:
+                case "fireKey":
                     draft.fire = keyDown;
                     break;
-                case Constants.f2:
-                case Constants.keyX:
+                case "phaserKey":
                     draft.phraser = keyDown;
                     break;
-                case Constants.space:
-                    draft.space = keyDown;
+                case "pauseKey":
+                    draft.pause = keyDown;
                     break;
             }
         }
@@ -89,6 +106,6 @@ function initState(): KeyboardState {
         fire: false,
         phraser: false,
         selfDestruct: false,
-        space: false,
+        pause: false,
     };
 }
