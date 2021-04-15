@@ -58,6 +58,16 @@ export namespace Styles {
         alignItems: "center",
     };
 
+    export const tableStyle: CSSProperties = {
+        ...defaultFont,
+        borderColor: "yellow",
+        borderStyle: "double",
+        color: "white",
+        flexDirection: "column",
+        width: "200px",
+        textAlign:"center"
+    }
+
     export const buttonStyle: CSSProperties = {
         ...alignCenter,
         ...defaultFont,

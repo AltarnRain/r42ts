@@ -67,7 +67,7 @@ export function GameOptions(props: {
         setGameSpeed(100);
         setPlaySounds(true);
     }
-    
+
     return (
         <div style={Styles.defaultContainer}>
             <div style={{ flexDirection: "column" }}>
@@ -89,10 +89,12 @@ export function GameOptions(props: {
                         <span style={Styles.textStyle}>Play sounds</span>
                     </div>
                 </div>
-                <table>
+                <table style={Styles.tableStyle}>
                     <thead>
-                        <th>Action</th>
-                        <th>Key</th>
+                        <tr>
+                            <th>Action</th>
+                            <th>Key</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <tr>
@@ -121,7 +123,7 @@ export function GameOptions(props: {
                         </tr>
                         <tr>
                             <td>Pause</td>
-                            <td>{keybindings.pauseKey}</td>
+                            <td>{keybindings.pauseKey === ' ' ? "Space" : keybindings.pauseKey }</td>
                         </tr>
                     </tbody>
                 </table>
