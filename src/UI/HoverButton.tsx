@@ -14,7 +14,7 @@ import { Styles } from "./Styles";
 
 export function HoverButton(props: {
     text: string,
-    onClick: () => void
+    onClick?: () => void
 }): JSX.Element {
 
     const [hover, setHover] = useState(false);
@@ -23,7 +23,13 @@ export function HoverButton(props: {
         setHover(!hover);
     }
 
+    function click(): void {
+        if (props.onClick) {
+            props.onClick();
+        }
+    }
+
     return (
-        <button style={hover ? Styles.buttonHoverStyle : Styles.buttonStyle} onClick={props.onClick} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>{props.text}</button>
+        <button style={hover ? Styles.buttonHoverStyle : Styles.buttonStyle} onClick={click} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>{props.text}</button>
     );
 }

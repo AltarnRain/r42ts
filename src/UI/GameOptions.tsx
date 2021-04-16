@@ -91,39 +91,49 @@ export function GameOptions(props: {
                 </div>
                 <table style={Styles.tableStyle}>
                     <thead>
-                        <tr>
-                            <th>Action</th>
-                            <th>Key</th>
+                        <tr style={Styles.tableStyle}>
+                            <th style={Styles.tableStyle}>Action</th>
+                            <th style={Styles.tableStyle}>Key</th>
+                            <th style={Styles.tableStyle}>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Up</td>
-                            <td>{keybindings.upkey}</td>
+                            <td style={Styles.tableStyle}>Up</td>
+                            <td style={Styles.tableStyle}>{keybindings.upkey}</td>
+                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
                         </tr>
                         <tr>
-                            <td>Down</td>
-                            <td>{keybindings.downKey}</td>
+                            <td style={Styles.tableStyle}>Down</td>
+                            <td style={Styles.tableStyle}>{keybindings.downKey}</td>
+                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
                         </tr>
                         <tr>
-                            <td>Left</td>
-                            <td>{keybindings.leftKey}</td>
+                            <td style={Styles.tableStyle}>Left</td>
+                            <td style={Styles.tableStyle}>{keybindings.leftKey}</td>
+                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
+
                         </tr>
                         <tr>
-                            <td>Right</td>
-                            <td>{keybindings.rightKey}</td>
+                            <td style={Styles.tableStyle}>Right</td>
+                            <td style={Styles.tableStyle}>{keybindings.rightKey}</td>
+                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
+
                         </tr>
                         <tr>
-                            <td>Fire</td>
-                            <td>{keybindings.fireKey}</td>
+                            <td style={Styles.tableStyle}>Fire</td>
+                            <td style={Styles.tableStyle}>{keybindings.fireKey}</td>
+                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
                         </tr>
                         <tr>
-                            <td>Phaser</td>
-                            <td>{keybindings.phaserKey}</td>
+                            <td style={Styles.tableStyle}> Phaser</td>
+                            <td style={Styles.tableStyle}>{keybindings.phaserKey}</td>
+                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
                         </tr>
                         <tr>
-                            <td>Pause</td>
-                            <td>{keybindings.pauseKey === ' ' ? "Space" : keybindings.pauseKey }</td>
+                            <td style={Styles.tableStyle}>Pause</td>
+                            <td style={Styles.tableStyle}>{keybindings.pauseKey === ' ' ? "Space" : keybindings.pauseKey}</td>
+                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
                         </tr>
                     </tbody>
                 </table>

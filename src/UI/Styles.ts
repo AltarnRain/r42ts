@@ -73,7 +73,6 @@ export namespace Styles {
         ...defaultFont,
         backgroundColor: "black",
         color: "yellow",
-        width: "150px",
         borderColor: "yellow",
         marginBottom: "10px",
         marginTop: "10px"
