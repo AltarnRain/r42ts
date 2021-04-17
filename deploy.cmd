@@ -7,9 +7,6 @@ cd dist
 rd /s /q sounds
 cd.. 
 
-echo Building game
-call tsc --build
-
 echo Packing
 call webpack -p
 
