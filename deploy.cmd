@@ -8,7 +8,7 @@ rd /s /q sounds
 cd.. 
 
 echo Packing
-call webpack -p
+npm run-script build
 
 echo Copying gamefiles.
 xcopy dist ..\altarnrain.github.io\round42 /y /s

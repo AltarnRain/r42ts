@@ -6,8 +6,8 @@
     "license": "MIT",
     "main": "./dist/Main.js",
     "scripts": {
-        "build": "webpack -p",
-        "start": "webpack serve",
+        "build": "webpack --config webpack.prod.config.js",
+        "start": "webpack serve --open --config webpack.dev.config.js",
         "test": "jest --watch --rootDir=./src/Tests",
         "lint": "tslint src/**/*.ts{,x}",
         "startel": "electron .",

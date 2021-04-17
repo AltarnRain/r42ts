@@ -10,3 +10,4 @@ dist/win-unpacked
 dist/Main.js
 distel
 out
+dist/bundle.js.LICENSE.txt
