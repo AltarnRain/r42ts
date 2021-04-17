@@ -36,6 +36,8 @@ export function updateKeyActions(): void {
     }    
 }
 
+updateKeyActions();
+
 /**
  * keyboardStateReducer
  * @param {DebuggingState} state. The current state.
