@@ -22,14 +22,22 @@ import { getKeyValue } from "./Lib";
  * Valid game keys.
  */
 
-const keybindings = SettingsManager.getSettings().keybindings;
 
-export const allGameKeys: string[] = [];
-for (const key in keybindings) {
+export let allGameKeys: string[] = [];
+let keybindings: KeybindingsModel = SettingsManager.getSettings().keybindings;
 
-    const keyValue = getKeyValue<KeybindingsModel, keyof KeybindingsModel>(key as keyof KeybindingsModel, keybindings);
-    allGameKeys.push(keyValue);
+export function updateKeybinds(): void {
+    allGameKeys = [];
+    keybindings = SettingsManager.getSettings().keybindings;
+
+    for (const key in keybindings) {
+    
+        const keyValue = getKeyValue<KeybindingsModel, keyof KeybindingsModel>(key as keyof KeybindingsModel, keybindings);
+        allGameKeys.push(keyValue);
+    }
 }
+
+updateKeybinds();
 
 /**
  * onKeyDown. Fired when a game control key is pushed down..

@@ -17,18 +17,23 @@ import Constants from "./KeyboardConstants";
 import KeyboardState from "./KeyboardState";
 import { KeyboardTypes } from "./KeyboardTypes";
 
-const { 
-    keybindings
-} = SettingsManager.getSettings();
 
-const keyActions: {keycode: keyof KeybindingsModel, binding: string }[] = [];
 
-for (const key in keybindings) {
-    const castKeyCode = key as keyof KeybindingsModel;
-    keyActions.push({
-        keycode: castKeyCode,
-        binding: getKeyValue<KeybindingsModel, keyof KeybindingsModel>(castKeyCode, keybindings),
-    })
+let keyActions: {keycode: keyof KeybindingsModel, binding: string }[] = [];
+
+export function updateKeyActions(): void {
+    const { 
+        keybindings
+    } = SettingsManager.getSettings();
+    
+    keyActions = [];
+    for (const key in keybindings) {
+        const castKeyCode = key as keyof KeybindingsModel;
+        keyActions.push({
+            keycode: castKeyCode,
+            binding: getKeyValue<KeybindingsModel, keyof KeybindingsModel>(castKeyCode, keybindings),
+        })
+    }    
 }
 
 /**

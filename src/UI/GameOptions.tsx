@@ -5,6 +5,8 @@
  */
 
 import React, { ChangeEvent, useEffect, useState } from "react";
+import { updateKeyActions } from "../State/Keyboard/KeyboardStateReducer";
+import { updateKeybinds } from "../Utility/JSEvents";
 import { HoverButton } from "./HoverButton";
 import { KeybindingsModel } from "./KeybindingsModel";
 import SettingsManager from "./SettingsManager";
@@ -97,6 +99,13 @@ export function GameOptions(props: {
             
             SettingsManager.storeSetting("keybindings", JSON.stringify(newKeybindings));
             setKeybinds(newKeybindings);
+
+            // Lazy solution but it works.
+            // Update the JSEvent keys that are listened to.
+            updateKeybinds();
+
+            // Update the key to action mapping the KeyboardReducer uses.
+            updateKeyActions();
         }
 
         setListening(false);
