@@ -15,6 +15,11 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+            {
                 test: /\.ogg$/,
                 loader: "file-loader",
                 options: {

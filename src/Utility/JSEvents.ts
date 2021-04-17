@@ -42,21 +42,21 @@ function onKeyDown(event: KeyboardEvent): void {
         gameState
     } = appState();
 
-    if (Guard.isValidGameKey(event.key)) {
+    if (Guard.isValidGameKey(event.code)) {
         // Only dispatch if the key is a game control key.
         event.stopPropagation();
         event.preventDefault();
 
         // If the space bar is hit and the player is alive the player pauses the game
         // otherwise, the space bar is used to pause formation.
-        if (event.key === keybindings.pauseKey && playerState.alive) {
+        if (event.code === keybindings.pauseKey && playerState.alive) {
             if (gameState.pause) {
                 dispatch(setPause(false));
             } else {
                 dispatch(setPause(true));
             }
         } else {
-            dispatch(keyDown(event.key));
+            dispatch(keyDown(event.code));
         }
     }
 }
@@ -66,12 +66,12 @@ function onKeyDown(event: KeyboardEvent): void {
  * @param {KeyboardEvent} event. A keyboard event.
  */
 function onKeyUp(event: KeyboardEvent): void {
-    if (Guard.isValidGameKey(event.key)) {
+    if (Guard.isValidGameKey(event.code)) {
         // Only dispatch if the key is a game control key.
         event.stopPropagation();
         event.preventDefault();
 
-        dispatch(keyUp(event.key));
+        dispatch(keyUp(event.code));
     }
 }
 

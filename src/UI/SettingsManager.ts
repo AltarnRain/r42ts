@@ -41,7 +41,7 @@ export namespace SettingsManager {
             rightKey: "ArrowRight",
             fireKey: "F1",
             phaserKey: "F2",
-            pauseKey: " ",
+            pauseKey: "Space",
             selfDestruct: "Backspace",
         }
     }
@@ -59,6 +59,9 @@ export namespace SettingsManager {
             case "playsound":
                 window.localStorage.setItem(StorageKeys.playSound, value);
                 break;
+            case "keybindings":
+                window.localStorage.setItem(StorageKeys.keybindings, value);
+            break;
             default:
                 throw new Error("Unknown setting");
         }

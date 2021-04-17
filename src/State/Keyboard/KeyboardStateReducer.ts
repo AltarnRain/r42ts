@@ -21,13 +21,13 @@ const {
     keybindings
 } = SettingsManager.getSettings();
 
-const keyActions: {key: keyof KeybindingsModel, binding: string }[] = [];
+const keyActions: {keycode: keyof KeybindingsModel, binding: string }[] = [];
 
 for (const key in keybindings) {
-    const castKey = key as keyof KeybindingsModel;
+    const castKeyCode = key as keyof KeybindingsModel;
     keyActions.push({
-        key: castKey,
-        binding: getKeyValue<KeybindingsModel, keyof KeybindingsModel>(castKey, keybindings),
+        keycode: castKeyCode,
+        binding: getKeyValue<KeybindingsModel, keyof KeybindingsModel>(castKeyCode, keybindings),
     })
 }
 
@@ -63,7 +63,7 @@ export default function keyboardStateReducer(state: KeyboardState = initState(),
                 return state;
             }
             const playerAction = keyActions.find(v => v.binding === action.payload);
-            switch (playerAction?.key) {
+            switch (playerAction?.keycode) {
                 case undefined:
                     break;
                 case "upkey":

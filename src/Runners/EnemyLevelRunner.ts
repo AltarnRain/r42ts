@@ -222,7 +222,7 @@ function handleEnemies(tick: number): void {
  * @param {EnemyState} enemy. The enemy that got hit.
  * @param {boolean} awardPoints. True by default. When false does not award points for destroyed enemies. Used when using self destruct.
  */
-function handleEnemyDestruction(tick: number, enemy: EnemyState, awardPoints = true): void {
+function handleEnemyDestruction(tick: number, enemy: EnemyState): void {
     const { enemyLevelState } = appState();
 
     // Get the enemies that are not destroyed and increase the remaining enemies speed in one go.
@@ -238,11 +238,7 @@ function handleEnemyDestruction(tick: number, enemy: EnemyState, awardPoints = t
     SoundPlayer.enemyExplosion();
     dispatchExplosion(enemy.offsetLeft, enemy.offsetTop, enemy.coloredExplosion, tick);
     dispatch(removeEnemy(enemy.enemyId));
-
-    // True by default but self destruct gives no points.
-    if (awardPoints) {
-        dispatch(increaseScore(enemy.points));
-    }
+    dispatch(increaseScore(enemy.points));
 
     // Keep track how often the player hits an enemy. This is a different dispatch because
     // tracking hits is registered in the GameState, not the EnemyLevelState.

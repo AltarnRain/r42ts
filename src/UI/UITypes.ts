@@ -17,4 +17,4 @@ export type ScreenState = "mainmenu" | "playing" | "about" | "gameover" | "optio
 /**
  * Supported game settings.
  */
-export type Settings = "playsound" | "gamespeed";
+export type Settings = "playsound" | "gamespeed" | "keybindings";

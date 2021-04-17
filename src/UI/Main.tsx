@@ -30,6 +30,7 @@ export default function Main(): JSX.Element {
     const [gameResult, setGameResult] = useState<GameResultModel>();
     const [gameSpeed, setGameSpeed] = useState(gameSpeedSetting);
     const [playSound, setPlaySounds] = useState(playSoundSetting);
+    const [keybinds, setKeybinds] = useState(keybindings);
 
     return (
         <div>
@@ -44,7 +45,8 @@ export default function Main(): JSX.Element {
                     setGameSpeed={setGameSpeed}
                     setScreenState={setScreenState}
                     setPlaySounds={setPlaySounds}
-                    keybindings={keybindings}
+                    keybindings={keybinds}
+                    setKeybinds={setKeybinds}
                 />
             }
         </div>

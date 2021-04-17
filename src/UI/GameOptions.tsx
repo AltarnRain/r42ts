@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { HoverButton } from "./HoverButton";
 import { KeybindingsModel } from "./KeybindingsModel";
 import SettingsManager from "./SettingsManager";
@@ -23,6 +23,7 @@ export function GameOptions(props: {
     setGameSpeed(speed: number): void,
     setScreenState(screenState: ScreenState): void,
     setPlaySounds(playSound: boolean): void,
+    setKeybinds(keybindings: KeybindingsModel): void,
 }): JSX.Element {
 
     const {
@@ -31,8 +32,18 @@ export function GameOptions(props: {
         setGameSpeed,
         setScreenState,
         setPlaySounds,
-        keybindings
+        keybindings,
+        setKeybinds
     } = props;
+
+    const [listening, setListening] = useState(false);
+    const [currentKeyBind, setCurrentKeyBind] = useState<keyof KeybindingsModel | undefined>(undefined)
+
+    useEffect(() => {
+        document.addEventListener("keypress", listenForKeyBind);
+
+        return () => document.removeEventListener("keypress", listenForKeyBind);
+    })
 
     /**
      * Handles a change in the game speed slider.
@@ -68,9 +79,35 @@ export function GameOptions(props: {
         setPlaySounds(true);
     }
 
+    function changeBinding(key: keyof KeybindingsModel): void {
+        
+        setListening(true);
+        setCurrentKeyBind(key);
+    }
+
+    function listenForKeyBind(e: KeyboardEvent): void {
+        if (!listening) {
+            return;
+        }
+
+        const newKeybindings  = {...keybindings};
+
+        if (currentKeyBind !== undefined) {
+            newKeybindings[currentKeyBind] = e.code;
+            
+            SettingsManager.storeSetting("keybindings", JSON.stringify(newKeybindings));
+            setKeybinds(newKeybindings);
+        }
+
+        setListening(false);
+    }
+
     return (
         <div style={Styles.defaultContainer}>
-            <div style={{ flexDirection: "column" }}>
+            {
+                listening ? <p style={Styles.header}>Press the key to bind</p>
+                :
+                <div style={{ flexDirection: "column" }}>
                 <p style={Styles.header}>Options</p>
                 <b><p style={Styles.textStyle} >Adjust game speed</p></b>
                 <div>
@@ -101,45 +138,46 @@ export function GameOptions(props: {
                         <tr>
                             <td style={Styles.tableStyle}>Up</td>
                             <td style={Styles.tableStyle}>{keybindings.upkey}</td>
-                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
+                            <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("upkey")} text="Edit"/></td>
                         </tr>
                         <tr>
                             <td style={Styles.tableStyle}>Down</td>
                             <td style={Styles.tableStyle}>{keybindings.downKey}</td>
-                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
+                            <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("downKey")} text="Edit"/></td>
                         </tr>
                         <tr>
                             <td style={Styles.tableStyle}>Left</td>
                             <td style={Styles.tableStyle}>{keybindings.leftKey}</td>
-                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
+                            <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("leftKey")} text="Edit"/></td>
 
                         </tr>
                         <tr>
                             <td style={Styles.tableStyle}>Right</td>
                             <td style={Styles.tableStyle}>{keybindings.rightKey}</td>
-                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
-
+                            <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("rightKey")} text="Edit"/></td>
                         </tr>
                         <tr>
                             <td style={Styles.tableStyle}>Fire</td>
                             <td style={Styles.tableStyle}>{keybindings.fireKey}</td>
-                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
+                            <td style={Styles.tableStyle}><HoverButton onClick={()=> changeBinding("fireKey")} text="Edit"/></td>
                         </tr>
                         <tr>
                             <td style={Styles.tableStyle}> Phaser</td>
                             <td style={Styles.tableStyle}>{keybindings.phaserKey}</td>
-                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
+                            <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("phaserKey")} text="Edit"/></td>
                         </tr>
                         <tr>
                             <td style={Styles.tableStyle}>Pause</td>
-                            <td style={Styles.tableStyle}>{keybindings.pauseKey === ' ' ? "Space" : keybindings.pauseKey}</td>
-                            <td style={Styles.tableStyle}><HoverButton text="Edit"/></td>
+                            <td style={Styles.tableStyle}>{keybindings.pauseKey}</td>
+                            <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("pauseKey")} text="Edit"/></td>
                         </tr>
                     </tbody>
                 </table>
                 <HoverButton onClick={resetSettings} text="Reset settings" />
                 <HoverButton onClick={() => setScreenState("mainmenu")} text="Main menu" />
             </div>
+            }
+
         </div>
     );
 }

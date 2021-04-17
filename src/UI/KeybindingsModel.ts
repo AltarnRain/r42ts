@@ -17,5 +17,4 @@ export interface KeybindingsModel {
     fireKey: string;
     phaserKey: string;
     pauseKey: string;
-    selfDestruct: string;
 }
