@@ -26,7 +26,7 @@ const {
 
 export default function Main(): JSX.Element {
 
-    const [screenState, setScreenState] = useState<ScreenState>("options");
+    const [screenState, setScreenState] = useState<ScreenState>("mainmenu");
     const [gameResult, setGameResult] = useState<GameResultModel>();
     const [gameSpeed, setGameSpeed] = useState(gameSpeedSetting);
     const [playSound, setPlaySounds] = useState(playSoundSetting);

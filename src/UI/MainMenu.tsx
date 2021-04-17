@@ -112,7 +112,7 @@ export default function MainMenu(props: {
             <br />
             <div style={{ ...Styles.buttonContainer, ...Styles.textStyle }}>
                 <HoverButton onClick={() => onStartGame()} text="Play" />
-                <HoverButton onClick={() => setScreenState("options")} text={"Show options"} />
+                <HoverButton onClick={() => setScreenState("options")} text={"Options and Keybinds"} />
                 <p>Round 42 is open source. Feel free to take a look.</p>
                 <HoverButton onClick={goToSource} text="Source code" />
                 <p>Learn more? Click about.</p>
