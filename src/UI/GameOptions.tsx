@@ -40,9 +40,9 @@ export function GameOptions(props: {
     const [currentKeyBind, setCurrentKeyBind] = useState<keyof KeybindingsModel | undefined>(undefined)
 
     useEffect(() => {
-        document.addEventListener("keypress", listenForKeyBind);
+        document.addEventListener("keydown", listenForKeyBind);
 
-        return () => document.removeEventListener("keypress", listenForKeyBind);
+        return () => document.removeEventListener("keydown", listenForKeyBind);
     })
 
     /**
