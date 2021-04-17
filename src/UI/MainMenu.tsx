@@ -93,20 +93,21 @@ export default function MainMenu(props: {
             </div>
             <div style={Styles.defaultTextContainer}>
                 <div style={{ flexDirection: "column" }}>
-                    <p>Instructions</p>
+                    <p>Instructions for default keybindings</p>
                     <ul>
-                        <li>Use the arrow keys to move.</li>
-                        <li>Press F1 or Z to fire a bullet.</li>
-                        <li>Press F2 or X to fire a Phaser.</li>
+                        <li>Use the arrow keys to move (default).</li>
+                        <li>Press F1 to fire a bullet (default).</li>
+                        <li>Press F2 to fire a Phaser (default).</li>
                         <ul>
                             <li>This is your super weapon. It kills a random enemy in one shot.</li>
                             <li>You only have limited charges so use them wisely.</li>
                         </ul>
                         <li>A life and phaser is awared every 7500 points.</li>
                         <li>When you die you'll lose your phaser charges.</li>
-                        <li>When you die you can hold Space to pause your formation.</li>
-                        <li>When there's enemies on the screen you can move left and right while your ship is warping in.</li>
+                        <li>When you die you can hold the 'Pause' key to stop your formation. While forming you cannot be hit.</li>
+                        <li>When there are enemies on the screen you can move left and right while your ship is forming.</li>
                     </ul>
+                    <p>You can setup your own keybinds in the 'Option and Keybinds' menu.</p>
                 </div>
             </div>
             <br />
