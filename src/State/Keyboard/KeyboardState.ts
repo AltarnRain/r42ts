@@ -41,11 +41,6 @@ export default interface KeyboardState {
     phraser: boolean;
 
     /**
-     * When true the backspace key is held down.
-     */
-    selfDestruct: boolean;
-
-    /**
      * When true the space bar key is held down.
      */
     pause: boolean;

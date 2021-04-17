@@ -56,7 +56,6 @@ export default function keyboardStateReducer(state: KeyboardState = initState(),
             draft.up = false;
             draft.down = false;
             draft.fire = false;
-            draft.selfDestruct = false;
             draft.phraser = false;
         } else {
             if (action.type !== Constants.keydown && action.type !== Constants.keyup) {
@@ -77,9 +76,6 @@ export default function keyboardStateReducer(state: KeyboardState = initState(),
                     break;
                 case "rightKey":
                     draft.right = keyDown;
-                    break;
-                case "selfDestruct":
-                    draft.selfDestruct = keyDown;
                     break;
                 case "fireKey":
                     draft.fire = keyDown;
@@ -107,7 +103,6 @@ function initState(): KeyboardState {
         right: false,
         fire: false,
         phraser: false,
-        selfDestruct: false,
         pause: false,
     };
 }
