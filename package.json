@@ -12,8 +12,7 @@
         "lint": "tslint src/**/*.ts{,x}",
         "startel": "electron .",
         "package": "electron-forge package",
-        "make": "electron-forge make",
-        "publish": "electron-forge publish"
+        "make": "electron-forge make"
     },
     "private": true,
     "keywords": [],

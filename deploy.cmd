@@ -15,8 +15,8 @@ xcopy dist ..\altarnrain.github.io\round42 /y /s
 
 echo Committing and pushing
 cd /d ..\altarnrain.github.io
-git add .
-git commit -m "Round 42 update"
-git push
+git.exe add .
+git.exe commit -m "Round 42 update"
+git.exe push
 pause
 exit
