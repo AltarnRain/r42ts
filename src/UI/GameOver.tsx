@@ -8,7 +8,7 @@ import React from "react";
 import GameResultModel from "../Models/GameResultModel";
 import { setScreenState } from "../State/Game/GameActions";
 import { dispatch } from "../State/Store";
-import { HoverButton } from "./HoverButton";
+import { HoverButton } from "./Components/HoverButton";
 import { Styles } from "./Styles";
 
 /**

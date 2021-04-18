@@ -14,7 +14,7 @@ import { setGameSpeedSetting, setKeybindings, setSoundStateSetting } from "../St
 import SettingsState from "../State/Settings/SettingsState";
 import { setSpeed } from "../State/Speed/SpeedActions";
 import { dispatch } from "../State/Store";
-import { HoverButton } from "./HoverButton";
+import { HoverButton } from "./Components/HoverButton";
 import SettingsManager from "./SettingsManager";
 import { Styles } from "./Styles";
 

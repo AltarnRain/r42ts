@@ -10,7 +10,7 @@ import requestFullScreen from "../Providers/RequestFullscreen";
 import { startGame } from "../StartGame";
 import { setGameInProgress, setScreenState } from "../State/Game/GameActions";
 import { dispatch } from "../State/Store";
-import { HoverButton } from "./HoverButton";
+import { HoverButton } from "./Components/HoverButton";
 import { Styles } from "./Styles";
 
 /**

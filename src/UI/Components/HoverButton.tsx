@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from "react";
-import { Styles } from "./Styles";
+import { Styles } from "../Styles";
 
 /**
  * Module:          HoverButton
