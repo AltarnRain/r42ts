@@ -10,13 +10,12 @@
         "start": "webpack serve --config webpack.dev.config.js",
         "test": "jest --watch --rootDir=./src/Tests",
         "lint": "tslint src/**/*.ts{,x}",
-        "startel": "electron .",
-        "package": "electron-forge package",
-        "make": "electron-forge make"
+        "package": "electron-forge package"
     },
     "private": true,
     "keywords": [],
     "author": "Onno Invernizzi",
+    "publisher": "Antin Games",
     "dependencies": {
         "howler": "2.2.1",
         "immer": "9.0.1",
