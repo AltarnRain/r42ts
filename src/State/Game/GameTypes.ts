@@ -10,6 +10,7 @@
  */
 
 import GameStateEnum from "./GameEnum";
+import { ScreenState } from "./UITypes";
 import { WarpLevelComplexity } from "./WarpLevelTypes";
 
 export interface IncreaseScore {
@@ -91,6 +92,11 @@ export interface ResetScore {
     type: typeof GameStateEnum.resetScore;
 }
 
+export interface SetScreenState {
+    type: typeof GameStateEnum.setScreenState;
+    screenState: ScreenState;
+}
+
 export type GameStateTypes =
     IncreaseScore |
     SetLives |
@@ -109,5 +115,6 @@ export type GameStateTypes =
     PhaserFired |
     EnemyHit |
     SetTimeLevelTimeLimit |
-    ResetScore
+    ResetScore |
+    SetScreenState
     ;

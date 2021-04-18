@@ -9,7 +9,7 @@ import { setGameSpeedSetting, setKeybindings, setSoundStateSetting } from "../St
 import SettingsState from "../State/Settings/SettingsState";
 import { dispatch } from "../State/Store";
 import StorageKeys from "./StorageKeys";
-import { Settings } from "./UITypes";
+import { Settings } from "../State/Game/UITypes";
 
 /**
  * Module:          SettingsManager
@@ -51,7 +51,7 @@ export namespace SettingsManager {
             fireKey: "F1",
             phaserKey: "F2",
             pauseKey: "Space",
-            menu: "Q",
+            menu: "KeyQ",
         }
     }
 

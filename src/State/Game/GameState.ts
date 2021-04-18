@@ -4,6 +4,7 @@
  * See LICENSE.MD.
  */
 
+import { ScreenState } from "./UITypes";
 import { WarpLevelSteps } from "./WarpLevelTypes";
 
 /**
@@ -72,4 +73,9 @@ export default interface GameState {
      * Triggers enemies at their hardest.
      */
     hardMode: boolean;
+
+    /**
+     * Current screen that is shown.
+     */
+    screenState: ScreenState;
 }

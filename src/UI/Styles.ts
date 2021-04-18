@@ -63,9 +63,9 @@ export namespace Styles {
         borderColor: "yellow",
         borderStyle: "double",
         color: "white",
-        flexDirection: "column",
-        width: "200px",
-        textAlign:"center"
+        width: "400px",
+        textAlign:"center",
+        justifyContent:"center"
     }
 
     export const buttonStyle: CSSProperties = {

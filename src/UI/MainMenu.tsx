@@ -8,9 +8,10 @@ import React from "react";
 import GameResultModel from "../Models/GameResultModel";
 import requestFullScreen from "../Providers/RequestFullscreen";
 import { startGame } from "../StartGame";
+import { setScreenState } from "../State/Game/GameActions";
+import { dispatch } from "../State/Store";
 import { HoverButton } from "./HoverButton";
 import { Styles } from "./Styles";
-import { ScreenState } from "./UITypes";
 
 /**
  * Module:          MainMenu
@@ -18,12 +19,10 @@ import { ScreenState } from "./UITypes";
  */
 
 export default function MainMenu(props: {
-    setScreenState(screenState: ScreenState): void,
     setGameResult(result: GameResultModel): void,
 }): JSX.Element {
 
     const {
-        setScreenState,
         setGameResult,
     } = props;
 
@@ -62,7 +61,7 @@ export default function MainMenu(props: {
         requestFullscreen();
 
         // Remove the UI from screen.
-        setScreenState("playing");
+        dispatch(setScreenState("playing"));
 
         // Lazy load the game. When the game starts it sets dimension constants all though the game
         // before this is done we want to make sure the game is either running in full screem
@@ -70,7 +69,7 @@ export default function MainMenu(props: {
         // Once loaded this module stays loaded. Thats why the game, when it ends, doesn't show the
         // main menu as switching to full screen would have no effect at that point.
         startGame((result) => {
-            setScreenState("gameover");
+            dispatch(setScreenState("gameover"));
             setGameResult(result);
         });
     }
@@ -108,11 +107,11 @@ export default function MainMenu(props: {
             <br />
             <div style={{ ...Styles.buttonContainer, ...Styles.textStyle }}>
                 <HoverButton onClick={() => onStartGame()} text="Play" />
-                <HoverButton onClick={() => setScreenState("options")} text={"Options and Keybinds"} />
+                <HoverButton onClick={() => dispatch(setScreenState("options"))} text={"Options and Keybinds"} />
                 <p>Round 42 is open source. Feel free to take a look.</p>
                 <HoverButton onClick={goToSource} text="Source code" />
                 <p>Learn more? Click about.</p>
-                <HoverButton onClick={() => setScreenState("about")} text="About" />
+                <HoverButton onClick={() => dispatch(setScreenState("about"))} text="About" />
             </div>
         </>
     );

@@ -93,6 +93,9 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 draft.score = 0;
                 draft.lastAwardScore = 0;
                 break;
+            case GameStateEnum.setScreenState:
+                draft.screenState = action.screenState;
+                break;
         }
     });
 }
@@ -114,6 +117,7 @@ function initState(): GameState {
         bulletsFired: 0,
         enemiesHit: 0,
         timeLevelTimeLimit: 20000, // 20 seconds
-        hardMode: false
+        hardMode: false,
+        screenState: "options",
     };
 }

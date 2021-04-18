@@ -5,10 +5,12 @@
  */
 
 import "react";
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import React from "react";
+import { Provider } from "react-redux";
 import debug from "./Debugging/Debug";
+import { appStore } from "./State/Store";
 import Main from "./UI/Main";
+import ReactDOM from "react-dom";
 
 /**
  * Module:          Index
@@ -26,5 +28,9 @@ if (window.location.search.indexOf("?playground") > -1 ||
     debug();
 } else {
     // Otherwise load the UI.
-    ReactDOM.render(<Main/>, document.getElementById("root"));
+    ReactDOM.render(
+        <Provider store={appStore()}>
+            <Main />
+        </Provider>
+        , document.getElementById("root"));
 }

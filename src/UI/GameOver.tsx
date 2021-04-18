@@ -6,18 +6,18 @@
 
 import React from "react";
 import GameResultModel from "../Models/GameResultModel";
+import { setScreenState } from "../State/Game/GameActions";
+import { dispatch } from "../State/Store";
 import { HoverButton } from "./HoverButton";
 import { Styles } from "./Styles";
-import { ScreenState } from "./UITypes";
 
 /**
  * Module:          GameOver
  * Responsibility:  Game over screen
  */
 
-export default function GameOver(props: { setScreenState(screenState: ScreenState): void, gameResult: GameResultModel | undefined }): JSX.Element {
+export default function GameOver(props: { gameResult: GameResultModel | undefined }): JSX.Element {
     const {
-        setScreenState,
         gameResult
     } = props;
 
@@ -37,7 +37,7 @@ export default function GameOver(props: { setScreenState(screenState: ScreenStat
             </div>
             <br />
             <div style={Styles.buttonContainer}>
-                <HoverButton onClick={() => setScreenState("mainmenu")} text="Ok" />
+                <HoverButton onClick={() => dispatch(setScreenState("mainmenu"))} text="Ok" />
             </div>
         </>
     );
