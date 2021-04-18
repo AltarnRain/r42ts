@@ -9,9 +9,6 @@ import setCanvasDimensions from "../Render/SetCanvasDimensions";
 import { setPause } from "../State/Game/GameActions";
 import { keyDown, keyUp } from "../State/Keyboard/KeyboardActions";
 import { appState, dispatch } from "../State/Store";
-import { KeybindingsState } from "../State/Settings/KeybindingsState";
-import SettingsManager from "../UI/SettingsManager";
-import { getKeyValue } from "./Lib";
 
 /**
  * Module:          JSEvents
@@ -21,23 +18,6 @@ import { getKeyValue } from "./Lib";
 /**
  * Valid game keys.
  */
-
-
-export let allGameKeys: string[] = [];
-let keybindings: KeybindingsState = SettingsManager.getSettings().keybindings;
-
-export function updateKeybinds(): void {
-    allGameKeys = [];
-    keybindings = SettingsManager.getSettings().keybindings;
-
-    for (const key in keybindings) {
-    
-        const keyValue = getKeyValue<KeybindingsState, keyof KeybindingsState>(key as keyof KeybindingsState, keybindings);
-        allGameKeys.push(keyValue);
-    }
-}
-
-updateKeybinds();
 
 /**
  * onKeyDown. Fired when a game control key is pushed down..
@@ -57,12 +37,14 @@ function onKeyDown(event: KeyboardEvent): void {
 
         // If the space bar is hit and the player is alive the player pauses the game
         // otherwise, the space bar is used to pause formation.
-        if (event.code === keybindings.pauseKey && playerState.alive) {
+        if (event.code === appState().settingsState.keybindings.pauseKey && playerState.alive) {
             if (gameState.pause) {
                 dispatch(setPause(false));
             } else {
                 dispatch(setPause(true));
             }
+        } else if (event.code === appState().settingsState.keybindings.menu) {
+            alert("Pause menu placeholder");
         } else {
             dispatch(keyDown(event.code));
         }

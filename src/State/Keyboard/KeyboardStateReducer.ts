@@ -46,7 +46,7 @@ export default function keyboardStateReducer(state: KeyboardState = initState(),
                 return state;
             }
 
-            const playerAction = KeybindingsMapping.get().find(v => v.binding === action.payload);
+            const playerAction = KeybindingsMapping.getMapping().find(v => v.binding === action.payload);
             switch (playerAction?.keycode) {
                 case undefined:
                     break;
@@ -70,6 +70,8 @@ export default function keyboardStateReducer(state: KeyboardState = initState(),
                     break;
                 case "pauseKey":
                     draft.pause = keyDown;
+                case "menu":
+                    draft.menu = keyDown;
                     break;
             }
         }
@@ -89,5 +91,6 @@ function initState(): KeyboardState {
         fire: false,
         phraser: false,
         pause: false,
+        menu: false,
     };
 }

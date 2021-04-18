@@ -51,6 +51,7 @@ export namespace SettingsManager {
             fireKey: "F1",
             phaserKey: "F2",
             pauseKey: "Space",
+            menu: "Q",
         }
     }
 

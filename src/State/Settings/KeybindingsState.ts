@@ -17,4 +17,5 @@ export interface KeybindingsState {
     fireKey: string;
     phaserKey: string;
     pauseKey: string;
+    menu: string;
 }

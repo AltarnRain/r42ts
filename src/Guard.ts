@@ -6,8 +6,8 @@
 
 import BaseEnemy from "./Base/BaseEnemy";
 import PlayerState, { AlivePlayer } from "./State/Player/PlayerState";
+import { KeybindingsMapping } from "./State/Settings/KeybindingsMapping";
 import { KeybindingsState } from "./State/Settings/KeybindingsState";
-import { allGameKeys } from "./Utility/JSEvents";
 
 /**
  * Module:          Guard
@@ -16,7 +16,7 @@ import { allGameKeys } from "./Utility/JSEvents";
 
 namespace Guard {
     export function isValidGameKey(value: string): value is keyof KeybindingsState {
-        return allGameKeys.indexOf(value) !== -1;
+        return KeybindingsMapping.getAllGameKeys().indexOf(value) !== -1;
     }
 
     /**
