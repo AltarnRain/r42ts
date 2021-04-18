@@ -17,19 +17,19 @@ export function setGameSpeedSetting(speed: number): SetSpeed {
     return {
         type: SettingsEnum.setGameSpeedSetting,
         speed,
-    }
+    };
 }
 
 export function setSoundStateSetting(value: boolean): SetToggleSound {
     return {
         type: SettingsEnum.setSoundStateSetting,
         value
-    }
+    };
 }
 
 export function setKeybindings(keybindings: KeybindingsState): SetKeybindings {
     return {
         type: SettingsEnum.setKeybindings,
         keybindings,
-    }
+    };
 }

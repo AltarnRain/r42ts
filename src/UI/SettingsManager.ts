@@ -4,12 +4,12 @@
  * See LICENSE.MD.
  */
 
+import { Settings } from "../State/Game/UITypes";
 import { KeybindingsState } from "../State/Settings/KeybindingsState";
 import { setGameSpeedSetting, setKeybindings, setSoundStateSetting } from "../State/Settings/SettingsActions";
 import SettingsState from "../State/Settings/SettingsState";
 import { dispatch } from "../State/Store";
 import StorageKeys from "./StorageKeys";
-import { Settings } from "../State/Game/UITypes";
 
 /**
  * Module:          SettingsManager
@@ -52,7 +52,7 @@ export namespace SettingsManager {
             phaserKey: "F2",
             pauseKey: "Space",
             menu: "KeyQ",
-        }
+        };
     }
 
     /**
@@ -70,7 +70,7 @@ export namespace SettingsManager {
                 break;
             case "keybindings":
                 window.localStorage.setItem(StorageKeys.keybindings, value);
-            break;
+                break;
             default:
                 throw new Error("Unknown setting");
         }

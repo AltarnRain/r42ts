@@ -41,7 +41,7 @@ export function GameOptions(): JSX.Element {
         document.addEventListener("keydown", listenForKeyBind);
 
         return () => {
-            document.removeEventListener("keydown", listenForKeyBind)
+            document.removeEventListener("keydown", listenForKeyBind);
         };
     }, [listening]);
 
@@ -182,5 +182,5 @@ function cell(description: string, currentBind: string, keybindingKeyword: keyof
             <td style={Styles.tableStyle}>{currentBind}</td>
             <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding(keybindingKeyword)} text="Edit" /></td>
         </tr>
-    )
+    );
 }

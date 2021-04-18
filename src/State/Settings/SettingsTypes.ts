@@ -11,8 +11,6 @@ import SettingsEnum from "./SettingsEnum";
  * Module:          SettingsTypes
  * Responsibility:  Definitions for actions dispatched to update the SettingsState
  */
-
-
 export interface SetSpeed {
     type: typeof SettingsEnum.setGameSpeedSetting;
     speed: number;
@@ -20,7 +18,7 @@ export interface SetSpeed {
 
 export interface SetToggleSound {
     type: typeof SettingsEnum.setSoundStateSetting;
-    value: boolean
+    value: boolean;
 }
 
 export interface SetKeybindings {

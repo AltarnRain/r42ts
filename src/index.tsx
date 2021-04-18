@@ -6,11 +6,11 @@
 
 import "react";
 import React from "react";
+import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import debug from "./Debugging/Debug";
 import { appStore } from "./State/Store";
 import Main from "./UI/Main";
-import ReactDOM from "react-dom";
 
 /**
  * Module:          Index

@@ -16,7 +16,6 @@ const {
     fullGameWidth,
 } = dimensionProvider();
 
-
 export namespace Canvas {
 
     /**

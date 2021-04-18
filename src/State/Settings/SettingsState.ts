@@ -11,7 +11,7 @@
 
 import { KeybindingsState } from "./KeybindingsState";
 
-export default interface SettingsState{
+export default interface SettingsState {
     playSound: boolean;
     gameSpeed: number;
     keybindings: KeybindingsState;

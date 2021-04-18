@@ -64,9 +64,9 @@ export namespace Styles {
         borderStyle: "double",
         color: "white",
         width: "400px",
-        textAlign:"center",
-        justifyContent:"center"
-    }
+        textAlign: "center",
+        justifyContent: "center"
+    };
 
     export const buttonStyle: CSSProperties = {
         ...alignCenter,

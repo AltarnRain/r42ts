@@ -119,12 +119,12 @@ export function setScreenState(screenState: ScreenState): SetScreenState {
     return {
         type: GameStateEnum.setScreenState,
         screenState,
-    }
+    };
 }
 
 export function setGameInProgress(gameInProgress: boolean): SetGameInProgress {
     return {
         type: GameStateEnum.setGameInProgress,
         gameInProgress
-    }
+    };
 }

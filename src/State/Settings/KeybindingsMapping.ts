@@ -12,25 +12,29 @@
 import { getKeyValue } from "../../Utility/Lib";
 import { KeybindingsState } from "./KeybindingsState";
 
-interface mapping { keycode: keyof KeybindingsState, binding: string };
-let KeybindingsMappingInner: mapping[] = [];
+interface Mapping {
+    keycode: keyof KeybindingsState;
+    binding: string;
+}
+
+let KeybindingsMappingInner: Mapping[] = [];
 let gameKeys: string[] = [];
 export namespace KeybindingsMapping {
     export function update(keybindings: KeybindingsState): void {
         KeybindingsMappingInner = [];
-        for (const key in keybindings) {
+        for (const key of Object.keys(keybindings)) {
             const castKeyCode = key as keyof KeybindingsState;
             KeybindingsMappingInner.push({
                 keycode: castKeyCode,
                 binding: getKeyValue<KeybindingsState, keyof KeybindingsState>(castKeyCode, keybindings),
-            })
+            });
         }
 
         gameKeys = [];
         gameKeys = getMapping().map((m) => m.binding);
     }
 
-    export function getMapping(): mapping[] {
+    export function getMapping(): Mapping[] {
         return [...KeybindingsMappingInner];
     }
 
