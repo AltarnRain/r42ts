@@ -10,6 +10,7 @@
  */
 
 import { KeybindingsState } from "./KeybindingsState";
+import SettingsEnum from "./SettingsEnum";
 import { SetKeybindings, SetSpeed, SetToggleSound } from "./SettingsTypes";
 
 export function setGameSpeedSetting(speed: number): SetSpeed {
@@ -26,7 +27,7 @@ export function setSoundStateSetting(value: boolean): SetToggleSound {
     }
 }
 
-export function setKeybindings(keybindings: KeybindingsState | undefined): SetKeybindings {
+export function setKeybindings(keybindings: KeybindingsState): SetKeybindings {
     return {
         type: SettingsEnum.setKeybindings,
         keybindings,

@@ -14,3 +14,4 @@ enum SettingsEnum {
     setSoundStateSetting,
     setKeybindings,
 }
+export default SettingsEnum;

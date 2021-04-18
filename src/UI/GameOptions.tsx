@@ -38,9 +38,11 @@ export function GameOptions(props: {setScreenState(screenState: ScreenState): vo
 
     useEffect(() => {
         document.addEventListener("keydown", listenForKeyBind);
+
         const subscription = appStore().subscribe(() => {
-            if (settings !== appState().settingsState) {
-                setSettings(appState().settingsState);
+            const settingsState = appState().settingsState;
+            if (settings !== settingsState) {
+                setSettings(settingsState);
             }
         })
 
@@ -48,7 +50,7 @@ export function GameOptions(props: {setScreenState(screenState: ScreenState): vo
             document.removeEventListener("keydown", listenForKeyBind)
             subscription();
         };
-    }, []);
+    }, [listening]);
 
     /**
      * Handles a change in the game speed slider.
@@ -83,10 +85,11 @@ export function GameOptions(props: {setScreenState(screenState: ScreenState): vo
     function resetSettings(): void {
         SettingsManager.storeSetting("gamespeed", "100");
         SettingsManager.storeSetting("playsound", "true");
+        SettingsManager.storeSetting("keybindings", JSON.stringify(SettingsManager.getDefaultKeyBindings()));
 
         setGameSpeedSetting(100);
         setSoundStateSetting(true);
-        setKeybindings(undefined);
+        setKeybindings(SettingsManager.getDefaultKeyBindings());
     }
 
     function changeBinding(key: keyof KeybindingsState): void {
@@ -105,6 +108,7 @@ export function GameOptions(props: {setScreenState(screenState: ScreenState): vo
             newKeybindings[currentKeyBind] = e.code;
 
             dispatch(setKeybindings(newKeybindings));
+            SettingsManager.storeSetting("keybindings", JSON.stringify(newKeybindings));
         }
 
         setListening(false);

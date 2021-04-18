@@ -5,6 +5,7 @@
  */
 
 import { KeybindingsState } from "./KeybindingsState";
+import SettingsEnum from "./SettingsEnum";
 
 /**
  * Module:          SettingsTypes
@@ -24,7 +25,7 @@ export interface SetToggleSound {
 
 export interface SetKeybindings {
     type: typeof SettingsEnum.setKeybindings;
-    keybindings: KeybindingsState | undefined;
+    keybindings: KeybindingsState;
 }
 
 export type SettingsStateTypes = SetSpeed | SetToggleSound | SetKeybindings;

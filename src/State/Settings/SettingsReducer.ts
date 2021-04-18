@@ -6,6 +6,8 @@
 
 import produce from "immer";
 import SettingsManager from "../../UI/SettingsManager";
+import { KeybindingsMapping } from "./KeybindingsMapping";
+import SettingsEnum from "./SettingsEnum";
 import SettingsState from "./SettingsState";
 import { SettingsStateTypes } from "./SettingsTypes";
 
@@ -22,13 +24,8 @@ export function settingsReducer(state: SettingsState = init(), action: SettingsS
                 draft.gameSpeed = action.speed;
                 break;
             case SettingsEnum.setKeybindings:
-
-                // undefined means reset to default
-                if (action.keybindings === undefined) {
-                    draft.keybindings = SettingsManager.getDefaultKeyBindings();
-                } else {
-                    draft.keybindings = action.keybindings;
-                }
+                draft.keybindings = action.keybindings;
+                KeybindingsMapping.update(draft.keybindings);
 
                 break;
             case SettingsEnum.setSoundStateSetting:

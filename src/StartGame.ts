@@ -12,6 +12,7 @@
 import GameLoop from "./GameLoop";
 import GameResultModel from "./Models/GameResultModel";
 import setCanvasDimensions from "./Render/SetCanvasDimensions";
+import SettingsManager from "./UI/SettingsManager";
 
 /**
  * startGame. Initializes the canvas dimensions, then starts the game.
@@ -20,6 +21,8 @@ import setCanvasDimensions from "./Render/SetCanvasDimensions";
 export function startGame(gameOverCallback: (result: GameResultModel) => void): void {
 
     setCanvasDimensions();
+
+    SettingsManager.setSettings();
 
     // Ok, screen's setup let start the game!
     GameLoop.init(gameOverCallback);

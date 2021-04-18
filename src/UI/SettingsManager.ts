@@ -5,7 +5,9 @@
  */
 
 import { KeybindingsState } from "../State/Settings/KeybindingsState";
+import { setGameSpeedSetting, setKeybindings, setSoundStateSetting } from "../State/Settings/SettingsActions";
 import SettingsState from "../State/Settings/SettingsState";
+import { dispatch } from "../State/Store";
 import StorageKeys from "./StorageKeys";
 import { Settings } from "./UITypes";
 
@@ -31,6 +33,13 @@ export namespace SettingsManager {
             playSound: playSound === null ? true : playSound === "true",
             keybindings: keybindings === null ? getDefaultKeyBindings() : JSON.parse(keybindings),
         };
+    }
+
+    export function setSettings(): void {
+        const currentSettings = getSettings();
+        dispatch(setGameSpeedSetting(currentSettings.gameSpeed));
+        dispatch(setKeybindings(currentSettings.keybindings));
+        dispatch(setSoundStateSetting(currentSettings.playSound));
     }
 
     export function getDefaultKeyBindings(): KeybindingsState {

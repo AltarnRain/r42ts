@@ -18,6 +18,7 @@ import { setDebuggingState } from "../State/Debugging/DebuggingActions";
 import DebuggingState from "../State/Debugging/DebuggingState";
 import { increaseScore, setLevel, setLives, setPhasers, setTimeLevelTimeLimit } from "../State/Game/GameActions";
 import { dispatch } from "../State/Store";
+import SettingsManager from "../UI/SettingsManager";
 import { getURLQueryKVPs } from "../Utility/Lib";
 import DebugSound from "./DebugSound";
 
@@ -91,6 +92,8 @@ export default function debug(): void {
         dispatch(setDebuggingState(debuggingState));
 
         setCanvasDimensions();
+
+        SettingsManager.setSettings();
 
         // Start with base speed.
         GameLoop.init();
