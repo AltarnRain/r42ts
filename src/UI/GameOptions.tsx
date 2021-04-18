@@ -4,7 +4,7 @@
  * See LICENSE.MD.
  */
 
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Canvas } from "../Render/Canvas";
 import ApplicationState from "../State/ApplicationState";
@@ -108,26 +108,28 @@ export function GameOptions(): JSX.Element {
                     :
                     <div style={{ flexDirection: "column" }}>
                         <p style={Styles.header}>Options</p>
-                            {
-                                !gameInProgress && <b><p style={Styles.textStyle} >Adjust game speed</p></b>
-                            }
-                            {
-                                !gameInProgress && <div style={{ ...Styles.textStyle, flexDirection: "column" }}>
-                                    <input
-                                        type="range"
-                                        min="50"
-                                        max="200"
-                                        step={1}
-                                        value={gameSpeed}
-                                        onChange={onSpeedChange} />
-                                    {gameSpeed}%</div>
-                            }
+                        {
+                            !gameInProgress && <b><p style={Styles.textStyle} >Adjust game speed</p></b>
+                        }
+                        {
+                            !gameInProgress && <div style={{ ...Styles.textStyle, flexDirection: "column" }}>
+                                <input
+                                    type="range"
+                                    min="50"
+                                    max="200"
+                                    step={1}
+                                    value={gameSpeed}
+                                    onChange={onSpeedChange} />
+                                {gameSpeed}%</div>
+                        }
                         <div>
                             <div style={{ flexDirection: "row" }}>
                                 <input type="checkbox" checked={playSound} onChange={onPlaySoundChange} />
                                 <span style={Styles.textStyle}>Play sounds</span>
                             </div>
                         </div>
+                        <br />
+                        <b><span style={Styles.textStyle}>Keybindings</span></b>
                         <table style={Styles.tableStyle}>
                             <thead>
                                 <tr style={Styles.tableStyle}>
@@ -137,47 +139,30 @@ export function GameOptions(): JSX.Element {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td style={Styles.tableStyle}>Up</td>
-                                    <td style={Styles.tableStyle}>{keybindings.upkey}</td>
-                                    <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("upkey")} text="Edit" /></td>
-                                </tr>
-                                <tr>
-                                    <td style={Styles.tableStyle}>Down</td>
-                                    <td style={Styles.tableStyle}>{keybindings.downKey}</td>
-                                    <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("downKey")} text="Edit" /></td>
-                                </tr>
-                                <tr>
-                                    <td style={Styles.tableStyle}>Left</td>
-                                    <td style={Styles.tableStyle}>{keybindings.leftKey}</td>
-                                    <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("leftKey")} text="Edit" /></td>
-
-                                </tr>
-                                <tr>
-                                    <td style={Styles.tableStyle}>Right</td>
-                                    <td style={Styles.tableStyle}>{keybindings.rightKey}</td>
-                                    <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("rightKey")} text="Edit" /></td>
-                                </tr>
-                                <tr>
-                                    <td style={Styles.tableStyle}>Fire</td>
-                                    <td style={Styles.tableStyle}>{keybindings.fireKey}</td>
-                                    <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("fireKey")} text="Edit" /></td>
-                                </tr>
-                                <tr>
-                                    <td style={Styles.tableStyle}> Phaser</td>
-                                    <td style={Styles.tableStyle}>{keybindings.phaserKey}</td>
-                                    <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("phaserKey")} text="Edit" /></td>
-                                </tr>
-                                <tr>
-                                    <td style={Styles.tableStyle}>Pause</td>
-                                    <td style={Styles.tableStyle}>{keybindings.pauseKey}</td>
-                                    <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("pauseKey")} text="Edit" /></td>
-                                </tr>
-                                <tr>
-                                    <td style={Styles.tableStyle}>In game menu</td>
-                                    <td style={Styles.tableStyle}>{keybindings.menu}</td>
-                                    <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding("menu")} text="Edit" /></td>
-                                </tr>
+                                {
+                                    cell("Up", keybindings.upkey, "upkey", changeBinding)
+                                }
+                                {
+                                    cell("Down", keybindings.downKey, "downKey", changeBinding)
+                                }
+                                {
+                                    cell("Left", keybindings.leftKey, "leftKey", changeBinding)
+                                }
+                                {
+                                    cell("Right", keybindings.rightKey, "rightKey", changeBinding)
+                                }
+                                {
+                                    cell("Fire", keybindings.fireKey, "fireKey", changeBinding)
+                                }
+                                {
+                                    cell("Phaser", keybindings.phaserKey, "phaserKey", changeBinding)
+                                }
+                                {
+                                    cell("Pause", keybindings.pauseKey, "pauseKey", changeBinding)
+                                }
+                                {
+                                    cell("In game menu", keybindings.menu, "menu", changeBinding)
+                                }
                             </tbody>
                         </table>
                         {
@@ -188,4 +173,14 @@ export function GameOptions(): JSX.Element {
             }
         </div>
     );
+}
+
+function cell(description: string, currentBind: string, keybindingKeyword: keyof KeybindingsState, changeBinding: (key: keyof KeybindingsState) => void): ReactElement {
+    return (
+        <tr>
+            <td style={Styles.tableStyle}>{description}</td>
+            <td style={Styles.tableStyle}>{currentBind}</td>
+            <td style={Styles.tableStyle}><HoverButton onClick={() => changeBinding(keybindingKeyword)} text="Edit" /></td>
+        </tr>
+    )
 }
