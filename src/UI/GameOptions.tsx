@@ -5,10 +5,12 @@
  */
 
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { updateKeyActions } from "../State/Keyboard/KeyboardStateReducer";
-import { updateKeybinds } from "../Utility/JSEvents";
+import { KeybindingsState } from "../State/Settings/KeybindingsState";
+import { setGameSpeedSetting, setKeybindings, setSoundStateSetting } from "../State/Settings/SettingsActions";
+import SettingsState from "../State/Settings/SettingsState";
+import { setSpeed } from "../State/Speed/SpeedActions";
+import { appState, appStore, dispatch } from "../State/Store";
 import { HoverButton } from "./HoverButton";
-import { KeybindingsModel } from "./KeybindingsModel";
 import SettingsManager from "./SettingsManager";
 import { Styles } from "./Styles";
 import { ScreenState } from "./UITypes";
@@ -18,34 +20,35 @@ import { ScreenState } from "./UITypes";
  * Responsibility:  Game options
  */
 
-export function GameOptions(props: {
-    gameSpeed: number,
-    playSound: boolean,
-    keybindings: KeybindingsModel
-    setGameSpeed(speed: number): void,
-    setScreenState(screenState: ScreenState): void,
-    setPlaySounds(playSound: boolean): void,
-    setKeybinds(keybindings: KeybindingsModel): void,
-}): JSX.Element {
+export function GameOptions(props: {setScreenState(screenState: ScreenState): void}): JSX.Element {
 
     const {
-        gameSpeed,
-        playSound,
-        setGameSpeed,
-        setScreenState,
-        setPlaySounds,
-        keybindings,
-        setKeybinds
+        setScreenState
     } = props;
 
     const [listening, setListening] = useState(false);
-    const [currentKeyBind, setCurrentKeyBind] = useState<keyof KeybindingsModel | undefined>(undefined)
+    const [currentKeyBind, setCurrentKeyBind] = useState<keyof KeybindingsState | undefined>(undefined);
+    const [settings, setSettings] = useState<SettingsState>(appState().settingsState);
+
+    const {
+        gameSpeed,
+        keybindings,
+        playSound
+    } = settings;
 
     useEffect(() => {
         document.addEventListener("keydown", listenForKeyBind);
+        const subscription = appStore().subscribe(() => {
+            if (settings !== appState().settingsState) {
+                setSettings(appState().settingsState);
+            }
+        })
 
-        return () => document.removeEventListener("keydown", listenForKeyBind);
-    })
+        return () => {
+            document.removeEventListener("keydown", listenForKeyBind)
+            subscription();
+        };
+    }, []);
 
     /**
      * Handles a change in the game speed slider.
@@ -56,8 +59,11 @@ export function GameOptions(props: {
             return;
         }
 
-        setGameSpeed(e.target.valueAsNumber);
-        SettingsManager.storeSetting("gamespeed", e.target.valueAsNumber.toString());
+        // Store the setting
+        dispatch(setGameSpeedSetting(e.target.valueAsNumber));
+
+        // Update the speed state. This triggers calculations and is stored in a seperate state.
+        dispatch(setSpeed(e.target.valueAsNumber));
     }
 
     /**
@@ -69,20 +75,21 @@ export function GameOptions(props: {
             return;
         }
 
-        setPlaySounds(e.target.checked);
-        SettingsManager.storeSetting("playsound", e.target.checked.toString());
+        const on = e.target.valueAsNumber === 1;
+
+        dispatch(setSoundStateSetting(on));
     }
 
     function resetSettings(): void {
         SettingsManager.storeSetting("gamespeed", "100");
         SettingsManager.storeSetting("playsound", "true");
 
-        setGameSpeed(100);
-        setPlaySounds(true);
+        setGameSpeedSetting(100);
+        setSoundStateSetting(true);
+        setKeybindings(undefined);
     }
 
-    function changeBinding(key: keyof KeybindingsModel): void {
-        
+    function changeBinding(key: keyof KeybindingsState): void {
         setListening(true);
         setCurrentKeyBind(key);
     }
@@ -96,16 +103,8 @@ export function GameOptions(props: {
 
         if (currentKeyBind !== undefined) {
             newKeybindings[currentKeyBind] = e.code;
-            
-            SettingsManager.storeSetting("keybindings", JSON.stringify(newKeybindings));
-            setKeybinds(newKeybindings);
 
-            // Lazy solution but it works.
-            // Update the JSEvent keys that are listened to.
-            updateKeybinds();
-
-            // Update the key to action mapping the KeyboardReducer uses.
-            updateKeyActions();
+            dispatch(setKeybindings(newKeybindings));
         }
 
         setListening(false);

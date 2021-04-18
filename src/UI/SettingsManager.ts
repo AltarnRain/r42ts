@@ -4,8 +4,8 @@
  * See LICENSE.MD.
  */
 
-import GameSettings from "./GameSettings";
-import { KeybindingsModel } from "./KeybindingsModel";
+import { KeybindingsState } from "../State/Settings/KeybindingsState";
+import SettingsState from "../State/Settings/SettingsState";
 import StorageKeys from "./StorageKeys";
 import { Settings } from "./UITypes";
 
@@ -20,7 +20,7 @@ export namespace SettingsManager {
      * getSettings
      * @returns {GameSettings}. Game settings object.
      */
-    export function getSettings(): GameSettings {
+    export function getSettings(): SettingsState {
 
         const playSound = window.localStorage.getItem(StorageKeys.playSound);
         const gameSpeed = window.localStorage.getItem(StorageKeys.gameSpeed);
@@ -33,7 +33,7 @@ export namespace SettingsManager {
         };
     }
 
-    function getDefaultKeyBindings(): KeybindingsModel {
+    export function getDefaultKeyBindings(): KeybindingsState {
         return {
             upkey: "ArrowUp",
             downKey: "ArrowDown",

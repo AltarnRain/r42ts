@@ -93,9 +93,6 @@ export default function gameStateReducer(state: GameState = initState(), action:
                 draft.score = 0;
                 draft.lastAwardScore = 0;
                 break;
-            case GameStateEnum.playSounds:
-                draft.playSounds = action.playSounds;
-                break;
         }
     });
 }
@@ -117,7 +114,6 @@ function initState(): GameState {
         bulletsFired: 0,
         enemiesHit: 0,
         timeLevelTimeLimit: 20000, // 20 seconds
-        hardMode: false,
-        playSounds: true,
+        hardMode: false
     };
 }

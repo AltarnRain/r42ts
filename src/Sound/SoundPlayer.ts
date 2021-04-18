@@ -352,7 +352,7 @@ namespace Howls {
  * True if no sounds should be played.
  */
 function muted(): boolean {
-    return !appState().gameState.playSounds;
+    return !appState().settingsState.playSound;
 }
 
 /**

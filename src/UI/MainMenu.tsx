@@ -18,16 +18,11 @@ import { ScreenState } from "./UITypes";
  */
 
 export default function MainMenu(props: {
-    gameSpeed: number,
-    soundsOn: boolean,
     setScreenState(screenState: ScreenState): void,
     setGameResult(result: GameResultModel): void,
-    setGameSpeed(speed: number): void,
 }): JSX.Element {
 
     const {
-        gameSpeed,
-        soundsOn: playSounds,
         setScreenState,
         setGameResult,
     } = props;
@@ -74,7 +69,7 @@ export default function MainMenu(props: {
         // or windows mode.
         // Once loaded this module stays loaded. Thats why the game, when it ends, doesn't show the
         // main menu as switching to full screen would have no effect at that point.
-        startGame(gameSpeed, playSounds, (result) => {
+        startGame((result) => {
             setScreenState("gameover");
             setGameResult(result);
         });

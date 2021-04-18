@@ -9,6 +9,7 @@ import EnemyLevelState from "./EnemyLevel/EnemyLevelState";
 import GameState from "./Game/GameState";
 import KeyboardState from "./Keyboard/KeyboardState";
 import PlayerState from "./Player/PlayerState";
+import SettingsState from "./Settings/SettingsState";
 import SpeedState from "./Speed/SpeedState";
 
 /**
@@ -47,4 +48,9 @@ export default interface ApplicationState {
      * The current speed state
      */
     speedState: SpeedState;
+
+    /**
+     * State for game settings.
+     */
+    settingsState: SettingsState;
 }

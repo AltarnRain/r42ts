@@ -10,33 +10,10 @@
  */
 
 import produce from "immer";
-import { KeybindingsModel } from "../../UI/KeybindingsModel";
-import SettingsManager from "../../UI/SettingsManager";
-import { getKeyValue } from "../../Utility/Lib";
+import { KeybindingsMapping } from "../Settings/KeybindingsMapping";
 import Constants from "./KeyboardConstants";
 import KeyboardState from "./KeyboardState";
 import { KeyboardTypes } from "./KeyboardTypes";
-
-
-
-let keyActions: {keycode: keyof KeybindingsModel, binding: string }[] = [];
-
-export function updateKeyActions(): void {
-    const { 
-        keybindings
-    } = SettingsManager.getSettings();
-    
-    keyActions = [];
-    for (const key in keybindings) {
-        const castKeyCode = key as keyof KeybindingsModel;
-        keyActions.push({
-            keycode: castKeyCode,
-            binding: getKeyValue<KeybindingsModel, keyof KeybindingsModel>(castKeyCode, keybindings),
-        })
-    }    
-}
-
-updateKeyActions();
 
 /**
  * keyboardStateReducer
@@ -68,7 +45,8 @@ export default function keyboardStateReducer(state: KeyboardState = initState(),
             if (action.type !== Constants.keydown && action.type !== Constants.keyup) {
                 return state;
             }
-            const playerAction = keyActions.find(v => v.binding === action.payload);
+
+            const playerAction = KeybindingsMapping.get().find(v => v.binding === action.payload);
             switch (playerAction?.keycode) {
                 case undefined:
                     break;

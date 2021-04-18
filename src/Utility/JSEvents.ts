@@ -9,7 +9,7 @@ import setCanvasDimensions from "../Render/SetCanvasDimensions";
 import { setPause } from "../State/Game/GameActions";
 import { keyDown, keyUp } from "../State/Keyboard/KeyboardActions";
 import { appState, dispatch } from "../State/Store";
-import { KeybindingsModel } from "../UI/KeybindingsModel";
+import { KeybindingsState } from "../State/Settings/KeybindingsState";
 import SettingsManager from "../UI/SettingsManager";
 import { getKeyValue } from "./Lib";
 
@@ -24,7 +24,7 @@ import { getKeyValue } from "./Lib";
 
 
 export let allGameKeys: string[] = [];
-let keybindings: KeybindingsModel = SettingsManager.getSettings().keybindings;
+let keybindings: KeybindingsState = SettingsManager.getSettings().keybindings;
 
 export function updateKeybinds(): void {
     allGameKeys = [];
@@ -32,7 +32,7 @@ export function updateKeybinds(): void {
 
     for (const key in keybindings) {
     
-        const keyValue = getKeyValue<KeybindingsModel, keyof KeybindingsModel>(key as keyof KeybindingsModel, keybindings);
+        const keyValue = getKeyValue<KeybindingsState, keyof KeybindingsState>(key as keyof KeybindingsState, keybindings);
         allGameKeys.push(keyValue);
     }
 }

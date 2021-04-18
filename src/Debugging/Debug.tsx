@@ -93,7 +93,7 @@ export default function debug(): void {
         setCanvasDimensions();
 
         // Start with base speed.
-        GameLoop.init(100);
+        GameLoop.init();
 
     } else if (showCanvas) {
         // canvas testing

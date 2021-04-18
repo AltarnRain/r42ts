@@ -91,11 +91,6 @@ export interface ResetScore {
     type: typeof GameStateEnum.resetScore;
 }
 
-export interface SetPlaySounds {
-    type: typeof GameStateEnum.playSounds;
-    playSounds: boolean;
-}
-
 export type GameStateTypes =
     IncreaseScore |
     SetLives |
@@ -114,6 +109,5 @@ export type GameStateTypes =
     PhaserFired |
     EnemyHit |
     SetTimeLevelTimeLimit |
-    ResetScore |
-    SetPlaySounds
+    ResetScore
     ;

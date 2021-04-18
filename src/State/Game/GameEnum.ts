@@ -28,7 +28,6 @@ enum GameStateEnum {
     enemyHit,
     setTimeLevelTimeLimit,
     resetScore,
-    playSounds,
 }
 
 export default GameStateEnum;
