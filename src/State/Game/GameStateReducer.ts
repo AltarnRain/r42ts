@@ -122,6 +122,6 @@ function initState(): GameState {
         enemiesHit: 0,
         timeLevelTimeLimit: 20000, // 20 seconds
         hardMode: false,
-        screenState: "mainmenu",
+        screenState: "about",
     };
 }
