@@ -6,8 +6,9 @@
 
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Canvas } from "../Render/Canvas";
 import ApplicationState from "../State/ApplicationState";
-import { setScreenState } from "../State/Game/GameActions";
+import { setPause, setScreenState } from "../State/Game/GameActions";
 import { KeybindingsState } from "../State/Settings/KeybindingsState";
 import { setGameSpeedSetting, setKeybindings, setSoundStateSetting } from "../State/Settings/SettingsActions";
 import SettingsState from "../State/Settings/SettingsState";
@@ -26,8 +27,9 @@ export function GameOptions(): JSX.Element {
 
     const [listening, setListening] = useState(false);
     const [currentKeyBind, setCurrentKeyBind] = useState<keyof KeybindingsState | undefined>(undefined);
-    
+
     const settings = useSelector<ApplicationState, SettingsState>((state) => state.settingsState);
+    const gameInProgress = useSelector<ApplicationState, boolean>((state) => state.gameState.gameInProgress);
 
     const {
         gameSpeed,
@@ -93,6 +95,12 @@ export function GameOptions(): JSX.Element {
         setListening(false);
     }
 
+    function continueGame(): void {
+        dispatch(setScreenState("playing"));
+        dispatch(setPause(false));
+        Canvas.setCanvasDimensions();
+    }
+
     return (
         <div style={Styles.defaultContainer}>
             {
@@ -100,18 +108,21 @@ export function GameOptions(): JSX.Element {
                     :
                     <div style={{ flexDirection: "column" }}>
                         <p style={Styles.header}>Options</p>
-                        <b><p style={Styles.textStyle} >Adjust game speed</p></b>
+                            {
+                                !gameInProgress && <b><p style={Styles.textStyle} >Adjust game speed</p></b>
+                            }
+                            {
+                                !gameInProgress && <div style={{ ...Styles.textStyle, flexDirection: "column" }}>
+                                    <input
+                                        type="range"
+                                        min="50"
+                                        max="200"
+                                        step={1}
+                                        value={gameSpeed}
+                                        onChange={onSpeedChange} />
+                                    {gameSpeed}%</div>
+                            }
                         <div>
-                            <div style={{ ...Styles.textStyle, flexDirection: "column" }}>
-                                <input
-                                    type="range"
-                                    min="50"
-                                    max="200"
-                                    step={1}
-                                    value={gameSpeed}
-                                    onChange={onSpeedChange} />
-                                {gameSpeed}%
-                        </div>
                             <div style={{ flexDirection: "row" }}>
                                 <input type="checkbox" checked={playSound} onChange={onPlaySoundChange} />
                                 <span style={Styles.textStyle}>Play sounds</span>
@@ -169,7 +180,10 @@ export function GameOptions(): JSX.Element {
                                 </tr>
                             </tbody>
                         </table>
-                        <HoverButton onClick={() => dispatch(setScreenState("mainmenu"))} text="Main menu" />
+                        {
+                            gameInProgress ? <HoverButton onClick={continueGame} text="Continue" /> :
+                                <HoverButton onClick={() => dispatch(setScreenState("mainmenu"))} text="Main menu" />
+                        }
                     </div>
             }
         </div>

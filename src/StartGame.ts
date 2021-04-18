@@ -11,7 +11,7 @@
 
 import GameLoop from "./GameLoop";
 import GameResultModel from "./Models/GameResultModel";
-import setCanvasDimensions from "./Render/SetCanvasDimensions";
+import { Canvas } from "./Render/Canvas";
 import SettingsManager from "./UI/SettingsManager";
 
 /**
@@ -20,7 +20,7 @@ import SettingsManager from "./UI/SettingsManager";
  */
 export function startGame(gameOverCallback: (result: GameResultModel) => void): void {
 
-    setCanvasDimensions();
+    Canvas.setCanvasDimensions();
 
     SettingsManager.setSettings();
 

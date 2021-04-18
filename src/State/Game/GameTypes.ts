@@ -97,6 +97,11 @@ export interface SetScreenState {
     screenState: ScreenState;
 }
 
+export interface SetGameInProgress {
+    type: typeof GameStateEnum.setGameInProgress;
+    gameInProgress: boolean;
+}
+
 export type GameStateTypes =
     IncreaseScore |
     SetLives |
@@ -116,5 +121,6 @@ export type GameStateTypes =
     EnemyHit |
     SetTimeLevelTimeLimit |
     ResetScore |
-    SetScreenState
+    SetScreenState |
+    SetGameInProgress
     ;

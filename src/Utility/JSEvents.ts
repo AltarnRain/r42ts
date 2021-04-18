@@ -5,8 +5,8 @@
  */
 
 import Guard from "../Guard";
-import setCanvasDimensions from "../Render/SetCanvasDimensions";
-import { setPause } from "../State/Game/GameActions";
+import { Canvas } from "../Render/Canvas";
+import { setPause, setScreenState } from "../State/Game/GameActions";
 import { keyDown, keyUp } from "../State/Keyboard/KeyboardActions";
 import { appState, dispatch } from "../State/Store";
 
@@ -44,7 +44,9 @@ function onKeyDown(event: KeyboardEvent): void {
                 dispatch(setPause(true));
             }
         } else if (event.code === appState().settingsState.keybindings.menu) {
-            alert("Pause menu placeholder");
+            dispatch(setPause(true));
+            dispatch(setScreenState("options"));
+            Canvas.minimizeCanvas();
         } else {
             dispatch(keyDown(event.code));
         }
@@ -71,7 +73,7 @@ function onKeyUp(event: KeyboardEvent): void {
 export function registerListeners(): void {
     window.addEventListener("keyup", onKeyUp);
     window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("resize", setCanvasDimensions);
+    window.addEventListener("resize", Canvas.setCanvasDimensions);
 }
 
 /**
@@ -80,5 +82,5 @@ export function registerListeners(): void {
 export function unregisterListeners(): void {
     window.removeEventListener("keyup", onKeyUp);
     window.removeEventListener("keydown", onKeyDown);
-    window.removeEventListener("resize", setCanvasDimensions);
+    window.removeEventListener("resize", Canvas.setCanvasDimensions);
 }

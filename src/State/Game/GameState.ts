@@ -78,4 +78,9 @@ export default interface GameState {
      * Current screen that is shown.
      */
     screenState: ScreenState;
+
+    /**
+     * When true, the game is in progress.
+     */
+    gameInProgress: boolean;
 }

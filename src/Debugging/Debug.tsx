@@ -13,7 +13,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import GameLoop from "../GameLoop";
 import ctxProvider from "../Render/CtxProvider";
-import setCanvasDimensions from "../Render/SetCanvasDimensions";
+import { Canvas } from "../Render/Canvas";
 import { setDebuggingState } from "../State/Debugging/DebuggingActions";
 import DebuggingState from "../State/Debugging/DebuggingState";
 import { increaseScore, setLevel, setLives, setPhasers, setTimeLevelTimeLimit } from "../State/Game/GameActions";
@@ -91,7 +91,7 @@ export default function debug(): void {
 
         dispatch(setDebuggingState(debuggingState));
 
-        setCanvasDimensions();
+        Canvas.setCanvasDimensions();
 
         SettingsManager.setSettings();
 

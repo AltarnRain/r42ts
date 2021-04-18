@@ -26,7 +26,8 @@ enum GameStateEnum {
     enemyHit,
     setTimeLevelTimeLimit,
     resetScore,
-    setScreenState
+    setScreenState,
+    setGameInProgress
 }
 
 export default GameStateEnum;

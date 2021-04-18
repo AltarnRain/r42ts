@@ -8,7 +8,7 @@ import React from "react";
 import GameResultModel from "../Models/GameResultModel";
 import requestFullScreen from "../Providers/RequestFullscreen";
 import { startGame } from "../StartGame";
-import { setScreenState } from "../State/Game/GameActions";
+import { setGameInProgress, setScreenState } from "../State/Game/GameActions";
 import { dispatch } from "../State/Store";
 import { HoverButton } from "./HoverButton";
 import { Styles } from "./Styles";
@@ -71,6 +71,7 @@ export default function MainMenu(props: {
         startGame((result) => {
             dispatch(setScreenState("gameover"));
             setGameResult(result);
+            dispatch(setGameInProgress(false));
         });
     }
 

@@ -10,14 +10,14 @@ import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import GameResultModel from "./Models/GameResultModel";
 import playerSpawnRunner from "./Player/PlayerSpawnRunner";
-import setCanvasDimensions from "./Render/SetCanvasDimensions";
+import { Canvas } from "./Render/Canvas";
 import EnemyLevelRunner from "./Runners/EnemyLevelRunner";
 import genericRunner from "./Runners/GenericRunner";
 import levelProgressionRunner, { resetLevelProgression } from "./Runners/LevelProgressionRunner";
 import playerRunner from "./Runners/PlayerRunner";
 import { SoundPlayer } from "./Sound/SoundPlayer";
 import { resetLevelState as resetEnemyLevelState } from "./State/EnemyLevel/EnemyLevelActions";
-import { gameStart, resetScore } from "./State/Game/GameActions";
+import { gameStart, resetScore, setGameInProgress } from "./State/Game/GameActions";
 import { resetKeyboardState } from "./State/Keyboard/KeyboardActions";
 import { setPlayerIsAlive, setPlayerLocationData } from "./State/Player/PlayerActions";
 import { appState, dispatch } from "./State/Store";
@@ -85,7 +85,9 @@ export namespace GameLoop {
 
         // Initialize the canvas dimensions.
         // Resized are handled by an event.
-        setCanvasDimensions();
+        Canvas.setCanvasDimensions();
+
+        dispatch(setGameInProgress(true));
 
         start();
     }

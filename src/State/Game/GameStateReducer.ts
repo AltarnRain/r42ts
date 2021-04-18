@@ -96,6 +96,9 @@ export default function gameStateReducer(state: GameState = initState(), action:
             case GameStateEnum.setScreenState:
                 draft.screenState = action.screenState;
                 break;
+            case GameStateEnum.setGameInProgress:
+                draft.gameInProgress = action.gameInProgress;
+                break;
         }
     });
 }
@@ -114,10 +117,11 @@ function initState(): GameState {
         pause: false,
         warpLevelSteps: getWarpGateComplexity(0),
         gameOver: false,
+        gameInProgress: false,
         bulletsFired: 0,
         enemiesHit: 0,
         timeLevelTimeLimit: 20000, // 20 seconds
         hardMode: false,
-        screenState: "options",
+        screenState: "mainmenu",
     };
 }
