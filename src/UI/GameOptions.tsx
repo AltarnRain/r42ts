@@ -17,8 +17,8 @@ import { dispatch } from "../State/Store";
 import { HoverButton } from "./Components/HoverButton";
 import SettingsManager from "./SettingsManager";
 import { Styles } from "./Styles";
-import { AsciiCheckbox } from "./AsciiCheckbox";
-import { AsciiSlider } from "./AsciiSlider";
+import { AsciiCheckbox } from "./Components/AsciiCheckbox";
+import { AsciiSlider } from "./Components/AsciiSlider";
 
 const checkboxChars = ["[", "]", "\u00A0", "x"];
 

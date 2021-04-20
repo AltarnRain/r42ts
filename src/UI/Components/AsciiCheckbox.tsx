@@ -6,7 +6,7 @@
 
 import React, { ChangeEvent } from "react";
 import { AsciiUIElement } from "./AsciiUIElement";
-import { Styles } from "./Styles";
+import { Styles } from "../Styles";
 
 interface AsciiCheckboxProperties {
     /**

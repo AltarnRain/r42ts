@@ -5,7 +5,7 @@
  */
 
 import React from "react";
-import { AsciiUIElement } from "../AsciiUIElement";
+import { AsciiUIElement } from "./AsciiUIElement";
 import { Styles } from "../Styles";
 
 /**
