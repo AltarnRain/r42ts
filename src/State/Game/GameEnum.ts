@@ -3,12 +3,10 @@
  * This source code is subject to terms and conditions.
  * See LICENSE.MD.
  */
-
 /**
  * Module:          GameConstants
  * Responsibility:  Constants used by the GameState reducer and by the Action creator functions
  */
-
 enum GameStateEnum {
     setLives = 2000,
     removeLife,
@@ -28,7 +26,8 @@ enum GameStateEnum {
     enemyHit,
     setTimeLevelTimeLimit,
     resetScore,
-    playSounds,
+    setScreenState,
+    setGameInProgress
 }
 
 export default GameStateEnum;

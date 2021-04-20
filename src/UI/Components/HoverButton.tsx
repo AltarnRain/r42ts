@@ -5,8 +5,8 @@
  */
 
 import React from "react";
-import { AsciiUIElement } from "./AsciiUIElement";
-import { Styles } from "./Styles";
+import { AsciiUIElement } from "../AsciiUIElement";
+import { Styles } from "../Styles";
 
 /**
  * Module:          HoverButton

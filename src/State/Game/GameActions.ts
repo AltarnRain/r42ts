@@ -10,7 +10,8 @@
  */
 
 import GameStateEnum from "./GameEnum";
-import { AddLifeAndPhaser, AddPhaser, BulletFired, EnemyHit, GameOver, IncreaseScore, NextLevel, PhaserFired, RemoveLife, RemovePhaser, ResetGameState, ResetScore, SetLevel, SetLives, SetPause, SetPhasers, SetPlaySounds, SetTimeLevelTimeLimit, SetWarpGateComplexity } from "./GameTypes";
+import { AddLifeAndPhaser, AddPhaser, BulletFired, EnemyHit, GameOver, IncreaseScore, NextLevel, PhaserFired, RemoveLife, RemovePhaser, ResetGameState, ResetScore, SetGameInProgress, SetLevel, SetLives, SetPause, SetPhasers, SetScreenState, SetTimeLevelTimeLimit, SetWarpGateComplexity } from "./GameTypes";
+import { ScreenState } from "./UITypes";
 import { WarpLevelComplexity } from "./WarpLevelTypes";
 
 export function increaseScore(score: number): IncreaseScore {
@@ -114,9 +115,16 @@ export function resetScore(): ResetScore {
     };
 }
 
-export function setPlaySounds(playSounds: boolean): SetPlaySounds {
+export function setScreenState(screenState: ScreenState): SetScreenState {
     return {
-        type: GameStateEnum.playSounds,
-        playSounds,
+        type: GameStateEnum.setScreenState,
+        screenState,
+    };
+}
+
+export function setGameInProgress(gameInProgress: boolean): SetGameInProgress {
+    return {
+        type: GameStateEnum.setGameInProgress,
+        gameInProgress
     };
 }

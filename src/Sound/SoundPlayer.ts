@@ -285,47 +285,47 @@ namespace Howls {
     /**
      * Howl objects for explosion.
      */
-    export const enemyExplosions = Sounds.EnemyExplosions.map((src) => new Howl({ src, volume: volume }));
+    export const enemyExplosions = Sounds.EnemyExplosions.map((src) => new Howl({ src, volume }));
 
     /**
      * Howl for the player bullet
      */
-    export const playerBullet = new Howl({ src: Sounds.Player.Shoot, volume: volume });
+    export const playerBullet = new Howl({ src: Sounds.Player.Shoot, volume });
 
     /**
      * Howl objects for phasers.
      */
-    export const phasers = Sounds.Phasers.map((src) => new Howl({ src, volume: volume }));
+    export const phasers = Sounds.Phasers.map((src) => new Howl({ src, volume }));
 
     /**
      * Sound for the player's explosion.
      */
-    export const playerExplosions = Sounds.PlayerExplosions.map((src) => new Howl({ src, volume: volume }));
+    export const playerExplosions = Sounds.PlayerExplosions.map((src) => new Howl({ src, volume }));
 
     /**
      * Sound for a fast formation.
      */
-    export const playerFormationFast = new Howl({ src: Sounds.Player.FormationFast, volume: volume });
+    export const playerFormationFast = new Howl({ src: Sounds.Player.FormationFast, volume });
 
     /**
      * Sound for a slow formation.
      */
-    export const playerFormationSlow = new Howl({ src: Sounds.Player.FormationSlow, volume: volume });
+    export const playerFormationSlow = new Howl({ src: Sounds.Player.FormationSlow, volume });
 
     /**
      * Sounds while travelin through a warp gate.
      */
-    export const warpGateTraveling = new Howl({ src: Sounds.Player.WarpGate, loop: true, volume: volume });
+    export const warpGateTraveling = new Howl({ src: Sounds.Player.WarpGate, loop: true, volume });
 
     /**
      * Sound played the player reached the end of a warp level.
      */
-    export const warpLevelEnd = new Howl({ src: [Sounds.Player.WarpLevelEnd], volume: volume });
+    export const warpLevelEnd = new Howl({ src: [Sounds.Player.WarpLevelEnd], volume });
 
     /**
      * Sound while playing an astreroid or space monster level.
      */
-    export const falling = new Howl({ src: Sounds.Falling.Falling, loop: true, volume: volume });
+    export const falling = new Howl({ src: Sounds.Falling.Falling, loop: true, volume });
 
     /**
      * Sounds for birds, spinners, diabolo's, etc.
@@ -345,14 +345,14 @@ namespace Howls {
     /**
      * Music. Player on round 13 and round 42.
      */
-    export const music = new Howl({ src: Sounds.Music.Music, volume: volume });
+    export const music = new Howl({ src: Sounds.Music.Music, volume });
 }
 
 /**
  * True if no sounds should be played.
  */
 function muted(): boolean {
-    return !appState().gameState.playSounds;
+    return !appState().settingsState.playSound;
 }
 
 /**
@@ -370,6 +370,6 @@ function createSpriteHowl(src: string, index: number, sprites: number[][]): Howl
             play: [sprite[0], sprite[1]],
         },
         loop: true,
-        volume: volume
+        volume
     });
 }

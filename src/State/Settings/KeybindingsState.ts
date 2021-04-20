@@ -9,7 +9,7 @@
  * Responsibility:  Model for storing keybinds.
  */
 
-export interface KeybindingsModel {
+export interface KeybindingsState {
     upkey: string;
     downKey: string;
     leftKey: string;
@@ -17,4 +17,5 @@ export interface KeybindingsModel {
     fireKey: string;
     phaserKey: string;
     pauseKey: string;
+    menu: string;
 }

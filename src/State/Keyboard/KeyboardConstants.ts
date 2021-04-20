@@ -4,7 +4,6 @@
  * See LICENSE.MD.
  */
 
-
 /**
  * Module:          KeyboardConstants
  * Responsibility:  Constants for valid keys used by the GameState

@@ -10,6 +10,7 @@
  */
 
 import GameStateEnum from "./GameEnum";
+import { ScreenState } from "./UITypes";
 import { WarpLevelComplexity } from "./WarpLevelTypes";
 
 export interface IncreaseScore {
@@ -91,9 +92,14 @@ export interface ResetScore {
     type: typeof GameStateEnum.resetScore;
 }
 
-export interface SetPlaySounds {
-    type: typeof GameStateEnum.playSounds;
-    playSounds: boolean;
+export interface SetScreenState {
+    type: typeof GameStateEnum.setScreenState;
+    screenState: ScreenState;
+}
+
+export interface SetGameInProgress {
+    type: typeof GameStateEnum.setGameInProgress;
+    gameInProgress: boolean;
 }
 
 export type GameStateTypes =
@@ -115,5 +121,6 @@ export type GameStateTypes =
     EnemyHit |
     SetTimeLevelTimeLimit |
     ResetScore |
-    SetPlaySounds
+    SetScreenState |
+    SetGameInProgress
     ;

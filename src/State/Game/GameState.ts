@@ -4,6 +4,7 @@
  * See LICENSE.MD.
  */
 
+import { ScreenState } from "./UITypes";
 import { WarpLevelSteps } from "./WarpLevelTypes";
 
 /**
@@ -74,7 +75,12 @@ export default interface GameState {
     hardMode: boolean;
 
     /**
-     * Play sounds or not.
+     * Current screen that is shown.
      */
-    playSounds: boolean;
+    screenState: ScreenState;
+
+    /**
+     * When true, the game is in progress.
+     */
+    gameInProgress: boolean;
 }

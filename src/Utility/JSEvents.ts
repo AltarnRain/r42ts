@@ -5,13 +5,10 @@
  */
 
 import Guard from "../Guard";
-import setCanvasDimensions from "../Render/SetCanvasDimensions";
-import { setPause } from "../State/Game/GameActions";
+import { Canvas } from "../Render/Canvas";
+import { setPause, setScreenState } from "../State/Game/GameActions";
 import { keyDown, keyUp } from "../State/Keyboard/KeyboardActions";
 import { appState, dispatch } from "../State/Store";
-import { KeybindingsModel } from "../UI/KeybindingsModel";
-import SettingsManager from "../UI/SettingsManager";
-import { getKeyValue } from "./Lib";
 
 /**
  * Module:          JSEvents
@@ -21,23 +18,6 @@ import { getKeyValue } from "./Lib";
 /**
  * Valid game keys.
  */
-
-
-export let allGameKeys: string[] = [];
-let keybindings: KeybindingsModel = SettingsManager.getSettings().keybindings;
-
-export function updateKeybinds(): void {
-    allGameKeys = [];
-    keybindings = SettingsManager.getSettings().keybindings;
-
-    for (const key in keybindings) {
-    
-        const keyValue = getKeyValue<KeybindingsModel, keyof KeybindingsModel>(key as keyof KeybindingsModel, keybindings);
-        allGameKeys.push(keyValue);
-    }
-}
-
-updateKeybinds();
 
 /**
  * onKeyDown. Fired when a game control key is pushed down..
@@ -57,12 +37,16 @@ function onKeyDown(event: KeyboardEvent): void {
 
         // If the space bar is hit and the player is alive the player pauses the game
         // otherwise, the space bar is used to pause formation.
-        if (event.code === keybindings.pauseKey && playerState.alive) {
+        if (event.code === appState().settingsState.keybindings.pauseKey && playerState.alive) {
             if (gameState.pause) {
                 dispatch(setPause(false));
             } else {
                 dispatch(setPause(true));
             }
+        } else if (event.code === appState().settingsState.keybindings.menu) {
+            dispatch(setPause(true));
+            dispatch(setScreenState("options"));
+            Canvas.minimizeCanvas();
         } else {
             dispatch(keyDown(event.code));
         }
@@ -89,7 +73,7 @@ function onKeyUp(event: KeyboardEvent): void {
 export function registerListeners(): void {
     window.addEventListener("keyup", onKeyUp);
     window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("resize", setCanvasDimensions);
+    window.addEventListener("resize", Canvas.setCanvasDimensions);
 }
 
 /**
@@ -98,5 +82,5 @@ export function registerListeners(): void {
 export function unregisterListeners(): void {
     window.removeEventListener("keyup", onKeyUp);
     window.removeEventListener("keydown", onKeyDown);
-    window.removeEventListener("resize", setCanvasDimensions);
+    window.removeEventListener("resize", Canvas.setCanvasDimensions);
 }

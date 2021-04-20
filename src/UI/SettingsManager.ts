@@ -4,10 +4,12 @@
  * See LICENSE.MD.
  */
 
-import GameSettings from "./GameSettings";
-import { KeybindingsModel } from "./KeybindingsModel";
+import { Settings } from "../State/Game/UITypes";
+import { KeybindingsState } from "../State/Settings/KeybindingsState";
+import { setGameSpeedSetting, setKeybindings, setSoundStateSetting } from "../State/Settings/SettingsActions";
+import SettingsState from "../State/Settings/SettingsState";
+import { dispatch } from "../State/Store";
 import StorageKeys from "./StorageKeys";
-import { Settings } from "./UITypes";
 
 /**
  * Module:          SettingsManager
@@ -20,7 +22,7 @@ export namespace SettingsManager {
      * getSettings
      * @returns {GameSettings}. Game settings object.
      */
-    export function getSettings(): GameSettings {
+    export function getSettings(): SettingsState {
 
         const playSound = window.localStorage.getItem(StorageKeys.playSound);
         const gameSpeed = window.localStorage.getItem(StorageKeys.gameSpeed);
@@ -33,7 +35,14 @@ export namespace SettingsManager {
         };
     }
 
-    function getDefaultKeyBindings(): KeybindingsModel {
+    export function setSettings(): void {
+        const currentSettings = getSettings();
+        dispatch(setGameSpeedSetting(currentSettings.gameSpeed));
+        dispatch(setKeybindings(currentSettings.keybindings));
+        dispatch(setSoundStateSetting(currentSettings.playSound));
+    }
+
+    export function getDefaultKeyBindings(): KeybindingsState {
         return {
             upkey: "ArrowUp",
             downKey: "ArrowDown",
@@ -42,7 +51,8 @@ export namespace SettingsManager {
             fireKey: "F1",
             phaserKey: "F2",
             pauseKey: "Space",
-        }
+            menu: "KeyQ",
+        };
     }
 
     /**
@@ -60,7 +70,7 @@ export namespace SettingsManager {
                 break;
             case "keybindings":
                 window.localStorage.setItem(StorageKeys.keybindings, value);
-            break;
+                break;
             default:
                 throw new Error("Unknown setting");
         }

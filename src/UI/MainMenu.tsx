@@ -8,9 +8,10 @@ import React from "react";
 import GameResultModel from "../Models/GameResultModel";
 import requestFullScreen from "../Providers/RequestFullscreen";
 import { startGame } from "../StartGame";
-import { HoverButton } from "./HoverButton";
+import { setGameInProgress, setScreenState } from "../State/Game/GameActions";
+import { dispatch } from "../State/Store";
+import { HoverButton } from "./Components/HoverButton";
 import { Styles } from "./Styles";
-import { ScreenState } from "./UITypes";
 
 /**
  * Module:          MainMenu
@@ -18,17 +19,10 @@ import { ScreenState } from "./UITypes";
  */
 
 export default function MainMenu(props: {
-    gameSpeed: number,
-    soundsOn: boolean,
-    setScreenState(screenState: ScreenState): void,
     setGameResult(result: GameResultModel): void,
-    setGameSpeed(speed: number): void,
 }): JSX.Element {
 
     const {
-        gameSpeed,
-        soundsOn: playSounds,
-        setScreenState,
         setGameResult,
     } = props;
 
@@ -67,16 +61,17 @@ export default function MainMenu(props: {
         requestFullscreen();
 
         // Remove the UI from screen.
-        setScreenState("playing");
+        dispatch(setScreenState("playing"));
 
         // Lazy load the game. When the game starts it sets dimension constants all though the game
         // before this is done we want to make sure the game is either running in full screem
         // or windows mode.
         // Once loaded this module stays loaded. Thats why the game, when it ends, doesn't show the
         // main menu as switching to full screen would have no effect at that point.
-        startGame(gameSpeed, playSounds, (result) => {
-            setScreenState("gameover");
+        startGame((result) => {
+            dispatch(setScreenState("gameover"));
             setGameResult(result);
+            dispatch(setGameInProgress(false));
         });
     }
 
@@ -115,11 +110,11 @@ export default function MainMenu(props: {
             <div style={{ ...Styles.buttonContainer, ...Styles.textStyle }}>
                 <HoverButton onClick={() => onStartGame()} text="Play" />
                 <p style={Styles.buttonSeparator}>/</p>
-                <HoverButton onClick={() => setScreenState("options")} text={"Options and Keybinds"} />
+                <HoverButton onClick={() => dispatch(setScreenState("options"))} text={"Options and Keybinds"} />
                 <p style={Styles.buttonSeparator}>/</p>
                 <HoverButton onClick={goToSource} text="Source code" />
                 <p style={Styles.buttonSeparator}>/</p>
-                <HoverButton onClick={() => setScreenState("about")} text="About" />
+                <HoverButton onClick={() => dispatch(setScreenState("about"))} text="About" />
             </div>
         </div>
     );

@@ -10,17 +10,16 @@ import { drawGameFieldBorder } from "./GameScreen/StaticRenders";
 import { drawStatusBar } from "./GameScreen/StatusBar";
 import GameResultModel from "./Models/GameResultModel";
 import playerSpawnRunner from "./Player/PlayerSpawnRunner";
-import setCanvasDimensions from "./Render/SetCanvasDimensions";
+import { Canvas } from "./Render/Canvas";
 import EnemyLevelRunner from "./Runners/EnemyLevelRunner";
 import genericRunner from "./Runners/GenericRunner";
 import levelProgressionRunner, { resetLevelProgression } from "./Runners/LevelProgressionRunner";
 import playerRunner from "./Runners/PlayerRunner";
 import { SoundPlayer } from "./Sound/SoundPlayer";
 import { resetLevelState as resetEnemyLevelState } from "./State/EnemyLevel/EnemyLevelActions";
-import { gameStart, resetScore, setPlaySounds } from "./State/Game/GameActions";
+import { gameStart, resetScore, setGameInProgress } from "./State/Game/GameActions";
 import { resetKeyboardState } from "./State/Keyboard/KeyboardActions";
 import { setPlayerIsAlive, setPlayerLocationData } from "./State/Player/PlayerActions";
-import { setSpeed } from "./State/Speed/SpeedActions";
 import { appState, dispatch } from "./State/Store";
 import TickFunction from "./Types/TickFunction";
 import { registerListeners, unregisterListeners } from "./Utility/JSEvents";
@@ -78,21 +77,17 @@ export namespace GameLoop {
     /**
      * Start game loop
      */
-    export function init(speed: number, gameOverCallback?: (result: GameResultModel) => void, sound: boolean = true): void {
-
-        // Singleton, only created once. Future create calls will not have any effect.
-        // Calculates all game speeds based on the passed frame rate. This is done exactly once.
-        dispatch(setSpeed(speed));
+    export function init(gameOverCallback?: (result: GameResultModel) => void): void {
 
         if (gameOverCallback) {
             gameOverHandler = gameOverCallback;
         }
 
-        dispatch(setPlaySounds(sound));
-
         // Initialize the canvas dimensions.
         // Resized are handled by an event.
-        setCanvasDimensions();
+        Canvas.setCanvasDimensions();
+
+        dispatch(setGameInProgress(true));
 
         start();
     }

@@ -98,6 +98,7 @@ export namespace Styles {
         borderWidth: "0.1em",
         padding: "0.1em",
         textAlign:"center",
+        width: 400,
     }
 
     export const tableTextCellStyle: CSSProperties = {

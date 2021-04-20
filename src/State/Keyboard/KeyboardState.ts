@@ -44,4 +44,9 @@ export default interface KeyboardState {
      * When true the space bar key is held down.
      */
     pause: boolean;
+
+    /**
+     * When true user pressed the option menu button.
+     */
+    menu: boolean;
 }

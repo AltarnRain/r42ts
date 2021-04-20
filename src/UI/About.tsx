@@ -5,20 +5,17 @@
  */
 
 import React from "react";
-import { HoverButton } from "./HoverButton";
+import { setScreenState } from "../State/Game/GameActions";
+import { dispatch } from "../State/Store";
+import { HoverButton } from "./Components/HoverButton";
 import { Styles } from "./Styles";
-import { ScreenState } from "./UITypes";
 
 /**
  * Module:          About
  * Responsibility:  Show 'about' this game.
  */
 
-export default function About(props: { setScreenState(setScreenState: ScreenState): void }): JSX.Element {
-
-    const {
-        setScreenState
-    } = props;
+export default function About(): JSX.Element {
 
     return (
         <div style={Styles.page}>
@@ -51,7 +48,7 @@ export default function About(props: { setScreenState(setScreenState: ScreenStat
             </div>
             <div style={Styles.spacer}/>
             <div style={Styles.buttonContainer}>
-                <HoverButton onClick={() => setScreenState("mainmenu")} text="Back to main menu" />
+                <HoverButton onClick={() => dispatch(setScreenState("mainmenu"))} text="Back to main menu" />
             </div>
         </div>
     );
