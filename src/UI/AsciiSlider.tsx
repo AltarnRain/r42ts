@@ -43,6 +43,8 @@ interface AsciiSliderProperties {
      * @param {number} value
      */
     onChange(value: number): void;
+
+    disabled?: boolean;
 }
 
 /**
@@ -51,7 +53,7 @@ interface AsciiSliderProperties {
  * @param {AsciiSliderProperties} props
  * @returns {JSX.Element}
  */
-export function AsciiSlider({value, min, max, step, charCount, chars, onChange}: AsciiSliderProperties): JSX.Element {
+export function AsciiSlider({value, min, max, step, charCount, chars, onChange, disabled}: AsciiSliderProperties): JSX.Element {
     
     function onInputChange(event: ChangeEvent<HTMLInputElement>): void {
         if (event) {
@@ -64,15 +66,18 @@ export function AsciiSlider({value, min, max, step, charCount, chars, onChange}:
             prefix={chars[0]}
             suffix={chars[1]}
             text={getAsciiSliderString(chars, charCount, value, min, max)}
-            style={Styles.sliderBarStyle}
+            style={disabled ? Styles.sliderDisabledStyle : Styles.sliderBarStyle}
+            fixStyle={disabled ? undefined : Styles.sliderStyle}
             hoverStyle={Styles.sliderHoverStyle}
-            fixStyle={Styles.sliderStyle}
+            fixClickable={false}
             tagName="input"
             type="range"
             min={min}
             max={max}
+            step={step}
             value={value}
             onChange={onInputChange}
+            disabled={disabled}
         />
     );
 }

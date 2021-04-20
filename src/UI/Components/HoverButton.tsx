@@ -15,6 +15,7 @@ import { Styles } from "../Styles";
 
 export function HoverButton(props: {
     text: string,
+    disabled?: boolean,
     onClick?: () => void
 }): JSX.Element {
 
@@ -31,9 +32,10 @@ export function HoverButton(props: {
             prefix={"\u00A0"}
             suffix={"\u00A0"}
             text={props.text}
-            style={Styles.buttonStyle}
+            style={props.disabled ? Styles.buttonDisabledStyle : Styles.buttonStyle}
             hoverStyle={Styles.buttonHoverStyle}
             onClick={click}
+            disabled={props.disabled}
         />
     );
 }

@@ -33,6 +33,11 @@ const defaultFont: CSSProperties = {
     fontSize: 24,
 };
 
+const disabledStyle: CSSProperties = {
+    backgroundColor: CGAColors.lightGray,
+    color: CGAColors.darkGray,
+};
+
 export namespace Styles {
     export const root: CSSProperties = {
         display: "flex",
@@ -51,6 +56,11 @@ export namespace Styles {
         flex: 1,
         maxWidth: 1080,
     };
+
+    export const ingamePage: CSSProperties = {
+        ...page,
+        backgroundColor: "transparent",
+    }
 
     export const defaultContainer: CSSProperties = {
         ...alignLeft,
@@ -72,10 +82,20 @@ export namespace Styles {
         color: CGAColors.white,
     };
 
+    export const textEmphasisStyle: CSSProperties = {
+        ...defaultFont,
+        color: CGAColors.yellow,
+    };
+
     export const defaultTextContainer: CSSProperties = {
         ...textStyle,
         ...defaultContainer,
         flexDirection: "column",
+    };
+
+    export const optionsContainer: CSSProperties = {
+        ...defaultTextContainer,
+        alignItems: "center",
     };
 
     export const buttonContainer: CSSProperties = {
@@ -98,14 +118,14 @@ export namespace Styles {
         borderWidth: "0.1em",
         padding: "0.1em",
         textAlign:"center",
-        width: 400,
+        minWidth: 120,
     }
 
     export const tableTextCellStyle: CSSProperties = {
         ...tableCellStyle,
         padding: "0.1em 0.6em",
     };
-
+    
     export const tableHeaderCellStyle: CSSProperties = {
         ...tableTextCellStyle,
         color: CGAColors.lightCyan,
@@ -113,18 +133,27 @@ export namespace Styles {
 
     export const buttonStyle: CSSProperties = {
         ...defaultFont,
-        backgroundColor: CGAColors.blue,
         color: CGAColors.yellow,
+    };
+
+    export const buttonDisabledStyle: CSSProperties = {
+        ...buttonStyle,
+        ...disabledStyle,
     };
 
     export const buttonHoverStyle: CSSProperties = {
         ...buttonStyle,
-        backgroundColor: "yellow",
-        color: "black",
+        backgroundColor: CGAColors.yellow,
+        color: CGAColors.blue,
     };
 
     export const sliderStyle: CSSProperties = {
-        ...defaultFont,
+        ...textStyle,
+    };
+
+    export const sliderDisabledStyle: CSSProperties = {
+        ...sliderStyle,
+        ...disabledStyle,
     };
 
     export const sliderBarStyle: CSSProperties = {

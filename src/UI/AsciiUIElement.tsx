@@ -6,11 +6,6 @@
 
 import React, { ComponentProps, CSSProperties, useState } from "react";
 
-const sliderContainerStyle: CSSProperties = {
-    display: "inline",
-    position: "relative",
-};
-
 const inputStyle: CSSProperties = {
     display: "block",
     position: "absolute",
@@ -22,8 +17,8 @@ const inputStyle: CSSProperties = {
     opacity: 0,
 };
 
-const inline: CSSProperties = {
-    display: "inline",
+const relative: CSSProperties = {
+    position: "relative",
 };
 
 type AsciiUIElement<T extends keyof JSX.IntrinsicElements> = ComponentProps<T> & {
@@ -31,6 +26,7 @@ type AsciiUIElement<T extends keyof JSX.IntrinsicElements> = ComponentProps<T> &
     prefix: string;
     suffix: string;
     text: string;
+    fixClickable?: boolean;
     style: CSSProperties;
     fixStyle?: CSSProperties;
     hoverStyle?: CSSProperties;
@@ -43,7 +39,7 @@ type AsciiUIElement<T extends keyof JSX.IntrinsicElements> = ComponentProps<T> &
  * @param {AsciiUIElement} props
  * @returns {JSX.Element}
  */
-export function AsciiUIElement<T extends keyof JSX.IntrinsicElements>({ tagName, prefix, suffix, text, style, fixStyle, hoverStyle, fixHoverStyle, ...inputProps }: AsciiUIElement<T>): JSX.Element {
+export function AsciiUIElement<T extends keyof JSX.IntrinsicElements>({ tagName, fixClickable = true, prefix, suffix, text, style, fixStyle, hoverStyle, fixHoverStyle, ...inputProps }: AsciiUIElement<T>): JSX.Element {
 
     const [hover, setHover] = useState(false);
 
@@ -59,9 +55,9 @@ export function AsciiUIElement<T extends keyof JSX.IntrinsicElements>({ tagName,
     const centerStyle = hover && hoverStyle || style;
 
     return (
-        <span style={inline}>
+        <span style={fixClickable ? relative : undefined}>
             <span style={leftRightStyle}>{prefix}</span>
-            <span style={sliderContainerStyle}>
+            <span style={fixClickable ? undefined : relative}>
                 <span style={centerStyle}>
                     {text}
                 </span>

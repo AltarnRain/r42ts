@@ -26,6 +26,8 @@ interface AsciiCheckboxProperties {
      * @param {boolean} value 
      */
     onChange(value: boolean): void;
+
+    disabled?: boolean;
 }
 
 /**
@@ -34,7 +36,7 @@ interface AsciiCheckboxProperties {
  * @param {AsciiCheckbox} props
  * @returns {JSX.Element}
  */
-export function AsciiCheckbox({value, chars, onChange}: AsciiCheckboxProperties): JSX.Element {
+export function AsciiCheckbox({value, chars, onChange, disabled = false}: AsciiCheckboxProperties): JSX.Element {
 
     function onInputChange(event: ChangeEvent<HTMLInputElement>): void {
         if (event) {
@@ -51,9 +53,10 @@ export function AsciiCheckbox({value, chars, onChange}: AsciiCheckboxProperties)
             type="checkbox"
             checked={value}
             onChange={onInputChange}
-            style={Styles.sliderBarStyle}
-            fixStyle={Styles.sliderStyle}
+            style={disabled ? Styles.sliderDisabledStyle : Styles.sliderBarStyle}
+            fixStyle={disabled ? undefined : Styles.sliderStyle}
             hoverStyle={Styles.sliderHoverStyle}
+            disabled={disabled}
         />
     );
 };
