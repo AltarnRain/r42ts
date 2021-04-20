@@ -22,65 +22,127 @@ const alignCenter: CSSProperties = {
     flexDirection: "row",
 };
 
+const alignLeft: CSSProperties = {
+    ...base,
+    justifyContent: "flex-start",
+    flexDirection: "row",
+};
+
 const defaultFont: CSSProperties = {
-    fontFamily: "consolas",
+    fontFamily: "DOS",
+    fontSize: 24,
 };
 
 export namespace Styles {
-    export const header: CSSProperties = {
-        ...alignCenter,
+    export const root: CSSProperties = {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        minHeight: "100%",
+    };
+
+    export const page: CSSProperties = {
         ...defaultFont,
-        margin: "0px",
-        color: CGAColors.yellow,
-        fontSize: 50
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        backgroundColor: CGAColors.lightBlue,
+        paddingBottom: "1em",
+        flex: 1,
+        maxWidth: 1080,
     };
 
     export const defaultContainer: CSSProperties = {
-        ...alignCenter
+        ...alignLeft,
+        padding: "1em",
+        margin: "1em 1em 0 1em",
+        backgroundColor: CGAColors.blue,
+    };
+
+    export const header: CSSProperties = {
+        ...defaultContainer,
+        ...alignCenter,
+        ...defaultFont,
+        color: CGAColors.lightCyan,
+        fontSize: 24,
     };
 
     export const textStyle: CSSProperties = {
         ...defaultFont,
-        backgroundColor: "black",
-        color: CGAColors.yellow,
+        color: CGAColors.white,
     };
 
     export const defaultTextContainer: CSSProperties = {
-        ...defaultContainer,
         ...textStyle,
+        ...defaultContainer,
+        flexDirection: "column",
     };
 
     export const buttonContainer: CSSProperties = {
         ...alignCenter,
         ...defaultFont,
-        flexDirection: "column",
-        flexGrow: 0,
+        ...defaultContainer,
         alignItems: "center",
     };
 
     export const tableStyle: CSSProperties = {
         ...defaultFont,
-        borderColor: "yellow",
-        borderStyle: "double",
-        color: "white",
-        flexDirection: "column",
-        width: "200px",
-        textAlign:"center"
+        borderCollapse: "separate",
+        borderSpacing: "0.1em",
     }
 
+    export const tableCellStyle: CSSProperties = {
+        ...textStyle,
+        borderColor: CGAColors.white,
+        borderStyle: "solid",
+        borderWidth: "0.1em",
+        padding: "0.1em",
+        textAlign:"center",
+    }
+
+    export const tableTextCellStyle: CSSProperties = {
+        ...tableCellStyle,
+        padding: "0.1em 0.6em",
+    };
+
+    export const tableHeaderCellStyle: CSSProperties = {
+        ...tableTextCellStyle,
+        color: CGAColors.lightCyan,
+    };
+
     export const buttonStyle: CSSProperties = {
-        ...alignCenter,
         ...defaultFont,
-        backgroundColor: "black",
-        color: "yellow",
-        borderColor: "yellow",
-        marginBottom: "10px",
-        marginTop: "10px"
+        backgroundColor: CGAColors.blue,
+        color: CGAColors.yellow,
     };
 
     export const buttonHoverStyle: CSSProperties = {
         ...buttonStyle,
         backgroundColor: "yellow",
         color: "black",
+    };
+
+    export const sliderStyle: CSSProperties = {
+        ...defaultFont,
+    };
+
+    export const sliderBarStyle: CSSProperties = {
+        ...sliderStyle,
+        color: CGAColors.yellow,
+    };
+
+    export const sliderHoverStyle: CSSProperties = {
+        ...sliderStyle,
+        backgroundColor: CGAColors.yellow,
+        color: CGAColors.blue,
+    };
+
+    export const buttonSeparator: CSSProperties = {
+        ...textStyle,
+        padding: "0 0.5em",
+    };
+
+    export const spacer: CSSProperties = {
+        flex: 1,
     };
 }

@@ -81,7 +81,7 @@ export default function MainMenu(props: {
     }
 
     return (
-        <>
+        <div style={Styles.page}>
             <p style={Styles.header}>Welcome to Round 42</p>
             <div style={Styles.defaultTextContainer}>
                 <p style={Styles.textStyle}>
@@ -89,36 +89,38 @@ export default function MainMenu(props: {
                     <br />
                     Remake by Antonio Invernizzi 2020.
                 </p>
-                <br />
             </div>
             <div style={Styles.defaultTextContainer}>
-                <div style={{ flexDirection: "column" }}>
-                    <p>Instructions for default keybindings</p>
+                <p>Instructions for default keybindings</p>
+                <ul>
+                    <li>Use the arrow keys to move (default).</li>
+                    <li>Press F1 to fire a bullet (default).</li>
+                    <li>Press F2 to fire a Phaser (default).</li>
                     <ul>
-                        <li>Use the arrow keys to move (default).</li>
-                        <li>Press F1 to fire a bullet (default).</li>
-                        <li>Press F2 to fire a Phaser (default).</li>
-                        <ul>
-                            <li>This is your super weapon. It kills a random enemy in one shot.</li>
-                            <li>You only have limited charges so use them wisely.</li>
-                        </ul>
-                        <li>A life and phaser is awared every 7500 points.</li>
-                        <li>When you die you'll lose your phaser charges.</li>
-                        <li>When you die you can hold the 'Pause' key to stop your formation. While forming you cannot be hit.</li>
-                        <li>When there are enemies on the screen you can move left and right while your ship is forming.</li>
+                        <li>This is your super weapon. It kills a random enemy in one shot.</li>
+                        <li>You only have limited charges so use them wisely.</li>
                     </ul>
-                    <p>You can setup your own keybinds in the 'Option and Keybinds' menu.</p>
-                </div>
+                    <li>A life and phaser is awared every 7500 points.</li>
+                    <li>When you die you'll lose your phaser charges.</li>
+                    <li>When you die you can hold the 'Pause' key to stop your formation. While forming you cannot be hit.</li>
+                    <li>When there are enemies on the screen you can move left and right while your ship is forming.</li>
+                </ul>
+                <p>You can setup your own keybinds in the 'Option and Keybinds' menu.</p>
+                <br />
+                <p>Round 42 is open source. Feel free to take a look.</p>
+                <br />
+                <p>Learn more? Click about.</p>
             </div>
-            <br />
+            <div style={Styles.spacer}/>
             <div style={{ ...Styles.buttonContainer, ...Styles.textStyle }}>
                 <HoverButton onClick={() => onStartGame()} text="Play" />
+                <p style={Styles.buttonSeparator}>/</p>
                 <HoverButton onClick={() => setScreenState("options")} text={"Options and Keybinds"} />
-                <p>Round 42 is open source. Feel free to take a look.</p>
+                <p style={Styles.buttonSeparator}>/</p>
                 <HoverButton onClick={goToSource} text="Source code" />
-                <p>Learn more? Click about.</p>
+                <p style={Styles.buttonSeparator}>/</p>
                 <HoverButton onClick={() => setScreenState("about")} text="About" />
             </div>
-        </>
+        </div>
     );
 }

@@ -21,9 +21,9 @@ export default function About(props: { setScreenState(setScreenState: ScreenStat
     } = props;
 
     return (
-        <>
+        <div style={Styles.page}>
             <p style={Styles.header}>About me</p>
-            <div style={{ ...Styles.defaultContainer, flexDirection: "column", ...Styles.textStyle }}>
+            <div style={Styles.defaultTextContainer}>
                 <p>
                     <p>My name is Antonio Invernizzi. I've worked as a professional programmer for 20 years. Round 42 is a big reason why.</p>
                     <p>It was 1990 and my parents bought our first PC. A 4 Mhz 8088 XT. It shipped with 3 games:
@@ -37,21 +37,22 @@ export default function About(props: { setScreenState(setScreenState: ScreenStat
                     Good times :). Course, spending hour uppon hour behind a PC made me curious what else I could do with it and... well... now I'm a programmer.
                     Though, I am not a game developer by trade I realy enjoyed the challenge of writing one.</p>
                 </p>
-                <p style={Styles.header}>Technologies used</p>
-                <p>
-                    <ul>
-                        <li>TypeScript for coding</li>
-                        <li>WebPack for packaging</li>
-                        <li>Redux for state</li>
-                        <li>Immer for QoL state management.</li>
-                        <li>React (menu only)</li>
-                        <li>Howler for sound</li>
-                    </ul>
-                </p>
-                <div style={Styles.buttonContainer}>
-                    <HoverButton onClick={() => setScreenState("mainmenu")} text="Back to main menu" />
-                </div>
             </div>
-        </>
+            <p style={Styles.header}>Technologies used</p>
+            <div style={Styles.defaultTextContainer}>
+                <ul>
+                    <li>TypeScript for coding</li>
+                    <li>WebPack for packaging</li>
+                    <li>Redux for state</li>
+                    <li>Immer for QoL state management.</li>
+                    <li>React (menu only)</li>
+                    <li>Howler for sound</li>
+                </ul>
+            </div>
+            <div style={Styles.spacer}/>
+            <div style={Styles.buttonContainer}>
+                <HoverButton onClick={() => setScreenState("mainmenu")} text="Back to main menu" />
+            </div>
+        </div>
     );
 }

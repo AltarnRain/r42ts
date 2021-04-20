@@ -11,6 +11,7 @@ import { GameOptions } from "./GameOptions";
 import GameOver from "./GameOver";
 import MainMenu from "./MainMenu";
 import SettingsManager from "./SettingsManager";
+import { Styles } from "./Styles";
 import { ScreenState } from "./UITypes";
 
 /**
@@ -33,7 +34,7 @@ export default function Main(): JSX.Element {
     const [keybinds, setKeybinds] = useState(keybindings);
 
     return (
-        <div>
+        <div style={Styles.root}>
             {
                 screenState === "mainmenu" && <MainMenu soundsOn={playSound} setGameSpeed={setGameSpeed} setScreenState={setScreenState} setGameResult={setGameResult} gameSpeed={gameSpeed} /> ||
                 screenState === "about" && <About setScreenState={setScreenState} /> ||

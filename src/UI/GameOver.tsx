@@ -22,9 +22,8 @@ export default function GameOver(props: { setScreenState(screenState: ScreenStat
     } = props;
 
     return (
-        <>
+        <div style={Styles.page}>
             <p style={Styles.header}>Game over</p>
-            <br />
             <div style={Styles.defaultContainer}>
                 <table style={{ ...Styles.textStyle, width: "20%" }}>
                     <tbody>
@@ -36,10 +35,11 @@ export default function GameOver(props: { setScreenState(screenState: ScreenStat
                 </table>
             </div>
             <br />
+            <div style={Styles.spacer}/>
             <div style={Styles.buttonContainer}>
                 <HoverButton onClick={() => setScreenState("mainmenu")} text="Ok" />
             </div>
-        </>
+        </div>
     );
 }
 
