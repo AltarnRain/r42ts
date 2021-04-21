@@ -6,7 +6,7 @@
 
 import React, { ComponentProps, CSSProperties, useState } from "react";
 
-const inputStyle: CSSProperties = {
+const htmlElementStyle: CSSProperties = {
     display: "block",
     position: "absolute",
     top: 0,
@@ -17,29 +17,72 @@ const inputStyle: CSSProperties = {
     opacity: 0,
 };
 
-const relative: CSSProperties = {
+const htmlElementSizeTargetStyle: CSSProperties = {
+    display: "inline",
     position: "relative",
 };
 
 type AsciiUIElement<T extends keyof JSX.IntrinsicElements> = ComponentProps<T> & {
+    /**
+     * Name of the invisible HTML element that will be stretched over the text to capture user input.
+     * All other props will be passed to this element.
+     */
     tagName: T
-    prefix: string;
-    suffix: string;
+     /**
+     * The text string to display
+     */
     text: string;
-    fixClickable?: boolean;
+    /**
+     * The style to apply to the text
+     */
     style: CSSProperties;
-    fixStyle?: CSSProperties;
+    /**
+     * The style of the text when the user hovers over or focuses the element
+     */
     hoverStyle?: CSSProperties;
-    fixHoverStyle?: CSSProperties;
+    /**
+     * The string to prepend to the text.
+     * Can be styled independently from text.
+     */
+    prefix?: string;
+    /**
+     * The string to append to the text.
+     * Can be styled independently from text.
+     */
+    suffix?: string;
+    /**
+     * The style of the prefix and suffix
+     */
+    affixStyle?: CSSProperties;
+    /**
+     * The style of the prefix and suffix when the user hovers over or focuses the element
+     */
+    affixHoverStyle?: CSSProperties;
+    /**
+     * Whether or not the invisible HTML element will be stretched over the prefix and suffix
+     * Default is true
+     */
+    affixClickable?: boolean;
 }
 
 /**
- * AsciiInput
- * Because the component logic is mostly the same.
+ * AsciiUIElement
+ * Used to create interactive UI elements that look like a string of characters.
  * @param {AsciiUIElement} props
  * @returns {JSX.Element}
  */
-export function AsciiUIElement<T extends keyof JSX.IntrinsicElements>({ tagName, fixClickable = true, prefix, suffix, text, style, fixStyle, hoverStyle, fixHoverStyle, ...inputProps }: AsciiUIElement<T>): JSX.Element {
+export function AsciiUIElement<T extends keyof JSX.IntrinsicElements>({
+    tagName,
+    affixClickable = true,
+    prefix = "",
+    suffix = "",
+    text,
+    style,
+    affixStyle,
+    hoverStyle,
+    affixHoverStyle,
+    ...elementProps
+}: AsciiUIElement<T>): JSX.Element {
 
     const [hover, setHover] = useState(false);
 
@@ -51,14 +94,14 @@ export function AsciiUIElement<T extends keyof JSX.IntrinsicElements>({ tagName,
         setHover(false);
     }
 
-    const leftRightStyle = hover && (fixHoverStyle || hoverStyle) || fixStyle || style;
-    const centerStyle = hover && hoverStyle || style;
+    const prefixSuffixStyle = hover && (affixHoverStyle || hoverStyle) || affixStyle || style;
+    const textStyle = hover && hoverStyle || style;
 
     return (
-        <span style={fixClickable ? relative : undefined}>
-            <span style={leftRightStyle}>{prefix}</span>
-            <span style={fixClickable ? undefined : relative}>
-                <span style={centerStyle}>
+        <span style={affixClickable ? htmlElementSizeTargetStyle : undefined}>
+            <span style={prefixSuffixStyle}>{prefix}</span>
+            <span style={affixClickable ? undefined : htmlElementSizeTargetStyle}>
+                <span style={textStyle}>
                     {text}
                 </span>
                 {React.createElement(tagName, {
@@ -66,11 +109,11 @@ export function AsciiUIElement<T extends keyof JSX.IntrinsicElements>({ tagName,
                     onMouseLeave,
                     onFocus: onMouseEnter,
                     onBlur: onMouseLeave,
-                    style: inputStyle,
-                    ...inputProps,
+                    style: htmlElementStyle,
+                    ...elementProps,
                 })}
             </span>
-            <span style={leftRightStyle}>{suffix}</span>
+            <span style={prefixSuffixStyle}>{suffix}</span>
         </span>
     );
 }

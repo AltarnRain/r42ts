@@ -43,7 +43,9 @@ interface AsciiSliderProperties {
      * @param {number} value
      */
     onChange(value: number): void;
-
+    /**
+     * Disables the UI element
+     */
     disabled?: boolean;
 }
 
@@ -63,13 +65,13 @@ export function AsciiSlider({value, min, max, step, charCount, chars, onChange, 
 
     return (
         <AsciiUIElement
+            text={getAsciiSliderString(chars, charCount, value, min, max)}
+            style={disabled ? Styles.uiDisabledStyle : Styles.uiStyle}
+            hoverStyle={Styles.uiHoverStyle}
             prefix={chars[0]}
             suffix={chars[1]}
-            text={getAsciiSliderString(chars, charCount, value, min, max)}
-            style={disabled ? Styles.sliderDisabledStyle : Styles.sliderBarStyle}
-            fixStyle={disabled ? undefined : Styles.sliderStyle}
-            hoverStyle={Styles.sliderHoverStyle}
-            fixClickable={false}
+            affixStyle={disabled ? undefined : Styles.uiAffixStyle}
+            affixClickable={false}
             tagName="input"
             type="range"
             min={min}

@@ -27,14 +27,13 @@ export function HoverButton(props: {
 
     return (
         <AsciiUIElement
-            tagName="input"
-            type="button"
             prefix={"\u00A0"}
             suffix={"\u00A0"}
             text={props.text}
-            style={props.disabled ? Styles.buttonDisabledStyle : Styles.buttonStyle}
-            hoverStyle={Styles.buttonHoverStyle}
+            style={props.disabled ? Styles.uiDisabledStyle : Styles.uiStyle}
+            hoverStyle={Styles.uiHoverStyle}
             onClick={click}
+            tagName="button"
             disabled={props.disabled}
         />
     );

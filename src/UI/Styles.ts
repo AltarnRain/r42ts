@@ -131,41 +131,23 @@ export namespace Styles {
         color: CGAColors.lightCyan,
     };
 
-    export const buttonStyle: CSSProperties = {
+    export const uiStyle: CSSProperties = {
         ...defaultFont,
         color: CGAColors.yellow,
     };
 
-    export const buttonDisabledStyle: CSSProperties = {
-        ...buttonStyle,
+    export const uiDisabledStyle: CSSProperties = {
+        ...uiStyle,
         ...disabledStyle,
     };
 
-    export const buttonHoverStyle: CSSProperties = {
-        ...buttonStyle,
+    export const uiHoverStyle: CSSProperties = {
+        ...uiStyle,
         backgroundColor: CGAColors.yellow,
         color: CGAColors.blue,
     };
 
-    export const sliderStyle: CSSProperties = {
-        ...textStyle,
-    };
-
-    export const sliderDisabledStyle: CSSProperties = {
-        ...sliderStyle,
-        ...disabledStyle,
-    };
-
-    export const sliderBarStyle: CSSProperties = {
-        ...sliderStyle,
-        color: CGAColors.yellow,
-    };
-
-    export const sliderHoverStyle: CSSProperties = {
-        ...sliderStyle,
-        backgroundColor: CGAColors.yellow,
-        color: CGAColors.blue,
-    };
+    export const uiAffixStyle: CSSProperties = textStyle;
 
     export const buttonSeparator: CSSProperties = {
         ...textStyle,
