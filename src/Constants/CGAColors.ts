@@ -18,7 +18,7 @@ const CGAColors = {             // Color hex code. Used to set the color of asse
     magenta: "#AA00AA",         // 5
     brown: "#AA5500",           // 6
     lightGray: "#AAAAAA",       // 7
-    darkGray: "555555",         // 8
+    darkGray: "#555555",        // 8
     lightBlue: "#5555FF",       // 9
     lightGreen: "#55FF55",      // A
     lightCyan: "#55FFFF",       // B
