@@ -2,12 +2,6 @@ node_modules
 .cache
 /js
 Speeds with time.xlsx
-dist/bundle.js.map
-dist/bundle.js
-dist/sounds
-dist/bundle.zip
-dist/win-unpacked
-dist/Main.js
+dist
 distel
 out
-dist/bundle.js.LICENSE.txt
