@@ -12,6 +12,7 @@ import About from "./About";
 import { GameOptions } from "./GameOptions";
 import GameOver from "./GameOver";
 import MainMenu from "./MainMenu";
+import { Styles } from "./Styles";
 
 /**
  * Module:          Main
@@ -24,7 +25,7 @@ export default function Main(): JSX.Element {
     const [gameResult, setGameResult] = useState<GameResultModel>();
 
     return (
-        <div>
+        <div style={Styles.root}>
             {
                 screenState === "mainmenu" && <MainMenu setGameResult={setGameResult} /> ||
                 screenState === "about" && <About /> ||

@@ -4,7 +4,8 @@
  * See LICENSE.MD.
  */
 
-import React from "react";
+import React, { CSSProperties } from "react";
+import CGAColors from "../Constants/CGAColors";
 import GameResultModel from "../Models/GameResultModel";
 import { setScreenState } from "../State/Game/GameActions";
 import { dispatch } from "../State/Store";
@@ -16,30 +17,44 @@ import { Styles } from "./Styles";
  * Responsibility:  Game over screen
  */
 
+const gameOverPage: CSSProperties = {...Styles.page, backgroundColor: CGAColors.black};
+const gameOverContainer: CSSProperties = {...Styles.defaultTextContainer};
+
 export default function GameOver(props: { gameResult: GameResultModel | undefined }): JSX.Element {
     const {
         gameResult
     } = props;
 
     return (
-        <>
+        <div style={gameOverPage}>
+            <div style={Styles.spacer}/>
             <p style={Styles.header}>Game over</p>
-            <br />
-            <div style={Styles.defaultContainer}>
-                <table style={{ ...Styles.textStyle, width: "20%" }}>
+            <div style={gameOverContainer}>
+                <table>
                     <tbody>
-                        <tr><td>Score</td><td>{gameResult?.score}</td></tr>
-                        <tr><td>Bullets fired</td><td>{gameResult?.bulletsFired}</td></tr>
-                        <tr><td>Enemies hit</td><td>{gameResult?.enemiesHit}</td></tr>
-                        <tr><td>% Hit</td><td>{getHitPercentage(gameResult?.enemiesHit, gameResult?.bulletsFired)}</td></tr>
+                        <tr>
+                            <td style={Styles.tableTextCellStyle}>Score</td>
+                            <td style={Styles.tableTextCellStyle}>{gameResult?.score}</td></tr>
+                        <tr>
+                            <td style={Styles.tableTextCellStyle}>Bullets fired</td>
+                            <td style={Styles.tableTextCellStyle}>{gameResult?.bulletsFired}</td>
+                        </tr>
+                        <tr>
+                            <td style={Styles.tableTextCellStyle}>Enemies hit</td>
+                            <td style={Styles.tableTextCellStyle}>{gameResult?.enemiesHit}</td>
+                        </tr>
+                        <tr>
+                            <td style={Styles.tableTextCellStyle}>% Hit</td>
+                            <td style={Styles.tableTextCellStyle}>{getHitPercentage(gameResult?.enemiesHit, gameResult?.bulletsFired)}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-            <br />
             <div style={Styles.buttonContainer}>
                 <HoverButton onClick={() => dispatch(setScreenState("mainmenu"))} text="Ok" />
             </div>
-        </>
+            <div style={Styles.spacer}/>
+        </div>
     );
 }
 

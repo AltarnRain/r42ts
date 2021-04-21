@@ -4,7 +4,8 @@
  * See LICENSE.MD.
  */
 
-import React, { useState } from "react";
+import React from "react";
+import { AsciiUIElement } from "./AsciiUIElement";
 import { Styles } from "../Styles";
 
 /**
@@ -14,14 +15,9 @@ import { Styles } from "../Styles";
 
 export function HoverButton(props: {
     text: string,
+    disabled?: boolean,
     onClick?: () => void
 }): JSX.Element {
-
-    const [hover, setHover] = useState(false);
-
-    function toggleHover(): void {
-        setHover(!hover);
-    }
 
     function click(): void {
         if (props.onClick) {
@@ -30,6 +26,15 @@ export function HoverButton(props: {
     }
 
     return (
-        <button style={hover ? Styles.buttonHoverStyle : Styles.buttonStyle} onClick={click} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>{props.text}</button>
+        <AsciiUIElement
+            prefix={"\u00A0"}
+            suffix={"\u00A0"}
+            text={props.text}
+            style={props.disabled ? Styles.uiDisabledStyle : Styles.uiStyle}
+            hoverStyle={Styles.uiHoverStyle}
+            onClick={click}
+            tagName="button"
+            disabled={props.disabled}
+        />
     );
 }
