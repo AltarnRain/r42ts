@@ -18,7 +18,7 @@
     "publisher": "Antin Games",
     "dependencies": {
         "howler": "2.2.1",
-        "immer": "9.0.1",
+        "immer": "9.0.6",
         "react": "17.0.1",
         "react-dom": "17.0.1",
         "react-redux": "7.2.3",
